@@ -10,31 +10,15 @@ void CharacterSword::MoveProcess(unsigned __int8 controllNumber)
 	if (moveFlag)
 	{
 		animSpeed = 0.75f;
-		if (direXAngle == 0.0f || direXAngle == DX_PI_F / 2.0f || direXAngle == -DX_PI_F / 2.0f)
+		if (walkSpeed < 30.0f)
 		{
-			if (walkSpeed < 30.0f)
-			{
-				walkNow = true;
-				walkSpeed += 5.0f;
-			}
-			else
-			{
-				walkNow = false;
-				walkSpeed = 30.0f;
-			}
+			walkNow = true;
+			walkSpeed += 5.0f;
 		}
-		else	// ŽÎ‚ß•ûŒü
+		else
 		{
-			if (walkSpeed < 20.0f)
-			{
-				walkNow = true;
-				walkSpeed += 5.0f;
-			}
-			else
-			{
-				walkNow = false;
-				walkSpeed = 20.0f;
-			}
+			walkNow = false;
+			walkSpeed = 30.0f;
 		}
 	}
 	else

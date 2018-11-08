@@ -55,27 +55,32 @@ void CharacterSword::MoveProcess(unsigned __int8 controllNumber)
 	// 左スティックが前に押されたら前進する
 	if (InputPad::GetPadThumbData(controllNumber, STICK_LEFT_Y) > 0)
 	{
-		area.x += sinf(angle + direXAngle) * -walkSpeed;
-		area.z += cosf(angle + direXAngle) * -walkSpeed;
+		m_direction[DIRECTION::up] = true;
 		direXAngle = 0.0f;
 		direZAngle = 0.0f;
 		moveFlag = true;
 	}
+	else
+	{
+		m_direction[DIRECTION::up] = false;
+	}
 	// 左スティックが後ろに押されたら後退する
 	if (0 > InputPad::GetPadThumbData(controllNumber, STICK_LEFT_Y))
 	{
-		area.x += sinf(angle + direXAngle) * walkSpeed;
-		area.z += cosf(angle + direXAngle) * walkSpeed;
+		m_direction[DIRECTION::down] = true;
 		direXAngle = 0.0f;
 		direZAngle = DX_PI_F;
 		moveFlag = true;
 	}
-
+	else
+	{
+		m_direction[DIRECTION::down] = false;
+	}
 	// 左スティックが左に押されたら左に移動する
 	if (0 > InputPad::GetPadThumbData(controllNumber, STICK_LEFT_X))
 	{
-		area.x += cosf(-angle) * walkSpeed;
-		area.z += sinf(-angle) * walkSpeed;
+		m_direction[DIRECTION::left] = true;
+		m_direction[DIRECTION::right] = false;
 		direXAngle = ((float)InputPad::GetPadThumbData(controllNumber, STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)InputPad::GetPadThumbMax(false, true, false);
 		if (direZAngle != 0.0f)
 		{
@@ -86,8 +91,8 @@ void CharacterSword::MoveProcess(unsigned __int8 controllNumber)
 	// 左スティックが右に押されたら右に移動する
 	else if (InputPad::GetPadThumbData(controllNumber, STICK_LEFT_X) > 0)
 	{
-		area.x += cosf(-angle) * -walkSpeed;
-		area.z += sinf(-angle) * -walkSpeed;
+		m_direction[DIRECTION::left] = false;
+		m_direction[DIRECTION::right] = true;
 		direXAngle = ((float)InputPad::GetPadThumbData(controllNumber, STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)InputPad::GetPadThumbMax(false, true, true);
 		if (direZAngle != 0.0f)
 		{
@@ -98,9 +103,62 @@ void CharacterSword::MoveProcess(unsigned __int8 controllNumber)
 	// キャラの前後の向きを気持ちよくするため
 	else
 	{
+		m_direction[DIRECTION::left] = false;
+		m_direction[DIRECTION::right] = false;
 		if (InputPad::GetPadThumbData(controllNumber, STICK_LEFT_Y) == 0)
 		{
 			moveFlag = false;
+		}
+	}
+
+	/// 操作に対する向きと動き
+	if (m_direction[static_cast<int>(DIRECTION::left)])
+	{
+		if (m_direction[static_cast<int>(DIRECTION::down)])
+		{
+			area.x += sinf(angle + direXAngle) * walkSpeed * sqrtf(2);
+			area.z += cosf(angle + direXAngle) * walkSpeed * sqrtf(2);
+		}
+		else if (m_direction[static_cast<int>(DIRECTION::up)])
+		{
+			area.x += sinf(angle + direXAngle) * -walkSpeed * sqrtf(2);
+			area.z += cosf(angle + direXAngle) * -walkSpeed * sqrtf(2);
+		}
+		else
+		{
+			area.x += cosf(-angle) * walkSpeed;
+			area.z += sinf(-angle) * walkSpeed;
+		}
+	}
+	if (m_direction[static_cast<int>(DIRECTION::right)])
+	{
+		if (m_direction[static_cast<int>(DIRECTION::down)])
+		{
+			area.x += sinf(angle + direXAngle) * walkSpeed * sqrtf(2);
+			area.z += cosf(angle + direXAngle) * walkSpeed * sqrtf(2);
+		}
+		else if (m_direction[static_cast<int>(DIRECTION::up)])
+		{
+			area.x += sinf(angle + direXAngle) * -walkSpeed * sqrtf(2);
+			area.z += cosf(angle + direXAngle) * -walkSpeed * sqrtf(2);
+		}
+		else
+		{
+			area.x += cosf(-angle) * -walkSpeed;
+			area.z += sinf(-angle) * -walkSpeed;
+		}
+	}
+	if (!m_direction[static_cast<int>(DIRECTION::right)] && !m_direction[static_cast<int>(DIRECTION::left)])
+	{
+		if (m_direction[static_cast<int>(DIRECTION::down)])
+		{
+			area.x += sinf(angle + direXAngle) * walkSpeed;
+			area.z += cosf(angle + direXAngle) * walkSpeed;
+		}
+		if (m_direction[static_cast<int>(DIRECTION::up)])
+		{
+			area.x += sinf(angle + direXAngle) * -walkSpeed;
+			area.z += cosf(angle + direXAngle) * -walkSpeed;
 		}
 	}
 }
@@ -317,14 +375,14 @@ void CharacterSword::AnimProcess()
 			if (moveFlag)
 			{
 				// 歩く速度の時
-				if (walkNow)
-				{
-					Player_PlayAnim(MOTION::walk);
-				}
-				else
-				{
+				//if (walkNow)
+				//{
+				//	Player_PlayAnim(MOTION::walk);
+				//}
+				//else
+				//{
 					Player_PlayAnim(MOTION::dash);
-				}
+				//}
 			}
 			else
 			{
@@ -372,6 +430,7 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	// それぞれの速度
 	walkSpeed = 0.0f;
 	animSpeed = 0.25f;
+	ZeroMemory(m_direction, sizeof(m_direction));
 
 
 	// 攻撃に関して

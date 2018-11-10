@@ -218,14 +218,12 @@ void MainMove1::LightProcess()
 			if (lightEventCount < 50)
 			{
 				SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - (lightEventCount * 2));
-				//DrawGraph(0, 0, drawWhite, false);
 				DrawBox(0, 0, 1920, 1080, GetColor(255, 255, 255), true);
 				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 			}
 			else		// フェードインの処理をさせて戻す
 			{
 				SetDrawBlendMode(DX_BLENDMODE_ALPHA, 155 + ((lightEventCount - 50) * 2));
-				//DrawGraph(0, 0, drawWhite, false);
 				DrawBox(0, 0, 1920, 1080, GetColor(255, 255, 255), true);
 				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 			}
@@ -244,8 +242,6 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 
 	// フォグに関する
 	SetFogEnable(FALSE);					// フォグを有効にする
-	//SetFogColor(128, 128, 128);			// フォグの色にする
-	//SetFogStartEnd(8000.0f, 10000.0f);	// フォグの開始距離
 
 
 	// 背景色に関する
@@ -273,8 +269,8 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 	// 敵生成に関する
 	std::random_device rnd;     // 非決定的な乱数生成器を生成
 	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
-	std::uniform_int_distribution<> randInX(-4000, 4000);        // X座標用乱数
-	std::uniform_int_distribution<> randInZ(-4000, 4000);        // Z座標用乱数
+	std::uniform_int_distribution<> randInX(-3000, 3000);        // X座標用乱数
+	std::uniform_int_distribution<> randInZ(-3000, 3000);        // Z座標用乱数
 	std::uniform_int_distribution<> color(1, 100);				 // 色用の乱数
 	for (int i = 0; i != enemyNum; ++i)
 	{
@@ -397,11 +393,6 @@ void MainMove1::Process(const unsigned __int8 controllNumber)
 
 
 	LightProcess();		// ライトのプロセスを呼ぶ
-
-
-#ifdef _DEBUG
-	DebugKeyControll();
-#endif // _DEBUG
 }
 
 
@@ -409,92 +400,3 @@ void MainMove1::CameraProcess()
 {
 	p_camera->SetUp();
 }
-
-
-
-#ifdef _DEBUG
-void MainMove1::DebugKeyControll()
-{
-	if (KeyData::Get(KEY_INPUT_Z) == 1)
-	{
-		if (catchEnemyNum != 30)
-		{
-			catchEnemyNum++;
-		}
-		s_enemyAggre[catchEnemyNum - 1].aliveNow = false;
-	}
-	if (KeyData::Get(KEY_INPUT_H) == 1)
-	{
-		SetLightEnable(TRUE);
-	}
-	if (KeyData::Get(KEY_INPUT_I) >= 1)
-	{
-		for (int i = 0; i != lightNum; ++i)
-		{
-			lightRange[i] += 10.0f;
-			SetLightRangeAttenHandle(lightHandle[i], lightRange[i], 0.0f, 0.002f, 0.0f);
-		}
-	}
-	if (KeyData::Get(KEY_INPUT_K) >= 1)
-	{
-		for (int i = 0; i != lightNum; ++i)
-		{
-			lightRange[i] -= 10.0f;
-			SetLightRangeAttenHandle(lightHandle[i], lightRange[i], 0.0f, 0.002f, 0.0f);
-		}
-	}
-	if (KeyData::Get(KEY_INPUT_R) >= 1)
-	{
-		for (int i = 0; i != lightNum; ++i)
-		{
-			lightArea[i].y += 10.0f;
-			SetLightRangeAttenHandle(lightHandle[i], lightRange[i], 0.0f, 0.002f, 0.0f);
-		}
-	}
-	if (KeyData::Get(KEY_INPUT_F) >= 1)
-	{
-		for (int i = 0; i != lightNum; ++i)
-		{
-			lightArea[i].y -= 10.0f;
-			SetLightRangeAttenHandle(lightHandle[i], lightRange[i], 0.0f, 0.002f, 0.0f);
-		}
-	}
-	if (KeyData::Get(KEY_INPUT_W) >= 1)
-	{
-		for (int i = 0; i != lightNum; ++i)
-		{
-			lightArea[i].z += 10.0f;
-			SetLightPositionHandle(lightHandle[i], lightArea[i]);
-		}
-	}
-	if (KeyData::Get(KEY_INPUT_S) >= 1)
-	{
-		for (int i = 0; i != lightNum; ++i)
-		{
-			lightArea[i].z -= 10.0f;
-			SetLightPositionHandle(lightHandle[i], lightArea[i]);
-		}
-	}
-	if (KeyData::Get(KEY_INPUT_A) >= 1)
-	{
-		for (int i = 0; i != lightNum; ++i)
-		{
-			lightArea[i].x -= 10.0f;
-			SetLightPositionHandle(lightHandle[i], lightArea[i]);
-		}
-	}
-	if (KeyData::Get(KEY_INPUT_D) >= 1)
-	{
-		for (int i = 0; i != lightNum; ++i)
-		{
-			lightArea[i].x += 10.0f;
-			SetLightPositionHandle(lightHandle[i], lightArea[i]);
-		}
-	}
-
-	if (KeyData::Get(KEY_INPUT_K) == 1)
-	{
-		scene = ESceneNumber::SECONDLOAD;
-	}
-}
-#endif // _DEBUG

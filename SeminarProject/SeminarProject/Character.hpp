@@ -15,6 +15,8 @@ private:
 
 
 	// “®‚«‚ÉŠÖ‚µ‚Ä
+	enum DIRECTION { left, down, right, up };
+	bool m_direction[4];
 	void MoveProcess(unsigned __int8 controllNumber);
 
 

@@ -1,6 +1,8 @@
 #pragma once
 #include "BaseMove.hpp"
 #include "LoadThread.hpp"
+
+#include "MainMove1.hpp"
 #include "MainMove2.hpp"
 
 
@@ -16,6 +18,12 @@ private:
 
 
 	void SceneChange();				// シーンを切り替える
+
+
+	// ムーブ１に関する
+	const int max1 = 5;
+	std::string move1str[5];
+	ELOADFILE load1[5];
 
 
 	// ムーブ２に関する

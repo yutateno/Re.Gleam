@@ -73,11 +73,6 @@ private:
 	int soundBG;
 
 
-#ifdef _DEBUG
-	void DebugKeyControll();
-#endif // _DEBUG
-
-
 public:
 	MainMove1(const std::vector<int> v_file);			// コンストラクタ
 	~MainMove1();							// デストラクタ

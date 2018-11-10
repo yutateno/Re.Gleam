@@ -6,6 +6,7 @@ void MainMove2::ShadowDraw()
 {
 	BaseMove::ShadowCharaSetUpBefore();
 	p_character->Draw();
+	p_enemy->Draw();
 	for (int i = 0; i != 10; ++i)
 	{
 		p_stageStairs[i]->Draw();
@@ -26,6 +27,7 @@ void MainMove2::ShadowDraw()
 	{
 		p_stageStairs[i]->Draw();
 	}
+	p_enemy->Draw();
 	for (int i = 0; i != 30; ++i)
 	{
 		p_stageStreetLight[i]->Draw();
@@ -41,6 +43,7 @@ void MainMove2::ShadowDraw()
 	BaseMove::ShadowAnotherCharaDrawBefore();
 	BaseMove::ShadowCharaDrawBefore();
 	p_stage->Draw();
+	p_enemy->Draw();
 	for (int i = 0; i != 10; ++i)
 	{
 		p_stageStairs[i]->Draw();
@@ -60,11 +63,29 @@ void MainMove2::ShadowDraw()
 }
 
 
+void MainMove2::AttackProcess()
+{
+	/*VECTOR ChkChToChVec;
+	VECTOR PushVec;
+	VECTOR ChPosition;
+	float Length;*/
+
+	// 当たっていなかったら何もしない
+	if (HitCheck_Capsule_Capsule(
+		p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f,
+		p_enemy->GetArea(), VAdd(p_enemy->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 50.0f))
+	{
+		p_character->SetReturn();
+	}
+}
+
+
 MainMove2::MainMove2(const std::vector<int> v_file)
 {
 	// ポインタNULL初期化
 	p_camera					 = NULL;
 	p_character					 = NULL;
+	p_enemy						 = NULL;
 	p_stage						 = NULL;
 	for (int i = 0; i != 10; ++i)
 	{
@@ -86,7 +107,7 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 		p_stageStairs[i] = new StageStairs(v_file[EFILE::stairs], v_file[EFILE::stage], VGet(-100.0f*i, 0.0f, -1000.0f));
 	}
 	p_stage		 = new Stage(v_file[EFILE::stage]);
-	p_character	 = new CharacterSword(v_file[EFILE::characterAttack], v_file[EFILE::stage], v_file[EFILE::stairsColl], v_file[EFILE::block]);
+	p_character	 = new CharacterSword(v_file[EFILE::characterAttack], v_file[EFILE::stage], v_file[EFILE::stairsColl], v_file[EFILE::paneru]);
 	p_camera	 = new Camera(p_character->GetArea(), v_file[EFILE::stage]);
 	for (int i = 0; i != 30; ++i)
 	{
@@ -94,8 +115,9 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	}
 	for (int i = 0; i != 10; ++i)
 	{
-		p_stagePaneru[i] = new StagePaneru(v_file[EFILE::block], v_file[EFILE::stage], VGet(500.0f * i, 300.0f*i, 100.0f*i));
+		p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneru], v_file[EFILE::stage], VGet(500.0f * i, 300.0f*i, 100.0f*i));
 	}
+	p_enemy = new EnemyMove2(v_file[EFILE::stage], VGet(1000.0f, 0.0f, 1000.0f), v_file[EFILE::block]);
 
 
 	// スカイボックス読み込み
@@ -135,6 +157,7 @@ MainMove2::~MainMove2()
 		POINTER_RELEASE(p_stageStairs[i]);
 	}
 	POINTER_RELEASE(p_camera);
+	POINTER_RELEASE(p_enemy);
 	POINTER_RELEASE(p_character);
 	POINTER_RELEASE(p_stage);
 }
@@ -162,7 +185,12 @@ void MainMove2::Process(const unsigned __int8 controllNumber)
 	p_camera->Process(p_character->GetArea(), controllNumber);		// カメラのプロセスを呼ぶ
 
 
+	p_enemy->Process();												// 敵のプロセス
+
+
 	BaseMove::ShadowArea(p_character->GetArea());
+
+	AttackProcess();
 
 	BaseMove::SkyBoxProcess(p_character->GetArea());
 }

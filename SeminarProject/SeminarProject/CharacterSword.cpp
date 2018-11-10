@@ -547,6 +547,11 @@ const VECTOR CharacterSword::GetPreArea() const
 	return preArea;
 }
 
+void CharacterSword::SetReturn()
+{
+	area = preArea;
+}
+
 
 // •`‰æ
 void CharacterSword::Draw()

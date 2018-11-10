@@ -141,6 +141,9 @@
     <ClCompile Include="EnemyMove1.cpp">
       <Filter>ソース ファイル\Actor\Creature\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyMove2.cpp">
+      <Filter>ソース ファイル\Actor\Creature\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseMove.hpp">
@@ -207,6 +210,9 @@
       <Filter>ヘッダー ファイル\MoveLevel</Filter>
     </ClInclude>
     <ClInclude Include="EnemyMove1.hpp">
+      <Filter>ヘッダー ファイル\Actor\Creature\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyMove2.hpp">
       <Filter>ヘッダー ファイル\Actor\Creature\Enemy</Filter>
     </ClInclude>
   </ItemGroup>

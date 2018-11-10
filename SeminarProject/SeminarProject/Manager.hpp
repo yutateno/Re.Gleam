@@ -27,9 +27,9 @@ private:
 
 
 	// ƒ€[ƒu‚Q‚ÉŠÖ‚·‚é
-	const int max2 = 7;
-	std::string move2str[7];
-	ELOADFILE load2[7];
+	const int max2 = 8;
+	std::string move2str[8];
+	ELOADFILE load2[8];
 
 
 	int antiAliasScreen;

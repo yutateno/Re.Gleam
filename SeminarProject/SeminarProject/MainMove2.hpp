@@ -6,6 +6,7 @@
 #include "StageStairs.hpp"
 #include "StageStreetLight.hpp"
 #include "StagePaneru.hpp"
+#include "EnemyMove2.hpp"
 
 #include <random>
 
@@ -16,7 +17,7 @@
 class MainMove2 : public BaseMove
 {
 private:
-	enum EFILE { stage, characterAttack, block, stairs, stairsColl, streetLight, skyBox };			// ロードで渡されるファイル
+	enum EFILE { stage, characterAttack, paneru, stairs, stairsColl, streetLight, skyBox, block};			// ロードで渡されるファイル
 
 
 	// ステージ
@@ -29,12 +30,18 @@ private:
 	// キャラクター
 	CharacterSword* p_character;		// キャラクターのポインタ
 
+	// 敵
+	EnemyMove2* p_enemy;				// 敵のポインタ
+
 
 	// カメラ
 	Camera* p_camera;					// カメラのポインタ
 
 
 	void ShadowDraw();
+
+
+	void AttackProcess();
 
 public:
 	MainMove2(const std::vector<int> v_file);

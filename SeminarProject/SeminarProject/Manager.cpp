@@ -56,6 +56,7 @@ Manager::Manager()
 	move2str[4] = "media\\kaidan\\kaidan_hantei.myn";
 	move2str[5] = "media\\街灯\\Gaitou.myn";
 	move2str[6] = "media\\スカイボックス\\SkyDome.myn";
+	move2str[7] = "media\\ブロック\\cubeblock.myn";
 	load2[0] = ELOADFILE::mv1model;
 	load2[1] = ELOADFILE::mv1model;
 	load2[2] = ELOADFILE::mv1model;
@@ -63,6 +64,7 @@ Manager::Manager()
 	load2[4] = ELOADFILE::mv1model;
 	load2[5] = ELOADFILE::mv1model;
 	load2[6] = ELOADFILE::mv1model;
+	load2[7] = ELOADFILE::mv1model;
 
 
 	p_baseMove = NULL;

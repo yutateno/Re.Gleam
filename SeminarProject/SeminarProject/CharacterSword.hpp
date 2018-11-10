@@ -68,5 +68,7 @@ public:
 
 
 	const VECTOR GetPreArea() const;
+
+	void SetReturn();
 };
 

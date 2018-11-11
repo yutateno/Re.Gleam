@@ -33,7 +33,7 @@ void Character::MoveProcess(unsigned __int8 controllNumber)
 	}
 
 	// 左スティックが前に押されたら前進する
-	if (InputPad::GetPadThumbData(controllNumber, STICK_LEFT_Y) > 0)
+	if (InputPad::GetPadThumbData(STICK_LEFT_Y) > 0)
 	{
 		m_direction[DIRECTION::up] = true;
 		direXAngle = 0.0f;
@@ -46,7 +46,7 @@ void Character::MoveProcess(unsigned __int8 controllNumber)
 		m_direction[DIRECTION::up] = false;
 	}
 	// 左スティックが後ろに押されたら後退する
-	if (0 > InputPad::GetPadThumbData(controllNumber, STICK_LEFT_Y))
+	if (0 > InputPad::GetPadThumbData(STICK_LEFT_Y))
 	{
 		m_direction[DIRECTION::down] = true;
 		direXAngle = 0.0f;
@@ -60,11 +60,11 @@ void Character::MoveProcess(unsigned __int8 controllNumber)
 	}
 
 	// 左スティックが左に押されたら左に移動する
-	if (0 > InputPad::GetPadThumbData(controllNumber, STICK_LEFT_X))
+	if (0 > InputPad::GetPadThumbData(STICK_LEFT_X))
 	{
 		m_direction[DIRECTION::left] = true;
 		m_direction[DIRECTION::right] = false;
-		direXAngle = ((float)InputPad::GetPadThumbData(controllNumber, STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)InputPad::GetPadThumbMax(false, true, false);
+		direXAngle = ((float)InputPad::GetPadThumbData(STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)InputPad::GetPadThumbMax(false, true, false);
 		if (direZAngle != 0.0f)
 		{
 			direXAngle = -direXAngle;
@@ -73,11 +73,11 @@ void Character::MoveProcess(unsigned __int8 controllNumber)
 		Player_PlayAnim(MOTION::walk);
 	}
 	// 左スティックが右に押されたら右に移動する
-	else if (InputPad::GetPadThumbData(controllNumber, STICK_LEFT_X) > 0)
+	else if (InputPad::GetPadThumbData(STICK_LEFT_X) > 0)
 	{
 		m_direction[DIRECTION::left] = false;
 		m_direction[DIRECTION::right] = true;
-		direXAngle = ((float)InputPad::GetPadThumbData(controllNumber, STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)InputPad::GetPadThumbMax(false, true, true);
+		direXAngle = ((float)InputPad::GetPadThumbData(STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)InputPad::GetPadThumbMax(false, true, true);
 		if (direZAngle != 0.0f)
 		{
 			direXAngle = -direXAngle;
@@ -90,7 +90,7 @@ void Character::MoveProcess(unsigned __int8 controllNumber)
 	{
 		m_direction[DIRECTION::left] = false;
 		m_direction[DIRECTION::right] = false;
-		if (InputPad::GetPadThumbData(controllNumber, STICK_LEFT_Y) == 0)
+		if (InputPad::GetPadThumbData(STICK_LEFT_Y) == 0)
 		{
 			moveFlag = false;
 			Player_PlayAnim(MOTION::idle);

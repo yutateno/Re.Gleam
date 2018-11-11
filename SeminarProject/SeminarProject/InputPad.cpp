@@ -235,27 +235,27 @@ void InputPad::EverUpdate()
 
 
 // バイブレーションを行う
-void InputPad::Vibration(const unsigned __int8 use_padnum, const int time, const unsigned __int16 rightVib, const unsigned __int16 leftVib)
+void InputPad::Vibration(const unsigned __int16 rightVib, const unsigned __int16 leftVib)
 {
 	// バイブレーション値
 	InputPad::vibration.wRightMotorSpeed = rightVib;
 	InputPad::vibration.wLeftMotorSpeed = leftVib;
 
-	XInputSetState(use_padnum, &InputPad::vibration);		// バーブレーション値を設定
+	XInputSetState(InputPad::playerPadNum, &InputPad::vibration);		// バーブレーション値を設定
 }
 
 
 // バイブレーションを止める
-void InputPad::VibrationStop(const unsigned __int8 use_padnum)
+void InputPad::VibrationForceStop()
 {
 	// バイブレーション値
 	InputPad::vibration.wRightMotorSpeed = 0;				// 0にする
 	InputPad::vibration.wLeftMotorSpeed = 0;				// 0にする
 
-	XInputSetState(use_padnum, &InputPad::vibration);		// バイブレーション値を設定
+	XInputSetState(InputPad::playerPadNum, &InputPad::vibration);		// バイブレーション値を設定
 }
 
-void MY_XINPUT::InputPad::VibrationSlowlyStop(const unsigned __int8 use_padnum)
+void MY_XINPUT::InputPad::VibrationSlowlyStop()
 {
 	// バイブレーション値
 	if (InputPad::vibration.wRightMotorSpeed > 0)
@@ -275,7 +275,7 @@ void MY_XINPUT::InputPad::VibrationSlowlyStop(const unsigned __int8 use_padnum)
 		InputPad::vibration.wLeftMotorSpeed = 0;				// 0にする
 	}
 
-	XInputSetState(use_padnum, &InputPad::vibration);		// バイブレーション値を設定
+	XInputSetState(InputPad::playerPadNum, &InputPad::vibration);		// バイブレーション値を設定
 }
 
 void InputPad::SetPlayerPadNum(const unsigned __int8 playerPadNum)
@@ -293,26 +293,26 @@ const int InputPad::GetPadNum()
 // ボタン入力取得
 const int InputPad::GetPadButtonData(const unsigned __int8 use_padnum, const unsigned __int8 use_button)
 {
-	return InputPad::button[use_padnum][use_button];
+	return InputPad::button[InputPad::playerPadNum][use_button];
 }
 
 // トリガー入力取得
-const int InputPad::GetPadTriggerData(const unsigned __int8 use_padnum, const bool use_Is_triggerLeft)
+const int InputPad::GetPadTriggerData(const bool use_Is_triggerLeft)
 {
 	if (use_Is_triggerLeft)
 	{
-		return InputPad::state[use_padnum].Gamepad.bLeftTrigger;
+		return InputPad::state[InputPad::playerPadNum].Gamepad.bLeftTrigger;
 	}
 	else
 	{
-		return InputPad::state[use_padnum].Gamepad.bRightTrigger;
+		return InputPad::state[InputPad::playerPadNum].Gamepad.bRightTrigger;
 	}
 }
 
 // スティック入力取得
-const int InputPad::GetPadThumbData(const unsigned __int8 use_padnum, const unsigned __int8 use_stick)
+const int InputPad::GetPadThumbData(const unsigned __int8 use_stick)
 {
-	return InputPad::stick[use_padnum][use_stick];
+	return InputPad::stick[InputPad::playerPadNum][use_stick];
 }
 
 // 

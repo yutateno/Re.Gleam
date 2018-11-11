@@ -65,11 +65,11 @@ public:
 
 	void SetAreaReturn();
 
-	void HitCircleReturn(VECTOR hitOneArea, VECTOR hitTwoArea);
+	void HitCircleReturn(VECTOR hitUnderArea, VECTOR hitTopArea);
 
 	void HitLineReturn(VECTOR hitOneArea, VECTOR hitTwoArea);
 
-	VECTOR GetAttackFirstFrameArea() {};
+	VECTOR GetAttackFirstFrameArea() {};		// 攻撃するときのモデルのフレームの先端
 
-	VECTOR GetAttackEndFrameArea() {};
+	VECTOR GetAttackEndFrameArea() {};			// 攻撃するときのモデルのフレームの後端
 };

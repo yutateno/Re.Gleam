@@ -43,14 +43,14 @@ void Camera::Process(const VECTOR charaarea, const unsigned __int8 controllNumbe
 
 	// ¶‚É‰ñ“]’†
 	if (KeyData::Get(KEY_INPUT_LEFT) >= 1
-		|| InputPad::GetPadThumbData(controllNumber, STICK_RIGHT_X) < 0)
+		|| InputPad::GetPadThumbData(STICK_RIGHT_X) < 0)
 	{
 		RLrotate(speed, TestPosition);	// ‰ñ“]ˆ—
 		angle += speed;
 	}
 	// ‰E‚É‰ñ“]’†
 	if (KeyData::Get(KEY_INPUT_RIGHT) >= 1
-		|| InputPad::GetPadThumbData(controllNumber, STICK_RIGHT_X) > 0)
+		|| InputPad::GetPadThumbData(STICK_RIGHT_X) > 0)
 	{
 		RLrotate(-speed, TestPosition);	// ‰ñ“]ˆ—
 		angle -= speed;
@@ -58,7 +58,7 @@ void Camera::Process(const VECTOR charaarea, const unsigned __int8 controllNumbe
 
 	// ãƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚½‚ç‰º‚©‚çŒ©ã‚°‚é
 	if (KeyData::Get(KEY_INPUT_UP) >= 1
-		|| InputPad::GetPadThumbData(controllNumber, STICK_RIGHT_Y) > 0)
+		|| InputPad::GetPadThumbData(STICK_RIGHT_Y) > 0)
 	{
 		// §ŒÀ
 		if (TestPosition.y > 240)
@@ -69,7 +69,7 @@ void Camera::Process(const VECTOR charaarea, const unsigned __int8 controllNumbe
 
 	// ‰ºƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚½‚çã‚©‚çŒ©‰º‚ë‚·
 	if (KeyData::Get(KEY_INPUT_DOWN) >= 1
-		|| ::InputPad::GetPadThumbData(controllNumber, STICK_RIGHT_Y) < 0)
+		|| ::InputPad::GetPadThumbData(STICK_RIGHT_Y) < 0)
 	{
 		// §ŒÀ
 		if (TestPosition.y < 400)

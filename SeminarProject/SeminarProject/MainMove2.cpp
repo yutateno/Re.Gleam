@@ -73,6 +73,7 @@ void MainMove2::AttackProcess()
 		p_character->HitCircleReturn(p_enemy->GetArea(), VAdd(p_enemy->GetArea(), VGet(0.0f, 100.0f, 0.0f)));
 	}
 
+	// UŒ‚’†‚¾‚Á‚½‚ç
 	if (p_character->GetAttackNow())
 	{
 		p_enemy->HitLineReturn(p_character->GetAttackFirstFrameArea(), p_character->GetAttackEndFrameArea());

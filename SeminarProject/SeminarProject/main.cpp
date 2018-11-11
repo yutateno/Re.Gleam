@@ -165,7 +165,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			manager->Update(controllNumber);
 
-			MY_XINPUT::InputPad::VibrationSlowlyStop(controllNumber);
+			MY_XINPUT::InputPad::VibrationSlowlyStop();
 		}
 
 		FpsTimeFanction();

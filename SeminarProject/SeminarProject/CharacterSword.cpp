@@ -528,8 +528,6 @@ void CharacterSword::Process(const unsigned __int8 controllNumber, const float g
 	// ステージのあたり判定
 	StageHit();
 
-	printfDx("%d\n", jumpNow);
-
 	// 第二引数の回転角度をセット
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));
 	// 指定位置にモデルを配置
@@ -547,9 +545,19 @@ const VECTOR CharacterSword::GetPreArea() const
 	return preArea;
 }
 
-void CharacterSword::SetReturn()
+bool CharacterSword::GetAttackNow()
 {
-	area = preArea;
+	return attackNow;
+}
+
+VECTOR CharacterSword::GetAttackFirstFrameArea()
+{
+	return MV1GetFramePosition(modelHandle, 66);
+}
+
+VECTOR CharacterSword::GetAttackEndFrameArea()
+{
+	return MV1GetFramePosition(modelHandle, 67);
 }
 
 

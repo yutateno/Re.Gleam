@@ -65,17 +65,17 @@ void MainMove2::ShadowDraw()
 
 void MainMove2::AttackProcess()
 {
-	/*VECTOR ChkChToChVec;
-	VECTOR PushVec;
-	VECTOR ChPosition;
-	float Length;*/
-
 	// “–‚½‚Á‚Ä‚¢‚È‚©‚Á‚½‚ç‰½‚à‚µ‚È‚¢
 	if (HitCheck_Capsule_Capsule(
 		p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f,
-		p_enemy->GetArea(), VAdd(p_enemy->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 50.0f))
+		p_enemy->GetArea(), VAdd(p_enemy->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 100.0f))
 	{
-		p_character->SetReturn();
+		p_character->HitCircleReturn(p_enemy->GetArea(), VAdd(p_enemy->GetArea(), VGet(0.0f, 100.0f, 0.0f)));
+	}
+
+	if (p_character->GetAttackNow())
+	{
+		p_enemy->HitLineReturn(p_character->GetAttackFirstFrameArea(), p_character->GetAttackEndFrameArea());
 	}
 }
 

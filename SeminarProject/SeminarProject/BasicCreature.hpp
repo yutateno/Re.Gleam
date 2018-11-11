@@ -53,14 +53,23 @@ private:
 	bool hitFlag;						// 当たっているかどうか
 	float maxYHit;						// 当たっているY座標の最大
 	float minYHit;						// 当たっているY座標の最小
-	MV1_COLL_RESULT_POLY_DIM hitDim;			// 周囲のポリゴンを代入する構造体
+	MV1_COLL_RESULT_POLY_DIM m_hitDim;			// 周囲のポリゴンを代入する構造体
 	MV1_COLL_RESULT_POLY* wallPoly[2048];		// 壁用のポリゴンの構造体
 	MV1_COLL_RESULT_POLY* floorPoly[2048];		// 床用のポリゴンの構造体
 	MV1_COLL_RESULT_POLY* mainPoly;				// ポリゴンの構造体にアクセスする構造体
 	HITRESULT_LINE lineResult;					// 線分との判定を代入する構造体
 
-
 public:
 	BasicCreature(const int collStageHandle);
 	virtual ~BasicCreature();
+
+	void SetAreaReturn();
+
+	void HitCircleReturn(VECTOR hitOneArea, VECTOR hitTwoArea);
+
+	void HitLineReturn(VECTOR hitOneArea, VECTOR hitTwoArea);
+
+	VECTOR GetAttackFirstFrameArea() {};
+
+	VECTOR GetAttackEndFrameArea() {};
 };

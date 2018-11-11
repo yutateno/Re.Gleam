@@ -255,6 +255,29 @@ void InputPad::VibrationStop(const unsigned __int8 use_padnum)
 	XInputSetState(use_padnum, &InputPad::vibration);		// バイブレーション値を設定
 }
 
+void MY_XINPUT::InputPad::VibrationSlowlyStop(const unsigned __int8 use_padnum)
+{
+	// バイブレーション値
+	if (InputPad::vibration.wRightMotorSpeed > 0)
+	{
+		InputPad::vibration.wRightMotorSpeed /= 2;
+	}
+	else
+	{
+		InputPad::vibration.wRightMotorSpeed = 0;				// 0にする
+	}
+	if (InputPad::vibration.wLeftMotorSpeed > 0)
+	{
+		InputPad::vibration.wLeftMotorSpeed /= 2;
+	}
+	else
+	{
+		InputPad::vibration.wLeftMotorSpeed = 0;				// 0にする
+	}
+
+	XInputSetState(use_padnum, &InputPad::vibration);		// バイブレーション値を設定
+}
+
 void InputPad::SetPlayerPadNum(const unsigned __int8 playerPadNum)
 {
 	InputPad::playerPadNum = playerPadNum;
@@ -345,6 +368,11 @@ const short MY_XINPUT::InputPad::GetPadThumbMax(const bool stickLightNow, const 
 			}
 		}
 	}
+}
+
+const unsigned __int8 MY_XINPUT::InputPad::GetPlayPadNumber()
+{
+	return playerPadNum;
 }
 
 // スティックのデッドゾーン設定

@@ -107,27 +107,27 @@ void BasicCreature::StageHit()
 void BasicCreature::ActorHit(int stageHandle)
 {
 	// プレイヤーをカプセルとしてステージとのコリジョン情報を調べる(OBB形式)
-	hitDim = MV1CollCheck_Capsule(stageHandle, -1, area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth);
+	m_hitDim = MV1CollCheck_Capsule(stageHandle, -1, area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth);
 
 	// ポリゴンの数を再初期化
 	wallNum = 0;
 	floorNum = 0;
 
 	// 検出された数だけ調べる
-	for (int i = 0, j = hitDim.HitNum; i != j; ++i)
+	for (int i = 0, j = m_hitDim.HitNum; i != j; ++i)
 	{
 		// 壁かどうか判断するため、XZ軸に垂直かどうかを法線が０に近いかどうかで調べる
-		if (hitDim.Dim[i].Normal.y < 0.001f && hitDim.Dim[i].Normal.y > -0.001f)
+		if (m_hitDim.Dim[i].Normal.y < 0.001f && m_hitDim.Dim[i].Normal.y > -0.001f)
 		{
 			// 壁だとしてもキャラクターの足より少し上を調べる
-			if (hitDim.Dim[i].Position[0].y > area.y + 5.0f
-				|| hitDim.Dim[i].Position[1].y > area.y + 5.0f
-				|| hitDim.Dim[i].Position[2].y > area.y + 5.0f)
+			if (m_hitDim.Dim[i].Position[0].y > area.y + 5.0f
+				|| m_hitDim.Dim[i].Position[1].y > area.y + 5.0f
+				|| m_hitDim.Dim[i].Position[2].y > area.y + 5.0f)
 			{
 				// 最大になるまで保存する
 				if (wallNum < 64)
 				{
-					wallPoly[wallNum] = &hitDim.Dim[i];		// ヒットしたポリゴン情報を保存
+					wallPoly[wallNum] = &m_hitDim.Dim[i];		// ヒットしたポリゴン情報を保存
 					wallNum++;
 				}
 			}
@@ -137,7 +137,7 @@ void BasicCreature::ActorHit(int stageHandle)
 			// 最大になるまで保存
 			if (floorNum < 64)
 			{
-				floorPoly[floorNum] = &hitDim.Dim[i];		// ヒットしたポリゴン情報を保存
+				floorPoly[floorNum] = &m_hitDim.Dim[i];		// ヒットしたポリゴン情報を保存
 				floorNum++;
 			}
 		}
@@ -346,7 +346,7 @@ void BasicCreature::ActorHit(int stageHandle)
 	}
 
 	// 検出した情報を解放する
-	MV1CollResultPolyDimTerminate(hitDim);
+	MV1CollResultPolyDimTerminate(m_hitDim);
 }
 
 
@@ -383,4 +383,54 @@ BasicCreature::BasicCreature(const int collStageHandle) :BasicObject(collStageHa
 BasicCreature::~BasicCreature()
 {
 	MODEL_RELEASE(stageHandle);
+}
+
+
+void BasicCreature::SetAreaReturn()
+{
+	area = preArea;
+}
+
+void BasicCreature::HitCircleReturn(VECTOR hitOneArea, VECTOR hitTwoArea)
+{
+	VECTOR v01, v02, outv;
+
+	// 頂点０から頂点１へのベクトルを算出
+	v01 = VGet(hitOneArea.x + (hitOneArea.x - area.x) - hitOneArea.x, hitTwoArea.y / 2.0f - hitOneArea.y, hitOneArea.z - (hitOneArea.z - area.z) - hitOneArea.z);
+
+	// 頂点０から頂点２へのベクトルを算出
+	v02 = VGet(hitOneArea.x - (hitOneArea.x - area.x) - hitOneArea.x, hitTwoArea.y / 2.0f - hitOneArea.y, hitOneArea.z + (hitOneArea.z - area.z) - hitOneArea.z);
+
+	// 二つのベクトルの外積を計算( 二つのベクトルに垂直なベクトルの算出 )
+	// outv.x = v01.y * v02.z - v01.z * v02.y ;
+	// outv.y = v01.z * v02.x - v01.x * v02.z ;
+	// outv.z = v01.x * v02.y - v01.y * v02.x ;
+	outv = VCross(v01, v02);
+
+	// 外積の値が長さ１とは限らないので、正規化( 長さを１にする )、これが法線です
+	// float r = sqrt( outv.x * outv.x + outv.y * outv.y + outv.z * outv.z ) ;
+	// outv.x /= r ;
+	// outv.y /= r ;
+	// outv.z /= r ;
+	outv = VNorm(outv);
+
+	printfDx("%f\t%f\t%f\n", outv.x, outv.y, outv.z);
+
+	VECTOR slideVec = VCross(VSub(area, preArea), outv);
+		slideVec = VCross(outv, slideVec);
+		area = VAdd(preArea, slideVec);
+}
+
+void BasicCreature::HitLineReturn(VECTOR hitOneArea, VECTOR hitTwoArea)
+{
+	MV1_COLL_RESULT_POLY HitPoly;
+
+	HitPoly = MV1CollCheck_Line(modelHandle, -1, hitOneArea, hitTwoArea);
+	
+	// 当たったかどうかで処理を分岐
+	if (HitPoly.HitFlag == 1)
+	{
+		DrawFormatString(250, 250, 255, "あたったたあああああああああああああああ");
+		MY_XINPUT::InputPad::Vibration(MY_XINPUT::InputPad::GetPlayPadNumber(), 10000, 10000);
+	}
 }

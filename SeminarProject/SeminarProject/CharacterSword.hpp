@@ -69,6 +69,10 @@ public:
 
 	const VECTOR GetPreArea() const;
 
-	void SetReturn();
+	bool GetAttackNow();
+
+	VECTOR GetAttackFirstFrameArea();
+
+	VECTOR GetAttackEndFrameArea();
 };
 

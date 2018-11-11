@@ -128,6 +128,8 @@ namespace MY_XINPUT	// XINPUT_STATEがあいまいとなるので一括スコープ逃げ
 
 		static void VibrationStop(const unsigned __int8 use_padnum);								// バーブレーションを止める
 
+		static void VibrationSlowlyStop(const unsigned __int8 use_padnum);
+
 
 		static void SetPlayerPadNum(const unsigned __int8 playerPadNum);					// プレイヤーの番号を設定
 
@@ -145,6 +147,8 @@ namespace MY_XINPUT	// XINPUT_STATEがあいまいとなるので一括スコープ逃げ
 		static const int GetPadTriggerData(const unsigned __int8 use_padnum, const bool use_Is_triggerLeft);				// コントローラのトリガー操作
 		static const int GetPadThumbData(const unsigned __int8 use_padnum, const unsigned __int8 use_stick);				// コントローラのスティック操作
 		static const short GetPadThumbMax(const bool stickLightNow, const bool stickXAxisNow, const bool stickPlusNow);
+
+		static const unsigned __int8 GetPlayPadNumber();
 	};
 }
 

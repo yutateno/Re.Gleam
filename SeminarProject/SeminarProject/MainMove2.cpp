@@ -118,7 +118,7 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	{
 		p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneru], v_file[EFILE::stage], VGet(500.0f * i, 300.0f*i, 100.0f*i));
 	}
-	p_enemy = new EnemyMove2(v_file[EFILE::stage], VGet(1000.0f, 0.0f, 1000.0f), v_file[EFILE::block]);
+	p_enemy = new EnemyMove2(v_file[EFILE::stage], VGet(1000.0f, 0.0f, -1000.0f), v_file[EFILE::block]);
 
 
 	// スカイボックス読み込み

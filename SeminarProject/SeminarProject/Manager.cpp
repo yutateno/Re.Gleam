@@ -35,8 +35,8 @@ void Manager::SceneChange()
 
 Manager::Manager()
 {
-	e_preScene = ESceneNumber::SECONDLOAD;
-	e_nowScene = ESceneNumber::SECONDLOAD;
+	e_preScene = ESceneNumber::FIRSTLOAD;
+	e_nowScene = ESceneNumber::FIRSTLOAD;
 
 	move1str[0] = "media\\ステージモデル\\move1_graphic.myn";
 	move1str[1] = "media\\ステージモデル\\move1_hantei.myn";

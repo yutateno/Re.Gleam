@@ -169,6 +169,7 @@
     <ClCompile Include="MainMove2.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="OrdinaryPerson.cpp" />
+    <ClCompile Include="SoundProcess.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StagePaneru.cpp" />
     <ClCompile Include="StageStairs.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="MainMove2.hpp" />
     <ClInclude Include="Manager.hpp" />
     <ClInclude Include="OrdinaryPerson.hpp" />
+    <ClInclude Include="SoundProcess.hpp" />
     <ClInclude Include="Stage.hpp" />
     <ClInclude Include="StagePaneru.hpp" />
     <ClInclude Include="StageStairs.hpp" />

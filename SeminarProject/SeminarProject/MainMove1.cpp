@@ -25,6 +25,7 @@ void MainMove1::ActorHit()
 		&& BaseMove::GetDistance(p_character->GetArea(), p_dropItem->GetArea()) <= 60)
 	{
 		touchSword = true;
+		//StopSoundMem(soundBG);
 		BaseMove::SetScene(ESceneNumber::SECONDLOAD);
 	}
 }
@@ -258,6 +259,7 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 	{
 		s_enemyAggre[i].p_enemyMove = NULL;
 	}
+	//soundBG = -1;
 
 
 	// 敵以外のポインタの初期化
@@ -303,16 +305,20 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 	touchSword = false;
 
 
-	soundBG = v_file[EFILE::sound];
-	ChangeVolumeSoundMem(150, soundBG);
-	PlaySoundMem(soundBG, DX_PLAYTYPE_LOOP);
+	//soundBG = v_file[EFILE::sound];
+	//ChangeVolumeSoundMem(150, soundBG);
+	//PlaySoundMem(soundBG, DX_PLAYTYPE_LOOP);
+
+	SoundProcess::Load(v_file[EFILE::sound], SoundProcess::ESOUNDNAME::titleMusicBox);
+	SoundProcess::DoSound(SoundProcess::ESOUNDNAME::titleMusicBox);
 }
 
 
 // デストラクタ
 MainMove1::~MainMove1()
 {
-	SOUND_RELEASE(soundBG);
+	//SOUND_RELEASE(soundBG);
+	SoundProcess::Release();
 	for (int i = 0; i != lightNum; ++i)
 	{
 		LIGHT_RELEASE(lightHandle[i]);

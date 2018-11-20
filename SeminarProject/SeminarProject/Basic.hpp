@@ -6,7 +6,6 @@
 #include <math.h>
 
 
-
 // 色んな所で使いそうなもの
 // シーンの動き
 enum class ESceneNumber
@@ -14,6 +13,11 @@ enum class ESceneNumber
 	FIRSTLOAD, FIRSTMOVE, SECONDLOAD, SECONDMOVE
 };
 
+namespace BASICPARAM
+{
+	extern ESceneNumber e_preScene;		// 直前のシーン
+	extern ESceneNumber e_nowScene;		// 今のシーン
+}
 
 
 // マクロ

@@ -73,6 +73,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	bool noTouch = true;							// コマンドを押されない時間経過次第で再起動を促すよう処理
 	const int COUNT = 600;							// コマンド時間の数値
 
+
 	// ゲームの核
 	while (/*ScreenFlip() == 0 && */ProcessMessage() == 0/* && ClearDrawScreen() == 0 */&& CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{

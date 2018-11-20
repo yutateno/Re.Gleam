@@ -9,10 +9,6 @@
 class Manager
 {
 private:
-	ESceneNumber e_preScene;		// 直前のシーン
-	ESceneNumber e_nowScene;		// 今のシーン
-
-
 	BaseMove* p_baseMove;			// シーンの基底クラス
 	LoadThread* p_loadThread;		// ロードのクラス
 
@@ -33,8 +29,6 @@ private:
 
 
 	int antiAliasScreen;
-
-
 
 public:
 	Manager();			// コンストラクタ

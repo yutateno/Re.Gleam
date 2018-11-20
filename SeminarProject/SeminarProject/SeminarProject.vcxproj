@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseMove.cpp" />
+    <ClCompile Include="Basic.cpp" />
     <ClCompile Include="BasicCreature.cpp" />
     <ClCompile Include="BasicObject.cpp" />
     <ClCompile Include="Camera.cpp" />

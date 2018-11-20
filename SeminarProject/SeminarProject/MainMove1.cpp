@@ -25,6 +25,7 @@ void MainMove1::ActorHit()
 		&& BaseMove::GetDistance(p_character->GetArea(), p_dropItem->GetArea()) <= 60)
 	{
 		touchSword = true;
+		BaseMove::SetScene(ESceneNumber::SECONDLOAD);
 	}
 }
 
@@ -387,7 +388,6 @@ void MainMove1::Process()
 			s_enemyAggre[i].p_enemyMove->Process();					// 敵のプロセスを呼ぶ
 		}
 	}
-
 
 	ActorHit();		// アクターごとのあたり判定を呼ぶ
 

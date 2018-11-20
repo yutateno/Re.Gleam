@@ -1,9 +1,8 @@
 #include "Manager.hpp"
 
-
 void Manager::SceneChange()
 {
-	switch (e_nowScene)
+	switch (BASICPARAM::e_nowScene)
 	{
 	case ESceneNumber::FIRSTLOAD:
 		p_loadThread = new LoadThread();
@@ -12,7 +11,7 @@ void Manager::SceneChange()
 
 	case ESceneNumber::FIRSTMOVE:
 		p_baseMove = new MainMove1(p_loadThread->GetFile());
-		p_baseMove->SetScene(e_nowScene);
+		p_baseMove->SetScene(BASICPARAM::e_nowScene);
 		POINTER_RELEASE(p_loadThread);
 		break;
 
@@ -24,7 +23,7 @@ void Manager::SceneChange()
 
 	case ESceneNumber::SECONDMOVE:
 		p_baseMove = new MainMove2(p_loadThread->GetFile());
-		p_baseMove->SetScene(e_nowScene);
+		p_baseMove->SetScene(BASICPARAM::e_nowScene);
 		POINTER_RELEASE(p_loadThread);
 		break;
 
@@ -35,8 +34,8 @@ void Manager::SceneChange()
 
 Manager::Manager()
 {
-	e_preScene = ESceneNumber::SECONDLOAD;
-	e_nowScene = ESceneNumber::SECONDLOAD;
+	BASICPARAM::e_preScene = ESceneNumber::FIRSTLOAD;
+	BASICPARAM::e_nowScene = ESceneNumber::FIRSTLOAD;
 
 	move1str[0] = "media\\ステージモデル\\move1_graphic.myn";
 	move1str[1] = "media\\ステージモデル\\move1_hantei.myn";
@@ -90,27 +89,27 @@ Manager::~Manager()
 
 void Manager::Update()
 {
-	if (e_nowScene == e_preScene)		// 今のシーンと直前のシーンが同じ
+	if (BASICPARAM::e_nowScene == BASICPARAM::e_preScene)		// 今のシーンと直前のシーンが同じ
 	{
-		if (e_preScene == ESceneNumber::FIRSTLOAD)		// ロード中に変わった瞬間なら
+		if (BASICPARAM::e_preScene == ESceneNumber::FIRSTLOAD)		// ロード中に変わった瞬間なら
 		{
 			p_loadThread->Process(max1, move1str, load1);		// ロードをする
 			if (p_loadThread->GetNum() >= max1)		// ロードが終了したら
 			{
 				if (CheckHitKey(KEY_INPUT_Z) == 1)			// 終わったら一操作
 				{
-					e_nowScene = ESceneNumber::FIRSTMOVE;
+					BASICPARAM::e_nowScene = ESceneNumber::FIRSTMOVE;
 				}
 			}
 		}
-		else if (e_preScene == ESceneNumber::SECONDLOAD)
+		else if (BASICPARAM::e_preScene == ESceneNumber::SECONDLOAD)
 		{
 			p_loadThread->Process(max2, move2str, load2);		// ロードをする
 			if (p_loadThread->GetNum() >= max2)		// ロードが終了したら
 			{
 				if (CheckHitKey(KEY_INPUT_Z) == 1)			// 終わったら一操作
 				{
-					e_nowScene = ESceneNumber::SECONDMOVE;
+					BASICPARAM::e_nowScene = ESceneNumber::SECONDMOVE;
 				}
 			}
 		}
@@ -122,7 +121,7 @@ void Manager::Update()
 			p_baseMove->CameraProcess();
 			p_baseMove->Draw();
 			p_baseMove->Process();
-			e_nowScene = p_baseMove->GetScene();
+			BASICPARAM::e_nowScene = p_baseMove->GetScene();
 
 
 			// アンチエイリアス画面に描画したものを裏画面に書き込む
@@ -135,6 +134,6 @@ void Manager::Update()
 	else
 	{
 		SceneChange();
-		e_preScene = e_nowScene;
+		BASICPARAM::e_preScene = BASICPARAM::e_nowScene;
 	}
 }

@@ -1,5 +1,6 @@
 #include "Camera.hpp"
 
+
 // コンストラクタ
 Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 {
@@ -10,7 +11,6 @@ Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 	MV1SetFrameVisible(stageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 	MV1RefreshCollInfo(stageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 
-	cameraArea = VGet(0, 1700, 2430);
 	viewArea = VGet(0, 150, 0);
 
 	charaArea = VAdd(charaarea, VGet(0.0f, 80.0f, 0.0f));
@@ -18,10 +18,17 @@ Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 	speed = DX_PI_F / 90;
 	angle = 0.0f;
 
-	orthoArea = 2200.0f;
-
-	SetupCamera_Ortho(orthoArea);
-	//SetCameraNearFar(100.0f, 10000.0f);	// カメラの描画範囲を指定
+	if (BASICPARAM::e_nowScene == ESceneNumber::FIRSTMOVE)
+	{
+		cameraArea = VGet(0, 530, 700);
+		SetCameraNearFar(100.0f, 10000.0f);	// カメラの描画範囲を指定
+	}
+	else
+	{
+		cameraArea = VGet(0, 1700, 2430);
+		orthoArea = 2200.0f;
+		SetupCamera_Ortho(orthoArea);
+	}
 
 	// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
 	SetCameraPositionAndTarget_UpVecY(VAdd(cameraArea, charaArea), VAdd(viewArea, charaArea));
@@ -55,25 +62,25 @@ void Camera::Process(const VECTOR charaarea)
 		angle -= speed;
 	}
 
-	// 上キーが押されていたら下から見上げる
-	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_Y) > 0)
-	{
-		// 制限
-		if (TestPosition.y > 240)
-		{
-			TestPosition = VAdd(TestPosition, VScale(VNorm(TestPosition), -10));	// 単位ベクトル化してマイナスかけて同一方向に減らす
-		}
-	}
+	//// 上キーが押されていたら下から見上げる
+	//if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_Y) > 0)
+	//{
+	//	// 制限
+	//	if (TestPosition.y > 240)
+	//	{
+	//		TestPosition = VAdd(TestPosition, VScale(VNorm(TestPosition), -10));	// 単位ベクトル化してマイナスかけて同一方向に減らす
+	//	}
+	//}
 
-	// 下キーが押されていたら上から見下ろす
-	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_Y) < 0)
-	{
-		// 制限
-		if (TestPosition.y <= 1700)
-		{
-			TestPosition = VAdd(TestPosition, VScale(VNorm(TestPosition), 10));	// VScaleいらない
-		}
-	}
+	//// 下キーが押されていたら上から見下ろす
+	//if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_Y) < 0)
+	//{
+	//	// 制限
+	//	if (TestPosition.y <= 1700)
+	//	{
+	//		TestPosition = VAdd(TestPosition, VScale(VNorm(TestPosition), 10));	// VScaleいらない
+	//	}
+	//}
 
 	//MV1_COLL_RESULT_POLY_DIM HRes;
 	//int HitNum;
@@ -144,8 +151,21 @@ void Camera::Process(const VECTOR charaarea)
 
 void Camera::SetUp()
 {
-	SetupCamera_Ortho(orthoArea);
-	//SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
+	if (BASICPARAM::e_nowScene == ESceneNumber::FIRSTMOVE)
+	{
+		//cameraArea = VGet(0, 530, 700);
+		SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
+		SetCameraNearFar(100.0f, 10000.0f);	// カメラの描画範囲を指定
+	}
+	else
+	{
+		//cameraArea = VGet(0, 1700, 2430);
+		//orthoArea = 2200.0f;
+		SetupCamera_Ortho(orthoArea);
+	}
+	//printfDx("%s\n", e_preScene == ESceneNumber::FIRSTLOAD ? "FIRSTLOAD" : e_preScene == ESceneNumber::FIRSTMOVE ? "FIRSTMOVE" : e_preScene == ESceneNumber::SECONDLOAD ? "SECONDLOAD" : "SECONDMOVE");
+	//SetupCamera_Ortho(orthoArea);
+	//
 
 	//SetCameraNearFar(100.0f, 10000.0f);	// カメラの描画範囲を指定
 

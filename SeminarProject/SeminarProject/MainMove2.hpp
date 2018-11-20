@@ -17,7 +17,7 @@
 class MainMove2 : public BaseMove
 {
 private:
-	enum EFILE { stage, characterAttack, paneru, stairs, stairsColl, streetLight, skyBox, block};			// ロードで渡されるファイル
+	enum EFILE { stage, characterAttack, paneru, stairs, stairsColl, streetLight, skyBox, block, drawStage };			// ロードで渡されるファイル
 
 
 	// ステージ

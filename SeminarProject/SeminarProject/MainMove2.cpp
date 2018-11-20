@@ -107,7 +107,7 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	{
 		p_stageStairs[i] = new StageStairs(v_file[EFILE::stairs], v_file[EFILE::stage], VGet(-100.0f*i, 0.0f, -1000.0f));
 	}
-	p_stage		 = new Stage(v_file[EFILE::stage]);
+	p_stage		 = new Stage(v_file[EFILE::drawStage]);
 	p_character	 = new CharacterSword(v_file[EFILE::characterAttack], v_file[EFILE::stage], v_file[EFILE::stairsColl], v_file[EFILE::paneru]);
 	p_camera	 = new Camera(p_character->GetArea(), v_file[EFILE::stage]);
 	for (int i = 0; i != 30; ++i)

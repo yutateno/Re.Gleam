@@ -414,7 +414,7 @@ void BasicCreature::HitCircleReturn(VECTOR hitOneArea, VECTOR hitTwoArea)
 	// outv.z /= r ;
 	outv = VNorm(outv);
 
-	printfDx("%f\t%f\t%f\n", outv.x, outv.y, outv.z);
+	//printfDx("%f\t%f\t%f\n", outv.x, outv.y, outv.z);
 
 	VECTOR slideVec = VCross(VSub(area, preArea), outv);
 		slideVec = VCross(outv, slideVec);

@@ -47,7 +47,7 @@ Manager::Manager()
 	load1[1] = ELOADFILE::mv1model;
 	load1[2] = ELOADFILE::mv1model;
 	load1[3] = ELOADFILE::mv1model;
-	load1[4] = ELOADFILE::soundmem;
+	load1[4] = ELOADFILE::soundStream;
 
 	move2str[0] = "media\\ステージモデル\\move1_hantei.myn";
 	move2str[1] = "media\\swordCLPH\\clph_sword_all.myn";
@@ -57,6 +57,7 @@ Manager::Manager()
 	move2str[5] = "media\\街灯\\Gaitou.myn";
 	move2str[6] = "media\\スカイボックス\\SkyDome.myn";
 	move2str[7] = "media\\ブロック\\cubeblock.myn";
+	move2str[8] = "media\\ステージモデル\\move1_graphic.myn";
 	load2[0] = ELOADFILE::mv1model;
 	load2[1] = ELOADFILE::mv1model;
 	load2[2] = ELOADFILE::mv1model;
@@ -65,6 +66,7 @@ Manager::Manager()
 	load2[5] = ELOADFILE::mv1model;
 	load2[6] = ELOADFILE::mv1model;
 	load2[7] = ELOADFILE::mv1model;
+	load2[8] = ELOADFILE::mv1model;
 
 
 	p_baseMove = NULL;

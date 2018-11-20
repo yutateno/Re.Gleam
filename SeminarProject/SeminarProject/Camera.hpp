@@ -13,6 +13,8 @@ private:
 
 	int stageHandle;		// 当たり判定用ステージ
 
+	float orthoArea;
+
 
 	float speed;					// 回転スピード
 	void RLrotate(const float speed, VECTOR& p_cameraArea);	// 回転を行う関数

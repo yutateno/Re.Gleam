@@ -12,7 +12,7 @@ Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 	MV1SetFrameVisible(stageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 	MV1RefreshCollInfo(stageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 
-	cameraArea = VGet(0, 350, 500);
+	cameraArea = VGet(0, 1700, 2430);
 	viewArea = VGet(0, 150, 0);
 
 	charaArea = VAdd(charaarea, VGet(0.0f, 80.0f, 0.0f));
@@ -20,7 +20,9 @@ Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 	speed = DX_PI_F / 90;
 	angle = 0.0f;
 
-	SetupCamera_Ortho(2000.0f);
+	orthoArea = 2200.0f;
+
+	SetupCamera_Ortho(orthoArea);
 	//SetCameraNearFar(100.0f, 10000.0f);	// カメラの描画範囲を指定
 
 	// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
@@ -73,10 +75,23 @@ void Camera::Process(const VECTOR charaarea, const unsigned __int8 controllNumbe
 		|| ::InputPad::GetPadThumbData(STICK_RIGHT_Y) < 0)
 	{
 		// 制限
-		if (TestPosition.y < 400)
+		if (TestPosition.y <= 1700)
 		{
 			TestPosition = VAdd(TestPosition, VScale(VNorm(TestPosition), 10));	// VScaleいらない
 		}
+	}
+	printfDx("Camera : %f\t\tOrtho : %f\tOrtho : %f\n", TestPosition.y, TestPosition.x, TestPosition.z);
+
+	if (KeyData::Get(KEY_INPUT_W) >= 1)
+	{
+		orthoArea += 10.0f;
+	//}
+	}
+
+	if (KeyData::Get(KEY_INPUT_S) >= 1)
+	{
+		orthoArea -= 10.0f;
+		//}
 	}
 
 	//MV1_COLL_RESULT_POLY_DIM HRes;
@@ -148,7 +163,7 @@ void Camera::Process(const VECTOR charaarea, const unsigned __int8 controllNumbe
 
 void Camera::SetUp()
 {
-	SetupCamera_Ortho(2000.0f);
+	SetupCamera_Ortho(orthoArea);
 	//SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
 
 	//SetCameraNearFar(100.0f, 10000.0f);	// カメラの描画範囲を指定

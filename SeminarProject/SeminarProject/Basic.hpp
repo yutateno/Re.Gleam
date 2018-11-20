@@ -1,13 +1,22 @@
 #pragma once
 
 // インクルードファイル
-#include "InputKey.hpp"
-#include "InputPad.hpp"
+#include "DLLXinput.h"
+#include "DxLib.h"
 #include <math.h>
 
 
-// マクロ
 
+// 色んな所で使いそうなもの
+// シーンの動き
+enum class ESceneNumber
+{
+	FIRSTLOAD, FIRSTMOVE, SECONDLOAD, SECONDMOVE
+};
+
+
+
+// マクロ
 // directx関係でよくある解放マクロ
 #define SAFE_RELEASE(p) { if(p!=NULL) { (p)->Release(); (p)=NULL; } }
 

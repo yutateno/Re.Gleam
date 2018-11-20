@@ -22,5 +22,4 @@ public:
 
 
 	void StolenChara(const VECTOR characterArea);		// キャラクターが近づいたら
-	void Collected();						// 個数分集まったら
 };

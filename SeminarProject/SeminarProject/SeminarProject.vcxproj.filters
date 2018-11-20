@@ -31,9 +31,6 @@
     <Filter Include="ヘッダー ファイル\MoveLevel">
       <UniqueIdentifier>{fdf64cad-1676-4183-925a-a31855bd00d9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Operation">
-      <UniqueIdentifier>{e492f32a-e394-4991-9462-426059298ca8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Load">
       <UniqueIdentifier>{8dcd1da8-1e6c-49a8-9b6e-370d6ffc0239}</UniqueIdentifier>
     </Filter>
@@ -61,9 +58,6 @@
     <Filter Include="ソース ファイル\Actor\Drop">
       <UniqueIdentifier>{c9727e57-8b08-473e-90f9-9255ab875904}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Operation">
-      <UniqueIdentifier>{5c362c77-6088-4cc4-b027-1dead4a88e1a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Actor\Drop">
       <UniqueIdentifier>{140e7be9-4ed7-4cab-9d92-5137667d9786}</UniqueIdentifier>
     </Filter>
@@ -80,12 +74,6 @@
     </ClCompile>
     <ClCompile Include="BaseMove.cpp">
       <Filter>ソース ファイル\MoveLevel</Filter>
-    </ClCompile>
-    <ClCompile Include="InputKey.cpp">
-      <Filter>ソース ファイル\Operation</Filter>
-    </ClCompile>
-    <ClCompile Include="InputPad.cpp">
-      <Filter>ソース ファイル\Operation</Filter>
     </ClCompile>
     <ClCompile Include="BasicCreature.cpp">
       <Filter>ソース ファイル\Actor\Creature</Filter>
@@ -148,12 +136,6 @@
   <ItemGroup>
     <ClInclude Include="BaseMove.hpp">
       <Filter>ヘッダー ファイル\MoveLevel</Filter>
-    </ClInclude>
-    <ClInclude Include="InputKey.hpp">
-      <Filter>ヘッダー ファイル\Operation</Filter>
-    </ClInclude>
-    <ClInclude Include="InputPad.hpp">
-      <Filter>ヘッダー ファイル\Operation</Filter>
     </ClInclude>
     <ClInclude Include="Basic.hpp">
       <Filter>ヘッダー ファイル</Filter>

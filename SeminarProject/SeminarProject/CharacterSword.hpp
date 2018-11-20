@@ -28,7 +28,7 @@ private:
 	enum DIRECTION { left, down, right, up };
 	bool m_direction[4];
 	bool walkNow;
-	void MoveProcess(unsigned __int8 controllNumber);
+	void MoveProcess();
 
 
 	// 攻撃に関して
@@ -37,14 +37,14 @@ private:
 	float attackFrame;										// 今の攻撃のフレーム数
 	int attackNumber;										// 攻撃の番号
 	int preAttackNumber;									// 直前の攻撃の番号
-	void AttackProcess(unsigned __int8 controllNumber);		// 攻撃のプロセス
+	void AttackProcess();		// 攻撃のプロセス
 
 
 	// ジャンプに関して
 	float gravity;
 	float flyJumpPower;
 	float fallJumpPower;
-	void JumpProcess(unsigned __int8 controllNumber);
+	void JumpProcess();
 
 
 	// 行動によってアニメーションの管理
@@ -61,7 +61,7 @@ public:
 	void SetPaneruArea(const VECTOR paneruArea, const int num);
 
 	void Draw();
-	void Process(const unsigned __int8 controllNumber, const float getAngle);
+	void Process(const float getAngle);
 
 
 	void PositionReset();

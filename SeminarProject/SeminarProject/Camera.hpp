@@ -25,7 +25,7 @@ public:
 	~Camera();													// デストラクタ
 
 
-	void Process(const VECTOR charaarea, const unsigned __int8 controllNumber);		// キャラの位置を引数に取ったプロセス
+	void Process(const VECTOR charaarea);		// キャラの位置を引数に取ったプロセス
 
 
 	void SetUp();

@@ -431,6 +431,6 @@ void BasicCreature::HitLineReturn(VECTOR hitOneArea, VECTOR hitTwoArea)
 	if (HitPoly.HitFlag == 1)
 	{
 		DrawFormatString(250, 250, 255, "‚ ‚½‚Á‚½‚½‚ ‚ ‚ ‚ ‚ ‚ ‚ ‚ ‚ ‚ ‚ ‚ ‚ ‚ ‚ ");
-		MY_XINPUT::InputPad::Vibration(10000, 10000);
+		DLLXinput::Vibration(10000, 10000);
 	}
 }

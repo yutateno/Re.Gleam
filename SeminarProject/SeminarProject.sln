@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SeminarProject", "SeminarProject\SeminarProject.vcxproj", "{69F2CB98-3B77-4135-A617-BD9B4187A583}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DLLXinput", "..\..\XinputInit\DLLXinput\DLLXinput\DLLXinput.vcxproj", "{CE719894-587F-423E-A2C0-B6D7DFC158DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{69F2CB98-3B77-4135-A617-BD9B4187A583}.Release|x64.Build.0 = Release|x64
 		{69F2CB98-3B77-4135-A617-BD9B4187A583}.Release|x86.ActiveCfg = Release|Win32
 		{69F2CB98-3B77-4135-A617-BD9B4187A583}.Release|x86.Build.0 = Release|Win32
+		{CE719894-587F-423E-A2C0-B6D7DFC158DF}.Debug|x64.ActiveCfg = Debug|x64
+		{CE719894-587F-423E-A2C0-B6D7DFC158DF}.Debug|x64.Build.0 = Debug|x64
+		{CE719894-587F-423E-A2C0-B6D7DFC158DF}.Debug|x86.ActiveCfg = Debug|Win32
+		{CE719894-587F-423E-A2C0-B6D7DFC158DF}.Debug|x86.Build.0 = Debug|Win32
+		{CE719894-587F-423E-A2C0-B6D7DFC158DF}.Release|x64.ActiveCfg = Release|x64
+		{CE719894-587F-423E-A2C0-B6D7DFC158DF}.Release|x64.Build.0 = Release|x64
+		{CE719894-587F-423E-A2C0-B6D7DFC158DF}.Release|x86.ActiveCfg = Release|Win32
+		{CE719894-587F-423E-A2C0-B6D7DFC158DF}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -178,12 +178,12 @@ void MainMove2::Draw()
 
 
 // メインプロセス
-void MainMove2::Process(const unsigned __int8 controllNumber)
+void MainMove2::Process()
 {
-	p_character->Process(controllNumber, p_camera->GetAngle());		// キャラクターのプロセスを呼ぶ
+	p_character->Process(p_camera->GetAngle());		// キャラクターのプロセスを呼ぶ
 
 
-	p_camera->Process(p_character->GetArea(), controllNumber);		// カメラのプロセスを呼ぶ
+	p_camera->Process(p_character->GetArea());		// カメラのプロセスを呼ぶ
 
 
 	p_enemy->Process();												// 敵のプロセス

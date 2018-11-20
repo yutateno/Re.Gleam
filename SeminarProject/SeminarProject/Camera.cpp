@@ -1,7 +1,5 @@
 #include "Camera.hpp"
 
-using namespace MY_XINPUT;
-
 // コンストラクタ
 Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 {
@@ -37,7 +35,7 @@ Camera::~Camera()
 
 
 // メインプロセス
-void Camera::Process(const VECTOR charaarea, const unsigned __int8 controllNumber)
+void Camera::Process(const VECTOR charaarea)
 {
 	VECTOR TestPosition = cameraArea;
 	//static int zoom = 0;
@@ -45,23 +43,20 @@ void Camera::Process(const VECTOR charaarea, const unsigned __int8 controllNumbe
 	charaArea = VAdd(charaarea, VGet(0.0f, 80.0f, 0.0f));					// キャラの位置を更新し続ける
 
 	// 左に回転中
-	if (KeyData::Get(KEY_INPUT_LEFT) >= 1
-		|| InputPad::GetPadThumbData(STICK_RIGHT_X) < 0)
+	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) < 0)
 	{
 		RLrotate(speed, TestPosition);	// 回転処理
 		angle += speed;
 	}
 	// 右に回転中
-	if (KeyData::Get(KEY_INPUT_RIGHT) >= 1
-		|| InputPad::GetPadThumbData(STICK_RIGHT_X) > 0)
+	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) > 0)
 	{
 		RLrotate(-speed, TestPosition);	// 回転処理
 		angle -= speed;
 	}
 
 	// 上キーが押されていたら下から見上げる
-	if (KeyData::Get(KEY_INPUT_UP) >= 1
-		|| InputPad::GetPadThumbData(STICK_RIGHT_Y) > 0)
+	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_Y) > 0)
 	{
 		// 制限
 		if (TestPosition.y > 240)
@@ -71,27 +66,13 @@ void Camera::Process(const VECTOR charaarea, const unsigned __int8 controllNumbe
 	}
 
 	// 下キーが押されていたら上から見下ろす
-	if (KeyData::Get(KEY_INPUT_DOWN) >= 1
-		|| ::InputPad::GetPadThumbData(STICK_RIGHT_Y) < 0)
+	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_Y) < 0)
 	{
 		// 制限
 		if (TestPosition.y <= 1700)
 		{
 			TestPosition = VAdd(TestPosition, VScale(VNorm(TestPosition), 10));	// VScaleいらない
 		}
-	}
-	printfDx("Camera : %f\t\tOrtho : %f\tOrtho : %f\n", TestPosition.y, TestPosition.x, TestPosition.z);
-
-	if (KeyData::Get(KEY_INPUT_W) >= 1)
-	{
-		orthoArea += 10.0f;
-	//}
-	}
-
-	if (KeyData::Get(KEY_INPUT_S) >= 1)
-	{
-		orthoArea -= 10.0f;
-		//}
 	}
 
 	//MV1_COLL_RESULT_POLY_DIM HRes;

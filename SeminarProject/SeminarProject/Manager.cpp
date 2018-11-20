@@ -35,8 +35,8 @@ void Manager::SceneChange()
 
 Manager::Manager()
 {
-	e_preScene = ESceneNumber::FIRSTLOAD;
-	e_nowScene = ESceneNumber::FIRSTLOAD;
+	e_preScene = ESceneNumber::SECONDLOAD;
+	e_nowScene = ESceneNumber::SECONDLOAD;
 
 	move1str[0] = "media\\ステージモデル\\move1_graphic.myn";
 	move1str[1] = "media\\ステージモデル\\move1_hantei.myn";
@@ -88,7 +88,7 @@ Manager::~Manager()
 	POINTER_RELEASE(p_loadThread);
 }
 
-void Manager::Update(const unsigned __int8 controllNumber)
+void Manager::Update()
 {
 	if (e_nowScene == e_preScene)		// 今のシーンと直前のシーンが同じ
 	{
@@ -97,7 +97,7 @@ void Manager::Update(const unsigned __int8 controllNumber)
 			p_loadThread->Process(max1, move1str, load1);		// ロードをする
 			if (p_loadThread->GetNum() >= max1)		// ロードが終了したら
 			{
-				if (KeyData::Get(KEY_INPUT_Z) == 1)			// 終わったら一操作
+				if (CheckHitKey(KEY_INPUT_Z) == 1)			// 終わったら一操作
 				{
 					e_nowScene = ESceneNumber::FIRSTMOVE;
 				}
@@ -108,7 +108,7 @@ void Manager::Update(const unsigned __int8 controllNumber)
 			p_loadThread->Process(max2, move2str, load2);		// ロードをする
 			if (p_loadThread->GetNum() >= max2)		// ロードが終了したら
 			{
-				if (KeyData::Get(KEY_INPUT_Z) == 1)			// 終わったら一操作
+				if (CheckHitKey(KEY_INPUT_Z) == 1)			// 終わったら一操作
 				{
 					e_nowScene = ESceneNumber::SECONDMOVE;
 				}
@@ -121,7 +121,7 @@ void Manager::Update(const unsigned __int8 controllNumber)
 			ClearDrawScreen();
 			p_baseMove->CameraProcess();
 			p_baseMove->Draw();
-			p_baseMove->Process(controllNumber);
+			p_baseMove->Process();
 			e_nowScene = p_baseMove->GetScene();
 
 

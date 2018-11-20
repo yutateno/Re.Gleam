@@ -17,7 +17,7 @@ private:
 	// “®‚«‚ÉŠÖ‚µ‚Ä
 	enum DIRECTION { left, down, right, up };
 	bool m_direction[4];
-	void MoveProcess(unsigned __int8 controllNumber);
+	void MoveProcess();
 
 
 public:
@@ -26,7 +26,7 @@ public:
 
 
 	void Draw();
-	void Process(const unsigned __int8 controllNumber, const float getAngle);
+	void Process(const float getAngle);
 
 
 	void PositionReset();

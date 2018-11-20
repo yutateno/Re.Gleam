@@ -102,7 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;E:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Documents\GitHubRip\XinputInit\DLLXinput\DLLXinput;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;E:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
@@ -138,7 +138,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;E:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Documents\GitHubRip\XinputInit\DLLXinput\DLLXinput;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;E:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
@@ -160,8 +160,6 @@
     <ClCompile Include="DropItemMove1.cpp" />
     <ClCompile Include="EnemyMove1.cpp" />
     <ClCompile Include="EnemyMove2.cpp" />
-    <ClCompile Include="InputKey.cpp" />
-    <ClCompile Include="InputPad.cpp" />
     <ClCompile Include="LoadFile.cpp" />
     <ClCompile Include="LoadScreen.cpp" />
     <ClCompile Include="LoadThread.cpp" />
@@ -186,8 +184,6 @@
     <ClInclude Include="DropItemMove1.hpp" />
     <ClInclude Include="EnemyMove1.hpp" />
     <ClInclude Include="EnemyMove2.hpp" />
-    <ClInclude Include="InputKey.hpp" />
-    <ClInclude Include="InputPad.hpp" />
     <ClInclude Include="LoadFile.hpp" />
     <ClInclude Include="LoadScreen.hpp" />
     <ClInclude Include="LoadThread.hpp" />
@@ -199,6 +195,11 @@
     <ClInclude Include="StagePaneru.hpp" />
     <ClInclude Include="StageStairs.hpp" />
     <ClInclude Include="StageStreetLight.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\XinputInit\DLLXinput\DLLXinput\DLLXinput.vcxproj">
+      <Project>{ce719894-587f-423e-a2c0-b6d7dfc158df}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

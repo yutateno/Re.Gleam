@@ -2,13 +2,6 @@
 #include "Basic.hpp"
 
 
-// シーンの動き
-enum class ESceneNumber
-{
-	FIRSTLOAD, FIRSTMOVE, SECONDLOAD, SECONDMOVE
-};
-
-
 class BaseMove
 {
 private:
@@ -88,7 +81,7 @@ public:
 	virtual ~BaseMove();		// デストラクタ
 
 	virtual void Draw() = 0;										// 描画
-	virtual void Process(const unsigned __int8 controllNumber) = 0;		// プロセス
+	virtual void Process() = 0;		// プロセス
 	virtual void CameraProcess() = 0;
 
 	static const bool GetEndFlag();		// 終了ゲッター

@@ -40,5 +40,5 @@ public:
 	Manager();			// コンストラクタ
 	~Manager();			// デストラクタ
 
-	void Update(const unsigned __int8 controllNumber);		// メインプロセス
+	void Update();		// メインプロセス
 };

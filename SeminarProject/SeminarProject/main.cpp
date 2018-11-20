@@ -60,18 +60,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetDrawScreen(DX_SCREEN_BACK);	// 背景描画
 
 	// コントローラーとキーボードの初期化
-	MY_XINPUT::InputPad::InputPad();
-	MY_XINPUT::InputPad::FirstUpdate();
-#ifdef _DEBUG
-	KeyData::UpDate();
-#endif
+	DLLXinput::Init();
+	DLLXinput::FirstUpdate();
 
 	// new
 	Manager* manager = new Manager();
 
 	// 最初にコントローラーを設定するための確認コマンド
 	bool firstControll = false;						// コントローラーが押されてないのでゲームを起動しないよう
-	unsigned __int8 controllNumber = 5;				// 表示用のコントローラー
+	DLLXinput::SetPlayerPadNum(5);
 	int controllCount = 0;							// コマンドに関する時間
 	bool noTouch = true;							// コマンドを押されない時間経過次第で再起動を促すよう処理
 	const int COUNT = 600;							// コマンド時間の数値
@@ -80,13 +77,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	while (/*ScreenFlip() == 0 && */ProcessMessage() == 0/* && ClearDrawScreen() == 0 */&& CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
 		// 接続数が一つの場合は確認しない
-		if (MY_XINPUT::InputPad::GetPadNum() == 1)
+		if (DLLXinput::GetPadNum() == 1)
 		{
-			MY_XINPUT::InputPad::SetPlayerPadNum(MY_XINPUT::NUM01);
-			controllNumber = MY_XINPUT::NUM01;
+			DLLXinput::SetPlayerPadNum(DLLXinput::XINPUT_PAD::NUM01);
 			firstControll = true;
 		}
-		else if (MY_XINPUT::InputPad::GetPadNum() == 0)
+		else if (DLLXinput::GetPadNum() == 0)
 		{
 			DrawFormatString(winWidth / 2, winHeight / 2, GetColor(0, 0, 180), "コントローラーが繋がっていません。終了します。");
 			if (controllCount >= 50)
@@ -97,38 +93,34 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// コントローラーが２つ以上の時
 		if (!firstControll)
 		{
-			MY_XINPUT::InputPad::FirstUpdate();
+			DLLXinput::FirstUpdate();
 
 			// 範囲外に投げといたまま
-			if (controllNumber == 5)
+			if (DLLXinput::GetPlayerPadNumber() == 5)
 			{
 				controllCount++;
 				DrawFormatString(winWidth / 2, winHeight / 2, GetColor(0, 0, 180), "コントローラーのAボタンを押してください。\nそれをコントローラーとして認証します。\n");
 				if (controllCount >= 10)
 				{
-					if (MY_XINPUT::InputPad::GetPadButtonData(0, MY_XINPUT::BUTTON_A) == 1)		// １Pが入力された
+					if (DLLXinput::GetPadButtonData(0, DLLXinput::XINPUT_PAD::BUTTON_A) == 1)		// １Pが入力された
 					{
-						MY_XINPUT::InputPad::SetPlayerPadNum(MY_XINPUT::NUM01);
+						DLLXinput::SetPlayerPadNum(DLLXinput::XINPUT_PAD::NUM01);
 						controllCount = 0;
-						controllNumber = MY_XINPUT::NUM01;
 					}
-					if (MY_XINPUT::InputPad::GetPadButtonData(1, MY_XINPUT::BUTTON_A) == 1)		// ２Pが入力された
+					if (DLLXinput::GetPadButtonData(1, DLLXinput::XINPUT_PAD::BUTTON_A) == 1)		// ２Pが入力された
 					{
-						MY_XINPUT::InputPad::SetPlayerPadNum(MY_XINPUT::NUM02);
+						DLLXinput::SetPlayerPadNum(DLLXinput::XINPUT_PAD::NUM02);
 						controllCount = 0;
-						controllNumber = MY_XINPUT::NUM02;
 					}
-					if (MY_XINPUT::InputPad::GetPadButtonData(2, MY_XINPUT::BUTTON_A) == 1)		// ３Pが入力された
+					if (DLLXinput::GetPadButtonData(2, DLLXinput::XINPUT_PAD::BUTTON_A) == 1)		// ３Pが入力された
 					{
-						MY_XINPUT::InputPad::SetPlayerPadNum(MY_XINPUT::NUM03);
+						DLLXinput::SetPlayerPadNum(DLLXinput::XINPUT_PAD::NUM03);
 						controllCount = 0;
-						controllNumber = MY_XINPUT::NUM03;
 					}
-					if (MY_XINPUT::InputPad::GetPadButtonData(3, MY_XINPUT::BUTTON_A) == 1)		// ４Pが入力された
+					if (DLLXinput::GetPadButtonData(3, DLLXinput::XINPUT_PAD::BUTTON_A) == 1)		// ４Pが入力された
 					{
-						MY_XINPUT::InputPad::SetPlayerPadNum(MY_XINPUT::NUM04);
+						DLLXinput::SetPlayerPadNum(DLLXinput::XINPUT_PAD::NUM04);
 						controllCount = 0;
-						controllNumber = MY_XINPUT::NUM04;
 					}
 				}
 
@@ -149,7 +141,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			else
 			{
 				controllCount++;
-				DrawFormatString(winWidth / 2, winHeight / 2, GetColor(0, 0, 0), "コントローラーナンバー：%d を確認しました。ゲームを開始します。\n", (controllNumber + 1));
+				DrawFormatString(winWidth / 2, winHeight / 2, GetColor(0, 0, 0), "コントローラーナンバー：%d を確認しました。ゲームを開始します。\n", (DLLXinput::GetPlayerPadNumber() + 1));
 				if (controllCount >= 100)
 				{
 					firstControll = true;
@@ -158,14 +150,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 		else
 		{
-#ifdef _DEBUG
-			KeyData::UpDate();
-#endif
-			MY_XINPUT::InputPad::EverUpdate();
+			DLLXinput::EverUpdate();
 
-			manager->Update(controllNumber);
+			manager->Update();
 
-			MY_XINPUT::InputPad::VibrationSlowlyStop();
+			DLLXinput::VibrationSlowlyStop();
 		}
 
 		FpsTimeFanction();

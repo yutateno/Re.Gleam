@@ -79,6 +79,6 @@ public:
 
 
 	void Draw();										// 描画
-	void Process(const unsigned __int8 controllNumber);		// プロセス
+	void Process();		// プロセス
 	void CameraProcess();
 };

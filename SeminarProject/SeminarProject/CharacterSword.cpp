@@ -1,10 +1,7 @@
 #include "CharacterSword.hpp"
 
-using namespace MY_XINPUT;
-
-
 // 動きのプロセス
-void CharacterSword::MoveProcess(unsigned __int8 controllNumber)
+void CharacterSword::MoveProcess()
 {
 	// スムーズに動かせる
 	if (moveFlag)
@@ -37,7 +34,7 @@ void CharacterSword::MoveProcess(unsigned __int8 controllNumber)
 	}
 
 	// 左スティックが前に押されたら前進する
-	if (InputPad::GetPadThumbData(STICK_LEFT_Y) > 0)
+	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
 	{
 		m_direction[DIRECTION::up] = true;
 		direXAngle = 0.0f;
@@ -49,7 +46,7 @@ void CharacterSword::MoveProcess(unsigned __int8 controllNumber)
 		m_direction[DIRECTION::up] = false;
 	}
 	// 左スティックが後ろに押されたら後退する
-	if (0 > InputPad::GetPadThumbData(STICK_LEFT_Y))
+	if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y))
 	{
 		m_direction[DIRECTION::down] = true;
 		direXAngle = 0.0f;
@@ -61,11 +58,11 @@ void CharacterSword::MoveProcess(unsigned __int8 controllNumber)
 		m_direction[DIRECTION::down] = false;
 	}
 	// 左スティックが左に押されたら左に移動する
-	if (0 > InputPad::GetPadThumbData(STICK_LEFT_X))
+	if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X))
 	{
 		m_direction[DIRECTION::left] = true;
 		m_direction[DIRECTION::right] = false;
-		direXAngle = ((float)InputPad::GetPadThumbData(STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)InputPad::GetPadThumbMax(false, true, false);
+		direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, false);
 		if (direZAngle != 0.0f)
 		{
 			direXAngle = -direXAngle;
@@ -73,11 +70,11 @@ void CharacterSword::MoveProcess(unsigned __int8 controllNumber)
 		moveFlag = true;
 	}
 	// 左スティックが右に押されたら右に移動する
-	else if (InputPad::GetPadThumbData(STICK_LEFT_X) > 0)
+	else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
 	{
 		m_direction[DIRECTION::left] = false;
 		m_direction[DIRECTION::right] = true;
-		direXAngle = ((float)InputPad::GetPadThumbData(STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)InputPad::GetPadThumbMax(false, true, true);
+		direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, true);
 		if (direZAngle != 0.0f)
 		{
 			direXAngle = -direXAngle;
@@ -89,7 +86,7 @@ void CharacterSword::MoveProcess(unsigned __int8 controllNumber)
 	{
 		m_direction[DIRECTION::left] = false;
 		m_direction[DIRECTION::right] = false;
-		if (InputPad::GetPadThumbData(STICK_LEFT_Y) == 0)
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) == 0)
 		{
 			moveFlag = false;
 		}
@@ -149,10 +146,10 @@ void CharacterSword::MoveProcess(unsigned __int8 controllNumber)
 
 
 // 攻撃に関するプロセス
-void CharacterSword::AttackProcess(unsigned __int8 controllNumber)
+void CharacterSword::AttackProcess()
 {
 	// 攻撃のコマンドを押したら
-	if (InputPad::GetPadButtonData(MY_XINPUT::InputPad::GetPlayPadNumber(), BUTTON_X) == 1)
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_X) == 1)
 	{
 		// 最初の時
 		if (attackFrame == 0)
@@ -245,31 +242,31 @@ void CharacterSword::AttackProcess(unsigned __int8 controllNumber)
 
 
 		// 左スティックが前に押されたら前を向く
-		if (InputPad::GetPadThumbData(STICK_LEFT_Y) > 0)
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
 		{
 			direXAngle = 0.0f;
 			direZAngle = 0.0f;
 		}
 		// 左スティックが後ろに押されたら後ろを向く
-		if (0 > InputPad::GetPadThumbData(STICK_LEFT_Y))
+		if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y))
 		{
 			direXAngle = 0.0f;
 			direZAngle = DX_PI_F;
 		}
 
 		// 左スティックが左に押されたら左を向く
-		if (0 > InputPad::GetPadThumbData(STICK_LEFT_X))
+		if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X))
 		{
-			direXAngle = ((float)InputPad::GetPadThumbData(STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)InputPad::GetPadThumbMax(false, true, false);
+			direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, false);
 			if (direZAngle != 0.0f)
 			{
 				direXAngle = -direXAngle;
 			}
 		}
 		// 左スティックが右に押されたら右を向く
-		else if (InputPad::GetPadThumbData(STICK_LEFT_X) > 0)
+		else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
 		{
-			direXAngle = ((float)InputPad::GetPadThumbData(STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)InputPad::GetPadThumbMax(false, true, true);
+			direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, true);
 			if (direZAngle != 0.0f)
 			{
 				direXAngle = -direXAngle;
@@ -280,10 +277,10 @@ void CharacterSword::AttackProcess(unsigned __int8 controllNumber)
 
 
 // ジャンプに関するプロセス
-void CharacterSword::JumpProcess(unsigned __int8 controllNumber)
+void CharacterSword::JumpProcess()
 {
 	// 浮いてない状態でジャンプするコマンドを押したら
-	if (InputPad::GetPadButtonData(MY_XINPUT::InputPad::GetPlayPadNumber(), BUTTON_A) == 1
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1
 		&& !jumpNow)
 	{
 		jumpNow = true;					// 飛んでいる
@@ -485,7 +482,7 @@ void CharacterSword::SetPaneruArea(const VECTOR paneruArea, const int num)
 
 
 // メインプロセス
-void CharacterSword::Process(const unsigned __int8 controllNumber, const float getAngle)
+void CharacterSword::Process(const float getAngle)
 {
 	preArea = area;		// 直前の座標
 	if (moveFlag || attackNow)
@@ -496,11 +493,11 @@ void CharacterSword::Process(const unsigned __int8 controllNumber, const float g
 	// 動きのプロセス
 	if (!attackNow)
 	{
-		MoveProcess(controllNumber);
+		MoveProcess();
 	}
 
 	// 攻撃のプロセス
-	AttackProcess(controllNumber);
+	AttackProcess();
 
 	
 	// モーションの実態
@@ -523,7 +520,7 @@ void CharacterSword::Process(const unsigned __int8 controllNumber, const float g
 	}
 
 	// ジャンプのプロセス
-	JumpProcess(controllNumber);
+	JumpProcess();
 
 	// ステージのあたり判定
 	StageHit();

@@ -16,7 +16,7 @@
 class MainMove1 : public BaseMove
 {
 private:
-	enum EFILE { drawStage, collStage, character, sword, sound };				// ロードから渡されるファイルの順番
+	enum EFILE { drawStage, collStage, character, sword, sound, seBallHigh, seBall };				// ロードから渡されるファイルの順番
 
 	// ステージ
 	Stage* p_stage;					// ステージのポインタ

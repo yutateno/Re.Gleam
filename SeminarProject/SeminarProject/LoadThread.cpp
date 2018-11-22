@@ -21,6 +21,8 @@ LoadThread::LoadThread()
 LoadThread::~LoadThread()
 {
 	POINTER_RELEASE(p_loadScreen);
+	fileName.clear();
+	fileName.shrink_to_fit();
 }
 
 void LoadThread::Process(const int max, const std::string* path, const ELOADFILE* type)

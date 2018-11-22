@@ -283,6 +283,7 @@ void CharacterSword::JumpProcess()
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1
 		&& !jumpNow)
 	{
+		SoundProcess::StageOneBallCatch();
 		jumpNow = true;					// 飛んでいる
 		jumpUpNow = true;				// 上に上がっている
 		jumpPower = flyJumpPower;		// 飛ぶ速度を加える
@@ -441,6 +442,8 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 
 	// モデルの座標を更新
 	MV1SetPosition(this->modelHandle, area);
+
+	SoundProcess::SetCharaArea(area);
 }
 
 
@@ -485,6 +488,9 @@ void CharacterSword::SetPaneruArea(const VECTOR paneruArea, const int num)
 void CharacterSword::Process(const float getAngle)
 {
 	preArea = area;		// 直前の座標
+
+	SoundProcess::SetCharaArea(area);
+
 	if (moveFlag || attackNow)
 	{
 		angle = getAngle;	// カメラ向きのアングル

@@ -5,6 +5,8 @@ void Manager::SceneChange()
 	switch (BASICPARAM::e_nowScene)
 	{
 	case ESceneNumber::FIRSTLOAD:
+		SoundProcess::Release();
+		SoundProcess::Init();
 		p_loadThread = new LoadThread();
 		break;
 
@@ -17,7 +19,10 @@ void Manager::SceneChange()
 
 
 	case ESceneNumber::SECONDLOAD:
+		SoundProcess::Release();
+		SoundProcess::Init();
 		p_loadThread = new LoadThread();
+		POINTER_RELEASE(p_baseMove);
 		break;
 
 
@@ -34,19 +39,23 @@ void Manager::SceneChange()
 
 Manager::Manager()
 {
-	BASICPARAM::e_preScene = ESceneNumber::SECONDLOAD;
-	BASICPARAM::e_nowScene = ESceneNumber::SECONDLOAD;
+	BASICPARAM::e_preScene = ESceneNumber::FIRSTLOAD;
+	BASICPARAM::e_nowScene = ESceneNumber::FIRSTLOAD;
 
 	move1str[0] = "media\\ステージモデル\\move1_graphic.myn";
 	move1str[1] = "media\\ステージモデル\\move1_hantei.myn";
 	move1str[2] = "media\\CLPH\\motion\\CLPH_motionALL.myn";
 	move1str[3] = "media\\剣\\sword.myn";
 	move1str[4] = "media\\sound\\タイトル（オルゴール）.wyn";
+	move1str[5] = "media\\sound\\玉がポーン（音が高いほう）.wyn";
+	move1str[6] = "media\\sound\\玉がポーン.wyn";
 	load1[0] = ELOADFILE::mv1model;
 	load1[1] = ELOADFILE::mv1model;
 	load1[2] = ELOADFILE::mv1model;
 	load1[3] = ELOADFILE::mv1model;
 	load1[4] = ELOADFILE::soundStream;
+	load1[5] = ELOADFILE::soundmem;
+	load1[6] = ELOADFILE::soundmem;
 
 	move2str[0] = "media\\ステージモデル\\move1_hantei.myn";
 	move2str[1] = "media\\swordCLPH\\clph_sword_all.myn";
@@ -136,4 +145,6 @@ void Manager::Update()
 		SceneChange();
 		BASICPARAM::e_preScene = BASICPARAM::e_nowScene;
 	}
+
+	SoundProcess::Test();
 }

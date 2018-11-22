@@ -12,6 +12,11 @@ void MainMove1::ActorHit()
 			if (BaseMove::GetDistance(p_character->GetArea(), s_enemyAggre[i].p_enemyMove->GetArea()) <= 60)
 			{
 				s_enemyAggre[i].aliveNow = false;			// 生きさせない
+				if (catchEnemyNum == 0)
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME::titleMusicBox);
+				}
+				SoundProcess::StageOneBallCatch();
 				catchEnemyNum++;				// 取った個数をカウント
 			}
 			else if (BaseMove::GetDistance(p_character->GetArea(), s_enemyAggre[i].p_enemyMove->GetArea()) <= 300)
@@ -281,7 +286,6 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 		s_enemyAggre[i].p_enemyMove = new EnemyMove1(v_file[1], (float)randInX(mt), (float)randInZ(mt), color(mt) / 100.0f);		// 敵初期化
 	}
 	catchEnemyNum = 0;		// 敵を手に入れた数を初期化
-	;
 
 	// ライトに関する
 	for (int i = 0; i != lightNum; ++i)
@@ -309,8 +313,9 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 	//ChangeVolumeSoundMem(150, soundBG);
 	//PlaySoundMem(soundBG, DX_PLAYTYPE_LOOP);
 
-	SoundProcess::Load(v_file[EFILE::sound], SoundProcess::ESOUNDNAME::titleMusicBox);
-	SoundProcess::DoSound(SoundProcess::ESOUNDNAME::titleMusicBox);
+	SoundProcess::Load(v_file[EFILE::sound], SoundProcess::ESOUNDNAME::titleMusicBox, SoundProcess::ESOUNDTYPE::soundStreem);
+	SoundProcess::Load(v_file[EFILE::seBallHigh], SoundProcess::ESOUNDNAME::ballPawnHigh, SoundProcess::ESOUNDTYPE::soundMem);
+	SoundProcess::Load(v_file[EFILE::seBall], SoundProcess::ESOUNDNAME::ballPawn, SoundProcess::ESOUNDTYPE::soundMem);
 }
 
 
@@ -318,7 +323,6 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 MainMove1::~MainMove1()
 {
 	//SOUND_RELEASE(soundBG);
-	SoundProcess::Release();
 	for (int i = 0; i != lightNum; ++i)
 	{
 		LIGHT_RELEASE(lightHandle[i]);
@@ -355,7 +359,7 @@ void MainMove1::Draw()
 	}
 
 
-	if (catchEnemyNum == 30)
+	if (catchEnemyNum == 30 && lightEventEnd)
 	{
 		p_dropItem->Draw();				// 剣を描画
 	}
@@ -399,6 +403,9 @@ void MainMove1::Process()
 
 
 	LightProcess();		// ライトのプロセスを呼ぶ
+
+	
+	SoundProcess::StageOneSound(catchEnemyNum);
 }
 
 

@@ -32,6 +32,8 @@ Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 
 	// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
 	SetCameraPositionAndTarget_UpVecY(VAdd(cameraArea, charaArea), VAdd(viewArea, charaArea));
+
+	SoundProcess::SetLisnerArea(cameraArea);
 }
 
 // デストラクタ
@@ -44,6 +46,8 @@ Camera::~Camera()
 // メインプロセス
 void Camera::Process(const VECTOR charaarea)
 {
+	SoundProcess::SetLisnerArea(cameraArea);
+
 	VECTOR TestPosition = cameraArea;
 	//static int zoom = 0;
 

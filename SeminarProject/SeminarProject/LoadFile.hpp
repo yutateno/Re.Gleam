@@ -14,7 +14,7 @@
 
 
 // “Ç‚İ‚Şƒtƒ@ƒCƒ‹‚Ìí—Ş
-enum class ELOADFILE { graph, soundmem, mv1model, soundStream };
+enum class ELOADFILE { graph, soundmem, mv1model, soundStream, sound3DSource };
 
 
 class LoadFile

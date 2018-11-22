@@ -1,5 +1,6 @@
 #pragma once
 #include "BasicObject.hpp"
+#include "SoundProcess.hpp"
 
 
 class BasicCreature : public BasicObject

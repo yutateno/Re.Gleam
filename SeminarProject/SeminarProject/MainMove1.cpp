@@ -406,6 +406,11 @@ void MainMove1::Process()
 
 	
 	SoundProcess::StageOneSound(catchEnemyNum);
+
+	if (catchEnemyNum >= 30)
+	{
+		SoundProcess::VolumeReset(SoundProcess::ESOUNDNAME::titleMusicBox);
+	}
 }
 
 

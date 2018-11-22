@@ -1,6 +1,6 @@
 #include "SoundProcess.hpp"
 
-
+#define PI 3.1415926f
 namespace SoundProcess
 {
 	/// ID‚Ì‚â‚Â‚ªƒ[ƒh‚µ‚½‚©‚Ç‚¤‚©
@@ -115,7 +115,7 @@ namespace SoundProcess
 
 	void StageOneSound(int touchNum)
 	{
-		if (touchNum >= 4)return;
+		if (touchNum > 4)return;
 		ChangeVolumeSoundMem(touchNum * 60, soundLoad[static_cast<int>(ESOUNDNAME::titleMusicBox)]);
 	}
 
@@ -154,16 +154,54 @@ namespace SoundProcess
 	}
 
 
+	/// ‰¹‚ð“ü‚ê‚Ä‚¢‚­
+	void VolumeIn(ESOUNDNAME name, int volume)
+	{
+		static int upCount = 0;
+		ChangeVolumeSoundMem(static_cast<int>((sin(-PI / 2 + PI / 120 * upCount) + 1) / 2 * volume), soundLoad[static_cast<int>(name)]);
+		if (upCount <= 120)
+		{
+			upCount++;
+		}
+	}
+
+
+	/// ‰¹‚ðÁ‚·
+	void VolumeReset(ESOUNDNAME name, int volume)
+	{
+		static int downCount = 0;
+		/*for (int i = 22; i != 33; ++i)
+		{
+			if (!playFlag[i]) continue;
+			for (double j = GetVolumeSoundMem(soundLoad[i]) >= 255 ? 255 : GetVolumeSoundMem(soundLoad[i]); j > 0; j-=0.01f)
+			{
+				ChangeVolumeSoundMem(static_cast<int>(j), soundLoad[i]);
+			}
+			playFlag[i] = false;
+		}*//*
+		if (volume <= 0) return;
+		if (++delay < 10)
+		{
+			VolumeReset(delay, name, volume);
+		}
+		else
+		{*/
+			ChangeVolumeSoundMem(static_cast<int>(volume - (sin(-PI / 2 + PI / 120 * downCount) + 1) / 2 * volume), soundLoad[static_cast<int>(name)]);
+			if (downCount <= 120)
+			{
+				downCount++;
+			}
+			//VolumeReset(delay, name, volume);
+		//}
+	}
+
 	/// ‰ð•ú
 	void Release()
 	{
 		for (int i = 0; i != 33; ++i)
 		{
-			//if (!loadFlag[i]) continue;
-			//if (i >= 22)
-			//{
-				StopSoundMem(soundLoad[i]);
-			//}
+			VolumeReset(static_cast<ESOUNDNAME>(i));
+			StopSoundMem(soundLoad[i]);
 			SOUND_RELEASE(soundLoad[i]);
 		}
 	}
@@ -183,6 +221,6 @@ namespace SoundProcess
 	}
 	void Test()
 	{
-		printfDx("loadF: %d\tfile: %d\tPlayF: %d\n", loadFlag[static_cast<int>(ESOUNDNAME::titleMusicBox)], soundLoad[static_cast<int>(ESOUNDNAME::titleMusicBox)], playFlag[static_cast<int>(ESOUNDNAME::titleMusicBox)]);
+		//printfDx("loadF: %d\tfile: %d\tPlayF: %d\n", loadFlag[static_cast<int>(ESOUNDNAME::titleMusicBox)], soundLoad[static_cast<int>(ESOUNDNAME::titleMusicBox)], playFlag[static_cast<int>(ESOUNDNAME::titleMusicBox)]);
 	}
 }

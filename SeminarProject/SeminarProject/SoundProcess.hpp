@@ -33,6 +33,12 @@ namespace SoundProcess
 	/// Ä¶‚·‚é
 	void DoSound(ESOUNDNAME name);
 
+	/// ‰¹‚ğ“ü‚ê‚Ä‚¢‚­
+	void VolumeIn(ESOUNDNAME name, int volume = 0);
+
+	/// ‰¹‚ğÁ‚·
+	void VolumeReset(ESOUNDNAME name, int volume = 255);
+
 	/// ‰ğ•ú‚·‚é
 	void Release();
 

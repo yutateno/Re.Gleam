@@ -3,7 +3,8 @@
 // インクルードファイル
 #include "DLLXinput.h"
 #include "DxLib.h"
-#include <math.h>
+#define _USE_MATH_DEFINES
+#include <cmath>
 
 
 // 色んな所で使いそうなもの

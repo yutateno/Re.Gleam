@@ -1,6 +1,5 @@
 #include "SoundProcess.hpp"
 
-#define PI 3.1415926f
 namespace SoundProcess
 {
 	/// IDÇÃÇ‚Ç¬Ç™ÉçÅ[ÉhÇµÇΩÇ©Ç«Ç§Ç©
@@ -158,7 +157,7 @@ namespace SoundProcess
 	void VolumeIn(ESOUNDNAME name, int volume)
 	{
 		static int upCount = 0;
-		ChangeVolumeSoundMem(static_cast<int>((sin(-PI / 2 + PI / 120 * upCount) + 1) / 2 * volume), soundLoad[static_cast<int>(name)]);
+		ChangeVolumeSoundMem(static_cast<int>((sin(-M_PI / 2 + M_PI / 120 * upCount) + 1) / 2 * volume), soundLoad[static_cast<int>(name)]);
 		if (upCount <= 120)
 		{
 			upCount++;
@@ -186,7 +185,7 @@ namespace SoundProcess
 		}
 		else
 		{*/
-			ChangeVolumeSoundMem(static_cast<int>(volume - (sin(-PI / 2 + PI / 120 * downCount) + 1) / 2 * volume), soundLoad[static_cast<int>(name)]);
+			ChangeVolumeSoundMem(static_cast<int>(volume - (sin(-M_PI / 2 + M_PI / 120 * downCount) + 1) / 2 * volume), soundLoad[static_cast<int>(name)]);
 			if (downCount <= 120)
 			{
 				downCount++;

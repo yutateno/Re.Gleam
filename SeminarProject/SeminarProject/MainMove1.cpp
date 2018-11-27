@@ -407,6 +407,22 @@ void MainMove1::Process()
 	
 	SoundProcess::StageOneSound(catchEnemyNum);
 
+	if (catchEnemyNum == 6)
+	{
+		SoundProcess::VolumeReset(SoundProcess::ESOUNDNAME::titleMusicBox);
+	}
+	if (catchEnemyNum == 8)
+	{
+		SoundProcess::VolumeIn(SoundProcess::ESOUNDNAME::titleMusicBox);
+	}
+	if (catchEnemyNum == 10)
+	{
+		SoundProcess::VolumeReset(SoundProcess::ESOUNDNAME::titleMusicBox);
+	}
+	if (catchEnemyNum == 12)
+	{
+		SoundProcess::VolumeIn(SoundProcess::ESOUNDNAME::titleMusicBox);
+	}
 	if (catchEnemyNum >= 30)
 	{
 		SoundProcess::VolumeReset(SoundProcess::ESOUNDNAME::titleMusicBox);

@@ -34,7 +34,7 @@ namespace SoundProcess
 	void DoSound(ESOUNDNAME name);
 
 	/// ‰¹‚ğ“ü‚ê‚Ä‚¢‚­
-	void VolumeIn(ESOUNDNAME name, int volume = 0);
+	void VolumeIn(ESOUNDNAME name, int volume = 255);
 
 	/// ‰¹‚ğÁ‚·
 	void VolumeReset(ESOUNDNAME name, int volume = 255);

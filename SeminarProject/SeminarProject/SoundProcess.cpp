@@ -16,6 +16,29 @@ namespace SoundProcess
 	/// リスナーの座標
 	VECTOR lisnerArea;
 
+	/// BGMに関する----------------------
+	/// BGMボリュームのフェード数値
+	int bgmVolumeCount = 120;
+
+	/// ボリューム上げる
+	bool volumeUpFlag = false;
+
+	/// ボリューム下げる
+	bool volumeDownFlag = false;
+
+	/// BGMの名前
+	ESOUNDNAME bgmName;
+
+	/// BGMボリューム
+	int bgmVolume;
+
+	/// 直前のBGMボリューム
+	int preBGMVolume = 255;
+	/// ---------------------------------
+
+	void VolumeInProcess(ESOUNDNAME name, int volume);
+	void VolumeResetProcess(ESOUNDNAME name, int volume);
+
 
 	/// 初期化
 	void Init()
@@ -110,10 +133,29 @@ namespace SoundProcess
 			ChangeVolumeSoundMem(255 - (6 * count), soundLoad[i]);
 			if (count > 0) count--;
 		}
+
+
+		if (volumeDownFlag)
+		{
+			VolumeResetProcess(bgmName, bgmVolume);
+		}
+		if (volumeUpFlag)
+		{
+			VolumeInProcess(bgmName, bgmVolume);
+		}
 	}
 
 	void StageOneSound(int touchNum)
 	{
+		if (volumeDownFlag)
+		{
+			VolumeResetProcess(bgmName, bgmVolume);
+		}
+		if (volumeUpFlag)
+		{
+			VolumeInProcess(bgmName, bgmVolume);
+		}
+
 		if (touchNum > 4)return;
 		ChangeVolumeSoundMem(touchNum * 60, soundLoad[static_cast<int>(ESOUNDNAME::titleMusicBox)]);
 	}
@@ -153,14 +195,49 @@ namespace SoundProcess
 	}
 
 
+	/// 音を入れていく処理
+	void VolumeInProcess(ESOUNDNAME name, int volume)
+	{
+		if (volumeUpFlag)
+		{
+			preBGMVolume = volume;
+			ChangeVolumeSoundMem(static_cast<int>((sin(-M_PI / 2 + M_PI / 120 * bgmVolumeCount) + 1) / 2 * volume), soundLoad[static_cast<int>(name)]);
+			if (bgmVolumeCount <= 120)
+			{
+				bgmVolumeCount++;
+			}
+			else
+			{
+				volumeUpFlag = false;
+			}
+		}
+	}
+
+
 	/// 音を入れていく
 	void VolumeIn(ESOUNDNAME name, int volume)
 	{
-		static int upCount = 0;
-		ChangeVolumeSoundMem(static_cast<int>((sin(-M_PI / 2 + M_PI / 120 * upCount) + 1) / 2 * volume), soundLoad[static_cast<int>(name)]);
-		if (upCount <= 120)
+		volumeUpFlag = true;
+		bgmName = name;
+		bgmVolume = volume;
+	}
+
+
+	/// 音を消す処理
+	void VolumeResetProcess(ESOUNDNAME name, int volume)
+	{
+		if (volumeDownFlag)
 		{
-			upCount++;
+			preBGMVolume = volume;
+			ChangeVolumeSoundMem(static_cast<int>((sin(-M_PI / 2 + M_PI / 120 * bgmVolumeCount) + 1) / 2 * volume), soundLoad[static_cast<int>(name)]);
+			if (bgmVolumeCount >= 0)
+			{
+				bgmVolumeCount--;
+			}
+			else
+			{
+				volumeDownFlag = false;
+			}
 		}
 	}
 
@@ -168,7 +245,6 @@ namespace SoundProcess
 	/// 音を消す
 	void VolumeReset(ESOUNDNAME name, int volume)
 	{
-		static int downCount = 0;
 		/*for (int i = 22; i != 33; ++i)
 		{
 			if (!playFlag[i]) continue;
@@ -185,14 +261,22 @@ namespace SoundProcess
 		}
 		else
 		{*/
-			ChangeVolumeSoundMem(static_cast<int>(volume - (sin(-M_PI / 2 + M_PI / 120 * downCount) + 1) / 2 * volume), soundLoad[static_cast<int>(name)]);
-			if (downCount <= 120)
-			{
-				downCount++;
-			}
+			
 			//VolumeReset(delay, name, volume);
 		//}
+		volumeDownFlag = true;
+		bgmName = name;
+		/// 音を消すときに消す最初の位置が現在のボリュームよりも大きかったら(消すタイミングで一瞬高くなってしまう)
+		if (preBGMVolume <= volume)
+		{
+			bgmVolume = preBGMVolume;
+		}
+		else
+		{
+			bgmVolume = volume;
+		}
 	}
+
 
 	/// 解放
 	void Release()

@@ -283,7 +283,6 @@ void CharacterSword::JumpProcess()
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1
 		&& !jumpNow)
 	{
-		SoundProcess::StageOneBallCatch();
 		jumpNow = true;					// ”ò‚ñ‚Å‚¢‚é
 		jumpUpNow = true;				// ã‚Éã‚ª‚Á‚Ä‚¢‚é
 		jumpPower = flyJumpPower;		// ”ò‚Ô‘¬“x‚ğ‰Á‚¦‚é

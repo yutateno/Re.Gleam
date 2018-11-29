@@ -30,6 +30,8 @@ private:
 
 	int antiAliasScreen;
 
+	int feedCount;
+
 public:
 	Manager();			// コンストラクタ
 	~Manager();			// デストラクタ

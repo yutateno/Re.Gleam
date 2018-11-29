@@ -5,7 +5,7 @@
 #include "DxLib.h"
 #define _USE_MATH_DEFINES
 #include <cmath>
-
+#include "SoundProcess.hpp"
 
 // 色んな所で使いそうなもの
 // シーンの動き

@@ -155,11 +155,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			manager->Update();
 
+			SoundProcess::Process();
+
 			DLLXinput::VibrationSlowlyStop();
 		}
 
 		FpsTimeFanction();
 	}
+
+	SoundProcess::Release();
 
 	// çÌèú
 	POINTER_RELEASE(manager);

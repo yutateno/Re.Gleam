@@ -2,308 +2,325 @@
 
 namespace SoundProcess
 {
-	/// IDのやつがロードしたかどうか
-	bool loadFlag[33];
-	/// 再生しているかどうか
-	bool playFlag[33];
-	/// ロードしたサウンド
-	int soundLoad[33];
-	/// ロードしたサウンドのタイプ
-	ESOUNDTYPE soundType[33];
+	/// ゲームによって変わる部分------------------
+	const int seNum = 22;
+	const int bgmNum = 11;
+	const int bgmArray = 2;
+	const int bgmFeedValue = 90;
+	///-------------------------------------------
 
-	/// プレイヤーの座標
+	/// SEに関する------------------------
+	// 保存する
+	int se_sound[seNum];
+	// ロードしたかどうか
+	bool se_loadFlag[seNum];
+	// 再生しているかどうか
+	bool se_playFlag[seNum];
+
+	/// BGMに関する-----------------------
+	// 保存する
+	int bgm_sound[bgmNum];
+	// ロードしたかどうか
+	bool bgm_loadFlag[bgmNum];
+	// ボリューム
+	int bgm_nowVolume[bgmArray];
+	// BGMの名前
+	ESOUNDNAME_BGM bgm_name[bgmArray];
+	// 要求されたBGMのボリューム
+	int bgm_requestVolume[bgmArray];
+	// 変更中の目的ボリューム
+	int bgm_nextVolume[bgmArray];
+	// フェードカウント
+	int bgm_feedCount[bgmArray];
+	// BGMが流れているかどうか
+	bool bgm_soundFlag;
+	// BGMの最大指定音量
+	int bgm_maxVolume[bgmArray];
+
+	/// 3Dに関する-------------------------
+	// プレイヤー位置
 	VECTOR charaArea;
-	/// リスナーの座標
-	VECTOR lisnerArea;
+	// 発生位置
+	VECTOR partnerArea;
+	// リスナー位置
+	VECTOR listenerArea;
 
-	/// BGMに関する----------------------
-	/// BGMボリュームのフェード数値
-	int bgmVolumeCount = 120;
-
-	/// ボリューム上げる
-	bool volumeUpFlag = false;
-
-	/// ボリューム下げる
-	bool volumeDownFlag = false;
-
-	/// BGMの名前
-	ESOUNDNAME bgmName;
-
-	/// BGMボリューム
-	int bgmVolume;
-
-	/// 直前のBGMボリューム
-	int preBGMVolume = 255;
-	/// ---------------------------------
-
-	void VolumeInProcess(ESOUNDNAME name, int volume);
-	void VolumeResetProcess(ESOUNDNAME name, int volume);
+	/// 内部関数---------------------------
+	// BGMプロセス
+	void BGMProcess();
+	// BGMフェード
+	void BGMFeed();
 
 
-	/// 初期化
 	void Init()
 	{
-		ZeroMemory(loadFlag, sizeof(loadFlag));
-		ZeroMemory(playFlag, sizeof(playFlag));
-		for (int i = 0; i != 33; ++i)
+		for (int i = 0; i != seNum; ++i)
 		{
-			soundLoad[i] = -1;
+			se_sound[i] = -1;
 		}
-		for (int i = 0; i != 33; ++i)
+		ZeroMemory(se_loadFlag, sizeof(se_loadFlag));
+		ZeroMemory(se_playFlag, sizeof(se_playFlag));
+		for (int i = 0; i != bgmNum; ++i)
 		{
-			soundType[i] = ESOUNDTYPE::none;
+			bgm_sound[i] = -1;
 		}
-		charaArea = VGet(0, 0, 0);
-		lisnerArea = VGet(0, 0, 0);
+		ZeroMemory(bgm_loadFlag, sizeof(bgm_loadFlag));
+		ZeroMemory(bgm_nowVolume, sizeof(bgm_nowVolume));
+		for (int i = 0; i != bgmArray; ++i)
+		{
+			bgm_name[i] = ESOUNDNAME_BGM::none;
+		}
+		ZeroMemory(bgm_requestVolume, sizeof(bgm_requestVolume));
+		ZeroMemory(bgm_nextVolume, sizeof(bgm_nextVolume));
+		ZeroMemory(bgm_feedCount, sizeof(bgm_feedCount));
+		ZeroMemory(bgm_maxVolume, sizeof(bgm_maxVolume));
+
+		bgm_soundFlag = false;
 	}
 
-
-	/// 読み込み
-	void Load(int loadFile, ESOUNDNAME name, ESOUNDTYPE type)
+	void Load(int loadFile, ESOUNDNAME_SE name, ESOUNDTYPE type, VECTOR partnerArea)
 	{
-		soundLoad[static_cast<int>(name)] = loadFile;
-		loadFlag[static_cast<int>(name)] = true;
-		soundType[static_cast<int>(name)] = type;
+		se_sound[static_cast<int>(name)] = loadFile;
+		se_loadFlag[static_cast<int>(name)] = true;
 		if (type == ESOUNDTYPE::sound3DSourceChara)
 		{
-			Set3DPositionSoundMem(charaArea, soundLoad[static_cast<int>(name)]);
-			Set3DRadiusSoundMem(VSize(VSub(charaArea, lisnerArea)), soundLoad[static_cast<int>(name)]);
+			Set3DPositionSoundMem(charaArea, se_sound[static_cast<int>(name)]);
+			Set3DRadiusSoundMem(VSize(VSub(charaArea, listenerArea)), se_sound[static_cast<int>(name)]);
 		}
-	}
-
-
-	/// 読み込み
-	void Load(int loadFile, ESOUNDNAME name, ESOUNDTYPE type, VECTOR partnerArea)
-	{
-		soundLoad[static_cast<int>(name)] = loadFile;
-		loadFlag[static_cast<int>(name)] = true;
-		soundType[static_cast<int>(name)] = type;
-		if (type == ESOUNDTYPE::sound3DSourcePartner)
+		else if (type == ESOUNDTYPE::sound3DSourcePartner)
 		{
-			Set3DPositionSoundMem(partnerArea, soundLoad[static_cast<int>(name)]);
-			Set3DRadiusSoundMem(VSize(VSub(partnerArea, lisnerArea)), soundLoad[static_cast<int>(name)]);
+			Set3DPositionSoundMem(partnerArea, se_sound[static_cast<int>(name)]);
+			Set3DRadiusSoundMem(VSize(VSub(partnerArea, listenerArea)), se_sound[static_cast<int>(name)]);
 		}
 	}
 
+	void Load(int loadFile, ESOUNDNAME_BGM name)
+	{
+		bgm_sound[static_cast<int>(name)] = loadFile;
+		bgm_loadFlag[static_cast<int>(name)] = true;
+	}
 
-	/// プロセス
 	void Process()
 	{
 		/// 再生個数
 		int count = 0;
 
 		// 再生しているかどうか判断
-		for (int i = 0; i != 33; ++i)
+		for (int i = 0; i != seNum; ++i)
 		{
 			// 音が流れていなかったら
-			if (!CheckSoundMem(soundLoad[i]))
+			if (!CheckSoundMem(se_sound[i]))
 			{
-				playFlag[i] = false;
-				continue;
-			}
-
-			// 3D音源だったら
-			if (soundType[i] == ESOUNDTYPE::sound3DSourceChara)
-			{
-				Set3DPositionSoundMem(charaArea, soundLoad[i]);
+				se_playFlag[i] = false;
 				continue;
 			}
 
 			// 再生していたら
-			if (playFlag[i])
+			if (se_playFlag[i])
 			{
 				count++;		// 再生個数を加算
 			}
 		}
 
-		// 一個以下なら特に何もしない
-		//if (count <= 1)return;
+		if (bgm_soundFlag)
+		{
+			if (bgm_requestVolume[0] < bgm_requestVolume[1]
+				&& bgm_requestVolume[1] != bgm_maxVolume[1] - (10 * count))
+			{
+				SetBGMVolume(bgm_name[1], bgm_maxVolume[1] - (10 * count), bgm_maxVolume[1]);
+			}
+			if (bgm_requestVolume[0] > bgm_requestVolume[1]
+				&& bgm_requestVolume[0] != bgm_maxVolume[0] - (10 * count))
+			{
+				SetBGMVolume(bgm_name[0], bgm_maxVolume[0] - (10 * count), bgm_maxVolume[0]);
+			}
+			count--;
+		}
 
-		// 最小がボリューム0にならないように
-		count--;
 
 		/// 下げる値を減らしながら再生音量調整
-		for (int i = 32; i >= 0; --i)
+		for (int i = seNum - 1; i >= 0; --i)
 		{
 			// 再生していなかったら
-			if (!playFlag[i]) continue;
-
+			if (!se_playFlag[i]) continue;
 
 			// 音量を下げる
-			ChangeVolumeSoundMem(255 - (6 * count), soundLoad[i]);
-			if (count > 0) count--;
-		}
-
-
-		if (volumeDownFlag)
-		{
-			VolumeResetProcess(bgmName, bgmVolume);
-		}
-		if (volumeUpFlag)
-		{
-			VolumeInProcess(bgmName, bgmVolume);
-		}
-	}
-
-	void StageOneSound(int touchNum)
-	{
-		if (volumeDownFlag)
-		{
-			VolumeResetProcess(bgmName, bgmVolume);
-		}
-		if (volumeUpFlag)
-		{
-			VolumeInProcess(bgmName, bgmVolume);
-		}
-
-		if (touchNum > 4)return;
-		ChangeVolumeSoundMem(touchNum * 60, soundLoad[static_cast<int>(ESOUNDNAME::titleMusicBox)]);
-	}
-
-	void StageOneBallCatch()
-	{
-		int rand = GetRand(1);
-		if (rand == 0)
-		{
-			PlaySoundMem(soundLoad[static_cast<int>(ESOUNDNAME::ballPawnHigh)], DX_PLAYTYPE_BACK);
-			ChangeVolumeSoundMem(125, soundLoad[static_cast<int>(ESOUNDNAME::ballPawnHigh)]);
-		}
-		else
-		{
-			PlaySoundMem(soundLoad[static_cast<int>(ESOUNDNAME::ballPawn)], DX_PLAYTYPE_BACK);
-			ChangeVolumeSoundMem(125, soundLoad[static_cast<int>(ESOUNDNAME::ballPawn)]);
-		}
-	}
-
-
-	/// 再生させる
-	void DoSound(ESOUNDNAME name)
-	{
-		if (static_cast<int>(name) >= 22)
-		{
-			if (playFlag[static_cast<int>(name)]) return;
-			PlaySoundMem(soundLoad[static_cast<int>(name)], DX_PLAYTYPE_LOOP);
-			ChangeVolumeSoundMem(0, soundLoad[static_cast<int>(name)]);
-		}
-		else
-		{
-			if (playFlag[static_cast<int>(name)]) return;
-			PlaySoundMem(soundLoad[static_cast<int>(name)], DX_PLAYTYPE_BACK);
-			ChangeVolumeSoundMem(0, soundLoad[static_cast<int>(name)]);
-		}
-		playFlag[static_cast<int>(name)] = true;
-	}
-
-
-	/// 音を入れていく処理
-	void VolumeInProcess(ESOUNDNAME name, int volume)
-	{
-		if (volumeUpFlag)
-		{
-			preBGMVolume = volume;
-			ChangeVolumeSoundMem(static_cast<int>((sin(-M_PI / 2 + M_PI / 120 * bgmVolumeCount) + 1) / 2 * volume), soundLoad[static_cast<int>(name)]);
-			if (bgmVolumeCount <= 120)
+			ChangeVolumeSoundMem(255 - (10 * count), se_sound[i]);
+			if (count > 0)
 			{
-				bgmVolumeCount++;
+				count--;
 			}
 			else
 			{
-				volumeUpFlag = false;
+				break;
 			}
+		}
+
+		BGMProcess();
+	}
+
+	void DoSound(ESOUNDNAME_SE name, int volume)
+	{
+		if (!se_playFlag[static_cast<int>(name)])
+		{
+			PlaySoundMem(se_sound[static_cast<int>(name)], DX_PLAYTYPE_BACK);
+			ChangeVolumeSoundMem(0, se_sound[static_cast<int>(name)]);
+		}
+
+		se_playFlag[static_cast<int>(name)] = true;
+	}
+
+	void BGMEnd()
+	{
+		for (int i = 0; i != bgmArray; ++i)
+		{
+			if (bgm_name[i] == ESOUNDNAME_BGM::none) continue;
+			SetBGMVolume(bgm_name[i], 0, 0);
 		}
 	}
 
-
-	/// 音を入れていく
-	void VolumeIn(ESOUNDNAME name, int volume)
+	void BGMTrans(ESOUNDNAME_BGM nextName, int volume)
 	{
-		volumeUpFlag = true;
-		bgmName = name;
-		bgmVolume = volume;
+		if (!bgm_soundFlag) bgm_soundFlag = true;
+
+		if (bgm_name[1] == ESOUNDNAME_BGM::none)
+		{
+			SetBGMVolume(bgm_name[0], 0, 0);
+			SetBGMVolume(nextName, volume, volume);
+			return;
+		}
+
+		if (bgm_name[1] == nextName)
+		{
+			SetBGMVolume(bgm_name[0], 0, 0);
+			SetBGMVolume(nextName, volume, volume);
+			return;
+		}
+
+		if (bgm_name[0] == nextName)
+		{
+			SetBGMVolume(bgm_name[1], 0, 0);
+			SetBGMVolume(nextName, volume, volume);
+			return;
+		}
+
+		if (bgm_requestVolume[0] < bgm_requestVolume[1])
+		{
+			ChangeVolumeSoundMem(0, bgm_sound[static_cast<int>(bgm_name[0])]);
+			StopSoundMem(bgm_sound[static_cast<int>(bgm_name[0])]);
+			bgm_nowVolume[0] = 0;
+			bgm_nextVolume[0] = 0;
+			bgm_requestVolume[0] = 0;
+			bgm_name[0] = ESOUNDNAME_BGM::none;
+
+			SetBGMVolume(nextName, volume, volume);
+			SetBGMVolume(bgm_name[1], 0, 0);
+			return;
+		}
+
+		if (bgm_requestVolume[0] > bgm_requestVolume[1])
+		{
+			ChangeVolumeSoundMem(0, bgm_sound[static_cast<int>(bgm_name[1])]);
+			StopSoundMem(bgm_sound[static_cast<int>(bgm_name[1])]);
+			bgm_nowVolume[1] = 0;
+			bgm_nextVolume[1] = 0;
+			bgm_requestVolume[1] = 0;
+			bgm_name[1] = ESOUNDNAME_BGM::none;
+
+			SetBGMVolume(bgm_name[0], 0, 0);
+			SetBGMVolume(nextName, volume, volume);
+			return;
+		}
 	}
 
-
-	/// 音を消す処理
-	void VolumeResetProcess(ESOUNDNAME name, int volume)
+	void BGMProcess()
 	{
-		if (volumeDownFlag)
+		BGMFeed();
+		printfDx("%d\n", GetVolumeSoundMem2(bgm_sound[static_cast<int>(bgm_name[0])]));
+	}
+
+	void BGMFeed()
+	{
+		if (!bgm_soundFlag) bgm_soundFlag = true;
+
+		for (int i = 0; i != bgmArray; ++i)
 		{
-			preBGMVolume = volume;
-			ChangeVolumeSoundMem(static_cast<int>((sin(-M_PI / 2 + M_PI / 120 * bgmVolumeCount) + 1) / 2 * volume), soundLoad[static_cast<int>(name)]);
-			if (bgmVolumeCount >= 0)
+			if (bgm_nowVolume[i] < bgm_nextVolume[i])
 			{
-				bgmVolumeCount--;
+				ChangeVolumeSoundMem(bgm_nowVolume[i] + static_cast<int>((sin(-M_PI / 2 + M_PI / bgmFeedValue * bgm_feedCount[i]) + 1) / 2 * (bgm_nextVolume[i] - bgm_nowVolume[i]))
+					, bgm_sound[static_cast<int>(bgm_name[i])]);
 			}
 			else
 			{
-				volumeDownFlag = false;
+				ChangeVolumeSoundMem(bgm_nowVolume[i] - static_cast<int>((sin(-M_PI / 2 + M_PI / bgmFeedValue * bgm_feedCount[i]) + 1) / 2 * (bgm_nowVolume[i] - bgm_nextVolume[i]))
+					, bgm_sound[static_cast<int>(bgm_name[i])]);
 			}
-		}
-	}
-
-
-	/// 音を消す
-	void VolumeReset(ESOUNDNAME name, int volume)
-	{
-		/*for (int i = 22; i != 33; ++i)
-		{
-			if (!playFlag[i]) continue;
-			for (double j = GetVolumeSoundMem(soundLoad[i]) >= 255 ? 255 : GetVolumeSoundMem(soundLoad[i]); j > 0; j-=0.01f)
+			if (bgm_feedCount[i] <= bgmFeedValue)
 			{
-				ChangeVolumeSoundMem(static_cast<int>(j), soundLoad[i]);
+				bgm_feedCount[i]++;
 			}
-			playFlag[i] = false;
-		}*//*
-		if (volume <= 0) return;
-		if (++delay < 10)
-		{
-			VolumeReset(delay, name, volume);
-		}
-		else
-		{*/
-			
-			//VolumeReset(delay, name, volume);
-		//}
-		volumeDownFlag = true;
-		bgmName = name;
-		/// 音を消すときに消す最初の位置が現在のボリュームよりも大きかったら(消すタイミングで一瞬高くなってしまう)
-		if (preBGMVolume <= volume)
-		{
-			bgmVolume = preBGMVolume;
-		}
-		else
-		{
-			bgmVolume = volume;
+			else
+			{
+				bgm_nowVolume[i] = bgm_nextVolume[i];
+			}
 		}
 	}
 
+	void SetBGMVolume(ESOUNDNAME_BGM name, int volume, int maxVolume)
+	{
+		if (!bgm_soundFlag) bgm_soundFlag = true;
 
-	/// 解放
+		for (int i = 0; i != bgmArray; ++i)
+		{
+			if (bgm_name[i] == ESOUNDNAME_BGM::none
+				|| bgm_name[i] == name)
+			{
+				bgm_name[i] = name;
+				bgm_requestVolume[i] = volume;
+				bgm_maxVolume[i] = maxVolume;
+				if (bgm_nextVolume[i] != bgm_requestVolume[i])
+				{
+					bgm_nowVolume[i] = GetVolumeSoundMem2(bgm_sound[static_cast<int>(bgm_name[i])]);
+					bgm_nextVolume[i] = bgm_requestVolume[i];
+				}
+				bgm_feedCount[i] = 0;
+				if (bgm_nowVolume[i] <= 2
+					|| !(CheckSoundMem(bgm_sound[static_cast<int>(bgm_name[i])])))
+				{
+					StopSoundMem(bgm_sound[static_cast<int>(bgm_name[i])]);
+					PlaySoundMem(bgm_sound[static_cast<int>(bgm_name[i])], DX_PLAYTYPE_LOOP);
+					ChangeVolumeSoundMem(0, bgm_sound[static_cast<int>(bgm_name[i])]);
+					bgm_nowVolume[i] = 0;
+				}
+				return;
+			}
+		}
+	}
+
 	void Release()
 	{
-		for (int i = 0; i != 33; ++i)
+		for (int i = 0; i != seNum; ++i)
 		{
-			VolumeReset(static_cast<ESOUNDNAME>(i));
-			StopSoundMem(soundLoad[i]);
-			SOUND_RELEASE(soundLoad[i]);
+			if (!se_loadFlag[i]) continue;
+			DeleteSoundMem(se_sound[i]);
+			se_sound[i] = -1;
+		}
+		for (int i = 0; i != bgmNum; ++i)
+		{
+			if (!bgm_loadFlag[i]) continue;
+			StopSoundMem(bgm_sound[i]);
+			DeleteSoundMem(bgm_sound[i]);
+			bgm_sound[i] = -1;
 		}
 	}
 
-
-	/// キャラクターのエリア
 	void SetCharaArea(VECTOR area)
 	{
 		charaArea = area;
 	}
 
-
-	/// リスナーのエリア
 	void SetLisnerArea(VECTOR area)
 	{
-		lisnerArea = area;
-	}
-	void Test()
-	{
-		//printfDx("loadF: %d\tfile: %d\tPlayF: %d\n", loadFlag[static_cast<int>(ESOUNDNAME::titleMusicBox)], soundLoad[static_cast<int>(ESOUNDNAME::titleMusicBox)], playFlag[static_cast<int>(ESOUNDNAME::titleMusicBox)]);
+		listenerArea = area;
 	}
 }

@@ -12,12 +12,22 @@ void MainMove1::ActorHit()
 			if (BaseMove::GetDistance(p_character->GetArea(), s_enemyAggre[i].p_enemyMove->GetArea()) <= 60)
 			{
 				s_enemyAggre[i].aliveNow = false;			// 生きさせない
-				if (catchEnemyNum == 0)
+				
+				switch (++catchEnemyNum)
 				{
-					SoundProcess::DoSound(SoundProcess::ESOUNDNAME::titleMusicBox);
+				case 1:
+					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 100, 100);
+					break;
+				case 3:
+					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 255, 255);
+					break;
+				case 30:
+					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 0, 0);
+					break;
+				default:
+					break;
 				}
-				SoundProcess::StageOneBallCatch();
-				catchEnemyNum++;				// 取った個数をカウント
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPawnHigh);
 			}
 			else if (BaseMove::GetDistance(p_character->GetArea(), s_enemyAggre[i].p_enemyMove->GetArea()) <= 300)
 			{
@@ -26,9 +36,9 @@ void MainMove1::ActorHit()
 		}
 	}
 
-	if (catchEnemyNum == 30 && lightEventEnd
-		&& BaseMove::GetDistance(p_character->GetArea(), p_dropItem->GetArea()) <= 60)
+	if (CheckHitKey(KEY_INPUT_Z)==1)
 	{
+		SoundProcess::BGMEnd();
 		touchSword = true;
 		//StopSoundMem(soundBG);
 		BaseMove::SetScene(ESceneNumber::SECONDLOAD);
@@ -309,13 +319,10 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 	touchSword = false;
 
 
-	//soundBG = v_file[EFILE::sound];
-	//ChangeVolumeSoundMem(150, soundBG);
-	//PlaySoundMem(soundBG, DX_PLAYTYPE_LOOP);
-
-	SoundProcess::Load(v_file[EFILE::sound], SoundProcess::ESOUNDNAME::titleMusicBox, SoundProcess::ESOUNDTYPE::soundStreem);
-	SoundProcess::Load(v_file[EFILE::seBallHigh], SoundProcess::ESOUNDNAME::ballPawnHigh, SoundProcess::ESOUNDTYPE::soundMem);
-	SoundProcess::Load(v_file[EFILE::seBall], SoundProcess::ESOUNDNAME::ballPawn, SoundProcess::ESOUNDTYPE::soundMem);
+	SoundProcess::Load(v_file[EFILE::sound], SoundProcess::ESOUNDNAME_BGM::titleMusicBox);
+	SoundProcess::Load(v_file[EFILE::seBallHigh], SoundProcess::ESOUNDNAME_SE::ballPawnHigh, SoundProcess::ESOUNDTYPE::soundMem);
+	SoundProcess::Load(v_file[EFILE::seBall], SoundProcess::ESOUNDNAME_SE::ballPawn, SoundProcess::ESOUNDTYPE::soundMem);
+	//SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 255, 255);
 }
 
 
@@ -403,30 +410,6 @@ void MainMove1::Process()
 
 
 	LightProcess();		// ライトのプロセスを呼ぶ
-
-	
-	SoundProcess::StageOneSound(catchEnemyNum);
-
-	if (catchEnemyNum == 6)
-	{
-		SoundProcess::VolumeReset(SoundProcess::ESOUNDNAME::titleMusicBox);
-	}
-	if (catchEnemyNum == 8)
-	{
-		SoundProcess::VolumeIn(SoundProcess::ESOUNDNAME::titleMusicBox);
-	}
-	if (catchEnemyNum == 10)
-	{
-		SoundProcess::VolumeReset(SoundProcess::ESOUNDNAME::titleMusicBox);
-	}
-	if (catchEnemyNum == 12)
-	{
-		SoundProcess::VolumeIn(SoundProcess::ESOUNDNAME::titleMusicBox);
-	}
-	if (catchEnemyNum >= 30)
-	{
-		SoundProcess::VolumeReset(SoundProcess::ESOUNDNAME::titleMusicBox);
-	}
 }
 
 

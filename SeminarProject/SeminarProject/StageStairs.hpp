@@ -4,13 +4,15 @@
 
 class StageStairs : public BasicObject
 {
-private:
-
 public:
+	// コンストラクタ
 	StageStairs(const int draw, const int collStageHandle, const VECTOR area);
+
+	// デストラクタ
 	~StageStairs();
 
 
+	// 描画
 	void Draw();
 };
 

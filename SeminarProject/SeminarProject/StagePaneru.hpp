@@ -4,13 +4,15 @@
 
 class StagePaneru : public BasicObject
 {
-private:
-
 public:
+	// コンストラクタ
 	StagePaneru(const int draw, const int collStageHandle, const VECTOR area);
+
+	// デストラクタ
 	~StagePaneru();
 
 
+	// 描画
 	void Draw();
 };
 

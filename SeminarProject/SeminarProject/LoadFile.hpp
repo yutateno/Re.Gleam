@@ -1,7 +1,6 @@
 #pragma once
 #include "Basic.hpp"
 
-
 #ifndef _ME_LoadFile_HPP
 #define _ME_LoadFile_HPP
 
@@ -20,15 +19,22 @@ enum class ELOADFILE { graph, soundmem, mv1model, soundStream, sound3DSource };
 class LoadFile
 {
 private:
-	static const int rad = 0x2546;						// 復号キー
-	static unsigned int file_size(std::ifstream &fin);	// ファイル読み込み
+	// 復号キー
+	static const int rad = 0x2546;
+
+	// ファイル読み込み
+	static unsigned int file_size(std::ifstream &fin);
 
 public:
-	LoadFile() {};		// コンストラクタ
-	~LoadFile() {};		// デストラクタ
+	// コンストラクタ
+	LoadFile() {};
+
+	// デストラクタ
+	~LoadFile() {};
 
 
-	static void MyLoad(const std::string path, int& file, const ELOADFILE type);	// メディアのロードを行う
+	// メディアのロードを行う
+	static void MyLoad(const std::string path, int& file, const ELOADFILE type);
 };
 
 #endif // !_ME_LoadFile_HPP

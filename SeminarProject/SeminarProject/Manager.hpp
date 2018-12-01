@@ -9,32 +9,56 @@
 class Manager
 {
 private:
-	BaseMove* p_baseMove;			// シーンの基底クラス
-	LoadThread* p_loadThread;		// ロードのクラス
+	// シーンの基底クラス
+	BaseMove* p_baseMove;
+
+	// ロードのクラス
+	LoadThread* p_loadThread;
 
 
-	void SceneChange();				// シーンを切り替える
+	// シーンを切り替える
+	void SceneChange();
 
 
-	// ムーブ１に関する
+	/// ムーブ１に関する----------------
+
+	// ムーブ1のロード数
 	const int max1 = 7;
+
+	// ムーブ1のロードファイル
 	std::string move1str[7];
+
+	// ムーブ1のロードの種類
 	ELOADFILE load1[7];
 
 
-	// ムーブ２に関する
+	/// ムーブ２に関する--------------
+
+	// ムーブ2のロード数
 	const int max2 = 9;
+
+	// ムーブ2のロードファイル
 	std::string move2str[9];
+
+	// ムーブ2のロードの種類
 	ELOADFILE load2[9];
 
 
+	// アンチエイリアスの画像
 	int antiAliasScreen;
 
+	// シーン切り替えのフェードカウント
 	int feedCount;
 
 public:
-	Manager();			// コンストラクタ
-	~Manager();			// デストラクタ
+	// コンストラクタ
+	Manager();
 
-	void Update();		// メインプロセス
+	// デストラクタ
+	~Manager();
+
+
+	// メインプロセス
+	void Update();
 };
+

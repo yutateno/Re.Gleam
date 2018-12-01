@@ -131,10 +131,6 @@ BaseMove::BaseMove()
 	SetFogStartEnd(3500.0f, 6000.0f);	// フォグの開始距離
 
 
-	backGround = 0;
-	backGround = MakeScreen(1920, 1080);
-
-
 	// シャドウマップハンドルの作成
 	shadowMapCharaHandle = MakeShadowMap(2048, 2048);
 	shadowMapAnotherCharaHandle = MakeShadowMap(512, 512);

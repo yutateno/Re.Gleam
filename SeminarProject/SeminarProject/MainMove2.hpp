@@ -17,39 +17,64 @@
 class MainMove2 : public BaseMove
 {
 private:
-	enum EFILE { stage, characterAttack, paneru, stairs, stairsColl, streetLight, skyBox, block, drawStage };			// ロードで渡されるファイル
+	// ロードで渡されるファイル
+	enum EFILE { stage, characterAttack, paneru, stairs, stairsColl, streetLight, skyBox, block, drawStage };
 
 
-	// ステージ
-	Stage* p_stage;			// ステージのポインタ
+	/// ステージ-------------------------------------
+	
+	// ステージのポインタ
+	Stage* p_stage;
+
+	// 階段のポインタ
 	StageStairs* p_stageStairs[10];
+
+	// 街灯のポインタ
 	StageStreetLight* p_stageStreetLight[50];
+
+	// パネルのポインタ
 	StagePaneru* p_stagePaneru[10];
 
 
-	// キャラクター
-	CharacterSword* p_character;		// キャラクターのポインタ
+	/// キャラクター----------------------
 
-	// 敵
-	EnemyMove2* p_enemy;				// 敵のポインタ
-
-
-	// カメラ
-	Camera* p_camera;					// カメラのポインタ
+	// キャラクターのポインタ
+	CharacterSword* p_character;
 
 
+	/// 敵---------------------
+
+	// 敵のポインタ
+	EnemyMove2* p_enemy;
+
+
+	/// カメラ-----------------------
+	// カメラのポインタ
+	Camera* p_camera;
+
+
+	// 影の描画
 	void ShadowDraw();
 
-
+	// 攻撃のプロセス
 	void AttackProcess();
 
+
 public:
+	// コンストラクタ
 	MainMove2(const std::vector<int> v_file);
+
+	// デストラクタ
 	~MainMove2();
 
 	
+	// 描画
 	void Draw();
+
+	// プロセス
 	void Process();
+
+	// カメラのプロセス
 	void CameraProcess();
 };
 

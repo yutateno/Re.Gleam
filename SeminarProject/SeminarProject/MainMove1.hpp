@@ -16,69 +16,119 @@
 class MainMove1 : public BaseMove
 {
 private:
-	enum EFILE { drawStage, collStage, character, sword, sound, seBallHigh, seBall };				// ロードから渡されるファイルの順番
+	// ロードから渡されるファイルの順番
+	enum EFILE { drawStage, collStage, character, sword, sound, seBallHigh, seBall };
 
-	// ステージ
-	Stage* p_stage;					// ステージのポインタ
-
-
-	// キャラクター
-	Character* p_character;			// キャラクターのポインタ
-	int catchEnemyNum;				// 敵を手に入れた数
+	/// ステージ--------------
+	
+	// ステージのポインタ
+	Stage* p_stage;
 
 
-	// 敵
-	const int enemyNum = 30;		// 敵の数
+	/// キャラクター-----------------
+
+	// キャラクターのポインタ
+	Character* p_character;
+
+	// 敵を手に入れた数
+	int catchEnemyNum;
+
+
+	/// 敵--------------------------------------
+
+	// 敵の数
+	const int enemyNum = 30;
+
+	// それぞれの敵が所持するもの
 	struct EnemyAggre
 	{
-		EnemyMove1* p_enemyMove;		// 敵のポインタ
-		bool aliveNow;					// 生きているか
+		// 敵のポインタ
+		EnemyMove1* p_enemyMove;
+
+		// 生きているか
+		bool aliveNow;
 	};
-	EnemyAggre s_enemyAggre[30];		// 敵の構造体を所持
+
+	// 敵の構造体を所持
+	EnemyAggre s_enemyAggre[30];
 
 
-	// カメラ
-	Camera* p_camera;					// カメラのポインタ
+	/// カメラ-------------------
+
+	// カメラのポインタ
+	Camera* p_camera;
 
 
-	// 簡単なあたり判定
-	void ActorHit();				// アクター同士のあたり判定(簡易)
+	/// あたり判定-----------------------
+
+	// アクター同士のあたり判定
+	void ActorHit();
 
 
-	// ライトの基本
-	const int lightNum = 4;				// ライトハンドルの数
-	int lightHandle[4];					// ライトハンドル情報保持
-	float lightRange[4];				// ライトの範囲
-	VECTOR lightArea[4];				// ライトの座標
-	// ライトに変化を加える
-	void LightProcess();				// ライトに関する関数
-	bool lightEventStart;				// イベントを行う
-	bool lightEventEnd;					// イベントの終了を確認
-	int lightEventCount;				// イベントのカウント
-	bool lightEnd;						// ライトを消す
-	float lightRangePreMax;				// 光源の広さの直前マックス
-	float lightRangeSpeed;				// 光源の広さを広げるスピード
+	/// ライトに関する--------------------------
+
+	// ライトハンドルの数
+	const int lightNum = 4;
+
+	// ライトハンドル情報保持
+	int lightHandle[4];
+
+	// ライトの範囲
+	float lightRange[4];
+
+	// ライトの座標
+	VECTOR lightArea[4];
+
+	// ライトに関する関数
+	void LightProcess();
+
+	// イベントを行う
+	bool lightEventStart;
+
+	// イベントの終了を確認
+	bool lightEventEnd;	
+
+	// イベントのカウント
+	int lightEventCount;
+
+	// ライトを消す
+	bool lightEnd;
+
+	// 光源の広さの直前マックス
+	float lightRangePreMax;
+
+	// 光源の広さを広げるスピード
+	float lightRangeSpeed;
+	/// ----------------------------------------
 
 
 	// 背景色
-	int backgroundColor;		// 背景色
+	int backgroundColor;
 
 
-	// 落ちてる剣
-	DropItemMove1* p_dropItem;		// 落ちるアイテム（剣）
-	bool touchSword;				// 落ちてるアイテムに触れる
+	/// 落ちてる剣-----------------------------
 
+	// 落ちるアイテム（剣）
+	DropItemMove1* p_dropItem;
 
-	// サウンド
-	int soundBG;
+	// 落ちてるアイテムに触れる
+	bool touchSword;
 
 
 public:
-	MainMove1(const std::vector<int> v_file);			// コンストラクタ
-	~MainMove1();							// デストラクタ
+	// コンストラクタ
+	MainMove1(const std::vector<int> v_file);
+
+	// デストラクタ
+	~MainMove1();
 
 
-	void Draw();										// 描画
-	void Process();		// プロセス
+	// 描画
+	void Draw();
+
+	// プロセス
+	void Process();
+
+	// カメラのプロセス
 	void CameraProcess();
 };

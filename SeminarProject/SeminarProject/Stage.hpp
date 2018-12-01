@@ -5,13 +5,18 @@
 class Stage
 {
 private:
-	int drawStageHandle;		// ステージ
+	// ステージ
+	int drawStageHandle;		
 
 
 public:
-	Stage(const int drawStageHandle);		// コンストラクタ
-	~Stage();						// デストラクタ
+	// コンストラクタ
+	Stage(const int drawStageHandle);		
+
+	// デストラクタ
+	~Stage();						
 
 
-	void Draw();				// 描画
+	// 描画
+	void Draw();				
 };

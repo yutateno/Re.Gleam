@@ -5,88 +5,131 @@
 class BaseMove
 {
 private:
-	// 影に関して-----------------------------------------------
-	int shadowMapCharaHandle;				// キャラクターの影のハンドル
-	int shadowMapAnotherCharaHandle;		// キャラクター以外の動くアクターのハンドル
-	int shadowMapNoMoveHandle;				// 全く動かないやつのハンドル
+	/// 影に関して-----------------------------------------------
 
-	VECTOR shadowCharaLowArea;				// キャラクターの影のマイナス範囲
-	VECTOR shadowCharaHighArea;				// キャラクターの影のプラス範囲
+	// キャラクターの影のハンドル
+	int shadowMapCharaHandle;
 
-	VECTOR shadowAnotherCharaLowArea;		// キャラクター以外動くやつの影のマイナス範囲
-	VECTOR shadowAnotherCharaHighArea;		// キャラクター以外動くやつの影のプラス範囲
+	// キャラクター以外の動くアクターのハンドル
+	int shadowMapAnotherCharaHandle;
 
-	VECTOR shadowNoMoveLowArea;				// 全く動かないやつの影のマイナス範囲
-	VECTOR shadowNoMoveHighArea;			// 全く動かないやつの影のプラス範囲
+	// 全く動かないやつのハンドル
+	int shadowMapNoMoveHandle;
 
-	VECTOR lightDire;						// ライトのディレクション方向
-	// ---------------------------------------------------------
+	// キャラクターの影のマイナス範囲
+	VECTOR shadowCharaLowArea;
 
-	// スカイボックスに関して
+	// キャラクターの影のプラス範囲
+	VECTOR shadowCharaHighArea;
+
+	// キャラクター以外動くやつの影のマイナス範囲
+	VECTOR shadowAnotherCharaLowArea;
+
+	// キャラクター以外動くやつの影のプラス範囲
+	VECTOR shadowAnotherCharaHighArea;
+
+	// 全く動かないやつの影のマイナス範囲
+	VECTOR shadowNoMoveLowArea;
+
+	// 全く動かないやつの影のプラス範囲
+	VECTOR shadowNoMoveHighArea;
+
+	// ライトのディレクション方向
+	VECTOR lightDire;
+	/// ---------------------------------------------------------
+
+
+	/// スカイボックスに関して
+
+	// スカイボックスのハンドル
 	int skyBoxUp, skyBoxUnder;
 
+
 protected:
-	// 高負荷覚悟で試したいので試す
-	int backGround;
+	// シーンの終了フラッグ
+	static bool endFlag;
+
+	// 現在のシーン
+	static ESceneNumber scene;
 
 
-	static bool endFlag;		// シーンの終了フラッグ
+	/// 影に関して-----------------------------------------------
 
-	static ESceneNumber scene;	// 現在のシーン
+	/// 設定する
 
-
-	// 影に関して-----------------------------------------------
-	// シャドウマップ０番：主人公
+	// 設定シャドウマップ０番：主人公
 	void ShadowCharaSetUpBefore();
 	void ShadowCharaSetUpAfter();
 
-	// シャドウマップ１番：主人公以外
+	// 設定シャドウマップ１番：主人公以外
 	void ShadowAnotherCharaSetUpBefore();
 	void ShadowAnotherCharaSetUpAfter();
 
-	// シャドウマップ２番：動かないもの
+	// 設定シャドウマップ２番：動かないもの
 	void ShadowNoMoveSetUpBefore();
 	void ShadowNoMoveSetUpAfter();
 
-	// 描画へ使用する
-	// シャドウマップ０番：主人公
+	/// 描画へ使用する
+
+	// 描画シャドウマップ０番：主人公
 	void ShadowCharaDrawBefore();
 	void ShadowCharaDrawAfter();
 
-	// シャドウマップ１番：主人公以外
+	// 描画シャドウマップ１番：主人公以外
 	void ShadowAnotherCharaDrawBefore();
 	void ShadowAnotherCharaDrawAfter();
 
-	// シャドウマップ２番：動かないもの
+	// 描画シャドウマップ２番：動かないもの
 	void ShadowNoMoveDrawBefore();
 	void ShadowNoMoveDrawAfter();
 
 	// 座標を更新し続ける
 	void ShadowArea(const VECTOR charaArea);
-	// ---------------------------------------------------------
+	/// ---------------------------------------------------------
 
 
 	// 二つのモデルの距離
 	int GetDistance(const VECTOR alpha, const VECTOR beta);
 
 
-	// スカイボックスに関して
+	/// スカイボックスに関して-----------------------------
+
+	// スカイボックスの描画
 	void SkyBoxDraw();
+
+	// スカイボックスのプロセス
 	void SkyBoxProcess(const VECTOR characterArea);
+
+	// スカイボックスの初期化
 	void SetInitSkyBox(const int skyBoxUp);
 
 
 public:
-	BaseMove();					// コンストラクタ
-	virtual ~BaseMove();		// デストラクタ
+	// コンストラクタ
+	BaseMove();
 
-	virtual void Draw() = 0;										// 描画
-	virtual void Process() = 0;		// プロセス
+	// デストラクタ
+	virtual ~BaseMove();
+
+	// 描画
+	virtual void Draw() = 0;
+
+	// プロセス
+	virtual void Process() = 0;
+
+	// カメラのプロセス
 	virtual void CameraProcess() = 0;
 
-	static const bool GetEndFlag();		// 終了ゲッター
-	static const ESceneNumber GetScene();	// 今のシーンゲッター
 
-	void SetScene(const ESceneNumber scene);	// 今のシーンセッター
+	/// ゲッターセッター------------------------------
+
+	// 終了かどうかを渡す
+	static const bool GetEndFlag();
+
+	// 今のシーンを渡す
+	static const ESceneNumber GetScene();
+
+	// 今のシーンを得る
+	void SetScene(const ESceneNumber scene);
 };
 

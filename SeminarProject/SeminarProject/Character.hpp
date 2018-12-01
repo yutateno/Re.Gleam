@@ -5,29 +5,46 @@
 class Character : public BasicCreature
 {
 private:
-	// それぞれの位置に関して
-	float direZAngle;		// 前後のキャラ向きを扱う変数
-	float direXAngle;		// 左右のキャラ向きを扱う変数
+	/// それぞれの位置に関して-----------
+
+	// 前後のキャラ向きを扱う変数
+	float direZAngle;
+
+	// 左右のキャラ向きを扱う変数
+	float direXAngle;
 
 
-	// モーションに関して
+	/// モーションに関して--------------------
 	enum MOTION { run, idle, walk };
 
 
-	// 動きに関して
+	/// 動きに関して----------------------------------
+
+	// 動きの向き
 	enum DIRECTION { left, down, right, up };
+
+	// 向いているかどうか
 	bool m_direction[4];
+
+	// 動きのプロセス
 	void MoveProcess();
 
 
 public:
-	Character(const int modelHandle, const int collStageHandle);	// コンストラクタ
-	~Character();					// デストラクタ
+	// コンストラクタ
+	Character(const int modelHandle, const int collStageHandle);
+
+	// デストラクタ
+	~Character();
 
 
+	// 描画
 	void Draw();
+
+	// プロセス
 	void Process(const float getAngle);
 
 
+	// 位置を初期化
 	void PositionReset();
 };

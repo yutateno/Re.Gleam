@@ -2,34 +2,49 @@
 #include "Basic.hpp"
 #include "SoundProcess.hpp"
 
+
 class Camera
 {
 private:
-	VECTOR cameraArea;		// カメラの位置
-	VECTOR viewArea;		// 注視する方向
-	VECTOR charaArea;		// キャラ位置
-	float angle;		// キャラクターのアングル
+	// カメラの位置
+	VECTOR cameraArea;
 
+	// 注視する方向
+	VECTOR viewArea;
 
-	int stageHandle;		// 当たり判定用ステージ
+	// キャラ位置
+	VECTOR charaArea;
 
+	// キャラクターのアングル
+	float angle;
+
+	// 当たり判定用ステージ
+	int stageHandle;
+
+	// 正射影カメラ用の座標
 	float orthoArea;
 
+	// 回転スピード
+	float speed;
 
-	float speed;					// 回転スピード
-	void RLrotate(const float speed, VECTOR& p_cameraArea);	// 回転を行う関数
+	// 回転を行う関数
+	void RLrotate(const float speed, VECTOR& p_cameraArea);
 
 
 public:
-	Camera(const VECTOR charaarea, const int collStageHandle);				// キャラの位置を引数に取ったコンストラクタ
-	~Camera();													// デストラクタ
+	// キャラの位置を引数に取ったコンストラクタ
+	Camera(const VECTOR charaarea, const int collStageHandle);
+
+	// デストラクタ
+	~Camera();
 
 
-	void Process(const VECTOR charaarea);		// キャラの位置を引数に取ったプロセス
+	// キャラの位置を引数に取ったプロセス
+	void Process(const VECTOR charaarea);		
 
-
+	// カメラのセットアップ
 	void SetUp();
 
-
-	const float GetAngle() const;				// キャラクターのアングル
+	// キャラクターのアングル
+	const float GetAngle() const;				
 };

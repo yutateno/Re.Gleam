@@ -5,29 +5,40 @@
 class LoadThread
 {
 private:
-	std::thread ths;		// 非同期を行う
+	// 非同期を行う
+	std::thread ths;
+
+	// ロードした個数
+	int num;
+
+	// ロードしたもの
+	std::vector<int> fileName;
+
+	// ロード画面のポインタ
+	LoadScreen* p_loadScreen;
 
 
-	int num;		// ロードした個数
-	std::vector<int> fileName;		// ロードしたもの
-
-
-	LoadScreen* p_loadScreen;		// ロード画面のポインタ
-
-
-	void MyNextLoad(const std::string path, int& file, const ELOADFILE type);		// 非同期を行うメソッド
+	// 非同期を行うメソッド
+	void MyNextLoad(const std::string path, int& file, const ELOADFILE type);
 
 	   
 public:
-	LoadThread();		// コンストラクタ
-	~LoadThread();		// デストラクタ
+	// コンストラクタ
+	LoadThread();
+
+	// デストラクタ
+	~LoadThread();
 
 
-	void Process(const int max, const std::string* path, const ELOADFILE* type);		// 行う
+	// 行う
+	void Process(const int max, const std::string* path, const ELOADFILE* type);
 
 
-	const std::vector<int> GetFile() const;		// ロードしたものを渡す
+	/// ゲッターセッター
+	
+	// ロードしたものを渡す
+	const std::vector<int> GetFile() const;
 
-
-	const int GetNum() const;			// ロードを終えた数
+	// ロードを終えた数
+	const int GetNum() const;
 };

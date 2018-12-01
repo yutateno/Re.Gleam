@@ -4,13 +4,15 @@
 
 class StageStreetLight : public BasicObject
 {
-private:
-
 public:
+	// コンストラクタ
 	StageStreetLight(const int draw, const int collStageHandle, const VECTOR area);
+
+	// デストラクタ
 	~StageStreetLight();
 
 
+	// 描画
 	void Draw();
 };
 

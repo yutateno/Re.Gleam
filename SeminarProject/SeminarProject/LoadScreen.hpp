@@ -5,15 +5,22 @@
 class LoadScreen
 {
 private:
-	int draw;			// ロード画面的な
-	int endDraw;		// ロード終了的な
+	// ロード画面
+	int draw;
+
+	// ロード終了
+	int endDraw;
 
 
 public:
-	LoadScreen();		// コンストラクタ
-	~LoadScreen();		// デストラクタ
+	// コンストラクタ
+	LoadScreen();
+
+	// デストラクタ
+	~LoadScreen();
 
 
-	void Process(const int num, const int max);		// 非同期で行うメソッド
+	// 非同期で行うメソッド
+	void Process(const int num, const int max);
 };
 

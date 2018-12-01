@@ -1,13 +1,15 @@
 #pragma once
 
-// インクルードファイル
+/// インクルードファイル-------------
 #include "DLLXinput.h"
 #include "DxLib.h"
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include "SoundProcess.hpp"
 
-// 色んな所で使いそうなもの
+
+/// 色んな所で使いそうなもの------------------------------
+
 // シーンの動き
 enum class ESceneNumber
 {
@@ -16,12 +18,16 @@ enum class ESceneNumber
 
 namespace BASICPARAM
 {
-	extern ESceneNumber e_preScene;		// 直前のシーン
-	extern ESceneNumber e_nowScene;		// 今のシーン
+	// 直前のシーン
+	extern ESceneNumber e_preScene;
+
+	// 今のシーン
+	extern ESceneNumber e_nowScene;
 }
 
 
-// マクロ
+/// マクロ-------------------------------------------------------------------------------------
+
 // directx関係でよくある解放マクロ
 #define SAFE_RELEASE(p) { if(p!=NULL) { (p)->Release(); (p)=NULL; } }
 

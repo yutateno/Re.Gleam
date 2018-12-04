@@ -108,10 +108,10 @@ void Manager::Update()
 			p_loadThread->Process(max1, move1str, load1);		// ロードをする
 			if (p_loadThread->GetNum() >= max1)		// ロードが終了したら
 			{
-				if (CheckHitKey(KEY_INPUT_Z) == 1)			// 終わったら一操作
-				{
+				//if (CheckHitKey(KEY_INPUT_Z) == 1)			// 終わったら一操作
+				//{
 					BASICPARAM::e_nowScene = ESceneNumber::FIRSTMOVE;
-				}
+				//}
 			}
 		}
 		else if (BASICPARAM::e_preScene == ESceneNumber::SECONDLOAD)
@@ -119,10 +119,10 @@ void Manager::Update()
 			p_loadThread->Process(max2, move2str, load2);		// ロードをする
 			if (p_loadThread->GetNum() >= max2)		// ロードが終了したら
 			{
-				if (CheckHitKey(KEY_INPUT_Z) == 1)			// 終わったら一操作
-				{
+				//if (CheckHitKey(KEY_INPUT_Z) == 1)			// 終わったら一操作
+				//{
 					BASICPARAM::e_nowScene = ESceneNumber::SECONDMOVE;
-				}
+				//}
 			}
 		}
 		else

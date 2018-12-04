@@ -34,6 +34,7 @@ void LoadThread::Process(const int max, const std::string* path, const ELOADFILE
 		ths.join();
 		num++;
 		ClearDrawScreen();
+		SetDrawScreen(DX_SCREEN_BACK);	// ”wŒi•`‰æ
 		p_loadScreen->Process(num, max);			// ƒ[ƒh‰æ–Ê
 		ScreenFlip();
 		Process(max, path, type);

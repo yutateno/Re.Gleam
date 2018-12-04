@@ -455,7 +455,7 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 
 
 	// ƒ‚ƒfƒ‹‚ÌŒü‚«‚ÆˆÊ’u
-	area = VGet(0.0f, 0.0f, 0.0f);
+	area = VGet(0.0f, 50.0f, 0.0f);
 	preArea = area;
 	direXAngle = 0.0f;
 	direZAngle = 0.0f;

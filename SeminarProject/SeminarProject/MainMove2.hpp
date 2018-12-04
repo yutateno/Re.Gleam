@@ -69,12 +69,12 @@ public:
 
 	
 	// 描画
-	void Draw();
+	void Draw() override;
 
 	// プロセス
-	void Process();
+	void Process() override;
 
 	// カメラのプロセス
-	void CameraProcess();
+	void CameraProcess() override;
 };
 

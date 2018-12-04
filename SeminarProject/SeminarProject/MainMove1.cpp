@@ -260,13 +260,13 @@ void MainMove1::LightProcess()
 			if (lightEventCount < 50)
 			{
 				SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - (lightEventCount * 2));
-				DrawBox(0, 0, 1920, 1080, GetColor(255, 255, 255), true);
+				DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, GetColor(255, 255, 255), true);
 				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 			}
 			else		// ƒtƒF[ƒhƒCƒ“‚Ìˆ—‚ğ‚³‚¹‚Ä–ß‚·
 			{
 				SetDrawBlendMode(DX_BLENDMODE_ALPHA, 155 + ((lightEventCount - 50) * 2));
-				DrawBox(0, 0, 1920, 1080, GetColor(255, 255, 255), true);
+				DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, GetColor(255, 255, 255), true);
 				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 			}
 		}
@@ -415,7 +415,7 @@ MainMove1::~MainMove1()
 // •`‰æ
 void MainMove1::Draw()
 {
-	DrawBox(0, 0, 1920, 1080, backgroundColor, true);	// ”wŒi‚ğ•`‰æ
+	DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, backgroundColor, true);	// ”wŒi‚ğ•`‰æ
 
 
 	p_stage->Draw();					// ƒXƒe[ƒW‚ğ•`‰æ

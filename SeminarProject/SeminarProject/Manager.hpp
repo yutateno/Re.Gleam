@@ -50,6 +50,22 @@ private:
 	// シーン切り替えのフェードカウント
 	int feedCount;
 
+
+	/// オプション画面に関する---------------
+
+	// ガウスフィルタの画像
+	int gaussianScreen;
+
+	// オプション画面にいるかどうか
+	bool optionMenuNow;
+
+	// オプション画面のプロセス
+	void OptionProcess();
+
+	// オプション画面の描画
+	void OptionDraw();
+
+
 public:
 	// コンストラクタ
 	Manager();

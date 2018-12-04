@@ -33,11 +33,28 @@ void Manager::SceneChange()
 	}
 }
 
+
+void Manager::OptionProcess()
+{
+
+}
+
+
+void Manager::OptionDraw()
+{
+	DrawGraph(0, 0, gaussianScreen, false);
+	//DrawBox(50, 50, 250, 100, GetColor(255, 255, 255), true);
+	//DrawBox(50, 50, 250, 100, GetColor(0, 0, 0), false);
+	//DrawFormatString(50, 50, 255, "あああああああ");
+}
+
+
 Manager::Manager()
 {
 	// 初期化
 	BASICPARAM::e_preScene = ESceneNumber::FIRSTLOAD;
 	BASICPARAM::e_nowScene = ESceneNumber::FIRSTLOAD;
+	BASICPARAM::e_preTextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::e_TextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::nowCameraOrtho = false;
 
@@ -86,14 +103,19 @@ Manager::Manager()
 	p_loadThread = new LoadThread();
 
 
+	gaussianScreen = MakeScreen(BASICPARAM::winWidth, BASICPARAM::winHeight);
+	optionMenuNow = false;
+
+
 	SetCreateDrawValidGraphMultiSample(4, 4);			// 4x4のアンチエイリアシングモードにする
-	antiAliasScreen = MakeScreen(1920, 1080, false);	// アンチエイリアシング用の画面を作成
+	antiAliasScreen = MakeScreen(BASICPARAM::winWidth, BASICPARAM::winHeight, false);	// アンチエイリアシング用の画面を作成
 	SetCreateDrawValidGraphMultiSample(0, 0);			// 元に戻す
 }
 
 
 Manager::~Manager()
 {
+	GRAPHIC_RELEASE(gaussianScreen);
 	GRAPHIC_RELEASE(antiAliasScreen);
 	POINTER_RELEASE(p_baseMove);
 	POINTER_RELEASE(p_loadThread);
@@ -127,20 +149,44 @@ void Manager::Update()
 		}
 		else
 		{
-			// アンチエイリアス画面に対して描画処理を行う
-			SetDrawScreen(antiAliasScreen);
-			ClearDrawScreen();
-			p_baseMove->CameraProcess();
-			p_baseMove->Draw();
-			p_baseMove->Process();
-			BASICPARAM::e_nowScene = p_baseMove->GetScene();
+			if (!optionMenuNow)
+			{
+				// アンチエイリアス画面に対して描画処理を行う
+				SetDrawScreen(antiAliasScreen);
+				ClearDrawScreen();
+				p_baseMove->CameraProcess();
+				p_baseMove->Draw();
+				p_baseMove->Process();
+				BASICPARAM::e_nowScene = p_baseMove->GetScene();
 
+				// アンチエイリアス画面に描画したものを裏画面に書き込む
+				SetDrawScreen(DX_SCREEN_BACK);
+				DrawGraph(0, 0, antiAliasScreen, false);
+				p_baseMove->CameraProcess();				// SetDrawScreenを行うとカメラの設定がなくなるので再設定を行う
+				ScreenFlip();
+				
+				// オプション画面に移行する
+				if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1)
+				{
+					GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, gaussianScreen);						// 現在の画面をキャプチャする
+					GraphFilter(gaussianScreen, DX_GRAPH_FILTER_GAUSS, 16, 1400);				// 現在の画面にガウスフィルタかけてぼかす
+					optionMenuNow = true;
+				}
+			}
+			else
+			{
+				ClearDrawScreen();
+				OptionProcess();
+				OptionDraw();
 
-			// アンチエイリアス画面に描画したものを裏画面に書き込む
-			SetDrawScreen(DX_SCREEN_BACK);
-			DrawGraph(0, 0, antiAliasScreen, false);
-			p_baseMove->CameraProcess();				// SetDrawScreenを行うとカメラの設定がなくなるので再設定を行う
-			ScreenFlip();
+				// オプション画面から戻る
+				if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1)
+				{
+					optionMenuNow = false;
+				}
+
+				ScreenFlip();
+			}
 		}
 	}
 	else

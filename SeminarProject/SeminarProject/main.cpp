@@ -20,9 +20,9 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	// ウィンドウサイズ
-	int winWidth = 1920;
-	int winHeight = 1080;
+	BASICPARAM::winWidth = 1920;
+	BASICPARAM::winHeight = 1080;
+	BASICPARAM::bitColor = 32;
 
 #ifdef _DEBUG
 	SetOutApplicationLogValidFlag(TRUE);	// ログテキスト出力する
@@ -42,7 +42,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	SetUseLarge3DPositionSupport(TRUE);		// 巨大な座標値をサポート
 
-	SetGraphMode(winWidth, winHeight, 32);					// 1920x1080x32bit
+	GetDefaultState(&BASICPARAM::winWidth, &BASICPARAM::winHeight, &BASICPARAM::bitColor);		// ウィンドウデフォルト値を得る
+
+	SetGraphMode(1920, 1080, BASICPARAM::bitColor);					// 1920x1080xdefaultbit
+	SetWindowSize(BASICPARAM::winWidth, BASICPARAM::winHeight);		// ウィンドウサイズに合わせてゲームサイズを変更
 
 	if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理
 	{
@@ -84,7 +87,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			ClearDrawScreen();
 			if (DLLXinput::GetPadNum() == 0)
 			{
-				DrawFormatString(winWidth / 2, winHeight / 2, GetColor(0, 0, 180), "コントローラーが繋がっていません。終了します。");
+				DrawFormatString(BASICPARAM::winWidth / 2, BASICPARAM::winHeight / 2, GetColor(0, 0, 180), "コントローラーが繋がっていません。終了します。");
 				controllCount++;
 				if (controllCount >= 50)
 				{
@@ -99,7 +102,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				if (DLLXinput::GetPlayerPadNumber() == 5)
 				{
 					controllCount++;
-					DrawFormatString(winWidth / 2, winHeight / 2, GetColor(0, 0, 180), "コントローラーのAボタンを押してください。\nそれをコントローラーとして認証します。\n");
+					DrawFormatString(BASICPARAM::winWidth / 2, BASICPARAM::winHeight / 2, GetColor(0, 0, 180), "コントローラーのAボタンを押してください。\nそれをコントローラーとして認証します。\n");
 					if (controllCount >= 10)
 					{
 						if (DLLXinput::GetPadButtonData(0, DLLXinput::XINPUT_PAD::BUTTON_A) == 1)		// １Pが入力された
@@ -127,11 +130,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 					// 入力されない時間経過で動きを与える
 					if (controllCount >= COUNT && controllCount < COUNT + 400)
 					{
-						DrawFormatString(winWidth / 2, (winHeight / 2) + 100, GetColor(0, 0, 180), "入力を一定時間確認できません。再起動してみてください。\n");
+						DrawFormatString(BASICPARAM::winWidth / 2, (BASICPARAM::winHeight / 2) + 100, GetColor(0, 0, 180), "入力を一定時間確認できません。再起動してみてください。\n");
 					}
 					else if (controllCount >= COUNT + 400 && controllCount < COUNT + 550)		// 何かしら問題があると判断して終了させる
 					{
-						DrawFormatString(winWidth / 2, (winHeight / 2) + 100, GetColor(0, 0, 180), "問題が発生してると判断し、ゲームを終了します。\n");
+						DrawFormatString(BASICPARAM::winWidth / 2, (BASICPARAM::winHeight / 2) + 100, GetColor(0, 0, 180), "問題が発生してると判断し、ゲームを終了します。\n");
 					}
 					else if (controllCount >= COUNT + 550)
 					{
@@ -141,7 +144,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				else
 				{
 					controllCount++;
-					DrawFormatString(winWidth / 2, winHeight / 2, GetColor(0, 0, 0), "コントローラーナンバー：%d を確認しました。ゲームを開始します。\n", (DLLXinput::GetPlayerPadNumber() + 1));
+					DrawFormatString(BASICPARAM::winWidth / 2, BASICPARAM::winHeight / 2, GetColor(0, 0, 0), "コントローラーナンバー：%d を確認しました。ゲームを開始します。\n", (DLLXinput::GetPlayerPadNumber() + 1));
 					if (controllCount >= 100)
 					{
 						firstControll = true;

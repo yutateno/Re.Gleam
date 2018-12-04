@@ -30,11 +30,19 @@ namespace BASICPARAM
 	// 今のシーン
 	extern ESceneNumber e_nowScene;
 
+	// 直前のテクスチャの色
+	extern ETextureColor e_preTextureColor;
+
 	// 今のテクスチャの色
 	extern ETextureColor e_TextureColor;
 
 	// 今のカメラの形式が正射影かどうか
 	extern bool nowCameraOrtho;
+
+	// ウィンドウサイズ
+	extern int winWidth;
+	extern int winHeight;
+	extern int bitColor;
 }
 
 

@@ -35,16 +35,20 @@ void Manager::SceneChange()
 
 Manager::Manager()
 {
+	// 初期化
 	BASICPARAM::e_preScene = ESceneNumber::FIRSTLOAD;
 	BASICPARAM::e_nowScene = ESceneNumber::FIRSTLOAD;
+	BASICPARAM::e_TextureColor = ETextureColor::WHITEBLACK;
 
-	move1str[0] = "media\\ステージモデル\\move1_graphic.myn";
-	move1str[1] = "media\\ステージモデル\\move1_hantei.myn";
-	move1str[2] = "media\\CLPH\\motion\\CLPH_motionALL.myn";
-	move1str[3] = "media\\剣\\sword.myn";
-	move1str[4] = "media\\sound\\ノイズ(1).wyn";
-	move1str[5] = "media\\sound\\玉がポーン（音が高いほう）.wyn";
-	move1str[6] = "media\\sound\\玉がポーン.wyn";
+
+	// シーン１の素材ファイル
+	move1str[0] = "media\\こっち\\media\\ステージモデル\\move1_graphic.myn";
+	move1str[1] = "media\\こっち\\media\\ステージモデル\\move1_hantei.myn";
+	move1str[2] = "media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.myn";
+	move1str[3] = "media\\こっち\\media\\剣\\sword.myn";
+	move1str[4] = "media\\こっち\\media\\sound\\タイトル（オルゴール）.wyn";
+	move1str[5] = "media\\こっち\\media\\sound\\玉がポーン（音が高いほう）.wyn";
+	move1str[6] = "media\\こっち\\media\\sound\\玉がポーン.wyn";
 	load1[0] = ELOADFILE::mv1model;
 	load1[1] = ELOADFILE::mv1model;
 	load1[2] = ELOADFILE::mv1model;
@@ -53,15 +57,17 @@ Manager::Manager()
 	load1[5] = ELOADFILE::soundmem;
 	load1[6] = ELOADFILE::soundmem;
 
-	move2str[0] = "media\\ステージモデル\\move1_hantei.myn";
-	move2str[1] = "media\\swordCLPH\\clph_sword_all.myn";
-	move2str[2] = "media\\paneru\\paneru.myn";
-	move2str[3] = "media\\kaidan\\kaidan.myn";
-	move2str[4] = "media\\kaidan\\kaidan_hantei.myn";
-	move2str[5] = "media\\街灯\\Gaitou.myn";
-	move2str[6] = "media\\スカイボックス\\SkyDome.myn";
-	move2str[7] = "media\\ブロック\\cubeblock.myn";
-	move2str[8] = "media\\ステージモデル\\move1_graphic.myn";
+
+	// シーン２の素材ファイル
+	move2str[0] = "media\\こっち\\media\\ステージモデル\\move1_hantei.myn";
+	move2str[1] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.myn";
+	move2str[2] = "media\\こっち\\media\\paneru\\paneru.myn";
+	move2str[3] = "media\\こっち\\media\\kaidan\\kaidan.myn";
+	move2str[4] = "media\\こっち\\media\\kaidan\\kaidan_hantei.myn";
+	move2str[5] = "media\\こっち\\media\\街灯\\Gaitou.myn";
+	move2str[6] = "media\\こっち\\media\\スカイボックス\\SkyDome.myn";
+	move2str[7] = "media\\こっち\\media\\ブロック\\cubeblock.myn";
+	move2str[8] = "media\\こっち\\media\\ステージモデル\\move1_graphic.myn";
 	load2[0] = ELOADFILE::mv1model;
 	load2[1] = ELOADFILE::mv1model;
 	load2[2] = ELOADFILE::mv1model;

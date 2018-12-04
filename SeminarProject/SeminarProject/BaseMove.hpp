@@ -1,5 +1,6 @@
 #pragma once
 #include "Basic.hpp"
+#include "LoadFile.hpp"
 
 
 class BaseMove
@@ -39,10 +40,13 @@ private:
 	/// ---------------------------------------------------------
 
 
-	/// スカイボックスに関して
+	/// スカイボックスに関して--------------
 
 	// スカイボックスのハンドル
 	int skyBoxUp, skyBoxUnder;
+
+	// テクスチャ
+	int textureHandle;
 
 
 protected:

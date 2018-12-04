@@ -153,6 +153,22 @@ Character::Character(const int modelHandle, const int collStageHandle) : BasicCr
 	// ３Ｄモデルの読み込み
 	this->modelHandle = 0;
 	this->modelHandle = MV1DuplicateModel(modelHandle);
+	
+
+	// テクスチャ適応（このモデルはステージ１のみであり白黒しか使わないのでここで
+	textureHandle0 = -1;
+	textureHandle1 = -1;
+	textureHandle2 = -1;
+	textureHandle3 = -1;
+	LoadFile::MyLoad("media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_hair.pyn"	, textureHandle0, ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_ex.pyn"		, textureHandle1, ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_wear.pyn"	, textureHandle2, ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_face.pyn"	, textureHandle3, ELOADFILE::graph);
+
+	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
+	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle1, true);
+	MV1SetTextureGraphHandle(this->modelHandle, 2, textureHandle2, false);
+	MV1SetTextureGraphHandle(this->modelHandle, 3, textureHandle3, false);
 
 
 	// ３Ｄモデルの0番目のアニメーションをアタッチする
@@ -194,6 +210,11 @@ Character::Character(const int modelHandle, const int collStageHandle) : BasicCr
 // デストラクタ
 Character::~Character()
 {
+	GRAPHIC_RELEASE(textureHandle0);
+	GRAPHIC_RELEASE(textureHandle1);
+	GRAPHIC_RELEASE(textureHandle2);
+	GRAPHIC_RELEASE(textureHandle3);
+
 	MODEL_RELEASE(modelHandle);
 }
 

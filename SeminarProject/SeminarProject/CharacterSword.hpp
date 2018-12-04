@@ -93,6 +93,16 @@ private:
 
 	// 行動によってアニメーションの管理
 	void AnimProcess();
+	
+
+	/// テクスチャに関して------------------
+
+	// テクスチャの相対IDを後ろにつけて
+	int textureHandle0;
+	int textureHandle1;
+	int textureHandle2;
+	int textureHandle3;
+	int textureHandle4;
 
 
 public:

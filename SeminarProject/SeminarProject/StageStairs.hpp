@@ -4,6 +4,11 @@
 
 class StageStairs : public BasicObject
 {
+private:
+	// テクスチャ
+	int textureHandle;
+
+
 public:
 	// コンストラクタ
 	StageStairs(const int draw, const int collStageHandle, const VECTOR area);

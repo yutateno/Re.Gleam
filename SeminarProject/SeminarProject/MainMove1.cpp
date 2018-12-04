@@ -16,18 +16,48 @@ void MainMove1::ActorHit()
 				switch (++catchEnemyNum)
 				{
 				case 1:
+					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 50, 50);
+					break;
+				case 2:
 					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 100, 100);
 					break;
 				case 3:
+					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 150, 150);
+					break;
+				case 4:
+					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 170, 170);
+					break;
+				case 5:
+					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 190, 190);
+					break;
+				case 6:
+					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 210, 210);
+					break;
+				case 7:
+					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 230, 230);
+					break;
+				case 8:
 					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 255, 255);
 					break;
+
 				case 30:
 					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 0, 0);
 					break;
 				default:
 					break;
 				}
-				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPawnHigh);
+
+				std::random_device rnd;     // 非決定的な乱数生成器を生成
+				std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+				std::uniform_int_distribution<> randPawnSE(0, 1);        // X座標用乱数
+				if (randPawnSE(mt) == 0)
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPawnHigh);
+				}
+				else
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPawn);
+				}
 			}
 			else if (BaseMove::GetDistance(p_character->GetArea(), s_enemyAggre[i].p_enemyMove->GetArea()) <= 300)
 			{
@@ -36,11 +66,11 @@ void MainMove1::ActorHit()
 		}
 	}
 
-	if (CheckHitKey(KEY_INPUT_Z)==1)
+	if (CheckHitKey(KEY_INPUT_Z)==1 ||
+		(catchEnemyNum==30 && lightEventEnd
+		&& BaseMove::GetDistance(p_character->GetArea(), p_dropItem->GetArea()) <= 60))
 	{
-		SoundProcess::BGMEnd();
 		touchSword = true;
-		//StopSoundMem(soundBG);
 		BaseMove::SetScene(ESceneNumber::SECONDLOAD);
 	}
 }
@@ -274,7 +304,6 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 	{
 		s_enemyAggre[i].p_enemyMove = NULL;
 	}
-	//soundBG = -1;
 
 
 	// 敵以外のポインタの初期化
@@ -322,14 +351,12 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 	SoundProcess::Load(v_file[EFILE::sound], SoundProcess::ESOUNDNAME_BGM::titleMusicBox);
 	SoundProcess::Load(v_file[EFILE::seBallHigh], SoundProcess::ESOUNDNAME_SE::ballPawnHigh, SoundProcess::ESOUNDTYPE::soundMem);
 	SoundProcess::Load(v_file[EFILE::seBall], SoundProcess::ESOUNDNAME_SE::ballPawn, SoundProcess::ESOUNDTYPE::soundMem);
-	//SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 255, 255);
 }
 
 
 // デストラクタ
 MainMove1::~MainMove1()
 {
-	//SOUND_RELEASE(soundBG);
 	for (int i = 0; i != lightNum; ++i)
 	{
 		LIGHT_RELEASE(lightHandle[i]);

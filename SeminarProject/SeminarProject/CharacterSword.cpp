@@ -381,6 +381,65 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	this->modelHandle = MV1DuplicateModel(modelHandle);
 
 
+	/// テクスチャに関する-------------------------------------------------------------------------------------------------------------------------
+
+	// テクスチャ適応
+	textureHandle0 = -1;
+	textureHandle1 = -1;
+	textureHandle2 = -1;
+	textureHandle3 = -1;
+	textureHandle4 = -1;
+	switch (BASICPARAM::e_TextureColor)
+	{
+	case ETextureColor::WHITEBLACK:
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_hair.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_wear.pyn", textureHandle2, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_face.pyn", textureHandle3, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_ex.pyn", textureHandle4, ELOADFILE::graph);
+		break;
+
+	case ETextureColor::NORMAL:
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\sword_Tex.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_hair.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_wear.pyn", textureHandle2, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn", textureHandle3, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn", textureHandle4, ELOADFILE::graph);
+		break;
+
+	case ETextureColor::D_CORRECTION:
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\sword_Tex.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_hair.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_wear.pyn", textureHandle2, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_face.pyn", textureHandle3, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_ex.pyn", textureHandle4, ELOADFILE::graph);
+		break;
+
+	case ETextureColor::P_CORRECTION:
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\sword_Tex.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_hair.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_wear.pyn", textureHandle2, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_face.pyn", textureHandle3, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_ex.pyn", textureHandle4, ELOADFILE::graph);
+		break;
+
+	default:
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\sword_Tex.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_hair.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_wear.pyn", textureHandle2, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn", textureHandle3, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn", textureHandle4, ELOADFILE::graph);
+		break;
+	}
+
+	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, true);
+	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle1, false);
+	MV1SetTextureGraphHandle(this->modelHandle, 2, textureHandle2, false);
+	MV1SetTextureGraphHandle(this->modelHandle, 3, textureHandle3, false);
+	MV1SetTextureGraphHandle(this->modelHandle, 4, textureHandle4, true);
+	/// -----------------------------------------------------------------------------------------------------------------------------------------
+
+
 	// ３Ｄモデルの0番目のアニメーションをアタッチする
 	attachNum = MOTION::idle;
 	attachMotion = MV1AttachAnim(this->modelHandle, attachNum, -1, FALSE);
@@ -448,6 +507,12 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 
 CharacterSword::~CharacterSword()
 {
+	GRAPHIC_RELEASE(textureHandle0);
+	GRAPHIC_RELEASE(textureHandle1);
+	GRAPHIC_RELEASE(textureHandle2);
+	GRAPHIC_RELEASE(textureHandle3);
+	GRAPHIC_RELEASE(textureHandle4);
+
 	for (int i = 0; i != 10; ++i)
 	{
 		MODEL_RELEASE(stairsHandle[i]);

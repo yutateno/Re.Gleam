@@ -3,15 +3,28 @@
 
 DropItemMove1::DropItemMove1(const int draw, const int collStageHandle) : BasicObject(collStageHandle)
 {
+	// 初期位置を設定
 	area = VGet(1000.0f, 0.0f, 1000.0f);
 
+
+	// 影のサイズを設定
 	BasicObject::shadowHeight = 10.0f;
 	BasicObject::shadowSize = 5.0f;
 
 
+	// モデルデータの読み込み
 	this->modelHandle = 0;
 	this->modelHandle = MV1DuplicateModel(draw);
 
+	
+	// テクスチャ適応
+	textureHandle = -1;
+	LoadFile::MyLoad("media\\こっち\\media\\剣\\whiteblack\\sword_Tex.pyn", textureHandle, ELOADFILE::graph);
+
+	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle, true);
+
+
+	// モデルのサイズを変更
 	MV1SetScale(this->modelHandle, VGet(0.2f, 0.2f, 0.2f));
 
 	// モデルの座標を更新
@@ -21,6 +34,7 @@ DropItemMove1::DropItemMove1(const int draw, const int collStageHandle) : BasicO
 
 DropItemMove1::~DropItemMove1()
 {
+	GRAPHIC_RELEASE(textureHandle);
 	MODEL_RELEASE(modelHandle);
 }
 

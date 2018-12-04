@@ -16,6 +16,12 @@ enum class ESceneNumber
 	FIRSTLOAD, FIRSTMOVE, SECONDLOAD, SECONDMOVE
 };
 
+// テクスチャの色
+enum class ETextureColor
+{
+	NORMAL, D_CORRECTION, P_CORRECTION, WHITEBLACK
+};
+
 namespace BASICPARAM
 {
 	// 直前のシーン
@@ -23,6 +29,9 @@ namespace BASICPARAM
 
 	// 今のシーン
 	extern ESceneNumber e_nowScene;
+
+	// 今のテクスチャの色
+	extern ETextureColor e_TextureColor;
 }
 
 

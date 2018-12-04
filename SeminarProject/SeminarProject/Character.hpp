@@ -30,6 +30,15 @@ private:
 	void MoveProcess();
 
 
+	/// テクスチャに関して------------------
+
+	// テクスチャの相対IDを後ろにつけて
+	int textureHandle0;
+	int textureHandle1;
+	int textureHandle2;
+	int textureHandle3;
+
+
 public:
 	// コンストラクタ
 	Character(const int modelHandle, const int collStageHandle);

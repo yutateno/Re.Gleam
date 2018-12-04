@@ -200,6 +200,11 @@ namespace SoundProcess
 			PlaySoundMem(se_sound[static_cast<int>(name)], DX_PLAYTYPE_BACK);
 			ChangeVolumeSoundMem(0, se_sound[static_cast<int>(name)]);
 		}
+		else
+		{
+			ChangeVolumeSoundMem(0, se_sound[static_cast<int>(name)]);
+			PlaySoundMem(se_sound[static_cast<int>(name)], DX_PLAYTYPE_BACK);
+		}
 
 		se_playFlag[static_cast<int>(name)] = true;
 	}
@@ -273,7 +278,6 @@ namespace SoundProcess
 	void BGMProcess()
 	{
 		BGMFeed();
-		printfDx("%d\n", GetVolumeSoundMem2(bgm_sound[static_cast<int>(bgm_name[0])]));
 	}
 
 

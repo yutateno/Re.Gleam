@@ -3,9 +3,9 @@
 LoadScreen::LoadScreen()
 {
 	draw = 0;
-	LoadFile::MyLoad("media\\load.pyn", draw, ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\load.pyn", draw, ELOADFILE::graph);
 	endDraw = 0;
-	LoadFile::MyLoad("media\\ロード終了.pyn", endDraw, ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\ロード終了.pyn", endDraw, ELOADFILE::graph);
 }
 
 LoadScreen::~LoadScreen()

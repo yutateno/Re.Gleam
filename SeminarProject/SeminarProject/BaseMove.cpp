@@ -113,10 +113,54 @@ void BaseMove::SkyBoxProcess(const VECTOR characterArea)
 
 void BaseMove::SetInitSkyBox(const int skyBoxUp)
 {
+	// テクスチャの読み込み
+	switch (BASICPARAM::e_TextureColor)
+	{
+	case ETextureColor::WHITEBLACK:
+		LoadFile::MyLoad("media\\こっち\\media\\スカイボックス\\whiteblack\\BlueSky.byn", textureHandle, ELOADFILE::graph);
+		break;
+
+	case ETextureColor::NORMAL:
+		LoadFile::MyLoad("media\\こっち\\media\\スカイボックス\\normal\\BlueSky.byn", textureHandle, ELOADFILE::graph);
+		break;
+
+	case ETextureColor::D_CORRECTION:
+		LoadFile::MyLoad("media\\こっち\\media\\スカイボックス\\D\\BlueSky.byn", textureHandle, ELOADFILE::graph);
+		break;
+
+	case ETextureColor::P_CORRECTION:
+		LoadFile::MyLoad("media\\こっち\\media\\スカイボックス\\P\\BlueSky.byn", textureHandle, ELOADFILE::graph);
+		break;
+
+	default:
+		LoadFile::MyLoad("media\\こっち\\media\\スカイボックス\\normal\\BlueSky.byn", textureHandle, ELOADFILE::graph);
+		break;
+	}
+
+	/// スカイボックスの上に関する-----------------------------------------
+
+	// 読み込み
 	this->skyBoxUp = MV1DuplicateModel(skyBoxUp);
+	
+	// テクスチャ適応
+	MV1SetTextureGraphHandle(this->skyBoxUp, 0, textureHandle, false);
+
+	// スケール変更
 	MV1SetScale(this->skyBoxUp, VGet(170.0f, 170.0f, 170.0f));
+
+
+	/// スカイボックスの下に関する-------------------------------------------
+
+	// 読み込み
 	this->skyBoxUnder = MV1DuplicateModel(this->skyBoxUp);
+
+	// テクスチャ適応
+	MV1SetTextureGraphHandle(this->skyBoxUnder, 0, textureHandle, false);
+
+	// スケール変更
 	MV1SetScale(this->skyBoxUnder, VGet(170.0f, 170.0f, 170.0f));
+
+	// ロケーション変更
 	MV1SetRotationXYZ(this->skyBoxUnder, VGet(DX_PI_F, 0.0f, 0.0f));
 }
 
@@ -164,6 +208,7 @@ BaseMove::BaseMove()
 	// スカイボックスに関して
 	skyBoxUnder = -1;
 	skyBoxUp = -1;
+	textureHandle = -1;
 }
 
 BaseMove::~BaseMove()
@@ -176,6 +221,7 @@ BaseMove::~BaseMove()
 	// スカイボックスの削除
 	MODEL_RELEASE(skyBoxUnder);
 	MODEL_RELEASE(skyBoxUp);
+	GRAPHIC_RELEASE(textureHandle);
 }
 
 const bool BaseMove::GetEndFlag()

@@ -4,6 +4,11 @@
 
 class EnemyMove2 : public BasicCreature
 {
+private:
+	// テクスチャ
+	int textureHandle;
+
+
 public:
 	// コンストラクタ
 	EnemyMove2(const int collStageHandle, const VECTOR area, const int modelHandle);

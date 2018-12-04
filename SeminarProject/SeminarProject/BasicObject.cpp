@@ -88,7 +88,7 @@ BasicObject::BasicObject(const int collStageHandle)
 	stageHandle = 0;
 
 	// 影の読み込み
-	LoadFile::MyLoad("media\\Shadow.tyn", shadowHandle, ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\Shadow.tyn", shadowHandle, ELOADFILE::graph);
 
 
 	// ステージのコリジョン情報の更新

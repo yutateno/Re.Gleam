@@ -3,21 +3,57 @@
 
 EnemyMove2::EnemyMove2(const int collStageHandle, const VECTOR area, const int modelHandle) : BasicCreature(collStageHandle)
 {
+	// 座標を設定
 	this->area = VAdd(area, VGet(0.0f, 10.0f, 0.0f));
 
+
+	// サイズを設定
 	modelHeight = 100.0f;
 	modelWigth = 50.0f;
 
 	shadowHeight = 10.0f;
 	shadowSize = 15.0f;
 
+
+	// モデルデータの読み込み
 	this->modelHandle = MV1DuplicateModel(modelHandle);
 
+
+	// テクスチャ適応
+	textureHandle = -1;
+	switch (BASICPARAM::e_TextureColor)
+	{
+	case ETextureColor::WHITEBLACK:
+		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\whiteblack\\tex.pyn", textureHandle, ELOADFILE::graph);
+		break;
+
+	case ETextureColor::NORMAL:
+		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\normal\\tex.pyn", textureHandle, ELOADFILE::graph);
+		break;
+
+	case ETextureColor::D_CORRECTION:
+		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\D\\tex.pyn", textureHandle, ELOADFILE::graph);
+		break;
+
+	case ETextureColor::P_CORRECTION:
+		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\P\\tex.pyn", textureHandle, ELOADFILE::graph);
+		break;
+
+	default:
+		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\normal\\tex.pyn", textureHandle, ELOADFILE::graph);
+		break;
+	}
+
+	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle, false);
+
+
+	// 座標にモデルを配置
 	MV1SetPosition(this->modelHandle, area);
 }
 
 EnemyMove2::~EnemyMove2()
 {
+	GRAPHIC_RELEASE(textureHandle);
 	MODEL_RELEASE(modelHandle);
 }
 

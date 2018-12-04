@@ -230,36 +230,31 @@ void MainMove1::LightProcess()
 
 
 		// 個数によるイベントの違い
-		switch (catchEnemyNum)
+		if (catchEnemyNum < 12 && catchEnemyNum >= 4)
 		{
-		case 4:			// 地面を明るくする
 			if (lightEventCount >= 10)
 			{
 				SetLightEnableHandle(lightHandle[3], TRUE);		// 四つ目の光源を出す
 			}
-			break;
-
-
-		case 12:		// 背景を明るくする
+		}
+		else if (catchEnemyNum < 19 && catchEnemyNum >= 12)
+		{
 			backgroundColor = GetColor(lightEventCount, lightEventCount, lightEventCount);
-			break;
-
-
-		case 19:		// 背景を明るくしつつ光源をカメラの方向に動かす
+		}
+		else if (catchEnemyNum < 29 && catchEnemyNum >= 19)
+		{
 			lightArea[0].z = -630.0f + lightEventCount * 5;
 			lightArea[1].z = -630.0f + lightEventCount * 4;
 			lightArea[2].z = -630.0f + lightEventCount * 3;
 			lightArea[3].z = -630.0f + lightEventCount * 2;
 			backgroundColor = GetColor(lightEventCount / 2 + 100, lightEventCount / 2 + 100, lightEventCount / 2 + 100);
-			break;
-
-
-		case 29:		// 背景を明るくする
+		}
+		else if (catchEnemyNum == 29)
+		{
 			backgroundColor = GetColor(lightEventCount / 2 + 150, lightEventCount / 2 + 150, lightEventCount / 2 + 150);
-			break;
-
-
-		case 30:		// 背景を明るくしつつまぶしくさせてる間に光源を消して自然光源に切り替える
+		}
+		else if (catchEnemyNum == 30)
+		{
 			backgroundColor = GetColor(lightEventCount + 155, lightEventCount + 155, lightEventCount + 155);
 			// フェードアウトの処理をさせてまぶしくする
 			if (lightEventCount < 50)
@@ -274,9 +269,54 @@ void MainMove1::LightProcess()
 				DrawBox(0, 0, 1920, 1080, GetColor(255, 255, 255), true);
 				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 			}
-			break;
-
 		}
+		//switch (catchEnemyNum)
+		//{
+		//case 4:			// 地面を明るくする
+		//	if (lightEventCount >= 10)
+		//	{
+		//		SetLightEnableHandle(lightHandle[3], TRUE);		// 四つ目の光源を出す
+		//	}
+		//	break;
+
+
+		//case 12:		// 背景を明るくする
+		//	backgroundColor = GetColor(lightEventCount, lightEventCount, lightEventCount);
+		//	break;
+
+
+		//case 19:		// 背景を明るくしつつ光源をカメラの方向に動かす
+		//	lightArea[0].z = -630.0f + lightEventCount * 5;
+		//	lightArea[1].z = -630.0f + lightEventCount * 4;
+		//	lightArea[2].z = -630.0f + lightEventCount * 3;
+		//	lightArea[3].z = -630.0f + lightEventCount * 2;
+		//	backgroundColor = GetColor(lightEventCount / 2 + 100, lightEventCount / 2 + 100, lightEventCount / 2 + 100);
+		//	break;
+
+
+		//case 29:		// 背景を明るくする
+		//	backgroundColor = GetColor(lightEventCount / 2 + 150, lightEventCount / 2 + 150, lightEventCount / 2 + 150);
+		//	break;
+
+
+		//case 30:		// 背景を明るくしつつまぶしくさせてる間に光源を消して自然光源に切り替える
+		//	backgroundColor = GetColor(lightEventCount + 155, lightEventCount + 155, lightEventCount + 155);
+		//	// フェードアウトの処理をさせてまぶしくする
+		//	if (lightEventCount < 50)
+		//	{
+		//		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - (lightEventCount * 2));
+		//		DrawBox(0, 0, 1920, 1080, GetColor(255, 255, 255), true);
+		//		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+		//	}
+		//	else		// フェードインの処理をさせて戻す
+		//	{
+		//		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 155 + ((lightEventCount - 50) * 2));
+		//		DrawBox(0, 0, 1920, 1080, GetColor(255, 255, 255), true);
+		//		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+		//	}
+		//	break;
+
+		//}
 	}
 }
 

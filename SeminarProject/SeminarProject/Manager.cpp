@@ -43,8 +43,44 @@ void Manager::OptionProcess()
 void Manager::OptionDraw()
 {
 	DrawGraph(0, 0, gaussianScreen, false);
-	//DrawBox(50, 50, 250, 100, GetColor(255, 255, 255), true);
-	//DrawBox(50, 50, 250, 100, GetColor(0, 0, 0), false);
+	DrawBox(386, 550, 386+83, 550+59, GetColor(255, 255, 255), true);
+	DrawBox(386, 550, 386+83, 550+59, GetColor(0, 0, 0), false);
+	//DrawFormatString(50, 50, 255, "‚ ‚ ‚ ‚ ‚ ‚ ‚ ");
+	DrawBox(385, 427, 385+ 83, 427+ 58, GetColor(255, 255, 255), true);
+	DrawBox(385, 427, 385+ 83, 427+ 58, GetColor(0, 0, 0), false);
+	//DrawFormatString(50, 50, 255, "‚ ‚ ‚ ‚ ‚ ‚ ‚ ");
+	DrawBox(385, 682, 385+ 83, 682+ 58, GetColor(255, 255, 255), true);
+	DrawBox(385, 682, 385+ 83, 682+ 58, GetColor(0, 0, 0), false);
+	//DrawFormatString(50, 50, 255, "‚ ‚ ‚ ‚ ‚ ‚ ‚ ");
+	DrawBox(96, 413, 96+ 154, 413+ 76, GetColor(255, 255, 255), true);
+	DrawBox(96, 413, 96+ 154, 413+ 76, GetColor(0, 0, 0), false);
+	//DrawFormatString(50, 50, 255, "‚ ‚ ‚ ‚ ‚ ‚ ‚ ");
+	DrawBox(385, 266, 385+ 86, 266+ 58, GetColor(255, 255, 255), true);
+	DrawBox(385, 266, 385+ 86, 266+ 58, GetColor(0, 0, 0), false);
+	//DrawFormatString(50, 50, 255, "‚ ‚ ‚ ‚ ‚ ‚ ‚ ");
+	DrawBox(559, 550, 559+ 269, 550+ 65, GetColor(255, 255, 255), true);
+	DrawBox(559, 550, 559+ 269, 550+ 65, GetColor(0, 0, 0), false);
+	//DrawFormatString(50, 50, 255, "‚ ‚ ‚ ‚ ‚ ‚ ‚ ");
+	DrawBox(557, 681, 557+ 273, 681+ 60, GetColor(255, 255, 255), true);
+	DrawBox(557, 681, 557+ 273, 681+ 60, GetColor(0, 0, 0), false);
+	//DrawFormatString(50, 50, 255, "‚ ‚ ‚ ‚ ‚ ‚ ‚ ");
+	DrawBox(1252, 94, 1252+ 589, 94+ 897, GetColor(255, 255, 255), true);
+	DrawBox(1252, 94, 1252+ 589, 94+ 897, GetColor(0, 0, 0), false);
+	//DrawFormatString(50, 50, 255, "‚ ‚ ‚ ‚ ‚ ‚ ‚ ");
+	DrawBox(381, 114, 381+ 87, 114+ 58, GetColor(255, 255, 255), true);
+	DrawBox(381, 114, 381+ 87, 114+ 58, GetColor(0, 0, 0), false);
+	//DrawFormatString(50, 50, 255, "‚ ‚ ‚ ‚ ‚ ‚ ‚ ");
+	DrawBox(548, 255, 548+ 547, 255+ 78, GetColor(255, 255, 255), true);
+	DrawBox(548, 255, 548+ 547, 255+ 78, GetColor(0, 0, 0), false);
+	//DrawFormatString(50, 50, 255, "‚ ‚ ‚ ‚ ‚ ‚ ‚ ");
+	DrawBox(95, 95, 95+ 211, 95+ 86, GetColor(255, 255, 255), true);
+	DrawBox(95, 95, 95+ 211, 95+ 86, GetColor(0, 0, 0), false);
+	//DrawFormatString(50, 50, 255, "‚ ‚ ‚ ‚ ‚ ‚ ‚ ");
+	DrawBox(546, 100, 546+ 548, 100+ 81, GetColor(255, 255, 255), true);
+	DrawBox(546, 100, 546+ 548, 100+ 81, GetColor(0, 0, 0), false);
+	//DrawFormatString(50, 50, 255, "‚ ‚ ‚ ‚ ‚ ‚ ‚ ");
+	DrawBox(375, 843, 375+ 109, 843+ 68, GetColor(255, 255, 255), true);
+	DrawBox(375, 843, 375+ 109, 843+ 68, GetColor(0, 0, 0), false);
 	//DrawFormatString(50, 50, 255, "‚ ‚ ‚ ‚ ‚ ‚ ‚ ");
 }
 

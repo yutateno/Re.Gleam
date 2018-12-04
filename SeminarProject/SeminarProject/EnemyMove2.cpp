@@ -21,6 +21,8 @@ EnemyMove2::EnemyMove2(const int collStageHandle, const VECTOR area, const int m
 
 	// テクスチャ適応
 	textureHandle = -1;
+	outTextureHandle = -1;
+	LoadFile::MyLoad("media\\こっち\\media\\ブロック\\out.pyn", outTextureHandle, ELOADFILE::graph);
 	switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::WHITEBLACK:

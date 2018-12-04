@@ -18,7 +18,7 @@ Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 	speed = DX_PI_F / 90;
 	angle = 0.0f;
 
-	if (BASICPARAM::e_nowScene == ESceneNumber::FIRSTMOVE)
+	if (!BASICPARAM::nowCameraOrtho)
 	{
 		cameraArea = VGet(0, 530, 700);
 		SetCameraNearFar(100.0f, 10000.0f);	// ƒJƒƒ‰‚Ì•`‰æ”ÍˆÍ‚ğw’è
@@ -155,7 +155,7 @@ void Camera::Process(const VECTOR charaarea)
 
 void Camera::SetUp()
 {
-	if (BASICPARAM::e_nowScene == ESceneNumber::FIRSTMOVE)
+	if (!BASICPARAM::nowCameraOrtho)
 	{
 		//cameraArea = VGet(0, 530, 700);
 		SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);

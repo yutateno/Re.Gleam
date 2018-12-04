@@ -32,6 +32,9 @@ namespace BASICPARAM
 
 	// 今のテクスチャの色
 	extern ETextureColor e_TextureColor;
+
+	// 今のカメラの形式が正射影かどうか
+	extern bool nowCameraOrtho;
 }
 
 

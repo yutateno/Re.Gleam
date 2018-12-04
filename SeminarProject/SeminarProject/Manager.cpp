@@ -39,6 +39,7 @@ Manager::Manager()
 	BASICPARAM::e_preScene = ESceneNumber::FIRSTLOAD;
 	BASICPARAM::e_nowScene = ESceneNumber::FIRSTLOAD;
 	BASICPARAM::e_TextureColor = ETextureColor::WHITEBLACK;
+	BASICPARAM::nowCameraOrtho = false;
 
 
 	// シーン１の素材ファイル

@@ -21,8 +21,6 @@ EnemyMove2::EnemyMove2(const int collStageHandle, const VECTOR area, const int m
 
 	// テクスチャ適応
 	textureHandle = -1;
-	outTextureHandle = -1;
-	LoadFile::MyLoad("media\\こっち\\media\\ブロック\\out.pyn", outTextureHandle, ELOADFILE::graph);
 	switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::WHITEBLACK:
@@ -48,6 +46,10 @@ EnemyMove2::EnemyMove2(const int collStageHandle, const VECTOR area, const int m
 
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle, false);
 
+	MV1SetMaterialDrawBlendMode(this->modelHandle, 0, DX_BLENDMODE_ALPHA);
+
+	MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
+
 
 	// 座標にモデルを配置
 	MV1SetPosition(this->modelHandle, area);
@@ -61,9 +63,13 @@ EnemyMove2::~EnemyMove2()
 
 void EnemyMove2::Draw()
 {
-	BasicObject::ShadowFoot();
+	if (!deathFlag)
+	{
+		BasicObject::ShadowFoot();
+	}
 
 	BasicObject::Draw();
+
 
 
 #ifdef _ENEMY2_DEBUG
@@ -75,6 +81,28 @@ void EnemyMove2::Process()
 {
 	// ステージのあたり判定
 	StageHit();
+
+
+	// ダメージ受けた時
+	if (damageHit)
+	{
+		deathFlag = true;
+	}
+
+	// 死んだとき
+	if (deathFlag)
+	{
+		if (blendCount >= 0)
+		{
+			blendCount--;
+		}
+		else
+		{
+			viewDrawFlag = true;
+		}
+
+		MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
+	}
 
 	MV1SetPosition(this->modelHandle, area);
 }

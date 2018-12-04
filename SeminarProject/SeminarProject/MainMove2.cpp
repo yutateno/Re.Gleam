@@ -6,7 +6,7 @@ void MainMove2::ShadowDraw()
 {
 	BaseMove::ShadowCharaSetUpBefore();
 	p_character->Draw();
-	p_enemy->Draw();
+	if (!p_enemy->GetViewDrawFlag()) p_enemy->Draw();
 	for (int i = 0; i != 10; ++i)
 	{
 		p_stageStairs[i]->Draw();
@@ -27,7 +27,7 @@ void MainMove2::ShadowDraw()
 	{
 		p_stageStairs[i]->Draw();
 	}
-	p_enemy->Draw();
+	if(!p_enemy->GetViewDrawFlag())	p_enemy->Draw();
 	for (int i = 0; i != 30; ++i)
 	{
 		p_stageStreetLight[i]->Draw();
@@ -43,7 +43,7 @@ void MainMove2::ShadowDraw()
 	BaseMove::ShadowAnotherCharaDrawBefore();
 	BaseMove::ShadowCharaDrawBefore();
 	p_stage->Draw();
-	p_enemy->Draw();
+	if (!p_enemy->GetViewDrawFlag()) p_enemy->Draw();
 	for (int i = 0; i != 10; ++i)
 	{
 		p_stageStairs[i]->Draw();
@@ -68,13 +68,14 @@ void MainMove2::AttackProcess()
 	// “–‚½‚Á‚Ä‚¢‚È‚©‚Á‚½‚ç‰½‚à‚µ‚È‚¢
 	if (HitCheck_Capsule_Capsule(
 		p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f,
-		p_enemy->GetArea(), VAdd(p_enemy->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 100.0f))
+		p_enemy->GetArea(), VAdd(p_enemy->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 100.0f)
+		&& !p_enemy->GetDeathFlag())
 	{
 		p_character->HitCircleReturn(p_enemy->GetArea(), VAdd(p_enemy->GetArea(), VGet(0.0f, 100.0f, 0.0f)));
 	}
 
 	// UŒ‚’†‚¾‚Á‚½‚ç
-	if (p_character->GetAttackNow())
+	if (p_character->GetAttackNow() && !p_enemy->GetDeathFlag())
 	{
 		p_enemy->HitLineReturn(p_character->GetAttackFirstFrameArea(), p_character->GetAttackEndFrameArea());
 	}

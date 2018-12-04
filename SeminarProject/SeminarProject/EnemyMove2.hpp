@@ -7,7 +7,6 @@ class EnemyMove2 : public BasicCreature
 private:
 	// テクスチャ
 	int textureHandle;
-	int outTextureHandle;
 
 
 public:

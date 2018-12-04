@@ -75,6 +75,21 @@ protected:
 	void ActorHit(int stageHandle);		
 
 
+	/// 攻撃を受けた時に関する-----------
+
+	// ダメージを受けたかどうか
+	bool damageHit;
+
+	// 倒れたかどうか
+	bool deathFlag;
+
+	// 描画から消すかどうか
+	bool viewDrawFlag;
+
+	// 透過ブレンドのカウント
+	int blendCount;
+
+
 private:
 	/// モーションに関して-------------
 
@@ -152,5 +167,11 @@ public:
 	VECTOR GetAttackFirstFrameArea() {};		
 
 	// 攻撃するときのモデルのフレームの後端
-	VECTOR GetAttackEndFrameArea() {};			
+	VECTOR GetAttackEndFrameArea() {};
+
+	// 死んだかどうか
+	bool GetDeathFlag() { return deathFlag; }
+
+	// 描画から消すかどうか
+	bool GetViewDrawFlag() { return viewDrawFlag; }
 };

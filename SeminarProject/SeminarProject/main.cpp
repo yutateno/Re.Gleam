@@ -158,7 +158,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			SoundProcess::Process();
 
-			DLLXinput::VibrationSlowlyStop();
+			DLLXinput::VibrationSlowlyStop(DLLXinput::GetPlayerPadNumber());
 		}
 		//FpsTimeFanction();
 	}

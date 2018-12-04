@@ -377,6 +377,11 @@ BasicCreature::BasicCreature(const int collStageHandle) :BasicObject(collStageHa
 	fallCount = 0;
 
 	angle = 0.0f;
+
+	damageHit = false;
+	deathFlag = false;
+	viewDrawFlag = false;
+	blendCount = 255;
 }
 
 // デストラクタ
@@ -390,6 +395,7 @@ void BasicCreature::SetAreaReturn()
 {
 	area = preArea;
 }
+
 
 void BasicCreature::HitCircleReturn(VECTOR hitOneArea, VECTOR hitTwoArea)
 {
@@ -421,6 +427,7 @@ void BasicCreature::HitCircleReturn(VECTOR hitOneArea, VECTOR hitTwoArea)
 		area = VAdd(preArea, slideVec);
 }
 
+
 void BasicCreature::HitLineReturn(VECTOR hitOneArea, VECTOR hitTwoArea)
 {
 	MV1_COLL_RESULT_POLY HitPoly;
@@ -428,9 +435,9 @@ void BasicCreature::HitLineReturn(VECTOR hitOneArea, VECTOR hitTwoArea)
 	HitPoly = MV1CollCheck_Line(modelHandle, -1, hitOneArea, hitTwoArea);
 	
 	// 当たったかどうかで処理を分岐
-	if (HitPoly.HitFlag == 1)
+	if (HitPoly.HitFlag == 1 && !damageHit)
 	{
-		DrawFormatString(250, 250, 255, "あたったたあああああああああああああああ");
-		DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 10, 10000, 10000);
+		DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 30, 10000, 10000);
+		damageHit = true;
 	}
 }

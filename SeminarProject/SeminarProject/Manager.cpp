@@ -94,7 +94,7 @@ void Manager::OptionDraw()
 
 	DrawBox(375, 843, 375 + 109, 843 + 68, GetColor(255, 255, 255), true);;
 	DrawBox(375, 843, 375 + 109, 843 + 68, GetColor(0, 0, 0), false);;
-	DrawFormatString(375, 843, 255, "‚ ‚ ‚ ‚ ‚ ‚ ‚ ");
+	DrawFormatString(375, 843, 255, "–ß‚é");
 }
 
 

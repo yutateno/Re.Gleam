@@ -106,8 +106,3 @@ void EnemyMove2::Process()
 
 	MV1SetPosition(this->modelHandle, area);
 }
-
-void EnemyMove2::SetArea(const VECTOR area)
-{
-	this->area = area;
-}

@@ -607,25 +607,6 @@ void CharacterSword::PositionReset()
 	area = VGet(0.0f, 0.0f, 0.0f);
 }
 
-const VECTOR CharacterSword::GetPreArea() const
-{
-	return preArea;
-}
-
-bool CharacterSword::GetAttackNow()
-{
-	return attackNow;
-}
-
-VECTOR CharacterSword::GetAttackFirstFrameArea()
-{
-	return MV1GetFramePosition(modelHandle, 66);
-}
-
-VECTOR CharacterSword::GetAttackEndFrameArea()
-{
-	return MV1GetFramePosition(modelHandle, 67);
-}
 
 
 // •`‰æ

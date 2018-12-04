@@ -37,8 +37,8 @@ public:
 	/// ゲッターセッター
 	
 	// ロードしたものを渡す
-	const std::vector<int> GetFile() const;
+	const std::vector<int> GetFile() const { return fileName; }
 
 	// ロードを終えた数
-	const int GetNum() const;
+	const int GetNum() const { return num; };
 };

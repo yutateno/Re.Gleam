@@ -223,18 +223,3 @@ BaseMove::~BaseMove()
 	MODEL_RELEASE(skyBoxUp);
 	GRAPHIC_RELEASE(textureHandle);
 }
-
-const bool BaseMove::GetEndFlag()
-{
-	return endFlag;
-}
-
-const ESceneNumber BaseMove::GetScene()
-{
-	return scene;
-}
-
-void BaseMove::SetScene(const ESceneNumber scene)
-{
-	this->scene = scene;
-}

@@ -46,5 +46,5 @@ public:
 	void SetUp();
 
 	// キャラクターのアングル
-	const float GetAngle() const;				
+	const float GetAngle() const { return angle; }
 };

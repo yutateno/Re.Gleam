@@ -41,13 +41,3 @@ void LoadThread::Process(const int max, const std::string* path, const ELOADFILE
 	}
 	p_loadScreen->Process(num, max);			// ƒ[ƒh‰æ–Ê
 }
-
-const vector<int> LoadThread::GetFile() const
-{
-	return fileName;
-}
-
-const int LoadThread::GetNum() const
-{
-	return num;
-}

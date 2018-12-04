@@ -67,6 +67,6 @@ public:
 	/// ゲッターセッター
 
 	// 座標を渡す
-	const VECTOR GetArea() const;
+	const VECTOR GetArea() const { return area; }
 };
 

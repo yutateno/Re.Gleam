@@ -128,12 +128,12 @@ public:
 	/// ゲッターセッター------------------------------
 
 	// 終了かどうかを渡す
-	static const bool GetEndFlag();
+	static const bool GetEndFlag() { return endFlag; }
 
 	// 今のシーンを渡す
-	static const ESceneNumber GetScene();
+	static const ESceneNumber GetScene() { return scene; }
 
 	// 今のシーンを得る
-	void SetScene(const ESceneNumber scene);
+	void SetScene(const ESceneNumber scene) { this->scene = scene; }
 };
 

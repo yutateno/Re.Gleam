@@ -108,14 +108,6 @@ BasicObject::~BasicObject()
 	MODEL_RELEASE(stageHandle);
 }
 
-
-// 今の座標を渡す用ゲッター
-const VECTOR BasicObject::GetArea() const
-{
-	return area;
-}
-
-
 // 描画
 void BasicObject::Draw()
 {

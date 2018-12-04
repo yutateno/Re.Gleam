@@ -27,6 +27,6 @@ public:
 	/// ゲッターセッター
 
 	// 座標を設定する
-	void SetArea(const VECTOR area);
+	void SetArea(const VECTOR area) { this->area = area; }
 };
 

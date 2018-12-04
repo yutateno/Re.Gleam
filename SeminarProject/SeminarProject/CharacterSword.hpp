@@ -132,15 +132,15 @@ public:
 	void SetPaneruArea(const VECTOR paneruArea, const int num);
 
 	// ’¼‘O‚ÌƒGƒŠƒA‚ğ“n‚·
-	const VECTOR GetPreArea() const;
+	const VECTOR GetPreArea() const { return preArea; }
 
 	// UŒ‚‚µ‚Ä‚¢‚é‚©‚ğ“n‚·
-	bool GetAttackNow();
+	bool GetAttackNow() { return attackNow; }
 
 	// UŒ‚‚Ì•Ší‚Ì‰‚ß‚ÌÀ•W‚ğ“n‚·
-	VECTOR GetAttackFirstFrameArea();
+	VECTOR GetAttackFirstFrameArea() { return MV1GetFramePosition(modelHandle, 66); }
 
 	// UŒ‚‚Ì•Ší‚ÌÅŒã‚ÌÀ•W‚ğ“n‚·
-	VECTOR GetAttackEndFrameArea();
+	VECTOR GetAttackEndFrameArea() { return MV1GetFramePosition(modelHandle, 67); }
 };
 

@@ -184,9 +184,3 @@ void Camera::RLrotate(const float speed, VECTOR& p_cameraArea)
 	p_cameraArea.x = tempX * cosf(speed) + p_cameraArea.z *sinf(speed);
 	p_cameraArea.z = -tempX * sinf(speed) + p_cameraArea.z * cosf(speed);
 }
-
-// カメラのアングルを渡すゲッター
-const float Camera::GetAngle() const
-{
-	return angle;
-}

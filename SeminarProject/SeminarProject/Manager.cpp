@@ -38,33 +38,156 @@ void Manager::SceneChange()
 
 void Manager::OptionProcess()
 {
-	// ボタンそれぞれの動作
+	// 常時
+	if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
+	{
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
+		{
+			SoundProcess::SetBGMVolumeEntire(SoundProcess::GetBGMVolumeEntire() < 1.00f ? SoundProcess::GetBGMVolumeEntire() + 0.01f : SoundProcess::GetBGMVolumeEntire());
+		}
+		else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) < 0)
+		{
+			SoundProcess::SetBGMVolumeEntire(SoundProcess::GetBGMVolumeEntire() > 0.00f ? SoundProcess::GetBGMVolumeEntire() - 0.01f : SoundProcess::GetBGMVolumeEntire());
+		}
+	}
+	else if (optionSelectButtonNum == EOptionSelectButton::SESelect)
+	{
+		if (++seDoWaitTimer > 60)
+		{
+			seDoWaitTimer = 0;
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPawnHigh);
+		}
+
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
+		{
+			SoundProcess::SetSEVolumeEntire(SoundProcess::GetSEVolumeEntire() < 1.00f ? SoundProcess::GetSEVolumeEntire() + 0.01f : SoundProcess::GetSEVolumeEntire());
+		}
+		else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) < 0)
+		{
+			SoundProcess::SetSEVolumeEntire(SoundProcess::GetSEVolumeEntire() > 0.00f ? SoundProcess::GetSEVolumeEntire() - 0.01f : SoundProcess::GetSEVolumeEntire());
+		}
+	}
+
+	// 決定ボタンを押したときの動作
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
 	{
 		if (optionSelectButtonNum == EOptionSelectButton::BGM)
 		{
-
+			optionSelectButtonNum = EOptionSelectButton::BGMSelect;
+			optionSelectMin = 8;
+			optionSelectMax = 8;
 		}
 		else if (optionSelectButtonNum == EOptionSelectButton::SE)
 		{
-
+			optionSelectButtonNum = EOptionSelectButton::SESelect;
+			optionSelectMin = 9;
+			optionSelectMax = 9;
 		}
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
 		{
-
+			if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK) BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
 		}
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorP)
 		{
-
+			if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK) BASICPARAM::e_TextureColor = ETextureColor::P_CORRECTION;
 		}
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorD)
 		{
-
+			if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK) BASICPARAM::e_TextureColor = ETextureColor::D_CORRECTION;
 		}
 		else if (optionSelectButtonNum == EOptionSelectButton::Back)
 		{
-
+			SoundProcess::SetOptionMenuNow(false);
+			optionMenuNow = false;
 		}
+		else if (optionSelectButtonNum == EOptionSelectButton::ColorSelect)
+		{
+			optionSelectButtonNum = EOptionSelectButton::ColorNormal;
+			optionSelectMin = 5;
+			optionSelectMax = 7;
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::Sound)
+		{
+			SoundProcess::SetOptionMenuNow(false);
+			optionSelectButtonNum = EOptionSelectButton::BGM;
+			optionSelectMin = 3;
+			optionSelectMax = 4;
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
+		{
+			optionSelectButtonNum = EOptionSelectButton::BGM;
+			optionSelectMin = 3;
+			optionSelectMax = 4;
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::SESelect)
+		{
+			optionSelectButtonNum = EOptionSelectButton::SE;
+			optionSelectMin = 3;
+			optionSelectMax = 4;
+		}
+	}
+
+
+	// 戻るボタンを押したときの動作
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
+	{
+		if (optionSelectButtonNum == EOptionSelectButton::BGM)
+		{
+			SoundProcess::SetOptionMenuNow(true);
+			optionSelectButtonNum = EOptionSelectButton::Sound;
+			optionSelectMin = 0;
+			optionSelectMax = 2;
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::SE)
+		{
+			SoundProcess::SetOptionMenuNow(true);
+			optionSelectButtonNum = EOptionSelectButton::Sound;
+			optionSelectMin = 0;
+			optionSelectMax = 2;
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
+		{
+			optionSelectButtonNum = EOptionSelectButton::ColorSelect;
+			optionSelectMin = 0;
+			optionSelectMax = 2;
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::ColorP)
+		{
+			optionSelectButtonNum = EOptionSelectButton::ColorSelect;
+			optionSelectMin = 0;
+			optionSelectMax = 2;
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::ColorD)
+		{
+			optionSelectButtonNum = EOptionSelectButton::ColorSelect;
+			optionSelectMin = 0;
+			optionSelectMax = 2;
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
+		{
+			optionSelectButtonNum = EOptionSelectButton::BGM;
+			optionSelectMin = 3;
+			optionSelectMax = 4;
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::SESelect)
+		{
+			optionSelectButtonNum = EOptionSelectButton::SE;
+			optionSelectMin = 3;
+			optionSelectMax = 4;
+		}
+		/*else if (optionSelectButtonNum == EOptionSelectButton::Back)
+		{
+			SoundProcess::SetOptionMenuNow(false);
+			optionMenuNow = false;
+		}*/
+		/*else if (optionSelectButtonNum == EOptionSelectButton::ColorSelect)
+		{
+			
+		}*/
+		/*else if (optionSelectButtonNum == EOptionSelectButton::Sound)
+		{
+
+		}*/
 	}
 
 
@@ -85,12 +208,12 @@ void Manager::OptionProcess()
 	if (optionControllStick[0] == 1)
 	{
 		int temp = static_cast<int>(optionSelectButtonNum);
-		optionSelectButtonNum = static_cast<EOptionSelectButton>(temp > 0 ? --temp : temp);
+		optionSelectButtonNum = static_cast<EOptionSelectButton>(temp > optionSelectMin ? --temp : temp);
 	}
 	if (optionControllStick[1] == 1)
 	{
 		int temp = static_cast<int>(optionSelectButtonNum);
-		optionSelectButtonNum = static_cast<EOptionSelectButton>(temp < 5 ? ++temp : temp);
+		optionSelectButtonNum = static_cast<EOptionSelectButton>(temp < optionSelectMax ? ++temp : temp);
 	}
 }
 
@@ -109,22 +232,44 @@ void Manager::OptionDraw()
 
 	DrawBox(95, 95, 95 + 211, 95 + 86, GetColor(255, 255, 255), true);
 	DrawBox(95, 95, 95 + 211, 95 + 86, GetColor(0, 0, 0), false);
+	if (optionSelectButtonNum == EOptionSelectButton::Sound)
+	{
+		DrawBox(95, 95, 95 + 211, 95 + 86, GetColor(255, 0, 0), true);
+	}
 	DrawFormatString(95, 95, 255, "サウンド調整");
 
 	DrawBox(381, 114, 381 + 87, 114 + 58, GetColor(255, 255, 255), true);
 	DrawBox(381, 114, 381 + 87, 114 + 58, GetColor(0, 0, 0), false);
+	if (optionSelectButtonNum == EOptionSelectButton::BGM)
+	{
+		DrawBox(381, 114, 381 + 87, 114 + 58, GetColor(255, 0, 0), true);
+	}
 	DrawFormatString(381, 114, 255, "BGM");
 
 	DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(255, 255, 255), true);
 	DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(0, 0, 0), false);
+	if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
+	{
+		DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(255, 0, 0), true);
+	}
+	DrawBox(546 - 5 + static_cast<int>(SoundProcess::GetBGMVolumeEntire() * 547), 100 - 10, 546 + 5 + static_cast<int>(SoundProcess::GetBGMVolumeEntire() * 548), 100 + 81 + 10, GetColor(0, 125, 125), true);
 	DrawFormatString(546, 100, 255, "BGMバー");
 
 	DrawBox(385, 266, 385 + 86, 266 + 58, GetColor(255, 255, 255), true);
 	DrawBox(385, 266, 385 + 86, 266 + 58, GetColor(0, 0, 0), false);
+	if (optionSelectButtonNum == EOptionSelectButton::SE)
+	{
+		DrawBox(385, 266, 385 + 86, 266 + 58, GetColor(255, 0, 0), true);
+	}
 	DrawFormatString(385, 266, 255, "SE");
 
 	DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(255, 255, 255), true);
 	DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(0, 0, 0), false);
+	if (optionSelectButtonNum == EOptionSelectButton::SESelect)
+	{
+		DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(255, 0, 0), true);
+	}
+	DrawBox(548 - 5 + static_cast<int>(SoundProcess::GetSEVolumeEntire() * 547), 255 - 10, 548 + 5 + static_cast<int>(SoundProcess::GetSEVolumeEntire() * 547), 255 + 78 + 10, GetColor(0, 125, 125), true);
 	DrawFormatString(548, 255, 255, "SEのバー");
 
 
@@ -132,14 +277,26 @@ void Manager::OptionDraw()
 
 	DrawBox(96, 413, 96 + 154, 413 + 76, GetColor(255, 255, 255), true);
 	DrawBox(96, 413, 96 + 154, 413 + 76, GetColor(0, 0, 0), false);
+	if (optionSelectButtonNum == EOptionSelectButton::ColorSelect)
+	{
+		DrawBox(96, 413, 96 + 154, 413 + 76, GetColor(255, 0, 0), true);
+	}
 	DrawFormatString(96, 413, 255, "色覚設定");
 
 	DrawBox(385, 427, 385 + 83, 427 + 58, GetColor(255, 255, 255), true);
 	DrawBox(385, 427, 385 + 83, 427 + 58, GetColor(0, 0, 0), false);
+	if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
+	{
+		DrawBox(385, 427, 385 + 83, 427 + 58, GetColor(255, 0, 0), true);
+	}
 	DrawFormatString(385, 427, 255, "通常色");
 
 	DrawBox(386, 550, 386 + 83, 550 + 59, GetColor(255, 255, 255), true);
 	DrawBox(386, 550, 386 + 83, 550 + 59, GetColor(0, 0, 0), false);
+	if (optionSelectButtonNum == EOptionSelectButton::ColorP)
+	{
+		DrawBox(386, 550, 386 + 83, 550 + 59, GetColor(255, 0, 0), true);
+	}
 	DrawFormatString(386, 550, 255, "P型補正");
 
 	DrawBox(559, 550, 559 + 269, 550 + 65, GetColor(255, 255, 255), true);
@@ -148,6 +305,10 @@ void Manager::OptionDraw()
 
 	DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(255, 255, 255), true);
 	DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(0, 0, 0), false);
+	if (optionSelectButtonNum == EOptionSelectButton::ColorD)
+	{
+		DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(255, 0, 0), true);
+	}
 	DrawFormatString(385, 682, 255, "D型補正");
 
 	DrawBox(557, 681, 557 + 273, 681 + 60, GetColor(255, 255, 255), true);
@@ -164,9 +325,13 @@ void Manager::OptionDraw()
 
 	// 戻る
 
-	DrawBox(375, 843, 375 + 109, 843 + 68, GetColor(255, 255, 255), true);
-	DrawBox(375, 843, 375 + 109, 843 + 68, GetColor(0, 0, 0), false);
-	DrawFormatString(375, 843, 255, "戻る");
+	DrawBox(95, 843, 95 + 109, 843 + 68, GetColor(255, 255, 255), true);
+	DrawBox(95, 843, 95 + 109, 843 + 68, GetColor(0, 0, 0), false);
+	if (optionSelectButtonNum == EOptionSelectButton::Back)
+	{
+		DrawBox(95, 843, 95 + 109, 843 + 68, GetColor(255, 0, 0), true);
+	}
+	DrawFormatString(95, 843, 255, "戻る");
 
 
 	// debug
@@ -232,6 +397,9 @@ Manager::Manager()
 	optionMenuNow = false;
 	optionControllStick[0] = 0;
 	optionControllStick[1] = 0;
+	optionSelectMin = 0;
+	optionSelectMax = 2;
+	seDoWaitTimer = 0;
 
 
 	SetCreateDrawValidGraphMultiSample(4, 4);			// 4x4のアンチエイリアシングモードにする
@@ -298,7 +466,7 @@ void Manager::Update()
 					GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, gaussianScreen);						// 現在の画面をキャプチャする
 					GraphFilter(gaussianScreen, DX_GRAPH_FILTER_GAUSS, 16, 1400);				// 現在の画面にガウスフィルタかけてぼかす
 					optionMenuNow = true;
-					optionSelectButtonNum = EOptionSelectButton::BGM;
+					optionSelectButtonNum = EOptionSelectButton::Sound;
 					SoundProcess::SetOptionMenuNow(true);
 				}
 			}

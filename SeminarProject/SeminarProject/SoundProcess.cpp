@@ -383,10 +383,20 @@ namespace SoundProcess
 		se_volumeAdjustment = volumeEntire;
 	}
 
+	float GetSEVolumeEntire()
+	{
+		return se_volumeAdjustment;
+	}
+
 
 	void SetBGMVolumeEntire(float volumeEntire)
 	{
 		bgm_volumeAdjustment = volumeEntire;
+	}
+
+	float GetBGMVolumeEntire()
+	{
+		return bgm_volumeAdjustment;
 	}
 
 

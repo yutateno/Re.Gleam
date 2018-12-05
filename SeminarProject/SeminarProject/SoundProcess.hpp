@@ -65,8 +65,14 @@ namespace SoundProcess
 	// SEのユーザー音量調整を設定
 	void SetSEVolumeEntire(float volumeEntire);
 
+	// SEのユーザー音量調整を渡す
+	float GetSEVolumeEntire();
+
 	// BGMのユーザー音量調整を設定
 	void SetBGMVolumeEntire(float volumeEntire);
+
+	// BGMのユーザー音量調整を渡す
+	float GetBGMVolumeEntire();
 
 	// オプション画面にいるかどうか、またサウンド調整しているかどうかでもここで調整する
 	void SetOptionMenuNow(bool nowTrue);

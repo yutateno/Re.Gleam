@@ -66,13 +66,22 @@ private:
 	void OptionDraw();
 
 	// オプション画面のID
-	enum class EOptionSelectButton { BGM, SE, ColorNormal, ColorP, ColorD, Back };
+	enum class EOptionSelectButton { Sound, ColorSelect, Back, BGM, SE, ColorNormal, ColorP, ColorD, BGMSelect, SESelect };
 
 	// オプション画面の選択ボタン
 	EOptionSelectButton optionSelectButtonNum;
 
 	// スティックの押し倒しかどうかを調べる(DLLXinputでやるべきなんだろうかとりあえず
 	int optionControllStick[2];
+
+	// 現選択の最小
+	int optionSelectMin;
+
+	// 現選択の最大
+	int optionSelectMax;
+
+	// SE再生ウェイトタイマー
+	int seDoWaitTimer;
 
 
 public:

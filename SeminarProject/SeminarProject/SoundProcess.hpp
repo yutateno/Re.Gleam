@@ -67,4 +67,7 @@ namespace SoundProcess
 
 	// BGMのユーザー音量調整を設定
 	void SetBGMVolumeEntire(float volumeEntire);
+
+	// オプション画面にいるかどうか、またサウンド調整しているかどうかでもここで調整する
+	void SetOptionMenuNow(bool nowTrue);
 }

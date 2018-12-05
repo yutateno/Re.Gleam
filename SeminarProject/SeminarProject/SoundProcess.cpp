@@ -78,6 +78,12 @@ namespace SoundProcess
 	void BGMFeed();
 
 
+	/// オプションに関する-------------
+
+	// オプションにいる場合の音量調整用
+	float optionNowVolume;
+
+
 
 	void Init()
 	{
@@ -106,6 +112,7 @@ namespace SoundProcess
 
 		se_volumeAdjustment = 1.0f;
 		bgm_volumeAdjustment = 1.0f;
+		optionNowVolume = 1.0f;
 	}
 
 
@@ -178,7 +185,7 @@ namespace SoundProcess
 			if (!se_playFlag[i]) continue;
 
 			// 音量を下げる
-			ChangeVolumeSoundMem(static_cast<int>(((255 - (10 * count))) * se_volumeAdjustment), se_sound[i]);
+			ChangeVolumeSoundMem(static_cast<int>(((255 - (10 * count))) * se_volumeAdjustment * optionNowVolume), se_sound[i]);
 			if (count > 0)
 			{
 				count--;
@@ -289,12 +296,12 @@ namespace SoundProcess
 		{
 			if (bgm_nowVolume[i] < bgm_nextVolume[i])
 			{
-				ChangeVolumeSoundMem(static_cast<int>((bgm_nowVolume[i] + static_cast<int>((sin(-M_PI / 2 + M_PI / bgmFeedValue * bgm_feedCount[i]) + 1) / 2 * (bgm_nextVolume[i] - bgm_nowVolume[i]))) * bgm_volumeAdjustment)
+				ChangeVolumeSoundMem(static_cast<int>((bgm_nowVolume[i] + static_cast<int>((sin(-M_PI / 2 + M_PI / bgmFeedValue * bgm_feedCount[i]) + 1) / 2 * (bgm_nextVolume[i] - bgm_nowVolume[i]))) * bgm_volumeAdjustment * optionNowVolume)
 					, bgm_sound[static_cast<int>(bgm_name[i])]);
 			}
 			else
 			{
-				ChangeVolumeSoundMem(static_cast<int>((bgm_nowVolume[i] - static_cast<int>((sin(-M_PI / 2 + M_PI / bgmFeedValue * bgm_feedCount[i]) + 1) / 2 * (bgm_nowVolume[i] - bgm_nextVolume[i]))) * bgm_volumeAdjustment)
+				ChangeVolumeSoundMem(static_cast<int>((bgm_nowVolume[i] - static_cast<int>((sin(-M_PI / 2 + M_PI / bgmFeedValue * bgm_feedCount[i]) + 1) / 2 * (bgm_nowVolume[i] - bgm_nextVolume[i]))) * bgm_volumeAdjustment * optionNowVolume)
 					, bgm_sound[static_cast<int>(bgm_name[i])]);
 			}
 			if (bgm_feedCount[i] <= bgmFeedValue)
@@ -380,5 +387,11 @@ namespace SoundProcess
 	void SetBGMVolumeEntire(float volumeEntire)
 	{
 		bgm_volumeAdjustment = volumeEntire;
+	}
+
+
+	void SetOptionMenuNow(bool nowTrue)
+	{
+		nowTrue ? optionNowVolume = 0.5f : optionNowVolume = 1.0f;
 	}
 }

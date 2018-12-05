@@ -10,6 +10,7 @@ void Manager::SceneChange()
 
 
 	case ESceneNumber::FIRSTMOVE:
+		SoundProcess::Release();
 		p_baseMove = new MainMove1(p_loadThread->GetFile());
 		p_baseMove->SetScene(BASICPARAM::e_nowScene);
 		POINTER_RELEASE(p_loadThread);
@@ -23,6 +24,7 @@ void Manager::SceneChange()
 
 
 	case ESceneNumber::SECONDMOVE:
+		SoundProcess::Release();
 		p_baseMove = new MainMove2(p_loadThread->GetFile());
 		p_baseMove->SetScene(BASICPARAM::e_nowScene);
 		POINTER_RELEASE(p_loadThread);
@@ -36,7 +38,10 @@ void Manager::SceneChange()
 
 void Manager::OptionProcess()
 {
-
+	if (optionMenuNow)
+	{
+		SoundProcess::SetOptionMenuNow(true);
+	}
 }
 
 
@@ -44,56 +49,73 @@ void Manager::OptionDraw()
 {
 	DrawGraph(0, 0, gaussianScreen, false);
 
-	DrawBox(386, 550, 386 + 83, 550 + 59, GetColor(255, 255, 255), true);;
-	DrawBox(386, 550, 386 + 83, 550 + 59, GetColor(0, 0, 0), false);;
-	DrawFormatString(386, 550, 255, "P型補正");
 
-	DrawBox(385, 427, 385 + 83, 427 + 58, GetColor(255, 255, 255), true);;
-	DrawBox(385, 427, 385 + 83, 427 + 58, GetColor(0, 0, 0), false);;
-	DrawFormatString(385, 427, 255, "通常色");
+	// 選択されるボタン(SEや通常やP型補正まわり)の座標
+	const int selectLeftXArea = 385;
+	const int selectRightXArea = selectLeftXArea + 83;
 
-	DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(255, 255, 255), true);;
-	DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(0, 0, 0), false);;
-	DrawFormatString(385, 682, 255, "D型補正");
 
-	DrawBox(96, 413, 96 + 154, 413 + 76, GetColor(255, 255, 255), true);;
-	DrawBox(96, 413, 96 + 154, 413 + 76, GetColor(0, 0, 0), false);;
-	DrawFormatString(96, 413, 255, "色覚設定");
+	/// サウンド関係オプション-----------------------------------------------
 
-	DrawBox(385, 266, 385 + 86, 266 + 58, GetColor(255, 255, 255), true);;
-	DrawBox(385, 266, 385 + 86, 266 + 58, GetColor(0, 0, 0), false);;
-	DrawFormatString(385, 266, 255, "SE");
-
-	DrawBox(559, 550, 559 + 269, 550 + 65, GetColor(255, 255, 255), true);;
-	DrawBox(559, 550, 559 + 269, 550 + 65, GetColor(0, 0, 0), false);;
-	DrawFormatString(559, 550, 255, "P型補足説明");
-
-	DrawBox(557, 681, 557 + 273, 681 + 60, GetColor(255, 255, 255), true);;
-	DrawBox(557, 681, 557 + 273, 681 + 60, GetColor(0, 0, 0), false);;
-	DrawFormatString(557, 681, 255, "D型補足説明");
-
-	DrawBox(1252, 94, 1252 + 589, 94 + 897, GetColor(255, 255, 255), true);;
-	DrawBox(1252, 94, 1252 + 589, 94 + 897, GetColor(0, 0, 0), false);;
-	DrawFormatString(1252, 94, 255, "モデル");
-
-	DrawBox(381, 114, 381 + 87, 114 + 58, GetColor(255, 255, 255), true);;
-	DrawBox(381, 114, 381 + 87, 114 + 58, GetColor(0, 0, 0), false);;
-	DrawFormatString(381, 114, 255, "BGM");
-
-	DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(255, 255, 255), true);;
-	DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(0, 0, 0), false);;
-	DrawFormatString(548, 255, 255, "SEのバー");
-
-	DrawBox(95, 95, 95 + 211, 95 + 86, GetColor(255, 255, 255), true);;
-	DrawBox(95, 95, 95 + 211, 95 + 86, GetColor(0, 0, 0), false);;
+	DrawBox(95, 95, 95 + 211, 95 + 86, GetColor(255, 255, 255), true);
+	DrawBox(95, 95, 95 + 211, 95 + 86, GetColor(0, 0, 0), false);
 	DrawFormatString(95, 95, 255, "サウンド調整");
 
-	DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(255, 255, 255), true);;
-	DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(0, 0, 0), false);;
+	DrawBox(381, 114, 381 + 87, 114 + 58, GetColor(255, 255, 255), true);
+	DrawBox(381, 114, 381 + 87, 114 + 58, GetColor(0, 0, 0), false);
+	DrawFormatString(381, 114, 255, "BGM");
+
+	DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(255, 255, 255), true);
+	DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(0, 0, 0), false);
 	DrawFormatString(546, 100, 255, "BGMバー");
 
-	DrawBox(375, 843, 375 + 109, 843 + 68, GetColor(255, 255, 255), true);;
-	DrawBox(375, 843, 375 + 109, 843 + 68, GetColor(0, 0, 0), false);;
+	DrawBox(385, 266, 385 + 86, 266 + 58, GetColor(255, 255, 255), true);
+	DrawBox(385, 266, 385 + 86, 266 + 58, GetColor(0, 0, 0), false);
+	DrawFormatString(385, 266, 255, "SE");
+
+	DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(255, 255, 255), true);
+	DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(0, 0, 0), false);
+	DrawFormatString(548, 255, 255, "SEのバー");
+
+
+	/// 色覚に関するオプション----------------------------------------------
+
+	DrawBox(96, 413, 96 + 154, 413 + 76, GetColor(255, 255, 255), true);
+	DrawBox(96, 413, 96 + 154, 413 + 76, GetColor(0, 0, 0), false);
+	DrawFormatString(96, 413, 255, "色覚設定");
+
+	DrawBox(385, 427, 385 + 83, 427 + 58, GetColor(255, 255, 255), true);
+	DrawBox(385, 427, 385 + 83, 427 + 58, GetColor(0, 0, 0), false);
+	DrawFormatString(385, 427, 255, "通常色");
+
+	DrawBox(386, 550, 386 + 83, 550 + 59, GetColor(255, 255, 255), true);
+	DrawBox(386, 550, 386 + 83, 550 + 59, GetColor(0, 0, 0), false);
+	DrawFormatString(386, 550, 255, "P型補正");
+
+	DrawBox(559, 550, 559 + 269, 550 + 65, GetColor(255, 255, 255), true);
+	DrawBox(559, 550, 559 + 269, 550 + 65, GetColor(0, 0, 0), false);
+	DrawFormatString(559, 550, 255, "P型補足説明");
+
+	DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(255, 255, 255), true);
+	DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(0, 0, 0), false);
+	DrawFormatString(385, 682, 255, "D型補正");
+
+	DrawBox(557, 681, 557 + 273, 681 + 60, GetColor(255, 255, 255), true);
+	DrawBox(557, 681, 557 + 273, 681 + 60, GetColor(0, 0, 0), false);
+	DrawFormatString(557, 681, 255, "D型補足説明");
+
+
+	///　モデル表示-------------------------------------------------------------
+
+	DrawBox(1252, 94, 1252 + 589, 94 + 897, GetColor(255, 255, 255), true);
+	DrawBox(1252, 94, 1252 + 589, 94 + 897, GetColor(0, 0, 0), false);
+	DrawFormatString(1252, 94, 255, "モデル");
+
+
+	// 戻る
+
+	DrawBox(375, 843, 375 + 109, 843 + 68, GetColor(255, 255, 255), true);
+	DrawBox(375, 843, 375 + 109, 843 + 68, GetColor(0, 0, 0), false);
 	DrawFormatString(375, 843, 255, "戻る");
 }
 
@@ -231,6 +253,7 @@ void Manager::Update()
 				// オプション画面から戻る
 				if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1)
 				{
+					SoundProcess::SetOptionMenuNow(false);
 					optionMenuNow = false;
 				}
 

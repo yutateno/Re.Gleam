@@ -38,32 +38,37 @@ void Manager::SceneChange()
 
 void Manager::OptionProcess()
 {
-	if (optionSelectButtonNum == EOptionSelectButton::BGM)
+	// ボタンそれぞれの動作
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
 	{
+		if (optionSelectButtonNum == EOptionSelectButton::BGM)
+		{
 
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::SE)
+		{
+
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
+		{
+
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::ColorP)
+		{
+
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::ColorD)
+		{
+
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::Back)
+		{
+
+		}
 	}
-	else if (optionSelectButtonNum == EOptionSelectButton::SE)
-	{
-
-	}
-	else if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
-	{
-
-	}
-	else if (optionSelectButtonNum == EOptionSelectButton::ColorP)
-	{
-
-	}
-	else if (optionSelectButtonNum == EOptionSelectButton::ColorD)
-	{
-
-	}
-	else if (optionSelectButtonNum == EOptionSelectButton::Back)
-	{
-
-	}
 
 
+	// スティックの一回押し倒しで更新するよう調整。
 	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
 	{
 		if(optionControllStick[0] < 2) optionControllStick[0]++;

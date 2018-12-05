@@ -38,9 +38,54 @@ void Manager::SceneChange()
 
 void Manager::OptionProcess()
 {
-	if (optionMenuNow)
+	if (optionSelectButtonNum == EOptionSelectButton::BGM)
 	{
-		SoundProcess::SetOptionMenuNow(true);
+
+	}
+	else if (optionSelectButtonNum == EOptionSelectButton::SE)
+	{
+
+	}
+	else if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
+	{
+
+	}
+	else if (optionSelectButtonNum == EOptionSelectButton::ColorP)
+	{
+
+	}
+	else if (optionSelectButtonNum == EOptionSelectButton::ColorD)
+	{
+
+	}
+	else if (optionSelectButtonNum == EOptionSelectButton::Back)
+	{
+
+	}
+
+
+	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
+	{
+		if(optionControllStick[0] < 2) optionControllStick[0]++;
+	}
+	else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) < 0)
+	{
+		if (optionControllStick[1] < 2) optionControllStick[1]++;
+	}
+	else
+	{
+		optionControllStick[0] = 0;
+		optionControllStick[1] = 0;
+	}
+	if (optionControllStick[0] == 1)
+	{
+		int temp = static_cast<int>(optionSelectButtonNum);
+		optionSelectButtonNum = static_cast<EOptionSelectButton>(temp > 0 ? --temp : temp);
+	}
+	if (optionControllStick[1] == 1)
+	{
+		int temp = static_cast<int>(optionSelectButtonNum);
+		optionSelectButtonNum = static_cast<EOptionSelectButton>(temp < 5 ? ++temp : temp);
 	}
 }
 
@@ -117,6 +162,10 @@ void Manager::OptionDraw()
 	DrawBox(375, 843, 375 + 109, 843 + 68, GetColor(255, 255, 255), true);
 	DrawBox(375, 843, 375 + 109, 843 + 68, GetColor(0, 0, 0), false);
 	DrawFormatString(375, 843, 255, "戻る");
+
+
+	// debug
+	DrawFormatString(0, 0, 255, "%d", optionSelectButtonNum);
 }
 
 
@@ -176,6 +225,8 @@ Manager::Manager()
 
 	gaussianScreen = MakeScreen(BASICPARAM::winWidth, BASICPARAM::winHeight);
 	optionMenuNow = false;
+	optionControllStick[0] = 0;
+	optionControllStick[1] = 0;
 
 
 	SetCreateDrawValidGraphMultiSample(4, 4);			// 4x4のアンチエイリアシングモードにする
@@ -242,6 +293,8 @@ void Manager::Update()
 					GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, gaussianScreen);						// 現在の画面をキャプチャする
 					GraphFilter(gaussianScreen, DX_GRAPH_FILTER_GAUSS, 16, 1400);				// 現在の画面にガウスフィルタかけてぼかす
 					optionMenuNow = true;
+					optionSelectButtonNum = EOptionSelectButton::BGM;
+					SoundProcess::SetOptionMenuNow(true);
 				}
 			}
 			else

@@ -8,7 +8,7 @@ void MainMove2::ShadowDraw()
 	p_character->Draw();
 	for (int i = 0; i != enemyNum; ++i)
 	{
-		if (!p_enemy[i]->GetViewDrawFlag()) p_enemy[i]->Draw();
+		if (!p_enemy[i]->GetEraseExistence()) p_enemy[i]->Draw();
 	}
 	for (int i = 0; i != 10; ++i)
 	{
@@ -32,7 +32,7 @@ void MainMove2::ShadowDraw()
 	}
 	for (int i = 0; i != enemyNum; ++i)
 	{
-		if (!p_enemy[i]->GetViewDrawFlag())	p_enemy[i]->Draw();
+		if (!p_enemy[i]->GetEraseExistence())	p_enemy[i]->Draw();
 	}
 	for (int i = 0; i != 30; ++i)
 	{
@@ -51,7 +51,7 @@ void MainMove2::ShadowDraw()
 	p_stage->Draw();
 	for (int i = 0; i != enemyNum; ++i)
 	{
-		if (!p_enemy[i]->GetViewDrawFlag()) p_enemy[i]->Draw();
+		if (!p_enemy[i]->GetEraseExistence()) p_enemy[i]->Draw();
 	}
 	for (int i = 0; i != 10; ++i)
 	{
@@ -74,9 +74,10 @@ void MainMove2::ShadowDraw()
 
 void MainMove2::AttackProcess()
 {
+	/// 敵に関する--------------------------------------------------------------------------------------------------------
 	for (int i = 0; i != enemyNum; ++i)
 	{
-		// 当たっていなかったら何もしない
+		// 当たっていたら押し出す
 		if (HitCheck_Capsule_Capsule(
 			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f,
 			p_enemy[i]->GetArea(), VAdd(p_enemy[i]->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 100.0f)
@@ -91,6 +92,24 @@ void MainMove2::AttackProcess()
 			p_enemy[i]->HitLineReturn(p_character->GetAttackFirstFrameArea(), p_character->GetAttackEndFrameArea());
 		}
 	}
+
+	
+	/// ドロップに関する--------------------------------------------------------------------------------------
+	for (int i = 0, n = enemyNum * 5; i != n; ++i)
+	{
+		if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 50
+			&& !p_dropItem[i]->GetDeath())
+		{
+			p_dropItem[i]->SetDeath(true);			// 生きさせない
+			if (i % 5 == 0) SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp);
+		}
+
+		if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 500)
+		{
+			p_dropItem[i]->StolenChara(p_character->GetArea());
+		}
+	}
+
 }
 
 
@@ -118,8 +137,12 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	}
 	for (int i = 0; i != 5; ++i)
 	{
-		p_dropItem[i]			 = NULL;
+		p_dropItem[i] = NULL;
 	}
+
+
+	// サウンド読み込み
+	SoundProcess::Load(v_file[EFILE::se_ballPickUp], SoundProcess::ESOUNDNAME_SE::ballPickUp, SoundProcess::ESOUNDTYPE::soundMem);
 
 
 	// ポインタ初期化
@@ -209,15 +232,9 @@ void MainMove2::Draw()
 	ShadowDraw();
 
 
-	for (int i = 0; i != enemyNum; ++i)
+	for (int i = 0, n = enemyNum * 5; i != n; ++i)
 	{
-		if (p_enemy[i]->GetViewDrawFlag())
-		{
-			for (int j = i * 5, n = (i + 1) * 5; j != n; ++j)
-			{
-				p_dropItem[j]->Draw();
-			}
-		}
+		p_dropItem[i]->Draw();
 	}
 
 
@@ -236,7 +253,21 @@ void MainMove2::Process()
 
 	for (int i = 0; i != enemyNum; ++i)
 	{
+		if (p_enemy[i]->GetEraseExistence())
+		{
+			p_dropItem[(i * 5)]->SetAlive(true);
+			p_dropItem[(i * 5) + 1]->SetAlive(true);
+			p_dropItem[(i * 5) + 2]->SetAlive(true);
+			p_dropItem[(i * 5) + 3]->SetAlive(true);
+			p_dropItem[(i * 5) + 4]->SetAlive(true);
+			continue;
+		}
 		p_enemy[i]->Process();												// 敵のプロセス
+	}
+
+	for (int i = 0, n = enemyNum * 5; i != n; ++i)
+	{
+		p_dropItem[i]->Process();
 	}
 
 

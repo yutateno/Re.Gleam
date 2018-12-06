@@ -14,6 +14,12 @@ DropItemMove2::DropItemMove2(const int draw, VECTOR area, const int tex0) : Basi
 	this->modelHandle = -1;
 	this->modelHandle = MV1DuplicateModel(draw);
 
+	rotationY = 0;
+
+	deathNow = false;
+
+	aliveNow = false;
+
 
 	// テクスチャ適応
 	textureHandle = -1;
@@ -39,11 +45,61 @@ DropItemMove2::~DropItemMove2()
 
 void DropItemMove2::Draw()
 {
+	if (deathNow || !aliveNow) return;
+
 	BasicObject::Draw();
 }
 
+
+void DropItemMove2::Process()
+{
+	if (deathNow || !aliveNow) return;
+
+	if (++rotationY >= 180) rotationY = 0;
+
+	MV1SetRotationXYZ(modelHandle, VGet(0.0f, rotationY * DX_PI_F / 180.0f, 0.0f));
+}
+
+
+void DropItemMove2::StolenChara(const VECTOR characterArea)
+{
+	if (deathNow || !aliveNow) return;
+
+	if (characterArea.x <= area.x)
+	{
+		area.x -= 5.0f;
+	}
+	else
+	{
+		area.x += 5.0f;
+	}
+	if (characterArea.z <= area.z)
+	{
+		area.z -= 5.0f;
+	}
+	else
+	{
+		area.z += 5.0f;
+	}
+
+	if (characterArea.y <= area.y)
+	{
+		area.y -= 2.0f;
+	}
+	else
+	{
+		area.y += 2.0f;
+	}
+
+	// モデルの座標を更新
+	MV1SetPosition(this->modelHandle, this->area);
+}
+
+
 void DropItemMove2::TextureReload()
 {
+	if (deathNow) return;
+
 	GRAPHIC_RELEASE(textureHandle);
 
 	switch (BASICPARAM::e_TextureColor)

@@ -84,7 +84,7 @@ protected:
 	bool deathFlag;
 
 	// 描画から消すかどうか
-	bool viewDrawFlag;
+	bool eraseExistence;
 
 	// 透過ブレンドのカウント
 	int blendCount;
@@ -173,5 +173,5 @@ public:
 	bool GetDeathFlag() { return deathFlag; }
 
 	// 描画から消すかどうか
-	bool GetViewDrawFlag() { return viewDrawFlag; }
+	bool GetEraseExistence() { return eraseExistence; }
 };

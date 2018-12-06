@@ -380,7 +380,7 @@ BasicCreature::BasicCreature(const int collStageHandle) :BasicObject(collStageHa
 
 	damageHit = false;
 	deathFlag = false;
-	viewDrawFlag = false;
+	eraseExistence = false;
 	blendCount = 255;
 }
 

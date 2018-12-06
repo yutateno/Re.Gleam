@@ -21,7 +21,7 @@ private:
 	// ロードで渡されるファイル
 	enum EFILE { stage, characterAttack, paneru, stairs, stairsColl, streetLight, skyBox, block, drawStage
 	, charaTex0, charaTex1, charaTex2, charaTex3, charaTex4, stairTex0, streetLightTex0, streetLightTex1
-	, skyBoxTex0, blockTex0 };
+	, skyBoxTex0, blockTex0, se_ballPickUp };
 
 
 	/// ステージ-------------------------------------
@@ -55,6 +55,8 @@ private:
 
 	// ドロップアイテム（１体に対して５個
 	DropItemMove2* p_dropItem[25];
+
+	int dropItemSE;
 
 
 	/// カメラ-----------------------

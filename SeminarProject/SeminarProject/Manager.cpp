@@ -440,6 +440,9 @@ Manager::Manager()
 	// ブロックのテクスチャ
 	move2str[18] = "media\\こっち\\media\\ブロック\\whiteblack\\tex.pyn";
 
+	// サウンドデータ
+	move2str[19] = "media\\こっち\\media\\sound\\たま拾う音.wyn";
+
 	load2[0] = ELOADFILE::mv1model;
 	load2[1] = ELOADFILE::mv1model;
 	load2[2] = ELOADFILE::mv1model;
@@ -460,6 +463,8 @@ Manager::Manager()
 	load2[16] = ELOADFILE::graph;
 	load2[17] = ELOADFILE::graph;
 	load2[18] = ELOADFILE::graph;
+
+	load2[19] = ELOADFILE::soundmem;
 
 
 	p_baseMove = NULL;

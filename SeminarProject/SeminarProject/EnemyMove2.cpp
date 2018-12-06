@@ -64,6 +64,8 @@ EnemyMove2::~EnemyMove2()
 
 void EnemyMove2::Draw()
 {
+	if (eraseExistence) return;
+
 	if (!deathFlag)
 	{
 		BasicObject::ShadowFoot();
@@ -80,6 +82,7 @@ void EnemyMove2::Draw()
 
 void EnemyMove2::Process()
 {
+	if (eraseExistence) return;
 	// ステージのあたり判定
 	StageHit();
 
@@ -99,7 +102,7 @@ void EnemyMove2::Process()
 		}
 		else
 		{
-			viewDrawFlag = true;
+			eraseExistence = true;
 		}
 
 		MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
@@ -110,6 +113,7 @@ void EnemyMove2::Process()
 
 void EnemyMove2::TextureReload()
 {
+	if (eraseExistence) return;
 	GRAPHIC_RELEASE(textureHandle);
 
 	switch (BASICPARAM::e_TextureColor)

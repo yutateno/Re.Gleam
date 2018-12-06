@@ -206,10 +206,11 @@ void MainMove2::CameraProcess()
 }
 
 
-void MainMove2::TextureReload()
+
+void MainMove2::ThsTextureReload()
 {
 	p_character->TextureReload();
-	
+
 	p_enemy->TextureReload();
 
 	for (int i = 0; i != 10; ++i)
@@ -221,4 +222,11 @@ void MainMove2::TextureReload()
 	{
 		p_stageStreetLight[i]->TextureReload();
 	}
+}
+
+
+void MainMove2::TextureReload()
+{
+	ths = std::thread(&MainMove2::ThsTextureReload, this);
+	ths.join();
 }

@@ -88,9 +88,8 @@ void Manager::OptionProcess()
 			/*if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK)*/ BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
 			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
 			{
-				p_baseMove->TextureReload();
 				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
-				printfDx("NNNNNNNNNNNNN\n");
+				p_baseMove->TextureReload();
 			}
 		}
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorP)
@@ -98,9 +97,8 @@ void Manager::OptionProcess()
 			/*if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK)*/ BASICPARAM::e_TextureColor = ETextureColor::P_CORRECTION;
 			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
 			{
-				p_baseMove->TextureReload();
 				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
-				printfDx("PPPPPPPPPPPP\n");
+				p_baseMove->TextureReload();
 			}
 		}
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorD)
@@ -108,9 +106,8 @@ void Manager::OptionProcess()
 			/*if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK)*/ BASICPARAM::e_TextureColor = ETextureColor::D_CORRECTION;
 			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
 			{
-				p_baseMove->TextureReload();
 				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
-				printfDx("DDDDDDDDDDDD\n");
+				p_baseMove->TextureReload();
 			}
 		}
 		else if (optionSelectButtonNum == EOptionSelectButton::Back)

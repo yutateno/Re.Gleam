@@ -110,6 +110,10 @@ protected:
 	// スカイボックスのテクスチャ変更
 	void SkyTextureReload();
 
+	// 非同期テクスチャの切り替え
+	virtual void ThsTextureReload() = 0;
+
+	std::thread ths;
 
 public:
 	// コンストラクタ

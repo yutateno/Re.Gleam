@@ -83,6 +83,10 @@ private:
 	// SE再生ウェイトタイマー
 	int seDoWaitTimer;
 
+	// ロード
+	std::thread thsTexture;
+
+
 
 public:
 	// コンストラクタ

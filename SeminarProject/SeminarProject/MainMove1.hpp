@@ -116,6 +116,9 @@ private:
 	bool touchSword;
 
 
+	void ThsTextureReload() override {}
+
+
 public:
 	// コンストラクタ
 	MainMove1(const std::vector<int> v_file);
@@ -134,5 +137,5 @@ public:
 	void CameraProcess() override;
 
 	// テクスチャの切り替え
-	void TextureReload() override {};
+	void TextureReload() override {}
 };

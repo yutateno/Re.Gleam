@@ -62,6 +62,10 @@ private:
 	void AttackProcess();
 
 
+	// 非同期テクスチャ切り替え
+	void ThsTextureReload() override;
+
+
 public:
 	// コンストラクタ
 	MainMove2(const std::vector<int> v_file);

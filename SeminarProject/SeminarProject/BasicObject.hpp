@@ -54,6 +54,9 @@ private:
 
 public:
 	// コンストラクタ
+	BasicObject();
+
+	// コピーコンストラクタ
 	BasicObject(const int collStageHandle);
 
 	// デストラクタ

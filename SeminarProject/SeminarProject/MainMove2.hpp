@@ -7,6 +7,7 @@
 #include "StageStreetLight.hpp"
 #include "StagePaneru.hpp"
 #include "EnemyMove2.hpp"
+#include "DropItemMove2.hpp"
 
 #include <random>
 
@@ -46,8 +47,14 @@ private:
 
 	/// 敵---------------------
 
+	// 敵の数
+	const int enemyNum = 5;
+
 	// 敵のポインタ
-	EnemyMove2* p_enemy;
+	EnemyMove2* p_enemy[5];
+
+	// ドロップアイテム（１体に対して５個
+	DropItemMove2* p_dropItem[25];
 
 
 	/// カメラ-----------------------

@@ -82,6 +82,11 @@ void BasicObject::ShadowFoot()
 
 
 
+BasicObject::BasicObject()
+{
+	notViewCount = 0;
+}
+
 BasicObject::BasicObject(const int collStageHandle)
 {
 	shadowHandle = 0;

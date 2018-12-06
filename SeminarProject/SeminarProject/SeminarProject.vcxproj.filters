@@ -138,6 +138,15 @@
     <ClCompile Include="SoundProcess.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="StageStairsRoad.cpp">
+      <Filter>ソース ファイル\Actor\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMove3.cpp">
+      <Filter>ソース ファイル\MoveLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="DropItemMove2.cpp">
+      <Filter>ソース ファイル\Actor\Drop</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseMove.hpp">
@@ -205,6 +214,15 @@
     </ClInclude>
     <ClInclude Include="SoundProcess.hpp">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="StageStairsRoad.hpp">
+      <Filter>ヘッダー ファイル\Actor\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMove3.hpp">
+      <Filter>ヘッダー ファイル\MoveLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="DropItemMove2.hpp">
+      <Filter>ヘッダー ファイル\Actor\Drop</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

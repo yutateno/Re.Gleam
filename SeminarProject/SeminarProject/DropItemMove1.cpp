@@ -13,7 +13,7 @@ DropItemMove1::DropItemMove1(const int draw, const int collStageHandle, const in
 
 
 	// モデルデータの読み込み
-	this->modelHandle = 0;
+	this->modelHandle = -1;
 	this->modelHandle = MV1DuplicateModel(draw);
 
 	

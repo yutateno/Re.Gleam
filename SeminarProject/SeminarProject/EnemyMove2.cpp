@@ -95,7 +95,7 @@ void EnemyMove2::Process()
 	{
 		if (blendCount >= 0)
 		{
-			blendCount--;
+			blendCount -= 5;
 		}
 		else
 		{

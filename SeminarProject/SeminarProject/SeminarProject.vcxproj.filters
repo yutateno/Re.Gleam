@@ -147,6 +147,9 @@
     <ClCompile Include="DropItemMove2.cpp">
       <Filter>ソース ファイル\Actor\Drop</Filter>
     </ClCompile>
+    <ClCompile Include="AdjustmentMachine.cpp">
+      <Filter>ソース ファイル\Actor\Drop</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseMove.hpp">
@@ -222,6 +225,9 @@
       <Filter>ヘッダー ファイル\MoveLevel</Filter>
     </ClInclude>
     <ClInclude Include="DropItemMove2.hpp">
+      <Filter>ヘッダー ファイル\Actor\Drop</Filter>
+    </ClInclude>
+    <ClInclude Include="AdjustmentMachine.hpp">
       <Filter>ヘッダー ファイル\Actor\Drop</Filter>
     </ClInclude>
   </ItemGroup>

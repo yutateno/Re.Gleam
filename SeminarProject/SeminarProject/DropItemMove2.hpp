@@ -35,7 +35,7 @@ public:
 	// テクスチャ切り替え
 	void TextureReload();
 
-	// 存在を一生消すかどうか
+	// 存在を一生消す
 	void SetDeath(bool death) { deathNow = death; }
 
 	// 存在を許されたかどうか
@@ -43,5 +43,8 @@ public:
 
 	// 存在を一生消しているかどうか渡す
 	bool GetDeath() { return deathNow; }
+
+	// 存在を許されてないかどうか渡す
+	bool GetAlive() { return aliveNow; }
 };
 

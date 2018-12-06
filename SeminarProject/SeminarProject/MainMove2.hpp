@@ -58,6 +58,9 @@ private:
 
 	int dropItemSE;
 
+	// 何個のドロップアイテムを手に持ったか
+	int catchDropItemNum;
+
 
 	/// カメラ-----------------------
 	// カメラのポインタ

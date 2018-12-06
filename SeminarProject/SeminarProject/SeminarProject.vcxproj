@@ -152,6 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AdjustmentMachine.cpp" />
     <ClCompile Include="BaseMove.cpp" />
     <ClCompile Include="Basic.cpp" />
     <ClCompile Include="BasicCreature.cpp" />
@@ -180,6 +181,7 @@
     <ClCompile Include="StageStreetLight.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AdjustmentMachine.hpp" />
     <ClInclude Include="BaseMove.hpp" />
     <ClInclude Include="Basic.hpp" />
     <ClInclude Include="BasicCreature.hpp" />

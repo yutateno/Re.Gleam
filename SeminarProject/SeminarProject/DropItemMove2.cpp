@@ -82,7 +82,7 @@ void DropItemMove2::StolenChara(const VECTOR characterArea)
 		area.z += 5.0f;
 	}
 
-	if (characterArea.y <= area.y)
+	if ((characterArea.y + 80.0f) <= area.y)
 	{
 		area.y -= 2.0f;
 	}

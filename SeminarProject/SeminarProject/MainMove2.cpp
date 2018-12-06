@@ -77,17 +77,18 @@ void MainMove2::AttackProcess()
 	/// 敵に関する--------------------------------------------------------------------------------------------------------
 	for (int i = 0; i != enemyNum; ++i)
 	{
+		if (p_enemy[i]->GetDeathFlag()) continue;
+
 		// 当たっていたら押し出す
 		if (HitCheck_Capsule_Capsule(
 			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f,
-			p_enemy[i]->GetArea(), VAdd(p_enemy[i]->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 100.0f)
-			&& !p_enemy[i]->GetDeathFlag())
+			p_enemy[i]->GetArea(), VAdd(p_enemy[i]->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 100.0f))
 		{
 			p_character->HitCircleReturn(p_enemy[i]->GetArea(), VAdd(p_enemy[i]->GetArea(), VGet(0.0f, 100.0f, 0.0f)));
 		}
 
 		// 攻撃中だったら
-		if (p_character->GetAttackNow() && !p_enemy[i]->GetDeathFlag())
+		if (p_character->GetAttackNow())
 		{
 			p_enemy[i]->HitLineReturn(p_character->GetAttackFirstFrameArea(), p_character->GetAttackEndFrameArea());
 		}
@@ -97,9 +98,11 @@ void MainMove2::AttackProcess()
 	/// ドロップに関する--------------------------------------------------------------------------------------
 	for (int i = 0, n = enemyNum * 5; i != n; ++i)
 	{
-		if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 50
-			&& !p_dropItem[i]->GetDeath())
+		if (p_dropItem[i]->GetDeath() || !p_dropItem[i]->GetAlive()) continue;
+
+		if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 50)
 		{
+			catchDropItemNum++;
 			p_dropItem[i]->SetDeath(true);			// 生きさせない
 			if (i % 5 == 0) SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp);
 		}
@@ -173,6 +176,9 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	}
 
 
+	catchDropItemNum = 0;
+
+
 	// スカイボックス読み込み
 	BaseMove::SetInitSkyBox(v_file[EFILE::skyBox], v_file[EFILE::skyBoxTex0]);
 
@@ -239,6 +245,9 @@ void MainMove2::Draw()
 
 
 	p_character->Draw();
+
+
+	DrawFormatString(255, 0, GetColor(255, 255, 255), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
 }
 
 
@@ -292,11 +301,13 @@ void MainMove2::ThsTextureReload()
 
 	for (int i = 0; i != enemyNum; ++i)
 	{
+		if (p_enemy[i]->GetDeathFlag()) continue;
 		p_enemy[i]->TextureReload();
 	}
 
 	for (int i = 0, n = enemyNum * 5; i != n; ++i)
 	{
+		if (p_dropItem[i]->GetDeath()) continue;
 		p_dropItem[i]->TextureReload();
 	}
 

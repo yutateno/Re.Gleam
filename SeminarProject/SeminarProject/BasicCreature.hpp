@@ -145,6 +145,9 @@ private:
 
 public:
 	// コンストラクタ
+	BasicCreature();
+
+	// コピーコンストラクタ
 	BasicCreature(const int collStageHandle);
 
 	// デストラクタ

@@ -11,7 +11,7 @@ private:
 
 public:
 	// コンストラクタ
-	StageStairs(const int draw, const int collStageHandle, const VECTOR area, const int tex0);
+	StageStairs(const int draw, const VECTOR area, const int tex0);
 
 	// デストラクタ
 	~StageStairs();

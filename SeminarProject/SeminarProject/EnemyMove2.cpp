@@ -1,7 +1,7 @@
 #include "EnemyMove2.hpp"
 
 
-EnemyMove2::EnemyMove2(const int collStageHandle, const VECTOR area, const int modelHandle, const int tex0) : BasicCreature(collStageHandle)
+EnemyMove2::EnemyMove2(const VECTOR area, const int modelHandle, const int tex0) : BasicCreature()
 {
 	// 座標を設定
 	this->area = VAdd(area, VGet(0.0f, 10.0f, 0.0f));
@@ -10,9 +10,6 @@ EnemyMove2::EnemyMove2(const int collStageHandle, const VECTOR area, const int m
 	// サイズを設定
 	modelHeight = 100.0f;
 	modelWigth = 50.0f;
-
-	shadowHeight = 10.0f;
-	shadowSize = 15.0f;
 
 
 	// モデルデータの読み込み
@@ -66,10 +63,10 @@ void EnemyMove2::Draw()
 {
 	if (eraseExistence) return;
 
-	if (!deathFlag)
+	/*if (!deathFlag)
 	{
 		BasicObject::ShadowFoot();
-	}
+	}*/
 
 	BasicObject::Draw();
 
@@ -84,7 +81,7 @@ void EnemyMove2::Process()
 {
 	if (eraseExistence) return;
 	// ステージのあたり判定
-	StageHit();
+	//StageHit();
 
 
 	// ダメージ受けた時

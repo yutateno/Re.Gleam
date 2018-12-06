@@ -443,6 +443,13 @@ Manager::Manager()
 	// サウンドデータ
 	move2str[19] = "media\\こっち\\media\\sound\\たま拾う音.wyn";
 
+	// 精算機械データ
+	move2str[20] = "media\\こっち\\media\\Terminal\\terminal.myn";					// 2
+
+	// 精算機械テクスチャ
+	move2str[21] = "media\\こっち\\media\\Terminal\\whiteblack\\Terminal.pyn";
+	move2str[22] = "media\\こっち\\media\\Terminal\\whiteblack\\T_display.pyn";
+
 	load2[0] = ELOADFILE::mv1model;
 	load2[1] = ELOADFILE::mv1model;
 	load2[2] = ELOADFILE::mv1model;
@@ -465,6 +472,11 @@ Manager::Manager()
 	load2[18] = ELOADFILE::graph;
 
 	load2[19] = ELOADFILE::soundmem;
+
+	load2[20] = ELOADFILE::mv1model;
+
+	load2[21] = ELOADFILE::graph;
+	load2[22] = ELOADFILE::graph;
 
 
 	p_baseMove = NULL;

@@ -1,14 +1,9 @@
 #include "StageStreetLight.hpp"
 
 
-StageStreetLight::StageStreetLight(const int draw, const int collStageHandle, const VECTOR area
-	, const int tex0, const int tex1) : BasicObject(collStageHandle)
+StageStreetLight::StageStreetLight(const int draw, const VECTOR area, const int tex0, const int tex1) : BasicObject()
 {
 	this->area = area;
-
-
-	shadowHeight = 10.0f;
-	shadowSize = 5.0f;
 
 
 	// モデルデータを読み込み
@@ -67,7 +62,7 @@ StageStreetLight::~StageStreetLight()
 
 void StageStreetLight::Draw()
 {
-	BasicObject::ShadowFoot();
+	//BasicObject::ShadowFoot();
 
 
 	BasicObject::Draw();

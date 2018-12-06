@@ -6,7 +6,7 @@ class StagePaneru : public BasicObject
 {
 public:
 	// コンストラクタ
-	StagePaneru(const int draw, const int collStageHandle, const VECTOR area);
+	StagePaneru(const int draw, const VECTOR area);
 
 	// デストラクタ
 	~StagePaneru();

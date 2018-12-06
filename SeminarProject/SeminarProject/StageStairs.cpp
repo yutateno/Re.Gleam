@@ -1,15 +1,15 @@
 #include "StageStairs.hpp"
 
 
-StageStairs::StageStairs(const int draw, const int collStageHandle, const VECTOR area, const int tex0) : BasicObject(collStageHandle)
+StageStairs::StageStairs(const int draw, const VECTOR area, const int tex0) : BasicObject()
 {
 	// 座標設定
 	this->area = area;
 
 
-	// 影の設定
-	shadowHeight = 10.0f;
-	shadowSize = 5.0f;
+	//// 影の設定
+	//shadowHeight = 10.0f;
+	//shadowSize = 5.0f;
 
 
 	// モデルデータの読み込み
@@ -59,7 +59,7 @@ StageStairs::~StageStairs()
 
 void StageStairs::Draw()
 {
-	BasicObject::ShadowFoot();
+	//BasicObject::ShadowFoot();
 
 
 	BasicObject::Draw();

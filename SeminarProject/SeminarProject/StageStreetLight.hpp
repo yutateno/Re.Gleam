@@ -12,8 +12,7 @@ private:
 
 public:
 	// コンストラクタ
-	StageStreetLight(const int draw, const int collStageHandle, const VECTOR area
-	, const int tex0, const int tex1);
+	StageStreetLight(const int draw, const VECTOR area, const int tex0, const int tex1);
 
 	// デストラクタ
 	~StageStreetLight();

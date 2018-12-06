@@ -5,7 +5,6 @@
 void MainMove2::ShadowDraw()
 {
 	BaseMove::ShadowCharaSetUpBefore();
-	p_character->Draw();
 	for (int i = 0; i != enemyNum; ++i)
 	{
 		if (!p_enemy[i]->GetEraseExistence()) p_enemy[i]->Draw();
@@ -22,6 +21,8 @@ void MainMove2::ShadowDraw()
 	{
 		p_stagePaneru[i]->Draw();
 	}
+	p_adjustmentMachine->Draw();
+	p_character->Draw();
 	BaseMove::ShadowCharaSetUpAfter();
 
 
@@ -42,6 +43,7 @@ void MainMove2::ShadowDraw()
 	{
 		p_stagePaneru[i]->Draw();
 	}
+	p_adjustmentMachine->Draw();
 	BaseMove::ShadowAnotherCharaSetUpAfter();
 
 
@@ -65,6 +67,7 @@ void MainMove2::ShadowDraw()
 	{
 		p_stagePaneru[i]->Draw();
 	}
+	p_adjustmentMachine->Draw();
 	p_character->Draw();
 	BaseMove::ShadowNoMoveDrawAfter();
 	BaseMove::ShadowAnotherCharaDrawAfter();
@@ -94,6 +97,16 @@ void MainMove2::AttackProcess()
 		}
 	}
 
+
+	/// 精算機械に関する-------------------------------------------------------------------------------------------------------------------
+
+	// 当たっていたら押し出す
+	if (HitCheck_Capsule_Capsule(
+		p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f,
+		p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 70.0f))
+	{
+		p_character->HitCircleReturn(p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)));
+	}
 	
 	/// ドロップに関する--------------------------------------------------------------------------------------
 	for (int i = 0, n = enemyNum * 5; i != n; ++i)
@@ -142,6 +155,8 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	{
 		p_dropItem[i] = NULL;
 	}
+	p_adjustmentMachine = NULL;
+
 
 
 	// サウンド読み込み
@@ -151,7 +166,7 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	// ポインタ初期化
 	for (int i = 0; i != 10; ++i)
 	{
-		p_stageStairs[i] = new StageStairs(v_file[EFILE::stairs], v_file[EFILE::stage], VGet(-100.0f*i, 0.0f, -1000.0f), v_file[EFILE::stairTex0]);
+		p_stageStairs[i] = new StageStairs(v_file[EFILE::stairs], VGet(-100.0f*i, 0.0f, -1000.0f), v_file[EFILE::stairTex0]);
 	}
 	p_stage		 = new Stage(v_file[EFILE::drawStage]);
 	p_character	 = new CharacterSword(v_file[EFILE::characterAttack], v_file[EFILE::stage], v_file[EFILE::stairsColl], v_file[EFILE::paneru]
@@ -159,21 +174,22 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	p_camera	 = new Camera(p_character->GetArea(), v_file[EFILE::stage]);
 	for (int i = 0; i != 30; ++i)
 	{
-		p_stageStreetLight[i] = new StageStreetLight(v_file[EFILE::streetLight], v_file[EFILE::stage], VGet(250.0f*i, 0.0f, -100.0f*i)
+		p_stageStreetLight[i] = new StageStreetLight(v_file[EFILE::streetLight], VGet(250.0f*i, 0.0f, -100.0f*i)
 			, v_file[EFILE::streetLightTex0], v_file[EFILE::streetLightTex1]);
 	}
 	for (int i = 0; i != 10; ++i)
 	{
-		p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneru], v_file[EFILE::stage], VGet(500.0f * i, 300.0f*i, 100.0f*i));
+		p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneru], VGet(500.0f * i, 300.0f*i, 100.0f*i));
 	}
 	for (int i = 0; i != enemyNum; ++i)
 	{
-		p_enemy[i] = new EnemyMove2(v_file[EFILE::stage], VGet(1000.0f + (i * 150), 0.0f, -1000.0f), v_file[EFILE::block], v_file[EFILE::blockTex0]);
+		p_enemy[i] = new EnemyMove2(VGet(1000.0f + (i * 150), 0.0f, -1000.0f), v_file[EFILE::block], v_file[EFILE::blockTex0]);
 	}
 	for (int i = 0, n = enemyNum * 5; i != n; ++i)
 	{
 		p_dropItem[i] = new DropItemMove2(v_file[EFILE::block], p_enemy[i / 5]->GetArea(), v_file[EFILE::blockTex0]);
 	}
+	p_adjustmentMachine = new AdjustmentMachine(v_file[EFILE::terminal], VGet(-1000.0f, 0.0f, -500.0f), v_file[EFILE::terminalTex0], v_file[EFILE::terminalTex1]);
 
 
 	catchDropItemNum = 0;
@@ -279,6 +295,13 @@ void MainMove2::Process()
 		p_dropItem[i]->Process();
 	}
 
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_Y) == 1)
+	{
+		static bool aaaaaaaaaaaaaaaaaaaaa = false;
+		aaaaaaaaaaaaaaaaaaaaa = !aaaaaaaaaaaaaaaaaaaaa;
+		p_adjustmentMachine->ChangeDisplayTexture(aaaaaaaaaaaaaaaaaaaaa);
+	}
+
 
 	BaseMove::ShadowArea(p_character->GetArea());
 
@@ -298,6 +321,8 @@ void MainMove2::CameraProcess()
 void MainMove2::ThsTextureReload()
 {
 	p_character->TextureReload();
+
+	p_adjustmentMachine->TextureReload();
 
 	for (int i = 0; i != enemyNum; ++i)
 	{

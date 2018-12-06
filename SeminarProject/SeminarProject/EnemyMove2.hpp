@@ -11,7 +11,7 @@ private:
 
 public:
 	// コンストラクタ
-	EnemyMove2(const int collStageHandle, const VECTOR area, const int modelHandle, const int tex0);
+	EnemyMove2(const VECTOR area, const int modelHandle, const int tex0);
 
 	// デストラクタ
 	~EnemyMove2();

@@ -350,6 +350,32 @@ void BasicCreature::ActorHit(int stageHandle)
 }
 
 
+BasicCreature::BasicCreature() :BasicObject()
+{
+	// 当たり判定に関する
+	wallNum = 0;
+	floorNum = 0;
+	hitFlag = false;
+	maxYHit = 0.0f;
+	minYHit = 0.0f;
+	moveFlag = false;
+
+	// モーション関連
+	nowPlayTime = 0.0f;
+	motionBlendTime = 0.0f;
+	preAttach = -1;
+	preMotionPlayTime = 0.0f;
+
+	fallCount = 0;
+
+	angle = 0.0f;
+
+	damageHit = false;
+	deathFlag = false;
+	eraseExistence = false;
+	blendCount = 255;
+}
+
 // コンストラクタ
 BasicCreature::BasicCreature(const int collStageHandle) :BasicObject(collStageHandle)
 {

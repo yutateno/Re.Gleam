@@ -35,13 +35,13 @@ private:
 	/// ムーブ２に関する--------------
 
 	// ムーブ2のロード数
-	const int max2 = 20;
+	const int max2 = 23;
 
 	// ムーブ2のロードファイル
-	std::string move2str[20];
+	std::string move2str[23];
 
 	// ムーブ2のロードの種類
-	ELOADFILE load2[20];
+	ELOADFILE load2[23];
 
 
 	// アンチエイリアスの画像

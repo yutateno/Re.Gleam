@@ -8,6 +8,7 @@
 #include "StagePaneru.hpp"
 #include "EnemyMove2.hpp"
 #include "DropItemMove2.hpp"
+#include "AdjustmentMachine.hpp"
 
 #include <random>
 
@@ -21,7 +22,7 @@ private:
 	// ロードで渡されるファイル
 	enum EFILE { stage, characterAttack, paneru, stairs, stairsColl, streetLight, skyBox, block, drawStage
 	, charaTex0, charaTex1, charaTex2, charaTex3, charaTex4, stairTex0, streetLightTex0, streetLightTex1
-	, skyBoxTex0, blockTex0, se_ballPickUp };
+	, skyBoxTex0, blockTex0, se_ballPickUp, terminal, terminalTex0, terminalTex1 };
 
 
 	/// ステージ-------------------------------------
@@ -60,6 +61,12 @@ private:
 
 	// 何個のドロップアイテムを手に持ったか
 	int catchDropItemNum;
+
+
+	/// 精算機械-------------
+
+	// 精算機械のポインタ
+	AdjustmentMachine* p_adjustmentMachine;
 
 
 	/// カメラ-----------------------

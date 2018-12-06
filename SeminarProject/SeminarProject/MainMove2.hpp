@@ -18,7 +18,9 @@ class MainMove2 : public BaseMove
 {
 private:
 	// ロードで渡されるファイル
-	enum EFILE { stage, characterAttack, paneru, stairs, stairsColl, streetLight, skyBox, block, drawStage };
+	enum EFILE { stage, characterAttack, paneru, stairs, stairsColl, streetLight, skyBox, block, drawStage
+	, charaTex0, charaTex1, charaTex2, charaTex3, charaTex4, stairTex0, streetLightTex0, streetLightTex1
+	, skyBoxTex0, blockTex0 };
 
 
 	/// ステージ-------------------------------------
@@ -30,7 +32,7 @@ private:
 	StageStairs* p_stageStairs[10];
 
 	// 街灯のポインタ
-	StageStreetLight* p_stageStreetLight[50];
+	StageStreetLight* p_stageStreetLight[30];
 
 	// パネルのポインタ
 	StagePaneru* p_stagePaneru[10];
@@ -76,5 +78,8 @@ public:
 
 	// カメラのプロセス
 	void CameraProcess() override;
+
+	// テクスチャの切り替え
+	void TextureReload() override;
 };
 

@@ -106,24 +106,26 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	// ポインタ初期化
 	for (int i = 0; i != 10; ++i)
 	{
-		p_stageStairs[i] = new StageStairs(v_file[EFILE::stairs], v_file[EFILE::stage], VGet(-100.0f*i, 0.0f, -1000.0f));
+		p_stageStairs[i] = new StageStairs(v_file[EFILE::stairs], v_file[EFILE::stage], VGet(-100.0f*i, 0.0f, -1000.0f), v_file[EFILE::stairTex0]);
 	}
 	p_stage		 = new Stage(v_file[EFILE::drawStage]);
-	p_character	 = new CharacterSword(v_file[EFILE::characterAttack], v_file[EFILE::stage], v_file[EFILE::stairsColl], v_file[EFILE::paneru]);
+	p_character	 = new CharacterSword(v_file[EFILE::characterAttack], v_file[EFILE::stage], v_file[EFILE::stairsColl], v_file[EFILE::paneru]
+		, v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3], v_file[EFILE::charaTex4]);
 	p_camera	 = new Camera(p_character->GetArea(), v_file[EFILE::stage]);
 	for (int i = 0; i != 30; ++i)
 	{
-		p_stageStreetLight[i] = new StageStreetLight(v_file[EFILE::streetLight], v_file[EFILE::stage], VGet(250.0f*i, 0.0f, -100.0f*i));
+		p_stageStreetLight[i] = new StageStreetLight(v_file[EFILE::streetLight], v_file[EFILE::stage], VGet(250.0f*i, 0.0f, -100.0f*i)
+			, v_file[EFILE::streetLightTex0], v_file[EFILE::streetLightTex1]);
 	}
 	for (int i = 0; i != 10; ++i)
 	{
 		p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneru], v_file[EFILE::stage], VGet(500.0f * i, 300.0f*i, 100.0f*i));
 	}
-	p_enemy = new EnemyMove2(v_file[EFILE::stage], VGet(1000.0f, 0.0f, -1000.0f), v_file[EFILE::block]);
+	p_enemy = new EnemyMove2(v_file[EFILE::stage], VGet(1000.0f, 0.0f, -1000.0f), v_file[EFILE::block], v_file[EFILE::blockTex0]);
 
 
 	// スカイボックス読み込み
-	BaseMove::SetInitSkyBox(v_file[EFILE::skyBox]);
+	BaseMove::SetInitSkyBox(v_file[EFILE::skyBox], v_file[EFILE::skyBoxTex0]);
 
 
 	// 階段のあたり判定
@@ -201,4 +203,22 @@ void MainMove2::Process()
 void MainMove2::CameraProcess()
 {
 	p_camera->SetUp();		// カメラのプロセスを呼ぶ
+}
+
+
+void MainMove2::TextureReload()
+{
+	p_character->TextureReload();
+	
+	p_enemy->TextureReload();
+
+	for (int i = 0; i != 10; ++i)
+	{
+		p_stageStairs[i]->TextureReload();
+	}
+
+	for (int i = 0; i != 30; ++i)
+	{
+		p_stageStreetLight[i]->TextureReload();
+	}
 }

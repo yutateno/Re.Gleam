@@ -23,25 +23,25 @@ private:
 	/// ムーブ１に関する----------------
 
 	// ムーブ1のロード数
-	const int max1 = 7;
+	const int max1 = 12;
 
 	// ムーブ1のロードファイル
-	std::string move1str[7];
+	std::string move1str[12];
 
 	// ムーブ1のロードの種類
-	ELOADFILE load1[7];
+	ELOADFILE load1[12];
 
 
 	/// ムーブ２に関する--------------
 
 	// ムーブ2のロード数
-	const int max2 = 9;
+	const int max2 = 19;
 
 	// ムーブ2のロードファイル
-	std::string move2str[9];
+	std::string move2str[19];
 
 	// ムーブ2のロードの種類
-	ELOADFILE load2[9];
+	ELOADFILE load2[19];
 
 
 	// アンチエイリアスの画像

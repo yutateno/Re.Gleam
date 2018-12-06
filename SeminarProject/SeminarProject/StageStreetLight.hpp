@@ -12,7 +12,8 @@ private:
 
 public:
 	// コンストラクタ
-	StageStreetLight(const int draw, const int collStageHandle, const VECTOR area);
+	StageStreetLight(const int draw, const int collStageHandle, const VECTOR area
+	, const int tex0, const int tex1);
 
 	// デストラクタ
 	~StageStreetLight();
@@ -20,5 +21,8 @@ public:
 
 	// 描画
 	void Draw();
+
+	// テクスチャ切り替え
+	void TextureReload();
 };
 

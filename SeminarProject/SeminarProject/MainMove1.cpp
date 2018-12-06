@@ -348,9 +348,9 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 
 	// 敵以外のポインタの初期化
 	p_stage = new Stage(v_file[EFILE::drawStage]);									// ステージ初期化
-	p_character = new Character(v_file[EFILE::character], v_file[EFILE::collStage]);		// キャラクター初期化
+	p_character = new Character(v_file[EFILE::character], v_file[EFILE::collStage], v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3]);		// キャラクター初期化
 	p_camera = new Camera(p_character->GetArea(), v_file[EFILE::collStage]);			// カメラ初期化
-	p_dropItem = new DropItemMove1(v_file[EFILE::sword], v_file[EFILE::collStage]);
+	p_dropItem = new DropItemMove1(v_file[EFILE::sword], v_file[EFILE::collStage], v_file[EFILE::swordTex0]);
 
 
 	// 敵生成に関する

@@ -5,12 +5,12 @@ void Manager::SceneChange()
 	switch (BASICPARAM::e_nowScene)
 	{
 	case ESceneNumber::FIRSTLOAD:
+		SoundProcess::Release();
 		p_loadThread = new LoadThread();
 		break;
 
 
 	case ESceneNumber::FIRSTMOVE:
-		SoundProcess::Release();
 		p_baseMove = new MainMove1(p_loadThread->GetFile());
 		p_baseMove->SetScene(BASICPARAM::e_nowScene);
 		POINTER_RELEASE(p_loadThread);
@@ -18,13 +18,13 @@ void Manager::SceneChange()
 
 
 	case ESceneNumber::SECONDLOAD:
+		SoundProcess::Release();
 		p_loadThread = new LoadThread();
 		POINTER_RELEASE(p_baseMove);
 		break;
 
 
 	case ESceneNumber::SECONDMOVE:
-		SoundProcess::Release();
 		p_baseMove = new MainMove2(p_loadThread->GetFile());
 		p_baseMove->SetScene(BASICPARAM::e_nowScene);
 		POINTER_RELEASE(p_loadThread);
@@ -85,15 +85,33 @@ void Manager::OptionProcess()
 		}
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
 		{
-			if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK) BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
+			/*if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK)*/ BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
+			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
+			{
+				p_baseMove->TextureReload();
+				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
+				printfDx("NNNNNNNNNNNNN\n");
+			}
 		}
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorP)
 		{
-			if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK) BASICPARAM::e_TextureColor = ETextureColor::P_CORRECTION;
+			/*if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK)*/ BASICPARAM::e_TextureColor = ETextureColor::P_CORRECTION;
+			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
+			{
+				p_baseMove->TextureReload();
+				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
+				printfDx("PPPPPPPPPPPP\n");
+			}
 		}
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorD)
 		{
-			if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK) BASICPARAM::e_TextureColor = ETextureColor::D_CORRECTION;
+			/*if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK)*/ BASICPARAM::e_TextureColor = ETextureColor::D_CORRECTION;
+			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
+			{
+				p_baseMove->TextureReload();
+				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
+				printfDx("DDDDDDDDDDDD\n");
+			}
 		}
 		else if (optionSelectButtonNum == EOptionSelectButton::Back)
 		{
@@ -349,33 +367,82 @@ Manager::Manager()
 	BASICPARAM::nowCameraOrtho = false;
 
 
-	// シーン１の素材ファイル
+	/// シーン１の素材ファイル-----------------------------------------------------------------------------
+	
+	// モデルデータ
 	move1str[0] = "media\\こっち\\media\\ステージモデル\\move1_graphic.myn";
 	move1str[1] = "media\\こっち\\media\\ステージモデル\\move1_hantei.myn";
-	move1str[2] = "media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.myn";
-	move1str[3] = "media\\こっち\\media\\剣\\sword.myn";
+	move1str[2] = "media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.myn";				// 4
+	move1str[3] = "media\\こっち\\media\\剣\\sword.myn";								// 1
+
+	// サウンドデータ
 	move1str[4] = "media\\こっち\\media\\sound\\タイトル（オルゴール）.wyn";
 	move1str[5] = "media\\こっち\\media\\sound\\玉がポーン（音が高いほう）.wyn";
 	move1str[6] = "media\\こっち\\media\\sound\\玉がポーン.wyn";
+
+	// キャラクターのテクスチャデータ
+	move1str[7] = "media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_hair.pyn";
+	move1str[8] = "media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_ex.pyn";
+	move1str[9] = "media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_wear.pyn";
+	move1str[10] = "media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_face.pyn";
+
+	// 剣のテクスチャデータ
+	move1str[11] = "media\\こっち\\media\\剣\\whiteblack\\sword_Tex.pyn";
+
+	// モデルデータ
 	load1[0] = ELOADFILE::mv1model;
 	load1[1] = ELOADFILE::mv1model;
 	load1[2] = ELOADFILE::mv1model;
 	load1[3] = ELOADFILE::mv1model;
+
+	// サウンドデータ
 	load1[4] = ELOADFILE::soundStream;
 	load1[5] = ELOADFILE::soundmem;
 	load1[6] = ELOADFILE::soundmem;
 
+	// キャラクターのテクスチャデータ
+	load1[7] = ELOADFILE::graph;
+	load1[8] = ELOADFILE::graph;
+	load1[9] = ELOADFILE::graph;
+	load1[10] = ELOADFILE::graph;
 
-	// シーン２の素材ファイル
+	// 剣のテクスチャデータ
+	load1[11] = ELOADFILE::graph;
+	/// ---------------------------------------------------------------------------------------------------
+
+
+	/// シーン２の素材ファイル
+	// モデルデータ
 	move2str[0] = "media\\こっち\\media\\ステージモデル\\move1_hantei.myn";
-	move2str[1] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.myn";
+	move2str[1] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.myn";			// 5
 	move2str[2] = "media\\こっち\\media\\paneru\\paneru.myn";
-	move2str[3] = "media\\こっち\\media\\kaidan\\kaidan.myn";
+	move2str[3] = "media\\こっち\\media\\kaidan\\kaidan.myn";						// 1
 	move2str[4] = "media\\こっち\\media\\kaidan\\kaidan_hantei.myn";
-	move2str[5] = "media\\こっち\\media\\街灯\\Gaitou.myn";
-	move2str[6] = "media\\こっち\\media\\スカイボックス\\SkyDome.myn";
-	move2str[7] = "media\\こっち\\media\\ブロック\\cubeblock.myn";
+	move2str[5] = "media\\こっち\\media\\街灯\\Gaitou.myn";							// 2
+	move2str[6] = "media\\こっち\\media\\スカイボックス\\SkyDome.myn";				// 1
+	move2str[7] = "media\\こっち\\media\\ブロック\\cubeblock.myn";					// 1
 	move2str[8] = "media\\こっち\\media\\ステージモデル\\move1_graphic.myn";
+
+	// キャラのテクスチャデータ
+	move2str[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn";
+	move2str[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_hair.pyn";
+	move2str[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_wear.pyn";
+	move2str[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_face.pyn";
+	move2str[13] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_ex.pyn";
+
+	// 階段のテクスチャデータ
+	move2str[14] = "media\\こっち\\media\\kaidan\\whiteblack\\kaidan.pyn";
+
+	// 街灯のテクスチャデータ
+	move2str[15] = "media\\こっち\\media\\街灯\\whiteblack\\body_col.pyn";
+	move2str[16] = "media\\こっち\\media\\街灯\\whiteblack\\lamp_COLandems.pyn";
+
+	// スカイボックスのテクスチャデータ
+	move2str[17] = "media\\こっち\\media\\スカイボックス\\whiteblack\\BlueSky.byn";
+
+	// ブロックのテクスチャ
+	move2str[18] = "media\\こっち\\media\\ブロック\\whiteblack\\tex.pyn";
+
 	load2[0] = ELOADFILE::mv1model;
 	load2[1] = ELOADFILE::mv1model;
 	load2[2] = ELOADFILE::mv1model;
@@ -385,6 +452,17 @@ Manager::Manager()
 	load2[6] = ELOADFILE::mv1model;
 	load2[7] = ELOADFILE::mv1model;
 	load2[8] = ELOADFILE::mv1model;
+
+	load2[9] = ELOADFILE::graph;
+	load2[10] = ELOADFILE::graph;
+	load2[11] = ELOADFILE::graph;
+	load2[12] = ELOADFILE::graph;
+	load2[13] = ELOADFILE::graph;
+	load2[14] = ELOADFILE::graph;
+	load2[15] = ELOADFILE::graph;
+	load2[16] = ELOADFILE::graph;
+	load2[17] = ELOADFILE::graph;
+	load2[18] = ELOADFILE::graph;
 
 
 	p_baseMove = NULL;

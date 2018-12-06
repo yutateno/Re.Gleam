@@ -1,7 +1,7 @@
 #include "EnemyMove2.hpp"
 
 
-EnemyMove2::EnemyMove2(const int collStageHandle, const VECTOR area, const int modelHandle) : BasicCreature(collStageHandle)
+EnemyMove2::EnemyMove2(const int collStageHandle, const VECTOR area, const int modelHandle, const int tex0) : BasicCreature(collStageHandle)
 {
 	// 座標を設定
 	this->area = VAdd(area, VGet(0.0f, 10.0f, 0.0f));
@@ -21,7 +21,8 @@ EnemyMove2::EnemyMove2(const int collStageHandle, const VECTOR area, const int m
 
 	// テクスチャ適応
 	textureHandle = -1;
-	switch (BASICPARAM::e_TextureColor)
+	textureHandle = tex0;
+	/*switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::WHITEBLACK:
 		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\whiteblack\\tex.pyn", textureHandle, ELOADFILE::graph);
@@ -42,7 +43,7 @@ EnemyMove2::EnemyMove2(const int collStageHandle, const VECTOR area, const int m
 	default:
 		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\normal\\tex.pyn", textureHandle, ELOADFILE::graph);
 		break;
-	}
+	}*/
 
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle, false);
 
@@ -105,4 +106,34 @@ void EnemyMove2::Process()
 	}
 
 	MV1SetPosition(this->modelHandle, area);
+}
+
+void EnemyMove2::TextureReload()
+{
+	GRAPHIC_RELEASE(textureHandle);
+
+	switch (BASICPARAM::e_TextureColor)
+	{
+	case ETextureColor::WHITEBLACK:
+		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\whiteblack\\tex.pyn", textureHandle, ELOADFILE::graph);
+		break;
+
+	case ETextureColor::NORMAL:
+		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\normal\\tex.pyn", textureHandle, ELOADFILE::graph);
+		break;
+
+	case ETextureColor::D_CORRECTION:
+		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\D\\tex.pyn", textureHandle, ELOADFILE::graph);
+		break;
+
+	case ETextureColor::P_CORRECTION:
+		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\P\\tex.pyn", textureHandle, ELOADFILE::graph);
+		break;
+
+	default:
+		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\normal\\tex.pyn", textureHandle, ELOADFILE::graph);
+		break;
+	}
+
+	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle, false);
 }

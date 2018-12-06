@@ -1,7 +1,7 @@
 #include "DropItemMove1.hpp"
 
 
-DropItemMove1::DropItemMove1(const int draw, const int collStageHandle) : BasicObject(collStageHandle)
+DropItemMove1::DropItemMove1(const int draw, const int collStageHandle, const int tex0) : BasicObject(collStageHandle)
 {
 	// 初期位置を設定
 	area = VGet(1000.0f, 0.0f, 1000.0f);
@@ -19,7 +19,8 @@ DropItemMove1::DropItemMove1(const int draw, const int collStageHandle) : BasicO
 	
 	// テクスチャ適応
 	textureHandle = -1;
-	LoadFile::MyLoad("media\\こっち\\media\\剣\\whiteblack\\sword_Tex.pyn", textureHandle, ELOADFILE::graph);
+
+	textureHandle = tex0;
 
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle, true);
 

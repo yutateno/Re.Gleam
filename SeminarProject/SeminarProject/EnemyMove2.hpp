@@ -11,7 +11,7 @@ private:
 
 public:
 	// コンストラクタ
-	EnemyMove2(const int collStageHandle, const VECTOR area, const int modelHandle);
+	EnemyMove2(const int collStageHandle, const VECTOR area, const int modelHandle, const int tex0);
 
 	// デストラクタ
 	~EnemyMove2();
@@ -22,6 +22,9 @@ public:
 
 	// プロセス
 	void Process();
+
+	// テクスチャ切り替え
+	void TextureReload();
 
 	
 	/// ゲッターセッター

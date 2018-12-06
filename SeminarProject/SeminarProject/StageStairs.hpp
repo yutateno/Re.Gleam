@@ -11,7 +11,7 @@ private:
 
 public:
 	// コンストラクタ
-	StageStairs(const int draw, const int collStageHandle, const VECTOR area);
+	StageStairs(const int draw, const int collStageHandle, const VECTOR area, const int tex0);
 
 	// デストラクタ
 	~StageStairs();
@@ -19,5 +19,8 @@ public:
 
 	// 描画
 	void Draw();
+
+	// テクスチャの切り替え
+	void TextureReload();
 };
 

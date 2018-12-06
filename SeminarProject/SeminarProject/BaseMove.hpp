@@ -105,7 +105,10 @@ protected:
 	void SkyBoxProcess(const VECTOR characterArea);
 
 	// スカイボックスの初期化
-	void SetInitSkyBox(const int skyBoxUp);
+	void SetInitSkyBox(const int skyBoxUp, const int tex0);
+
+	// スカイボックスのテクスチャ変更
+	void SkyTextureReload();
 
 
 public:
@@ -123,6 +126,9 @@ public:
 
 	// カメラのプロセス
 	virtual void CameraProcess() = 0;
+
+	// テクスチャの切り替え
+	virtual void TextureReload() = 0;
 
 
 	/// ゲッターセッター------------------------------

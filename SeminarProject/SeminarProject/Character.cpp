@@ -148,7 +148,7 @@ void Character::MoveProcess()
 
 
 // コンストラクタ
-Character::Character(const int modelHandle, const int collStageHandle) : BasicCreature(collStageHandle)
+Character::Character(const int modelHandle, const int collStageHandle, const int tex0, const int tex1, const int tex2, const int tex3) : BasicCreature(collStageHandle)
 {
 	// ３Ｄモデルの読み込み
 	this->modelHandle = 0;
@@ -160,10 +160,11 @@ Character::Character(const int modelHandle, const int collStageHandle) : BasicCr
 	textureHandle1 = -1;
 	textureHandle2 = -1;
 	textureHandle3 = -1;
-	LoadFile::MyLoad("media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_hair.pyn"	, textureHandle0, ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_ex.pyn"		, textureHandle1, ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_wear.pyn"	, textureHandle2, ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_face.pyn"	, textureHandle3, ELOADFILE::graph);
+
+	textureHandle0 = tex0;
+	textureHandle1 = tex1;
+	textureHandle2 = tex2;
+	textureHandle3 = tex3;
 
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle1, true);

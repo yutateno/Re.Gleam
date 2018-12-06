@@ -107,7 +107,8 @@ private:
 
 public:
 	// コンストラクタ
-	CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle, const int paneruHandle);
+	CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle, const int paneruHandle
+	, const int tex0, const int tex1, const int tex2, const int tex3, const int tex4);
 
 	// デストラクタ
 	~CharacterSword();
@@ -121,6 +122,9 @@ public:
 
 	// ポジションを初期化する
 	void PositionReset();
+
+	// テクスチャの切り替え
+	void TextureReload();
 
 
 	/// ゲッターセッター--------------------

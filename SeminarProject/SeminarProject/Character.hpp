@@ -41,7 +41,7 @@ private:
 
 public:
 	// コンストラクタ
-	Character(const int modelHandle, const int collStageHandle);
+	Character(const int modelHandle, const int collStageHandle, const int tex0, const int tex1, const int tex2, const int tex3);
 
 	// デストラクタ
 	~Character();

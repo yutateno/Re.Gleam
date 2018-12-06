@@ -374,7 +374,8 @@ void CharacterSword::AnimProcess()
 }
 
 
-CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle, const int paneruHandle) : BasicCreature(collStageHandle)
+CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle, const int paneruHandle
+	, const int tex0, const int tex1, const int tex2, const int tex3, const int tex4) : BasicCreature(collStageHandle)
 {
 	// ‚R‚cƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý
 	this->modelHandle = 0;
@@ -389,7 +390,12 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	textureHandle2 = -1;
 	textureHandle3 = -1;
 	textureHandle4 = -1;
-	switch (BASICPARAM::e_TextureColor)
+	textureHandle0 = tex0;
+	textureHandle1 = tex1;
+	textureHandle2 = tex2;
+	textureHandle3 = tex3;
+	textureHandle4 = tex4;
+	/*switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::WHITEBLACK:
 		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn", textureHandle0, ELOADFILE::graph);
@@ -430,7 +436,7 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn", textureHandle3, ELOADFILE::graph);
 		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn", textureHandle4, ELOADFILE::graph);
 		break;
-	}
+	}*/
 
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, true);
 	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle1, false);
@@ -605,6 +611,64 @@ void CharacterSword::Process(const float getAngle)
 void CharacterSword::PositionReset()
 {
 	area = VGet(0.0f, 0.0f, 0.0f);
+}
+
+void CharacterSword::TextureReload()
+{
+	GRAPHIC_RELEASE(textureHandle0);
+	GRAPHIC_RELEASE(textureHandle1);
+	GRAPHIC_RELEASE(textureHandle2);
+	GRAPHIC_RELEASE(textureHandle3);
+	GRAPHIC_RELEASE(textureHandle4);
+
+	switch (BASICPARAM::e_TextureColor)
+	{
+	case ETextureColor::WHITEBLACK:
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_hair.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_wear.pyn", textureHandle2, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_face.pyn", textureHandle3, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_ex.pyn", textureHandle4, ELOADFILE::graph);
+		break;
+
+	case ETextureColor::NORMAL:
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\sword_Tex.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_hair.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_wear.pyn", textureHandle2, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn", textureHandle3, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn", textureHandle4, ELOADFILE::graph);
+		break;
+
+	case ETextureColor::D_CORRECTION:
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\D\\sword_Tex.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_hair.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_wear.pyn", textureHandle2, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_face.pyn", textureHandle3, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_ex.pyn", textureHandle4, ELOADFILE::graph);
+		break;
+
+	case ETextureColor::P_CORRECTION:
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\P\\sword_Tex.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_hair.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_wear.pyn", textureHandle2, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_face.pyn", textureHandle3, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_ex.pyn", textureHandle4, ELOADFILE::graph);
+		break;
+
+	default:
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\sword_Tex.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_hair.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_wear.pyn", textureHandle2, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn", textureHandle3, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn", textureHandle4, ELOADFILE::graph);
+		break;
+	}
+
+	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, true);
+	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle1, false);
+	MV1SetTextureGraphHandle(this->modelHandle, 2, textureHandle2, false);
+	MV1SetTextureGraphHandle(this->modelHandle, 3, textureHandle3, false);
+	MV1SetTextureGraphHandle(this->modelHandle, 4, textureHandle4, true);
 }
 
 

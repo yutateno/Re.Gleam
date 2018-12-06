@@ -17,7 +17,8 @@ class MainMove1 : public BaseMove
 {
 private:
 	// ロードから渡されるファイルの順番
-	enum EFILE { drawStage, collStage, character, sword, sound, seBallHigh, seBall };
+	enum EFILE { drawStage, collStage, character, sword, sound, seBallHigh, seBall
+	, charaTex0, charaTex1, charaTex2, charaTex3, swordTex0 };
 
 	/// ステージ--------------
 	
@@ -131,4 +132,7 @@ public:
 
 	// カメラのプロセス
 	void CameraProcess() override;
+
+	// テクスチャの切り替え
+	void TextureReload() override {};
 };

@@ -230,6 +230,18 @@ void Manager::OptionProcess()
 		int temp = static_cast<int>(optionSelectButtonNum);
 		optionSelectButtonNum = static_cast<EOptionSelectButton>(temp < optionSelectMax ? ++temp : temp);
 	}
+
+	// debug
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::SHOULDER_LB) == 1)
+	{
+		BASICPARAM::nowCameraOrtho = false;
+		p_baseMove->CameraProcess();
+	}
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::SHOULDER_RB) == 1)
+	{
+		BASICPARAM::nowCameraOrtho = true;
+		p_baseMove->CameraProcess();
+	}
 }
 
 

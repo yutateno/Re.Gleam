@@ -18,22 +18,28 @@ Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 	speed = DX_PI_F / 90;
 	angle = 0.0f;
 
+	cameraPerspectiveArea = VGet(0, 530, 700);
+	cameraOrthoArea = VGet(0, 1700, 2430);
+	orthoArea = 2200.0f;
+
 	if (!BASICPARAM::nowCameraOrtho)
 	{
-		cameraArea = VGet(0, 530, 700);
 		SetCameraNearFar(100.0f, 10000.0f);	// カメラの描画範囲を指定
+
+		// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
+		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea), VAdd(viewArea, charaArea));
+
+		SoundProcess::SetLisnerArea(cameraPerspectiveArea);
 	}
 	else
 	{
-		cameraArea = VGet(0, 1700, 2430);
-		orthoArea = 2200.0f;
 		SetupCamera_Ortho(orthoArea);
+
+		// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
+		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea), VAdd(viewArea, charaArea));
+
+		SoundProcess::SetLisnerArea(cameraOrthoArea);
 	}
-
-	// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
-	SetCameraPositionAndTarget_UpVecY(VAdd(cameraArea, charaArea), VAdd(viewArea, charaArea));
-
-	SoundProcess::SetLisnerArea(cameraArea);
 }
 
 // デストラクタ
@@ -46,135 +52,54 @@ Camera::~Camera()
 // メインプロセス
 void Camera::Process(const VECTOR charaarea)
 {
-	SoundProcess::SetLisnerArea(cameraArea);
-
-	VECTOR TestPosition = cameraArea;
-	//static int zoom = 0;
-
 	charaArea = VAdd(charaarea, VGet(0.0f, 80.0f, 0.0f));					// キャラの位置を更新し続ける
 
 	// 左に回転中
 	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) < 0)
 	{
-		RLrotate(speed, TestPosition);	// 回転処理
+		RLrotate(speed, cameraPerspectiveArea);	// 回転処理
+		RLrotate(speed, cameraOrthoArea);	// 回転処理
 		angle += speed;
 	}
 	// 右に回転中
 	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) > 0)
 	{
-		RLrotate(-speed, TestPosition);	// 回転処理
+		RLrotate(-speed, cameraPerspectiveArea);	// 回転処理
+		RLrotate(-speed, cameraOrthoArea);			// 回転処理
 		angle -= speed;
 	}
 
-	//// 上キーが押されていたら下から見上げる
-	//if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_Y) > 0)
-	//{
-	//	// 制限
-	//	if (TestPosition.y > 240)
-	//	{
-	//		TestPosition = VAdd(TestPosition, VScale(VNorm(TestPosition), -10));	// 単位ベクトル化してマイナスかけて同一方向に減らす
-	//	}
-	//}
-
-	//// 下キーが押されていたら上から見下ろす
-	//if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_Y) < 0)
-	//{
-	//	// 制限
-	//	if (TestPosition.y <= 1700)
-	//	{
-	//		TestPosition = VAdd(TestPosition, VScale(VNorm(TestPosition), 10));	// VScaleいらない
-	//	}
-	//}
-
-	//MV1_COLL_RESULT_POLY_DIM HRes;
-	//int HitNum;
-
-	//// 注視点からカメラの座標までの間にステージのポリゴンがあるか調べる
-	//HRes = MV1CollCheck_Capsule(this->stageHandle, -1, VAdd(TestPosition, charaArea), charaArea, 10.0f);
-	//HitNum = HRes.HitNum;
-	//MV1CollResultPolyDimTerminate(HRes);
-	//if (HitNum != 0)
-	//{
-	//	//TestPosition = VAdd(TestPosition, VAdd(VGet(0, 10.0f, 0), VScale(VNorm(VGet(TestPosition.x, 0, TestPosition.z)), -1)));	// ズームイン処理をさせる
-	//	//zoom++;
-	//	cameraArea = TestPosition;
-
-	//	//float NotHitLength;
-	//	//float HitLength;
-	//	//float TestLength;
-
-	//	//// あったら無い位置までプレイヤーに近づく
-
-	//	//// ポリゴンに当たらない距離をセット
-	//	//NotHitLength = 0.0f;
-
-	//	//// ポリゴンに当たる距離をセット
-	//	//HitLength = sqrt((charaArea.x - cameraArea.x) * (charaArea.x - cameraArea.x) + (charaArea.z - cameraArea.z) * (charaArea.z - cameraArea.z));;
-	//	//do
-	//	//{
-	//	//	// 当たるかどうかテストする距離をセット( 当たらない距離と当たる距離の中間 )
-	//	//	TestLength = NotHitLength + (HitLength - NotHitLength) / 2.0f;
-	//	//	
-	//	//	// 新しい座標で壁に当たるかテスト
-	//	//	HRes = MV1CollCheck_Capsule(this->stageHandle, -1, this->charaArea, TestPosition, 10.0f);
-	//	//	HitNum = HRes.HitNum;
-	//	//	MV1CollResultPolyDimTerminate(HRes);
-	//	//	if (HitNum != 0)
-	//	//	{
-	//	//		// 当たったら当たる距離を TestLength に変更する
-	//	//		HitLength = TestLength;
-	//	//	}
-	//	//	else
-	//	//	{
-	//	//		// 当たらなかったら当たらない距離を TestLength に変更する
-	//	//		NotHitLength = TestLength;
-	//	//	}
-
-	//	//	// HitLength と NoHitLength が十分に近づいていなかったらループ
-	//	//} while (HitLength - NotHitLength > 0.1f);
-	//}
-	//else
-	//{
-	//	if (zoom > 0)
-	//	{
-	//		TestPosition = VAdd(TestPosition, VAdd(VGet(0, -10.0f, 0), VScale(VNorm(VGet(TestPosition.x, 0, TestPosition.z)), 1)));	// ズームアウト処理をさせる
-	//		zoom--;
-	//	}
-	//	cameraArea = TestPosition;
-	//}
-
-	cameraArea = TestPosition;
-
-#ifdef _CAMERA_DEBG
-	printfDx("%d\n", HitNum);
-	//DrawCapsule3D(VAdd(cameraArea, charaArea), VAdd(viewArea, charaArea), 5.0f, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 面白い
-	DrawCapsule3D(VAdd(cameraArea, charaArea), charaArea, 5.0f, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
-#endif // !_CAMERA_DEBG
-
+	if (!BASICPARAM::nowCameraOrtho)
+	{
+		SoundProcess::SetLisnerArea(cameraPerspectiveArea);
+	}
+	else
+	{
+		SoundProcess::SetLisnerArea(cameraOrthoArea);
+	}
 }
 
 void Camera::SetUp()
 {
 	if (!BASICPARAM::nowCameraOrtho)
 	{
-		//cameraArea = VGet(0, 530, 700);
 		SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
 		SetCameraNearFar(100.0f, 10000.0f);	// カメラの描画範囲を指定
+
+		// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
+		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea), VAdd(viewArea, charaArea));
+
+		SoundProcess::SetLisnerArea(cameraPerspectiveArea);
 	}
 	else
 	{
-		//cameraArea = VGet(0, 1700, 2430);
-		//orthoArea = 2200.0f;
 		SetupCamera_Ortho(orthoArea);
+
+		// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
+		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea), VAdd(viewArea, charaArea));
+
+		SoundProcess::SetLisnerArea(cameraOrthoArea);
 	}
-	//printfDx("%s\n", e_preScene == ESceneNumber::FIRSTLOAD ? "FIRSTLOAD" : e_preScene == ESceneNumber::FIRSTMOVE ? "FIRSTMOVE" : e_preScene == ESceneNumber::SECONDLOAD ? "SECONDLOAD" : "SECONDMOVE");
-	//SetupCamera_Ortho(orthoArea);
-	//
-
-	//SetCameraNearFar(100.0f, 10000.0f);	// カメラの描画範囲を指定
-
-	// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
-	SetCameraPositionAndTarget_UpVecY(VAdd(cameraArea, charaArea), VAdd(viewArea, charaArea));
 }
 
 // ang角回転する

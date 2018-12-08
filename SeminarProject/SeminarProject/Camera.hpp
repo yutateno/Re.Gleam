@@ -7,7 +7,8 @@ class Camera
 {
 private:
 	// カメラの位置
-	VECTOR cameraArea;
+	VECTOR cameraPerspectiveArea;		// 遠近法カメラ
+	VECTOR cameraOrthoArea;				// 正射影カメラ
 
 	// 注視する方向
 	VECTOR viewArea;

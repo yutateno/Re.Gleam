@@ -16,6 +16,7 @@ void MainMove1::ActorHit()
 				switch (++catchEnemyNum)
 				{
 				case 1:
+					explanationDrawFlag = false;
 					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 50, 50);
 					break;
 				case 2:
@@ -387,6 +388,12 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 
 	touchSword = false;
 
+	
+	// à–¾‚ÉŠÖ‚·‚é
+	stickLeftDraw = v_file[EFILE::explanationLeftStick];
+	stickRightDraw = v_file[EFILE::explanationRightStick];
+	explanationDrawFlag = true;
+
 
 	SoundProcess::Load(v_file[EFILE::sound], SoundProcess::ESOUNDNAME_BGM::titleMusicBox);
 	SoundProcess::Load(v_file[EFILE::seBallHigh], SoundProcess::ESOUNDNAME_SE::ballPawnHigh, SoundProcess::ESOUNDTYPE::soundMem);
@@ -436,6 +443,13 @@ void MainMove1::Draw()
 	if (catchEnemyNum == 30 && lightEventEnd)
 	{
 		p_dropItem->Draw();				// Œ•‚ð•`‰æ
+	}
+
+
+	if (explanationDrawFlag)
+	{
+		DrawGraph(100, 100, stickLeftDraw, true);
+		DrawGraph(1200, 100, stickRightDraw, true);
 	}
 
 #ifdef _MOVE1_DEBUG

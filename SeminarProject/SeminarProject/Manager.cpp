@@ -398,6 +398,10 @@ Manager::Manager()
 	// 剣のテクスチャデータ
 	move1str[11] = "media\\こっち\\media\\剣\\whiteblack\\sword_Tex.pyn";
 
+	// コントローラー説明
+	move1str[12] = "media\\こっち\\media\\move1LeftStick.pyn";
+	move1str[13] = "media\\こっち\\media\\move1RightStick.pyn";
+
 	// モデルデータ
 	load1[0] = ELOADFILE::mv1model;
 	load1[1] = ELOADFILE::mv1model;
@@ -417,6 +421,10 @@ Manager::Manager()
 
 	// 剣のテクスチャデータ
 	load1[11] = ELOADFILE::graph;
+
+	// コントローラー説明
+	load1[12] = ELOADFILE::graph;
+	load1[13] = ELOADFILE::graph;
 	/// ---------------------------------------------------------------------------------------------------
 
 

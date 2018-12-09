@@ -18,7 +18,8 @@ class MainMove1 : public BaseMove
 private:
 	// ロードから渡されるファイルの順番
 	enum EFILE { drawStage, collStage, character, sword, sound, seBallHigh, seBall
-	, charaTex0, charaTex1, charaTex2, charaTex3, swordTex0 };
+	, charaTex0, charaTex1, charaTex2, charaTex3, swordTex0
+	, explanationLeftStick, explanationRightStick};
 
 	/// ステージ--------------
 	
@@ -118,6 +119,17 @@ private:
 
 	void ThsTextureReload() override {}
 
+
+	/// 説明------------------------------
+
+	// 左スティック説明用画像
+	int stickLeftDraw;
+
+	// 右スティック説明用画像
+	int stickRightDraw;
+
+	// 説明画像を表示させるかどうか
+	bool explanationDrawFlag;
 
 public:
 	// コンストラクタ

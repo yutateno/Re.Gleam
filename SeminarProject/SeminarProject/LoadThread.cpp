@@ -39,5 +39,5 @@ void LoadThread::Process(const int max, const std::string* path, const ELOADFILE
 		ScreenFlip();
 		Process(max, path, type);
 	}
-	p_loadScreen->Process(num, max);			// ロード画面
+	//p_loadScreen->Process(num, max);			// ロード画面
 }

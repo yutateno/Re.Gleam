@@ -32,7 +32,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	SetWindowText("Re.Gleam");	// メインウインドウのウインドウタイトルを変更する
 
-	//SetBackgroundColor(255, 255, 255);
+	SetBackgroundColor(255, 255, 255);
 
 	SetUseDirect3DVersion(DX_DIRECT3D_11);			// Direct3D11を使用する
 

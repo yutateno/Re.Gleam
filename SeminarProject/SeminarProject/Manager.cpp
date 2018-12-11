@@ -11,6 +11,8 @@ void Manager::SceneChange()
 
 
 	case ESceneNumber::FIRSTMOVE:
+		BASICPARAM::startFeedNow = true;
+		feedCount = 255;
 		p_baseMove = new MainMove1(p_loadThread->GetFile());
 		p_baseMove->SetScene(BASICPARAM::e_nowScene);
 		POINTER_RELEASE(p_loadThread);
@@ -25,6 +27,8 @@ void Manager::SceneChange()
 
 
 	case ESceneNumber::SECONDMOVE:
+		BASICPARAM::startFeedNow = true;
+		feedCount = 255;
 		p_baseMove = new MainMove2(p_loadThread->GetFile());
 		p_baseMove->SetScene(BASICPARAM::e_nowScene);
 		POINTER_RELEASE(p_loadThread);
@@ -513,6 +517,10 @@ Manager::Manager()
 	optionSelectMax = 2;
 	seDoWaitTimer = 0;
 
+	feedCount = 0;
+	BASICPARAM::endFeedNow = false;
+	BASICPARAM::startFeedNow = false;
+	LoadFile::MyLoad("media\\こっち\\media\\black.pyn", feedDraw, ELOADFILE::graph);
 
 	SetCreateDrawValidGraphMultiSample(4, 4);			// 4x4のアンチエイリアシングモードにする
 	antiAliasScreen = MakeScreen(BASICPARAM::winWidth, BASICPARAM::winHeight, false);	// アンチエイリアシング用の画面を作成
@@ -537,7 +545,13 @@ void Manager::Update()
 			p_loadThread->Process(max1, move1str, load1);		// ロードをする
 			if (p_loadThread->GetNum() >= max1)		// ロードが終了したら
 			{
-				//if (CheckHitKey(KEY_INPUT_Z) == 1)			// 終わったら一操作
+				//feedCount++;
+				//SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - feedCount);
+				//p_loadThread->Process(max1, move1str, load1);		// ロードをする
+				//DrawGraph(0, 0, feedDraw, false);
+				//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+				//if (feedCount >= 255)
 				//{
 					BASICPARAM::e_nowScene = ESceneNumber::FIRSTMOVE;
 				//}
@@ -548,38 +562,56 @@ void Manager::Update()
 			p_loadThread->Process(max2, move2str, load2);		// ロードをする
 			if (p_loadThread->GetNum() >= max2)		// ロードが終了したら
 			{
-				//if (CheckHitKey(KEY_INPUT_Z) == 1)			// 終わったら一操作
-				//{
-					BASICPARAM::e_nowScene = ESceneNumber::SECONDMOVE;
-				//}
+				BASICPARAM::e_nowScene = ESceneNumber::SECONDMOVE;
 			}
 		}
 		else
 		{
 			if (!optionMenuNow)
 			{
-				// アンチエイリアス画面に対して描画処理を行う
-				SetDrawScreen(antiAliasScreen);
-				ClearDrawScreen();
-				p_baseMove->CameraProcess();
-				p_baseMove->Draw();
-				p_baseMove->Process();
-				BASICPARAM::e_nowScene = p_baseMove->GetScene();
-
-				// アンチエイリアス画面に描画したものを裏画面に書き込む
-				SetDrawScreen(DX_SCREEN_BACK);
-				DrawGraph(0, 0, antiAliasScreen, false);
-				p_baseMove->CameraProcess();				// SetDrawScreenを行うとカメラの設定がなくなるので再設定を行う
-				ScreenFlip();
-				
-				// オプション画面に移行する
-				if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1)
+				if (!BASICPARAM::startFeedNow && !BASICPARAM::endFeedNow)
 				{
-					GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, gaussianScreen);						// 現在の画面をキャプチャする
-					GraphFilter(gaussianScreen, DX_GRAPH_FILTER_GAUSS, 16, 1400);				// 現在の画面にガウスフィルタかけてぼかす
-					optionMenuNow = true;
-					optionSelectButtonNum = EOptionSelectButton::Sound;
-					SoundProcess::SetOptionMenuNow(true);
+					// アンチエイリアス画面に対して描画処理を行う
+					SetDrawScreen(antiAliasScreen);
+					ClearDrawScreen();
+					p_baseMove->CameraProcess();
+					p_baseMove->Draw();
+					p_baseMove->Process();
+					BASICPARAM::e_nowScene = p_baseMove->GetScene();
+
+					// アンチエイリアス画面に描画したものを裏画面に書き込む
+					SetDrawScreen(DX_SCREEN_BACK);
+					DrawGraph(0, 0, antiAliasScreen, false);
+					p_baseMove->CameraProcess();				// SetDrawScreenを行うとカメラの設定がなくなるので再設定を行う
+					ScreenFlip();
+
+					// オプション画面に移行する
+					if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1)
+					{
+						GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, gaussianScreen);						// 現在の画面をキャプチャする
+						GraphFilter(gaussianScreen, DX_GRAPH_FILTER_GAUSS, 16, 1400);				// 現在の画面にガウスフィルタかけてぼかす
+						optionMenuNow = true;
+						optionSelectButtonNum = EOptionSelectButton::Sound;
+						SoundProcess::SetOptionMenuNow(true);
+					}
+				}
+				else if(BASICPARAM::startFeedNow)
+				{
+					feedCount -= 5;
+					ClearDrawScreen();
+					SetDrawScreen(DX_SCREEN_BACK);
+					p_baseMove->CameraProcess();
+					p_baseMove->Draw();
+					SetDrawBlendMode(DX_BLENDMODE_ALPHA, feedCount);
+					DrawGraph(0, 0, feedDraw, false);
+					SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+					ScreenFlip();
+
+					if (feedCount <= 0)
+					{
+						feedCount = 0;
+						BASICPARAM::startFeedNow = false;
+					}
 				}
 			}
 			else
@@ -601,7 +633,27 @@ void Manager::Update()
 	}
 	else
 	{
-		SceneChange();
-		BASICPARAM::e_preScene = BASICPARAM::e_nowScene;
+		if (!BASICPARAM::endFeedNow)
+		{
+			SceneChange();
+			BASICPARAM::e_preScene = BASICPARAM::e_nowScene;
+		}
+		else
+		{
+			feedCount += 5;
+			SetDrawScreen(DX_SCREEN_BACK);
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - feedCount);
+			ClearDrawScreen();
+			p_baseMove->CameraProcess();
+			p_baseMove->Draw();
+			ScreenFlip();
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+			if (feedCount >= 255)
+			{
+				feedCount = 0;
+				BASICPARAM::endFeedNow = false;
+			}
+		}
 	}
 }

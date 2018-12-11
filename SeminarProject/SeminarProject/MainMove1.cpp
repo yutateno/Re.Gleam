@@ -72,6 +72,7 @@ void MainMove1::ActorHit()
 		&& BaseMove::GetDistance(p_character->GetArea(), p_dropItem->GetArea()) <= 60))
 	{
 		touchSword = true;
+		BASICPARAM::endFeedNow = true;
 		BaseMove::SetScene(ESceneNumber::SECONDLOAD);
 	}
 }

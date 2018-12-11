@@ -39,5 +39,11 @@ void LoadThread::Process(const int max, const std::string* path, const ELOADFILE
 		ScreenFlip();
 		Process(max, path, type);
 	}
-	//p_loadScreen->Process(num, max);			// ロード画面
+	//else
+	//{
+	//	SetDrawScreen(DX_SCREEN_BACK);	// 背景描画
+	//	ClearDrawScreen();
+	//	p_loadScreen->Process(num, max);			// ロード画面
+	//	ScreenFlip();
+	//}
 }

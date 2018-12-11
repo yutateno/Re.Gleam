@@ -43,6 +43,12 @@ namespace BASICPARAM
 	extern int winWidth;
 	extern int winHeight;
 	extern int bitColor;
+
+	// 前シーンの終了フェードを終えたかどうか
+	extern bool endFeedNow;
+
+	// 次シーンの開始フェードを終えたかどうか
+	extern bool startFeedNow;
 }
 
 

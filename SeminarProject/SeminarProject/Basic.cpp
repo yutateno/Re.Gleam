@@ -8,3 +8,5 @@ bool BASICPARAM::nowCameraOrtho;	// ¡‚ÌƒJƒƒ‰‚ÌŒ`®‚ª³Ë‰e‚©‚Ç‚¤‚©
 int BASICPARAM::winWidth;
 int BASICPARAM::winHeight;
 int BASICPARAM::bitColor;
+bool BASICPARAM::startFeedNow;
+bool BASICPARAM::endFeedNow;

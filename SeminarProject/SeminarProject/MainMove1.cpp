@@ -91,24 +91,20 @@ void MainMove1::LightProcess()
 
 
 	// 玉の個数で判断させる
-	switch (catchEnemyNum)
+	if (catchEnemyNum == 1)
 	{
-	case 1:		// 一つ目を有効にする
 		SetLightEnableHandle(lightHandle[0], TRUE);
-		break;
-
-
-	case 2:		// 二つ目を有効にする
+	}
+	else if (catchEnemyNum == 2)
+	{
 		SetLightEnableHandle(lightHandle[1], TRUE);
-		break;
-
-
-	case 3:		// 三つ目を有効にする
+	}
+	else if (catchEnemyNum == 3)
+	{
 		SetLightEnableHandle(lightHandle[2], TRUE);
-		break;
-
-
-	case 4:		// 四つ目を有効にしつつ地面の明るさをじわじわ広げる
+	}
+	else if (catchEnemyNum == 4)
+	{
 		if (!lightEventStart && !lightEventEnd)
 		{
 			lightEventCount = 0;
@@ -116,15 +112,13 @@ void MainMove1::LightProcess()
 			lightRangePreMax = 1000.0f;
 			lightEventStart = true;
 		}
-		break;
-
-
-	case 5:		// フラグを倒す
-		lightEventEnd = false;
-		break;
-
-
-	case 7:		// 地面の明るさを広くする
+	}
+	else if (catchEnemyNum >= 5 && catchEnemyNum <= 6)
+	{
+		if (lightEventEnd) lightEventEnd = false;
+	}
+	else if (catchEnemyNum == 7)
+	{
 		if (!lightEventStart && !lightEventEnd)
 		{
 			lightEventCount = 0;
@@ -132,15 +126,13 @@ void MainMove1::LightProcess()
 			lightRangePreMax = 1700.0f;
 			lightEventStart = true;
 		}
-		break;
-
-
-	case 8:		// フラグを倒す
-		lightEventEnd = false;
-		break;
-
-
-	case 12:	// 地面の明るさを広くする
+	}
+	else if (catchEnemyNum >= 8 && catchEnemyNum <= 11)
+	{
+		if (lightEventEnd) lightEventEnd = false;
+	}
+	else if (catchEnemyNum == 12)
+	{
 		if (!lightEventStart && !lightEventEnd)
 		{
 			lightEventCount = 0;
@@ -148,15 +140,13 @@ void MainMove1::LightProcess()
 			lightRangePreMax = 2600.0f;
 			lightEventStart = true;
 		}
-		break;
-
-
-	case 13:	// フラグを倒す
-		lightEventEnd = false;
-		break;
-
-
-	case 19:	// 地面の明るさを広くする
+	}
+	else if (catchEnemyNum >= 13 && catchEnemyNum <= 18)
+	{
+		if (lightEventEnd) lightEventEnd = false;
+	}
+	else if (catchEnemyNum == 19)
+	{
 		if (!lightEventStart && !lightEventEnd)
 		{
 			lightEventCount = 0;
@@ -164,15 +154,13 @@ void MainMove1::LightProcess()
 			lightRangePreMax = 3700.0f;
 			lightEventStart = true;
 		}
-		break;
-
-
-	case 20:	// フラグを倒す
-		lightEventEnd = false;
-		break;
-
-
-	case 29:	// 地面の明るさを広くする
+	}
+	else if (catchEnemyNum >= 20 && catchEnemyNum <= 28)
+	{
+		if (lightEventEnd) lightEventEnd = false;
+	}
+	else if (catchEnemyNum == 29)
+	{
 		if (!lightEventStart && !lightEventEnd)
 		{
 			lightEventCount = 0;
@@ -180,22 +168,123 @@ void MainMove1::LightProcess()
 			lightRangePreMax = 5100.0f;
 			lightEventStart = true;
 		}
-		break;
-
-
-	case 30:	// 光源を消して自然光源を通常にする
+	}
+	else if (catchEnemyNum == 30)
+	{
 		if (!lightEnd && !lightEventStart)
 		{
 			lightEventCount = 0;
 			lightEventStart = true;
 			lightEnd = true;
 		}
-		break;
-
-
-	default:
-		break;
 	}
+
+
+	//switch (catchEnemyNum)
+	//{
+	//case 1:		// 一つ目を有効にする
+	//	SetLightEnableHandle(lightHandle[0], TRUE);
+	//	break;
+
+
+	//case 2:		// 二つ目を有効にする
+	//	SetLightEnableHandle(lightHandle[1], TRUE);
+	//	break;
+
+
+	//case 3:		// 三つ目を有効にする
+	//	SetLightEnableHandle(lightHandle[2], TRUE);
+	//	break;
+
+
+	//case 4:		// 四つ目を有効にしつつ地面の明るさをじわじわ広げる
+	//	if (!lightEventStart && !lightEventEnd)
+	//	{
+	//		lightEventCount = 0;
+	//		lightRangeSpeed = 7.0f;
+	//		lightRangePreMax = 1000.0f;
+	//		lightEventStart = true;
+	//	}
+	//	break;
+
+
+	//case 5:		// フラグを倒す
+	//	lightEventEnd = false;
+	//	break;
+
+
+	//case 7:		// 地面の明るさを広くする
+	//	if (!lightEventStart && !lightEventEnd)
+	//	{
+	//		lightEventCount = 0;
+	//		lightRangeSpeed = 9.0f;
+	//		lightRangePreMax = 1700.0f;
+	//		lightEventStart = true;
+	//	}
+	//	break;
+
+
+	//case 8:		// フラグを倒す
+	//	lightEventEnd = false;
+	//	break;
+
+
+	//case 12:	// 地面の明るさを広くする
+	//	if (!lightEventStart && !lightEventEnd)
+	//	{
+	//		lightEventCount = 0;
+	//		lightRangeSpeed = 11.0f;
+	//		lightRangePreMax = 2600.0f;
+	//		lightEventStart = true;
+	//	}
+	//	break;
+
+
+	//case 13:	// フラグを倒す
+	//	lightEventEnd = false;
+	//	break;
+
+
+	//case 19:	// 地面の明るさを広くする
+	//	if (!lightEventStart && !lightEventEnd)
+	//	{
+	//		lightEventCount = 0;
+	//		lightRangeSpeed = 14.0f;
+	//		lightRangePreMax = 3700.0f;
+	//		lightEventStart = true;
+	//	}
+	//	break;
+
+
+	//case 20:	// フラグを倒す
+	//	lightEventEnd = false;
+	//	break;
+
+
+	//case 29:	// 地面の明るさを広くする
+	//	if (!lightEventStart && !lightEventEnd)
+	//	{
+	//		lightEventCount = 0;
+	//		lightRangeSpeed = 20.0f;
+	//		lightRangePreMax = 5100.0f;
+	//		lightEventStart = true;
+	//	}
+	//	break;
+
+
+	//case 30:	// 光源を消して自然光源を通常にする
+	//	if (!lightEnd && !lightEventStart)
+	//	{
+	//		lightEventCount = 0;
+	//		lightEventStart = true;
+	//		lightEnd = true;
+	//	}
+	//	break;
+
+
+	//default:
+	//	break;
+	//}
 
 
 	// イベントを開始する
@@ -232,18 +321,18 @@ void MainMove1::LightProcess()
 
 
 		// 個数によるイベントの違い
-		if (catchEnemyNum < 12 && catchEnemyNum >= 4)
+		if (catchEnemyNum == 4)
 		{
 			if (lightEventCount >= 10)
 			{
 				SetLightEnableHandle(lightHandle[3], TRUE);		// 四つ目の光源を出す
 			}
 		}
-		else if (catchEnemyNum < 19 && catchEnemyNum >= 12)
+		else if (catchEnemyNum == 12)
 		{
 			backgroundColor = GetColor(lightEventCount, lightEventCount, lightEventCount);
 		}
-		else if (catchEnemyNum < 29 && catchEnemyNum >= 19)
+		else if (catchEnemyNum == 19)
 		{
 			lightArea[0].z = -630.0f + lightEventCount * 5;
 			lightArea[1].z = -630.0f + lightEventCount * 4;

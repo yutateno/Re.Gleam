@@ -11,6 +11,9 @@ private:
 	// ロードした個数
 	int num;
 
+	// 最大ロード個数
+	int maxNum;
+
 	// ロードしたもの
 	std::vector<int> fileName;
 
@@ -32,6 +35,9 @@ public:
 
 	// 行う
 	void Process(const int max, const std::string* path, const ELOADFILE* type);
+
+	// 描画
+	void Draw();
 
 
 	/// ゲッターセッター

@@ -438,8 +438,8 @@ Manager::Manager()
 	move1str[11] = "media\\こっち\\media\\剣\\whiteblack\\sword_Tex.pyn";
 
 	// コントローラー説明
-	move1str[12] = "media\\こっち\\media\\move1LeftStick.pyn";
-	move1str[13] = "media\\こっち\\media\\move1RightStick.pyn";
+	move1str[12] = "media\\こっち\\media\\hida.pyn";
+	move1str[13] = "media\\こっち\\media\\mighi.pyn";
 
 	// モデルデータ
 	load1[0] = ELOADFILE::mv1model;
@@ -552,6 +552,8 @@ Manager::Manager()
 	optionSelectMax = 2;
 	seDoWaitTimer = 0;
 
+	preLoadScene = false;
+
 	feedCount = 0;
 	BASICPARAM::endFeedNow = false;
 	BASICPARAM::startFeedNow = false;
@@ -581,14 +583,16 @@ void Manager::Update()
 			if (p_loadThread->GetNum() >= max1)		// ロードが終了したら
 			{
 				//feedCount++;
-				//SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - feedCount);
-				//p_loadThread->Process(max1, move1str, load1);		// ロードをする
+				////p_loadThread->Process(max1, move1str, load1);		// ロードをする
+				//SetDrawBlendMode(DX_BLENDMODE_ALPHA, feedCount);
 				//DrawGraph(0, 0, feedDraw, false);
 				//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
 				//if (feedCount >= 255)
 				//{
-					BASICPARAM::e_nowScene = ESceneNumber::FIRSTMOVE;
+				BASICPARAM::endFeedNow = true;
+				preLoadScene = true;
+				BASICPARAM::e_nowScene = ESceneNumber::FIRSTMOVE;
 				//}
 			}
 		}
@@ -597,11 +601,14 @@ void Manager::Update()
 			p_loadThread->Process(max2, move2str, load2);		// ロードをする
 			if (p_loadThread->GetNum() >= max2)		// ロードが終了したら
 			{
+				BASICPARAM::endFeedNow = true;
+				preLoadScene = true;
 				BASICPARAM::e_nowScene = ESceneNumber::SECONDMOVE;
 			}
 		}
 		else
 		{
+			preLoadScene = false;
 			if (!optionMenuNow)
 			{
 				if (!BASICPARAM::startFeedNow && !BASICPARAM::endFeedNow)
@@ -675,19 +682,40 @@ void Manager::Update()
 		}
 		else
 		{
-			feedCount += 5;
-			SetDrawScreen(DX_SCREEN_BACK);
-			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - feedCount);
-			ClearDrawScreen();
-			p_baseMove->CameraProcess();
-			p_baseMove->Draw();
-			ScreenFlip();
-			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-
-			if (feedCount >= 255)
+			if (!preLoadScene)
 			{
-				feedCount = 0;
-				BASICPARAM::endFeedNow = false;
+				feedCount += 5;
+				SetDrawScreen(DX_SCREEN_BACK);
+				ClearDrawScreen();
+				p_baseMove->CameraProcess();
+				p_baseMove->Draw();
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, feedCount);
+				DrawGraph(0, 0, feedDraw, false);
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+				ScreenFlip();
+
+				if (feedCount >= 255)
+				{
+					feedCount = 0;
+					BASICPARAM::endFeedNow = false;
+				}
+			}
+			else
+			{
+				feedCount += 5;
+				SetDrawScreen(DX_SCREEN_BACK);
+				ClearDrawScreen();
+				p_loadThread->Draw();
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, feedCount);
+				DrawGraph(0, 0, feedDraw, false);
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+				ScreenFlip();
+
+				if (feedCount >= 255)
+				{
+					feedCount = 0;
+					BASICPARAM::endFeedNow = false;
+				}
 			}
 		}
 	}

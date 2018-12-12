@@ -47,3 +47,8 @@ void LoadThread::Process(const int max, const std::string* path, const ELOADFILE
 	//	ScreenFlip();
 	//}
 }
+
+void LoadThread::Draw()
+{
+	p_loadScreen->Process(num, num);			// ƒ[ƒh‰æ–Ê
+}

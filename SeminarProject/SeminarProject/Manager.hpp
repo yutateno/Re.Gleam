@@ -19,6 +19,9 @@ private:
 	// シーンを切り替える
 	void SceneChange();
 
+	// 直前のシーンがロードかゲームかどうか
+	bool preLoadScene;
+
 
 	/// ムーブ１に関する----------------
 

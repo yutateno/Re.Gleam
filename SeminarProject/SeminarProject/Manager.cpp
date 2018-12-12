@@ -114,11 +114,6 @@ void Manager::OptionProcess()
 				p_baseMove->TextureReload();
 			}
 		}
-		else if (optionSelectButtonNum == EOptionSelectButton::Back)
-		{
-			SoundProcess::SetOptionMenuNow(false);
-			optionMenuNow = false;
-		}
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorSelect)
 		{
 			optionSelectButtonNum = EOptionSelectButton::ColorNormal;
@@ -143,6 +138,22 @@ void Manager::OptionProcess()
 			optionSelectButtonNum = EOptionSelectButton::SE;
 			optionSelectMin = 3;
 			optionSelectMax = 4;
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::Camera)
+		{
+			optionSelectButtonNum = EOptionSelectButton::CameraPerspective;
+			optionSelectMin = 10;
+			optionSelectMax = 11;
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective)
+		{
+			BASICPARAM::nowCameraOrtho = false;
+			p_baseMove->CameraProcess();
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::CameraOrtho)
+		{
+			BASICPARAM::nowCameraOrtho = true;
+			p_baseMove->CameraProcess();
 		}
 	}
 
@@ -193,6 +204,18 @@ void Manager::OptionProcess()
 			optionSelectButtonNum = EOptionSelectButton::SE;
 			optionSelectMin = 3;
 			optionSelectMax = 4;
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective)
+		{
+			optionSelectButtonNum = EOptionSelectButton::Camera;
+			optionSelectMin = 0;
+			optionSelectMax = 2;
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::CameraOrtho)
+		{
+			optionSelectButtonNum = EOptionSelectButton::Camera;
+			optionSelectMin = 0;
+			optionSelectMax = 2;
 		}
 		/*else if (optionSelectButtonNum == EOptionSelectButton::Back)
 		{
@@ -332,7 +355,7 @@ void Manager::OptionDraw()
 
 	DrawBox(559, 550, 559 + 269, 550 + 65, GetColor(255, 255, 255), true);
 	DrawBox(559, 550, 559 + 269, 550 + 65, GetColor(0, 0, 0), false);
-	DrawFormatString(559, 550, 255, "P型補足説明");
+	DrawFormatString(559, 550, 255, "P型補足説明画像");
 
 	DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(255, 255, 255), true);
 	DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(0, 0, 0), false);
@@ -344,7 +367,7 @@ void Manager::OptionDraw()
 
 	DrawBox(557, 681, 557 + 273, 681 + 60, GetColor(255, 255, 255), true);
 	DrawBox(557, 681, 557 + 273, 681 + 60, GetColor(0, 0, 0), false);
-	DrawFormatString(557, 681, 255, "D型補足説明");
+	DrawFormatString(557, 681, 255, "D型補足説明画像");
 
 
 	///　モデル表示-------------------------------------------------------------
@@ -354,19 +377,31 @@ void Manager::OptionDraw()
 	DrawFormatString(1252, 94, 255, "モデル");
 
 
-	// 戻る
+	/// カメラの関するオプション------------------------------------------------
 
 	DrawBox(95, 843, 95 + 109, 843 + 68, GetColor(255, 255, 255), true);
 	DrawBox(95, 843, 95 + 109, 843 + 68, GetColor(0, 0, 0), false);
-	if (optionSelectButtonNum == EOptionSelectButton::Back)
+	if (optionSelectButtonNum == EOptionSelectButton::Camera)
 	{
 		DrawBox(95, 843, 95 + 109, 843 + 68, GetColor(255, 0, 0), true);
 	}
-	DrawFormatString(95, 843, 255, "戻る");
+	DrawFormatString(95, 843, 255, "カメラ");
 
+	DrawBox(385, 843, 385 + 83, 843 + 58, GetColor(255, 255, 255), true);
+	DrawBox(385, 843, 385 + 83, 843 + 58, GetColor(0, 0, 0), false);
+	if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective)
+	{
+		DrawBox(385, 843, 385 + 83, 843 + 58, GetColor(255, 0, 0), true);
+	}
+	DrawFormatString(385, 843, 255, "遠近法カメラ");
 
-	// debug
-	DrawFormatString(0, 0, 255, "%d", optionSelectButtonNum);
+	DrawBox(385, 970, 385 + 83, 970 + 58, GetColor(255, 255, 255), true);
+	DrawBox(385, 970, 385 + 83, 970 + 58, GetColor(0, 0, 0), false);
+	if (optionSelectButtonNum == EOptionSelectButton::CameraOrtho)
+	{
+		DrawBox(385, 970, 385 + 83, 970 + 58, GetColor(255, 0, 0), true);
+	}
+	DrawFormatString(385, 970, 255, "正射影カメラ");
 }
 
 

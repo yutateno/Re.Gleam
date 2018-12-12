@@ -69,7 +69,8 @@ private:
 	void OptionDraw();
 
 	// オプション画面のID
-	enum class EOptionSelectButton { Sound, ColorSelect, Back, BGM, SE, ColorNormal, ColorP, ColorD, BGMSelect, SESelect };
+	enum class EOptionSelectButton { Sound, ColorSelect, Camera, BGM, SE, ColorNormal, ColorP, ColorD
+		, BGMSelect, SESelect, CameraPerspective, CameraOrtho };
 
 	// オプション画面の選択ボタン
 	EOptionSelectButton optionSelectButtonNum;

@@ -26,13 +26,13 @@ private:
 	/// ムーブ１に関する----------------
 
 	// ムーブ1のロード数
-	const int max1 = 14;
+	const int max1 = 24;
 
 	// ムーブ1のロードファイル
-	std::string move1str[14];
+	std::string move1str[24];
 
 	// ムーブ1のロードの種類
-	ELOADFILE load1[14];
+	ELOADFILE load1[24];
 
 
 	/// ムーブ２に関する--------------
@@ -92,6 +92,12 @@ private:
 
 	// ロード
 	std::thread thsTexture;
+
+	// オプション用画像ID
+	enum class EOptionDraw { BGM, Camera, ColorD, ColorP, SE, Sound, Perspective, Color, Ortho, ColorNormal };
+
+	// オプション用画像
+	int optionDrawMedia[10];
 
 
 

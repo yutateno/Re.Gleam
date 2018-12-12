@@ -13,6 +13,10 @@ void Manager::SceneChange()
 	case ESceneNumber::FIRSTMOVE:
 		BASICPARAM::startFeedNow = true;
 		feedCount = 255;
+		for (int i = 0; i != 10; ++i)
+		{
+			optionDrawMedia[i] = p_loadThread->GetFile()[i + 14];
+		}
 		p_baseMove = new MainMove1(p_loadThread->GetFile());
 		p_baseMove->SetScene(BASICPARAM::e_nowScene);
 		POINTER_RELEASE(p_loadThread);
@@ -275,53 +279,42 @@ void Manager::OptionProcess()
 void Manager::OptionDraw()
 {
 	DrawGraph(0, 0, gaussianScreen, false);
-
-
-	// 選択されるボタン(SEや通常やP型補正まわり)の座標
-	const int selectLeftXArea = 385;
-	const int selectRightXArea = selectLeftXArea + 83;
-
+	
 
 	/// サウンド関係オプション-----------------------------------------------
 
-	DrawBox(95, 95, 95 + 211, 95 + 86, GetColor(255, 255, 255), true);
-	DrawBox(95, 95, 95 + 211, 95 + 86, GetColor(0, 0, 0), false);
+	DrawGraph(95, 95, optionDrawMedia[static_cast<int>(EOptionDraw::Sound)], false);
 	if (optionSelectButtonNum == EOptionSelectButton::Sound)
 	{
-		DrawBox(95, 95, 95 + 211, 95 + 86, GetColor(255, 0, 0), true);
+		DrawBox(95, 95, 95 + 211, 95 + 86, GetColor(255, 0, 0), false);
 	}
-	DrawFormatString(95, 95, 255, "サウンド調整");
 
-	DrawBox(381, 114, 381 + 87, 114 + 58, GetColor(255, 255, 255), true);
-	DrawBox(381, 114, 381 + 87, 114 + 58, GetColor(0, 0, 0), false);
+	DrawGraph(381, 114, optionDrawMedia[static_cast<int>(EOptionDraw::BGM)], false);
 	if (optionSelectButtonNum == EOptionSelectButton::BGM)
 	{
-		DrawBox(381, 114, 381 + 87, 114 + 58, GetColor(255, 0, 0), true);
+		DrawBox(381, 114, 381 + 87, 114 + 58, GetColor(255, 0, 0), false);
 	}
-	DrawFormatString(381, 114, 255, "BGM");
 
-	DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(255, 255, 255), true);
+	DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(200, 200, 200), true);
 	DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(0, 0, 0), false);
 	if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
 	{
-		DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(255, 0, 0), true);
+		DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(255, 0, 0), false);
 	}
 	DrawBox(546 - 5 + static_cast<int>(SoundProcess::GetBGMVolumeEntire() * 547), 100 - 10, 546 + 5 + static_cast<int>(SoundProcess::GetBGMVolumeEntire() * 548), 100 + 81 + 10, GetColor(0, 125, 125), true);
 	DrawFormatString(546, 100, 255, "BGMバー");
 
-	DrawBox(385, 266, 385 + 86, 266 + 58, GetColor(255, 255, 255), true);
-	DrawBox(385, 266, 385 + 86, 266 + 58, GetColor(0, 0, 0), false);
+	DrawGraph(385, 266, optionDrawMedia[static_cast<int>(EOptionDraw::SE)], false);
 	if (optionSelectButtonNum == EOptionSelectButton::SE)
 	{
-		DrawBox(385, 266, 385 + 86, 266 + 58, GetColor(255, 0, 0), true);
+		DrawBox(385, 266, 385 + 86, 266 + 58, GetColor(255, 0, 0), false);
 	}
-	DrawFormatString(385, 266, 255, "SE");
 
-	DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(255, 255, 255), true);
+	DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(200, 200, 200), true);
 	DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(0, 0, 0), false);
 	if (optionSelectButtonNum == EOptionSelectButton::SESelect)
 	{
-		DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(255, 0, 0), true);
+		DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(255, 0, 0), false);
 	}
 	DrawBox(548 - 5 + static_cast<int>(SoundProcess::GetSEVolumeEntire() * 547), 255 - 10, 548 + 5 + static_cast<int>(SoundProcess::GetSEVolumeEntire() * 547), 255 + 78 + 10, GetColor(0, 125, 125), true);
 	DrawFormatString(548, 255, 255, "SEのバー");
@@ -329,45 +322,29 @@ void Manager::OptionDraw()
 
 	/// 色覚に関するオプション----------------------------------------------
 
-	DrawBox(96, 413, 96 + 154, 413 + 76, GetColor(255, 255, 255), true);
-	DrawBox(96, 413, 96 + 154, 413 + 76, GetColor(0, 0, 0), false);
+	DrawGraph(96, 413, optionDrawMedia[static_cast<int>(EOptionDraw::Color)], false);
 	if (optionSelectButtonNum == EOptionSelectButton::ColorSelect)
 	{
-		DrawBox(96, 413, 96 + 154, 413 + 76, GetColor(255, 0, 0), true);
+		DrawBox(96, 413, 96 + 112, 413 + 76, GetColor(255, 0, 0), false);
 	}
-	DrawFormatString(96, 413, 255, "色覚設定");
 
-	DrawBox(385, 427, 385 + 83, 427 + 58, GetColor(255, 255, 255), true);
-	DrawBox(385, 427, 385 + 83, 427 + 58, GetColor(0, 0, 0), false);
+	DrawGraph(385, 427, optionDrawMedia[static_cast<int>(EOptionDraw::ColorNormal)], false);
 	if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
 	{
-		DrawBox(385, 427, 385 + 83, 427 + 58, GetColor(255, 0, 0), true);
+		DrawBox(385, 427, 385 + 83, 427 + 58, GetColor(255, 0, 0), false);
 	}
-	DrawFormatString(385, 427, 255, "通常色");
 
-	DrawBox(386, 550, 386 + 83, 550 + 59, GetColor(255, 255, 255), true);
-	DrawBox(386, 550, 386 + 83, 550 + 59, GetColor(0, 0, 0), false);
+	DrawGraph(386, 550, optionDrawMedia[static_cast<int>(EOptionDraw::ColorP)], false);
 	if (optionSelectButtonNum == EOptionSelectButton::ColorP)
 	{
-		DrawBox(386, 550, 386 + 83, 550 + 59, GetColor(255, 0, 0), true);
+		DrawBox(386, 550, 386 + 83, 550 + 59, GetColor(255, 0, 0), false);
 	}
-	DrawFormatString(386, 550, 255, "P型補正");
 
-	DrawBox(559, 550, 559 + 269, 550 + 65, GetColor(255, 255, 255), true);
-	DrawBox(559, 550, 559 + 269, 550 + 65, GetColor(0, 0, 0), false);
-	DrawFormatString(559, 550, 255, "P型補足説明画像");
-
-	DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(255, 255, 255), true);
-	DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(0, 0, 0), false);
+	DrawGraph(385, 682, optionDrawMedia[static_cast<int>(EOptionDraw::ColorD)], false);
 	if (optionSelectButtonNum == EOptionSelectButton::ColorD)
 	{
-		DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(255, 0, 0), true);
+		DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(255, 0, 0), false);
 	}
-	DrawFormatString(385, 682, 255, "D型補正");
-
-	DrawBox(557, 681, 557 + 273, 681 + 60, GetColor(255, 255, 255), true);
-	DrawBox(557, 681, 557 + 273, 681 + 60, GetColor(0, 0, 0), false);
-	DrawFormatString(557, 681, 255, "D型補足説明画像");
 
 
 	///　モデル表示-------------------------------------------------------------
@@ -379,29 +356,23 @@ void Manager::OptionDraw()
 
 	/// カメラの関するオプション------------------------------------------------
 
-	DrawBox(95, 843, 95 + 109, 843 + 68, GetColor(255, 255, 255), true);
-	DrawBox(95, 843, 95 + 109, 843 + 68, GetColor(0, 0, 0), false);
+	DrawGraph(95, 843, optionDrawMedia[static_cast<int>(EOptionDraw::Camera)], false);
 	if (optionSelectButtonNum == EOptionSelectButton::Camera)
 	{
-		DrawBox(95, 843, 95 + 109, 843 + 68, GetColor(255, 0, 0), true);
+		DrawBox(95, 843, 95 + 109, 843 + 68, GetColor(255, 0, 0), false);
 	}
-	DrawFormatString(95, 843, 255, "カメラ");
 
-	DrawBox(385, 843, 385 + 83, 843 + 58, GetColor(255, 255, 255), true);
-	DrawBox(385, 843, 385 + 83, 843 + 58, GetColor(0, 0, 0), false);
+	DrawGraph(385, 843, optionDrawMedia[static_cast<int>(EOptionDraw::Perspective)], false);
 	if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective)
 	{
-		DrawBox(385, 843, 385 + 83, 843 + 58, GetColor(255, 0, 0), true);
+		DrawBox(385, 843, 385 + 83, 843 + 58, GetColor(255, 0, 0), false);
 	}
-	DrawFormatString(385, 843, 255, "遠近法カメラ");
 
-	DrawBox(385, 970, 385 + 83, 970 + 58, GetColor(255, 255, 255), true);
-	DrawBox(385, 970, 385 + 83, 970 + 58, GetColor(0, 0, 0), false);
+	DrawGraph(385, 970, optionDrawMedia[static_cast<int>(EOptionDraw::Ortho)], false);
 	if (optionSelectButtonNum == EOptionSelectButton::CameraOrtho)
 	{
-		DrawBox(385, 970, 385 + 83, 970 + 58, GetColor(255, 0, 0), true);
+		DrawBox(385, 970, 385 + 83, 970 + 58, GetColor(255, 0, 0), false);
 	}
-	DrawFormatString(385, 970, 255, "正射影カメラ");
 }
 
 
@@ -438,8 +409,20 @@ Manager::Manager()
 	move1str[11] = "media\\こっち\\media\\剣\\whiteblack\\sword_Tex.pyn";
 
 	// コントローラー説明
-	move1str[12] = "media\\こっち\\media\\hida.pyn";
-	move1str[13] = "media\\こっち\\media\\mighi.pyn";
+	move1str[12] = "media\\こっち\\media\\move1\\hida.pyn";
+	move1str[13] = "media\\こっち\\media\\move1\\mighi.pyn";
+
+	// オプション用画像
+	move1str[14] = "media\\こっち\\media\\option\\BGM.pyn";
+	move1str[15] = "media\\こっち\\media\\option\\camera.pyn";
+	move1str[16] = "media\\こっち\\media\\option\\D型.pyn";
+	move1str[17] = "media\\こっち\\media\\option\\P型.pyn";
+	move1str[18] = "media\\こっち\\media\\option\\SE.pyn";
+	move1str[19] = "media\\こっち\\media\\option\\Sound.pyn";
+	move1str[20] = "media\\こっち\\media\\option\\遠近法.pyn";
+	move1str[21] = "media\\こっち\\media\\option\\色覚調整.pyn";
+	move1str[22] = "media\\こっち\\media\\option\\正射影.pyn";
+	move1str[23] = "media\\こっち\\media\\option\\通常色.pyn";
 
 	// モデルデータ
 	load1[0] = ELOADFILE::mv1model;
@@ -464,6 +447,18 @@ Manager::Manager()
 	// コントローラー説明
 	load1[12] = ELOADFILE::graph;
 	load1[13] = ELOADFILE::graph;
+
+	// オプション用画像
+	load1[14] = ELOADFILE::graph;
+	load1[15] = ELOADFILE::graph;
+	load1[16] = ELOADFILE::graph;
+	load1[17] = ELOADFILE::graph;
+	load1[18] = ELOADFILE::graph;
+	load1[19] = ELOADFILE::graph;
+	load1[20] = ELOADFILE::graph;
+	load1[21] = ELOADFILE::graph;
+	load1[22] = ELOADFILE::graph;
+	load1[23] = ELOADFILE::graph;
 	/// ---------------------------------------------------------------------------------------------------
 
 
@@ -552,6 +547,11 @@ Manager::Manager()
 	optionSelectMax = 2;
 	seDoWaitTimer = 0;
 
+	for (int i = 0; i != 10; ++i)
+	{
+		optionDrawMedia[i] = -1;
+	}
+
 	preLoadScene = false;
 
 	feedCount = 0;
@@ -567,6 +567,10 @@ Manager::Manager()
 
 Manager::~Manager()
 {
+	for (int i = 0; i != 10; ++i)
+	{
+		GRAPHIC_RELEASE(optionDrawMedia[i]);
+	}
 	GRAPHIC_RELEASE(gaussianScreen);
 	GRAPHIC_RELEASE(antiAliasScreen);
 	POINTER_RELEASE(p_baseMove);

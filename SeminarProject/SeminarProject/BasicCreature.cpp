@@ -113,8 +113,10 @@ void BasicCreature::ActorHit(int stageHandle)
 	wallNum = 0;
 	floorNum = 0;
 
+	printfDx("%d\n", m_hitDim.HitNum);
+
 	// ŒŸo‚³‚ê‚½”‚¾‚¯’²‚×‚é
-	for (int i = 0, j = m_hitDim.HitNum; i != j; ++i)
+	for (int i = 0, n = m_hitDim.HitNum; i != n; ++i)
 	{
 		// •Ç‚©‚Ç‚¤‚©”»’f‚·‚é‚½‚ßAXZ²‚É‚’¼‚©‚Ç‚¤‚©‚ğ–@ü‚ª‚O‚É‹ß‚¢‚©‚Ç‚¤‚©‚Å’²‚×‚é
 		if (m_hitDim.Dim[i].Normal.y < 0.001f && m_hitDim.Dim[i].Normal.y > -0.001f)

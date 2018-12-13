@@ -75,7 +75,10 @@ protected:
 	void StageHit();					
 
 	// “–‚½‚è”»’è‚ğs‚¤
-	void ActorHit(int stageHandle);		
+	void ActorHit(int stageHandle);	
+
+	// ƒ|ƒŠƒSƒ“ŒŸ’m‚µ‚Ä‚¢‚é”
+	int hitDimNum;
 
 
 	/// UŒ‚‚ğó‚¯‚½‚ÉŠÖ‚·‚é-----------

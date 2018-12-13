@@ -552,6 +552,8 @@ void CharacterSword::Process(const float getAngle)
 	// モーションのプロセス
 	AnimProcess();
 
+	hitDimNum = 0;
+
 	// 階段のあたり判定
 	for (int i = 0; i != BASICPARAM::stairsNum; ++i)
 	{
@@ -572,6 +574,21 @@ void CharacterSword::Process(const float getAngle)
 
 	// ステージのあたり判定
 	StageHit();
+
+
+	if (hitDimNum == 0 && area.y >= 10.0f)
+	{
+		printfDx("通ってる\n");
+		// 飛ぶコマンドで飛んでいなかったら
+		if (!jumpNow)
+		{
+			printfDx("さらに落ちた\n");
+			jumpNow = true;				// 飛んでいる
+
+			jumpPower = fallJumpPower;	// 落下速度を加える
+		}
+	}
+
 
 	// 第二引数の回転角度をセット
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));

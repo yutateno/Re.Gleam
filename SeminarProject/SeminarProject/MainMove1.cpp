@@ -135,7 +135,6 @@ void MainMove1::LightProcess()
 
 
 	/// 玉の個数でライトの状況を変化させる命令をする--------------------------------------------
-
 	if (catchEnemyNum == 1)
 	{
 		// ライトを一つ有効にする
@@ -402,7 +401,6 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 
 	
 	/// 玉生成に関する初期化---------------------------------------------------------------
-
 	std::random_device rnd;     // 非決定的な乱数生成器を生成
 	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
 	std::uniform_int_distribution<> randInX(-3000, 3000);        // X座標用乱数
@@ -444,7 +442,6 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 
 
 	/// ライトに関する初期化--------------------------------------------------------------------------
-
 	for (int i = 0; i != lightNum; ++i)
 	{
 		lightHandle[i] = -1;						// ライトハンドルを初期化
@@ -468,7 +465,6 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 
 	
 	/// 説明に関する初期化---------------------------------------
-
 	//  左スティック操作の説明の初期化
 	stickLeftDraw = -1;
 	stickLeftDraw = v_file[EFILE::explanationLeftStick];
@@ -483,7 +479,6 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 
 
 	/// サウンドの初期化---------------------------------------------------------------------------------------------------------------
-
 	SoundProcess::Load(v_file[EFILE::sound], SoundProcess::ESOUNDNAME_BGM::titleMusicBox);
 	SoundProcess::Load(v_file[EFILE::seBallHigh], SoundProcess::ESOUNDNAME_SE::ballPawnHigh, SoundProcess::ESOUNDTYPE::soundMem);
 	SoundProcess::Load(v_file[EFILE::seBall], SoundProcess::ESOUNDNAME_SE::ballPawn, SoundProcess::ESOUNDTYPE::soundMem);

@@ -25,19 +25,13 @@ private:
 	/// 階段に関して----------------------
 
 	// 階段のモデル
-	int stairsHandle[10];
-
-	// 階段の位置
-	VECTOR stairsArea[10];
+	std::vector<int> v_stairsHandle;
 
 
 	/// パネルに関して------------------------
 	
 	// パネルのモデル
 	int paneruHandle[10];
-
-	// パネルの位置
-	VECTOR paneruArea[10];
 
 
 	/// 動きに関して------------------------------

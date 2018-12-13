@@ -82,6 +82,7 @@ LoadScreen::~LoadScreen()
 void LoadScreen::Process(const int num, const int max)
 {
 	if (++walkCount > 5) walkCount = 0;
+
 	if (num < max)
 	{
 		DrawGraph(BASICPARAM::winWidth - (num * static_cast<int>(BASICPARAM::winWidth / max)), BASICPARAM::winHeight - 260, draw[walkCount], true);

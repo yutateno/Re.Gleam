@@ -31,14 +31,14 @@ private:
 	Stage* p_stage;
 
 	// 階段のポインタ
-	StageStairs* p_stageStairs[10];
+	std::vector<StageStairs*> vp_stageStairs;
 
 	// 街灯のポインタ
-	StageStreetLight* p_stageStreetLight[30];
+	std::vector<StageStreetLight*> vp_stageStreetLight;
 
 	// パネルのポインタ
 	StagePaneru* p_stagePaneru[10];
-
+	
 
 	/// キャラクター----------------------
 

@@ -9,13 +9,13 @@ void MainMove2::ShadowDraw()
 	{
 		if (!p_enemy[i]->GetEraseExistence()) p_enemy[i]->Draw();
 	}
-	for (int i = 0; i != 10; ++i)
+	for (int i = 0; i != vp_stageStairs.size(); ++i)
 	{
-		p_stageStairs[i]->Draw();
+		vp_stageStairs[i]->Draw();
 	}
-	for (int i = 0; i != 30; ++i)
+	for (int i = 0; i != vp_stageStreetLight.size(); ++i)
 	{
-		p_stageStreetLight[i]->Draw();
+		vp_stageStreetLight[i]->Draw();
 	}
 	for (int i = 0; i != 10; ++i)
 	{
@@ -27,17 +27,17 @@ void MainMove2::ShadowDraw()
 
 
 	BaseMove::ShadowAnotherCharaSetUpBefore();
-	for (int i = 0; i != 10; ++i)
+	for (int i = 0; i != vp_stageStairs.size(); ++i)
 	{
-		p_stageStairs[i]->Draw();
+		vp_stageStairs[i]->Draw();
 	}
 	for (int i = 0; i != enemyNum; ++i)
 	{
 		if (!p_enemy[i]->GetEraseExistence())	p_enemy[i]->Draw();
 	}
-	for (int i = 0; i != 30; ++i)
+	for (int i = 0; i != vp_stageStreetLight.size(); ++i)
 	{
-		p_stageStreetLight[i]->Draw();
+		vp_stageStreetLight[i]->Draw();
 	}
 	for (int i = 0; i != 10; ++i)
 	{
@@ -55,13 +55,13 @@ void MainMove2::ShadowDraw()
 	{
 		if (!p_enemy[i]->GetEraseExistence()) p_enemy[i]->Draw();
 	}
-	for (int i = 0; i != 10; ++i)
+	for (int i = 0; i != vp_stageStairs.size(); ++i)
 	{
-		p_stageStairs[i]->Draw();
+		vp_stageStairs[i]->Draw();
 	}
-	for (int i = 0; i != 30; ++i)
+	for (int i = 0; i != vp_stageStreetLight.size(); ++i)
 	{
-		p_stageStreetLight[i]->Draw();
+		vp_stageStreetLight[i]->Draw();
 	}
 	for (int i = 0; i != 10; ++i)
 	{
@@ -139,14 +139,8 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 		p_enemy[i]				 = NULL;
 	}
 	p_stage						 = NULL;
-	for (int i = 0; i != 10; ++i)
-	{
-		p_stageStairs[i]		 = NULL;
-	}
-	for (int i = 0; i != 30; ++i)
-	{
-		p_stageStreetLight[i]	 = NULL;
-	}
+	vp_stageStairs.clear();
+	vp_stageStreetLight.clear();
 	for (int i = 0; i != 10; ++i)
 	{
 		p_stagePaneru[i]		 = NULL;
@@ -164,9 +158,9 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 
 
 	// ポインタ初期化
-	for (int i = 0; i != 10; ++i)
+	for (int i = 0; i != 40; ++i)
 	{
-		p_stageStairs[i] = new StageStairs(v_file[EFILE::stairs], VGet(-100.0f*i, 0.0f, -1000.0f), v_file[EFILE::stairTex0]);
+		vp_stageStairs.push_back(new StageStairs(v_file[EFILE::stairs], VGet(-100.0f*i, 0.0f, -1000.0f), v_file[EFILE::stairTex0]));
 	}
 	p_stage		 = new Stage(v_file[EFILE::drawStage]);
 	p_character	 = new CharacterSword(v_file[EFILE::characterAttack], v_file[EFILE::stage], v_file[EFILE::stairsColl], v_file[EFILE::paneru]
@@ -174,8 +168,8 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	p_camera	 = new Camera(p_character->GetArea(), v_file[EFILE::stage]);
 	for (int i = 0; i != 30; ++i)
 	{
-		p_stageStreetLight[i] = new StageStreetLight(v_file[EFILE::streetLight], VGet(250.0f*i, 0.0f, -100.0f*i)
-			, v_file[EFILE::streetLightTex0], v_file[EFILE::streetLightTex1]);
+		vp_stageStreetLight.push_back(new StageStreetLight(v_file[EFILE::streetLight], VGet(250.0f*i, 0.0f, -100.0f*i)
+			, v_file[EFILE::streetLightTex0], v_file[EFILE::streetLightTex1]));
 	}
 	for (int i = 0; i != 10; ++i)
 	{
@@ -200,9 +194,9 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 
 
 	// 階段のあたり判定
-	for (int i = 0; i != 10; ++i)
+	for (int i = 0; i != vp_stageStairs.size(); ++i)
 	{
-		p_character->SetStairsArea(p_stageStairs[i]->GetArea(), i);
+		p_character->SetStairsArea(vp_stageStairs[i]->GetArea(), i);
 	}
 
 	// パネルのあたり判定
@@ -223,24 +217,35 @@ MainMove2::~MainMove2()
 	{
 		POINTER_RELEASE(p_stagePaneru[i]);
 	}
-	for (int i = 0; i != 30; ++i)
+
+	for (int i = 0; i != vp_stageStreetLight.size(); ++i)
 	{
-		POINTER_RELEASE(p_stageStreetLight[i]);
+		POINTER_RELEASE(vp_stageStreetLight[i]);
 	}
-	for (int i = 0; i != 10; ++i)
+	vp_stageStreetLight.clear();
+	vp_stageStreetLight.shrink_to_fit();
+
+	for (int i = 0; i != vp_stageStairs.size(); ++i)
 	{
-		POINTER_RELEASE(p_stageStairs[i]);
+		POINTER_RELEASE(vp_stageStairs[i]);
 	}
+	vp_stageStairs.clear();
+	vp_stageStairs.shrink_to_fit();
+
 	POINTER_RELEASE(p_camera);
+
 	for (int i = 0, n = enemyNum * 5; i != n; ++i)
 	{
 		POINTER_RELEASE(p_dropItem[i]);
 	}
+
 	for (int i = 0; i != enemyNum; ++i)
 	{
 		POINTER_RELEASE(p_enemy[i]);
 	}
+
 	POINTER_RELEASE(p_character);
+
 	POINTER_RELEASE(p_stage);
 }
 
@@ -336,14 +341,14 @@ void MainMove2::ThsTextureReload()
 		p_dropItem[i]->TextureReload();
 	}
 
-	for (int i = 0; i != 10; ++i)
+	for (int i = 0; i != vp_stageStairs.size(); ++i)
 	{
-		p_stageStairs[i]->TextureReload();
+		vp_stageStairs[i]->TextureReload();
 	}
 
-	for (int i = 0; i != 30; ++i)
+	for (int i = 0; i != vp_stageStreetLight.size(); ++i)
 	{
-		p_stageStreetLight[i]->TextureReload();
+		vp_stageStreetLight[i]->TextureReload();
 	}
 }
 

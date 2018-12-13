@@ -316,13 +316,20 @@ void CharacterSword::JumpProcess()
 		{
 			jumpUpNow = false;			// 落下に切り替える
 
-			// 地面に触れたら
-			if (fallCount <= 1)
-			{
-				jumpPower = 0.0f;
-				jumpUpNow = false;
-			}
+			//// 地面に触れたら
+			//if (fallCount <= 1)
+			//{
+			//	if (CheckHitKey(KEY_INPUT_G) >= 1)
+			//	{
+			//		printfDx("asdas\n");
+			//	}
+			//	jumpPower = 0.0f;
+			//	jumpUpNow = false;
+			//}
 		}
+
+
+		area.y -= 7.5f;
 	}
 }
 
@@ -395,48 +402,6 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	textureHandle2 = tex2;
 	textureHandle3 = tex3;
 	textureHandle4 = tex4;
-	/*switch (BASICPARAM::e_TextureColor)
-	{
-	case ETextureColor::WHITEBLACK:
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_hair.pyn", textureHandle1, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_wear.pyn", textureHandle2, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_face.pyn", textureHandle3, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_ex.pyn", textureHandle4, ELOADFILE::graph);
-		break;
-
-	case ETextureColor::NORMAL:
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\sword_Tex.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_hair.pyn", textureHandle1, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_wear.pyn", textureHandle2, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn", textureHandle3, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn", textureHandle4, ELOADFILE::graph);
-		break;
-
-	case ETextureColor::D_CORRECTION:
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\sword_Tex.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_hair.pyn", textureHandle1, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_wear.pyn", textureHandle2, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_face.pyn", textureHandle3, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_ex.pyn", textureHandle4, ELOADFILE::graph);
-		break;
-
-	case ETextureColor::P_CORRECTION:
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\sword_Tex.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_hair.pyn", textureHandle1, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_wear.pyn", textureHandle2, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_face.pyn", textureHandle3, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_ex.pyn", textureHandle4, ELOADFILE::graph);
-		break;
-
-	default:
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\sword_Tex.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_hair.pyn", textureHandle1, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_wear.pyn", textureHandle2, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn", textureHandle3, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn", textureHandle4, ELOADFILE::graph);
-		break;
-	}*/
 
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, true);
 	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle1, false);
@@ -497,7 +462,8 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 
 
 	// 階段
-	this->stairsHandle[0] = MV1DuplicateModel(stairsHandle);
+	v_stairsHandle.clear();
+	this->v_stairsHandle.push_back(MV1DuplicateModel(stairsHandle));
 
 	// パネル
 	this->paneruHandle[0] = MV1DuplicateModel(paneruHandle);
@@ -519,10 +485,13 @@ CharacterSword::~CharacterSword()
 	GRAPHIC_RELEASE(textureHandle3);
 	GRAPHIC_RELEASE(textureHandle4);
 
-	for (int i = 0; i != 10; ++i)
+	for (int i = 0; i != v_stairsHandle.size(); ++i)
 	{
-		MODEL_RELEASE(stairsHandle[i]);
+		MODEL_RELEASE(v_stairsHandle[i]);
 	}
+	v_stairsHandle.clear();
+	v_stairsHandle.shrink_to_fit();
+
 	MODEL_RELEASE(modelHandle);
 }
 
@@ -531,12 +500,12 @@ void CharacterSword::SetStairsArea(const VECTOR stairsArea, const int num)
 	// ステージのコリジョン情報の更新
 	if (num != 0)
 	{
-		stairsHandle[num] = MV1DuplicateModel(stairsHandle[0]);
+		v_stairsHandle.push_back(MV1DuplicateModel(v_stairsHandle[0]));
 	}
-	MV1SetupCollInfo(stairsHandle[num], -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetPosition(stairsHandle[num], stairsArea);				// ステージの座標を更新
-	MV1SetFrameVisible(stairsHandle[num], -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(stairsHandle[num], -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetupCollInfo(v_stairsHandle[num], -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
+	MV1SetPosition(v_stairsHandle[num], stairsArea);				// ステージの座標を更新
+	MV1SetFrameVisible(v_stairsHandle[num], -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1RefreshCollInfo(v_stairsHandle[num], -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 }
 
 void CharacterSword::SetPaneruArea(const VECTOR paneruArea, const int num)
@@ -584,12 +553,12 @@ void CharacterSword::Process(const float getAngle)
 	AnimProcess();
 
 	// 階段のあたり判定
-	for (int i = 0; i != 10; ++i)
+	for (int i = 0; i != v_stairsHandle.size(); ++i)
 	{
-		ActorHit(stairsHandle[i]);
+		ActorHit(v_stairsHandle[i]);
 	}
 
-	// 階段のあたり判定
+	// パネルのあたり判定
 	for (int i = 0; i != 10; ++i)
 	{
 		ActorHit(paneruHandle[i]);

@@ -234,10 +234,10 @@ void BasicCreature::ActorHit(int stageHandle)
 			}
 		}
 	}
-	else	// °‚ÉG‚ê‚Ä‚¢‚È‚¢
-	{
-		area.y -= 0.75f;
-	}
+	//else	// °‚ÉG‚ê‚Ä‚¢‚È‚¢
+	//{
+	//	area.y -= 0.75f;
+	//}
 
 	// •Ç”»’è
 	if (wallNum != 0)

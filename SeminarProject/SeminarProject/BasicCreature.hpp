@@ -36,7 +36,10 @@ protected:
 	bool jumpUpNow;		
 
 	// ƒWƒƒƒ“ƒv—Í
-	float jumpPower;	
+	float jumpPower;
+
+	// ”»’è‚·‚é°‚Ì”
+	int floorNum;
 
 
 	/// ƒ‚ƒfƒ‹‚ÉŠÖ‚µ‚Ä--------------------
@@ -112,10 +115,7 @@ private:
 	int stageHandle;					
 
 	// ”»’è‚·‚é•Ç‚Ì”
-	int wallNum;						
-
-	// ”»’è‚·‚é°‚Ì”
-	int floorNum;						
+	int wallNum;					
 
 	// “–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
 	bool hitFlag;						

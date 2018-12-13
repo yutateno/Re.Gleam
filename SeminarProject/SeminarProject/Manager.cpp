@@ -379,15 +379,14 @@ void Manager::OptionDraw()
 Manager::Manager()
 {
 	// 初期化
-	BASICPARAM::e_preScene = ESceneNumber::FIRSTLOAD;
-	BASICPARAM::e_nowScene = ESceneNumber::FIRSTLOAD;
+	BASICPARAM::e_preScene = ESceneNumber::SECONDLOAD;
+	BASICPARAM::e_nowScene = ESceneNumber::SECONDLOAD;
 	BASICPARAM::e_preTextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::e_TextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::nowCameraOrtho = false;
 
 
 	/// シーン１の素材ファイル-----------------------------------------------------------------------------
-	
 	// モデルデータ
 	move1str[0] = "media\\こっち\\media\\ステージモデル\\move1_graphic.myn";
 	move1str[1] = "media\\こっち\\media\\ステージモデル\\move1_hantei.myn";

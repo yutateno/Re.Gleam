@@ -99,6 +99,18 @@ private:
 	// 精密機械からオブジェクト生成
 	void AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID);
 
+	// 精密機械のシーンへのフェード
+	int adjustmentSceneFeed;
+
+	// 精密機械のフェードが終了したかどうか
+	bool adjustmentFeedNow;
+
+	// 精密機械の方に移るフェードかどうか
+	bool adjustmentStartFeed;
+
+	// 精密機械に移るときの画像
+	int adjustmentDrawScreen;
+
 
 	/// カメラ-----------------------
 	// カメラのポインタ

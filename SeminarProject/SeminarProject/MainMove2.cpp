@@ -7,8 +7,8 @@ void MainMove2::AdjustmentProcess()
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
 	{
 		printfDx("戻れー");
-		changeAdjustmentScene = false;
-		p_adjustmentMachine->ChangeDisplayTexture(false);
+		adjustmentFeedNow = true;
+		adjustmentStartFeed = false;
 	}
 
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
@@ -33,6 +33,58 @@ void MainMove2::AdjustmentProcess()
 
 void MainMove2::AdjustmentDraw()
 {
+	if (adjustmentSceneFeed >= 100)
+	{
+		DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, GetColor(255, 255, 255), true);
+	}
+	else
+	{
+		DrawGraph(0, 0, adjustmentDrawScreen, true);
+	}
+
+
+	if (adjustmentSceneFeed >= 10 && adjustmentSceneFeed <= 110)
+	{
+		DrawBox(0, 108 * 0, BASICPARAM::winWidth, 108 * 1, GetColor(0, 0, 0), true);
+	}
+	if (adjustmentSceneFeed >= 20 && adjustmentSceneFeed <= 120)
+	{
+		DrawBox(0, 108 * 1, BASICPARAM::winWidth, 108 * 2, GetColor(0, 0, 0), true);
+	}
+	if (adjustmentSceneFeed >= 30 && adjustmentSceneFeed <= 130)
+	{
+		DrawBox(0, 108 * 2, BASICPARAM::winWidth, 108 * 3, GetColor(0, 0, 0), true);
+	}
+	if (adjustmentSceneFeed >= 40 && adjustmentSceneFeed <= 140)
+	{
+		DrawBox(0, 108 * 3, BASICPARAM::winWidth, 108 * 4, GetColor(0, 0, 0), true);
+	}
+	if (adjustmentSceneFeed >= 50 && adjustmentSceneFeed <= 150)
+	{
+		DrawBox(0, 108 * 4, BASICPARAM::winWidth, 108 * 5, GetColor(0, 0, 0), true);
+	}
+	if (adjustmentSceneFeed >= 60 && adjustmentSceneFeed <= 160)
+	{
+		DrawBox(0, 108 * 5, BASICPARAM::winWidth, 108 * 6, GetColor(0, 0, 0), true);
+	}
+	if (adjustmentSceneFeed >= 70 && adjustmentSceneFeed <= 170)
+	{
+		DrawBox(0, 108 * 6, BASICPARAM::winWidth, 108 * 7, GetColor(0, 0, 0), true);
+	}
+	if (adjustmentSceneFeed >= 80 && adjustmentSceneFeed <= 180)
+	{
+		DrawBox(0, 108 * 7, BASICPARAM::winWidth, 108 * 8, GetColor(0, 0, 0), true);
+	}
+	if (adjustmentSceneFeed >= 90 && adjustmentSceneFeed <= 190)
+	{
+		DrawBox(0, 108 * 8, BASICPARAM::winWidth, 108 * 9, GetColor(0, 0, 0), true);
+	}
+	if (adjustmentSceneFeed >= 100 && adjustmentSceneFeed <= 200)
+	{
+		DrawBox(0, 108 * 9, BASICPARAM::winWidth, 108 * 10, GetColor(0, 0, 0), true);
+	}
+
+
 	DrawFormatString(0, 0, 255, "オペレーターシーンなう");
 }
 
@@ -166,7 +218,6 @@ void MainMove2::AttackProcess()
 
 
 	/// 精算機械に関する-------------------------------------------------------------------------------------------------------------------
-
 	// 当たっていたら押し出す
 	if (HitCheck_Capsule_Capsule(
 		p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f,
@@ -177,13 +228,25 @@ void MainMove2::AttackProcess()
 
 	// 距離が近かくで触れるボタン押したら
 	if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175
+		&& !p_character->GetAttackNow() && p_character->GetArea().y <= 10.0f
 		&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(),DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
 	{
 		printfDx("移れー");
+		GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, adjustmentDrawScreen);
+		adjustmentFeedNow = true;
+		adjustmentStartFeed = true;
 		changeAdjustmentScene = true;
+	}
+	if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 250)
+	{
 		p_adjustmentMachine->ChangeDisplayTexture(true);
 	}
+	else
+	{
+		p_adjustmentMachine->ChangeDisplayTexture(false);
+	}
 	
+
 	/// ドロップに関する--------------------------------------------------------------------------------------
 	for (int i = 0, n = enemyNum * 5; i != n; ++i)
 	{
@@ -276,6 +339,9 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 
 	changeAdjustmentScene = false;
 	adjustmentDescriptionDraw = v_file[EFILE::terminalDescription];
+	adjustmentSceneFeed = 0;
+	adjustmentFeedNow = false;
+	adjustmentDrawScreen = MakeGraph(BASICPARAM::winWidth, BASICPARAM::winHeight);
 
 	catchDropItemNum = 0;
 
@@ -304,6 +370,8 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 
 MainMove2::~MainMove2()
 {
+	GRAPHIC_RELEASE(adjustmentDrawScreen);
+
 	GRAPHIC_RELEASE(adjustmentDescriptionDraw);
 
 	for (int i = 0; i != 10; ++i)
@@ -416,7 +484,34 @@ void MainMove2::Process()
 	}
 	else
 	{
-		AdjustmentProcess();
+		if (adjustmentStartFeed)
+		{
+			if (adjustmentSceneFeed <= 210)
+			{
+				adjustmentSceneFeed++;
+			}
+			else
+			{
+				adjustmentFeedNow = false;
+			}
+		}
+		else
+		{
+			if (adjustmentSceneFeed >= 0)
+			{
+				adjustmentSceneFeed--;
+			}
+			else
+			{
+				changeAdjustmentScene = false;
+				adjustmentFeedNow = false;
+			}
+		}
+
+		if (!adjustmentFeedNow)
+		{
+			AdjustmentProcess();
+		}
 	}
 
 

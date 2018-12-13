@@ -410,24 +410,24 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 	{
 		// ‹Ê‚ÌXÀ•Wİ’è
 		float tempX = static_cast<float>(randInX(mt));
-		if (tempX <= 100.0f && tempX >= 0.0f)
+		if (tempX <= 200.0f && tempX >= 0.0f)
 		{
-			tempX += 100.0f;
+			tempX += 200.0f;
 		}
-		else if (tempX >= -100.0f)
+		else if (tempX >= -200.0f)
 		{
-			tempX -= 100.0f;
+			tempX -= 200.0f;
 		}
 
 		// ‹Ê‚ÌYÀ•Wİ’è
 		float tempZ = static_cast<float>(randInZ(mt));
-		if (tempZ <= 100.0f && tempZ >= 0.0f)
+		if (tempZ <= 200.0f && tempZ >= 0.0f)
 		{
-			tempZ += 100.0f;
+			tempZ += 200.0f;
 		}
-		else if (tempZ >= -100.0f && tempZ)
+		else if (tempZ >= -200.0f)
 		{
-			tempZ -= 100.0f;
+			tempZ -= 200.0f;
 		}
 
 		// ¶‚«‚Ä‚é‚æ‚¤‚É‚·‚é

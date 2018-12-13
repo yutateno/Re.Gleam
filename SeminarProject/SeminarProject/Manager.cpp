@@ -380,8 +380,8 @@ void Manager::OptionDraw()
 Manager::Manager()
 {
 	// 初期化
-	BASICPARAM::e_preScene = ESceneNumber::SECONDLOAD;
-	BASICPARAM::e_nowScene = ESceneNumber::SECONDLOAD;
+	BASICPARAM::e_preScene = ESceneNumber::FIRSTLOAD;
+	BASICPARAM::e_nowScene = ESceneNumber::FIRSTLOAD;
 	BASICPARAM::e_preTextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::e_TextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::nowCameraOrtho = false;
@@ -610,21 +610,20 @@ void Manager::Update()
 			preLoadScene = false;
 			if (!optionMenuNow)
 			{
-				if (!BASICPARAM::startFeedNow && !BASICPARAM::endFeedNow)
+				if (!BASICPARAM::startFeedNow/* && !BASICPARAM::endFeedNow*/)
 				{
 					// アンチエイリアス画面に対して描画処理を行う
 					SetDrawScreen(antiAliasScreen);
 					ClearDrawScreen();
 					p_baseMove->CameraProcess();
 					p_baseMove->Draw();
-					p_baseMove->Process();
 					BASICPARAM::e_nowScene = p_baseMove->GetScene();
 
 					// アンチエイリアス画面に描画したものを裏画面に書き込む
 					SetDrawScreen(DX_SCREEN_BACK);
 					DrawGraph(0, 0, antiAliasScreen, false);
 					p_baseMove->CameraProcess();				// SetDrawScreenを行うとカメラの設定がなくなるので再設定を行う
-					ScreenFlip();
+					p_baseMove->Process();
 
 					// オプション画面に移行する
 					if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1)
@@ -635,6 +634,8 @@ void Manager::Update()
 						optionSelectButtonNum = EOptionSelectButton::Sound;
 						SoundProcess::SetOptionMenuNow(true);
 					}
+
+					ScreenFlip();
 				}
 				else if(BASICPARAM::startFeedNow)
 				{
@@ -646,13 +647,14 @@ void Manager::Update()
 					SetDrawBlendMode(DX_BLENDMODE_ALPHA, feedCount);
 					DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, feedDraw, true);
 					SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-					ScreenFlip();
 
 					if (feedCount <= 0)
 					{
 						feedCount = 0;
 						BASICPARAM::startFeedNow = false;
 					}
+
+					ScreenFlip();
 				}
 			}
 			else

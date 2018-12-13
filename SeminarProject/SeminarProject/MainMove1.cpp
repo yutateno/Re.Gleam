@@ -16,13 +16,13 @@ void MainMove1::ActorHit()
 				switch (++catchEnemyNum)
 				{
 				case 1:
-					explanationDrawFlag = false;
 					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 50, 50);
 					break;
 				case 2:
 					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 100, 100);
 					break;
 				case 3:
+					explanationDrawFeed = 254;
 					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 150, 150);
 					break;
 				case 4:
@@ -482,7 +482,7 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 	// à–¾‚ÉŠÖ‚·‚é
 	stickLeftDraw = v_file[EFILE::explanationLeftStick];
 	stickRightDraw = v_file[EFILE::explanationRightStick];
-	explanationDrawFlag = true;
+	explanationDrawFeed = 255;
 
 
 	SoundProcess::Load(v_file[EFILE::sound], SoundProcess::ESOUNDNAME_BGM::titleMusicBox);
@@ -536,10 +536,14 @@ void MainMove1::Draw()
 	}
 
 
-	if (explanationDrawFlag)
+	if (explanationDrawFeed >= 0)
 	{
+		if (explanationDrawFeed != 255) explanationDrawFeed -= 3;
+
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, explanationDrawFeed);
 		DrawGraph(100, 100, stickLeftDraw, true);
 		DrawGraph(1200, 100, stickRightDraw, true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 	}
 
 #ifdef _MOVE1_DEBUG

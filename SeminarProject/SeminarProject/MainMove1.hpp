@@ -128,8 +128,8 @@ private:
 	// 右スティック説明用画像
 	int stickRightDraw;
 
-	// 説明画像を表示させるかどうか
-	bool explanationDrawFlag;
+	// 説明画像のフェード
+	int explanationDrawFeed;
 
 public:
 	// コンストラクタ

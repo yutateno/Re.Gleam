@@ -706,7 +706,7 @@ void Manager::Update()
 			}
 			else
 			{
-				feedCount += 5;
+				feedCount += 15;
 				SetDrawScreen(DX_SCREEN_BACK);
 				ClearDrawScreen();
 				p_loadThread->Draw();

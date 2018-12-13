@@ -329,7 +329,7 @@ void CharacterSword::JumpProcess()
 		}
 
 
-		area.y -= 7.5f;
+		area.y -= 10.5f;
 	}
 }
 

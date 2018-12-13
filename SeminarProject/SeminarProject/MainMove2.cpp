@@ -37,10 +37,10 @@ void MainMove2::AdjustmentDraw()
 	{
 		DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, GetColor(255, 255, 255), true);
 	}
-	else
-	{
-		DrawGraph(0, 0, adjustmentDrawScreen, true);
-	}
+	//else
+	//{
+	//	DrawGraph(0, 0, adjustmentDrawScreen, true);
+	//}
 
 
 	if (adjustmentSceneFeed >= 10 && adjustmentSceneFeed <= 110)
@@ -232,7 +232,7 @@ void MainMove2::AttackProcess()
 		&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(),DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
 	{
 		printfDx("移れー");
-		GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, adjustmentDrawScreen);
+		//GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, adjustmentDrawScreen);
 		adjustmentFeedNow = true;
 		adjustmentStartFeed = true;
 		changeAdjustmentScene = true;
@@ -341,7 +341,7 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	adjustmentDescriptionDraw = v_file[EFILE::terminalDescription];
 	adjustmentSceneFeed = 0;
 	adjustmentFeedNow = false;
-	adjustmentDrawScreen = MakeGraph(BASICPARAM::winWidth, BASICPARAM::winHeight);
+	//adjustmentDrawScreen = MakeGraph(BASICPARAM::winWidth, BASICPARAM::winHeight);
 
 	catchDropItemNum = 0;
 
@@ -370,7 +370,7 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 
 MainMove2::~MainMove2()
 {
-	GRAPHIC_RELEASE(adjustmentDrawScreen);
+	//GRAPHIC_RELEASE(adjustmentDrawScreen);
 
 	GRAPHIC_RELEASE(adjustmentDescriptionDraw);
 
@@ -414,8 +414,8 @@ MainMove2::~MainMove2()
 // 描画
 void MainMove2::Draw()
 {
-	if (!changeAdjustmentScene)
-	{
+//	if (!changeAdjustmentScene)
+//	{
 		BaseMove::SkyBoxDraw();
 
 
@@ -437,11 +437,11 @@ void MainMove2::Draw()
 
 
 		DrawFormatString(255, 0, GetColor(255, 255, 255), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
-	}
-	else
-	{
+	//}
+	////else
+	//{
 		AdjustmentDraw();
-	}
+	//}
 }
 
 
@@ -527,10 +527,10 @@ void MainMove2::Process()
 
 void MainMove2::CameraProcess()
 {
-	if (!changeAdjustmentScene)
-	{
+	//if (!changeAdjustmentScene)
+	//{
 		p_camera->SetUp();		// カメラのプロセスを呼ぶ
-	}
+	//}
 }
 
 

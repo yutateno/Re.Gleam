@@ -21,10 +21,14 @@ private:
 	, charaTex0, charaTex1, charaTex2, charaTex3, swordTex0
 	, explanationLeftStick, explanationRightStick};
 
+
 	/// ステージ--------------
 	
 	// ステージのポインタ
 	Stage* p_stage;
+
+	// 背景色
+	int backgroundColor;
 
 
 	/// キャラクター-----------------
@@ -104,20 +108,10 @@ private:
 	/// ----------------------------------------
 
 
-	// 背景色
-	int backgroundColor;
-
-
 	/// 落ちてる剣-----------------------------
 
 	// 落ちるアイテム（剣）
 	DropItemMove1* p_dropItem;
-
-	// 落ちてるアイテムに触れる
-	bool touchSword;
-
-
-	void ThsTextureReload() override {}
 
 
 	/// 説明------------------------------
@@ -130,6 +124,14 @@ private:
 
 	// 説明画像のフェード
 	int explanationDrawFeed;
+
+	// 説明画像のフェードの目的カウント
+	int nextExplanationDrawFeed;
+
+
+	// テクスチャの差し替えだがこのムーブでは使わない
+	void ThsTextureReload() override {}
+
 
 public:
 	// コンストラクタ

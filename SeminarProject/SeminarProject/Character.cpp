@@ -29,6 +29,7 @@ void Character::MoveProcess()
 		}
 	}
 
+
 	// 左スティックが前に押されたら前進する
 	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
 	{
@@ -42,6 +43,8 @@ void Character::MoveProcess()
 	{
 		m_direction[DIRECTION::up] = false;
 	}
+
+
 	// 左スティックが後ろに押されたら後退する
 	if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y))
 	{
@@ -55,6 +58,7 @@ void Character::MoveProcess()
 	{
 		m_direction[DIRECTION::down] = false;
 	}
+
 
 	// 左スティックが左に押されたら左に移動する
 	if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X))
@@ -94,7 +98,8 @@ void Character::MoveProcess()
 		}
 	}
 
-	/// 操作に対する向きと動き
+
+	/// 操作に対する向きと動き--------------------------------------------------
 	if (m_direction[static_cast<int>(DIRECTION::left)])
 	{
 		if (m_direction[static_cast<int>(DIRECTION::down)])
@@ -155,17 +160,15 @@ Character::Character(const int modelHandle, const int collStageHandle, const int
 	this->modelHandle = MV1DuplicateModel(modelHandle);
 	
 
-	// テクスチャ適応（このモデルはステージ１のみであり白黒しか使わないのでここで
+	// テクスチャ適応
 	textureHandle0 = -1;
 	textureHandle1 = -1;
 	textureHandle2 = -1;
 	textureHandle3 = -1;
-
 	textureHandle0 = tex0;
 	textureHandle1 = tex1;
 	textureHandle2 = tex2;
 	textureHandle3 = tex3;
-
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle1, true);
 	MV1SetTextureGraphHandle(this->modelHandle, 2, textureHandle2, false);
@@ -223,28 +226,39 @@ Character::~Character()
 // メインプロセス
 void Character::Process(const float getAngle)
 {
-	preArea = area;		// 直前の座標
+	// 直前の座標
+	preArea = area;		
+
+	
+	// 動いていたら
 	if (moveFlag)
 	{
 		angle = getAngle;	// カメラ向きのアングル
 	}
 
+
 	// 動きのプロセス
 	MoveProcess();
+
 
 	// モーションの実態
 	Player_AnimProcess();
 
+
 	// ステージのあたり判定
 	StageHit();
 
+
 	// 第二引数の回転角度をセット
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));
+
+
 	// 指定位置にモデルを配置
 	MV1SetPosition(modelHandle, area);
 }
 
 
+// ポジションをリセットする
 void Character::PositionReset()
 {
 	area = VGet(0.0f, 0.0f, 0.0f);
@@ -254,7 +268,8 @@ void Character::PositionReset()
 // 描画
 void Character::Draw()
 {
-	BasicObject::Draw();		// 基本的なものを引っ張ってくる
+	BasicObject::Draw();
+
 
 	BasicObject::ShadowFoot();
 

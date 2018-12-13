@@ -5,8 +5,6 @@
 class EnemyMove1 : public BasicCreature
 {
 private:
-	/// 動きに関して
-
 	// 今上がり中かどうか
 	bool upNow;
 
@@ -35,5 +33,5 @@ public:
 	void Process();
 
 	// キャラクターが近づいたら
-	void StolenChara(const VECTOR characterArea);
+	void NearChara(const VECTOR characterArea);
 };

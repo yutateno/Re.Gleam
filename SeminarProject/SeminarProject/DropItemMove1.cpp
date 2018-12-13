@@ -19,9 +19,7 @@ DropItemMove1::DropItemMove1(const int draw, const int collStageHandle, const in
 	
 	// テクスチャ適応
 	textureHandle = -1;
-
 	textureHandle = tex0;
-
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle, true);
 
 

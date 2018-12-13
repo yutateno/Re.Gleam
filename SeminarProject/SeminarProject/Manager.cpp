@@ -557,7 +557,7 @@ Manager::Manager()
 	feedCount = 0;
 	BASICPARAM::endFeedNow = false;
 	BASICPARAM::startFeedNow = false;
-	LoadFile::MyLoad("media\\こっち\\media\\black.pyn", feedDraw, ELOADFILE::graph);
+	feedDraw = GetColor(0, 0, 0);
 
 	SetCreateDrawValidGraphMultiSample(4, 4);			// 4x4のアンチエイリアシングモードにする
 	antiAliasScreen = MakeScreen(BASICPARAM::winWidth, BASICPARAM::winHeight, false);	// アンチエイリアシング用の画面を作成
@@ -649,7 +649,7 @@ void Manager::Update()
 					p_baseMove->CameraProcess();
 					p_baseMove->Draw();
 					SetDrawBlendMode(DX_BLENDMODE_ALPHA, feedCount);
-					DrawGraph(0, 0, feedDraw, false);
+					DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, feedDraw, true);
 					SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 					ScreenFlip();
 
@@ -694,7 +694,7 @@ void Manager::Update()
 				p_baseMove->CameraProcess();
 				p_baseMove->Draw();
 				SetDrawBlendMode(DX_BLENDMODE_ALPHA, feedCount);
-				DrawGraph(0, 0, feedDraw, false);
+				DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, feedDraw, true);
 				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 				ScreenFlip();
 
@@ -711,7 +711,7 @@ void Manager::Update()
 				ClearDrawScreen();
 				p_loadThread->Draw();
 				SetDrawBlendMode(DX_BLENDMODE_ALPHA, feedCount);
-				DrawGraph(0, 0, feedDraw, false);
+				DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, feedDraw, true);
 				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 				ScreenFlip();
 

@@ -1,5 +1,6 @@
 #include "EnemyMove1.hpp"
 
+
 // 動きのプロセス
 void EnemyMove1::MoveProcess()
 {
@@ -66,9 +67,11 @@ EnemyMove1::EnemyMove1(const int collStageHandle, const float areaX, const float
 	shadowHeight = 70.0f;
 	shadowSize = 90.0f;
 
+	// 動きに関する
 	upNow = true;
 	flyMove = 0.0f;
 }
+
 
 // デストラクタ
 EnemyMove1::~EnemyMove1()
@@ -80,6 +83,7 @@ EnemyMove1::~EnemyMove1()
 void EnemyMove1::Draw()
 {
 	BasicObject::ShadowFoot();
+
 
 	// Ｚバッファを有効にする
 	SetUseZBuffer3D(TRUE);
@@ -100,6 +104,7 @@ void EnemyMove1::Draw()
 #endif // _MODEL_DEBUG
 }
 
+
 // メインプロセス
 void EnemyMove1::Process()
 {
@@ -107,8 +112,11 @@ void EnemyMove1::Process()
 	MoveProcess();
 }
 
-void EnemyMove1::StolenChara(const VECTOR characterArea)
+
+// プレイヤーが近づいたら
+void EnemyMove1::NearChara(const VECTOR characterArea)
 {
+	// プレイヤーにちこうよれ
 	if (characterArea.x <= area.x)
 	{
 		area.x -= 2.0f;

@@ -8,6 +8,7 @@ private:
 	// テクスチャ
 	int textureHandle;
 
+
 public:
 	// コンストラクタ
 	DropItemMove1(const int draw, const int collStageHandle, const int tex0);

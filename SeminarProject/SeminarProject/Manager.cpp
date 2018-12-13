@@ -7,6 +7,7 @@ void Manager::SceneChange()
 	case ESceneNumber::FIRSTLOAD:
 		SoundProcess::Release();
 		p_loadThread = new LoadThread();
+		POINTER_RELEASE(p_baseMove);
 		break;
 
 
@@ -503,6 +504,9 @@ Manager::Manager()
 	move2str[21] = "media\\こっち\\media\\Terminal\\whiteblack\\Terminal.pyn";
 	move2str[22] = "media\\こっち\\media\\Terminal\\whiteblack\\T_display.pyn";
 
+	// 精密機械の補助説明
+	move2str[23] = "media\\こっち\\media\\Terminal\\push.pyn";
+
 	load2[0] = ELOADFILE::mv1model;
 	load2[1] = ELOADFILE::mv1model;
 	load2[2] = ELOADFILE::mv1model;
@@ -530,6 +534,7 @@ Manager::Manager()
 
 	load2[21] = ELOADFILE::graph;
 	load2[22] = ELOADFILE::graph;
+	load2[23] = ELOADFILE::graph;
 
 
 	p_baseMove = NULL;
@@ -585,18 +590,9 @@ void Manager::Update()
 			p_loadThread->Process(max1, move1str, load1);		// ロードをする
 			if (p_loadThread->GetNum() >= max1)		// ロードが終了したら
 			{
-				//feedCount++;
-				////p_loadThread->Process(max1, move1str, load1);		// ロードをする
-				//SetDrawBlendMode(DX_BLENDMODE_ALPHA, feedCount);
-				//DrawGraph(0, 0, feedDraw, false);
-				//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-
-				//if (feedCount >= 255)
-				//{
 				BASICPARAM::endFeedNow = true;
 				preLoadScene = true;
 				BASICPARAM::e_nowScene = ESceneNumber::FIRSTMOVE;
-				//}
 			}
 		}
 		else if (BASICPARAM::e_preScene == ESceneNumber::SECONDLOAD)

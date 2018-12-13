@@ -6,6 +6,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include "SoundProcess.hpp"
+#include <vector>
 
 
 /// 色んな所で使いそうなもの------------------------------
@@ -49,6 +50,21 @@ namespace BASICPARAM
 
 	// 次シーンの開始フェードを終えたかどうか
 	extern bool startFeedNow;
+
+	// パネルを表示するかどうか
+	extern bool paneruDrawFlag;
+
+	// 階段の数
+	extern int stairsNum;
+
+	// 階段の座標
+	extern std::vector<VECTOR> v_stairsArea;
+
+	// 街灯の数
+	extern int streetLightNum;
+
+	// 街灯の座標
+	extern std::vector<VECTOR> v_streetLightArea;
 }
 
 

@@ -553,15 +553,18 @@ void CharacterSword::Process(const float getAngle)
 	AnimProcess();
 
 	// 階段のあたり判定
-	for (int i = 0; i != v_stairsHandle.size(); ++i)
+	for (int i = 0; i != BASICPARAM::stairsNum; ++i)
 	{
 		ActorHit(v_stairsHandle[i]);
 	}
 
 	// パネルのあたり判定
-	for (int i = 0; i != 10; ++i)
+	if (BASICPARAM::paneruDrawFlag)
 	{
-		ActorHit(paneruHandle[i]);
+		for (int i = 0; i != 10; ++i)
+		{
+			ActorHit(paneruHandle[i]);
+		}
 	}
 
 	// ジャンプのプロセス

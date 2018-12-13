@@ -10,3 +10,8 @@ int BASICPARAM::winHeight;
 int BASICPARAM::bitColor;
 bool BASICPARAM::startFeedNow;
 bool BASICPARAM::endFeedNow;
+bool BASICPARAM::paneruDrawFlag;
+int BASICPARAM::stairsNum;
+std::vector<VECTOR> BASICPARAM::v_stairsArea;
+int BASICPARAM::streetLightNum;
+std::vector<VECTOR> BASICPARAM::v_streetLightArea;

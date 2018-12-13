@@ -2,6 +2,64 @@
 
 
 
+void MainMove2::AdjustmentProcess()
+{
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
+	{
+		printfDx("戻れー");
+		changeAdjustmentScene = false;
+		p_adjustmentMachine->ChangeDisplayTexture(false);
+	}
+
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
+	{
+		AdjuctmentCreate(VGet(-100.0f*BASICPARAM::stairsNum, 0.0f, -1000.0f), AdjustmentObject::Stairs);
+		printfDx("階段を生成: %d\n", BASICPARAM::stairsNum);
+	}
+
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_X) == 1)
+	{
+		AdjuctmentCreate(VGet(250.0f*BASICPARAM::streetLightNum, 0.0f, -100.0f*BASICPARAM::streetLightNum), AdjustmentObject::StreetLight);
+		printfDx("街灯を生成: %d\n", BASICPARAM::streetLightNum);
+	}
+
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_Y) == 1)
+	{
+		BASICPARAM::paneruDrawFlag = !BASICPARAM::paneruDrawFlag;
+		printfDx("パネルを表示: %s\n", BASICPARAM::paneruDrawFlag ? "true" : "false");
+	}
+}
+
+
+void MainMove2::AdjustmentDraw()
+{
+	DrawFormatString(0, 0, 255, "オペレーターシーンなう");
+}
+
+
+void MainMove2::AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID)
+{
+	switch (obujectID)
+	{
+	case AdjustmentObject::Stairs:
+		vp_stageStairs.push_back(new StageStairs(stairsHandle, area, stairsTexture0));
+		p_character->SetStairsArea(vp_stageStairs[BASICPARAM::stairsNum]->GetArea(), BASICPARAM::stairsNum);
+		BASICPARAM::stairsNum++;
+		BASICPARAM::v_stairsArea.push_back(area);
+		break;
+
+	case AdjustmentObject::StreetLight:
+		vp_stageStreetLight.push_back(new StageStreetLight(streetLightHandle, area, streetLightTexture0, streetLightTexture1));
+		BASICPARAM::streetLightNum++;
+		BASICPARAM::v_streetLightArea.push_back(area);
+		break;
+
+	default:
+		break;
+	}
+}
+
+
 void MainMove2::ShadowDraw()
 {
 	BaseMove::ShadowCharaSetUpBefore();
@@ -17,9 +75,12 @@ void MainMove2::ShadowDraw()
 	{
 		vp_stageStreetLight[i]->Draw();
 	}
-	for (int i = 0; i != 10; ++i)
+	if (BASICPARAM::paneruDrawFlag)
 	{
-		p_stagePaneru[i]->Draw();
+		for (int i = 0; i != 10; ++i)
+		{
+			p_stagePaneru[i]->Draw();
+		}
 	}
 	p_adjustmentMachine->Draw();
 	p_character->Draw();
@@ -39,9 +100,12 @@ void MainMove2::ShadowDraw()
 	{
 		vp_stageStreetLight[i]->Draw();
 	}
-	for (int i = 0; i != 10; ++i)
+	if (BASICPARAM::paneruDrawFlag)
 	{
-		p_stagePaneru[i]->Draw();
+		for (int i = 0; i != 10; ++i)
+		{
+			p_stagePaneru[i]->Draw();
+		}
 	}
 	p_adjustmentMachine->Draw();
 	BaseMove::ShadowAnotherCharaSetUpAfter();
@@ -63,9 +127,12 @@ void MainMove2::ShadowDraw()
 	{
 		vp_stageStreetLight[i]->Draw();
 	}
-	for (int i = 0; i != 10; ++i)
+	if (BASICPARAM::paneruDrawFlag)
 	{
-		p_stagePaneru[i]->Draw();
+		for (int i = 0; i != 10; ++i)
+		{
+			p_stagePaneru[i]->Draw();
+		}
 	}
 	p_adjustmentMachine->Draw();
 	p_character->Draw();
@@ -107,6 +174,15 @@ void MainMove2::AttackProcess()
 	{
 		p_character->HitCircleReturn(p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)));
 	}
+
+	// 距離が近かくで触れるボタン押したら
+	if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175
+		&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(),DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
+	{
+		printfDx("移れー");
+		changeAdjustmentScene = true;
+		p_adjustmentMachine->ChangeDisplayTexture(true);
+	}
 	
 	/// ドロップに関する--------------------------------------------------------------------------------------
 	for (int i = 0, n = enemyNum * 5; i != n; ++i)
@@ -125,12 +201,18 @@ void MainMove2::AttackProcess()
 			p_dropItem[i]->StolenChara(p_character->GetArea());
 		}
 	}
-
 }
 
 
 MainMove2::MainMove2(const std::vector<int> v_file)
 {
+	BASICPARAM::paneruDrawFlag = false;
+	BASICPARAM::stairsNum = 0;
+	BASICPARAM::streetLightNum = 0;
+	BASICPARAM::v_stairsArea.clear();
+	BASICPARAM::v_streetLightArea.clear();
+
+
 	// ポインタNULL初期化
 	p_camera					 = NULL;
 	p_character					 = NULL;
@@ -158,19 +240,25 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 
 
 	// ポインタ初期化
-	for (int i = 0; i != 40; ++i)
+	stairsHandle = v_file[EFILE::stairs];
+	stairsTexture0 = v_file[EFILE::stairTex0];
+	/*for (int i = 0; i != 40; ++i)
 	{
 		vp_stageStairs.push_back(new StageStairs(v_file[EFILE::stairs], VGet(-100.0f*i, 0.0f, -1000.0f), v_file[EFILE::stairTex0]));
-	}
+	}*/
 	p_stage		 = new Stage(v_file[EFILE::drawStage]);
 	p_character	 = new CharacterSword(v_file[EFILE::characterAttack], v_file[EFILE::stage], v_file[EFILE::stairsColl], v_file[EFILE::paneru]
 		, v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3], v_file[EFILE::charaTex4]);
 	p_camera	 = new Camera(p_character->GetArea(), v_file[EFILE::stage]);
-	for (int i = 0; i != 30; ++i)
+
+	streetLightHandle = v_file[EFILE::streetLight];
+	streetLightTexture0 = v_file[EFILE::streetLightTex0];
+	streetLightTexture1 = v_file[EFILE::streetLightTex1];
+	/*for (int i = 0; i != 30; ++i)
 	{
 		vp_stageStreetLight.push_back(new StageStreetLight(v_file[EFILE::streetLight], VGet(250.0f*i, 0.0f, -100.0f*i)
 			, v_file[EFILE::streetLightTex0], v_file[EFILE::streetLightTex1]));
-	}
+	}*/
 	for (int i = 0; i != 10; ++i)
 	{
 		p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneru], VGet(500.0f * i, 300.0f*i, 100.0f*i));
@@ -186,6 +274,9 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	p_adjustmentMachine = new AdjustmentMachine(v_file[EFILE::terminal], VGet(-1000.0f, 0.0f, -500.0f), v_file[EFILE::terminalTex0], v_file[EFILE::terminalTex1]);
 
 
+	changeAdjustmentScene = false;
+	adjustmentDescriptionDraw = v_file[EFILE::terminalDescription];
+
 	catchDropItemNum = 0;
 
 
@@ -194,10 +285,10 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 
 
 	// 階段のあたり判定
-	for (int i = 0; i != vp_stageStairs.size(); ++i)
+	/*for (int i = 0; i != vp_stageStairs.size(); ++i)
 	{
 		p_character->SetStairsArea(vp_stageStairs[i]->GetArea(), i);
-	}
+	}*/
 
 	// パネルのあたり判定
 	for (int i = 0; i != 10; ++i)
@@ -213,6 +304,8 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 
 MainMove2::~MainMove2()
 {
+	GRAPHIC_RELEASE(adjustmentDescriptionDraw);
+
 	for (int i = 0; i != 10; ++i)
 	{
 		POINTER_RELEASE(p_stagePaneru[i]);
@@ -253,72 +346,96 @@ MainMove2::~MainMove2()
 // 描画
 void MainMove2::Draw()
 {
-	BaseMove::SkyBoxDraw();
-
-
-	ShadowDraw();
-
-
-	for (int i = 0, n = enemyNum * 5; i != n; ++i)
+	if (!changeAdjustmentScene)
 	{
-		p_dropItem[i]->Draw();
+		BaseMove::SkyBoxDraw();
+
+
+		ShadowDraw();
+
+
+		for (int i = 0, n = enemyNum * 5; i != n; ++i)
+		{
+			p_dropItem[i]->Draw();
+		}
+
+
+		p_character->Draw();
+
+		if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175)
+		{
+			DrawBillboard3D(VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 200.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, adjustmentDescriptionDraw, false);
+		}
+
+
+		DrawFormatString(255, 0, GetColor(255, 255, 255), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
 	}
-
-
-	p_character->Draw();
-
-
-	DrawFormatString(255, 0, GetColor(255, 255, 255), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
+	else
+	{
+		AdjustmentDraw();
+	}
 }
 
 
 // メインプロセス
 void MainMove2::Process()
 {
-	p_character->Process(p_camera->GetAngle());		// キャラクターのプロセスを呼ぶ
-
-
-	p_camera->Process(p_character->GetArea());		// カメラのプロセスを呼ぶ
-
-
-	for (int i = 0; i != enemyNum; ++i)
+	if (!changeAdjustmentScene)
 	{
-		if (p_enemy[i]->GetEraseExistence())
+		p_character->Process(p_camera->GetAngle());		// キャラクターのプロセスを呼ぶ
+
+
+		p_camera->Process(p_character->GetArea());		// カメラのプロセスを呼ぶ
+
+
+		for (int i = 0; i != enemyNum; ++i)
 		{
-			p_dropItem[(i * 5)]->SetAlive(true);
-			p_dropItem[(i * 5) + 1]->SetAlive(true);
-			p_dropItem[(i * 5) + 2]->SetAlive(true);
-			p_dropItem[(i * 5) + 3]->SetAlive(true);
-			p_dropItem[(i * 5) + 4]->SetAlive(true);
-			continue;
+			if (p_enemy[i]->GetEraseExistence())
+			{
+				p_dropItem[(i * 5)]->SetAlive(true);
+				p_dropItem[(i * 5) + 1]->SetAlive(true);
+				p_dropItem[(i * 5) + 2]->SetAlive(true);
+				p_dropItem[(i * 5) + 3]->SetAlive(true);
+				p_dropItem[(i * 5) + 4]->SetAlive(true);
+				continue;
+			}
+			p_enemy[i]->Process();												// 敵のプロセス
 		}
-		p_enemy[i]->Process();												// 敵のプロセス
-	}
 
-	for (int i = 0, n = enemyNum * 5; i != n; ++i)
+		for (int i = 0, n = enemyNum * 5; i != n; ++i)
+		{
+			p_dropItem[i]->Process();
+		}
+
+
+		BaseMove::ShadowArea(p_character->GetArea());
+
+		AttackProcess();
+
+		BaseMove::SkyBoxProcess(p_character->GetArea());
+	}
+	else
 	{
-		p_dropItem[i]->Process();
+		AdjustmentProcess();
 	}
 
-	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_Y) == 1)
+
+#ifdef _DEBUG
+	if (CheckHitKey(KEY_INPUT_Z) == 1)
 	{
-		static bool aaaaaaaaaaaaaaaaaaaaa = false;
-		aaaaaaaaaaaaaaaaaaaaa = !aaaaaaaaaaaaaaaaaaaaa;
-		p_adjustmentMachine->ChangeDisplayTexture(aaaaaaaaaaaaaaaaaaaaa);
+		BASICPARAM::endFeedNow = true;
+		BaseMove::SetScene(ESceneNumber::FIRSTLOAD);
 	}
-
-
-	BaseMove::ShadowArea(p_character->GetArea());
-
-	AttackProcess();
-
-	BaseMove::SkyBoxProcess(p_character->GetArea());
+#endif
 }
 
 
 void MainMove2::CameraProcess()
 {
-	p_camera->SetUp();		// カメラのプロセスを呼ぶ
+	if (!changeAdjustmentScene)
+	{
+		p_camera->SetUp();		// カメラのプロセスを呼ぶ
+	}
 }
 
 

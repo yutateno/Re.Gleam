@@ -22,7 +22,7 @@ private:
 	// ロードで渡されるファイル
 	enum EFILE { stage, characterAttack, paneru, stairs, stairsColl, streetLight, skyBox, block, drawStage
 	, charaTex0, charaTex1, charaTex2, charaTex3, charaTex4, stairTex0, streetLightTex0, streetLightTex1
-	, skyBoxTex0, blockTex0, se_ballPickUp, terminal, terminalTex0, terminalTex1 };
+	, skyBoxTex0, blockTex0, se_ballPickUp, terminal, terminalTex0, terminalTex1, terminalDescription };
 
 
 	/// ステージ-------------------------------------
@@ -30,8 +30,21 @@ private:
 	// ステージのポインタ
 	Stage* p_stage;
 
+	// 階段のハンドル
+	int stairsHandle;
+	
+	// 階段のテクスチャ
+	int stairsTexture0;
+
 	// 階段のポインタ
 	std::vector<StageStairs*> vp_stageStairs;
+
+	// 街灯のハンドル
+	int streetLightHandle;
+
+	// 街灯のテクスチャ
+	int streetLightTexture0;
+	int streetLightTexture1;
 
 	// 街灯のポインタ
 	std::vector<StageStreetLight*> vp_stageStreetLight;
@@ -68,6 +81,24 @@ private:
 	// 精算機械のポインタ
 	AdjustmentMachine* p_adjustmentMachine;
 
+	// 精密機械のシーンに移行
+	bool changeAdjustmentScene;
+
+	// 精密機械の補助説明画像
+	int adjustmentDescriptionDraw;
+
+	// 精密機械のプロセス
+	void AdjustmentProcess();
+
+	// 精密機械の描画
+	void AdjustmentDraw();
+
+	// 精密機械からオブジェクト生成するID
+	enum class AdjustmentObject { Stairs, StreetLight };
+
+	// 精密機械からオブジェクト生成
+	void AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID);
+
 
 	/// カメラ-----------------------
 	// カメラのポインタ
@@ -83,6 +114,8 @@ private:
 
 	// 非同期テクスチャ切り替え
 	void ThsTextureReload() override;
+
+
 
 
 public:

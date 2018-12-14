@@ -85,6 +85,17 @@ void BasicObject::ShadowFoot()
 BasicObject::BasicObject()
 {
 	notViewCount = 0;
+
+
+	// 初期化
+	modelHeight = 0;
+	modelHandle = -1;
+	shadowHeight = 0;
+	shadowSize = 0;
+	area = VGet(0, 0, 0);
+	ShadowHitResDim;
+	ShadowHitRes = NULL;
+	ZeroMemory(ShadowVertex, sizeof(ShadowVertex));
 }
 
 BasicObject::BasicObject(const int collStageHandle)
@@ -104,6 +115,17 @@ BasicObject::BasicObject(const int collStageHandle)
 	MV1RefreshCollInfo(stageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 
 	notViewCount = 0;
+
+
+	// 初期化
+	modelHeight = 0;
+	modelHandle = -1;
+	shadowHeight = 0;
+	shadowSize = 0;
+	area = VGet(0, 0, 0);
+	ShadowHitResDim;
+	ShadowHitRes = NULL;
+	ZeroMemory(ShadowVertex, sizeof(ShadowVertex));
 }
 
 

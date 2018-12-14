@@ -97,11 +97,14 @@ void EnemyMove1::Draw()
 	SetUseZBuffer3D(FALSE);
 
 
-#ifdef _MODEL_DEBUG
-	VECTOR viewArea = VAdd(area, VGet(0.0f, 60.0f, 0.0f));		// モデルの初期Y座標が浮いているので調整
+#ifdef _DEBUG
+	if (MyDebug::enemyOneDrawFlag)
+	{
+		VECTOR viewArea = VAdd(area, VGet(0.0f, 60.0f, 0.0f));		// モデルの初期Y座標が浮いているので調整
 
-	DrawSphere3D(VAdd(area, VGet(0.0f, 60.0f, 0.0f)), modelWigth + 3, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
-#endif // _MODEL_DEBUG
+		DrawSphere3D(VAdd(area, VGet(0.0f, 60.0f, 0.0f)), modelWigth + 3, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
+	}
+#endif // _DEBUG
 }
 
 

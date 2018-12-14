@@ -15,7 +15,8 @@ void Manager::SceneChange()
 		feedCount = 255;
 		for (int i = 0; i != 10; ++i)
 		{
-			optionDrawMedia[i] = p_loadThread->GetFile()[i + 14];
+			int temp = i + 14;
+			optionDrawMedia[i] = p_loadThread->GetFile()[temp];
 		}
 		p_baseMove = new MainMove1(p_loadThread->GetFile());
 		p_baseMove->SetScene(BASICPARAM::e_nowScene);
@@ -671,6 +672,11 @@ void Manager::Update()
 						// サウンド音量をオプションメニュー用に下げるよう命令
 						SoundProcess::SetOptionMenuNow(true);
 					}
+
+#ifdef _DEBUG
+					MyDebug::DebugProcess();
+#endif // _DEBUG
+
 
 					ScreenFlip();
 				}

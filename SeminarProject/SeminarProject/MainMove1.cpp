@@ -557,19 +557,18 @@ void MainMove1::Draw()
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 	}
 
-#ifdef _MOVE1_DEBUG
-#ifdef _SEARCH_MODEL_DEBUG
-	for (int i = 0; i < enemyNum; ++i)
+#ifdef _DEBUG
+	if (MyDebug::moveOneDrawFlag)
 	{
-		//DrawFormatString(0, i * 16, GetColor(255, 255, 255), "%d", BaseMove::GetDistance(character->GetArea(), enemyAggre[i].enemyMove->GetArea()));
-		if (BaseMove::GetDistance(p_character->GetArea(), s_enemyAggre[i].p_enemyMove->GetArea()) <= 500)
+		for (int i = 0; i < enemyNum; ++i)
 		{
-			DrawLine3D(VAdd(p_character->GetArea(), VGet(0.0f, 80.0f, 0.0f)), VAdd(s_enemyAggre[i].p_enemyMove->GetArea(), VGet(0.0f, 60.0f, 0.0f)), GetColor(255, 0, 0));
+			if (BaseMove::GetDistance(p_character->GetArea(), s_enemyAggre[i].p_enemyMove->GetArea()) <= 500)
+			{
+				DrawLine3D(VAdd(p_character->GetArea(), VGet(0.0f, 80.0f, 0.0f)), VAdd(s_enemyAggre[i].p_enemyMove->GetArea(), VGet(0.0f, 60.0f, 0.0f)), GetColor(255, 0, 0));
+			}
 		}
 	}
-#endif
-	//printfDx("NUM:%d\tCOUNT:%d\tX:%f\tY:%f\tZ:%f\n", catchEnemyNum, lightEventCount, p_character->GetArea().x, p_character->GetArea().y, p_character->GetArea().z);
-#endif // _MOVE1_DEBUG
+#endif // _DEBUG
 
 }
 

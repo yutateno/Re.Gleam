@@ -78,6 +78,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		firstControll = true;
 	}
 
+#ifdef _DEBUG
+	MyDebug::Init();
+#endif // _DEBUG
+
+
 	// ÉQÅ[ÉÄÇÃäj
 	while (/*ScreenFlip() == 0 && */ProcessMessage() == 0/* && ClearDrawScreen() == 0 */&& CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{

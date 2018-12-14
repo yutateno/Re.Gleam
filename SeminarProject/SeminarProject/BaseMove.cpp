@@ -113,32 +113,7 @@ void BaseMove::SkyBoxProcess(const VECTOR characterArea)
 
 void BaseMove::SetInitSkyBox(const int skyBoxUp, const int tex0)
 {
-	//// テクスチャの読み込み
-	//switch (BASICPARAM::e_TextureColor)
-	//{
-	//case ETextureColor::WHITEBLACK:
-	//	LoadFile::MyLoad("media\\こっち\\media\\スカイボックス\\whiteblack\\BlueSky.byn", textureHandle, ELOADFILE::graph);
-	//	break;
-
-	//case ETextureColor::NORMAL:
-	//	LoadFile::MyLoad("media\\こっち\\media\\スカイボックス\\normal\\BlueSky.byn", textureHandle, ELOADFILE::graph);
-	//	break;
-
-	//case ETextureColor::D_CORRECTION:
-	//	LoadFile::MyLoad("media\\こっち\\media\\スカイボックス\\D\\BlueSky.byn", textureHandle, ELOADFILE::graph);
-	//	break;
-
-	//case ETextureColor::P_CORRECTION:
-	//	LoadFile::MyLoad("media\\こっち\\media\\スカイボックス\\P\\BlueSky.byn", textureHandle, ELOADFILE::graph);
-	//	break;
-
-	//default:
-	//	LoadFile::MyLoad("media\\こっち\\media\\スカイボックス\\normal\\BlueSky.byn", textureHandle, ELOADFILE::graph);
-	//	break;
-	//}
-
 	/// スカイボックスの上に関する-----------------------------------------
-
 	// 読み込み
 	this->skyBoxUp = MV1DuplicateModel(skyBoxUp);
 	
@@ -152,7 +127,6 @@ void BaseMove::SetInitSkyBox(const int skyBoxUp, const int tex0)
 
 
 	/// スカイボックスの下に関する-------------------------------------------
-
 	// 読み込み
 	this->skyBoxUnder = MV1DuplicateModel(this->skyBoxUp);
 

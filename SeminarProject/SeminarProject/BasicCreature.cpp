@@ -376,6 +376,16 @@ BasicCreature::BasicCreature() :BasicObject()
 	deathFlag = false;
 	eraseExistence = false;
 	blendCount = 255;
+
+
+	// 初期化
+	jumpNow = false;
+	attachMotion = 0;
+	walkSpeed = 0;
+	mainPoly = NULL;
+	nextArea = VGet(0, 0, 0);
+	modelWigth = 0;
+	ZeroMemory(floorPoly, sizeof(floorPoly));
 }
 
 // コンストラクタ
@@ -410,6 +420,16 @@ BasicCreature::BasicCreature(const int collStageHandle) :BasicObject(collStageHa
 	deathFlag = false;
 	eraseExistence = false;
 	blendCount = 255;
+
+
+	// 初期化
+	jumpNow = false;
+	attachMotion = 0;
+	walkSpeed = 0;
+	mainPoly = NULL;
+	nextArea = VGet(0, 0, 0);
+	modelWigth = 0;
+	ZeroMemory(floorPoly, sizeof(floorPoly));
 }
 
 // デストラクタ

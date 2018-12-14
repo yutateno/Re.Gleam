@@ -178,10 +178,10 @@ void OrdinaryPerson::Draw()
 
 	BasicObject::ShadowFoot();
 
-#ifdef _MODEL_DEBUG
-	DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
-#endif // _MODEL_DEBUG
 #ifdef _DEBUG
-	//printfDx("X : %f\tZ : %f\tNX : %f\tNZ : %f\n", direXAngle, direZAngle, nextDireXAngle, nextDireZAngle);
+	if(MyDebug::ordinaryDrawFlag)
+	{
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+	}
 #endif // _DEBUG
 }

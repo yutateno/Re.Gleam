@@ -669,7 +669,10 @@ void CharacterSword::Draw()
 
 	BasicObject::ShadowFoot();
 
-#ifdef _SWORD_CHARA_DEBUG
-	DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
-#endif // _SWORD_CHARA_DEBUG
+#ifdef _DEBUG
+	if(MyDebug::characterSwordDrawFlag)
+	{
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+	}
+#endif // _DEBUG
 }

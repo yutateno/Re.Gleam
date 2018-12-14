@@ -45,7 +45,13 @@ void AdjustmentMachine::Draw()
 
 
 	BasicObject::Draw();
-	//DrawCapsule3D(area, VAdd(area, VGet(0.0f, 100.0f, 0.0f)), 40.0f, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+
+#ifdef _DEBUG
+	if (MyDebug::adjustmentMachineDrawFlag)
+	{
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, 100.0f, 0.0f)), 40.0f, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+	}
+#endif // _DEBUG
 }
 
 void AdjustmentMachine::TextureReload()

@@ -53,24 +53,30 @@ void LoadFile::MyLoad(const string path, int& file, const ELOADFILE type)
 	case ELOADFILE::graph:
 		file = CreateGraphFromMem((char*)&data[0], size);
 		break;
+
 	case ELOADFILE::soundmem:
 		file = LoadSoundMemByMemImage((char*)&data[0], size);
 		break;
+
 	case ELOADFILE::mv1model:
 		file = MV1LoadModel(outstr.c_str());
 
 		// àÍéûèoóÕÇµÇΩÇ‡ÇÃÇçÌèú
 		std::remove(outstr.c_str());
 		break;
+
 	case ELOADFILE::soundStream:
 		SetCreateSoundDataType(DX_SOUNDDATATYPE_FILE);
 		file = LoadSoundMemByMemImage((char*)&data[0], size);
 		SetCreateSoundDataType(DX_SOUNDDATATYPE_MEMNOPRESS);
+		break;
+
 	case ELOADFILE::sound3DSource:
 		SetCreate3DSoundFlag(TRUE);
 		file = LoadSoundMemByMemImage((char*)&data[0], size);
 		SetCreate3DSoundFlag(FALSE);
 		break;
+
 	default:
 		break;
 	}

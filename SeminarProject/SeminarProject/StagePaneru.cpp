@@ -6,9 +6,6 @@ StagePaneru::StagePaneru(const int draw, const VECTOR area) : BasicObject()
 	this->area = area;
 
 
-	/*shadowHeight = 10.0f;
-	shadowSize = 5.0f;*/
-
 	this->modelHandle = 0;
 	this->modelHandle = MV1DuplicateModel(draw);
 
@@ -26,8 +23,5 @@ StagePaneru::~StagePaneru()
 
 void StagePaneru::Draw()
 {
-	//BasicObject::ShadowFoot();
-
-
 	BasicObject::Draw();
 }

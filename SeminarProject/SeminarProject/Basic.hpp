@@ -97,7 +97,7 @@ namespace BASICPARAM
 #ifdef _DEBUG
 namespace MyDebug
 {
-	bool checkFlag;
+	static bool checkFlag;
 	extern bool characterDrawFlag;
 	extern bool characterSwordDrawFlag;
 	extern bool ordinaryDrawFlag;
@@ -108,84 +108,8 @@ namespace MyDebug
 	extern bool stageDrawFlag;
 	extern bool moveOneDrawFlag;
 
-	void Init()
-	{
-		characterDrawFlag = false;
-		characterSwordDrawFlag = false;
-		ordinaryDrawFlag = false;
-		enemyOneDrawFlag = false;
-		enemyTwoDrawFlag = false;
-		adjustmentMachineDrawFlag = false;
-		dropItemOneDrawFlag = false;
-		stageDrawFlag = false;
-		moveOneDrawFlag = false;
-	}
+	void Init();
 
-	void DebugProcess()
-	{
-		if (CheckHitKey(KEY_INPUT_Q) == 2)
-		{
-			checkFlag = !checkFlag;
-		}
-
-		if (checkFlag)
-		{
-			DrawBox(960, 0, 1920, 540, GetColor(255, 255, 255), true);
-
-			DrawFormatString(970, 10, GetColor(0, 0, 0), "characterDrawFlag: A: %s", characterDrawFlag ? "true" : "false");
-			if (CheckHitKey(KEY_INPUT_A) == 2)
-			{
-				characterDrawFlag = !characterDrawFlag;
-			}
-
-			DrawFormatString(970, 30, GetColor(0, 0, 0), "characterSwordDrawFlag: S: %s", characterSwordDrawFlag ? "true" : "false");
-			if (CheckHitKey(KEY_INPUT_S) == 2)
-			{
-				characterSwordDrawFlag = !characterSwordDrawFlag;
-			}
-
-			DrawFormatString(970, 50, GetColor(0, 0, 0), "ordinaryDrawFlag: D: %s", ordinaryDrawFlag ? "true" : "false");
-			if (CheckHitKey(KEY_INPUT_D) == 2)
-			{
-				ordinaryDrawFlag = !ordinaryDrawFlag;
-			}
-
-			DrawFormatString(970, 70, GetColor(0, 0, 0), "enemyOneDrawFlag: F: %s", enemyOneDrawFlag ? "true" : "false");
-			if (CheckHitKey(KEY_INPUT_F) == 2)
-			{
-				enemyOneDrawFlag = !enemyOneDrawFlag;
-			}
-
-			DrawFormatString(970, 90, GetColor(0, 0, 0), "enemyTwoDrawFlag: G: %s", enemyTwoDrawFlag ? "true" : "false");
-			if (CheckHitKey(KEY_INPUT_G) == 2)
-			{
-				enemyTwoDrawFlag = !enemyTwoDrawFlag;
-			}
-
-			DrawFormatString(970, 110, GetColor(0, 0, 0), "adjustmentMachineDrawFlag: H: %s", adjustmentMachineDrawFlag ? "true" : "false");
-			if (CheckHitKey(KEY_INPUT_H) == 2)
-			{
-				adjustmentMachineDrawFlag = !adjustmentMachineDrawFlag;
-			}
-
-			DrawFormatString(970, 130, GetColor(0, 0, 0), "dropItemOneDrawFlag: J: %s", dropItemOneDrawFlag ? "true" : "false");
-			if (CheckHitKey(KEY_INPUT_J) == 2)
-			{
-				dropItemOneDrawFlag = !dropItemOneDrawFlag;
-			}
-
-			DrawFormatString(970, 150, GetColor(0, 0, 0), "stageDrawFlag: K: %s", stageDrawFlag ? "true" : "false");
-			if (CheckHitKey(KEY_INPUT_K) == 2)
-			{
-				stageDrawFlag = !stageDrawFlag;
-			}
-
-			DrawFormatString(970, 170, GetColor(0, 0, 0), "moveOneDrawFlag: L: %s", moveOneDrawFlag ? "true" : "false");
-			if (CheckHitKey(KEY_INPUT_L) == 2)
-			{
-				moveOneDrawFlag = !moveOneDrawFlag;
-			}
-		}
-	}
+	void DebugProcess();
 }
 #endif // _DEBUG

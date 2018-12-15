@@ -109,6 +109,7 @@ BasicObject::BasicObject(const int collStageHandle)
 
 	// ステージのコリジョン情報の更新
 	stageHandle = MV1DuplicateModel(collStageHandle);
+	MV1SetScale(stageHandle, VGet(0.75f, 0.75f, 0.75f));
 	MV1SetupCollInfo(stageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
 	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
 	MV1SetFrameVisible(stageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）

@@ -4,6 +4,8 @@
 Stage::Stage(const int drawStageHandle)
 {
 	this->drawStageHandle = MV1DuplicateModel(drawStageHandle);
+	MV1SetScale(this->drawStageHandle, VGet(0.75f, 0.75f, 0.75f));
+	
 
 	// À•W‚ðŽw’è
 	MV1SetPosition(this->drawStageHandle, VGet(0, 0, 0));

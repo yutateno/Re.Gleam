@@ -47,27 +47,32 @@ void MainMove2::AdjustmentDraw()
 		// 2D
 		for (int i = 0, n = enemyNum; i != n; ++i)
 		{
-			DrawRotaGraph(static_cast<int>((6000 + p_enemy[i]->GetArea().x) / 12000 * 1920), static_cast<int>((6000 + p_enemy[i]->GetArea().z) / 12000 * 1080)
-				, 0.05, 0.0, adjustment2DDraw[0], true);
+			DrawRotaGraph(static_cast<int>((4500 + p_enemy[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + p_enemy[i]->GetArea().z) / 9000 * 1080)
+				, 0.1, 0.0, adjustment2DDraw[0], true);
 		}
-		DrawRotaGraph(static_cast<int>((6000 + p_character->GetArea().x) / 12000 * 1920), static_cast<int>((6000 + p_character->GetArea().z) / 12000 * 1080)
-			, 0.05, 0.0, adjustment2DDraw[1], true);
+		DrawRotaGraph(static_cast<int>((4500 + p_character->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + p_character->GetArea().z) / 9000 * 1080)
+			, 0.1, 0.0, adjustment2DDraw[1], true);
 		for (int i = 0, n = static_cast<int>(vp_stageStreetLight.size()); i != n; ++i)
 		{
-			DrawRotaGraph(static_cast<int>((6000 + vp_stageStreetLight[i]->GetArea().x) / 12000 * 1920), static_cast<int>((6000 + vp_stageStreetLight[i]->GetArea().z) / 12000 * 1080)
-				, 0.05, 0.0, adjustment2DDraw[2], true);
+			DrawRotaGraph(static_cast<int>((4500 + vp_stageStreetLight[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + vp_stageStreetLight[i]->GetArea().z) / 9000 * 1080)
+				, 0.1, 0.0, adjustment2DDraw[2], true);
 		}
 		for (int i = 0, n = static_cast<int>(vp_stageStairs.size()); i != n; ++i)
 		{
-			DrawRotaGraph(static_cast<int>((6000 + vp_stageStairs[i]->GetArea().x) / 12000 * 1920), static_cast<int>((6000 + vp_stageStairs[i]->GetArea().z) / 12000 * 1080)
-				, 0.05, 0.0, adjustment2DDraw[3], true);
+			DrawRotaGraph(static_cast<int>((4500 + vp_stageStairs[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + vp_stageStairs[i]->GetArea().z) / 9000 * 1080)
+				, 0.1, 0.0, adjustment2DDraw[3], true);
 		}
-		DrawRotaGraph(static_cast<int>((6000 + p_adjustmentMachine->GetArea().x) / 12000 * 1920), static_cast<int>((6000 + p_adjustmentMachine->GetArea().z) / 12000 * 1080)
-			, 0.05, 0.0, adjustment2DDraw[4], true);
+		DrawRotaGraph(static_cast<int>((4500 + p_adjustmentMachine->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + p_adjustmentMachine->GetArea().z) / 9000 * 1080)
+			, 0.1, 0.0, adjustment2DDraw[4], true);
 		for (int i = 0, n = static_cast<int>(vp_stageStairsRoad.size()); i != n; ++i)
 		{
-			DrawRotaGraph(static_cast<int>((6000 + vp_stageStairsRoad[i]->GetArea().x) / 12000 * 1920), static_cast<int>((6000 + vp_stageStairsRoad[i]->GetArea().z) / 12000 * 1080)
-				, 0.05, 0.0, adjustment2DDraw[5], true);
+			DrawRotaGraph(static_cast<int>((4500 + vp_stageStairsRoad[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + vp_stageStairsRoad[i]->GetArea().z) / 9000 * 1080)
+				, 0.1, 0.0, adjustment2DDraw[5], true);
+		}
+		for (int i = 0, n = 10; i != n; ++i)
+		{
+			DrawRotaGraph(static_cast<int>((4500 + p_stagePaneru[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + p_stagePaneru[i]->GetArea().z) / 9000 * 1080)
+				, 0.1, 0.0, adjustment2DDraw[5], true);
 		}
 
 		printfDx("CX: %f\tCZ: %f\tAX: %f\tAZ: %f\n", p_character->GetArea().x, p_character->GetArea().z, p_adjustmentMachine->GetArea().x, p_adjustmentMachine->GetArea().z);

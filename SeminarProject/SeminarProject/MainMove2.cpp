@@ -14,25 +14,25 @@ void MainMove2::AdjustmentProcess()
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
 	{
 		AdjuctmentCreate(VGet(-100.0f*BASICPARAM::stairsNum, 0.0f, -1000.0f), AdjustmentObject::Stairs);
-		printfDx("ŠK’i‚ð¶¬: %d\n", BASICPARAM::stairsNum);
+		//printfDx("ŠK’i‚ð¶¬: %d\n", BASICPARAM::stairsNum);
 	}
 
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_X) == 1)
 	{
 		AdjuctmentCreate(VGet(250.0f*BASICPARAM::streetLightNum, 0.0f, -100.0f*BASICPARAM::streetLightNum), AdjustmentObject::StreetLight);
-		printfDx("ŠX“”‚ð¶¬: %d\n", BASICPARAM::streetLightNum);
+		//printfDx("ŠX“”‚ð¶¬: %d\n", BASICPARAM::streetLightNum);
 	}
 
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_Y) == 1)
 	{
 		BASICPARAM::paneruDrawFlag = !BASICPARAM::paneruDrawFlag;
-		printfDx("ƒpƒlƒ‹‚ð•\Ž¦: %s\n", BASICPARAM::paneruDrawFlag ? "true" : "false");
+		//printfDx("ƒpƒlƒ‹‚ð•\Ž¦: %s\n", BASICPARAM::paneruDrawFlag ? "true" : "false");
 	}
 
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_UP) == 1)
 	{
 		AdjuctmentCreate(VGet(-100.0f*BASICPARAM::stairsRoadNum, 0.0f, -1000.0f), AdjustmentObject::StairsRoad);
-		printfDx("ŠX“”‚ð¶¬: %d\n", BASICPARAM::stairsRoadNum);
+		//printfDx("ŠX“”‚ð¶¬: %d\n", BASICPARAM::stairsRoadNum);
 	}
 }
 
@@ -75,7 +75,7 @@ void MainMove2::AdjustmentDraw()
 				, 0.1, 0.0, adjustment2DDraw[5], true);
 		}
 
-		printfDx("CX: %f\tCZ: %f\tAX: %f\tAZ: %f\n", p_character->GetArea().x, p_character->GetArea().z, p_adjustmentMachine->GetArea().x, p_adjustmentMachine->GetArea().z);
+		//printfDx("CX: %f\tCZ: %f\tAX: %f\tAZ: %f\n", p_character->GetArea().x, p_character->GetArea().z, p_adjustmentMachine->GetArea().x, p_adjustmentMachine->GetArea().z);
 	}
 	//else
 	//{
@@ -313,7 +313,7 @@ void MainMove2::AttackProcess()
 		&& !p_character->GetAttackNow() && p_character->GetArea().y <= 10.0f
 		&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(),DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
 	{
-		printfDx("ˆÚ‚ê[");
+		//printfDx("ˆÚ‚ê[");
 		//GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, adjustmentDrawScreen);
 		adjustmentFeedNow = true;
 		adjustmentStartFeed = true;

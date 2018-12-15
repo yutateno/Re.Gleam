@@ -516,6 +516,14 @@ Manager::Manager()
 	// äKíiÇ∆è∞ÇÃÇ†ÇΩÇËîªíËÉfÅ[É^
 	move2str[27] = "media\\Ç±Ç¡Çø\\media\\äKíiÇ∆è∞çáëÃ\\kaidan_yuka1_hantei.myn";
 
+	// 2Dä÷òA
+	move2str[28] = "media\\Ç±Ç¡Çø\\media\\2Dëfçﬁ\\change\\whiteblack\\block_2D.pyn";
+	move2str[29] = "media\\Ç±Ç¡Çø\\media\\2Dëfçﬁ\\change\\whiteblack\\CLPH_up.pyn";
+	move2str[30] = "media\\Ç±Ç¡Çø\\media\\2Dëfçﬁ\\change\\whiteblack\\gaiyou_2D.pyn";
+	move2str[31] = "media\\Ç±Ç¡Çø\\media\\2Dëfçﬁ\\change\\whiteblack\\kaidan_2d.pyn";
+	move2str[32] = "media\\Ç±Ç¡Çø\\media\\2Dëfçﬁ\\change\\whiteblack\\Terminal_2D.pyn";
+	move2str[33] = "media\\Ç±Ç¡Çø\\media\\2Dëfçﬁ\\change\\whiteblack\\yuka_2D.pyn";
+
 	load2[0] = ELOADFILE::mv1model;
 	load2[1] = ELOADFILE::mv1model;
 	load2[2] = ELOADFILE::mv1model;
@@ -551,6 +559,13 @@ Manager::Manager()
 	load2[26] = ELOADFILE::graph;
 
 	load2[27] = ELOADFILE::mv1model;
+
+	load2[28] = ELOADFILE::graph;
+	load2[29] = ELOADFILE::graph;
+	load2[30] = ELOADFILE::graph;
+	load2[31] = ELOADFILE::graph;
+	load2[32] = ELOADFILE::graph;
+	load2[33] = ELOADFILE::graph;
 	/// ---------------------------------------------------------------------------------------------------
 
 

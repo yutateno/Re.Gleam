@@ -26,6 +26,7 @@ private:
 		, charaTex0, charaTex1, charaTex2, charaTex3, charaTex4, stairTex0, streetLightTex0, streetLightTex1
 		, skyBoxTex0, blockTex0, se_ballPickUp, terminal, terminalTex0, terminalTex1, terminalDescription
 		, stairsRoad, stairsRoadTex0, stairsRoadTex1, stairsRoadColl
+		, block2D, character2D, streetLight2D, stairs2D, terminal2D, stairsRoad2D
 	};
 
 
@@ -124,6 +125,9 @@ private:
 
 	// ¸–§‹@ŠB‚ÉˆÚ‚é‚Æ‚«‚Ì‰æ‘œ
 	int adjustmentDrawScreen;
+
+	// ¸–§‹@ŠB’†‚É‰f‚é2D‚Ì‰æ‘œ
+	int adjustment2DDraw[6];
 
 
 	/// ƒJƒƒ‰-----------------------

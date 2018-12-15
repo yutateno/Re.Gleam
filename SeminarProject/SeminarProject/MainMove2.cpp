@@ -2,6 +2,7 @@
 
 
 
+
 void MainMove2::AdjustmentProcess()
 {
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
@@ -42,6 +43,34 @@ void MainMove2::AdjustmentDraw()
 	if (adjustmentSceneFeed >= 100)
 	{
 		DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, GetColor(255, 255, 255), true);
+
+		// 2D
+		for (int i = 0, n = enemyNum; i != n; ++i)
+		{
+			DrawRotaGraph(static_cast<int>((6000 + p_enemy[i]->GetArea().x) / 12000 * 1920), static_cast<int>((6000 + p_enemy[i]->GetArea().z) / 12000 * 1080)
+				, 0.05, 0.0, adjustment2DDraw[0], true);
+		}
+		DrawRotaGraph(static_cast<int>((6000 + p_character->GetArea().x) / 12000 * 1920), static_cast<int>((6000 + p_character->GetArea().z) / 12000 * 1080)
+			, 0.05, 0.0, adjustment2DDraw[1], true);
+		for (int i = 0, n = static_cast<int>(vp_stageStreetLight.size()); i != n; ++i)
+		{
+			DrawRotaGraph(static_cast<int>((6000 + vp_stageStreetLight[i]->GetArea().x) / 12000 * 1920), static_cast<int>((6000 + vp_stageStreetLight[i]->GetArea().z) / 12000 * 1080)
+				, 0.05, 0.0, adjustment2DDraw[2], true);
+		}
+		for (int i = 0, n = static_cast<int>(vp_stageStairs.size()); i != n; ++i)
+		{
+			DrawRotaGraph(static_cast<int>((6000 + vp_stageStairs[i]->GetArea().x) / 12000 * 1920), static_cast<int>((6000 + vp_stageStairs[i]->GetArea().z) / 12000 * 1080)
+				, 0.05, 0.0, adjustment2DDraw[3], true);
+		}
+		DrawRotaGraph(static_cast<int>((6000 + p_adjustmentMachine->GetArea().x) / 12000 * 1920), static_cast<int>((6000 + p_adjustmentMachine->GetArea().z) / 12000 * 1080)
+			, 0.05, 0.0, adjustment2DDraw[4], true);
+		for (int i = 0, n = static_cast<int>(vp_stageStairsRoad.size()); i != n; ++i)
+		{
+			DrawRotaGraph(static_cast<int>((6000 + vp_stageStairsRoad[i]->GetArea().x) / 12000 * 1920), static_cast<int>((6000 + vp_stageStairsRoad[i]->GetArea().z) / 12000 * 1080)
+				, 0.05, 0.0, adjustment2DDraw[5], true);
+		}
+
+		printfDx("CX: %f\tCZ: %f\tAX: %f\tAZ: %f\n", p_character->GetArea().x, p_character->GetArea().z, p_adjustmentMachine->GetArea().x, p_adjustmentMachine->GetArea().z);
 	}
 	//else
 	//{
@@ -129,22 +158,22 @@ void MainMove2::ShadowDraw()
 	/// セットアップ
 	BaseMove::ShadowCharaSetUpBefore();
 	// 敵
-	for (int i = 0; i != enemyNum; ++i)
+	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
 		if (!p_enemy[i]->GetEraseExistence()) p_enemy[i]->Draw();
 	}
 	// 階段
-	for (int i = 0; i != vp_stageStairs.size(); ++i)
+	for (int i = 0, n = static_cast<int>(vp_stageStairs.size()); i != n; ++i)
 	{
 		vp_stageStairs[i]->Draw();
 	}
 	// 街灯
-	for (int i = 0; i != vp_stageStreetLight.size(); ++i)
+	for (int i = 0, n = static_cast<int>(vp_stageStreetLight.size()); i != n; ++i)
 	{
 		vp_stageStreetLight[i]->Draw();
 	}
 	// 階段と床
-	for (int i = 0; i != vp_stageStairsRoad.size(); ++i)
+	for (int i = 0, n = static_cast<int>(vp_stageStairsRoad.size()); i != n; ++i)
 	{
 		vp_stageStairsRoad[i]->Draw();
 	}
@@ -166,22 +195,22 @@ void MainMove2::ShadowDraw()
 	// キャラクター以外再セットアップ
 	BaseMove::ShadowAnotherCharaSetUpBefore();
 	// 階段
-	for (int i = 0; i != vp_stageStairs.size(); ++i)
+	for (int i = 0, n = static_cast<int>(vp_stageStairs.size()); i != n; ++i)
 	{
 		vp_stageStairs[i]->Draw();
 	}
 	// 敵
-	for (int i = 0; i != enemyNum; ++i)
+	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
 		if (!p_enemy[i]->GetEraseExistence())	p_enemy[i]->Draw();
 	}
 	// 階段
-	for (int i = 0; i != vp_stageStreetLight.size(); ++i)
+	for (int i = 0, n = static_cast<int>(vp_stageStreetLight.size()); i != n; ++i)
 	{
 		vp_stageStreetLight[i]->Draw();
 	}
 	// 階段と床
-	for (int i = 0; i != vp_stageStairsRoad.size(); ++i)
+	for (int i = 0, n = static_cast<int>(vp_stageStairsRoad.size()); i != n; ++i)
 	{
 		vp_stageStairsRoad[i]->Draw();
 	}
@@ -205,22 +234,22 @@ void MainMove2::ShadowDraw()
 	// ステージ
 	p_stage->Draw();
 	// 敵
-	for (int i = 0; i != enemyNum; ++i)
+	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
 		if (!p_enemy[i]->GetEraseExistence()) p_enemy[i]->Draw();
 	}
 	// 階段
-	for (int i = 0; i != vp_stageStairs.size(); ++i)
+	for (int i = 0, n = static_cast<int>(vp_stageStairs.size()); i != n; ++i)
 	{
 		vp_stageStairs[i]->Draw();
 	}
 	// 街灯
-	for (int i = 0; i != vp_stageStreetLight.size(); ++i)
+	for (int i = 0, n = static_cast<int>(vp_stageStreetLight.size()); i != n; ++i)
 	{
 		vp_stageStreetLight[i]->Draw();
 	}
 	// 階段と床
-	for (int i = 0; i != vp_stageStairsRoad.size(); ++i)
+	for (int i = 0, n = static_cast<int>(vp_stageStairsRoad.size()); i != n; ++i)
 	{
 		vp_stageStairsRoad[i]->Draw();
 	}
@@ -245,7 +274,7 @@ void MainMove2::ShadowDraw()
 void MainMove2::AttackProcess()
 {
 	/// 敵に関する--------------------------------------------------------------------------------------------------------
-	for (int i = 0; i != enemyNum; ++i)
+	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
 		if (p_enemy[i]->GetDeathFlag()) continue;
 
@@ -327,7 +356,7 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	// ポインタNULL初期化
 	p_camera					 = NULL;
 	p_character					 = NULL;
-	for (int i = 0; i != enemyNum; ++i)
+	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
 		p_enemy[i]				 = NULL;
 	}
@@ -389,7 +418,7 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 
 
 	// 敵の初期化
-	for (int i = 0; i != enemyNum; ++i)
+	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
 		p_enemy[i] = new EnemyMove2(VGet(1000.0f + (i * 150), 0.0f, -1000.0f), v_file[EFILE::block], v_file[EFILE::blockTex0]);
 	}
@@ -412,6 +441,13 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	adjustmentSceneFeed = 0;
 	adjustmentFeedNow = false;
 	//adjustmentDrawScreen = MakeGraph(BASICPARAM::winWidth, BASICPARAM::winHeight);
+
+	
+	// 精密機械での2D
+	for (int i = 0, n = EFILE::stairsRoad2D + 1 - EFILE::block2D; i != n; ++i)
+	{
+		adjustment2DDraw[i] = v_file[i + EFILE::block2D];
+	}
 
 
 	// ドロップアイテムを手に入れた数
@@ -442,6 +478,10 @@ MainMove2::~MainMove2()
 
 	/// 精密機械に関する
 	GRAPHIC_RELEASE(adjustmentDescriptionDraw);
+	for (int i = 0; i != 6; ++i)
+	{
+		GRAPHIC_RELEASE(adjustment2DDraw[i]);
+	}
 
 	/// パネルに関する
 	for (int i = 0; i != 10; ++i)
@@ -453,7 +493,7 @@ MainMove2::~MainMove2()
 	MODEL_RELEASE(streetLightHandle);
 	GRAPHIC_RELEASE(streetLightTexture0);
 	GRAPHIC_RELEASE(streetLightTexture1);
-	for (int i = 0; i != vp_stageStreetLight.size(); ++i)
+	for (int i = 0, n = static_cast<int>(vp_stageStreetLight.size()); i != n; ++i)
 	{
 		POINTER_RELEASE(vp_stageStreetLight[i]);
 	}
@@ -463,7 +503,7 @@ MainMove2::~MainMove2()
 	/// 階段に関する
 	MODEL_RELEASE(stairsHandle);
 	GRAPHIC_RELEASE(stairsTexture0);
-	for (int i = 0; i != vp_stageStairs.size(); ++i)
+	for (int i = 0, n = static_cast<int>(vp_stageStairs.size()); i != n; ++i)
 	{
 		POINTER_RELEASE(vp_stageStairs[i]);
 	}
@@ -474,7 +514,7 @@ MainMove2::~MainMove2()
 	MODEL_RELEASE(stairsRoadHandle);
 	GRAPHIC_RELEASE(stairsRoadTexture0);
 	GRAPHIC_RELEASE(stairsRoadTexture1);
-	for (int i = 0; i != vp_stageStairsRoad.size(); ++i)
+	for (int i = 0, n = static_cast<int>(vp_stageStairsRoad.size()); i != n; ++i)
 	{
 		POINTER_RELEASE(vp_stageStairsRoad[i]);
 	}
@@ -491,7 +531,7 @@ MainMove2::~MainMove2()
 	}
 
 	/// 敵に関する
-	for (int i = 0; i != enemyNum; ++i)
+	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
 		POINTER_RELEASE(p_enemy[i]);
 	}
@@ -552,7 +592,7 @@ void MainMove2::Process()
 
 
 		// 敵のプロセス
-		for (int i = 0; i != enemyNum; ++i)
+		for (int i = 0, n = enemyNum; i != n; ++i)
 		{
 			if (p_enemy[i]->GetEraseExistence())
 			{
@@ -641,7 +681,7 @@ void MainMove2::ThsTextureReload()
 	p_adjustmentMachine->TextureReload();
 
 	// 敵
-	for (int i = 0; i != enemyNum; ++i)
+	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
 		if (p_enemy[i]->GetDeathFlag()) continue;
 		p_enemy[i]->TextureReload();
@@ -655,19 +695,19 @@ void MainMove2::ThsTextureReload()
 	}
 
 	// 階段
-	for (int i = 0; i != vp_stageStairs.size(); ++i)
+	for (int i = 0, n = static_cast<int>(vp_stageStairs.size()); i != n; ++i)
 	{
 		vp_stageStairs[i]->TextureReload();
 	}
 
 	// 街灯
-	for (int i = 0; i != vp_stageStreetLight.size(); ++i)
+	for (int i = 0, n = static_cast<int>(vp_stageStreetLight.size()); i != n; ++i)
 	{
 		vp_stageStreetLight[i]->TextureReload();
 	}
 
 	// 階段と床
-	for (int i = 0; i != vp_stageStairsRoad.size(); ++i)
+	for (int i = 0, n = static_cast<int>(vp_stageStairsRoad.size()); i != n; ++i)
 	{
 		vp_stageStairsRoad[i]->TextureReload();
 	}

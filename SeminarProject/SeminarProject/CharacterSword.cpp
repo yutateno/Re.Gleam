@@ -381,7 +381,7 @@ void CharacterSword::AnimProcess()
 }
 
 
-CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle, const int paneruHandle
+CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle, const int paneruHandle, const int stairsRoadHandle
 	, const int tex0, const int tex1, const int tex2, const int tex3, const int tex4) : BasicCreature(collStageHandle)
 {
 	// ３Ｄモデルの読み込み
@@ -469,6 +469,10 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	this->paneruHandle[0] = MV1DuplicateModel(paneruHandle);
 	MV1SetScale(this->paneruHandle[0], VGet(50.0f, 50.0f, 50.0f));
 
+	// 階段と床
+	v_stairsRoadHandle.clear();
+	this->v_stairsRoadHandle.push_back(MV1DuplicateModel(stairsRoadHandle));
+
 
 	// モデルの座標を更新
 	MV1SetPosition(this->modelHandle, area);
@@ -502,10 +506,10 @@ void CharacterSword::SetStairsArea(const VECTOR stairsArea, const int num)
 	{
 		v_stairsHandle.push_back(MV1DuplicateModel(v_stairsHandle[0]));
 	}
-	MV1SetupCollInfo(v_stairsHandle[num], -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
+	MV1SetupCollInfo(v_stairsHandle[num], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
 	MV1SetPosition(v_stairsHandle[num], stairsArea);				// ステージの座標を更新
-	MV1SetFrameVisible(v_stairsHandle[num], -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(v_stairsHandle[num], -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetFrameVisible(v_stairsHandle[num], -1, false);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1RefreshCollInfo(v_stairsHandle[num], -1);					// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 }
 
 void CharacterSword::SetPaneruArea(const VECTOR paneruArea, const int num)
@@ -516,10 +520,23 @@ void CharacterSword::SetPaneruArea(const VECTOR paneruArea, const int num)
 		paneruHandle[num] = MV1DuplicateModel(paneruHandle[0]);
 		MV1SetScale(this->paneruHandle[num], VGet(50.0f, 50.0f, 50.0f));
 	}
-	MV1SetupCollInfo(paneruHandle[num], -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetPosition(paneruHandle[num], paneruArea);				// ステージの座標を更新
-	MV1SetFrameVisible(paneruHandle[num], -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(paneruHandle[num], -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetupCollInfo(paneruHandle[num], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
+	MV1SetPosition(paneruHandle[num], paneruArea);					// ステージの座標を更新
+	MV1SetFrameVisible(paneruHandle[num], -1, false);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1RefreshCollInfo(paneruHandle[num], -1);						// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+}
+
+void CharacterSword::SetStairsRoadArea(const VECTOR stairsRoadArea, const int num)
+{
+	// ステージのコリジョン情報の更新
+	if (num != 0)
+	{
+		v_stairsRoadHandle.push_back(MV1DuplicateModel(v_stairsRoadHandle[0]));
+	}
+	MV1SetupCollInfo(v_stairsRoadHandle[num], -1);					// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
+	MV1SetPosition(v_stairsRoadHandle[num], stairsRoadArea);		// ステージの座標を更新
+	MV1SetFrameVisible(v_stairsRoadHandle[num], -1, false);			// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1RefreshCollInfo(v_stairsRoadHandle[num], -1);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 }
 
 
@@ -560,6 +577,12 @@ void CharacterSword::Process(const float getAngle)
 		ActorHit(v_stairsHandle[i]);
 	}
 
+	// 階段と床のあたり判定
+	for (int i = 0; i != BASICPARAM::stairsRoadNum; ++i)
+	{
+		ActorHit(v_stairsRoadHandle[i]);
+	}
+
 	// パネルのあたり判定
 	if (BASICPARAM::paneruDrawFlag)
 	{
@@ -578,11 +601,9 @@ void CharacterSword::Process(const float getAngle)
 
 	if (hitDimNum == 0 && area.y >= 10.0f)
 	{
-		printfDx("通ってる\n");
 		// 飛ぶコマンドで飛んでいなかったら
 		if (!jumpNow)
 		{
-			printfDx("さらに落ちた\n");
 			jumpNow = true;				// 飛んでいる
 
 			jumpPower = fallJumpPower;	// 落下速度を加える

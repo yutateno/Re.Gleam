@@ -19,7 +19,7 @@ StageStairs::StageStairs(const int draw, const VECTOR area, const int tex0) : Ba
 
 
 	// 座標にモデルを配置
-	MV1SetPosition(modelHandle, area);
+	MV1SetPosition(modelHandle, this->area);
 }
 
 StageStairs::~StageStairs()

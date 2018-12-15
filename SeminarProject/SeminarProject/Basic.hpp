@@ -65,6 +65,12 @@ namespace BASICPARAM
 
 	// ŠX“”‚ÌÀ•W
 	extern std::vector<VECTOR> v_streetLightArea;
+
+	// ŠK’i‚Æ°‚Ì”
+	extern int stairsRoadNum;
+
+	// ŠK’i‚Æ°‚ÌÀ•W
+	extern std::vector<VECTOR> v_stairsRoadArea;
 }
 
 

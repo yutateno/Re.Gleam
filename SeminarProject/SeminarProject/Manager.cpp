@@ -506,6 +506,16 @@ Manager::Manager()
 	// 精密機械の補助説明
 	move2str[23] = "media\\こっち\\media\\Terminal\\push.pyn";
 
+	// 階段とそのあとの床データ
+	move2str[24] = "media\\こっち\\media\\階段と床合体\\kaidan_yuka1.myn";			// 2
+
+	// 階段とそのあとの床のテクスチャデータ
+	move2str[25] = "media\\こっち\\media\\階段と床合体\\whiteblack\\kaidan.pyn";
+	move2str[26] = "media\\こっち\\media\\階段と床合体\\whiteblack\\yuka.pyn";
+
+	// 階段と床のあたり判定データ
+	move2str[27] = "media\\こっち\\media\\階段と床合体\\kaidan_yuka1_hantei.myn";
+
 	load2[0] = ELOADFILE::mv1model;
 	load2[1] = ELOADFILE::mv1model;
 	load2[2] = ELOADFILE::mv1model;
@@ -534,6 +544,13 @@ Manager::Manager()
 	load2[21] = ELOADFILE::graph;
 	load2[22] = ELOADFILE::graph;
 	load2[23] = ELOADFILE::graph;
+
+	load2[24] = ELOADFILE::mv1model;
+
+	load2[25] = ELOADFILE::graph;
+	load2[26] = ELOADFILE::graph;
+
+	load2[27] = ELOADFILE::mv1model;
 	/// ---------------------------------------------------------------------------------------------------
 
 

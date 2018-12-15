@@ -14,7 +14,9 @@ bool BASICPARAM::paneruDrawFlag;
 int BASICPARAM::stairsNum;
 std::vector<VECTOR> BASICPARAM::v_stairsArea;
 int BASICPARAM::streetLightNum;
-std::vector<VECTOR> BASICPARAM::v_streetLightArea;
+std::vector<VECTOR> BASICPARAM::v_streetLightArea; 
+int BASICPARAM::stairsRoadNum;
+std::vector<VECTOR> BASICPARAM::v_stairsRoadArea;
 
 
 // debug

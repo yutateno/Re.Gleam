@@ -9,6 +9,7 @@
 #include "EnemyMove2.hpp"
 #include "DropItemMove2.hpp"
 #include "AdjustmentMachine.hpp"
+#include "StageStairsRoad.hpp"
 
 #include <random>
 
@@ -20,9 +21,12 @@ class MainMove2 : public BaseMove
 {
 private:
 	// ロードで渡されるファイル
-	enum EFILE { stage, characterAttack, paneru, stairs, stairsColl, streetLight, skyBox, block, drawStage
-	, charaTex0, charaTex1, charaTex2, charaTex3, charaTex4, stairTex0, streetLightTex0, streetLightTex1
-	, skyBoxTex0, blockTex0, se_ballPickUp, terminal, terminalTex0, terminalTex1, terminalDescription };
+	enum EFILE {
+		stage, characterAttack, paneru, stairs, stairsColl, streetLight, skyBox, block, drawStage
+		, charaTex0, charaTex1, charaTex2, charaTex3, charaTex4, stairTex0, streetLightTex0, streetLightTex1
+		, skyBoxTex0, blockTex0, se_ballPickUp, terminal, terminalTex0, terminalTex1, terminalDescription
+		, stairsRoad, stairsRoadTex0, stairsRoadTex1, stairsRoadColl
+	};
 
 
 	/// ステージ-------------------------------------
@@ -51,6 +55,16 @@ private:
 
 	// パネルのポインタ
 	StagePaneru* p_stagePaneru[10];
+
+	// 階段と床のハンドル
+	int stairsRoadHandle;
+
+	// 階段と床のテクスチャ
+	int stairsRoadTexture0;
+	int stairsRoadTexture1;
+
+	// 階段と床のポインタ
+	std::vector<StageStairsRoad*> vp_stageStairsRoad;
 	
 
 	/// キャラクター----------------------
@@ -94,7 +108,7 @@ private:
 	void AdjustmentDraw();
 
 	// 精密機械からオブジェクト生成するID
-	enum class AdjustmentObject { Stairs, StreetLight };
+	enum class AdjustmentObject { Stairs, StreetLight, StairsRoad };
 
 	// 精密機械からオブジェクト生成
 	void AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID);

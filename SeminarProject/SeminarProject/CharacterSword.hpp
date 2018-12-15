@@ -28,6 +28,12 @@ private:
 	std::vector<int> v_stairsHandle;
 
 
+	/// 階段と床に関して
+
+	// 階段と床のモデル
+	std::vector<int> v_stairsRoadHandle;
+
+
 	/// パネルに関して------------------------
 	
 	// パネルのモデル
@@ -101,7 +107,7 @@ private:
 
 public:
 	// コンストラクタ
-	CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle, const int paneruHandle
+	CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle, const int paneruHandle, const int stairsRoadHandle
 	, const int tex0, const int tex1, const int tex2, const int tex3, const int tex4);
 
 	// デストラクタ
@@ -128,6 +134,9 @@ public:
 
 	// パネルの座標を設定する
 	void SetPaneruArea(const VECTOR paneruArea, const int num);
+
+	// 階段と床の座標を設定する
+	void SetStairsRoadArea(const VECTOR stairsRoadArea, const int num);
 
 	// 直前のエリアを渡す
 	const VECTOR GetPreArea() const { return preArea; }

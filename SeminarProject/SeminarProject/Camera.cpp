@@ -71,11 +71,11 @@ void Camera::Process(const VECTOR charaarea)
 
 	if (!BASICPARAM::nowCameraOrtho)
 	{
-		SoundProcess::SetLisnerArea(cameraPerspectiveArea);
+		SoundProcess::SetLisnerArea(VAdd(cameraPerspectiveArea, charaArea));
 	}
 	else
 	{
-		SoundProcess::SetLisnerArea(cameraOrthoArea);
+		SoundProcess::SetLisnerArea(VAdd(cameraOrthoArea, charaArea));
 	}
 }
 
@@ -89,7 +89,7 @@ void Camera::SetUp()
 		// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
 		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea), VAdd(viewArea, charaArea));
 
-		SoundProcess::SetLisnerArea(cameraPerspectiveArea);
+		//SoundProcess::SetLisnerArea(VAdd(cameraPerspectiveArea, charaArea));
 	}
 	else
 	{
@@ -98,7 +98,7 @@ void Camera::SetUp()
 		// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
 		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea), VAdd(viewArea, charaArea));
 
-		SoundProcess::SetLisnerArea(cameraOrthoArea);
+		//SoundProcess::SetLisnerArea(VAdd(cameraOrthoArea, charaArea));
 	}
 }
 

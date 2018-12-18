@@ -177,7 +177,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// 削除
 	POINTER_RELEASE(manager);
 
-	DxLib::DxLib_End();		// DXライブラリの後始末
+	DxLib_End();		// DXライブラリの後始末
 
 	return 0;
 }

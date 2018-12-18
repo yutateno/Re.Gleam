@@ -524,6 +524,14 @@ Manager::Manager()
 	move2str[32] = "media\\こっち\\media\\2D素材\\change\\whiteblack\\Terminal_2D.pyn";
 	move2str[33] = "media\\こっち\\media\\2D素材\\change\\whiteblack\\yuka_2D.pyn";
 
+	// キャラクター周りの3DSE
+	move2str[34] = "media\\こっち\\media\\sound\\ジャンプ.wyn";
+	move2str[35] = "media\\こっち\\media\\sound\\足音（廊下っぽいの）.wyn";
+	move2str[36] = "media\\こっち\\media\\sound\\足音.wyn";
+	move2str[37] = "media\\こっち\\media\\sound\\着地.wyn";
+	move2str[38] = "media\\こっち\\media\\sound\\着地２.wyn";
+
+
 	load2[0] = ELOADFILE::mv1model;
 	load2[1] = ELOADFILE::mv1model;
 	load2[2] = ELOADFILE::mv1model;
@@ -566,6 +574,12 @@ Manager::Manager()
 	load2[31] = ELOADFILE::graph;
 	load2[32] = ELOADFILE::graph;
 	load2[33] = ELOADFILE::graph;
+
+	load2[34] = ELOADFILE::sound3DSource;
+	load2[35] = ELOADFILE::sound3DSource;
+	load2[36] = ELOADFILE::sound3DSource;
+	load2[37] = ELOADFILE::sound3DSource;
+	load2[38] = ELOADFILE::sound3DSource;
 	/// ---------------------------------------------------------------------------------------------------
 
 

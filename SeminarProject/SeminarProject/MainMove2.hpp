@@ -27,6 +27,7 @@ private:
 		, skyBoxTex0, blockTex0, se_ballPickUp, terminal, terminalTex0, terminalTex1, terminalDescription
 		, stairsRoad, stairsRoadTex0, stairsRoadTex1, stairsRoadColl
 		, block2D, character2D, streetLight2D, stairs2D, terminal2D, stairsRoad2D
+		, jump3DSE, footCorridor3DSE, foot3DSE, landing3DSE, landingSecond3DSE
 	};
 
 

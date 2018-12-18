@@ -44,6 +44,9 @@ namespace SoundProcess
 	// SE‚ÌÄ¶
 	void DoSound(ESOUNDNAME_SE name, int volume = 255);
 
+	// 3DSE‚ÌÄ¶
+	void DoSound(ESOUNDNAME_SE name, VECTOR area, int volume = 255);
+
 	// BGM‚ÌI‚í‚è
 	void BGMEnd();
 

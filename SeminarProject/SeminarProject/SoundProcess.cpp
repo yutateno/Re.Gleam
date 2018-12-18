@@ -216,6 +216,25 @@ namespace SoundProcess
 		se_playFlag[static_cast<int>(name)] = true;
 	}
 
+	void DoSound(ESOUNDNAME_SE name, VECTOR area, int volume)
+	{
+		Set3DPositionSoundMem(area, se_sound[static_cast<int>(name)]);
+		Set3DRadiusSoundMem(VSize(VSub(area, listenerArea)), se_sound[static_cast<int>(name)]);
+		if (!se_playFlag[static_cast<int>(name)])
+		{
+			printfDx("areaX: %f\tareaZ: %f\t\tlistnerX: %f\tlistnerZ: %f\n", area.x, area.z, listenerArea.x, listenerArea.z);
+			PlaySoundMem(se_sound[static_cast<int>(name)], DX_PLAYTYPE_BACK);
+			ChangeVolumeSoundMem(0, se_sound[static_cast<int>(name)]);
+		}
+		else
+		{
+			ChangeVolumeSoundMem(0, se_sound[static_cast<int>(name)]);
+			PlaySoundMem(se_sound[static_cast<int>(name)], DX_PLAYTYPE_BACK);
+		}
+
+		se_playFlag[static_cast<int>(name)] = true;
+	}
+
 
 	void BGMEnd()
 	{

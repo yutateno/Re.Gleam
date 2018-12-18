@@ -474,6 +474,14 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	BaseMove::ShadowNoMoveSetUpBefore();
 	p_stage->Draw();
 	BaseMove::ShadowNoMoveSetUpAfter();
+
+
+	// サウンドのロード
+	SoundProcess::Load(v_file[EFILE::jump3DSE]			, SoundProcess::ESOUNDNAME_SE::jump		, SoundProcess::ESOUNDTYPE::sound3DSourceChara, p_character->GetArea());
+	SoundProcess::Load(v_file[EFILE::footCorridor3DSE]	, SoundProcess::ESOUNDNAME_SE::footFloor, SoundProcess::ESOUNDTYPE::sound3DSourceChara, p_character->GetArea());
+	SoundProcess::Load(v_file[EFILE::foot3DSE]			, SoundProcess::ESOUNDNAME_SE::foot		, SoundProcess::ESOUNDTYPE::sound3DSourceChara, p_character->GetArea());
+	SoundProcess::Load(v_file[EFILE::landing3DSE]		, SoundProcess::ESOUNDNAME_SE::landing	, SoundProcess::ESOUNDTYPE::sound3DSourceChara, p_character->GetArea());
+	SoundProcess::Load(v_file[EFILE::landingSecond3DSE]	, SoundProcess::ESOUNDNAME_SE::landing2	, SoundProcess::ESOUNDTYPE::sound3DSourceChara, p_character->GetArea());
 }
 
 
@@ -662,6 +670,11 @@ void MainMove2::Process()
 	{
 		BASICPARAM::endFeedNow = true;
 		BaseMove::SetScene(ESceneNumber::FIRSTLOAD);
+	}
+
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_DOWN) == 1)
+	{
+		SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::jump, p_character->GetArea());
 	}
 #endif
 }

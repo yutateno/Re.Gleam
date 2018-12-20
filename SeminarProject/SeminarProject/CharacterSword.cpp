@@ -283,6 +283,7 @@ void CharacterSword::JumpProcess()
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1
 		&& !jumpNow)
 	{
+		SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::jump, area, 125);
 		jumpNow = true;					// ”ò‚ñ‚Å‚¢‚é
 		jumpUpNow = true;				// ã‚Éã‚ª‚Á‚Ä‚¢‚é
 		jumpPower = flyJumpPower;		// ”ò‚Ô‘¬“x‚ð‰Á‚¦‚é
@@ -305,6 +306,7 @@ void CharacterSword::JumpProcess()
 	// ”ò‚ñ‚Å‚¢‚é
 	if (jumpNow)
 	{
+		preJumpNow = true;
 		walkSpeed = 10.0f;
 		animSpeed = 1.0f;
 		jumpPower -= gravity;			// —Ž‰ºd—Í‚ð‰Á‚¦‘±‚¯‚é
@@ -330,6 +332,20 @@ void CharacterSword::JumpProcess()
 
 
 		area.y -= 10.5f;
+	}
+
+
+	if (!jumpNow && preJumpNow)
+	{
+		preJumpNow = false;
+		if (area.y >= 10.0f)
+		{
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
+		}
+		else
+		{
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot, area);
+		}
 	}
 }
 
@@ -459,6 +475,7 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	gravity = 0.75f;
 	flyJumpPower = 50.0f;
 	fallJumpPower = 3.0f;
+	preJumpNow = false;
 
 
 	// ŠK’i

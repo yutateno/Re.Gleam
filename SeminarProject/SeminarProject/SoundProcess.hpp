@@ -35,7 +35,7 @@ namespace SoundProcess
 	void Init();
 
 	// ロード
-	void Load(int loadFile, ESOUNDNAME_SE name, ESOUNDTYPE type, VECTOR partnerArea = VGet(0, 0, 0));
+	void Load(int loadFile, ESOUNDNAME_SE name);
 	void Load(int loadFile, ESOUNDNAME_BGM name);
 
 	// プロセス
@@ -64,6 +64,12 @@ namespace SoundProcess
 
 	// リスナーの座標を設定
 	void SetLisnerArea(VECTOR area);
+
+	// リスナーのビュー座標を設定
+	void SetLisnerViewArea(VECTOR area);
+
+	// サウンドの3Dでの大きさを設定
+	void Set3DRadius(float radius);
 
 	// SEのユーザー音量調整を設定
 	void SetSEVolumeEntire(float volumeEntire);

@@ -90,6 +90,9 @@ private:
 	// ジャンププロセス
 	void JumpProcess();
 
+	// ジャンプから床についたかどうか
+	bool preJumpNow;
+
 
 	// 行動によってアニメーションの管理
 	void AnimProcess();

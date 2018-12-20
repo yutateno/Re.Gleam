@@ -48,4 +48,7 @@ public:
 
 	// キャラクターのアングル
 	const float GetAngle() const { return angle; }
+
+	// カメラの座標
+	const VECTOR GetArea();
 };

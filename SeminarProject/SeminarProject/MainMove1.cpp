@@ -480,8 +480,8 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 
 	/// ÉTÉEÉìÉhÇÃèâä˙âª---------------------------------------------------------------------------------------------------------------
 	SoundProcess::Load(v_file[EFILE::sound], SoundProcess::ESOUNDNAME_BGM::titleMusicBox);
-	SoundProcess::Load(v_file[EFILE::seBallHigh], SoundProcess::ESOUNDNAME_SE::ballPawnHigh, SoundProcess::ESOUNDTYPE::soundMem);
-	SoundProcess::Load(v_file[EFILE::seBall], SoundProcess::ESOUNDNAME_SE::ballPawn, SoundProcess::ESOUNDTYPE::soundMem);
+	SoundProcess::Load(v_file[EFILE::seBallHigh], SoundProcess::ESOUNDNAME_SE::ballPawnHigh);
+	SoundProcess::Load(v_file[EFILE::seBall], SoundProcess::ESOUNDNAME_SE::ballPawn);
 }
 
 

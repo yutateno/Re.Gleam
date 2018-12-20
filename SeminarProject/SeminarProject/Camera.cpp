@@ -11,6 +11,7 @@ Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 	MV1SetFrameVisible(stageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 	MV1RefreshCollInfo(stageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 
+
 	viewArea = VGet(0, 150, 0);
 
 	charaArea = VAdd(charaarea, VGet(0.0f, 80.0f, 0.0f));
@@ -28,8 +29,7 @@ Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 
 		// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
 		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea), VAdd(viewArea, charaArea));
-
-		SoundProcess::SetLisnerArea(cameraPerspectiveArea);
+		SoundProcess::Set3DRadius(VSize(cameraPerspectiveArea));
 	}
 	else
 	{
@@ -37,8 +37,7 @@ Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 
 		// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
 		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea), VAdd(viewArea, charaArea));
-
-		SoundProcess::SetLisnerArea(cameraOrthoArea);
+		SoundProcess::Set3DRadius(VSize(cameraOrthoArea));
 	}
 }
 
@@ -53,6 +52,7 @@ Camera::~Camera()
 void Camera::Process(const VECTOR charaarea)
 {
 	charaArea = VAdd(charaarea, VGet(0.0f, 80.0f, 0.0f));					// キャラの位置を更新し続ける
+
 
 	// 左に回転中
 	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) < 0)
@@ -69,13 +69,15 @@ void Camera::Process(const VECTOR charaarea)
 		angle -= speed;
 	}
 
+
+	SoundProcess::SetLisnerViewArea(viewArea);
 	if (!BASICPARAM::nowCameraOrtho)
 	{
-		SoundProcess::SetLisnerArea(VAdd(cameraPerspectiveArea, charaArea));
+		SoundProcess::SetLisnerArea(cameraPerspectiveArea);
 	}
 	else
 	{
-		SoundProcess::SetLisnerArea(VAdd(cameraOrthoArea, charaArea));
+		SoundProcess::SetLisnerArea(cameraOrthoArea);
 	}
 }
 
@@ -88,8 +90,8 @@ void Camera::SetUp()
 
 		// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
 		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea), VAdd(viewArea, charaArea));
-
-		//SoundProcess::SetLisnerArea(VAdd(cameraPerspectiveArea, charaArea));
+		SoundProcess::SetLisnerArea(cameraPerspectiveArea);
+		SoundProcess::Set3DRadius(VSize(cameraPerspectiveArea));
 	}
 	else
 	{
@@ -97,8 +99,20 @@ void Camera::SetUp()
 
 		// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
 		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea), VAdd(viewArea, charaArea));
+		SoundProcess::SetLisnerArea(cameraOrthoArea);
+		SoundProcess::Set3DRadius(VSize(cameraOrthoArea));
+	}
+}
 
-		//SoundProcess::SetLisnerArea(VAdd(cameraOrthoArea, charaArea));
+const VECTOR Camera::GetArea()
+{
+	if (!BASICPARAM::nowCameraOrtho)
+	{
+		return cameraPerspectiveArea;
+	}
+	else
+	{
+		return cameraOrthoArea;
 	}
 }
 

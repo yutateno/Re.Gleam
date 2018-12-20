@@ -62,12 +62,14 @@ namespace SoundProcess
 	// プレイヤー位置
 	VECTOR charaArea;
 
-	// 発生位置
-	VECTOR partnerArea;
-
 	// リスナー位置
 	VECTOR listenerArea;
 
+	// リスナーのビュー位置
+	VECTOR listenerViewArea;
+
+	// サウンドの大きさ
+	float volume3DRadius;
 
 	/// 内部関数---------------------------
 
@@ -116,20 +118,10 @@ namespace SoundProcess
 	}
 
 
-	void Load(int loadFile, ESOUNDNAME_SE name, ESOUNDTYPE type, VECTOR partnerArea)
+	void Load(int loadFile, ESOUNDNAME_SE name)
 	{
 		se_sound[static_cast<int>(name)] = loadFile;
 		se_loadFlag[static_cast<int>(name)] = true;
-		if (type == ESOUNDTYPE::sound3DSourceChara)
-		{
-			Set3DPositionSoundMem(charaArea, se_sound[static_cast<int>(name)]);
-			Set3DRadiusSoundMem(VSize(VSub(charaArea, listenerArea)), se_sound[static_cast<int>(name)]);
-		}
-		else if (type == ESOUNDTYPE::sound3DSourcePartner)
-		{
-			Set3DPositionSoundMem(partnerArea, se_sound[static_cast<int>(name)]);
-			Set3DRadiusSoundMem(VSize(VSub(partnerArea, listenerArea)), se_sound[static_cast<int>(name)]);
-		}
 	}
 
 
@@ -142,7 +134,10 @@ namespace SoundProcess
 
 	void Process()
 	{
-		/// 再生個数
+		Set3DSoundListenerPosAndFrontPos_UpVecY(VAdd(listenerArea, charaArea), VAdd(listenerViewArea, charaArea));
+
+
+		// 再生個数
 		int count = 0;
 
 		// 再生しているかどうか判断
@@ -218,11 +213,11 @@ namespace SoundProcess
 
 	void DoSound(ESOUNDNAME_SE name, VECTOR area, int volume)
 	{
-		Set3DPositionSoundMem(area, se_sound[static_cast<int>(name)]);
-		Set3DRadiusSoundMem(VSize(VSub(area, listenerArea)), se_sound[static_cast<int>(name)]);
+		Set3DPositionSoundMem(VAdd(area, VScale(listenerArea, 0.1f)), se_sound[static_cast<int>(name)]);
+		Set3DRadiusSoundMem(volume3DRadius*5, se_sound[static_cast<int>(name)]);
+
 		if (!se_playFlag[static_cast<int>(name)])
 		{
-			printfDx("areaX: %f\tareaZ: %f\t\tlistnerX: %f\tlistnerZ: %f\n", area.x, area.z, listenerArea.x, listenerArea.z);
 			PlaySoundMem(se_sound[static_cast<int>(name)], DX_PLAYTYPE_BACK);
 			ChangeVolumeSoundMem(0, se_sound[static_cast<int>(name)]);
 		}
@@ -384,18 +379,25 @@ namespace SoundProcess
 		}
 	}
 
-
 	void SetCharaArea(VECTOR area)
 	{
 		charaArea = area;
 	}
-
 
 	void SetLisnerArea(VECTOR area)
 	{
 		listenerArea = area;
 	}
 
+	void SetLisnerViewArea(VECTOR area)
+	{
+		listenerViewArea = area;
+	}
+
+	void Set3DRadius(float radius)
+	{
+		volume3DRadius = radius;
+	}
 
 	void SetSEVolumeEntire(float volumeEntire)
 	{

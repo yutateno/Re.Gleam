@@ -40,7 +40,7 @@ void MainMove2::AdjustmentProcess()
 void MainMove2::AdjustmentDraw()
 {
 	/// オペレーターのフェード表現に関する-----------------------------------------------------------
-	if (adjustmentSceneFeed >= 100)
+	if (adjustmentSceneFeed >= 50)
 	{
 		DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, GetColor(255, 255, 255), true);
 
@@ -83,43 +83,43 @@ void MainMove2::AdjustmentDraw()
 	//}
 
 
-	if (adjustmentSceneFeed >= 10 && adjustmentSceneFeed <= 110)
+	if (adjustmentSceneFeed >= 5 && adjustmentSceneFeed <= 55)
 	{
 		DrawBox(0, 108 * 0, BASICPARAM::winWidth, 108 * 1, GetColor(0, 0, 0), true);
 	}
-	if (adjustmentSceneFeed >= 20 && adjustmentSceneFeed <= 120)
+	if (adjustmentSceneFeed >= 10 && adjustmentSceneFeed <= 60)
 	{
 		DrawBox(0, 108 * 1, BASICPARAM::winWidth, 108 * 2, GetColor(0, 0, 0), true);
 	}
-	if (adjustmentSceneFeed >= 30 && adjustmentSceneFeed <= 130)
+	if (adjustmentSceneFeed >= 15 && adjustmentSceneFeed <= 65)
 	{
 		DrawBox(0, 108 * 2, BASICPARAM::winWidth, 108 * 3, GetColor(0, 0, 0), true);
 	}
-	if (adjustmentSceneFeed >= 40 && adjustmentSceneFeed <= 140)
+	if (adjustmentSceneFeed >= 20 && adjustmentSceneFeed <= 70)
 	{
 		DrawBox(0, 108 * 3, BASICPARAM::winWidth, 108 * 4, GetColor(0, 0, 0), true);
 	}
-	if (adjustmentSceneFeed >= 50 && adjustmentSceneFeed <= 150)
+	if (adjustmentSceneFeed >= 25 && adjustmentSceneFeed <= 75)
 	{
 		DrawBox(0, 108 * 4, BASICPARAM::winWidth, 108 * 5, GetColor(0, 0, 0), true);
 	}
-	if (adjustmentSceneFeed >= 60 && adjustmentSceneFeed <= 160)
+	if (adjustmentSceneFeed >= 30 && adjustmentSceneFeed <= 80)
 	{
 		DrawBox(0, 108 * 5, BASICPARAM::winWidth, 108 * 6, GetColor(0, 0, 0), true);
 	}
-	if (adjustmentSceneFeed >= 70 && adjustmentSceneFeed <= 170)
+	if (adjustmentSceneFeed >= 35 && adjustmentSceneFeed <= 85)
 	{
 		DrawBox(0, 108 * 6, BASICPARAM::winWidth, 108 * 7, GetColor(0, 0, 0), true);
 	}
-	if (adjustmentSceneFeed >= 80 && adjustmentSceneFeed <= 180)
+	if (adjustmentSceneFeed >= 40 && adjustmentSceneFeed <= 90)
 	{
 		DrawBox(0, 108 * 7, BASICPARAM::winWidth, 108 * 8, GetColor(0, 0, 0), true);
 	}
-	if (adjustmentSceneFeed >= 90 && adjustmentSceneFeed <= 190)
+	if (adjustmentSceneFeed >= 45 && adjustmentSceneFeed <= 95)
 	{
 		DrawBox(0, 108 * 8, BASICPARAM::winWidth, 108 * 9, GetColor(0, 0, 0), true);
 	}
-	if (adjustmentSceneFeed >= 100 && adjustmentSceneFeed <= 200)
+	if (adjustmentSceneFeed >= 50 && adjustmentSceneFeed <= 100)
 	{
 		DrawBox(0, 108 * 9, BASICPARAM::winWidth, 108 * 10, GetColor(0, 0, 0), true);
 	}
@@ -636,7 +636,7 @@ void MainMove2::Process()
 	{
 		if (adjustmentStartFeed)
 		{
-			if (adjustmentSceneFeed <= 210)
+			if (adjustmentSceneFeed <= 100)
 			{
 				adjustmentSceneFeed++;
 			}

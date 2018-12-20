@@ -214,7 +214,7 @@ namespace SoundProcess
 	void DoSound(ESOUNDNAME_SE name, VECTOR area, int volume)
 	{
 		Set3DPositionSoundMem(VAdd(area, VScale(listenerArea, 0.1f)), se_sound[static_cast<int>(name)]);
-		Set3DRadiusSoundMem(volume3DRadius*5, se_sound[static_cast<int>(name)]);
+		Set3DRadiusSoundMem(volume3DRadius * 2, se_sound[static_cast<int>(name)]);
 
 		if (!se_playFlag[static_cast<int>(name)])
 		{

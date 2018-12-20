@@ -54,6 +54,15 @@ private:
 	// 動きのプロセス
 	void MoveProcess();
 
+	// 左足の位置
+	float leftFootArea;
+
+	// 動いているフレーム数
+	int underWalkCount;
+
+	// 片足が床に触れるフレーム数
+	int leftUnderTouchFrame;
+
 
 	/// 攻撃に関して-----------------------
 
@@ -93,6 +102,8 @@ private:
 	// ジャンプから床についたかどうか
 	bool preJumpNow;
 
+	// 浮いているフレーム数
+	int flyCount;
 
 	// 行動によってアニメーションの管理
 	void AnimProcess();

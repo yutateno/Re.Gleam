@@ -17,6 +17,49 @@ void CharacterSword::MoveProcess()
 			walkNow = false;
 			walkSpeed = 30.0f;
 		}
+
+
+		if (!jumpNow)
+		{
+			if (flyCount <= 10) flyCount = 0;
+			underWalkCount++;
+			if (underWalkCount == 1)
+			{
+				leftFootArea = MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y;
+				if (area.y >= 10.0f)
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
+				}
+				else
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot, area);
+				}
+			}
+			if (leftFootArea < MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y + 1.0f
+				&& leftFootArea > MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y - 1.0f)
+			{
+				underWalkCount = 2;
+				if (area.y >= 10.0f)
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
+				}
+				else
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot, area);
+				}
+			}
+			if (underWalkCount % 14 == 0 && underWalkCount != 0)
+			{
+				if (area.y >= 10.0f)
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
+				}
+				else
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot, area);
+				}
+			}
+		}
 	}
 	else
 	{
@@ -28,6 +71,7 @@ void CharacterSword::MoveProcess()
 		}
 		else
 		{
+			underWalkCount = 0;
 			walkNow = false;
 			walkSpeed = 0.0f;
 		}
@@ -283,7 +327,7 @@ void CharacterSword::JumpProcess()
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1
 		&& !jumpNow)
 	{
-		SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::jump, area, 125);
+		SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::jump, area);
 		jumpNow = true;					// ”ò‚ñ‚Å‚¢‚é
 		jumpUpNow = true;				// ã‚Éã‚ª‚Á‚Ä‚¢‚é
 		jumpPower = flyJumpPower;		// ”ò‚Ô‘¬“x‚ð‰Á‚¦‚é
@@ -306,6 +350,8 @@ void CharacterSword::JumpProcess()
 	// ”ò‚ñ‚Å‚¢‚é
 	if (jumpNow)
 	{
+		flyCount++;
+		underWalkCount = 0;
 		preJumpNow = true;
 		walkSpeed = 10.0f;
 		animSpeed = 1.0f;
@@ -335,16 +381,17 @@ void CharacterSword::JumpProcess()
 	}
 
 
-	if (!jumpNow && preJumpNow)
+	if (!jumpNow && preJumpNow && flyCount > 10)
 	{
+		flyCount = 0;
 		preJumpNow = false;
 		if (area.y >= 10.0f)
 		{
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::landing, area);
 		}
 		else
 		{
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot, area);
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::landing2, area);
 		}
 	}
 }
@@ -447,6 +494,9 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	direXAngle = 0.0f;
 	direZAngle = 0.0f;
 	walkNow = false;
+	leftFootArea = 0.0f;
+	underWalkCount = 0;
+	leftUnderTouchFrame = 13;
 
 
 	// ‘«Œ³‚Ì‰e‚ÉŠÖ‚·‚é
@@ -476,6 +526,7 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	flyJumpPower = 50.0f;
 	fallJumpPower = 3.0f;
 	preJumpNow = false;
+	flyCount = 0;
 
 
 	// ŠK’i

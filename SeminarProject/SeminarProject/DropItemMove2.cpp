@@ -4,17 +4,25 @@
 DropItemMove2::DropItemMove2(const int draw, VECTOR area, const int tex0) : BasicObject()
 {
 	// 初期位置を設定
+	this->area = area;
+
+
+	// 目的位置を設定
 	std::random_device rnd;     // 非決定的な乱数生成器を生成
 	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
-	std::uniform_int_distribution<> randInX(-20, 20);        // X座標用乱数
-	std::uniform_int_distribution<> randInZ(-20, 20);        // Z座標用乱数
-	this->area = VAdd(area, VGet(static_cast<float>(randInX(mt)), 0.0f, static_cast<float>(randInZ(mt))));
+	std::uniform_int_distribution<> randInX(-50, 50);        // X座標用乱数
+	std::uniform_int_distribution<> randInZ(-50, 50);        // Z座標用乱数
+	nextAreaX = static_cast<float>(randInX(mt));
+	nextAreaZ = static_cast<float>(randInZ(mt));
+
 
 	// モデルデータの読み込み
 	this->modelHandle = -1;
 	this->modelHandle = MV1DuplicateModel(draw);
 
 	rotationY = 0;
+
+	flyAroundFrame = 0;
 
 	deathNow = false;
 
@@ -56,6 +64,14 @@ void DropItemMove2::Process()
 	if (deathNow || !aliveNow) return;
 
 	if (++rotationY >= 180) rotationY = 0;
+
+	if (flyAroundFrame++ < 120)
+	{
+		area.x += nextAreaX / 20.0f;
+		area.z += nextAreaZ / 20.0f;
+
+		area.y -= (DX_PI_F * 2 / 120 * flyAroundFrame) * 200;
+	}
 
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, rotationY * DX_PI_F / 180.0f, 0.0f));
 }

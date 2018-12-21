@@ -531,6 +531,11 @@ Manager::Manager()
 	move2str[37] = "media\\こっち\\media\\sound\\着地.wyn";
 	move2str[38] = "media\\こっち\\media\\sound\\着地２.wyn";
 
+	// キャラクターの攻撃の音
+	move2str[39] = "media\\こっち\\media\\sound\\piano攻撃音1.wyn";
+	move2str[40] = "media\\こっち\\media\\sound\\piano攻撃音2.wyn";
+	move2str[41] = "media\\こっち\\media\\sound\\piano攻撃音3.wyn";
+
 
 	load2[0] = ELOADFILE::mv1model;
 	load2[1] = ELOADFILE::mv1model;
@@ -580,6 +585,10 @@ Manager::Manager()
 	load2[36] = ELOADFILE::sound3DSource;
 	load2[37] = ELOADFILE::sound3DSource;
 	load2[38] = ELOADFILE::sound3DSource;
+
+	load2[39] = ELOADFILE::sound3DSource;
+	load2[40] = ELOADFILE::sound3DSource;
+	load2[41] = ELOADFILE::sound3DSource;
 	/// ---------------------------------------------------------------------------------------------------
 
 
@@ -698,8 +707,9 @@ void Manager::Update()
 					p_baseMove->Process();
 
 
-					// オプション画面に移行するコマンドを押されたら
-					if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1)
+					// オプション画面に移行するコマンドを押されたら、またはウィンドウズが非アクティブになったら
+					if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1
+						|| !GetWindowActiveFlag())
 					{
 						// 現在の画面をキャプチャする
 						GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, gaussianScreen);	

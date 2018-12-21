@@ -41,10 +41,10 @@ private:
 	const int max2 = 39;
 
 	// ムーブ2のロードファイル
-	std::string move2str[39];
+	std::string move2str[42];
 
 	// ムーブ2のロードの種類
-	ELOADFILE load2[39];
+	ELOADFILE load2[42];
 
 
 	// アンチエイリアスの画像

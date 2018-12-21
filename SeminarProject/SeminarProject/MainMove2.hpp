@@ -28,6 +28,7 @@ private:
 		, stairsRoad, stairsRoadTex0, stairsRoadTex1, stairsRoadColl
 		, block2D, character2D, streetLight2D, stairs2D, terminal2D, stairsRoad2D
 		, jump3DSE, footCorridor3DSE, foot3DSE, landing3DSE, landingSecond3DSE
+		, charaAttackOne3DSE, charaAttackTwo3DSE, charaAttackThree3DSE
 	};
 
 

@@ -313,7 +313,6 @@ void MainMove2::AttackProcess()
 		&& !p_character->GetAttackNow() && p_character->GetArea().y <= 10.0f
 		&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(),DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
 	{
-		//printfDx("移れー");
 		//GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, adjustmentDrawScreen);
 		adjustmentFeedNow = true;
 		adjustmentStartFeed = true;
@@ -332,9 +331,9 @@ void MainMove2::AttackProcess()
 	/// ドロップに関する--------------------------------------------------------------------------------------
 	for (int i = 0, n = enemyNum * 5; i != n; ++i)
 	{
-		if (p_dropItem[i]->GetDeath() || !p_dropItem[i]->GetAlive()) continue;
+		if (p_dropItem[i]->GetDeath() || !p_dropItem[i]->GetAlive() || !p_dropItem[i]->GetCanCatch()) continue;
 
-		if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 50)
+		if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 75)
 		{
 			catchDropItemNum++;
 			p_dropItem[i]->SetDeath(true);			// 生きさせない
@@ -482,6 +481,9 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	SoundProcess::Load(v_file[EFILE::foot3DSE]			, SoundProcess::ESOUNDNAME_SE::foot);
 	SoundProcess::Load(v_file[EFILE::landing3DSE]		, SoundProcess::ESOUNDNAME_SE::landing);
 	SoundProcess::Load(v_file[EFILE::landingSecond3DSE]	, SoundProcess::ESOUNDNAME_SE::landing2);
+	SoundProcess::Load(v_file[EFILE::charaAttackOne3DSE], SoundProcess::ESOUNDNAME_SE::pianoAttack1);
+	SoundProcess::Load(v_file[EFILE::charaAttackTwo3DSE], SoundProcess::ESOUNDNAME_SE::pianoAttack2);
+	SoundProcess::Load(v_file[EFILE::charaAttackThree3DSE], SoundProcess::ESOUNDNAME_SE::pianoAttack3);
 }
 
 

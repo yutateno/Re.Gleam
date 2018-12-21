@@ -209,7 +209,7 @@ void CharacterSword::AttackProcess()
 			attackNow = true;					// 攻撃しているフラッグを立てる
 			attackNumber = MOTION::action1;		// 攻撃コマンド番号を1番にする
 
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack1, area);
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack1, MV1GetFramePosition(modelHandle, 67));
 		}
 		// 二回目以降の攻撃時
 		else if (attackFrame < 10.0f)
@@ -238,14 +238,14 @@ void CharacterSword::AttackProcess()
 				animSpeed = 0.4f;									// アニメーション速度を変更
 				attackNumber = MOTION::action2;
 				preAttackNumber = attackNumber;
-				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack2, area);
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack2, MV1GetFramePosition(modelHandle, 67));
 				break;
 			// 二コンボ目の攻撃時
 			case MOTION::action2:
 				animSpeed = 0.4f;									// アニメーション速度を変更
 				attackNumber = MOTION::action3;
 				preAttackNumber = attackNumber;
-				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack3, area);
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack3, MV1GetFramePosition(modelHandle, 67));
 				break;
 			// 最後の攻撃時
 			case MOTION::action3:
@@ -253,7 +253,6 @@ void CharacterSword::AttackProcess()
 				attackNumber = MOTION::action1;
 				preAttackNumber = attackNumber;
 				walkSpeed = 0.0f;
-				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack1, area);
 				break;
 			}
 

@@ -10,10 +10,11 @@ DropItemMove2::DropItemMove2(const int draw, VECTOR area, const int tex0) : Basi
 	// 目的位置を設定
 	std::random_device rnd;     // 非決定的な乱数生成器を生成
 	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
-	std::uniform_int_distribution<> randInX(-50, 50);        // X座標用乱数
-	std::uniform_int_distribution<> randInZ(-50, 50);        // Z座標用乱数
+	std::uniform_int_distribution<> randInX(-250, 250);        // X座標用乱数
+	std::uniform_int_distribution<> randInZ(-250, 250);        // Z座標用乱数
 	nextAreaX = static_cast<float>(randInX(mt));
 	nextAreaZ = static_cast<float>(randInZ(mt));
+	moveAreaY = 0;
 
 
 	// モデルデータの読み込み
@@ -65,15 +66,16 @@ void DropItemMove2::Process()
 
 	if (++rotationY >= 180) rotationY = 0;
 
-	if (flyAroundFrame++ < 120)
+	if (flyAroundFrame++ < 60)
 	{
-		area.x += nextAreaX / 20.0f;
-		area.z += nextAreaZ / 20.0f;
+		area.x += nextAreaX / 60.0f;
+		area.z += nextAreaZ / 60.0f;
 
-		area.y -= (DX_PI_F * 2 / 120 * flyAroundFrame) * 200;
+		moveAreaY = (sin(-DX_PI_F / 2 + DX_PI_F / 30 * flyAroundFrame) + 1) / 2 * 120;
 	}
 
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, rotationY * DX_PI_F / 180.0f, 0.0f));
+	MV1SetPosition(this->modelHandle, VGet(area.x, area.y + moveAreaY, area.z));
 }
 
 

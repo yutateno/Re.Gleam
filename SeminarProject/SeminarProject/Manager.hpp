@@ -38,7 +38,7 @@ private:
 	/// ムーブ２に関する--------------
 
 	// ムーブ2のロード数
-	const int max2 = 39;
+	const int max2 = 42;
 
 	// ムーブ2のロードファイル
 	std::string move2str[42];

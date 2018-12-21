@@ -24,6 +24,7 @@ private:
 	// 飛び散った先の座標
 	float nextAreaX;
 	float nextAreaZ;
+	float moveAreaY;
 
 public:
 	DropItemMove2(const int draw, VECTOR area, const int tex0);
@@ -55,6 +56,6 @@ public:
 	const bool GetAlive() { return aliveNow; }
 
 	// 目的の座標に達したことでキャラクターが手に入れられるかどうか
-	const bool GetCanCatch() { return flyAroundFrame >= 120 ? true : false; }
+	const bool GetCanCatch() { return flyAroundFrame >= 60 ? true : false; }
 };
 

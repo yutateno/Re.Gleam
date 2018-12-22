@@ -152,4 +152,7 @@ public:
 
 	// テクスチャの切り替え
 	void TextureReload() override {}
+
+	// オプション画面でのモデル表示
+	void OptionActorModel() override;
 };

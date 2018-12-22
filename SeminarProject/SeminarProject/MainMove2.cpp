@@ -734,3 +734,8 @@ void MainMove2::TextureReload()
 	ths = std::thread(&MainMove2::ThsTextureReload, this);
 	ths.join();
 }
+
+void MainMove2::OptionActorModel()
+{
+	p_character->OptionActorDraw();
+}

@@ -290,7 +290,9 @@ void Manager::OptionDraw()
 {
 	// 背景
 	DrawGraph(0, 0, gaussianScreen, false);
-	
+
+	///　モデル表示-------------------------------------------------------------
+	p_baseMove->OptionActorModel();
 
 	/// サウンド関係オプション-----------------------------------------------
 	// UI:Sound
@@ -367,12 +369,6 @@ void Manager::OptionDraw()
 		DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(255, 0, 0), false);
 	}
 	if (BASICPARAM::e_nowScene < ESceneNumber::THIRDMOVE) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-
-
-	///　モデル表示-------------------------------------------------------------
-	/*DrawBox(1252, 94, 1252 + 589, 94 + 897, GetColor(255, 255, 255), true);
-	DrawBox(1252, 94, 1252 + 589, 94 + 897, GetColor(0, 0, 0), false);
-	DrawFormatString(1252, 94, 255, "モデル");*/
 
 
 	/// カメラの関するオプション------------------------------------------------
@@ -766,7 +762,7 @@ void Manager::Update()
 						GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, gaussianScreen);	
 
 						// 現在の画面にガウスフィルタかけてぼかす
-						GraphFilter(gaussianScreen, DX_GRAPH_FILTER_GAUSS, 16, 1400);				
+						GraphFilter(gaussianScreen, DX_GRAPH_FILTER_GAUSS, 8, 1400);				
 						
 
 						// オプションメニューに移行するフラッグを立てる

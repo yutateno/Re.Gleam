@@ -117,6 +117,8 @@ BasicObject::BasicObject(const int collStageHandle)
 
 	notViewCount = 0;
 
+	optionRotaCount = 0;
+
 
 	// ‰Šú‰»
 	modelHeight = 0;
@@ -169,4 +171,13 @@ void BasicObject::Draw()
 			MV1DrawModel(modelHandle);
 		}
 	}
+}
+
+void BasicObject::OptionActorDraw()
+{
+	if (++optionRotaCount > 360) optionRotaCount = 0;
+	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 0.0f, -650.0f), VGet(0.0f, 0.0f, 0.0f));
+	MV1DrawModel(modelHandle);
+	MV1SetRotationXYZ(modelHandle, VGet(0.0f, optionRotaCount * DX_PI_F / 180.0f, 0.0f));
+	MV1SetPosition(modelHandle, VGet(150.0f, -110.0f, -370.0f));
 }

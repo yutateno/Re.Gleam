@@ -609,3 +609,8 @@ void MainMove1::CameraProcess()
 {
 	p_camera->SetUp();
 }
+
+void MainMove1::OptionActorModel()
+{
+	p_character->OptionActorDraw();
+}

@@ -52,6 +52,9 @@ private:
 	// 画面外に外れて描画させなくするまでのカウント
 	int notViewCount;
 
+	// オプションでの回転数
+	int optionRotaCount;
+
 public:
 	// コンストラクタ
 	BasicObject();
@@ -65,6 +68,9 @@ public:
 
 	// 描画
 	void Draw();
+
+	// オプション用モデル描画
+	void OptionActorDraw();
 
 
 	/// ゲッターセッター

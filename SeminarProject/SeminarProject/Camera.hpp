@@ -31,9 +31,8 @@ private:
 	float speed;
 
 	// ‰ñ“]‚ğs‚¤ŠÖ”
-	void RLrotate(const float speed, float& axisOne, float& axisTwo, const float viewOne, const float viewTwo);
+	void RLrotate(const float speed, float& axisOne, float& axisTwo);
 
-	float upDownAngle;
 	VECTOR zRota;
 
 public:

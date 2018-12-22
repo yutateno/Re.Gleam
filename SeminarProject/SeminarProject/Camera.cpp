@@ -19,7 +19,6 @@ Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 
 	speed = DX_PI_F / 90;
 	angle = 0.0f;
-	upDownAngle = 0.0f;
 
 	zRota = VGet(0, 530, 700);
 	cameraPerspectiveArea = VGet(0, 530, 700);
@@ -60,25 +59,27 @@ void Camera::Process(const VECTOR charaarea)
 	// ¶‚É‰ñ“]’†
 	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) < 0)
 	{
-		RLrotate(speed, cameraPerspectiveArea.x, cameraPerspectiveArea.z, perspesctiveViewArea.x, perspesctiveViewArea.z);	// ‰ñ“]ˆ—
-		RLrotate(speed, cameraOrthoArea.x, cameraOrthoArea.z, orthoViewArea.x, orthoViewArea.z);	// ‰ñ“]ˆ—
-		if (angle >= DX_TWO_PI_F)
+		RLrotate(speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f), cameraPerspectiveArea.x, cameraPerspectiveArea.z);	// ‰ñ“]ˆ—
+		RLrotate(speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f), cameraOrthoArea.x, cameraOrthoArea.z);	// ‰ñ“]ˆ—
+		if ((angle >= DX_TWO_PI_F && !BASICPARAM::cameraHorizonReturn)
+			|| (angle <= -DX_TWO_PI_F && BASICPARAM::cameraHorizonReturn))
 		{
 			angle = 0;
 		}
-		angle += speed;
+		angle = angle + (speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f));
 		//printfDx("%f\n", angle);
 	}
 	// ‰E‚É‰ñ“]’†
 	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) > 0)
 	{
-		RLrotate(-speed, cameraPerspectiveArea.x, cameraPerspectiveArea.z, perspesctiveViewArea.x, perspesctiveViewArea.z);	// ‰ñ“]ˆ—
-		RLrotate(-speed, cameraOrthoArea.x, cameraOrthoArea.z, orthoViewArea.x, orthoViewArea.z);			// ‰ñ“]ˆ—
-		if (angle <= -DX_TWO_PI_F)
+		RLrotate(-speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f), cameraPerspectiveArea.x, cameraPerspectiveArea.z);	// ‰ñ“]ˆ—
+		RLrotate(-speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f), cameraOrthoArea.x, cameraOrthoArea.z);			// ‰ñ“]ˆ—
+		if ((angle <= -DX_TWO_PI_F && !BASICPARAM::cameraHorizonReturn)
+			|| (angle >= DX_TWO_PI_F && BASICPARAM::cameraHorizonReturn))
 		{
 			angle = 0;
 		}
-		angle -= speed;
+		angle = angle - (speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f));
 		//printfDx("%f\n", angle);
 	}
 	// ã‰º‰ñ“]
@@ -87,20 +88,22 @@ void Camera::Process(const VECTOR charaarea)
 		// ã‚É‰ñ“]’†
 		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_Y) > 0)
 		{
-			if (zRota.y <= 600.0f)
+			if ((zRota.y <= 600.0f && !BASICPARAM::cameraVerticalReturn)
+				|| (zRota.y >= 0.0f && BASICPARAM::cameraVerticalReturn))
 			{
 				VECTOR temp = VSub(cameraPerspectiveArea, zRota);
-				RLrotate(-speed, zRota.z, zRota.y, perspesctiveViewArea.z, perspesctiveViewArea.y);	// ‰ñ“]ˆ—
+				RLrotate(-speed * (BASICPARAM::cameraVerticalReturn ? -1.0f : 1.0f), zRota.z, zRota.y);	// ‰ñ“]ˆ—
 				cameraPerspectiveArea = VAdd(VGet(cameraPerspectiveArea.x, 0, cameraPerspectiveArea.z), VGet(0, zRota.y + temp.y, 0));
 			}
 		}
 		// ‰º‚É‰ñ“]
 		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_Y) < 0)
 		{
-			if (zRota.y >= 0.0f)
+			if ((zRota.y >= 0.0f && !BASICPARAM::cameraVerticalReturn)
+				|| (zRota.y <= 600.0f && BASICPARAM::cameraVerticalReturn))
 			{
 				VECTOR temp = VSub(cameraPerspectiveArea, zRota);
-				RLrotate(speed, zRota.z, zRota.y, perspesctiveViewArea.z, perspesctiveViewArea.y);	// ‰ñ“]ˆ—
+				RLrotate(speed * (BASICPARAM::cameraVerticalReturn ? -1.0f : 1.0f), zRota.z, zRota.y);	// ‰ñ“]ˆ—
 				cameraPerspectiveArea = VAdd(VGet(cameraPerspectiveArea.x, 0, cameraPerspectiveArea.z), VGet(0, zRota.y + temp.y, 0));
 			}
 		}
@@ -155,12 +158,10 @@ const VECTOR Camera::GetArea()
 }
 
 // angŠp‰ñ“]‚·‚é
-void Camera::RLrotate(const float speed, float& axisOne, float& axisTwo, const float viewOne, const float viewTwo)
+void Camera::RLrotate(const float speed, float& axisOne, float& axisTwo)
 {
-	const float tempX = axisOne - viewOne;
-	const float tempY = axisTwo - viewTwo;
+	const float tempX = axisOne;
+	const float tempY = axisTwo;
 	axisOne = tempX * cosf(speed) + tempY * sinf(speed);
 	axisTwo = -tempX * sinf(speed) + tempY * cosf(speed);
-	axisOne += viewOne;
-	axisTwo += viewTwo;
 }

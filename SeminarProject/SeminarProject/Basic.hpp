@@ -71,6 +71,12 @@ namespace BASICPARAM
 
 	// ŠK’i‚Æ°‚ÌÀ•W
 	extern std::vector<VECTOR> v_stairsRoadArea;
+
+	// ƒJƒƒ‰‚Ì‰¡”½“]‚·‚é‚©‚Ç‚¤‚©
+	extern bool cameraHorizonReturn;
+
+	// ƒJƒƒ‰‚Ìc”½“]‚·‚é‚©‚Ç‚¤‚©
+	extern bool cameraVerticalReturn;
 }
 
 

@@ -17,6 +17,8 @@ int BASICPARAM::streetLightNum;
 std::vector<VECTOR> BASICPARAM::v_streetLightArea; 
 int BASICPARAM::stairsRoadNum;
 std::vector<VECTOR> BASICPARAM::v_stairsRoadArea;
+bool BASICPARAM::cameraHorizonReturn;
+bool BASICPARAM::cameraVerticalReturn;
 
 
 // debug

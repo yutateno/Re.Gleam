@@ -384,6 +384,8 @@ Manager::Manager()
 	BASICPARAM::e_preTextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::e_TextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::nowCameraOrtho = false;
+	BASICPARAM::cameraHorizonReturn = true;
+	BASICPARAM::cameraVerticalReturn = true;
 
 
 	/// シーン１の素材ファイル-----------------------------------------------------------------------------

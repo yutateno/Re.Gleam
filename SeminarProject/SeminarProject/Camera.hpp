@@ -11,13 +11,15 @@ private:
 	VECTOR cameraOrthoArea;				// 正射影カメラ
 
 	// 注視する方向
-	VECTOR viewArea;
+	VECTOR perspesctiveViewArea;		// 遠近法カメラ
+	VECTOR orthoViewArea;				// 正射影カメラ
 
 	// キャラ位置
 	VECTOR charaArea;
 
 	// キャラクターのアングル
 	float angle;
+
 
 	// 当たり判定用ステージ
 	int stageHandle;
@@ -29,8 +31,10 @@ private:
 	float speed;
 
 	// 回転を行う関数
-	void RLrotate(const float speed, VECTOR& p_cameraArea);
+	void RLrotate(const float speed, float& axisOne, float& axisTwo, const float viewOne, const float viewTwo);
 
+	float upDownAngle;
+	VECTOR zRota;
 
 public:
 	// キャラの位置を引数に取ったコンストラクタ

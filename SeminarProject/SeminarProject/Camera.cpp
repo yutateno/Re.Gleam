@@ -12,13 +12,16 @@ Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 	MV1RefreshCollInfo(stageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 
 
-	viewArea = VGet(0, 150, 0);
+	perspesctiveViewArea = VGet(0, 150, 0);
+	orthoViewArea = VGet(0, 150, 0);
 
 	charaArea = VAdd(charaarea, VGet(0.0f, 80.0f, 0.0f));
 
 	speed = DX_PI_F / 90;
 	angle = 0.0f;
+	upDownAngle = 0.0f;
 
+	zRota = VGet(0, 530, 700);
 	cameraPerspectiveArea = VGet(0, 530, 700);
 	cameraOrthoArea = VGet(0, 1700, 2430);
 	orthoArea = 2200.0f;
@@ -28,7 +31,7 @@ Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 		SetCameraNearFar(100.0f, 10000.0f);	// カメラの描画範囲を指定
 
 		// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
-		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea), VAdd(viewArea, charaArea));
+		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea), VAdd(perspesctiveViewArea, charaArea));
 		SoundProcess::Set3DRadius(VSize(cameraPerspectiveArea));
 	}
 	else
@@ -36,7 +39,7 @@ Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 		SetupCamera_Ortho(orthoArea);
 
 		// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
-		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea), VAdd(viewArea, charaArea));
+		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea), VAdd(orthoViewArea, charaArea));
 		SoundProcess::Set3DRadius(VSize(cameraOrthoArea));
 	}
 }
@@ -57,26 +60,61 @@ void Camera::Process(const VECTOR charaarea)
 	// 左に回転中
 	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) < 0)
 	{
-		RLrotate(speed, cameraPerspectiveArea);	// 回転処理
-		RLrotate(speed, cameraOrthoArea);	// 回転処理
+		RLrotate(speed, cameraPerspectiveArea.x, cameraPerspectiveArea.z, perspesctiveViewArea.x, perspesctiveViewArea.z);	// 回転処理
+		RLrotate(speed, cameraOrthoArea.x, cameraOrthoArea.z, orthoViewArea.x, orthoViewArea.z);	// 回転処理
+		if (angle >= DX_TWO_PI_F)
+		{
+			angle = 0;
+		}
 		angle += speed;
+		//printfDx("%f\n", angle);
 	}
 	// 右に回転中
 	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) > 0)
 	{
-		RLrotate(-speed, cameraPerspectiveArea);	// 回転処理
-		RLrotate(-speed, cameraOrthoArea);			// 回転処理
+		RLrotate(-speed, cameraPerspectiveArea.x, cameraPerspectiveArea.z, perspesctiveViewArea.x, perspesctiveViewArea.z);	// 回転処理
+		RLrotate(-speed, cameraOrthoArea.x, cameraOrthoArea.z, orthoViewArea.x, orthoViewArea.z);			// 回転処理
+		if (angle <= -DX_TWO_PI_F)
+		{
+			angle = 0;
+		}
 		angle -= speed;
+		//printfDx("%f\n", angle);
+	}
+	// 上下回転
+	if (!BASICPARAM::nowCameraOrtho)
+	{
+		// 上に回転中
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_Y) > 0)
+		{
+			if (zRota.y <= 600.0f)
+			{
+				VECTOR temp = VSub(cameraPerspectiveArea, zRota);
+				RLrotate(-speed, zRota.z, zRota.y, perspesctiveViewArea.z, perspesctiveViewArea.y);	// 回転処理
+				cameraPerspectiveArea = VAdd(VGet(cameraPerspectiveArea.x, 0, cameraPerspectiveArea.z), VGet(0, zRota.y + temp.y, 0));
+			}
+		}
+		// 下に回転
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_Y) < 0)
+		{
+			if (zRota.y >= 0.0f)
+			{
+				VECTOR temp = VSub(cameraPerspectiveArea, zRota);
+				RLrotate(speed, zRota.z, zRota.y, perspesctiveViewArea.z, perspesctiveViewArea.y);	// 回転処理
+				cameraPerspectiveArea = VAdd(VGet(cameraPerspectiveArea.x, 0, cameraPerspectiveArea.z), VGet(0, zRota.y + temp.y, 0));
+			}
+		}
 	}
 
 
-	SoundProcess::SetLisnerViewArea(viewArea);
 	if (!BASICPARAM::nowCameraOrtho)
 	{
+		SoundProcess::SetLisnerViewArea(perspesctiveViewArea);
 		SoundProcess::SetLisnerArea(cameraPerspectiveArea);
 	}
 	else
 	{
+		SoundProcess::SetLisnerViewArea(orthoViewArea);
 		SoundProcess::SetLisnerArea(cameraOrthoArea);
 	}
 }
@@ -89,7 +127,7 @@ void Camera::SetUp()
 		SetCameraNearFar(100.0f, 10000.0f);	// カメラの描画範囲を指定
 
 		// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
-		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea), VAdd(viewArea, charaArea));
+		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea), VAdd(perspesctiveViewArea, charaArea));
 		SoundProcess::SetLisnerArea(cameraPerspectiveArea);
 		SoundProcess::Set3DRadius(VSize(cameraPerspectiveArea));
 	}
@@ -98,7 +136,7 @@ void Camera::SetUp()
 		SetupCamera_Ortho(orthoArea);
 
 		// 第一引数の視点から第二引数のターゲットを見る角度にカメラを設置
-		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea), VAdd(viewArea, charaArea));
+		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea), VAdd(orthoViewArea, charaArea));
 		SoundProcess::SetLisnerArea(cameraOrthoArea);
 		SoundProcess::Set3DRadius(VSize(cameraOrthoArea));
 	}
@@ -117,9 +155,12 @@ const VECTOR Camera::GetArea()
 }
 
 // ang角回転する
-void Camera::RLrotate(const float speed, VECTOR& p_cameraArea)
+void Camera::RLrotate(const float speed, float& axisOne, float& axisTwo, const float viewOne, const float viewTwo)
 {
-	float tempX = p_cameraArea.x;
-	p_cameraArea.x = tempX * cosf(speed) + p_cameraArea.z *sinf(speed);
-	p_cameraArea.z = -tempX * sinf(speed) + p_cameraArea.z * cosf(speed);
+	const float tempX = axisOne - viewOne;
+	const float tempY = axisTwo - viewTwo;
+	axisOne = tempX * cosf(speed) + tempY * sinf(speed);
+	axisTwo = -tempX * sinf(speed) + tempY * cosf(speed);
+	axisOne += viewOne;
+	axisTwo += viewTwo;
 }

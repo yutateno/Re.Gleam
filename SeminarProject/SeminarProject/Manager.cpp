@@ -13,7 +13,7 @@ void Manager::SceneChange()
 	case ESceneNumber::FIRSTMOVE:
 		BASICPARAM::startFeedNow = true;
 		feedCount = 255;
-		for (int i = 0; i != 10; ++i)
+		for (int i = 0; i != optionDrawNum; ++i)
 		{
 			int temp = i + 14;
 			optionDrawMedia[i] = p_loadThread->GetFile()[temp];
@@ -102,7 +102,7 @@ void Manager::OptionProcess()
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
 		{
 			// 白黒画像ではなかったら通常色に変える
-			/*if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK)*/ BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
+			if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK) BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
 			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
 			{
 				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
@@ -112,7 +112,7 @@ void Manager::OptionProcess()
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorP)
 		{
 			// 白黒画像ではなかったらP型補正色に変える
-			/*if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK)*/ BASICPARAM::e_TextureColor = ETextureColor::P_CORRECTION;
+			if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK) BASICPARAM::e_TextureColor = ETextureColor::P_CORRECTION;
 			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
 			{
 				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
@@ -122,14 +122,15 @@ void Manager::OptionProcess()
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorD)
 		{
 			// 白黒画像ではなかったらD型補正色に変える
-			/*if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK)*/ BASICPARAM::e_TextureColor = ETextureColor::D_CORRECTION;
+			if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK) BASICPARAM::e_TextureColor = ETextureColor::D_CORRECTION;
 			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
 			{
 				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
 				p_baseMove->TextureReload();		// テクスチャ切り替え
 			}
 		}
-		else if (optionSelectButtonNum == EOptionSelectButton::ColorSelect)
+		else if (optionSelectButtonNum == EOptionSelectButton::ColorSelect
+			&& BASICPARAM::e_nowScene >= ESceneNumber::THIRDMOVE)
 		{
 			optionSelectButtonNum = EOptionSelectButton::ColorNormal;
 			optionSelectMin = 5;
@@ -158,7 +159,7 @@ void Manager::OptionProcess()
 		{
 			optionSelectButtonNum = EOptionSelectButton::CameraPerspective;
 			optionSelectMin = 10;
-			optionSelectMax = 11;
+			optionSelectMax = 13;
 		}
 		else if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective)
 		{
@@ -169,6 +170,14 @@ void Manager::OptionProcess()
 		{
 			BASICPARAM::nowCameraOrtho = true;
 			p_baseMove->CameraProcess();		// カメラ切り替え
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::CameraHReturn)
+		{
+			BASICPARAM::cameraHorizonReturn = !BASICPARAM::cameraHorizonReturn;
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::CameraVReturn)
+		{
+			BASICPARAM::cameraVerticalReturn = !BASICPARAM::cameraVerticalReturn;
 		}
 	}
 	///-----------------------------------------------------------------------------------------------------------
@@ -229,6 +238,18 @@ void Manager::OptionProcess()
 			optionSelectMax = 2;
 		}
 		else if (optionSelectButtonNum == EOptionSelectButton::CameraOrtho)
+		{
+			optionSelectButtonNum = EOptionSelectButton::Camera;
+			optionSelectMin = 0;
+			optionSelectMax = 2;
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::CameraHReturn)
+		{
+			optionSelectButtonNum = EOptionSelectButton::Camera;
+			optionSelectMin = 0;
+			optionSelectMax = 2;
+		}
+		else if (optionSelectButtonNum == EOptionSelectButton::CameraVReturn)
 		{
 			optionSelectButtonNum = EOptionSelectButton::Camera;
 			optionSelectMin = 0;
@@ -318,6 +339,7 @@ void Manager::OptionDraw()
 
 	/// 色覚に関するオプション----------------------------------------------
 	// UI:色覚調整
+	if (BASICPARAM::e_nowScene < ESceneNumber::THIRDMOVE) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
 	DrawGraph(96, 413, optionDrawMedia[static_cast<int>(EOptionDraw::Color)], false);
 	if (optionSelectButtonNum == EOptionSelectButton::ColorSelect)
 	{
@@ -344,6 +366,7 @@ void Manager::OptionDraw()
 	{
 		DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(255, 0, 0), false);
 	}
+	if (BASICPARAM::e_nowScene < ESceneNumber::THIRDMOVE) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
 
 	///　モデル表示-------------------------------------------------------------
@@ -361,18 +384,40 @@ void Manager::OptionDraw()
 	}
 
 	// 遠近法
+	if (BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
 	DrawGraph(385, 843, optionDrawMedia[static_cast<int>(EOptionDraw::Perspective)], false);
 	if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective)
 	{
 		DrawBox(385, 843, 385 + 83, 843 + 58, GetColor(255, 0, 0), false);
 	}
+	if (BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
 	// 正射影
+	if (!BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
 	DrawGraph(385, 970, optionDrawMedia[static_cast<int>(EOptionDraw::Ortho)], false);
 	if (optionSelectButtonNum == EOptionSelectButton::CameraOrtho)
 	{
 		DrawBox(385, 970, 385 + 83, 970 + 58, GetColor(255, 0, 0), false);
 	}
+	if (!BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+	// 横反転
+	if (!BASICPARAM::cameraHorizonReturn) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
+	DrawGraph(568, 843, optionDrawMedia[static_cast<int>(EOptionDraw::HorizonReturn)], false);
+	if (optionSelectButtonNum == EOptionSelectButton::CameraHReturn)
+	{
+		DrawBox(568, 843, 568 + 83, 843 + 58, GetColor(255, 0, 0), false);
+	}
+	if (!BASICPARAM::cameraHorizonReturn) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+	// 縦反転
+	if (!BASICPARAM::cameraVerticalReturn) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
+	DrawGraph(568, 970, optionDrawMedia[static_cast<int>(EOptionDraw::VerticalReturn)], false);
+	if (optionSelectButtonNum == EOptionSelectButton::CameraVReturn)
+	{
+		DrawBox(568, 970, 568 + 83, 970 + 58, GetColor(255, 0, 0), false);
+	}
+	if (!BASICPARAM::cameraVerticalReturn) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 }
 
 
@@ -424,6 +469,8 @@ Manager::Manager()
 	move1str[21] = "media\\こっち\\media\\option\\色覚調整.pyn";
 	move1str[22] = "media\\こっち\\media\\option\\正射影.pyn";
 	move1str[23] = "media\\こっち\\media\\option\\通常色.pyn";
+	move1str[24] = "media\\こっち\\media\\option\\横反転.pyn";
+	move1str[25] = "media\\こっち\\media\\option\\縦反転.pyn";
 
 	// モデルデータ
 	load1[0] = ELOADFILE::mv1model;
@@ -460,6 +507,8 @@ Manager::Manager()
 	load1[21] = ELOADFILE::graph;
 	load1[22] = ELOADFILE::graph;
 	load1[23] = ELOADFILE::graph;
+	load1[24] = ELOADFILE::graph;
+	load1[25] = ELOADFILE::graph;
 	/// ---------------------------------------------------------------------------------------------------
 
 
@@ -617,7 +666,7 @@ Manager::Manager()
 	optionSelectMin = 0;
 	optionSelectMax = 2;
 	seDoWaitTimer = 0;
-	for (int i = 0; i != 10; ++i)
+	for (int i = 0; i != optionDrawNum; ++i)
 	{
 		optionDrawMedia[i] = -1;
 	}
@@ -639,7 +688,7 @@ Manager::Manager()
 
 Manager::~Manager()
 {
-	for (int i = 0; i != 10; ++i)
+	for (int i = 0; i != optionDrawNum; ++i)
 	{
 		GRAPHIC_RELEASE(optionDrawMedia[i]);
 	}

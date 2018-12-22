@@ -26,13 +26,13 @@ private:
 	/// ムーブ１に関する----------------
 
 	// ムーブ1のロード数
-	const int max1 = 24;
+	const int max1 = 26;
 
 	// ムーブ1のロードファイル
-	std::string move1str[24];
+	std::string move1str[26];
 
 	// ムーブ1のロードの種類
-	ELOADFILE load1[24];
+	ELOADFILE load1[26];
 
 
 	/// ムーブ２に関する--------------
@@ -73,7 +73,7 @@ private:
 
 	// オプション画面のID
 	enum class EOptionSelectButton { Sound, ColorSelect, Camera, BGM, SE, ColorNormal, ColorP, ColorD
-		, BGMSelect, SESelect, CameraPerspective, CameraOrtho };
+		, BGMSelect, SESelect, CameraPerspective, CameraOrtho, CameraHReturn, CameraVReturn };
 
 	// オプション画面の選択ボタン
 	EOptionSelectButton optionSelectButtonNum;
@@ -94,10 +94,13 @@ private:
 	std::thread thsTexture;
 
 	// オプション用画像ID
-	enum class EOptionDraw { BGM, Camera, ColorD, ColorP, SE, Sound, Perspective, Color, Ortho, ColorNormal };
+	enum class EOptionDraw { BGM, Camera, ColorD, ColorP, SE, Sound, Perspective, Color, Ortho, ColorNormal, HorizonReturn, VerticalReturn };
 
 	// オプション用画像
-	int optionDrawMedia[10];
+	int optionDrawMedia[12];
+
+	// オプション用画像個数
+	const int optionDrawNum = 12;
 
 
 

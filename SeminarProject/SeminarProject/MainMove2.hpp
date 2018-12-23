@@ -111,7 +111,7 @@ private:
 	void AdjustmentDraw();
 
 	// 精密機械からオブジェクト生成するID
-	enum class AdjustmentObject { Stairs, StreetLight, StairsRoad };
+	enum class AdjustmentObject { Stairs, StairsRoad, StreetLight};
 
 	// 精密機械からオブジェクト生成
 	void AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID, float direction);
@@ -142,6 +142,9 @@ private:
 
 	// 配置するオブジェクトの向き
 	float adjustmentArrangementDire;
+
+	// スティックの押し倒しかどうかを調べる(DLLXinputでやるべきなんだろうかとりあえず
+	int adjustmentControllStick[2];
 
 
 	/// カメラ-----------------------

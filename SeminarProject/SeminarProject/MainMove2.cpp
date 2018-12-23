@@ -75,17 +75,29 @@ void MainMove2::AdjustmentProcess()
 	}
 	else
 	{
-		if (CheckHitKey(KEY_INPUT_1) == 1)
+		// スティックの一回押し倒しで更新するよう調整。
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) < 0)
 		{
-			adjustmentSelectObjectNumber = AdjustmentObject::Stairs;
+			if (adjustmentControllStick[0] < 2) adjustmentControllStick[0]++;
 		}
-		if (CheckHitKey(KEY_INPUT_2) == 1)
+		else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
 		{
-			adjustmentSelectObjectNumber = AdjustmentObject::StairsRoad;
+			if (adjustmentControllStick[1] < 2) adjustmentControllStick[1]++;
 		}
-		if (CheckHitKey(KEY_INPUT_3) == 1)
+		else
 		{
-			adjustmentSelectObjectNumber = AdjustmentObject::StreetLight;
+			adjustmentControllStick[0] = 0;
+			adjustmentControllStick[1] = 0;
+		}
+		if (adjustmentControllStick[0] == 1)
+		{
+			int temp = static_cast<int>(adjustmentSelectObjectNumber);
+			adjustmentSelectObjectNumber = static_cast<AdjustmentObject>(temp > 0 ? --temp : temp);
+		}
+		if (adjustmentControllStick[1] == 1)
+		{
+			int temp = static_cast<int>(adjustmentSelectObjectNumber);
+			adjustmentSelectObjectNumber = static_cast<AdjustmentObject>(temp < 2 ? ++temp : temp);
 		}
 	}
 }

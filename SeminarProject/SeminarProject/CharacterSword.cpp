@@ -571,15 +571,16 @@ CharacterSword::~CharacterSword()
 	MODEL_RELEASE(modelHandle);
 }
 
-void CharacterSword::SetStairsArea(const VECTOR stairsArea, const int num)
+void CharacterSword::SetStairsArea(const VECTOR stairsArea, const int num, const float angle)
 {
 	// ステージのコリジョン情報の更新
 	if (num != 0)
 	{
 		v_stairsHandle.push_back(MV1DuplicateModel(v_stairsHandle[0]));
 	}
-	MV1SetupCollInfo(v_stairsHandle[num], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
+	MV1SetRotationXYZ(v_stairsHandle[num], VGet(0.0f, angle, 0.0f));
 	MV1SetPosition(v_stairsHandle[num], stairsArea);				// ステージの座標を更新
+	MV1SetupCollInfo(v_stairsHandle[num], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
 	MV1SetFrameVisible(v_stairsHandle[num], -1, false);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 	MV1RefreshCollInfo(v_stairsHandle[num], -1);					// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 }
@@ -592,21 +593,22 @@ void CharacterSword::SetPaneruArea(const VECTOR paneruArea, const int num)
 		paneruHandle[num] = MV1DuplicateModel(paneruHandle[0]);
 		MV1SetScale(this->paneruHandle[num], VGet(50.0f, 50.0f, 50.0f));
 	}
-	MV1SetupCollInfo(paneruHandle[num], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
 	MV1SetPosition(paneruHandle[num], paneruArea);					// ステージの座標を更新
+	MV1SetupCollInfo(paneruHandle[num], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
 	MV1SetFrameVisible(paneruHandle[num], -1, false);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 	MV1RefreshCollInfo(paneruHandle[num], -1);						// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 }
 
-void CharacterSword::SetStairsRoadArea(const VECTOR stairsRoadArea, const int num)
+void CharacterSword::SetStairsRoadArea(const VECTOR stairsRoadArea, const int num, const float angle)
 {
 	// ステージのコリジョン情報の更新
 	if (num != 0)
 	{
 		v_stairsRoadHandle.push_back(MV1DuplicateModel(v_stairsRoadHandle[0]));
 	}
-	MV1SetupCollInfo(v_stairsRoadHandle[num], -1);					// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
+	MV1SetRotationXYZ(v_stairsRoadHandle[num], VGet(0.0f, angle, 0.0f));
 	MV1SetPosition(v_stairsRoadHandle[num], stairsRoadArea);		// ステージの座標を更新
+	MV1SetupCollInfo(v_stairsRoadHandle[num], -1);					// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
 	MV1SetFrameVisible(v_stairsRoadHandle[num], -1, false);			// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 	MV1RefreshCollInfo(v_stairsRoadHandle[num], -1);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 }

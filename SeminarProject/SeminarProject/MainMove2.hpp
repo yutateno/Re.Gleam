@@ -79,13 +79,13 @@ private:
 	/// 敵---------------------
 
 	// 敵の数
-	const int enemyNum = 5;
+	const int enemyNum = 50;
 
 	// 敵のポインタ
-	EnemyMove2* p_enemy[5];
+	EnemyMove2* p_enemy[50];
 
 	// ドロップアイテム（１体に対して５個
-	DropItemMove2* p_dropItem[25];
+	DropItemMove2* p_dropItem[250];
 
 	int dropItemSE;
 
@@ -114,7 +114,7 @@ private:
 	enum class AdjustmentObject { Stairs, StreetLight, StairsRoad };
 
 	// 精密機械からオブジェクト生成
-	void AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID);
+	void AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID, float direction);
 
 	// 精密機械のシーンへのフェード
 	int adjustmentSceneFeed;
@@ -130,6 +130,18 @@ private:
 
 	// 精密機械中に映る2Dの画像
 	int adjustment2DDraw[6];
+
+	// 精密機械にて配置するオブジェクトを決定したかどうか
+	bool adjustmentSelectObject;
+
+	// どのオブジェクトを配置するかどうか
+	AdjustmentObject adjustmentSelectObjectNumber;
+
+	// 配置するオブジェクトの座標
+	VECTOR adjustmentArrangementArea;
+
+	// 配置するオブジェクトの向き
+	float adjustmentArrangementDire;
 
 
 	/// カメラ-----------------------

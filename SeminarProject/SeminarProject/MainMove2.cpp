@@ -5,13 +5,24 @@
 
 void MainMove2::AdjustmentProcess()
 {
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
+	{
+		adjustmentSelectObject = !adjustmentSelectObject;
+	}
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
 	{
-		adjustmentFeedNow = true;
-		adjustmentStartFeed = false;
+		if (adjustmentSelectObject)
+		{
+			AdjuctmentCreate(adjustmentArrangementArea, adjustmentSelectObjectNumber, adjustmentArrangementDire);
+		}
+		else
+		{
+			adjustmentFeedNow = true;
+			adjustmentStartFeed = false;
+		}
 	}
 
-	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
+	/*if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
 	{
 		AdjuctmentCreate(VGet(-160.0f*BASICPARAM::stairsNum, 0.0f, -1000.0f), AdjustmentObject::Stairs);
 		printfDx("階段を生成: %d\n", BASICPARAM::stairsNum);
@@ -33,6 +44,49 @@ void MainMove2::AdjustmentProcess()
 	{
 		AdjuctmentCreate(VGet(-900.0f*BASICPARAM::stairsRoadNum, 0.0f, 1000.0f), AdjustmentObject::StairsRoad);
 		printfDx("階段と床を生成: %d\n", BASICPARAM::stairsRoadNum);
+	}*/
+
+	if (adjustmentSelectObject)
+	{
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
+		{
+			adjustmentArrangementArea.x -= 10.0f;
+		}
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) < 0)
+		{
+			adjustmentArrangementArea.x += 10.0f;
+		}
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
+		{
+			adjustmentArrangementArea.z -= 10.0f;
+		}
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) < 0)
+		{
+			adjustmentArrangementArea.z += 10.0f;
+		}
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) > 0)
+		{
+			adjustmentArrangementDire += DX_PI_F / 60;
+		}
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) < 0)
+		{
+			adjustmentArrangementDire -= DX_PI_F / 60;
+		}
+	}
+	else
+	{
+		if (CheckHitKey(KEY_INPUT_1) == 1)
+		{
+			adjustmentSelectObjectNumber = AdjustmentObject::Stairs;
+		}
+		if (CheckHitKey(KEY_INPUT_2) == 1)
+		{
+			adjustmentSelectObjectNumber = AdjustmentObject::StairsRoad;
+		}
+		if (CheckHitKey(KEY_INPUT_3) == 1)
+		{
+			adjustmentSelectObjectNumber = AdjustmentObject::StreetLight;
+		}
 	}
 }
 
@@ -45,48 +99,103 @@ void MainMove2::AdjustmentDraw()
 		DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, GetColor(255, 255, 255), true);
 
 
-		/// 2D------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		/// 配置されているオブジェクトの2D----------------------------------------------------------------------------------------------------------------------------------------
 		// 敵~~
 		for (int i = 0, n = enemyNum; i != n; ++i)
 		{
-			DrawRotaGraph(static_cast<int>((4500 - p_enemy[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + p_enemy[i]->GetArea().z) / 9000 * 1080)
+			DrawRotaGraph(static_cast<int>((4500 - p_enemy[i]->GetArea().x) / 9000 * 1920)
+				, static_cast<int>((4500 + p_enemy[i]->GetArea().z) / 9000 * 1080)
 				, 0.1, 0.0, adjustment2DDraw[0], true);
 		}
 		// 街灯~~
 		for (int i = 0, n = static_cast<int>(vp_stageStreetLight.size()); i != n; ++i)
 		{
-			DrawRotaGraph(static_cast<int>((4500 - vp_stageStreetLight[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + vp_stageStreetLight[i]->GetArea().z) / 9000 * 1080)
-				, 0.15, 0.0, adjustment2DDraw[2], true);
+			DrawRotaGraph(static_cast<int>((4500 - vp_stageStreetLight[i]->GetArea().x) / 9000 * 1920)
+				, static_cast<int>((4500 + vp_stageStreetLight[i]->GetArea().z) / 9000 * 1080)
+				, 0.15, vp_stageStreetLight[i]->GetYAngle(), adjustment2DDraw[2], true);
 		}
 		// 階段~~
 		for (int i = 0, n = static_cast<int>(vp_stageStairs.size()); i != n; ++i)
 		{
-			DrawRotaGraph(static_cast<int>((4500 - vp_stageStairs[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + vp_stageStairs[i]->GetArea().z) / 9000 * 1080)
-				, 0.22, DX_PI, adjustment2DDraw[3], true);
+			DrawRotaGraph(static_cast<int>((4500 - vp_stageStairs[i]->GetArea().x) / 9000 * 1920)
+				, static_cast<int>((4500 + vp_stageStairs[i]->GetArea().z) / 9000 * 1080)
+				, 0.22, DX_PI + vp_stageStairs[i]->GetYAngle(), adjustment2DDraw[3], true);
 		}
 		// オペレーター
-		if (p_adjustmentMachine->GetCanTouch()) DrawRotaGraph(static_cast<int>((4500 - p_adjustmentMachine->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + p_adjustmentMachine->GetArea().z) / 9000 * 1080)
+		if (p_adjustmentMachine->GetCanTouch()) DrawRotaGraph(static_cast<int>((4500 - p_adjustmentMachine->GetArea().x) / 9000 * 1920)
+			, static_cast<int>((4500 + p_adjustmentMachine->GetArea().z) / 9000 * 1080)
 			, 0.08, DX_PI, adjustment2DDraw[4], true);
+
 		// 階段と床~~
 		for (int i = 0, n = static_cast<int>(vp_stageStairsRoad.size()); i != n; ++i)
 		{
-			DrawRotaGraph(static_cast<int>((4500 - vp_stageStairsRoad[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + vp_stageStairsRoad[i]->GetArea().z) / 9000 * 1080)
-				, 0.75, 0.0, adjustment2DDraw[5], true);
+			DrawRotaGraph(static_cast<int>((4500 - vp_stageStairsRoad[i]->GetArea().x) / 9000 * 1920)
+				, static_cast<int>((4500 + vp_stageStairsRoad[i]->GetArea().z) / 9000 * 1080)
+				, 0.75, DX_PI + vp_stageStairsRoad[i]->GetYAngle(), adjustment2DDraw[5], true);
 		}
 		// パネル~~
 		if (BASICPARAM::paneruDrawFlag)
 		{
 			for (int i = 0, n = 10; i != n; ++i)
 			{
-				DrawRotaGraph(static_cast<int>((4500 - p_stagePaneru[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + p_stagePaneru[i]->GetArea().z) / 9000 * 1080)
+				DrawRotaGraph(static_cast<int>((4500 - p_stagePaneru[i]->GetArea().x) / 9000 * 1920)
+					, static_cast<int>((4500 + p_stagePaneru[i]->GetArea().z) / 9000 * 1080)
 					, 0.2, 0.0, adjustment2DDraw[5], true);
 			}
 		}
 		// キャラクター
-		DrawRotaGraph(static_cast<int>((4500 - p_character->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + p_character->GetArea().z) / 9000 * 1080)
+		DrawRotaGraph(static_cast<int>((4500 - p_character->GetArea().x) / 9000 * 1920)
+			, static_cast<int>((4500 + p_character->GetArea().z) / 9000 * 1080)
 			, 0.1, p_character->GetAngle() - DX_PI, adjustment2DDraw[1], true);
 
-		//printfDx("CX: %f\tCZ: %f\tAX: %f\tAZ: %f\n", p_character->GetArea().x, p_character->GetArea().z, p_adjustmentMachine->GetArea().x, p_adjustmentMachine->GetArea().z);
+
+		// 配置するオブジェクトについて
+		if (adjustmentSelectObject)
+		{
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
+			if (adjustmentSelectObjectNumber==AdjustmentObject::Stairs)
+			{
+				DrawRotaGraph(static_cast<int>((4500 - adjustmentArrangementArea.x) / 9000 * 1920)
+					, static_cast<int>((4500 + adjustmentArrangementArea.z) / 9000 * 1080)
+					, 0.22, adjustmentArrangementDire, adjustment2DDraw[3], true);
+			}
+			else if (adjustmentSelectObjectNumber == AdjustmentObject::StairsRoad)
+			{
+				DrawRotaGraph(static_cast<int>((4500 - adjustmentArrangementArea.x) / 9000 * 1920)
+					, static_cast<int>((4500 + adjustmentArrangementArea.z) / 9000 * 1080)
+					, 0.75, adjustmentArrangementDire, adjustment2DDraw[5], true);
+			}
+			else if (adjustmentSelectObjectNumber == AdjustmentObject::StreetLight)
+			{
+				DrawRotaGraph(static_cast<int>((4500 - adjustmentArrangementArea.x) / 9000 * 1920)
+					, static_cast<int>((4500 + adjustmentArrangementArea.z) / 9000 * 1080)
+					, 0.15, adjustmentArrangementDire, adjustment2DDraw[2], true);
+			}
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+		}
+		else
+		{
+			DrawBox(0, 0, 980, 540, GetColor(255, 255, 255), true);
+			DrawBox(0, 0, 980, 540, GetColor(0, 0, 0), false);
+			DrawRotaGraph(120, 120, 0.22, 0.0, adjustment2DDraw[3], true);
+			DrawRotaGraph(320, 130, 0.75, 0.0, adjustment2DDraw[5], true);
+			DrawRotaGraph(500, 120, 0.15, 0.0, adjustment2DDraw[2], true);
+			DrawFormatString(50, 170, GetColor(0, 0, 0), "階段: 15ブロック");
+			DrawFormatString(240, 250, GetColor(0, 0, 0), "階段＆床: 45ブロック");
+			DrawFormatString(430, 170, GetColor(0, 0, 0), "街灯: 5ブロック");
+			if (adjustmentSelectObjectNumber == AdjustmentObject::Stairs)
+			{
+				DrawBox(30, 30, 200, 230, GetColor(255, 0, 0), false);
+			}
+			else if (adjustmentSelectObjectNumber == AdjustmentObject::StairsRoad)
+			{
+				DrawBox(230, 30, 420, 280, GetColor(255, 0, 0), false);
+			}
+			else if (adjustmentSelectObjectNumber == AdjustmentObject::StreetLight)
+			{
+				DrawBox(420, 60, 570, 220, GetColor(255, 0, 0), false);
+			}
+		}
 	}
 	//else
 	//{
@@ -139,26 +248,26 @@ void MainMove2::AdjustmentDraw()
 }
 
 
-void MainMove2::AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID)
+void MainMove2::AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID, float direction)
 {
 	switch (obujectID)
 	{
 	case AdjustmentObject::Stairs:
-		vp_stageStairs.push_back(new StageStairs(stairsHandle, area, stairsTexture0));
-		p_character->SetStairsArea(vp_stageStairs[BASICPARAM::stairsNum]->GetArea(), BASICPARAM::stairsNum);
+		vp_stageStairs.push_back(new StageStairs(stairsHandle, area, stairsTexture0, DX_PI_F + direction));
+		p_character->SetStairsArea(vp_stageStairs[BASICPARAM::stairsNum]->GetArea(), BASICPARAM::stairsNum, DX_PI_F + direction);
 		BASICPARAM::stairsNum++;
 		BASICPARAM::v_stairsArea.push_back(area);
 		break;
 
 	case AdjustmentObject::StreetLight:
-		vp_stageStreetLight.push_back(new StageStreetLight(streetLightHandle, area, streetLightTexture0, streetLightTexture1));
+		vp_stageStreetLight.push_back(new StageStreetLight(streetLightHandle, area, streetLightTexture0, streetLightTexture1, direction));
 		BASICPARAM::streetLightNum++;
 		BASICPARAM::v_streetLightArea.push_back(area);
 		break;
 
 	case AdjustmentObject::StairsRoad:
-		vp_stageStairsRoad.push_back(new StageStairsRoad(stairsRoadHandle, area, stairsRoadTexture0, stairsRoadTexture1));
-		p_character->SetStairsRoadArea(vp_stageStairsRoad[BASICPARAM::stairsRoadNum]->GetArea(), BASICPARAM::stairsRoadNum);
+		vp_stageStairsRoad.push_back(new StageStairsRoad(stairsRoadHandle, area, stairsRoadTexture0, stairsRoadTexture1, DX_PI_F + direction));
+		p_character->SetStairsRoadArea(vp_stageStairsRoad[BASICPARAM::stairsRoadNum]->GetArea(), BASICPARAM::stairsRoadNum, DX_PI_F + direction);
 		BASICPARAM::stairsRoadNum++;
 		BASICPARAM::v_stairsRoadArea.push_back(area);
 		break;
@@ -472,6 +581,10 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	adjustmentDescriptionDraw = v_file[EFILE::terminalDescription];
 	adjustmentSceneFeed = 0;
 	adjustmentFeedNow = false;
+	adjustmentSelectObject = false;
+	adjustmentSelectObjectNumber = AdjustmentObject::Stairs;
+	adjustmentArrangementArea = VGet(0, 0, 0);
+	adjustmentArrangementDire = 0.0f;
 	//adjustmentDrawScreen = MakeGraph(BASICPARAM::winWidth, BASICPARAM::winHeight);
 
 	

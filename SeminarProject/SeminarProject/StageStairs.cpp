@@ -1,10 +1,11 @@
 #include "StageStairs.hpp"
 
 
-StageStairs::StageStairs(const int draw, const VECTOR area, const int tex0) : BasicObject()
+StageStairs::StageStairs(const int draw, const VECTOR area, const int tex0, const float angle) : BasicObject()
 {
 	// 座標設定
 	this->area = area;
+	this->angle = angle;
 	
 
 	// モデルデータの読み込み
@@ -19,6 +20,7 @@ StageStairs::StageStairs(const int draw, const VECTOR area, const int tex0) : Ba
 
 
 	// 座標にモデルを配置
+	MV1SetRotationXYZ(modelHandle, VGet(0.0f, this->angle, 0.0f));
 	MV1SetPosition(modelHandle, this->area);
 }
 

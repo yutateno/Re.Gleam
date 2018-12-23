@@ -569,7 +569,7 @@ Manager::Manager()
 	move2str[30] = "media\\‚±‚Á‚¿\\media\\2D‘fŞ\\change\\whiteblack\\gaiyou_2D.pyn";
 	move2str[31] = "media\\‚±‚Á‚¿\\media\\2D‘fŞ\\change\\whiteblack\\kaidan_2d.pyn";
 	move2str[32] = "media\\‚±‚Á‚¿\\media\\2D‘fŞ\\change\\whiteblack\\Terminal_2D.pyn";
-	move2str[33] = "media\\‚±‚Á‚¿\\media\\2D‘fŞ\\change\\whiteblack\\yuka_2D.pyn";
+	move2str[33] = "media\\‚±‚Á‚¿\\media\\2D‘fŞ\\change\\whiteblack\\kaidan_yuka2D.pyn";
 
 	// ƒLƒƒƒ‰ƒNƒ^[ü‚è‚Ì3DSE
 	move2str[34] = "media\\‚±‚Á‚¿\\media\\sound\\ƒWƒƒƒ“ƒv.wyn";

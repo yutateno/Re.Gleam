@@ -1,9 +1,10 @@
 #include "StageStreetLight.hpp"
 
 
-StageStreetLight::StageStreetLight(const int draw, const VECTOR area, const int tex0, const int tex1) : BasicObject()
+StageStreetLight::StageStreetLight(const int draw, const VECTOR area, const int tex0, const int tex1, const float angle) : BasicObject()
 {
 	this->area = area;
+	this->angle = angle;
 
 
 	// モデルデータを読み込み
@@ -23,6 +24,7 @@ StageStreetLight::StageStreetLight(const int draw, const VECTOR area, const int 
 
 
 	// 座標にモデルを配置
+	MV1SetRotationXYZ(modelHandle, VGet(0.0f, this->angle, 0.0f));
 	MV1SetPosition(this->modelHandle, area);
 }
 

@@ -144,13 +144,13 @@ public:
 	/// ゲッターセッター--------------------
 
 	// 階段の座標を設定する
-	void SetStairsArea(const VECTOR stairsArea, const int num);
+	void SetStairsArea(const VECTOR stairsArea, const int num, const float angle);
 
 	// パネルの座標を設定する
 	void SetPaneruArea(const VECTOR paneruArea, const int num);
 
 	// 階段と床の座標を設定する
-	void SetStairsRoadArea(const VECTOR stairsRoadArea, const int num);
+	void SetStairsRoadArea(const VECTOR stairsRoadArea, const int num, const float angle);
 
 	// 直前のエリアを渡す
 	const VECTOR GetPreArea() const { return preArea; }

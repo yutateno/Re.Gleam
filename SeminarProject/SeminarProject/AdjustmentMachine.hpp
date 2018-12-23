@@ -11,6 +11,21 @@ private:
 	int textureHandleDisplayBlack;
 
 
+	// ムーブ2用のブレンド
+	int blendCount;
+
+
+	int nextBlendCount;
+
+
+	// ムーブ2にて何個ドロップアイテム得たかどうか
+	int dropCount;
+
+	
+	// 触れるフラッグ
+	bool canTouch;
+
+
 public:
 	AdjustmentMachine(const int draw, const VECTOR area, const int tex0, const int tex1);
 	~AdjustmentMachine();
@@ -23,5 +38,14 @@ public:
 
 	// 触れられ次第でテクスチャを切り替える
 	void ChangeDisplayTexture(bool touchNow);
+
+	// 触れるフラッグ
+	const bool GetCanTouch()const { return canTouch; }
+
+	// いくつドロップアイテム得たかどうか
+	void CatchDropItem() { dropCount++; }
+
+	// もうドロップアイテムいらないかどうか
+	const bool GetFullDropItem() const { return dropCount < 15 ? false : true; }
 };
 

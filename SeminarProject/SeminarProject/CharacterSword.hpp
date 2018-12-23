@@ -163,5 +163,8 @@ public:
 
 	// 攻撃の武器の最後の座標を渡す
 	VECTOR GetAttackEndFrameArea() { return MV1GetFramePosition(modelHandle, 67); }
+
+	// キャラクターの向いている方向
+	const float GetAngle() const { return angle + direXAngle + direZAngle; }
 };
 

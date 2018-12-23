@@ -13,26 +13,26 @@ void MainMove2::AdjustmentProcess()
 
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
 	{
-		AdjuctmentCreate(VGet(-100.0f*BASICPARAM::stairsNum, 0.0f, -1000.0f), AdjustmentObject::Stairs);
-		//printfDx("階段を生成: %d\n", BASICPARAM::stairsNum);
+		AdjuctmentCreate(VGet(-160.0f*BASICPARAM::stairsNum, 0.0f, -1000.0f), AdjustmentObject::Stairs);
+		printfDx("階段を生成: %d\n", BASICPARAM::stairsNum);
 	}
 
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_X) == 1)
 	{
-		AdjuctmentCreate(VGet(250.0f*BASICPARAM::streetLightNum, 0.0f, -100.0f*BASICPARAM::streetLightNum), AdjustmentObject::StreetLight);
-		//printfDx("街灯を生成: %d\n", BASICPARAM::streetLightNum);
+		AdjuctmentCreate(VGet(50.0f*BASICPARAM::streetLightNum, 0.0f, -100.0f), AdjustmentObject::StreetLight);
+		printfDx("街灯を生成: %d\n", BASICPARAM::streetLightNum);
 	}
 
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_Y) == 1)
 	{
 		BASICPARAM::paneruDrawFlag = !BASICPARAM::paneruDrawFlag;
-		//printfDx("パネルを表示: %s\n", BASICPARAM::paneruDrawFlag ? "true" : "false");
+		printfDx("パネルを表示: %s\n", BASICPARAM::paneruDrawFlag ? "true" : "false");
 	}
 
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_UP) == 1)
 	{
-		AdjuctmentCreate(VGet(-100.0f*BASICPARAM::stairsRoadNum, 0.0f, -1000.0f), AdjustmentObject::StairsRoad);
-		//printfDx("街灯を生成: %d\n", BASICPARAM::stairsRoadNum);
+		AdjuctmentCreate(VGet(-900.0f*BASICPARAM::stairsRoadNum, 0.0f, 1000.0f), AdjustmentObject::StairsRoad);
+		printfDx("階段と床を生成: %d\n", BASICPARAM::stairsRoadNum);
 	}
 }
 
@@ -44,36 +44,47 @@ void MainMove2::AdjustmentDraw()
 	{
 		DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, GetColor(255, 255, 255), true);
 
-		// 2D
+
+		/// 2D------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		// 敵~~
 		for (int i = 0, n = enemyNum; i != n; ++i)
 		{
-			DrawRotaGraph(static_cast<int>((4500 + p_enemy[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + p_enemy[i]->GetArea().z) / 9000 * 1080)
+			DrawRotaGraph(static_cast<int>((4500 - p_enemy[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + p_enemy[i]->GetArea().z) / 9000 * 1080)
 				, 0.1, 0.0, adjustment2DDraw[0], true);
 		}
-		DrawRotaGraph(static_cast<int>((4500 + p_character->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + p_character->GetArea().z) / 9000 * 1080)
-			, 0.1, 0.0, adjustment2DDraw[1], true);
+		// 街灯~~
 		for (int i = 0, n = static_cast<int>(vp_stageStreetLight.size()); i != n; ++i)
 		{
-			DrawRotaGraph(static_cast<int>((4500 + vp_stageStreetLight[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + vp_stageStreetLight[i]->GetArea().z) / 9000 * 1080)
-				, 0.1, 0.0, adjustment2DDraw[2], true);
+			DrawRotaGraph(static_cast<int>((4500 - vp_stageStreetLight[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + vp_stageStreetLight[i]->GetArea().z) / 9000 * 1080)
+				, 0.15, 0.0, adjustment2DDraw[2], true);
 		}
+		// 階段~~
 		for (int i = 0, n = static_cast<int>(vp_stageStairs.size()); i != n; ++i)
 		{
-			DrawRotaGraph(static_cast<int>((4500 + vp_stageStairs[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + vp_stageStairs[i]->GetArea().z) / 9000 * 1080)
-				, 0.1, 0.0, adjustment2DDraw[3], true);
+			DrawRotaGraph(static_cast<int>((4500 - vp_stageStairs[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + vp_stageStairs[i]->GetArea().z) / 9000 * 1080)
+				, 0.22, DX_PI, adjustment2DDraw[3], true);
 		}
-		DrawRotaGraph(static_cast<int>((4500 + p_adjustmentMachine->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + p_adjustmentMachine->GetArea().z) / 9000 * 1080)
-			, 0.1, 0.0, adjustment2DDraw[4], true);
+		// オペレーター
+		if (p_adjustmentMachine->GetCanTouch()) DrawRotaGraph(static_cast<int>((4500 - p_adjustmentMachine->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + p_adjustmentMachine->GetArea().z) / 9000 * 1080)
+			, 0.08, DX_PI, adjustment2DDraw[4], true);
+		// 階段と床~~
 		for (int i = 0, n = static_cast<int>(vp_stageStairsRoad.size()); i != n; ++i)
 		{
-			DrawRotaGraph(static_cast<int>((4500 + vp_stageStairsRoad[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + vp_stageStairsRoad[i]->GetArea().z) / 9000 * 1080)
-				, 0.1, 0.0, adjustment2DDraw[5], true);
+			DrawRotaGraph(static_cast<int>((4500 - vp_stageStairsRoad[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + vp_stageStairsRoad[i]->GetArea().z) / 9000 * 1080)
+				, 0.75, 0.0, adjustment2DDraw[5], true);
 		}
-		for (int i = 0, n = 10; i != n; ++i)
+		// パネル~~
+		if (BASICPARAM::paneruDrawFlag)
 		{
-			DrawRotaGraph(static_cast<int>((4500 + p_stagePaneru[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + p_stagePaneru[i]->GetArea().z) / 9000 * 1080)
-				, 0.1, 0.0, adjustment2DDraw[5], true);
+			for (int i = 0, n = 10; i != n; ++i)
+			{
+				DrawRotaGraph(static_cast<int>((4500 - p_stagePaneru[i]->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + p_stagePaneru[i]->GetArea().z) / 9000 * 1080)
+					, 0.2, 0.0, adjustment2DDraw[5], true);
+			}
 		}
+		// キャラクター
+		DrawRotaGraph(static_cast<int>((4500 - p_character->GetArea().x) / 9000 * 1920), static_cast<int>((4500 + p_character->GetArea().z) / 9000 * 1080)
+			, 0.1, p_character->GetAngle() - DX_PI, adjustment2DDraw[1], true);
 
 		//printfDx("CX: %f\tCZ: %f\tAX: %f\tAZ: %f\n", p_character->GetArea().x, p_character->GetArea().z, p_adjustmentMachine->GetArea().x, p_adjustmentMachine->GetArea().z);
 	}
@@ -191,7 +202,7 @@ void MainMove2::ShadowDraw()
 		}
 	}
 	// 精密機械
-	p_adjustmentMachine->Draw();
+	if(p_adjustmentMachine->GetCanTouch()) p_adjustmentMachine->Draw();
 	// キャラクター
 	p_character->Draw();
 	BaseMove::ShadowCharaSetUpAfter();
@@ -228,7 +239,7 @@ void MainMove2::ShadowDraw()
 		}
 	}
 	// 精密機械
-	p_adjustmentMachine->Draw();
+	if (p_adjustmentMachine->GetCanTouch()) p_adjustmentMachine->Draw();
 	BaseMove::ShadowAnotherCharaSetUpAfter();
 
 
@@ -267,7 +278,7 @@ void MainMove2::ShadowDraw()
 		}
 	}
 	// 精密機械
-	p_adjustmentMachine->Draw();
+	if (p_adjustmentMachine->GetCanTouch()) p_adjustmentMachine->Draw();
 	// キャラクター
 	p_character->Draw();
 	BaseMove::ShadowNoMoveDrawAfter();
@@ -300,31 +311,34 @@ void MainMove2::AttackProcess()
 
 
 	/// 精算機械に関する-------------------------------------------------------------------------------------------------------------------
-	// 当たっていたら押し出す
-	if (HitCheck_Capsule_Capsule(
-		p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f,
-		p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 70.0f))
+	if (p_adjustmentMachine->GetCanTouch())
 	{
-		p_character->HitCircleReturn(p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)));
-	}
+		// 当たっていたら押し出す
+		if (HitCheck_Capsule_Capsule(
+			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f,
+			p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 70.0f))
+		{
+			p_character->HitCircleReturn(p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)));
+		}
 
-	// 距離が近かくで触れるボタン押したら
-	if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175
-		&& !p_character->GetAttackNow() && p_character->GetArea().y <= 10.0f
-		&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(),DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
-	{
-		//GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, adjustmentDrawScreen);
-		adjustmentFeedNow = true;
-		adjustmentStartFeed = true;
-		changeAdjustmentScene = true;
-	}
-	if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 250)
-	{
-		p_adjustmentMachine->ChangeDisplayTexture(true);
-	}
-	else
-	{
-		p_adjustmentMachine->ChangeDisplayTexture(false);
+		// 距離が近かくで触れるボタン押したら
+		if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175
+			&& !p_character->GetAttackNow() && p_character->GetArea().y <= 10.0f
+			&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
+		{
+			//GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, adjustmentDrawScreen);
+			adjustmentFeedNow = true;
+			adjustmentStartFeed = true;
+			changeAdjustmentScene = true;
+		}
+		if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 250)
+		{
+			p_adjustmentMachine->ChangeDisplayTexture(true);
+		}
+		else
+		{
+			p_adjustmentMachine->ChangeDisplayTexture(false);
+		}
 	}
 	
 
@@ -333,16 +347,30 @@ void MainMove2::AttackProcess()
 	{
 		if (p_dropItem[i]->GetDeath() || !p_dropItem[i]->GetAlive() || !p_dropItem[i]->GetCanCatch()) continue;
 
-		if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 75)
+		if (p_adjustmentMachine->GetFullDropItem())
 		{
-			catchDropItemNum++;
-			p_dropItem[i]->SetDeath(true);			// 生きさせない
-			if (i % 5 == 0) SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp);
-		}
+			if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 75)
+			{
+				catchDropItemNum++;
+				p_dropItem[i]->SetDeath(true);			// 生きさせない
+				if (i % 5 == 0) SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp);
+			}
 
-		if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 500)
+			if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 500)
+			{
+				p_dropItem[i]->StolenChara(p_character->GetArea());
+			}
+		}
+		else
 		{
-			p_dropItem[i]->StolenChara(p_character->GetArea());
+			if (BaseMove::GetDistance(p_adjustmentMachine->GetArea(), p_dropItem[i]->GetArea()) <= 75)
+			{
+				p_adjustmentMachine->CatchDropItem();
+				p_dropItem[i]->SetDeath(true);			// 生きさせない
+				if (i % 5 == 0) SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp);
+			}
+
+			p_dropItem[i]->StolenChara(p_adjustmentMachine->GetArea());
 		}
 	}
 }
@@ -569,6 +597,11 @@ void MainMove2::Draw()
 
 		ShadowDraw();
 
+		if (!p_adjustmentMachine->GetCanTouch())
+		{
+			p_adjustmentMachine->Draw();
+		}
+
 
 		for (int i = 0, n = enemyNum * 5; i != n; ++i)
 		{
@@ -578,9 +611,12 @@ void MainMove2::Draw()
 
 		p_character->Draw();
 
-		if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175)
+		if (p_adjustmentMachine->GetCanTouch())
 		{
-			DrawBillboard3D(VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 200.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, adjustmentDescriptionDraw, false);
+			if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175)
+			{
+				DrawBillboard3D(VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 200.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, adjustmentDescriptionDraw, false);
+			}
 		}
 
 

@@ -6,13 +6,20 @@ AdjustmentMachine::AdjustmentMachine(const int draw, const VECTOR area, const in
 	this->area = area;
 
 
-	shadowHeight = 10.0f;
-	shadowSize = 5.0f;
-
-
 	// モデルデータを読み込み
 	this->modelHandle = 0;
 	this->modelHandle = MV1DuplicateModel(draw);
+
+	canTouch = true;
+
+	// ムーブ2用の変数
+	if (BASICPARAM::e_nowScene <= ESceneNumber::SECONDMOVE)
+	{
+		canTouch = false;
+		blendCount = 0;
+		dropCount = 0;
+		nextBlendCount = 0;
+	}
 
 
 	// テクスチャ適応
@@ -41,7 +48,19 @@ AdjustmentMachine::~AdjustmentMachine()
 
 void AdjustmentMachine::Draw()
 {
-	BasicObject::ShadowFoot();
+	if (BASICPARAM::e_nowScene <= ESceneNumber::SECONDMOVE
+		&& blendCount < 255)
+	{
+		if (nextBlendCount > blendCount) blendCount++;
+		nextBlendCount = dropCount * 17;
+
+		MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
+		MV1SetMaterialDrawBlendParam(this->modelHandle, 1, blendCount);
+	}
+	else
+	{
+		canTouch = true;
+	}
 
 
 	BasicObject::Draw();

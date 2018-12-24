@@ -94,7 +94,7 @@ BasicObject::BasicObject()
 	shadowSize = 0;
 	area = VGet(0, 0, 0);
 	ShadowHitResDim;
-	ShadowHitRes = NULL;
+	ShadowHitRes = nullptr;
 	ZeroMemory(ShadowVertex, sizeof(ShadowVertex));
 }
 
@@ -127,7 +127,7 @@ BasicObject::BasicObject(const int collStageHandle)
 	shadowSize = 0;
 	area = VGet(0, 0, 0);
 	ShadowHitResDim;
-	ShadowHitRes = NULL;
+	ShadowHitRes = nullptr;
 	ZeroMemory(ShadowVertex, sizeof(ShadowVertex));
 }
 

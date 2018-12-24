@@ -14,7 +14,7 @@ void LoadThread::MyNextLoad(const std::string path, int& file, const ELOADFILE t
 LoadThread::LoadThread()
 {
 	num = 0;
-	p_loadScreen = NULL;
+	p_loadScreen = nullptr;
 	p_loadScreen = new LoadScreen();
 }
 

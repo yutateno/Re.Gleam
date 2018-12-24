@@ -640,8 +640,8 @@ Manager::Manager()
 
 
 	// ƒƒ‚ƒŠ‚Ì‰Šú‰»
-	p_baseMove = NULL;
-	p_loadThread = NULL;
+	p_baseMove = nullptr;
+	p_loadThread = nullptr;
 
 
 	// Å‰‚Ìƒ[ƒh‚ğ¶¬

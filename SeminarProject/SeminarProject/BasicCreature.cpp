@@ -382,7 +382,7 @@ BasicCreature::BasicCreature() :BasicObject()
 	jumpNow = false;
 	attachMotion = 0;
 	walkSpeed = 0;
-	mainPoly = NULL;
+	mainPoly = nullptr;
 	nextArea = VGet(0, 0, 0);
 	modelWigth = 0;
 	ZeroMemory(floorPoly, sizeof(floorPoly));
@@ -427,7 +427,7 @@ BasicCreature::BasicCreature(const int collStageHandle) :BasicObject(collStageHa
 	jumpNow = false;
 	attachMotion = 0;
 	walkSpeed = 0;
-	mainPoly = NULL;
+	mainPoly = nullptr;
 	nextArea = VGet(0, 0, 0);
 	modelWigth = 0;
 	ZeroMemory(floorPoly, sizeof(floorPoly));

@@ -51,7 +51,7 @@ void AdjustmentMachine::Draw()
 	if (BASICPARAM::e_nowScene <= ESceneNumber::SECONDMOVE
 		&& blendCount < 255)
 	{
-		if (nextBlendCount > blendCount) blendCount++;
+		if (nextBlendCount > blendCount) blendCount += 3;
 		nextBlendCount = dropCount * 17;
 
 		MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);

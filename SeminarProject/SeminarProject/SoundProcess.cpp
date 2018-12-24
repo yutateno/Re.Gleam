@@ -23,6 +23,9 @@ namespace SoundProcess
 	// SEのユーザー音量調整
 	float se_volumeAdjustment;
 
+	// SEの指定最大音量
+	int se_volumeSetMaxVolume[seNum];
+
 
 	/// BGMに関する-----------------------
 
@@ -95,6 +98,7 @@ namespace SoundProcess
 		}
 		ZeroMemory(se_loadFlag, sizeof(se_loadFlag));
 		ZeroMemory(se_playFlag, sizeof(se_playFlag));
+		ZeroMemory(se_volumeSetMaxVolume, sizeof(se_volumeSetMaxVolume));
 		for (int i = 0; i != bgmNum; ++i)
 		{
 			bgm_sound[i] = -1;
@@ -180,7 +184,7 @@ namespace SoundProcess
 			if (!se_playFlag[i]) continue;
 
 			// 音量を下げる
-			ChangeVolumeSoundMem(static_cast<int>(((255 - (10 * count))) * se_volumeAdjustment * optionNowVolume), se_sound[i]);
+			ChangeVolumeSoundMem(static_cast<int>((((255 - (10 * count))) * se_volumeAdjustment * optionNowVolume) / 255 * se_volumeSetMaxVolume[i]), se_sound[i]);
 			if (count > 0)
 			{
 				count--;
@@ -197,6 +201,7 @@ namespace SoundProcess
 
 	void DoSound(ESOUNDNAME_SE name, int volume)
 	{
+		se_volumeSetMaxVolume[static_cast<int>(name)] = volume;
 		if (!se_playFlag[static_cast<int>(name)])
 		{
 			PlaySoundMem(se_sound[static_cast<int>(name)], DX_PLAYTYPE_BACK);
@@ -215,6 +220,7 @@ namespace SoundProcess
 	{
 		Set3DPositionSoundMem(VAdd(area, VScale(listenerArea, 0.1f)), se_sound[static_cast<int>(name)]);
 		Set3DRadiusSoundMem(volume3DRadius * 2, se_sound[static_cast<int>(name)]);
+		se_volumeSetMaxVolume[static_cast<int>(name)] = volume;
 
 		if (!se_playFlag[static_cast<int>(name)])
 		{

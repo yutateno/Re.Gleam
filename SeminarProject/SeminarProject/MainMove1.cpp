@@ -377,13 +377,13 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 
 
 	// É|ÉCÉìÉ^NULLèâä˙âª
-	p_camera = NULL;
-	p_character = NULL;
-	p_stage = NULL;
-	p_dropItem = NULL;
+	p_camera = nullptr;
+	p_character = nullptr;
+	p_stage = nullptr;
+	p_dropItem = nullptr;
 	for (int i = 0; i != enemyNum; ++i)
 	{
-		s_enemyAggre[i].p_enemyMove = NULL;
+		s_enemyAggre[i].p_enemyMove = nullptr;
 	}
 
 

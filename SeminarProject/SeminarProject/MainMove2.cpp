@@ -510,7 +510,7 @@ void MainMove2::AttackProcess()
 			{
 				catchDropItemNum++;
 				p_dropItem[i]->SetDeath(true);			// 生きさせない
-				if (i % 5 == 0) SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp);
+				/*if (i % 5 == 0) */SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, 125);
 			}
 
 			if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 500)
@@ -524,7 +524,7 @@ void MainMove2::AttackProcess()
 			{
 				p_adjustmentMachine->CatchDropItem();
 				p_dropItem[i]->SetDeath(true);			// 生きさせない
-				if (i % 5 == 0) SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp);
+				/*if (i % 5 == 0) */SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, 125);
 			}
 
 			p_dropItem[i]->StolenChara(p_adjustmentMachine->GetArea());
@@ -543,30 +543,25 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 
 
 	// ポインタNULL初期化
-	p_camera					 = NULL;
-	p_character					 = NULL;
+	p_camera					 = nullptr;
+	p_character					 = nullptr;
 	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
-		p_enemy[i]				 = NULL;
+		p_enemy[i]				 = nullptr;
 	}
-	p_stage						 = NULL;
+	p_stage						 = nullptr;
 	vp_stageStairs.clear();
 	vp_stageStreetLight.clear();
 	for (int i = 0; i != 10; ++i)
 	{
-		p_stagePaneru[i]		 = NULL;
+		p_stagePaneru[i]		 = nullptr;
 	}
 	for (int i = 0; i != 5; ++i)
 	{
-		p_dropItem[i] = NULL;
+		p_dropItem[i] = nullptr;
 	}
-	p_adjustmentMachine = NULL;
+	p_adjustmentMachine = nullptr;
 	vp_stageStairsRoad.clear();
-
-
-
-	// サウンド読み込み
-	SoundProcess::Load(v_file[EFILE::se_ballPickUp], SoundProcess::ESOUNDNAME_SE::ballPickUp);
 
 
 	// 階段の初期化
@@ -665,14 +660,15 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 
 
 	// サウンドのロード
-	SoundProcess::Load(v_file[EFILE::jump3DSE]			, SoundProcess::ESOUNDNAME_SE::jump);
-	SoundProcess::Load(v_file[EFILE::footCorridor3DSE]	, SoundProcess::ESOUNDNAME_SE::footFloor);
-	SoundProcess::Load(v_file[EFILE::foot3DSE]			, SoundProcess::ESOUNDNAME_SE::foot);
-	SoundProcess::Load(v_file[EFILE::landing3DSE]		, SoundProcess::ESOUNDNAME_SE::landing);
-	SoundProcess::Load(v_file[EFILE::landingSecond3DSE]	, SoundProcess::ESOUNDNAME_SE::landing2);
-	SoundProcess::Load(v_file[EFILE::charaAttackOne3DSE], SoundProcess::ESOUNDNAME_SE::pianoAttack1);
-	SoundProcess::Load(v_file[EFILE::charaAttackTwo3DSE], SoundProcess::ESOUNDNAME_SE::pianoAttack2);
-	SoundProcess::Load(v_file[EFILE::charaAttackThree3DSE], SoundProcess::ESOUNDNAME_SE::pianoAttack3);
+	SoundProcess::Load(v_file[EFILE::se_ballPickUp]			, SoundProcess::ESOUNDNAME_SE::ballPickUp);
+	SoundProcess::Load(v_file[EFILE::jump3DSE]				, SoundProcess::ESOUNDNAME_SE::jump);
+	SoundProcess::Load(v_file[EFILE::footCorridor3DSE]		, SoundProcess::ESOUNDNAME_SE::footFloor);
+	SoundProcess::Load(v_file[EFILE::foot3DSE]				, SoundProcess::ESOUNDNAME_SE::foot);
+	SoundProcess::Load(v_file[EFILE::landing3DSE]			, SoundProcess::ESOUNDNAME_SE::landing);
+	SoundProcess::Load(v_file[EFILE::landingSecond3DSE]		, SoundProcess::ESOUNDNAME_SE::landing2);
+	SoundProcess::Load(v_file[EFILE::charaAttackOne3DSE]	, SoundProcess::ESOUNDNAME_SE::pianoAttack1);
+	SoundProcess::Load(v_file[EFILE::charaAttackTwo3DSE]	, SoundProcess::ESOUNDNAME_SE::pianoAttack2);
+	SoundProcess::Load(v_file[EFILE::charaAttackThree3DSE]	, SoundProcess::ESOUNDNAME_SE::pianoAttack3);
 }
 
 

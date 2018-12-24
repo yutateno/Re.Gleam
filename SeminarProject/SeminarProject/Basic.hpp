@@ -82,11 +82,8 @@ namespace BASICPARAM
 
 /// マクロ-------------------------------------------------------------------------------------
 
-// directx関係でよくある解放マクロ
-#define SAFE_RELEASE(p) { if(p!=NULL) { (p)->Release(); (p)=NULL; } }
-
 // ポインタ用解放マクロ
-#define POINTER_RELEASE(p) { if(p!=NULL) {delete p; (p)=NULL; } }
+#define POINTER_RELEASE(p) { if(p!=nullptr) {delete p; (p)=nullptr; } }
 
 // 2D関連画像解放マクロ
 #define GRAPHIC_RELEASE(p) { if(p!=-1) { DeleteGraph(p); (p)=-1; } }

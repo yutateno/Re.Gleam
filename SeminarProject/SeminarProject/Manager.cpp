@@ -164,12 +164,12 @@ void Manager::OptionProcess()
 		else if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective)
 		{
 			BASICPARAM::nowCameraOrtho = false;
-			p_baseMove->CameraProcess();		// カメラ切り替え
+			//p_baseMove->CameraProcess();		// カメラ切り替え
 		}
 		else if (optionSelectButtonNum == EOptionSelectButton::CameraOrtho)
 		{
 			BASICPARAM::nowCameraOrtho = true;
-			p_baseMove->CameraProcess();		// カメラ切り替え
+			//p_baseMove->CameraProcess();		// カメラ切り替え
 		}
 		else if (optionSelectButtonNum == EOptionSelectButton::CameraHReturn)
 		{
@@ -762,7 +762,11 @@ void Manager::Update()
 						GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, gaussianScreen);	
 
 						// 現在の画面にガウスフィルタかけてぼかす
-						GraphFilter(gaussianScreen, DX_GRAPH_FILTER_GAUSS, 8, 1400);				
+						GraphFilter(gaussianScreen, DX_GRAPH_FILTER_GAUSS, 8, 1400);	
+
+
+						// オプション用のモデル表示の準備
+						p_baseMove->OptionActorModelBefore();
 						
 
 						// オプションメニューに移行するフラッグを立てる
@@ -774,6 +778,7 @@ void Manager::Update()
 
 						// サウンド音量をオプションメニュー用に下げるよう命令
 						SoundProcess::SetOptionMenuNow(true);
+
 					}
 
 #ifdef _DEBUG
@@ -825,6 +830,7 @@ void Manager::Update()
 				// オプション画面から戻る
 				if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1)
 				{
+					p_baseMove->CameraProcess();			// カメラ切り替え
 					SoundProcess::SetOptionMenuNow(false);		// サウンド音量をオプション用から戻す
 					optionMenuNow = false;
 				}

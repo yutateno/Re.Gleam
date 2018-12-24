@@ -10,19 +10,19 @@ void MainMove2::AdjustmentProcess()
 		if (!adjustmentSelectObject)
 		{
 			if (adjustmentSelectObjectNumber == AdjustmentObject::Stairs
-				&& catchDropItemNum >= 15)
+				/*&& catchDropItemNum >= 15*/)
 			{
 				catchDropItemNum -= 15;
 				adjustmentSelectObject = true;
 			}
 			else if (adjustmentSelectObjectNumber == AdjustmentObject::StairsRoad
-				&& catchDropItemNum >= 45)
+				/*&& catchDropItemNum >= 45*/)
 			{
 				catchDropItemNum -= 45;
 				adjustmentSelectObject = true;
 			}
 			else if (adjustmentSelectObjectNumber == AdjustmentObject::StreetLight
-				&& catchDropItemNum >= 5)
+				/*&& catchDropItemNum >= 5*/)
 			{
 				catchDropItemNum -= 5;
 				adjustmentSelectObject = true;
@@ -931,4 +931,9 @@ void MainMove2::TextureReload()
 void MainMove2::OptionActorModel()
 {
 	p_character->OptionActorDraw();
+}
+
+void MainMove2::OptionActorModelBefore()
+{
+	p_character->OptionActorDrawBefore();
 }

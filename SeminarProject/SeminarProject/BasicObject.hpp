@@ -55,6 +55,9 @@ private:
 	// オプションでの回転数
 	int optionRotaCount;
 
+	// オプションでもモデル表示カウント
+	int optionModelDrawCount;
+
 public:
 	// コンストラクタ
 	BasicObject();
@@ -71,6 +74,9 @@ public:
 
 	// オプション用モデル描画
 	void OptionActorDraw();
+
+	// オプション用モデル描画の準備
+	void OptionActorDrawBefore();
 
 
 	/// ゲッターセッター

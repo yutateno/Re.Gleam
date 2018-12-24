@@ -187,5 +187,8 @@ public:
 
 	// オプション画面でのモデル表示
 	void OptionActorModel() override;
+
+	// オプション画面でのモデル表示の準備
+	void OptionActorModelBefore() override;
 };
 

@@ -36,6 +36,8 @@ AdjustmentMachine::AdjustmentMachine(const int draw, const VECTOR area, const in
 
 
 	// 座標にモデルを配置
+	MV1SetMaterialDrawBlendMode(this->modelHandle, 0, DX_BLENDMODE_ALPHA);
+	MV1SetMaterialDrawBlendMode(this->modelHandle, 1, DX_BLENDMODE_ALPHA);
 	MV1SetPosition(this->modelHandle, area);
 }
 

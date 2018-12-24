@@ -614,3 +614,8 @@ void MainMove1::OptionActorModel()
 {
 	p_character->OptionActorDraw();
 }
+
+void MainMove1::OptionActorModelBefore()
+{
+	p_character->OptionActorDrawBefore();
+}

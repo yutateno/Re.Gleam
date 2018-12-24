@@ -7,44 +7,41 @@ void MainMove2::AdjustmentProcess()
 {
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
 	{
-		adjustmentSelectObject = !adjustmentSelectObject;
+		if (!adjustmentSelectObject)
+		{
+			if (adjustmentSelectObjectNumber == AdjustmentObject::Stairs
+				&& catchDropItemNum >= 15)
+			{
+				catchDropItemNum -= 15;
+				adjustmentSelectObject = true;
+			}
+			else if (adjustmentSelectObjectNumber == AdjustmentObject::StairsRoad
+				&& catchDropItemNum >= 45)
+			{
+				catchDropItemNum -= 45;
+				adjustmentSelectObject = true;
+			}
+			else if (adjustmentSelectObjectNumber == AdjustmentObject::StreetLight
+				&& catchDropItemNum >= 5)
+			{
+				catchDropItemNum -= 5;
+				adjustmentSelectObject = true;
+			}
+		}
+		else
+		{
+			adjustmentSelectObject = false;
+			AdjuctmentCreate(adjustmentArrangementArea, adjustmentSelectObjectNumber, adjustmentArrangementDire);
+		}
 	}
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
 	{
-		if (adjustmentSelectObject)
-		{
-			AdjuctmentCreate(adjustmentArrangementArea, adjustmentSelectObjectNumber, adjustmentArrangementDire);
-		}
-		else
+		if (!adjustmentSelectObject)
 		{
 			adjustmentFeedNow = true;
 			adjustmentStartFeed = false;
 		}
 	}
-
-	/*if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
-	{
-		AdjuctmentCreate(VGet(-160.0f*BASICPARAM::stairsNum, 0.0f, -1000.0f), AdjustmentObject::Stairs);
-		printfDx("階段を生成: %d\n", BASICPARAM::stairsNum);
-	}
-
-	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_X) == 1)
-	{
-		AdjuctmentCreate(VGet(50.0f*BASICPARAM::streetLightNum, 0.0f, -100.0f), AdjustmentObject::StreetLight);
-		printfDx("街灯を生成: %d\n", BASICPARAM::streetLightNum);
-	}
-
-	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_Y) == 1)
-	{
-		BASICPARAM::paneruDrawFlag = !BASICPARAM::paneruDrawFlag;
-		printfDx("パネルを表示: %s\n", BASICPARAM::paneruDrawFlag ? "true" : "false");
-	}
-
-	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_UP) == 1)
-	{
-		AdjuctmentCreate(VGet(-900.0f*BASICPARAM::stairsRoadNum, 0.0f, 1000.0f), AdjustmentObject::StairsRoad);
-		printfDx("階段と床を生成: %d\n", BASICPARAM::stairsRoadNum);
-	}*/
 
 	if (adjustmentSelectObject)
 	{
@@ -108,7 +105,7 @@ void MainMove2::AdjustmentDraw()
 	/// オペレーターのフェード表現に関する-----------------------------------------------------------
 	if (adjustmentSceneFeed >= 50)
 	{
-		DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, GetColor(255, 255, 255), true);
+		DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, GetColor(247, 247, 247), true);
 
 
 		/// 配置されているオブジェクトの2D----------------------------------------------------------------------------------------------------------------------------------------
@@ -164,6 +161,8 @@ void MainMove2::AdjustmentDraw()
 		// 配置するオブジェクトについて
 		if (adjustmentSelectObject)
 		{
+			DrawFormatString(30, 60, GetColor(0, 0, 0), "Aボタンで配置");
+
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
 			if (adjustmentSelectObjectNumber==AdjustmentObject::Stairs)
 			{
@@ -189,24 +188,61 @@ void MainMove2::AdjustmentDraw()
 		{
 			DrawBox(0, 0, 980, 540, GetColor(255, 255, 255), true);
 			DrawBox(0, 0, 980, 540, GetColor(0, 0, 0), false);
+
+			DrawFormatString(10, 10, GetColor(0, 0, 0), "Aボタンで決定");
+
+			if (catchDropItemNum < 15) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
 			DrawRotaGraph(120, 120, 0.22, 0.0, adjustment2DDraw[3], true);
-			DrawRotaGraph(320, 130, 0.75, 0.0, adjustment2DDraw[5], true);
-			DrawRotaGraph(500, 120, 0.15, 0.0, adjustment2DDraw[2], true);
 			DrawFormatString(50, 170, GetColor(0, 0, 0), "階段: 15ブロック");
+			if (catchDropItemNum < 15) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+			if (catchDropItemNum < 45) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+			DrawRotaGraph(320, 130, 0.75, 0.0, adjustment2DDraw[5], true);
 			DrawFormatString(240, 250, GetColor(0, 0, 0), "階段＆床: 45ブロック");
+			if (catchDropItemNum < 45) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+			if (catchDropItemNum < 5) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+			DrawRotaGraph(500, 120, 0.15, 0.0, adjustment2DDraw[2], true);
 			DrawFormatString(430, 170, GetColor(0, 0, 0), "街灯: 5ブロック");
+			if (catchDropItemNum < 5) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
 			if (adjustmentSelectObjectNumber == AdjustmentObject::Stairs)
 			{
-				DrawBox(30, 30, 200, 230, GetColor(255, 0, 0), false);
+				if (catchDropItemNum < 15)
+				{
+					DrawBox(30, 30, 200, 230, GetColor(0, 0, 255), false);
+				}
+				else
+				{
+					DrawBox(30, 30, 200, 230, GetColor(255, 0, 0), false);
+				}
 			}
 			else if (adjustmentSelectObjectNumber == AdjustmentObject::StairsRoad)
 			{
-				DrawBox(230, 30, 420, 280, GetColor(255, 0, 0), false);
+				if (catchDropItemNum < 45)
+				{
+					DrawBox(230, 30, 420, 280, GetColor(0, 0, 255), false);
+				}
+				else
+				{
+					DrawBox(230, 30, 420, 280, GetColor(255, 0, 0), false);
+				}
 			}
 			else if (adjustmentSelectObjectNumber == AdjustmentObject::StreetLight)
 			{
-				DrawBox(420, 60, 570, 220, GetColor(255, 0, 0), false);
+				if (catchDropItemNum < 5)
+				{
+					DrawBox(420, 60, 570, 220, GetColor(0, 0, 255), false);
+				}
+				else
+				{
+					DrawBox(420, 60, 570, 220, GetColor(255, 0, 0), false);
+				}
 			}
+
+			DrawFormatString(30, 700, GetColor(0, 0, 0), "Bボタンで戻る");
+
+			DrawFormatString(1020, 20, GetColor(0, 0, 0), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
 		}
 	}
 	//else
@@ -744,8 +780,8 @@ void MainMove2::Draw()
 			}
 		}
 
+		DrawFormatString(1020, 20, GetColor(0, 0, 0), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
 
-		DrawFormatString(255, 0, GetColor(255, 255, 255), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
 	//}
 	////else
 	//{

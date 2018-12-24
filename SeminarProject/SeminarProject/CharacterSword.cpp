@@ -198,17 +198,33 @@ void CharacterSword::AttackProcess()
 		// 最初の時
 		if (attackFrame == 0)
 		{
+			if (jumpNow)
+			{
+				if (!jumpAttackDo)
+				{
+					jumpPower = 0.0f;
+					jumpUpNow = false;
+					attackNumber = MOTION::skyAction1;		// 攻撃コマンド番号を1番にする
+					jumpAttackDo = true;
+				}
+				else
+				{
+					return;
+				}
+			}
+			else
+			{
+				attackNumber = MOTION::action1;		// 攻撃コマンド番号を1番にする
+			}
 			animSpeed = 0.4f;									// アニメーション速度を変更
-			
-			
+
+
 			// 移動プロセスから流用して前方に移動させる
 			area.x += sinf(angle + direXAngle) * -walkSpeed;
 			area.z += cosf(angle + direXAngle) * -walkSpeed;
 
 
 			attackNow = true;					// 攻撃しているフラッグを立てる
-			attackNumber = MOTION::action1;		// 攻撃コマンド番号を1番にする
-
 			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack1, MV1GetFramePosition(modelHandle, 67));
 		}
 		// 二回目以降の攻撃時
@@ -217,6 +233,8 @@ void CharacterSword::AttackProcess()
 			attackNext = true;			// 次の攻撃モーションに移行するというフラッグを立てる
 		}
 	}
+
+	if (attackFrame == 0 && !jumpNow) jumpAttackDo = false;
 
 
 	// 攻撃モーションの終盤当たりで次の行動を決める
@@ -240,6 +258,7 @@ void CharacterSword::AttackProcess()
 				preAttackNumber = attackNumber;
 				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack2, MV1GetFramePosition(modelHandle, 67));
 				break;
+
 			// 二コンボ目の攻撃時
 			case MOTION::action2:
 				animSpeed = 0.4f;									// アニメーション速度を変更
@@ -247,12 +266,40 @@ void CharacterSword::AttackProcess()
 				preAttackNumber = attackNumber;
 				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack3, MV1GetFramePosition(modelHandle, 67));
 				break;
+
 			// 最後の攻撃時
 			case MOTION::action3:
 				attackNow = false;					// 次のコンボがないので攻撃フラッグを倒す
 				attackNumber = MOTION::action1;
 				preAttackNumber = attackNumber;
 				walkSpeed = 0.0f;
+				break;
+
+			// ジャンプ中の最初の攻撃時
+			case MOTION::skyAction1:
+				animSpeed = 0.4f;
+				attackNumber = MOTION::skyAction2;
+				preAttackNumber = attackNumber;
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack2, MV1GetFramePosition(modelHandle, 67));
+				break;
+
+			// ジャンプ中の二コンボ目の攻撃時
+			case MOTION::skyAction2:
+				animSpeed = 0.4f;
+				attackNumber = MOTION::skyAction3;
+				preAttackNumber = attackNumber;
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack2, MV1GetFramePosition(modelHandle, 67));
+				break;
+
+			// ジャンプ中の最後の攻撃時
+			case MOTION::skyAction3:
+				attackNow = false;
+				attackNumber = MOTION::action1;
+				preAttackNumber = attackNumber;
+				walkSpeed = 0.0f;
+				break;
+
+			default:
 				break;
 			}
 
@@ -327,6 +374,8 @@ void CharacterSword::AttackProcess()
 // ジャンプに関するプロセス
 void CharacterSword::JumpProcess()
 {
+	if (attackNow && jumpNow) return;
+
 	// 浮いてない状態でジャンプするコマンドを押したら
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1
 		&& !jumpNow)
@@ -407,14 +456,22 @@ void CharacterSword::AnimProcess()
 	// 飛んでいる
 	if (jumpNow)
 	{
-		// 上昇している
-		if (jumpUpNow)
+		// 攻撃している
+		if (attackNow)
 		{
-			Player_PlayAnim(MOTION::jump);
+			Player_PlayAnim(attackNumber);
 		}
 		else
 		{
-			Player_PlayAnim(MOTION::fall);
+			// 上昇している
+			if (jumpUpNow)
+			{
+				Player_PlayAnim(MOTION::jump);
+			}
+			else
+			{
+				Player_PlayAnim(MOTION::fall);
+			}
 		}
 	}
 	else
@@ -520,6 +577,7 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	attackFrame = 0;
 	attackNumber = MOTION::action1;
 	preAttackNumber = MOTION::action1;
+	jumpAttackDo = false;
 
 
 	// ジャンプに関して

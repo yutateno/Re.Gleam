@@ -81,6 +81,9 @@ private:
 	// 直前の攻撃の番号
 	int preAttackNumber;
 
+	// ジャンプでの攻撃をしたかどうか
+	bool jumpAttackDo;
+
 	// 攻撃のプロセス
 	void AttackProcess();
 

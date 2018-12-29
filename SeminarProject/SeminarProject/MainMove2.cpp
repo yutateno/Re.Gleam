@@ -783,6 +783,9 @@ void MainMove2::Draw()
 	//{
 		AdjustmentDraw();
 	//}
+
+		// Effekseerにより再生中のエフェクトを描画する。
+		DrawEffekseer3D();
 }
 
 
@@ -826,6 +829,10 @@ void MainMove2::Process()
 		AttackProcess();
 
 		BaseMove::SkyBoxProcess(p_character->GetArea());
+
+
+		// Effekseerにより再生中のエフェクトを更新する。
+		UpdateEffekseer3D();
 	}
 	else
 	{

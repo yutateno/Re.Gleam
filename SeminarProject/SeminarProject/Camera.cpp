@@ -41,6 +41,9 @@ Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea), VAdd(orthoViewArea, charaArea));
 		SoundProcess::Set3DRadius(VSize(cameraOrthoArea));
 	}
+
+	// DXライブラリのカメラとEffekseerのカメラを同期する。
+	Effekseer_Sync3DSetting();
 }
 
 // デストラクタ
@@ -120,6 +123,10 @@ void Camera::Process(const VECTOR charaarea)
 		SoundProcess::SetLisnerViewArea(orthoViewArea);
 		SoundProcess::SetLisnerArea(cameraOrthoArea);
 	}
+
+
+	// DXライブラリのカメラとEffekseerのカメラを同期する。
+	Effekseer_Sync3DSetting();
 }
 
 void Camera::SetUp()
@@ -143,6 +150,9 @@ void Camera::SetUp()
 		SoundProcess::SetLisnerArea(cameraOrthoArea);
 		SoundProcess::Set3DRadius(VSize(cameraOrthoArea));
 	}
+
+	// DXライブラリのカメラとEffekseerのカメラを同期する。
+	Effekseer_Sync3DSetting();
 }
 
 const VECTOR Camera::GetArea()

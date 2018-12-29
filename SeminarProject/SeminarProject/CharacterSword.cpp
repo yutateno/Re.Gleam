@@ -6,6 +6,12 @@ void CharacterSword::MoveProcess()
 	// スムーズに動かせる
 	if (moveFlag)
 	{
+		// エフェクトを再生する。
+		playingEffectHandle = PlayEffekseer3DEffect(effectResourceHandle);
+		SetScalePlayingEffekseer3DEffect(playingEffectHandle, 1, 10000, 1);
+		// 再生中のエフェクトを移動する。
+		SetPosPlayingEffekseer3DEffect(playingEffectHandle, area.x, area.y, area.z);
+
 		animSpeed = 0.75f;
 		if (walkSpeed < 30.0f)
 		{
@@ -608,11 +614,18 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	MV1SetPosition(this->modelHandle, area);
 
 	SoundProcess::SetCharaArea(area);
+
+
+	effectResourceHandle = LoadEffekseerEffect("media\\effekseerTest\\謎オーラ\\ice.efk");
+	playingEffectHandle = -1;
 }
 
 
 CharacterSword::~CharacterSword()
 {
+	// エフェクトリソースを削除する。(Effekseer終了時に破棄されるので削除しなくてもいい)
+	DeleteEffekseerEffect(effectResourceHandle);
+
 	GRAPHIC_RELEASE(textureHandle0);
 	GRAPHIC_RELEASE(textureHandle1);
 	GRAPHIC_RELEASE(textureHandle2);

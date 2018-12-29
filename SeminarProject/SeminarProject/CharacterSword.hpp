@@ -122,6 +122,11 @@ private:
 	int textureHandle4;
 
 
+	/// Effekseer関連-----------------------
+	int effectResourceHandle;
+	int playingEffectHandle;
+
+
 public:
 	// コンストラクタ
 	CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle, const int paneruHandle, const int stairsRoadHandle

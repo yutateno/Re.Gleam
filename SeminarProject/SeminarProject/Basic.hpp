@@ -3,6 +3,7 @@
 /// インクルードファイル-------------
 #include "DLLXinput.h"
 #include "DxLib.h"
+#include "EffekseerForDXLib.h"
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include "SoundProcess.hpp"

@@ -425,8 +425,8 @@ Manager::Manager()
 	BASICPARAM::e_preTextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::e_TextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::nowCameraOrtho = false;
-	BASICPARAM::cameraHorizonReturn = true;
-	BASICPARAM::cameraVerticalReturn = true;
+	BASICPARAM::cameraHorizonReturn = false;
+	BASICPARAM::cameraVerticalReturn = false;
 
 
 	/// シーン１の素材ファイル-----------------------------------------------------------------------------
@@ -586,6 +586,9 @@ Manager::Manager()
 	// ドロップアイテムのSEの二種類目
 	move2str[42] = "media\\こっち\\media\\sound\\たま拾う音2.wyn";
 
+	// 次のステージでのBGMを流す
+	move2str[43] = "media\\こっち\\media\\sound\\通常bgm.wyn";
+
 
 	load2[0] = ELOADFILE::mv1model;
 	load2[1] = ELOADFILE::mv1model;
@@ -641,6 +644,8 @@ Manager::Manager()
 	load2[41] = ELOADFILE::sound3DSource;
 
 	load2[42] = ELOADFILE::sound3DSource;
+
+	load2[43] = ELOADFILE::soundStream;
 	/// ---------------------------------------------------------------------------------------------------
 
 
@@ -766,7 +771,7 @@ void Manager::Update()
 
 					// Effekseerにより再生中のエフェクトを更新する。
 					UpdateEffekseer3D();
-					// Effekseerにより再生中のエフェクトを更新する。(Processとかで行う
+					// Effekseerにより再生中のエフェクトを更新する。
 					UpdateEffekseer2D();
 
 					// オプション画面に移行するコマンドを押されたら、またはウィンドウズが非アクティブになったら

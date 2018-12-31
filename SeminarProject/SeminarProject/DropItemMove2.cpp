@@ -91,6 +91,7 @@ void DropItemMove2::StolenChara(const VECTOR characterArea)
 	{
 		area.x += 10.0f;
 	}
+
 	if (characterArea.z <= area.z)
 	{
 		area.z -= 10.0f;
@@ -108,9 +109,6 @@ void DropItemMove2::StolenChara(const VECTOR characterArea)
 	{
 		area.y += 2.0f;
 	}
-
-	// モデルの座標を更新
-	//MV1SetPosition(this->modelHandle, this->area);
 }
 
 

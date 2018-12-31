@@ -29,7 +29,7 @@ private:
 		, block2D, character2D, streetLight2D, stairs2D, terminal2D, stairsRoad2D
 		, jump3DSE, footCorridor3DSE, foot3DSE, landing3DSE, landingSecond3DSE
 		, charaAttackOne3DSE, charaAttackTwo3DSE, charaAttackThree3DSE
-		, se_ballPickUp2
+		, se_ballPickUp2, nextStageBGM
 	};
 
 
@@ -169,6 +169,8 @@ private:
 	int playingEfAttack;
 
 
+	// BGM‚Ì‰¹—Ê•ÏX‚ğˆê“x‚¾‚¯ŒÄ‚Ô‚æ‚¤‚É
+	int bgmOnceVolumeChange;
 
 
 public:

@@ -30,6 +30,22 @@ void MainMove2::AdjustmentProcess()
 		}
 		else
 		{
+			if (adjustmentSelectObjectNumber == AdjustmentObject::Stairs
+				&& adjustmentArrangementArea.x + 120.0f > p_character->GetArea().x
+				&& adjustmentArrangementArea.x - 120.0f < p_character->GetArea().x
+				&& adjustmentArrangementArea.z + 250.0f > p_character->GetArea().z
+				&& adjustmentArrangementArea.z - 250.0f < p_character->GetArea().z)
+			{
+				return;
+			}
+			else if (adjustmentSelectObjectNumber == AdjustmentObject::StairsRoad
+				&& adjustmentArrangementArea.x + 500.0f > p_character->GetArea().x
+				&& adjustmentArrangementArea.x - 500.0f < p_character->GetArea().x
+				&& adjustmentArrangementArea.z + 670.0f > p_character->GetArea().z
+				&& adjustmentArrangementArea.z - 670.0f < p_character->GetArea().z)
+			{
+				return;
+			}
 			adjustmentSelectObject = false;
 			AdjuctmentCreate(adjustmentArrangementArea, adjustmentSelectObjectNumber, adjustmentArrangementDire);
 		}
@@ -45,19 +61,23 @@ void MainMove2::AdjustmentProcess()
 
 	if (adjustmentSelectObject)
 	{
-		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0
+			&& adjustmentArrangementArea.x > -4500.0f)
 		{
 			adjustmentArrangementArea.x -= 10.0f;
 		}
-		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) < 0)
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) < 0
+			&& adjustmentArrangementArea.x < 4500.0f)
 		{
 			adjustmentArrangementArea.x += 10.0f;
 		}
-		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0
+			&& adjustmentArrangementArea.z > -4500.0f)
 		{
 			adjustmentArrangementArea.z -= 10.0f;
 		}
-		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) < 0)
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) < 0
+			&& adjustmentArrangementArea.z < 4500.0f)
 		{
 			adjustmentArrangementArea.z += 10.0f;
 		}
@@ -96,6 +116,12 @@ void MainMove2::AdjustmentProcess()
 			int temp = static_cast<int>(adjustmentSelectObjectNumber);
 			adjustmentSelectObjectNumber = static_cast<AdjustmentObject>(temp < 2 ? ++temp : temp);
 		}
+		
+		if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::SHOULDER_RB) == 1
+			&& !BASICPARAM::paneruDrawFlag)
+		{
+			BASICPARAM::paneruDrawFlag = true;
+		}
 	}
 }
 
@@ -112,6 +138,7 @@ void MainMove2::AdjustmentDraw()
 		// 敵~~
 		for (int i = 0, n = enemyNum; i != n; ++i)
 		{
+			if (p_enemy[i]->GetDeathFlag()) continue;
 			DrawRotaGraph(static_cast<int>((4500 - p_enemy[i]->GetArea().x) / 9000 * 1920)
 				, static_cast<int>((4500 + p_enemy[i]->GetArea().z) / 9000 * 1080)
 				, 0.1, 0.0, adjustment2DDraw[0], true);
@@ -147,9 +174,11 @@ void MainMove2::AdjustmentDraw()
 		{
 			for (int i = 0, n = 10; i != n; ++i)
 			{
-				DrawRotaGraph(static_cast<int>((4500 - p_stagePaneru[i]->GetArea().x) / 9000 * 1920)
-					, static_cast<int>((4500 + p_stagePaneru[i]->GetArea().z) / 9000 * 1080)
-					, 0.2, 0.0, adjustment2DDraw[5], true);
+				DrawBox(static_cast<int>((4500 - p_stagePaneru[i]->GetArea().x) / 9000 * 1920) - 25
+					, static_cast<int>((4500 + p_stagePaneru[i]->GetArea().z) / 9000 * 1080) - 25
+					, static_cast<int>((4500 - p_stagePaneru[i]->GetArea().x) / 9000 * 1920) + 25
+					, static_cast<int>((4500 + p_stagePaneru[i]->GetArea().z) / 9000 * 1080) + 25
+					, GetColor(200, 200, 200), true);
 			}
 		}
 		// キャラクター
@@ -206,6 +235,8 @@ void MainMove2::AdjustmentDraw()
 			DrawFormatString(430, 170, GetColor(0, 0, 0), "街灯: 5ブロック");
 			if (catchDropItemNum < 5) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
+			DrawFormatString(20, 350, GetColor(0, 0, 0), "RBボタンで次のステージへの道");
+
 			if (adjustmentSelectObjectNumber == AdjustmentObject::Stairs)
 			{
 				if (catchDropItemNum < 15)
@@ -240,7 +271,7 @@ void MainMove2::AdjustmentDraw()
 				}
 			}
 
-			DrawFormatString(30, 700, GetColor(0, 0, 0), "Bボタンで戻る");
+			DrawFormatString(30, 500, GetColor(0, 0, 0), "Bボタンで戻る");
 
 			DrawFormatString(1020, 20, GetColor(0, 0, 0), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
 		}
@@ -520,11 +551,16 @@ void MainMove2::AttackProcess()
 
 		if (p_adjustmentMachine->GetFullDropItem())
 		{
+			if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 500)
+			{
+				p_dropItem[i]->StolenChara(p_character->GetArea());
+			}
+
+
 			if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 75)
 			{
 				catchDropItemNum++;
 				p_dropItem[i]->SetDeath(true);			// 生きさせない
-				///*if (i % 5 == 0) */SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, 125);
 
 				/// SEの再生をランダムにする-----------------------------------------------------------------------------
 				std::random_device rnd;     // 非決定的な乱数生成器を生成
@@ -541,11 +577,6 @@ void MainMove2::AttackProcess()
 				}
 				/// -----------------------------------------------------------------------------------------------------
 			}
-
-			if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 500)
-			{
-				p_dropItem[i]->StolenChara(p_character->GetArea());
-			}
 		}
 		else
 		{
@@ -553,7 +584,6 @@ void MainMove2::AttackProcess()
 			{
 				p_adjustmentMachine->CatchDropItem();
 				p_dropItem[i]->SetDeath(true);			// 生きさせない
-				///*if (i % 5 == 0) */SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, 125);
 
 				/// SEの再生をランダムにする-----------------------------------------------------------------------------
 				std::random_device rnd;     // 非決定的な乱数生成器を生成
@@ -641,14 +671,39 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	// パネルの初期化
 	for (int i = 0; i != 10; ++i)
 	{
-		p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneru], VGet(500.0f * i, 300.0f*i, 100.0f*i));
+		p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneru], VGet(500.0f * i, 300.0f * i, 100.0f * i));
 	}
 
 
 	// 敵の初期化
+	std::random_device rnd;     // 非決定的な乱数生成器を生成
+	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+	std::uniform_int_distribution<> randInX(-4000, 4000);        // X座標用乱数
+	std::uniform_int_distribution<> randInZ(-4000, 4000);        // Z座標用乱数
 	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
-		p_enemy[i] = new EnemyMove2(VGet(1000.0f + (i * 150), 0.0f, -1000.0f), v_file[EFILE::block], v_file[EFILE::blockTex0]);
+		// 玉のX座標設定
+		float tempX = static_cast<float>(randInX(mt));
+		if (tempX <= 200.0f && tempX >= 0.0f)
+		{
+			tempX += 200.0f;
+		}
+		if (tempX >= -200.0f && tempX <= 0.0f)
+		{
+			tempX -= 200.0f;
+		}
+
+		// 玉のY座標設定
+		float tempZ = static_cast<float>(randInZ(mt));
+		if (tempZ <= 200.0f && tempZ >= 0.0f)
+		{
+			tempZ += 200.0f;
+		}
+		if (tempZ >= -200.0f && tempZ <= 0.0f)
+		{
+			tempZ -= 200.0f;
+		}
+		p_enemy[i] = new EnemyMove2(VGet(tempX, 0.0f, tempZ), v_file[EFILE::block], v_file[EFILE::blockTex0]);
 	}
 
 
@@ -714,7 +769,10 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	SoundProcess::Load(v_file[EFILE::charaAttackTwo3DSE]	, SoundProcess::ESOUNDNAME_SE::pianoAttack2);
 	SoundProcess::Load(v_file[EFILE::charaAttackThree3DSE]	, SoundProcess::ESOUNDNAME_SE::pianoAttack3);
 	SoundProcess::Load(v_file[EFILE::se_ballPickUp2]		, SoundProcess::ESOUNDNAME_SE::ballPickUp2);
+	SoundProcess::Load(v_file[EFILE::nextStageBGM]			, SoundProcess::ESOUNDNAME_BGM::normalBGM);
 
+	SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 0, 0);
+	bgmOnceVolumeChange = 0;
 
 	// エフェクト読み込み
 	effectAttack = LoadEffekseerEffect("media\\こっち\\media\\Effect\\characterAttack.efk");
@@ -814,6 +872,7 @@ void MainMove2::Draw()
 
 		for (int i = 0, n = enemyNum * 5; i != n; ++i)
 		{
+			if (p_dropItem[i]->GetDeath()) continue;
 			p_dropItem[i]->Draw();
 		}
 
@@ -835,6 +894,8 @@ void MainMove2::Draw()
 	//{
 		AdjustmentDraw();
 	//}
+
+		printfDx("%f\n", p_character->GetArea().y);
 }
 
 
@@ -856,19 +917,20 @@ void MainMove2::Process()
 		{
 			if (p_enemy[i]->GetEraseExistence())
 			{
-				p_dropItem[(i * 5)]->SetAlive(true);
-				p_dropItem[(i * 5) + 1]->SetAlive(true);
-				p_dropItem[(i * 5) + 2]->SetAlive(true);
-				p_dropItem[(i * 5) + 3]->SetAlive(true);
-				p_dropItem[(i * 5) + 4]->SetAlive(true);
+				if (!p_dropItem[(i * 5)]->GetDeath()) p_dropItem[(i * 5)]->SetAlive(true);
+				if (!p_dropItem[(i * 5) + 1]->GetDeath()) p_dropItem[(i * 5) + 1]->SetAlive(true);
+				if (!p_dropItem[(i * 5) + 2]->GetDeath()) p_dropItem[(i * 5) + 2]->SetAlive(true);
+				if (!p_dropItem[(i * 5) + 3]->GetDeath()) p_dropItem[(i * 5) + 3]->SetAlive(true);
+				if (!p_dropItem[(i * 5) + 4]->GetDeath()) p_dropItem[(i * 5) + 4]->SetAlive(true);
 				continue;
 			}
-			p_enemy[i]->Process();												
+			p_enemy[i]->Process();
 		}
 
 		// ドロップアイテム
 		for (int i = 0, n = enemyNum * 5; i != n; ++i)
 		{
+			if (p_dropItem[i]->GetDeath()) continue;
 			p_dropItem[i]->Process();
 		}
 
@@ -909,6 +971,45 @@ void MainMove2::Process()
 		{
 			AdjustmentProcess();
 		}
+	}
+
+
+	if (p_character->GetArea().y >= 2500.0f)
+	{
+		if (bgmOnceVolumeChange != 5) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 200, 200);
+		bgmOnceVolumeChange = 5;
+	}
+	else if (p_character->GetArea().y >= 2000.0f)
+	{
+		if (bgmOnceVolumeChange != 4) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 170, 170);
+		bgmOnceVolumeChange = 4;
+	}
+	else if (p_character->GetArea().y >= 1500.0f)
+	{
+		if (bgmOnceVolumeChange != 3) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 150, 150);
+		bgmOnceVolumeChange = 3;
+	}
+	else if (p_character->GetArea().y >= 1000.0f)
+	{
+		if (bgmOnceVolumeChange != 2) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 100, 100);
+		bgmOnceVolumeChange = 2;
+	}
+	else if (p_character->GetArea().y >= 500.0f)
+	{
+		if (bgmOnceVolumeChange != 1) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 50, 50);
+		bgmOnceVolumeChange = 1;
+	}
+	else
+	{
+		if (bgmOnceVolumeChange != 0) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 0, 0);
+		bgmOnceVolumeChange = 0;
+	}
+
+
+	if (p_character->GetArea().y >= 3550.0f)
+	{
+		BASICPARAM::endFeedNow = true;
+		BaseMove::SetScene(ESceneNumber::FIRSTLOAD);
 	}
 
 

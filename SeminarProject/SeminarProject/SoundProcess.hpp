@@ -12,7 +12,7 @@ namespace SoundProcess
 	{
 		saveOn, saveMiss, pianoAttack3, pianoAttack2, pianoAttack1, pianoAttack
 		, jump, pianoAttackMiss, landing, landing2, footFloor, foot
-		, ballPickUp, strikeBomb, ballPawnHigh, ballPawn, lightOneFoot, lightFoot
+		, ballPickUp, ballPickUp2, strikeBomb, ballPawnHigh, ballPawn, lightOneFoot, lightFoot
 		, crayonDie, titleBurnLow, titleBurnLowMagni, titleBurn
 	};
 

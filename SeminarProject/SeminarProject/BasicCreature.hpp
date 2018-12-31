@@ -168,16 +168,13 @@ public:
 
 
 	/// ゲッターセッター
-	   
-	// 攻撃するときのモデルのフレームの先端
-	VECTOR GetAttackFirstFrameArea() {};		
-
-	// 攻撃するときのモデルのフレームの後端
-	VECTOR GetAttackEndFrameArea() {};
 
 	// 死んだかどうか
-	bool GetDeathFlag() { return deathFlag; }
+	const bool GetDeathFlag() const { return deathFlag; }
+
+	// ダメージを受けたかどうか
+	const bool GetDamageFlag() const { return damageHit; }
 
 	// 描画から消すかどうか
-	bool GetEraseExistence() { return eraseExistence; }
+	const bool GetEraseExistence() const { return eraseExistence; }
 };

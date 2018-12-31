@@ -122,11 +122,6 @@ private:
 	int textureHandle4;
 
 
-	/// Effekseer関連-----------------------
-	int effectResourceHandle;
-	int playingEffectHandle;
-
-
 public:
 	// コンストラクタ
 	CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle, const int paneruHandle, const int stairsRoadHandle
@@ -164,13 +159,13 @@ public:
 	const VECTOR GetPreArea() const { return preArea; }
 
 	// 攻撃しているかを渡す
-	bool GetAttackNow() { return attackNow; }
+	const bool GetAttackNow() const { return attackNow; }
 
 	// 攻撃の武器の初めの座標を渡す
-	VECTOR GetAttackFirstFrameArea() { return MV1GetFramePosition(modelHandle, 66); }
+	const VECTOR GetAttackFirstFrameArea() const { return MV1GetFramePosition(modelHandle, 66); }
 
 	// 攻撃の武器の最後の座標を渡す
-	VECTOR GetAttackEndFrameArea() { return MV1GetFramePosition(modelHandle, 67); }
+	const VECTOR GetAttackEndFrameArea() const { return MV1GetFramePosition(modelHandle, 67); }
 
 	// キャラクターの向いている方向
 	const float GetAngle() const { return angle + direXAngle + direZAngle; }

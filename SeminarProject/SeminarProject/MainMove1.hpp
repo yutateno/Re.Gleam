@@ -133,6 +133,11 @@ private:
 	void ThsTextureReload() override {}
 
 
+	/// エフェクト関連------------------
+	int effeckBack;
+	int playingEfBack;
+
+
 public:
 	// コンストラクタ
 	MainMove1(const std::vector<int> v_file);

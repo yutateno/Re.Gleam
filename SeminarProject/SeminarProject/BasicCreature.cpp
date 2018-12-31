@@ -486,7 +486,6 @@ void BasicCreature::HitLineReturn(VECTOR hitOneArea, VECTOR hitTwoArea)
 	// “–‚½‚Á‚½‚©‚Ç‚¤‚©‚Åˆ—‚ğ•ªŠò
 	if (HitPoly.HitFlag == 1 && !damageHit)
 	{
-		DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 30, 10000, 10000);
 		damageHit = true;
 	}
 }

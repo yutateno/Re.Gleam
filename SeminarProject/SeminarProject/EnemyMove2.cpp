@@ -91,6 +91,8 @@ void EnemyMove2::Process()
 	if (damageHit)
 	{
 		deathFlag = true;
+
+		damageHit = false;
 	}
 
 	// Ž€‚ñ‚¾‚Æ‚«

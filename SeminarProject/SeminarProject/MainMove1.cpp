@@ -482,12 +482,20 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 	SoundProcess::Load(v_file[EFILE::sound], SoundProcess::ESOUNDNAME_BGM::titleMusicBox);
 	SoundProcess::Load(v_file[EFILE::seBallHigh], SoundProcess::ESOUNDNAME_SE::ballPawnHigh);
 	SoundProcess::Load(v_file[EFILE::seBall], SoundProcess::ESOUNDNAME_SE::ballPawn);
+
+
+	// エフェクト読み込み
+	effeckBack = LoadEffekseerEffect("media\\こっち\\media\\Effect\\moveOneBack.efk");
+	playingEfBack = -1;
 }
 
 
 // デストラクタ
 MainMove1::~MainMove1()
 {
+	StopEffekseer2DEffect(playingEfBack);
+	DeleteEffekseerEffect(effeckBack);
+
 	for (int i = 0; i != lightNum; ++i)
 	{
 		LIGHT_RELEASE(lightHandle[i]);
@@ -555,6 +563,15 @@ void MainMove1::Draw()
 		DrawGraph(1200, 100, stickRightDraw, true);
 
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	}
+
+	if (IsEffekseer2DEffectPlaying(playingEfBack) != 0)
+	{
+		// エフェクトを再生する。
+		playingEfBack = PlayEffekseer2DEffect(effeckBack);
+		SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
+		// 再生中のエフェクトを移動する。
+		SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
 	}
 
 #ifdef _DEBUG

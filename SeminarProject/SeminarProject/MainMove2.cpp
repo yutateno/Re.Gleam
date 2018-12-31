@@ -464,6 +464,20 @@ void MainMove2::AttackProcess()
 		{
 			p_enemy[i]->HitLineReturn(p_character->GetAttackFirstFrameArea(), p_character->GetAttackEndFrameArea());
 		}
+
+
+		// 攻撃でダメージを受けたら
+		if (p_enemy[i]->GetDamageFlag())
+		{
+			// バイブレーションさせる
+			DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 30, 1000, 1000);
+
+			// エフェクトを再生する。
+			playingEfAttack = PlayEffekseer3DEffect(effectAttack);
+			SetScalePlayingEffekseer3DEffect(playingEfAttack, 10, 10, 10);
+			// 再生中のエフェクトを移動する。
+			SetPosPlayingEffekseer3DEffect(playingEfAttack, p_character->GetAttackEndFrameArea().x, p_character->GetAttackEndFrameArea().y, p_character->GetAttackEndFrameArea().z);
+		}
 	}
 
 
@@ -510,7 +524,22 @@ void MainMove2::AttackProcess()
 			{
 				catchDropItemNum++;
 				p_dropItem[i]->SetDeath(true);			// 生きさせない
-				/*if (i % 5 == 0) */SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, 125);
+				///*if (i % 5 == 0) */SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, 125);
+
+				/// SEの再生をランダムにする-----------------------------------------------------------------------------
+				std::random_device rnd;     // 非決定的な乱数生成器を生成
+				std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+				std::uniform_int_distribution<> randPawnSE(0, 1);        // 乱数
+
+				if (randPawnSE(mt) == 0)
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, p_dropItem[i]->GetArea());
+				}
+				else
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp2, p_dropItem[i]->GetArea());
+				}
+				/// -----------------------------------------------------------------------------------------------------
 			}
 
 			if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 500)
@@ -524,7 +553,22 @@ void MainMove2::AttackProcess()
 			{
 				p_adjustmentMachine->CatchDropItem();
 				p_dropItem[i]->SetDeath(true);			// 生きさせない
-				/*if (i % 5 == 0) */SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, 125);
+				///*if (i % 5 == 0) */SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, 125);
+
+				/// SEの再生をランダムにする-----------------------------------------------------------------------------
+				std::random_device rnd;     // 非決定的な乱数生成器を生成
+				std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+				std::uniform_int_distribution<> randPawnSE(0, 1);        // 乱数
+
+				if (randPawnSE(mt) == 0)
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, p_dropItem[i]->GetArea());
+				}
+				else
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp2, p_dropItem[i]->GetArea());
+				}
+				/// -----------------------------------------------------------------------------------------------------
 			}
 
 			p_dropItem[i]->StolenChara(p_adjustmentMachine->GetArea());
@@ -669,11 +713,19 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	SoundProcess::Load(v_file[EFILE::charaAttackOne3DSE]	, SoundProcess::ESOUNDNAME_SE::pianoAttack1);
 	SoundProcess::Load(v_file[EFILE::charaAttackTwo3DSE]	, SoundProcess::ESOUNDNAME_SE::pianoAttack2);
 	SoundProcess::Load(v_file[EFILE::charaAttackThree3DSE]	, SoundProcess::ESOUNDNAME_SE::pianoAttack3);
+	SoundProcess::Load(v_file[EFILE::se_ballPickUp2]		, SoundProcess::ESOUNDNAME_SE::ballPickUp2);
+
+
+	// エフェクト読み込み
+	effectAttack = LoadEffekseerEffect("media\\こっち\\media\\Effect\\characterAttack.efk");
+	playingEfAttack = -1;
 }
 
 
 MainMove2::~MainMove2()
 {
+	StopEffekseer3DEffect(playingEfAttack);
+	DeleteEffekseerEffect(effectAttack);
 	//GRAPHIC_RELEASE(adjustmentDrawScreen);
 
 	/// 精密機械に関する
@@ -783,9 +835,6 @@ void MainMove2::Draw()
 	//{
 		AdjustmentDraw();
 	//}
-
-		// Effekseerにより再生中のエフェクトを描画する。
-		DrawEffekseer3D();
 }
 
 
@@ -829,10 +878,6 @@ void MainMove2::Process()
 		AttackProcess();
 
 		BaseMove::SkyBoxProcess(p_character->GetArea());
-
-
-		// Effekseerにより再生中のエフェクトを更新する。
-		UpdateEffekseer3D();
 	}
 	else
 	{

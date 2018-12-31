@@ -3,7 +3,7 @@
 namespace SoundProcess
 {
 	/// ƒQ[ƒ€‚É‚æ‚Á‚Ä•Ï‚í‚é•”•ª------------------
-	const int seNum = 22;
+	const int seNum = 23;
 	const int bgmNum = 11;
 	const int bgmArray = 2;
 	const int bgmFeedValue = 90;

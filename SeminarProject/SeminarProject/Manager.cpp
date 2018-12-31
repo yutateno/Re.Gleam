@@ -583,6 +583,9 @@ Manager::Manager()
 	move2str[40] = "media\\こっち\\media\\sound\\piano攻撃音2.wyn";
 	move2str[41] = "media\\こっち\\media\\sound\\piano攻撃音3.wyn";
 
+	// ドロップアイテムのSEの二種類目
+	move2str[42] = "media\\こっち\\media\\sound\\たま拾う音2.wyn";
+
 
 	load2[0] = ELOADFILE::mv1model;
 	load2[1] = ELOADFILE::mv1model;
@@ -605,7 +608,7 @@ Manager::Manager()
 	load2[17] = ELOADFILE::graph;
 	load2[18] = ELOADFILE::graph;
 
-	load2[19] = ELOADFILE::soundmem;
+	load2[19] = ELOADFILE::sound3DSource;
 
 	load2[20] = ELOADFILE::mv1model;
 
@@ -636,6 +639,8 @@ Manager::Manager()
 	load2[39] = ELOADFILE::sound3DSource;
 	load2[40] = ELOADFILE::sound3DSource;
 	load2[41] = ELOADFILE::sound3DSource;
+
+	load2[42] = ELOADFILE::sound3DSource;
 	/// ---------------------------------------------------------------------------------------------------
 
 
@@ -743,6 +748,12 @@ void Manager::Update()
 					// ゲームに関する
 					p_baseMove->CameraProcess();
 					p_baseMove->Draw();
+
+					// Effekseerにより再生中のエフェクトを描画する。
+					DrawEffekseer3D();
+					// Effekseerにより再生中のエフェクトを描画する。
+					DrawEffekseer2D();
+
 					BASICPARAM::e_nowScene = p_baseMove->GetScene();
 
 					// アンチエイリアス画面に描画したものを裏画面に書き込む
@@ -753,6 +764,10 @@ void Manager::Update()
 					p_baseMove->CameraProcess();				// SetDrawScreenを行うとカメラの設定がなくなるので再設定を行う
 					p_baseMove->Process();
 
+					// Effekseerにより再生中のエフェクトを更新する。
+					UpdateEffekseer3D();
+					// Effekseerにより再生中のエフェクトを更新する。(Processとかで行う
+					UpdateEffekseer2D();
 
 					// オプション画面に移行するコマンドを押されたら、またはウィンドウズが非アクティブになったら
 					if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1
@@ -856,11 +871,7 @@ void Manager::Update()
 		{
 			// 終了シーンがロードではないとき
 			if (!preLoadScene)
-			{
-				// サウンドを解放する
-				SoundProcess::Release();
-
-				
+			{				
 				// フェードを加算する
 				feedCount += 5;
 
@@ -883,6 +894,15 @@ void Manager::Update()
 				// フェードカウントが一定に達したらフラッグを下す
 				if (feedCount >= 255)
 				{
+					// エフェクトを終了する
+					DrawEffekseer2D_End();
+					DrawEffekseer3D_End();
+
+
+					// サウンドを解放する
+					SoundProcess::Release();
+
+
 					feedCount = 0;
 					BASICPARAM::endFeedNow = false;
 				}

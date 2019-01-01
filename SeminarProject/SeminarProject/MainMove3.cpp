@@ -44,6 +44,11 @@ void MainMove3::ShadowDraw()
 	{
 		p_enemySlime[i]->Draw();
 	}
+	// 敵クレヨンヒューマン
+	for (int i = 0; i != enemyCrayonHumanNum; ++i)
+	{
+		p_enemyCrayonHuman[i]->Draw();
+	}
 	// キャラクター
 	p_character->Draw();
 	BaseMove::ShadowCharaSetUpAfter();
@@ -88,6 +93,11 @@ void MainMove3::ShadowDraw()
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
 		p_enemySlime[i]->Draw();
+	}
+	// 敵クレヨンヒューマン
+	for (int i = 0; i != enemyCrayonHumanNum; ++i)
+	{
+		p_enemyCrayonHuman[i]->Draw();
 	}
 	BaseMove::ShadowAnotherCharaSetUpAfter();
 
@@ -135,6 +145,11 @@ void MainMove3::ShadowDraw()
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
 		p_enemySlime[i]->Draw();
+	}
+	// 敵クレヨンヒューマン
+	for (int i = 0; i != enemyCrayonHumanNum; ++i)
+	{
+		p_enemyCrayonHuman[i]->Draw();
 	}
 	// キャラクター
 	p_character->Draw();
@@ -192,6 +207,10 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
 		p_enemySlime[i] = nullptr;
+	}
+	for (int i = 0; i != enemyCrayonHumanNum; ++i)
+	{
+		p_enemyCrayonHuman[i] = nullptr;
 	}
 	vp_stageStairs.clear();
 	vp_stageStairsRoad.clear();
@@ -269,6 +288,13 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 			, v_file[EFILE::slimeTex0], VGet(1000.0f, 0.0f, 1000.0f));
 	}
 
+	// 敵クレヨンヒューマンの初期化
+	for (int i = 0; i != enemyCrayonHumanNum; ++i)
+	{
+		p_enemyCrayonHuman[i] = new EnemyMove3CrayonHuman(v_file[EFILE::crayonHumanModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
+			, v_file[EFILE::crayonHumanTex0], VGet(-1000.0f, 0.0f, -1000.0f));
+	}
+
 	// スカイボックス
 	BaseMove::SetInitSkyBox(v_file[EFILE::skyBoxModel], v_file[EFILE::skyBoxTex0]);
 
@@ -295,6 +321,17 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 
 MainMove3::~MainMove3()
 {
+	// 敵クレヨンヒューマン
+	for (int i = 0; i != enemyCrayonHumanNum; ++i)
+	{
+		POINTER_RELEASE(p_enemyCrayonHuman[i]);
+	}
+	// 敵スライム
+	for (int i = 0; i != enemySlimeNum; ++i)
+	{
+		POINTER_RELEASE(p_enemySlime[i]);
+	}
+
 	// 精密機械
 	GRAPHIC_RELEASE(adjustmentDescDraw);
 	POINTER_RELEASE(p_adjustmentMachine);
@@ -366,9 +403,6 @@ void MainMove3::Draw()
 			DrawBillboard3D(VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 200.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, adjustmentDescDraw, false);
 		}
 	}
-
-
-	printfDx("%f\n", p_character->GetArea().y);
 }
 
 void MainMove3::Process()
@@ -383,6 +417,12 @@ void MainMove3::Process()
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
 		p_enemySlime[i]->Process();
+	}
+
+	// 敵クレヨンヒューマンのプロセス
+	for (int i = 0; i != enemyCrayonHumanNum; ++i)
+	{
+		p_enemyCrayonHuman[i]->Process();
 	}
 
 	BaseMove::ShadowArea(p_character->GetArea());

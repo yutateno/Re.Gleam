@@ -737,6 +737,10 @@ Manager::Manager()
 	move3str[36] = "media\\こっち\\media\\move3\\インクスライム\\ink_slime_motionALL.myn";
 	move3str[37] = "media\\こっち\\media\\move3\\インクスライム\\ink_slime_motionALL.fbm\\normal\\Slime_tex.pyn";
 
+	// 敵のクレヨンヒューマンのデータ
+	move3str[38] = "media\\こっち\\media\\move3\\人型クレヨン\\kureyon_,motionALL.myn";
+	move3str[39] = "media\\こっち\\media\\move3\\人型クレヨン\\kureyon_,motionALL.fbm\\normal\\kre.pyn";
+
 	load3[0] = ELOADFILE::mv1model;
 	load3[1] = ELOADFILE::mv1model;
 	load3[2] = ELOADFILE::mv1model;
@@ -791,6 +795,9 @@ Manager::Manager()
 
 	load3[36] = ELOADFILE::mv1model;
 	load3[37] = ELOADFILE::graph;
+
+	load3[38] = ELOADFILE::mv1model;
+	load3[39] = ELOADFILE::graph;
 	/// --------------------------------------------------------------------
 
 	// メモリの初期化

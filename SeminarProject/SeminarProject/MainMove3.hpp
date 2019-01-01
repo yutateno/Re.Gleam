@@ -9,6 +9,7 @@
 #include "AdjustmentMachine.hpp"
 #include "StageStairsRoad.hpp"
 #include "EnemyMove3Slime.hpp"
+#include "EnemyMove3CrayonHuman.hpp"
 
 #include <random>
 
@@ -25,7 +26,8 @@ private:
 		, terminalDesc, stairsRoadDrawModel, stairsRoadTex0, stairsRoadTex1
 		, stairsRoadCollModel, se_jump, se_footCorridor, se_foot, se_landing
 		, se_landingSecond, se_attackOne, se_attackTwo, se_attackThrid
-		, se_ballPickUp2, bgm_Main, slimeModel, slimeTex0
+		, se_ballPickUp2, bgm_Main, slimeModel, slimeTex0, crayonHumanModel
+		, crayonHumanTex0
 	};
 
 
@@ -60,6 +62,12 @@ private:
 
 	// スライムの数
 	const int enemySlimeNum = 10;
+
+	// クレヨンヒューマンのポインタ
+	EnemyMove3CrayonHuman* p_enemyCrayonHuman[10];
+
+	// クレヨンヒューマンの数
+	const int enemyCrayonHumanNum = 10;
 
 
 	/// 精密機械------------------------------

@@ -509,7 +509,7 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	, const int tex0, const int tex1, const int tex2, const int tex3, const int tex4) : BasicCreature(collStageHandle)
 {
 	// ‚R‚cƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý
-	this->modelHandle = 0;
+	this->modelHandle = -1;
 	this->modelHandle = MV1DuplicateModel(modelHandle);
 
 
@@ -618,8 +618,20 @@ CharacterSword::~CharacterSword()
 	GRAPHIC_RELEASE(textureHandle2);
 	GRAPHIC_RELEASE(textureHandle3);
 	GRAPHIC_RELEASE(textureHandle4);
+	
+	for (int i = 0; i != 10; ++i)
+	{
+		MODEL_RELEASE(paneruHandle[i]);
+	}
 
-	for (int i = 0; i != v_stairsHandle.size(); ++i)
+	for (int i = 0, n = v_stairsRoadHandle.size(); i != n; ++i)
+	{
+		MODEL_RELEASE(v_stairsRoadHandle[i]);
+	}
+	v_stairsRoadHandle.clear();
+	v_stairsRoadHandle.shrink_to_fit();
+
+	for (int i = 0, n = v_stairsHandle.size(); i != n; ++i)
 	{
 		MODEL_RELEASE(v_stairsHandle[i]);
 	}

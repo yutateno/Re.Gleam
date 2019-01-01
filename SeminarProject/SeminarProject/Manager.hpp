@@ -51,13 +51,13 @@ private:
 	/// ムーブ3に関する--------------
 
 	// ムーブ3のロード数
-	const int max3 = 36;
+	const int max3 = 38;
 
 	// ムーブ3のロードファイル
-	std::string move3str[36];
+	std::string move3str[38];
 
 	// ムーブ3のロードの種類
-	ELOADFILE load3[36];
+	ELOADFILE load3[38];
 
 
 	// アンチエイリアスの画像

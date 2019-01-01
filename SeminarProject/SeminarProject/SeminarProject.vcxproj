@@ -168,8 +168,11 @@
     <ClCompile Include="CharacterSword.cpp" />
     <ClCompile Include="DropItemMove1.cpp" />
     <ClCompile Include="DropItemMove2.cpp" />
+    <ClCompile Include="DropItemMove3.cpp" />
     <ClCompile Include="EnemyMove1.cpp" />
     <ClCompile Include="EnemyMove2.cpp" />
+    <ClCompile Include="EnemyMove3CrayonHuman.cpp" />
+    <ClCompile Include="EnemyMove3Slime.cpp" />
     <ClCompile Include="LoadFile.cpp" />
     <ClCompile Include="LoadScreen.cpp" />
     <ClCompile Include="LoadThread.cpp" />
@@ -197,8 +200,11 @@
     <ClInclude Include="CharacterSword.hpp" />
     <ClInclude Include="DropItemMove1.hpp" />
     <ClInclude Include="DropItemMove2.hpp" />
+    <ClInclude Include="DropItemMove3.hpp" />
     <ClInclude Include="EnemyMove1.hpp" />
     <ClInclude Include="EnemyMove2.hpp" />
+    <ClInclude Include="EnemyMove3CrayonHuman.hpp" />
+    <ClInclude Include="EnemyMove3Slime.hpp" />
     <ClInclude Include="LoadFile.hpp" />
     <ClInclude Include="LoadScreen.hpp" />
     <ClInclude Include="LoadThread.hpp" />

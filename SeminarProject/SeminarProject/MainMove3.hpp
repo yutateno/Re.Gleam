@@ -8,6 +8,7 @@
 #include "StagePaneru.hpp"
 #include "AdjustmentMachine.hpp"
 #include "StageStairsRoad.hpp"
+#include "EnemyMove3Slime.hpp"
 
 #include <random>
 
@@ -24,7 +25,7 @@ private:
 		, terminalDesc, stairsRoadDrawModel, stairsRoadTex0, stairsRoadTex1
 		, stairsRoadCollModel, se_jump, se_footCorridor, se_foot, se_landing
 		, se_landingSecond, se_attackOne, se_attackTwo, se_attackThrid
-		, se_ballPickUp2, bgm_Main
+		, se_ballPickUp2, bgm_Main, slimeModel, slimeTex0
 	};
 
 
@@ -52,10 +53,19 @@ private:
 	CharacterSword* p_character;
 
 
+	/// 敵---------------------
+
+	// スライムのポインタ
+	EnemyMove3Slime* p_enemySlime;
+
+
 	/// 精密機械------------------------------
 
 	// 精密機械のポインタ
 	AdjustmentMachine* p_adjustmentMachine;
+
+	// 精密機械の説明補助画像
+	int adjustmentDescDraw;
 
 
 	/// カメラ------------------

@@ -150,6 +150,15 @@
     <ClCompile Include="AdjustmentMachine.cpp">
       <Filter>ソース ファイル\Actor\Drop</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyMove3Slime.cpp">
+      <Filter>ソース ファイル\Actor\Creature\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyMove3CrayonHuman.cpp">
+      <Filter>ソース ファイル\Actor\Creature\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="DropItemMove3.cpp">
+      <Filter>ソース ファイル\Actor\Drop</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseMove.hpp">
@@ -228,6 +237,15 @@
       <Filter>ヘッダー ファイル\Actor\Drop</Filter>
     </ClInclude>
     <ClInclude Include="AdjustmentMachine.hpp">
+      <Filter>ヘッダー ファイル\Actor\Drop</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyMove3Slime.hpp">
+      <Filter>ヘッダー ファイル\Actor\Creature\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyMove3CrayonHuman.hpp">
+      <Filter>ヘッダー ファイル\Actor\Creature\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="DropItemMove3.hpp">
       <Filter>ヘッダー ファイル\Actor\Drop</Filter>
     </ClInclude>
   </ItemGroup>

@@ -39,6 +39,8 @@ void MainMove3::ShadowDraw()
 	}
 	// 精密機械
 	p_adjustmentMachine->Draw();
+	// 敵スライム
+	p_enemySlime->Draw();
 	// キャラクター
 	p_character->Draw();
 	BaseMove::ShadowCharaSetUpAfter();
@@ -79,6 +81,8 @@ void MainMove3::ShadowDraw()
 	}
 	// 精密機械
 	p_adjustmentMachine->Draw();
+	// 敵スライム
+	p_enemySlime->Draw();
 	BaseMove::ShadowAnotherCharaSetUpAfter();
 
 	/// 描画
@@ -112,12 +116,17 @@ void MainMove3::ShadowDraw()
 		}
 	}
 	// パネル
-	for (int i = 0; i != 10; ++i)
+	if (BASICPARAM::paneruDrawFlag)
 	{
-		p_stagePaneru[i]->Draw();
+		for (int i = 0; i != 10; ++i)
+		{
+			p_stagePaneru[i]->Draw();
+		}
 	}
 	// 精密機械
 	p_adjustmentMachine->Draw();
+	// 敵スライム
+	p_enemySlime->Draw();
 	// キャラクター
 	p_character->Draw();
 	BaseMove::ShadowNoMoveDrawAfter();
@@ -127,6 +136,27 @@ void MainMove3::ShadowDraw()
 
 void MainMove3::AttackProcess()
 {
+	/// 精算機械に関する-------------------------------------------------------------------------------------------------------------------
+	if (p_adjustmentMachine->GetCanTouch())
+	{
+		// 当たっていたら押し出す
+		if (HitCheck_Capsule_Capsule(
+			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f,
+			p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 70.0f))
+		{
+			p_character->HitCircleReturn(p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)));
+		}
+
+		// 近くかどうかで見た目を変える
+		if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 250)
+		{
+			p_adjustmentMachine->ChangeDisplayTexture(true);
+		}
+		else
+		{
+			p_adjustmentMachine->ChangeDisplayTexture(false);
+		}
+	}
 }
 
 void MainMove3::ThsTextureReload()
@@ -150,6 +180,7 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	{
 		p_stagePaneru[i] = nullptr;
 	}
+	p_enemySlime = nullptr;
 	vp_stageStairs.clear();
 	vp_stageStairsRoad.clear();
 	vp_stageStreetLight.clear();
@@ -160,7 +191,8 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 
 
 	// キャラクターの初期化
-	p_character = new CharacterSword(v_file[EFILE::charaModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::paneruModel], v_file[EFILE::stairsRoadCollModel]
+	p_character = new CharacterSword(v_file[EFILE::charaModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel]
+		, v_file[EFILE::paneruModel], v_file[EFILE::stairsRoadCollModel]
 		, v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3], v_file[EFILE::charaTex4]);
 
 	// カメラの初期化
@@ -180,7 +212,8 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
 		{
 			vp_stageStairsRoad[i] = nullptr;
-			vp_stageStairsRoad[i] = new StageStairsRoad(v_file[EFILE::stairsRoadDrawModel], BASICPARAM::v_stairsRoadArea[i], v_file[EFILE::stairsRoadTex0], v_file[EFILE::stairsRoadTex1], BASICPARAM::v_stairsRoadAngle[i]);
+			vp_stageStairsRoad[i] = new StageStairsRoad(v_file[EFILE::stairsRoadDrawModel], BASICPARAM::v_stairsRoadArea[i]
+				, v_file[EFILE::stairsRoadTex0], v_file[EFILE::stairsRoadTex1], BASICPARAM::v_stairsRoadAngle[i]);
 			p_character->SetStairsRoadArea(vp_stageStairsRoad[i]->GetArea(), i, BASICPARAM::v_stairsRoadAngle[i]);
 		}
 	}
@@ -192,7 +225,8 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 		for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
 		{
 			vp_stageStreetLight[i] = nullptr;
-			vp_stageStreetLight[i] = new StageStreetLight(v_file[EFILE::streetLightModel], BASICPARAM::v_streetLightArea[i], v_file[EFILE::streetLightTex0], v_file[EFILE::streetLightTex1], BASICPARAM::v_stairsAngle[i]);
+			vp_stageStreetLight[i] = new StageStreetLight(v_file[EFILE::streetLightModel], BASICPARAM::v_streetLightArea[i]
+				, v_file[EFILE::streetLightTex0], v_file[EFILE::streetLightTex1], BASICPARAM::v_stairsAngle[i]);
 		}
 	}
 
@@ -214,6 +248,11 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	{
 		p_adjustmentMachine->CatchDropItem();
 	}
+	adjustmentDescDraw = v_file[EFILE::terminalDesc];
+
+	// 敵スライムの初期化
+	p_enemySlime = new EnemyMove3Slime(v_file[EFILE::slimeModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
+		, v_file[EFILE::slimeTex0], VGet(1000.0f, 0.0f, 1000.0f));
 
 	// スカイボックス
 	BaseMove::SetInitSkyBox(v_file[EFILE::skyBoxModel], v_file[EFILE::skyBoxTex0]);
@@ -242,6 +281,7 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 MainMove3::~MainMove3()
 {
 	// 精密機械
+	GRAPHIC_RELEASE(adjustmentDescDraw);
 	POINTER_RELEASE(p_adjustmentMachine);
 
 	// 階段
@@ -304,6 +344,15 @@ void MainMove3::Draw()
 	p_character->Draw();
 
 
+	if (p_adjustmentMachine->GetCanTouch())
+	{
+		if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175)
+		{
+			DrawBillboard3D(VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 200.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, adjustmentDescDraw, false);
+		}
+	}
+
+
 	printfDx("%f\n", p_character->GetArea().y);
 }
 
@@ -314,6 +363,9 @@ void MainMove3::Process()
 
 	// カメラのプロセス
 	p_camera->Process(p_character->GetArea());
+
+	// 敵スライムのプロセス
+	p_enemySlime->Process();
 
 
 	BaseMove::ShadowArea(p_character->GetArea());

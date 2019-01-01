@@ -733,6 +733,9 @@ Manager::Manager()
 	// BGM
 	move3str[35] = "media\\こっち\\media\\sound\\通常bgm.wyn";
 
+	// 敵のスライムのデータ
+	move3str[36] = "media\\こっち\\media\\move3\\インクスライム\\ink_slime_motionALL.myn";
+	move3str[37] = "media\\こっち\\media\\move3\\インクスライム\\ink_slime_motionALL.fbm\\whiteblack\\Slime_tex.pyn";
 
 	load3[0] = ELOADFILE::mv1model;
 	load3[1] = ELOADFILE::mv1model;
@@ -785,6 +788,9 @@ Manager::Manager()
 	load3[34] = ELOADFILE::sound3DSource;
 
 	load3[35] = ELOADFILE::soundStream;
+
+	load3[36] = ELOADFILE::mv1model;
+	load3[37] = ELOADFILE::graph;
 	/// --------------------------------------------------------------------
 
 	// メモリの初期化

@@ -13,10 +13,13 @@ bool BASICPARAM::endFeedNow;
 bool BASICPARAM::paneruDrawFlag;
 int BASICPARAM::stairsNum;
 std::vector<VECTOR> BASICPARAM::v_stairsArea;
+std::vector<float> BASICPARAM::v_stairsAngle;
 int BASICPARAM::streetLightNum;
-std::vector<VECTOR> BASICPARAM::v_streetLightArea; 
+std::vector<VECTOR> BASICPARAM::v_streetLightArea;
+std::vector<float> BASICPARAM::v_streetLightAngle;
 int BASICPARAM::stairsRoadNum;
 std::vector<VECTOR> BASICPARAM::v_stairsRoadArea;
+std::vector<float> BASICPARAM::v_stairsRoadAngle;
 bool BASICPARAM::cameraHorizonReturn;
 bool BASICPARAM::cameraVerticalReturn;
 

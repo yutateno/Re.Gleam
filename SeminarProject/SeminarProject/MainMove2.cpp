@@ -336,12 +336,14 @@ void MainMove2::AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID, float 
 		p_character->SetStairsArea(vp_stageStairs[BASICPARAM::stairsNum]->GetArea(), BASICPARAM::stairsNum, DX_PI_F + direction);
 		BASICPARAM::stairsNum++;
 		BASICPARAM::v_stairsArea.push_back(area);
+		BASICPARAM::v_stairsAngle.push_back(DX_PI_F + direction);
 		break;
 
 	case AdjustmentObject::StreetLight:
 		vp_stageStreetLight.push_back(new StageStreetLight(streetLightHandle, area, streetLightTexture0, streetLightTexture1, direction));
 		BASICPARAM::streetLightNum++;
 		BASICPARAM::v_streetLightArea.push_back(area);
+		BASICPARAM::v_streetLightAngle.push_back(direction);
 		break;
 
 	case AdjustmentObject::StairsRoad:
@@ -349,6 +351,7 @@ void MainMove2::AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID, float 
 		p_character->SetStairsRoadArea(vp_stageStairsRoad[BASICPARAM::stairsRoadNum]->GetArea(), BASICPARAM::stairsRoadNum, DX_PI_F + direction);
 		BASICPARAM::stairsRoadNum++;
 		BASICPARAM::v_stairsRoadArea.push_back(area);
+		BASICPARAM::v_stairsRoadAngle.push_back(DX_PI_F + direction);
 		break;
 
 	default:
@@ -396,7 +399,7 @@ void MainMove2::ShadowDraw()
 	BaseMove::ShadowCharaSetUpAfter();
 
 
-	// キャラクター以外再セットアップ
+	/// キャラクター以外再セットアップ
 	BaseMove::ShadowAnotherCharaSetUpBefore();
 	// 階段
 	for (int i = 0, n = static_cast<int>(vp_stageStairs.size()); i != n; ++i)
@@ -431,7 +434,7 @@ void MainMove2::ShadowDraw()
 	BaseMove::ShadowAnotherCharaSetUpAfter();
 
 
-	// 描画
+	/// 描画
 	BaseMove::ShadowNoMoveDrawBefore();
 	BaseMove::ShadowAnotherCharaDrawBefore();
 	BaseMove::ShadowCharaDrawBefore();
@@ -612,8 +615,13 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	BASICPARAM::paneruDrawFlag = false;
 	BASICPARAM::stairsNum = 0;
 	BASICPARAM::streetLightNum = 0;
+	BASICPARAM::stairsRoadNum = 0;
 	BASICPARAM::v_stairsArea.clear();
+	BASICPARAM::v_stairsAngle.clear();
 	BASICPARAM::v_streetLightArea.clear();
+	BASICPARAM::v_streetLightAngle.clear();
+	BASICPARAM::v_stairsRoadArea.clear();
+	BASICPARAM::v_stairsRoadAngle.clear();
 
 
 	// ポインタNULL初期化
@@ -630,7 +638,7 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	{
 		p_stagePaneru[i]		 = nullptr;
 	}
-	for (int i = 0; i != 5; ++i)
+	for (int i = 0, n = enemyNum * 5; i != n; ++i)
 	{
 		p_dropItem[i] = nullptr;
 	}
@@ -894,8 +902,6 @@ void MainMove2::Draw()
 	//{
 		AdjustmentDraw();
 	//}
-
-		printfDx("%f\n", p_character->GetArea().y);
 }
 
 
@@ -1017,7 +1023,7 @@ void MainMove2::Process()
 	if (CheckHitKey(KEY_INPUT_Z) == 1)
 	{
 		BASICPARAM::endFeedNow = true;
-		BaseMove::SetScene(ESceneNumber::FIRSTLOAD);
+		BaseMove::SetScene(ESceneNumber::THIRDLOAD);
 	}
 #endif
 }

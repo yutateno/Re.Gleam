@@ -735,7 +735,7 @@ Manager::Manager()
 
 	// 敵のスライムのデータ
 	move3str[36] = "media\\こっち\\media\\move3\\インクスライム\\ink_slime_motionALL.myn";
-	move3str[37] = "media\\こっち\\media\\move3\\インクスライム\\ink_slime_motionALL.fbm\\whiteblack\\Slime_tex.pyn";
+	move3str[37] = "media\\こっち\\media\\move3\\インクスライム\\ink_slime_motionALL.fbm\\normal\\Slime_tex.pyn";
 
 	load3[0] = ELOADFILE::mv1model;
 	load3[1] = ELOADFILE::mv1model;

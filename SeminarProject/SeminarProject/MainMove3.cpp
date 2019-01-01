@@ -40,7 +40,10 @@ void MainMove3::ShadowDraw()
 	// 精密機械
 	p_adjustmentMachine->Draw();
 	// 敵スライム
-	p_enemySlime->Draw();
+	for (int i = 0; i != enemySlimeNum; ++i)
+	{
+		p_enemySlime[i]->Draw();
+	}
 	// キャラクター
 	p_character->Draw();
 	BaseMove::ShadowCharaSetUpAfter();
@@ -82,7 +85,10 @@ void MainMove3::ShadowDraw()
 	// 精密機械
 	p_adjustmentMachine->Draw();
 	// 敵スライム
-	p_enemySlime->Draw();
+	for (int i = 0; i != enemySlimeNum; ++i)
+	{
+		p_enemySlime[i]->Draw();
+	}
 	BaseMove::ShadowAnotherCharaSetUpAfter();
 
 	/// 描画
@@ -126,7 +132,10 @@ void MainMove3::ShadowDraw()
 	// 精密機械
 	p_adjustmentMachine->Draw();
 	// 敵スライム
-	p_enemySlime->Draw();
+	for (int i = 0; i != enemySlimeNum; ++i)
+	{
+		p_enemySlime[i]->Draw();
+	}
 	// キャラクター
 	p_character->Draw();
 	BaseMove::ShadowNoMoveDrawAfter();
@@ -180,7 +189,10 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	{
 		p_stagePaneru[i] = nullptr;
 	}
-	p_enemySlime = nullptr;
+	for (int i = 0; i != enemySlimeNum; ++i)
+	{
+		p_enemySlime[i] = nullptr;
+	}
 	vp_stageStairs.clear();
 	vp_stageStairsRoad.clear();
 	vp_stageStreetLight.clear();
@@ -251,8 +263,11 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	adjustmentDescDraw = v_file[EFILE::terminalDesc];
 
 	// 敵スライムの初期化
-	p_enemySlime = new EnemyMove3Slime(v_file[EFILE::slimeModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
-		, v_file[EFILE::slimeTex0], VGet(1000.0f, 0.0f, 1000.0f));
+	for (int i = 0; i != enemySlimeNum; ++i)
+	{
+		p_enemySlime[i] = new EnemyMove3Slime(v_file[EFILE::slimeModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
+			, v_file[EFILE::slimeTex0], VGet(1000.0f, 0.0f, 1000.0f));
+	}
 
 	// スカイボックス
 	BaseMove::SetInitSkyBox(v_file[EFILE::skyBoxModel], v_file[EFILE::skyBoxTex0]);
@@ -365,10 +380,14 @@ void MainMove3::Process()
 	p_camera->Process(p_character->GetArea());
 
 	// 敵スライムのプロセス
-	p_enemySlime->Process();
-
+	for (int i = 0; i != enemySlimeNum; ++i)
+	{
+		p_enemySlime[i]->Process();
+	}
 
 	BaseMove::ShadowArea(p_character->GetArea());
+
+	AttackProcess();
 
 	BaseMove::SkyBoxProcess(p_character->GetArea());
 

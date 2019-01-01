@@ -56,7 +56,10 @@ private:
 	/// 敵---------------------
 
 	// スライムのポインタ
-	EnemyMove3Slime* p_enemySlime;
+	EnemyMove3Slime* p_enemySlime[10];
+
+	// スライムの数
+	const int enemySlimeNum = 10;
 
 
 	/// 精密機械------------------------------

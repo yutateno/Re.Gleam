@@ -64,6 +64,7 @@ void EnemyMove3Slime::MoveProcess()
 		{
 			nextDireXAngle = -nextDireXAngle;
 		}
+		
 	}
 
 	area.x += sinf(angle + direXAngle + direZAngle) * -walkSpeed;
@@ -93,6 +94,14 @@ void EnemyMove3Slime::MoveProcess()
 			direZAngle += 0.01f;
 		}
 	}
+
+	if (area.x > 4000 || area.x < -4000
+		|| area.z > 4000 || area.z < -4000)
+	{
+		moveCount = 100;
+		nextDireXAngle = direXAngle;
+		nextDireZAngle = direZAngle;
+	}
 }
 
 
@@ -116,8 +125,8 @@ EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandl
 
 
 	// モデルの基本情報
-	modelHeight = 100.0f;
-	modelWigth = 200.0f;
+	modelHeight = 50.0f;
+	modelWigth = 140.0f;
 
 	// モデルの向きと位置
 	this->area = area;
@@ -128,8 +137,8 @@ EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandl
 	nextDireZAngle = 0.0f;
 	
 	// 足元の影に関する
-	shadowHeight = 50.0f;
-	shadowSize = 100.0f;
+	shadowHeight = 25.0f;
+	shadowSize = 70.0f;
 
 	// それぞれの速度
 	walkSpeed = 0.0f;
@@ -175,6 +184,9 @@ void EnemyMove3Slime::Draw()
 	BasicObject::Draw();		// 基本的なものを引っ張ってくる
 
 	BasicObject::ShadowFoot();
+
+	
+	DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
 }
 
 
@@ -204,10 +216,6 @@ void EnemyMove3Slime::TextureReload()
 
 	switch (BASICPARAM::e_TextureColor)
 	{
-	case ETextureColor::WHITEBLACK:
-		LoadFile::MyLoad("media\\こっち\\media\\move3\\インクスライム\\ink_slime_motionALL.fbm\\whiteblack\\Slime_tex.pyn", textureHandle0, ELOADFILE::graph);
-		break;
-
 	case ETextureColor::NORMAL:
 		LoadFile::MyLoad("media\\こっち\\media\\move3\\インクスライム\\ink_slime_motionALL.fbm\\normal\\Slime_tex.pyn", textureHandle0, ELOADFILE::graph);
 		break;
@@ -221,7 +229,7 @@ void EnemyMove3Slime::TextureReload()
 		break;
 
 	default:
-		LoadFile::MyLoad("media\\こっち\\media\\move3\\インクスライム\\ink_slime_motionALL.fbm\\whiteblack\\Slime_tex.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\move3\\インクスライム\\ink_slime_motionALL.fbm\\normal\\Slime_tex.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 	}
 

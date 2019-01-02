@@ -624,19 +624,25 @@ CharacterSword::~CharacterSword()
 		MODEL_RELEASE(paneruHandle[i]);
 	}
 
-	for (int i = 0, n = v_stairsRoadHandle.size(); i != n; ++i)
+	if (BASICPARAM::stairsRoadNum != 0)
 	{
-		MODEL_RELEASE(v_stairsRoadHandle[i]);
+		for (int i = 0, n = v_stairsRoadHandle.size(); i != n; ++i)
+		{
+			MODEL_RELEASE(v_stairsRoadHandle[i]);
+		}
+		v_stairsRoadHandle.clear();
+		v_stairsRoadHandle.shrink_to_fit();
 	}
-	v_stairsRoadHandle.clear();
-	v_stairsRoadHandle.shrink_to_fit();
 
-	for (int i = 0, n = v_stairsHandle.size(); i != n; ++i)
+	if (BASICPARAM::stairsNum != 0)
 	{
-		MODEL_RELEASE(v_stairsHandle[i]);
+		for (int i = 0, n = v_stairsHandle.size(); i != n; ++i)
+		{
+			MODEL_RELEASE(v_stairsHandle[i]);
+		}
+		v_stairsHandle.clear();
+		v_stairsHandle.shrink_to_fit();
 	}
-	v_stairsHandle.clear();
-	v_stairsHandle.shrink_to_fit();
 
 	MODEL_RELEASE(modelHandle);
 }
@@ -652,7 +658,7 @@ void CharacterSword::SetStairsArea(const VECTOR stairsArea, const int num, const
 	MV1SetPosition(v_stairsHandle[num], stairsArea);				// ステージの座標を更新
 	MV1SetupCollInfo(v_stairsHandle[num], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
 	MV1SetFrameVisible(v_stairsHandle[num], -1, false);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(v_stairsHandle[num], -1);					// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1RefreshCollInfo(v_stairsHandle[num], -1);
 }
 
 void CharacterSword::SetPaneruArea(const VECTOR paneruArea, const int num)
@@ -666,7 +672,7 @@ void CharacterSword::SetPaneruArea(const VECTOR paneruArea, const int num)
 	MV1SetPosition(paneruHandle[num], paneruArea);					// ステージの座標を更新
 	MV1SetupCollInfo(paneruHandle[num], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
 	MV1SetFrameVisible(paneruHandle[num], -1, false);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(paneruHandle[num], -1);						// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1RefreshCollInfo(paneruHandle[num], -1);
 }
 
 void CharacterSword::SetStairsRoadArea(const VECTOR stairsRoadArea, const int num, const float angle)

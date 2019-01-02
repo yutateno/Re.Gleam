@@ -66,8 +66,8 @@ void EnemyMove3Slime::MoveProcess()
 		
 	}
 
-	area.x += sinf(angle + direXAngle + direZAngle) * -walkSpeed;
-	area.z += cosf(angle + direXAngle + direZAngle) * -walkSpeed;
+	area.x += sinf(direXAngle + direZAngle) * -walkSpeed;
+	area.z += cosf(direXAngle + direZAngle) * -walkSpeed;
 	moveFlag = true;
 	Player_PlayAnim(MOTION::idle);
 
@@ -93,18 +93,11 @@ void EnemyMove3Slime::MoveProcess()
 			direZAngle += 0.01f;
 		}
 	}
-
-	if (area.x > 4000 || area.x < -4000
-		|| area.z > 4000 || area.z < -4000)
-	{
-		moveCount = 100;
-		nextDireXAngle = direXAngle;
-		nextDireZAngle = direZAngle;
-	}
 }
 
 
-EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle, const int tex0, const VECTOR area)
+EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
+	, const int tex0, const VECTOR area) : BasicCreature(collStageHandle)
 {
 	// 3Dモデルの読み込み
 	this->modelHandle = -1;
@@ -145,11 +138,35 @@ EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandl
 
 	// 階段
 	v_stairsHandle.clear();
-	this->v_stairsHandle.push_back(MV1DuplicateModel(stairsHandle));
+	if (BASICPARAM::stairsNum != 0)
+	{
+		v_stairsHandle.resize(BASICPARAM::stairsNum);
+		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+		{
+			v_stairsHandle[i] = MV1DuplicateModel(stairsHandle);
+			MV1SetRotationXYZ(v_stairsHandle[i], VGet(0.0f, BASICPARAM::v_stairsAngle[i], 0.0f));
+			MV1SetPosition(v_stairsHandle[i], BASICPARAM::v_stairsArea[i]);				// ステージの座標を更新
+			MV1SetupCollInfo(v_stairsHandle[i], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
+			MV1SetFrameVisible(v_stairsHandle[i], -1, false);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+			MV1RefreshCollInfo(v_stairsHandle[i], -1);
+		}
+	}
 
 	// 階段と床
 	v_stairsRoadHandle.clear();
-	this->v_stairsRoadHandle.push_back(MV1DuplicateModel(stairsRoadHandle));
+	if (BASICPARAM::stairsRoadNum != 0)
+	{
+		v_stairsRoadHandle.resize(BASICPARAM::stairsRoadNum);
+		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+		{
+			v_stairsRoadHandle[i] = MV1DuplicateModel(stairsRoadHandle);
+			MV1SetRotationXYZ(v_stairsRoadHandle[i], VGet(0.0f, BASICPARAM::v_stairsRoadAngle[i], 0.0f));
+			MV1SetPosition(v_stairsRoadHandle[i], BASICPARAM::v_stairsRoadArea[i]);				// ステージの座標を更新
+			MV1SetupCollInfo(v_stairsRoadHandle[i], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
+			MV1SetFrameVisible(v_stairsRoadHandle[i], -1, false);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+			MV1RefreshCollInfo(v_stairsRoadHandle[i], -1);
+		}
+	}
 
 	// モデルの座標を更新
 	MV1SetPosition(this->modelHandle, this->area);
@@ -160,19 +177,25 @@ EnemyMove3Slime::~EnemyMove3Slime()
 {
 	GRAPHIC_RELEASE(textureHandle0);
 
-	for (int i = 0, n = v_stairsRoadHandle.size(); i != n; ++i)
+	if (BASICPARAM::stairsRoadNum != 0)
 	{
-		MODEL_RELEASE(v_stairsRoadHandle[i]);
+		for (int i = 0, n = v_stairsRoadHandle.size(); i != n; ++i)
+		{
+			MODEL_RELEASE(v_stairsRoadHandle[i]);
+		}
+		v_stairsRoadHandle.clear();
+		v_stairsRoadHandle.shrink_to_fit();
 	}
-	v_stairsRoadHandle.clear();
-	v_stairsRoadHandle.shrink_to_fit();
 
-	for (int i = 0, n = v_stairsHandle.size(); i != n; ++i)
+	if (BASICPARAM::stairsNum != 0)
 	{
-		MODEL_RELEASE(v_stairsHandle[i]);
+		for (int i = 0, n = v_stairsHandle.size(); i != n; ++i)
+		{
+			MODEL_RELEASE(v_stairsHandle[i]);
+		}
+		v_stairsHandle.clear();
+		v_stairsHandle.shrink_to_fit();
 	}
-	v_stairsHandle.clear();
-	v_stairsHandle.shrink_to_fit();
 
 	MODEL_RELEASE(modelHandle);
 }
@@ -199,6 +222,24 @@ void EnemyMove3Slime::Process()
 
 	// モーション
 	Player_AnimProcess();
+
+	// 階段のあたり判定
+	if (BASICPARAM::stairsNum != 0)
+	{
+		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+		{
+			ActorHit(v_stairsHandle[i]);
+		}
+	}
+
+	// 階段と床のあたり判定
+	if (BASICPARAM::stairsRoadNum != 0)
+	{
+		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+		{
+			ActorHit(v_stairsRoadHandle[i]);
+		}
+	}
 
 	// ステージのあたり判定
 	StageHit();

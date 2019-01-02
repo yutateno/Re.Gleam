@@ -389,11 +389,18 @@ BasicCreature::BasicCreature() :BasicObject()
 }
 
 // コンストラクタ
-BasicCreature::BasicCreature(const int collStageHandle) :BasicObject(collStageHandle)
+BasicCreature::BasicCreature(const int collStageHandle, bool anotherMoveChara) :BasicObject(collStageHandle)
 {
 	// ステージのコリジョン情報の更新
 	stageHandle = MV1DuplicateModel(collStageHandle);
-	MV1SetScale(stageHandle, VGet(0.75f, 0.75f, 0.75f));
+	if (!anotherMoveChara)
+	{
+		MV1SetScale(stageHandle, VGet(0.75f, 0.75f, 0.75f));
+	}
+	else
+	{
+		MV1SetScale(stageHandle, VGet(0.7f, 0.7f, 0.7f));
+	}
 	MV1SetupCollInfo(stageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
 	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
 	MV1SetFrameVisible(stageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
@@ -448,32 +455,70 @@ void BasicCreature::SetAreaReturn()
 
 void BasicCreature::HitCircleReturn(VECTOR hitOneArea, VECTOR hitTwoArea)
 {
-	VECTOR v01, v02, outv;
+	//VECTOR v01, v02, outv;
 
-	// 頂点０から頂点１へのベクトルを算出
-	v01 = VGet(hitOneArea.x + (hitOneArea.x - area.x) - hitOneArea.x, hitTwoArea.y / 2.0f - hitOneArea.y, hitOneArea.z - (hitOneArea.z - area.z) - hitOneArea.z);
+	//// 頂点０から頂点１へのベクトルを算出
+	//v01 = VGet(hitOneArea.x + (hitOneArea.x - area.x) - hitOneArea.x, hitTwoArea.y / 2.0f - hitOneArea.y, hitOneArea.z - (hitOneArea.z - area.z) - hitOneArea.z);
 
-	// 頂点０から頂点２へのベクトルを算出
-	v02 = VGet(hitOneArea.x - (hitOneArea.x - area.x) - hitOneArea.x, hitTwoArea.y / 2.0f - hitOneArea.y, hitOneArea.z + (hitOneArea.z - area.z) - hitOneArea.z);
+	//// 頂点０から頂点２へのベクトルを算出
+	//v02 = VGet(hitOneArea.x - (hitOneArea.x - area.x) - hitOneArea.x, hitTwoArea.y / 2.0f - hitOneArea.y, hitOneArea.z + (hitOneArea.z - area.z) - hitOneArea.z);
 
-	// 二つのベクトルの外積を計算( 二つのベクトルに垂直なベクトルの算出 )
-	// outv.x = v01.y * v02.z - v01.z * v02.y ;
-	// outv.y = v01.z * v02.x - v01.x * v02.z ;
-	// outv.z = v01.x * v02.y - v01.y * v02.x ;
-	outv = VCross(v01, v02);
+	//// 二つのベクトルの外積を計算( 二つのベクトルに垂直なベクトルの算出 )
+	//// outv.x = v01.y * v02.z - v01.z * v02.y ;
+	//// outv.y = v01.z * v02.x - v01.x * v02.z ;
+	//// outv.z = v01.x * v02.y - v01.y * v02.x ;
+	//outv = VCross(v01, v02);
 
-	// 外積の値が長さ１とは限らないので、正規化( 長さを１にする )、これが法線です
-	// float r = sqrt( outv.x * outv.x + outv.y * outv.y + outv.z * outv.z ) ;
-	// outv.x /= r ;
-	// outv.y /= r ;
-	// outv.z /= r ;
-	outv = VNorm(outv);
+	//// 外積の値が長さ１とは限らないので、正規化( 長さを１にする )、これが法線です
+	//// float r = sqrt( outv.x * outv.x + outv.y * outv.y + outv.z * outv.z ) ;
+	//// outv.x /= r ;
+	//// outv.y /= r ;
+	//// outv.z /= r ;
+	//outv = VNorm(outv);
 
-	//printfDx("%f\t%f\t%f\n", outv.x, outv.y, outv.z);
+	////printfDx("%f\t%f\t%f\n", outv.x, outv.y, outv.z);
 
-	VECTOR slideVec = VCross(VSub(area, preArea), outv);
-		slideVec = VCross(outv, slideVec);
-		area = VAdd(preArea, slideVec);
+	//VECTOR slideVec = VCross(VSub(area, preArea), outv);
+	//slideVec = VCross(outv, slideVec);
+	//area = VAdd(preArea, slideVec);
+
+	// 当たっていたら ch が chk から離れる処理をする
+
+	VECTOR ChkChToChVec;
+	float Length;
+	VECTOR PushVec;
+	//float power = 30.0f;
+	VECTOR tempArea = area;
+
+		// chk_ch から ch へのベクトルを算出
+	ChkChToChVec = VSub(area, hitOneArea);
+
+	// Ｙ軸は見ない
+	ChkChToChVec.y = 0.0f;
+
+	// 二人の距離を算出
+	Length = VSize(ChkChToChVec);
+
+	// chk_ch から ch へのベクトルを正規化( ベクトルの長さを 1.0f にする )
+	PushVec = VScale(ChkChToChVec, 1.0f / Length);
+
+	// 押し出す距離を算出、もし二人の距離から二人の大きさを引いた値に押し出し力を足して離れてしまう場合は、ぴったりくっつく距離に移動する
+	if (Length - hitTwoArea.y < 0)
+	{
+		float TempY;
+
+		TempY = area.y;
+		area = VAdd(hitOneArea, VScale(PushVec, hitTwoArea.y));
+
+		// Ｙ座標は変化させない
+		area.y = TempY;
+	}
+	//else
+	//{
+	//	// 押し出し
+	//	area = VAdd(area, VScale(PushVec, power));
+	//}
+	//area = VSub(area, tempArea);
 }
 
 

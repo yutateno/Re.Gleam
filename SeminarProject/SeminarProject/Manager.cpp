@@ -741,6 +741,10 @@ Manager::Manager()
 	move3str[38] = "media\\こっち\\media\\move3\\人型クレヨン\\kureyon_,motionALL.myn";
 	move3str[39] = "media\\こっち\\media\\move3\\人型クレヨン\\kureyon_,motionALL.fbm\\normal\\kre.pyn";
 
+	// ドロップアイテムのデータ
+	move3str[40] = "media\\こっち\\media\\move3\\インク的な\\ink.myn";
+	move3str[41] = "media\\こっち\\media\\move3\\インク的な\\correction\\normal\\ink.pyn";
+
 	load3[0] = ELOADFILE::mv1model;
 	load3[1] = ELOADFILE::mv1model;
 	load3[2] = ELOADFILE::mv1model;
@@ -798,6 +802,9 @@ Manager::Manager()
 
 	load3[38] = ELOADFILE::mv1model;
 	load3[39] = ELOADFILE::graph;
+
+	load3[40] = ELOADFILE::mv1model;
+	load3[41] = ELOADFILE::graph;
 	/// --------------------------------------------------------------------
 
 	// メモリの初期化

@@ -151,7 +151,7 @@ public:
 	BasicCreature();
 
 	// コピーコンストラクタ
-	BasicCreature(const int collStageHandle);
+	BasicCreature(const int collStageHandle, bool anotherMoveChara = false);
 
 	// デストラクタ
 	virtual ~BasicCreature();

@@ -10,6 +10,7 @@
 #include "StageStairsRoad.hpp"
 #include "EnemyMove3Slime.hpp"
 #include "EnemyMove3CrayonHuman.hpp"
+#include "DropItemMove3.hpp"
 
 #include <random>
 
@@ -27,7 +28,7 @@ private:
 		, stairsRoadCollModel, se_jump, se_footCorridor, se_foot, se_landing
 		, se_landingSecond, se_attackOne, se_attackTwo, se_attackThrid
 		, se_ballPickUp2, bgm_Main, slimeModel, slimeTex0, crayonHumanModel
-		, crayonHumanTex0
+		, crayonHumanTex0, dropItemModel, dropItemTex0
 	};
 
 
@@ -68,6 +69,14 @@ private:
 
 	// クレヨンヒューマンの数
 	const int enemyCrayonHumanNum = 10;
+
+	// ドロップアイテム
+	DropItemMove3* p_dropItem[20];
+
+	int dropItemSE;
+
+	// 何個のドロップアイテムを手に持ったか
+	int catchDropItemNum;
 
 
 	/// 精密機械------------------------------

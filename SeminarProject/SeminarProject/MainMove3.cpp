@@ -161,24 +161,99 @@ void MainMove3::ShadowDraw()
 void MainMove3::AttackProcess()
 {
 	/// 精算機械に関する-------------------------------------------------------------------------------------------------------------------
-	if (p_adjustmentMachine->GetCanTouch())
+	// 当たっていたら押し出す
+	if (HitCheck_Capsule_Capsule(
+		p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f,
+		p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 70.0f))
 	{
-		// 当たっていたら押し出す
+		p_character->HitCircleReturn(p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)));
+	}
+	for (int i = 0; i != enemySlimeNum; ++i)
+	{
+		if (BaseMove::GetDistance(p_enemySlime[i]->GetArea(), p_adjustmentMachine->GetArea()) > 250) continue;
 		if (HitCheck_Capsule_Capsule(
-			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f,
+			p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, 50.0f, 0.0f)), 140.0f,
 			p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 70.0f))
 		{
-			p_character->HitCircleReturn(p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)));
+			p_enemySlime[i]->HitCircleReturn(p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)));
+		}
+	}
+	for (int i = 0; i != enemyCrayonHumanNum; ++i)
+	{
+		if (BaseMove::GetDistance(p_enemyCrayonHuman[i]->GetArea(), p_adjustmentMachine->GetArea()) > 250) continue;
+		if (HitCheck_Capsule_Capsule(
+			p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, 130.0f, 0.0f)), 70.0f,
+			p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 70.0f))
+		{
+			p_enemyCrayonHuman[i]->HitCircleReturn(p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)));
+		}
+	}
+	// 近くかどうかで見た目を変える
+	if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 250)
+	{
+		p_adjustmentMachine->ChangeDisplayTexture(true);
+	}
+	else
+	{
+		p_adjustmentMachine->ChangeDisplayTexture(false);
+	}
+
+
+	/// キャラクターを押し出す
+	for (int i = 0; i != enemySlimeNum; ++i)
+	{
+		if (BaseMove::GetDistance(p_enemySlime[i]->GetArea(), p_character->GetArea()) > 250) continue;
+		if (HitCheck_Capsule_Capsule(
+			p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, 50.0f, 0.0f)), 140.0f,
+			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f))
+		{
+			//p_enemySlime[i]->HitCircleReturn(p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)));
+			p_character->HitCircleReturn(p_enemySlime[i]->GetArea(), VGet(0.0f, 140.0f, 0.0f));
+		}
+	}
+	for (int i = 0; i != enemyCrayonHumanNum; ++i)
+	{
+		if (BaseMove::GetDistance(p_enemyCrayonHuman[i]->GetArea(), p_character->GetArea()) > 250) continue;
+		if (HitCheck_Capsule_Capsule(
+			p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, 130.0f, 0.0f)), 70.0f,
+			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f))
+		{
+			//p_enemyCrayonHuman[i]->HitCircleReturn(p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)));
+			p_character->HitCircleReturn(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, 70.0f, 0.0f));
+		}
+	}
+
+
+	/// ドロップに関する--------------------------------------------------------------------------------------
+	for (int i = 0, n = enemySlimeNum + enemyCrayonHumanNum; i != n; ++i)
+	{
+		if (p_dropItem[i]->GetDeath() || !p_dropItem[i]->GetAlive() || !p_dropItem[i]->GetCanCatch()) continue;
+
+		if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 500)
+		{
+			p_dropItem[i]->StolenChara(p_character->GetArea());
 		}
 
-		// 近くかどうかで見た目を変える
-		if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 250)
+
+		if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 75)
 		{
-			p_adjustmentMachine->ChangeDisplayTexture(true);
-		}
-		else
-		{
-			p_adjustmentMachine->ChangeDisplayTexture(false);
+			catchDropItemNum++;
+			p_dropItem[i]->SetDeath(true);			// 生きさせない
+
+			/// SEの再生をランダムにする-----------------------------------------------------------------------------
+			//std::random_device rnd;     // 非決定的な乱数生成器を生成
+			//std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+			//std::uniform_int_distribution<> randPawnSE(0, 1);        // 乱数
+
+			//if (randPawnSE(mt) == 0)
+			//{
+			//	SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, p_dropItem[i]->GetArea());
+			//}
+			//else
+			//{
+			//	SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp2, p_dropItem[i]->GetArea());
+			//}
+			/// -----------------------------------------------------------------------------------------------------
 		}
 	}
 }
@@ -211,6 +286,10 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
 		p_enemyCrayonHuman[i] = nullptr;
+	}
+	for (int i = 0, n = enemySlimeNum + enemyCrayonHumanNum; i != n; ++i)
+	{
+		p_dropItem[i] = nullptr;
 	}
 	vp_stageStairs.clear();
 	vp_stageStairsRoad.clear();
@@ -295,6 +374,13 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 			, v_file[EFILE::crayonHumanTex0], VGet(-1000.0f, 0.0f, -1000.0f));
 	}
 
+	// ドロップアイテムの初期化
+	catchDropItemNum = 0;
+	for (int i = 0, n = enemySlimeNum + enemyCrayonHumanNum; i != n; ++i)
+	{
+		p_dropItem[i] = new DropItemMove3(v_file[EFILE::dropItemModel], p_character->GetArea(), v_file[EFILE::dropItemTex0]);
+	}
+
 	// スカイボックス
 	BaseMove::SetInitSkyBox(v_file[EFILE::skyBoxModel], v_file[EFILE::skyBoxTex0]);
 
@@ -321,6 +407,11 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 
 MainMove3::~MainMove3()
 {
+	// ドロップアイテム
+	for (int i = 0, n = enemySlimeNum + enemyCrayonHumanNum; i != n; ++i)
+	{
+		POINTER_RELEASE(p_dropItem[i]);
+	}
 	// 敵クレヨンヒューマン
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
@@ -393,6 +484,13 @@ void MainMove3::Draw()
 	ShadowDraw();
 
 
+	for (int i = 0, n = enemySlimeNum + enemyCrayonHumanNum; i != n; ++i)
+	{
+		if (p_dropItem[i]->GetDeath()) continue;
+		p_dropItem[i]->Draw();
+	}
+
+
 	p_character->Draw();
 
 
@@ -403,6 +501,9 @@ void MainMove3::Draw()
 			DrawBillboard3D(VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 200.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, adjustmentDescDraw, false);
 		}
 	}
+
+
+	DrawFormatString(1020, 20, GetColor(0, 0, 0), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
 }
 
 void MainMove3::Process()
@@ -423,6 +524,17 @@ void MainMove3::Process()
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
 		p_enemyCrayonHuman[i]->Process();
+	}
+
+	// ドロップアイテム
+	for (int i = 0, n = enemySlimeNum + enemyCrayonHumanNum; i != n; ++i)
+	{
+		/*if (CheckHitKey(KEY_INPUT_Y) == 1)
+		{
+			if (!p_dropItem[i]->GetDeath()) p_dropItem[i]->SetAlive(true, p_character->GetArea());
+		}*/
+		if (p_dropItem[i]->GetDeath()) continue;
+		p_dropItem[i]->Process();
 	}
 
 	BaseMove::ShadowArea(p_character->GetArea());
@@ -479,6 +591,27 @@ void MainMove3::TextureReload()
 		{
 			vp_stageStairsRoad[i]->TextureReload();
 		}
+	}
+
+	// 敵スライム
+	for (int i = 0; i != enemySlimeNum; ++i)
+	{
+		if (p_enemySlime[i]->GetDeathFlag()) continue;
+		p_enemySlime[i]->TextureReload();
+	}
+
+	// 敵クレヨンヒューマン
+	for (int i = 0; i != enemyCrayonHumanNum; ++i)
+	{
+		if (p_enemyCrayonHuman[i]->GetDeathFlag()) continue;
+		p_enemyCrayonHuman[i]->TextureReload();
+	}
+
+	// ドロップアイテム
+	for (int i = 0, n = enemySlimeNum + enemyCrayonHumanNum; i != n; ++i)
+	{
+		if (p_dropItem[i]->GetDeath()) continue;
+		p_dropItem[i]->TextureReload();
 	}
 }
 

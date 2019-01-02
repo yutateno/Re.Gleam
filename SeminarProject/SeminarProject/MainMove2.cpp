@@ -490,7 +490,7 @@ void MainMove2::AttackProcess()
 			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f,
 			p_enemy[i]->GetArea(), VAdd(p_enemy[i]->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 100.0f))
 		{
-			p_character->HitCircleReturn(p_enemy[i]->GetArea(), VAdd(p_enemy[i]->GetArea(), VGet(0.0f, 100.0f, 0.0f)));
+			p_character->HitCircleReturn(p_enemy[i]->GetArea(), VGet(0.0f, 100.0f, 0.0f));
 		}
 
 		// UŒ‚’†‚¾‚Á‚½‚ç

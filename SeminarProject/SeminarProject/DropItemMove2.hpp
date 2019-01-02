@@ -22,12 +22,13 @@ private:
 	int flyAroundFrame;
 
 	// 飛び散った先の座標
-	float nextAreaX;
-	float nextAreaZ;
-	float moveAreaY;
+	float nextAreaX, nextAreaZ, moveAreaY;
 
 public:
+	// コンストラクタ
 	DropItemMove2(const int draw, VECTOR area, const int tex0);
+
+	// デストラクタ
 	~DropItemMove2();
 
 

@@ -97,7 +97,7 @@ void EnemyMove3Slime::MoveProcess()
 
 
 EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
-	, const int tex0, const VECTOR area) : BasicCreature(collStageHandle)
+	, const int tex0, const VECTOR area) : BasicCreature(collStageHandle, true)
 {
 	// 3Dƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý
 	this->modelHandle = -1;

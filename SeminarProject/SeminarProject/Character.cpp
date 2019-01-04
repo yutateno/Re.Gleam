@@ -186,7 +186,7 @@ Character::Character(const int modelHandle, const int collStageHandle, const int
 
 	// モデルの基本情報
 	modelHeight = 160.0f;
-	modelWigth = 50.0f;
+	modelWidth = 50.0f;
 
 
 	// モデルの向きと位置
@@ -283,7 +283,7 @@ void Character::Draw()
 #ifdef _DEBUG
 	if(MyDebug::characterDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
 	}
 #endif // _DEBUG
 }

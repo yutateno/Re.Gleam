@@ -148,7 +148,7 @@ void MyDebug::DebugProcess()
 			enemyThreeSlimeSearchLineDrawFlag = !enemyThreeSlimeSearchLineDrawFlag;
 		}
 
-		DrawFormatString(970, 230, GetColor(0, 0, 0), "enemyThreeCrayonHumanSearchLineDrawFlag: R: %s", enemyThreeCrayonHumanSearchLineDrawFlag ? "true" : "false");
+		DrawFormatString(970, 250, GetColor(0, 0, 0), "enemyThreeCrayonHumanSearchLineDrawFlag: R: %s", enemyThreeCrayonHumanSearchLineDrawFlag ? "true" : "false");
 		if (CheckHitKey(KEY_INPUT_R) == 1 && DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_BACK) == 1)
 		{
 			enemyThreeCrayonHumanSearchLineDrawFlag = !enemyThreeCrayonHumanSearchLineDrawFlag;

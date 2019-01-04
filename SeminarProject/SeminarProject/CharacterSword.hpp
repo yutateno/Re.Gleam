@@ -169,5 +169,8 @@ public:
 
 	// キャラクターの向いている方向
 	const float GetAngle() const { return angle + direXAngle + direZAngle; }
+
+	// 攻撃を受けている
+	void SetDamage();
 };
 

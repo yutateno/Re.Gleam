@@ -11,6 +11,9 @@ protected:
 	// モデルの高さ
 	float modelHeight;
 
+	// モデルの横幅
+	float modelWidth;
+
 	// 画面外に外れて描画させなくするまでのカウント
 	int notViewCount;
 
@@ -83,5 +86,11 @@ public:
 
 	// 座標を渡す
 	const VECTOR GetArea() const { return area; }
+
+	// 縦幅を渡す
+	const float GetHeight() const { return modelHeight; }
+
+	// 横幅を渡す
+	const float GetWidth() const { return modelWidth; }
 };
 

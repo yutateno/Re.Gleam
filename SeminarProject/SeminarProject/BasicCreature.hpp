@@ -42,12 +42,6 @@ protected:
 	int floorNum;
 
 
-	/// モデルに関して--------------------
-
-	// モデルの横幅
-	float modelWigth;	
-
-
 	/// モーションに関して-------------------
 
 	// モーションのアタッチ
@@ -161,7 +155,7 @@ public:
 	void SetAreaReturn();
 
 	// 当たったら押し出すようにする
-	void HitCircleReturn(VECTOR hitUnderArea, VECTOR hitTopArea);
+	void HitCircleReturn(VECTOR hitUnderArea, float width);
 
 	// 武器の線分当たっているかどうか
 	void HitLineReturn(VECTOR hitOneArea, VECTOR hitTwoArea);

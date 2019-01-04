@@ -558,7 +558,7 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 
 	// モデルの基本情報
 	modelHeight = 160.0f;
-	modelWigth = 50.0f;
+	modelWidth = 50.0f;
 
 
 	// モデルの向きと位置
@@ -699,6 +699,11 @@ void CharacterSword::SetStairsRoadArea(const VECTOR stairsRoadArea, const int nu
 	MV1SetupCollInfo(v_stairsRoadHandle[num], -1);					// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
 	MV1SetFrameVisible(v_stairsRoadHandle[num], -1, false);			// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 	MV1RefreshCollInfo(v_stairsRoadHandle[num], -1);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+}
+
+void CharacterSword::SetDamage()
+{
+	Player_PlayAnim(MOTION::damage);
 }
 
 
@@ -850,7 +855,7 @@ void CharacterSword::Draw()
 #ifdef _DEBUG
 	if(MyDebug::characterSwordDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
 	}
 #endif // _DEBUG
 }

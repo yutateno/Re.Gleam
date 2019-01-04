@@ -11,6 +11,9 @@ AdjustmentMachine::AdjustmentMachine(const int draw, const VECTOR area, const in
 	this->modelHandle = MV1DuplicateModel(draw);
 
 	canTouch = true;
+	
+	modelHeight = 100.0f;
+	modelWidth = 70.0f;
 
 	// ムーブ2用の変数
 	if (BASICPARAM::e_nowScene <= ESceneNumber::SECONDMOVE)
@@ -70,7 +73,7 @@ void AdjustmentMachine::Draw()
 #ifdef _DEBUG
 	if (MyDebug::adjustmentMachineDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, 100.0f, 0.0f)), 40.0f, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
 	}
 #endif // _DEBUG
 }

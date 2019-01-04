@@ -20,8 +20,11 @@ private:
 	// 次の左右のキャラ向きを扱う変数
 	float nextDireXAngle;
 
-	// 初期座標
-	VECTOR firstArea;
+	// キャラクターの位置
+	VECTOR playerCharaArea;
+
+	// キャラクターとの距離
+	int playerCharaDistance;
 
 
 	/// モーションに関して----------
@@ -29,7 +32,7 @@ private:
 	// モーションのID
 	enum MOTION { idle, attack };
 
-	// モーションプロセス
+	// モーションのプロセス
 	void MotionProcess();
 
 
@@ -50,8 +53,20 @@ private:
 	// 動きのプロセス
 	void AutoMoveProcess();
 
+	// 追うプロセス
+	void ChaseMoveProcess();
+
 	// 動きのカウント
 	int moveCount;
+
+
+	/// 攻撃に関して
+
+	// 攻撃のフレーム
+	float attackFrame;
+
+	// 攻撃によるあたりをさせるかどうか
+	bool attackDamageNow;
 
 	
 	/// 落下に関して
@@ -99,7 +114,10 @@ public:
 	// テクスチャの切り替え
 	void TextureReload();
 
-	// 座標を初期値に戻す
-	void SetPositionReset();
+	// キャラクターの座標と距離を把握する
+	void SetCharacterArea(const VECTOR characterArea, const int distance);
+
+	// 攻撃をダメージに反映するかどうか
+	const bool GetAttackDamage() const { return attackDamageNow; }
 };
 

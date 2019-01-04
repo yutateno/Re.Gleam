@@ -19,11 +19,20 @@ private:
 	// 次の左右のキャラ向きを扱う変数
 	float nextDireXAngle;
 
+	// キャラクターの位置
+	VECTOR playerCharaArea;
+
+	// キャラクターとの距離
+	int playerCharaDistance;
+
 
 	/// モーションに関して----------
 
 	// モーションのID
 	enum MOTION { walk, idle, damage, death };
+
+	// モーションのプロセス
+	void MotionProcess();
 
 
 	/// 階段に関して--------------
@@ -41,10 +50,22 @@ private:
 	/// 動きに関して------------
 
 	// 動きのプロセス
-	void MoveProcess();
+	void AutoMoveProcess();
+
+	// 追うプロセス
+	void ChaseMoveProcess();
 
 	// 動きのカウント
 	int moveCount;
+	
+	
+	/// 攻撃に関して
+
+	// 攻撃のフレーム
+	float attackFrame;
+
+	// 攻撃によるあたりをさせるかどうか
+	bool attackDamageNow;
 
 
 	/// 落下に関して
@@ -77,7 +98,7 @@ private:
 public:
 	// コンストラクタ
 	EnemyMove3CrayonHuman(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
-		, const int tex0, const VECTOR area);
+		, const int tex0, const VECTOR area, const float rotationY);
 
 	// デストラクタ
 	~EnemyMove3CrayonHuman();
@@ -91,5 +112,11 @@ public:
 
 	// テクスチャの切り替え
 	void TextureReload();
+
+	// キャラクターの座標と距離を把握する
+	void SetCharacterArea(const VECTOR characterArea, const int distance);
+
+	// 攻撃をダメージに反映するかどうか
+	const bool GetAttackDamage() const { return attackDamageNow; }
 };
 

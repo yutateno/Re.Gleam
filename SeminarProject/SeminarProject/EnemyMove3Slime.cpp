@@ -1,6 +1,29 @@
 #include "EnemyMove3Slime.hpp"
 
 
+void EnemyMove3Slime::MotionProcess()
+{
+	if (playerCharaDistance <= 250)
+	{
+		Player_PlayAnim(MOTION::attack);
+		attackFrame += animSpeed;
+		if (attackFrame >= MV1GetAnimTotalTime(modelHandle, MOTION::attack))
+		{
+			attackDamageNow = true;
+			attackFrame = 0.0f;
+		}
+		else
+		{
+			attackDamageNow = false;
+		}
+	}
+	else
+	{
+		Player_PlayAnim(MOTION::idle);
+	}
+}
+
+
 void EnemyMove3Slime::AutoMoveProcess()
 {
 	std::random_device rnd;     // 非決定的な乱数生成器を生成
@@ -11,42 +34,26 @@ void EnemyMove3Slime::AutoMoveProcess()
 	moveCount++;
 
 	// スムーズに動かせる
-	if (moveFlag)
+	if (direXAngle == 0.0f)
 	{
-		animSpeed = 0.75f;
-		if (direXAngle == 0.0f)
+		if (walkSpeed < 6.0f)
 		{
-			if (walkSpeed < 6.0f)
-			{
-				walkSpeed += 2.5f;
-			}
-			else
-			{
-				walkSpeed = 6.0f;
-			}
-		}
-		else	// 斜め方向
-		{
-			if (walkSpeed < 3.0f)
-			{
-				walkSpeed += 1.0f;
-			}
-			else
-			{
-				walkSpeed = 3.0f;
-			}
-		}
-	}
-	else
-	{
-		animSpeed = 0.5f;
-		if (walkSpeed > 0.0f)
-		{
-			walkSpeed -= 3.0f;
+			walkSpeed += 2.5f;
 		}
 		else
 		{
-			walkSpeed = 0.0f;
+			walkSpeed = 6.0f;
+		}
+	}
+	else	// 斜め方向
+	{
+		if (walkSpeed < 3.0f)
+		{
+			walkSpeed += 1.0f;
+		}
+		else
+		{
+			walkSpeed = 3.0f;
 		}
 	}
 
@@ -68,8 +75,6 @@ void EnemyMove3Slime::AutoMoveProcess()
 
 	area.x += sinf(direXAngle + direZAngle) * -walkSpeed;
 	area.z += cosf(direXAngle + direZAngle) * -walkSpeed;
-	moveFlag = true;
-	Player_PlayAnim(MOTION::idle);
 
 	if (nextDireXAngle != direXAngle)
 	{
@@ -93,6 +98,31 @@ void EnemyMove3Slime::AutoMoveProcess()
 			direZAngle += 0.01f;
 		}
 	}
+}
+
+
+void EnemyMove3Slime::ChaseMoveProcess()
+{
+	walkSpeed = 7.0f;
+	// キャラクターに近づく
+	if (playerCharaArea.x < area.x - walkSpeed + 2.0f)
+	{
+		area.x -= walkSpeed;
+	}
+	else if (playerCharaArea.x > area.x + walkSpeed + 2.0f)
+	{
+		area.x += walkSpeed;
+	}
+	else {}
+	if (playerCharaArea.z < area.z - walkSpeed + 2.0f)
+	{
+		area.z -= walkSpeed;
+	}
+	else if (playerCharaArea.z > area.z + walkSpeed + 2.0f)
+	{
+		area.z += walkSpeed;
+	}
+	else {}
 }
 
 
@@ -186,7 +216,7 @@ EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandl
 
 	// モデルの基本情報
 	modelHeight = 50.0f;
-	modelWigth = 140.0f;
+	modelWidth = 140.0f;
 
 	// モデルの向きと位置
 	this->area = area;
@@ -195,15 +225,20 @@ EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandl
 	direZAngle = 0.0f;
 	nextDireXAngle = 0.0f;
 	nextDireZAngle = 0.0f;
-	firstArea = area;
+	playerCharaArea = VGet(0, 0, 0);
+	playerCharaDistance = 0;
 	
 	// 足元の影に関する
 	shadowHeight = 25.0f;
 	shadowSize = 70.0f;
 
 	// それぞれの速度
-	walkSpeed = 0.0f;
-	animSpeed = 0.25f;
+	walkSpeed = 6.0f;
+	animSpeed = 0.45f;
+
+	// 攻撃
+	attackFrame = 0.0f;
+	attackDamageNow = false;
 
 	// 階段
 	v_stairsHandle.clear();
@@ -281,7 +316,7 @@ void EnemyMove3Slime::Draw()
 #ifdef _DEBUG
 	if (MyDebug::enemyThreeSlimeDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
 	}
 #endif // _DEBUG
 }
@@ -294,8 +329,16 @@ void EnemyMove3Slime::Process()
 
 
 	// 動きのプロセス
-	AutoMoveProcess();
+	if (playerCharaDistance > 1500)
+	{
+		AutoMoveProcess();
+	}
+	else
+	{
+		ChaseMoveProcess();
+	}
 
+	MotionProcess();
 
 	// モーション
 	Player_AnimProcess();
@@ -330,13 +373,6 @@ void EnemyMove3Slime::Process()
 		area.y = 0.5f;
 	}
 
-	// アクティブだが画面外にいることが多くなったら初期値に戻す
-	if (notViewCount > 10)
-	{
-		moveCount = 0;
-		SetPositionReset();
-	}
-
 	// 第二引数の回転角度をセット
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, direXAngle + direZAngle, 0.0f));
 	// 指定位置にモデルを配置
@@ -369,13 +405,8 @@ void EnemyMove3Slime::TextureReload()
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 }
 
-void EnemyMove3Slime::SetPositionReset()
+void EnemyMove3Slime::SetCharacterArea(const VECTOR characterArea, const int distance)
 {
-	if (area.x != firstArea.x
-		&& area.y != firstArea.y
-		&& area.z != firstArea.z)
-	{
-		moveCount = 0;
-		area = firstArea;
-	}
+	playerCharaArea = characterArea;
+	playerCharaDistance = distance;
 }

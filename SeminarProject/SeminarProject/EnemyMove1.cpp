@@ -61,7 +61,7 @@ EnemyMove1::EnemyMove1(const int collStageHandle, const float areaX, const float
 
 	// モデルの基本情報
 	modelHeight = 10.0f;
-	modelWigth = 10.0f;
+	modelWidth = 10.0f;
 
 	// 足元の影に関する
 	shadowHeight = 70.0f;
@@ -90,7 +90,7 @@ void EnemyMove1::Draw()
 	// Ｚバッファへの書き込みを有効にする
 	SetWriteZBuffer3D(TRUE);
 	SetMaterialParam(material);
-	DrawSphere3D(VAdd(area, VGet(0.0f, 60.0f, 0.0f)), modelWigth, 16, GetColor(68, 178, 227), GetColor(255, 255, 255), TRUE);
+	DrawSphere3D(VAdd(area, VGet(0.0f, 60.0f, 0.0f)), modelWidth, 16, GetColor(68, 178, 227), GetColor(255, 255, 255), TRUE);
 	// Ｚバッファへの書き込みを有効にする
 	SetWriteZBuffer3D(FALSE);
 	// Ｚバッファを有効にする
@@ -102,7 +102,7 @@ void EnemyMove1::Draw()
 	{
 		VECTOR viewArea = VAdd(area, VGet(0.0f, 60.0f, 0.0f));		// モデルの初期Y座標が浮いているので調整
 
-		DrawSphere3D(VAdd(area, VGet(0.0f, 60.0f, 0.0f)), modelWigth + 3, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
+		DrawSphere3D(VAdd(area, VGet(0.0f, 60.0f, 0.0f)), modelWidth + 3, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
 	}
 #endif // _DEBUG
 }

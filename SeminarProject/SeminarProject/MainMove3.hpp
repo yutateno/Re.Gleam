@@ -55,6 +55,9 @@ private:
 	// キャラクターのポインタ
 	CharacterSword* p_character;
 
+	// 多くの敵にダメージ受けた時に代表二体のみ受けるようにするカウント
+	int charaSonmeEnemyDamageCount;
+
 
 	/// 敵---------------------
 
@@ -77,12 +80,6 @@ private:
 
 	// 何個のドロップアイテムを手に持ったか
 	int catchDropItemNum;
-
-	// 敵の描画する距離
-	const int enemyDrawDistance = 2500;
-
-	// 敵がキャラクターを認識する範囲
-	const int enemyAttackDistance = 1500;
 
 
 	/// 精密機械------------------------------

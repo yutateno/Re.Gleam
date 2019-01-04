@@ -1,7 +1,29 @@
 #include "EnemyMove3CrayonHuman.hpp"
 
 
-void EnemyMove3CrayonHuman::MoveProcess()
+void EnemyMove3CrayonHuman::MotionProcess()
+{
+	if (playerCharaDistance <= 250)
+	{
+		Player_PlayAnim(MOTION::damage);
+		attackFrame += animSpeed;
+		if (attackFrame >= MV1GetAnimTotalTime(modelHandle, MOTION::damage))
+		{
+			attackDamageNow = true;
+			attackFrame = 0.0f;
+		}
+		else
+		{
+			attackDamageNow = false;
+		}
+	}
+	else
+	{
+		Player_PlayAnim(MOTION::idle);
+	}
+}
+
+void EnemyMove3CrayonHuman::AutoMoveProcess()
 {
 	std::random_device rnd;     // 非決定的な乱数生成器を生成
 	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
@@ -11,42 +33,26 @@ void EnemyMove3CrayonHuman::MoveProcess()
 	moveCount++;
 
 	// スムーズに動かせる
-	if (moveFlag)
+	if (direXAngle == 0.0f)
 	{
-		animSpeed = 0.75f;
-		if (direXAngle == 0.0f)
+		if (walkSpeed < 6.0f)
 		{
-			if (walkSpeed < 6.0f)
-			{
-				walkSpeed += 2.5f;
-			}
-			else
-			{
-				walkSpeed = 6.0f;
-			}
-		}
-		else	// 斜め方向
-		{
-			if (walkSpeed < 3.0f)
-			{
-				walkSpeed += 1.0f;
-			}
-			else
-			{
-				walkSpeed = 3.0f;
-			}
-		}
-	}
-	else
-	{
-		animSpeed = 0.5f;
-		if (walkSpeed > 0.0f)
-		{
-			walkSpeed -= 3.0f;
+			walkSpeed += 2.5f;
 		}
 		else
 		{
-			walkSpeed = 0.0f;
+			walkSpeed = 6.0f;
+		}
+	}
+	else	// 斜め方向
+	{
+		if (walkSpeed < 3.0f)
+		{
+			walkSpeed += 1.0f;
+		}
+		else
+		{
+			walkSpeed = 3.0f;
 		}
 	}
 
@@ -68,8 +74,6 @@ void EnemyMove3CrayonHuman::MoveProcess()
 
 	area.x += sinf(direXAngle + direZAngle) * -walkSpeed;
 	area.z += cosf(direXAngle + direZAngle) * -walkSpeed;
-	moveFlag = true;
-	Player_PlayAnim(MOTION::walk);
 
 	if (nextDireXAngle != direXAngle)
 	{
@@ -93,6 +97,30 @@ void EnemyMove3CrayonHuman::MoveProcess()
 			direZAngle += 0.01f;
 		}
 	}
+}
+
+void EnemyMove3CrayonHuman::ChaseMoveProcess()
+{
+	walkSpeed = 7.0f;
+	// キャラクターに近づく
+	if (playerCharaArea.x < area.x - walkSpeed + 2.0f)
+	{
+		area.x -= walkSpeed;
+	}
+	else if (playerCharaArea.x > area.x + walkSpeed + 2.0f)
+	{
+		area.x += walkSpeed;
+	}
+	else {}
+	if (playerCharaArea.z < area.z - walkSpeed + 2.0f)
+	{
+		area.z -= walkSpeed;
+	}
+	else if (playerCharaArea.z > area.z + walkSpeed + 2.0f)
+	{
+		area.z += walkSpeed;
+	}
+	else {}
 }
 
 
@@ -165,7 +193,7 @@ void EnemyMove3CrayonHuman::FallProcess()
 
 
 EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
-	, const int tex0, const VECTOR area) : BasicCreature(collStageHandle)
+	, const int tex0, const VECTOR area, const float rotationY) : BasicCreature(collStageHandle)
 {
 	// 3Dモデルの読み込み
 	this->modelHandle = -1;
@@ -186,7 +214,7 @@ EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int co
 
 	// モデルの基本情報
 	modelHeight = 130.0f;
-	modelWigth = 70.0f;
+	modelWidth = 70.0f;
 
 	// モデルの向きと位置
 	this->area = area;
@@ -195,14 +223,20 @@ EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int co
 	direZAngle = 0.0f;
 	nextDireXAngle = 0.0f;
 	nextDireZAngle = 0.0f;
+	playerCharaArea = VGet(0, 0, 0);
+	playerCharaDistance = 3000;
 
 	// 足元の影に関する
 	shadowHeight = 65.0f;
 	shadowSize = 35.0f;
 
 	// それぞれの速度
-	walkSpeed = 0.0f;
-	animSpeed = 0.25f;
+	walkSpeed = 6.0f;
+	animSpeed = 0.75f;
+
+	// 攻撃
+	attackFrame = 0;
+	attackDamageNow = false;
 
 	// 階段
 	v_stairsHandle.clear();
@@ -277,7 +311,7 @@ void EnemyMove3CrayonHuman::Draw()
 #ifdef _DEBUG
 	if (MyDebug::enemyThreeCrayonHumanDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
 	}
 	//if (MyDebug::enemyThreeCrayonHumanSearchAreaDrawFlag)
 	//{
@@ -292,7 +326,16 @@ void EnemyMove3CrayonHuman::Process()
 	preArea = area;
 
 	// 動きのプロセス
-	MoveProcess();
+	if (playerCharaDistance > 1500)
+	{
+		AutoMoveProcess();
+	}
+	else
+	{
+		ChaseMoveProcess();
+	}
+
+	MotionProcess();
 
 	// モーション
 	Player_AnimProcess();
@@ -357,4 +400,10 @@ void EnemyMove3CrayonHuman::TextureReload()
 	}
 
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
+}
+
+void EnemyMove3CrayonHuman::SetCharacterArea(const VECTOR characterArea, const int distance)
+{
+	playerCharaArea = characterArea;
+	playerCharaDistance = distance;
 }

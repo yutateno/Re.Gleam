@@ -107,7 +107,7 @@ void BasicCreature::StageHit()
 void BasicCreature::ActorHit(int stageHandle)
 {
 	// プレイヤーをカプセルとしてステージとのコリジョン情報を調べる(OBB形式)
-	m_hitDim = MV1CollCheck_Capsule(stageHandle, -1, area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth);
+	m_hitDim = MV1CollCheck_Capsule(stageHandle, -1, area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth);
 
 	// ポリゴンの数を再初期化
 	wallNum = 0;
@@ -256,7 +256,7 @@ void BasicCreature::ActorHit(int stageHandle)
 				mainPoly = wallPoly[i];			// 今の調べるポリゴン情報を渡す
 
 				// 当たっているかどうかを調べる
-				if (HitCheck_Capsule_Triangle(VAdd(area, VGet(0.0f, modelHeight, 0.0f)), VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == false)
+				if (HitCheck_Capsule_Triangle(VAdd(area, VGet(0.0f, modelHeight, 0.0f)), VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == false)
 				{
 					continue;			// 当たっていないので次！
 				}
@@ -269,7 +269,7 @@ void BasicCreature::ActorHit(int stageHandle)
 					mainPoly = wallPoly[j];			// 今の調べるポリゴン情報を渡す
 
 					// 当たっているかどうかを調べる
-					if (HitCheck_Capsule_Triangle(VAdd(area, VGet(0.0f, modelHeight, 0.0f)), VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == TRUE)
+					if (HitCheck_Capsule_Triangle(VAdd(area, VGet(0.0f, modelHeight, 0.0f)), VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == TRUE)
 					{
 						jumpUpNow = false;
 						break;			// 当たっていたので抜ける
@@ -291,7 +291,7 @@ void BasicCreature::ActorHit(int stageHandle)
 				mainPoly = wallPoly[i];			// 今の調べるポリゴン情報を渡す
 
 				// 当たっているかどうかを調べる
-				if (HitCheck_Capsule_Triangle(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == TRUE)
+				if (HitCheck_Capsule_Triangle(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == TRUE)
 				{
 					hitFlag = true;
 					break;			// 当たっていたので抜ける
@@ -312,7 +312,7 @@ void BasicCreature::ActorHit(int stageHandle)
 					mainPoly = wallPoly[j];
 
 					// 当たっているかどうかを調べる
-					if (HitCheck_Capsule_Triangle(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == false)
+					if (HitCheck_Capsule_Triangle(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == false)
 					{
 						continue;
 					}
@@ -325,7 +325,7 @@ void BasicCreature::ActorHit(int stageHandle)
 					{
 						// 当たっていたらループを抜ける
 						mainPoly = wallPoly[k];
-						if (HitCheck_Capsule_Triangle(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == TRUE)
+						if (HitCheck_Capsule_Triangle(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == TRUE)
 						{
 							break;
 						}
@@ -384,7 +384,7 @@ BasicCreature::BasicCreature() :BasicObject()
 	walkSpeed = 0;
 	mainPoly = nullptr;
 	nextArea = VGet(0, 0, 0);
-	modelWigth = 0;
+	modelWidth = 0;
 	ZeroMemory(floorPoly, sizeof(floorPoly));
 }
 
@@ -436,7 +436,7 @@ BasicCreature::BasicCreature(const int collStageHandle, bool anotherMoveChara) :
 	walkSpeed = 0;
 	mainPoly = nullptr;
 	nextArea = VGet(0, 0, 0);
-	modelWigth = 0;
+	modelWidth = 0;
 	ZeroMemory(floorPoly, sizeof(floorPoly));
 }
 
@@ -453,7 +453,7 @@ void BasicCreature::SetAreaReturn()
 }
 
 
-void BasicCreature::HitCircleReturn(VECTOR hitOneArea, VECTOR hitTwoArea)
+void BasicCreature::HitCircleReturn(VECTOR hitOneArea, float width)
 {
 	//VECTOR v01, v02, outv;
 
@@ -487,8 +487,6 @@ void BasicCreature::HitCircleReturn(VECTOR hitOneArea, VECTOR hitTwoArea)
 	VECTOR ChkChToChVec;
 	float Length;
 	VECTOR PushVec;
-	//float power = 30.0f;
-	VECTOR tempArea = area;
 
 		// chk_ch から ch へのベクトルを算出
 	ChkChToChVec = VSub(area, hitOneArea);
@@ -503,12 +501,12 @@ void BasicCreature::HitCircleReturn(VECTOR hitOneArea, VECTOR hitTwoArea)
 	PushVec = VScale(ChkChToChVec, 1.0f / Length);
 
 	// 押し出す距離を算出、もし二人の距離から二人の大きさを引いた値に押し出し力を足して離れてしまう場合は、ぴったりくっつく距離に移動する
-	if (Length - hitTwoArea.y < 0)
+	if (Length - width < 0)
 	{
 		float TempY;
 
 		TempY = area.y;
-		area = VAdd(hitOneArea, VScale(PushVec, hitTwoArea.y));
+		area = VAdd(hitOneArea, VScale(PushVec, width));
 
 		// Ｙ座標は変化させない
 		area.y = TempY;

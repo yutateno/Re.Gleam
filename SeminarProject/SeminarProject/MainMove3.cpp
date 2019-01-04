@@ -42,12 +42,12 @@ void MainMove3::ShadowDraw()
 	// 敵スライム
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
-		if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) <= enemyDrawDistance) p_enemySlime[i]->Draw();
+		p_enemySlime[i]->Draw();
 	}
 	// 敵クレヨンヒューマン
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
-		if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()) <= enemyDrawDistance) p_enemyCrayonHuman[i]->Draw();
+		p_enemyCrayonHuman[i]->Draw();
 	}
 	// キャラクター
 	p_character->Draw();
@@ -92,12 +92,12 @@ void MainMove3::ShadowDraw()
 	// 敵スライム
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
-		if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) <= enemyDrawDistance) p_enemySlime[i]->Draw();
+		p_enemySlime[i]->Draw();
 	}
 	// 敵クレヨンヒューマン
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
-		if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()) <= enemyDrawDistance) p_enemyCrayonHuman[i]->Draw();
+		p_enemyCrayonHuman[i]->Draw();
 	}
 	BaseMove::ShadowAnotherCharaSetUpAfter();
 
@@ -144,12 +144,12 @@ void MainMove3::ShadowDraw()
 	// 敵スライム
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
-		if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) <= enemyDrawDistance) p_enemySlime[i]->Draw();
+		p_enemySlime[i]->Draw();
 	}
 	// 敵クレヨンヒューマン
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
-		if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()) <= enemyDrawDistance) p_enemyCrayonHuman[i]->Draw();
+		p_enemyCrayonHuman[i]->Draw();
 	}
 	// キャラクター
 	p_character->Draw();
@@ -163,31 +163,32 @@ void MainMove3::AttackProcess()
 	/// 精算機械に関する-------------------------------------------------------------------------------------------------------------------
 	// 当たっていたら押し出す
 	if (HitCheck_Capsule_Capsule(
-		p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f,
-		p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 70.0f))
+		p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth()
+		, p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, p_adjustmentMachine->GetHeight(), 0.0f)), p_adjustmentMachine->GetWidth()))
 	{
-		p_character->HitCircleReturn(p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)));
+		p_character->HitCircleReturn(p_adjustmentMachine->GetArea()
+			, p_adjustmentMachine->GetWidth() >= p_character->GetWidth() ? p_adjustmentMachine->GetWidth() : p_character->GetWidth());
 	}
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
-		if (BaseMove::GetDistance(p_enemySlime[i]->GetArea(), p_adjustmentMachine->GetArea()) > 250
-			|| BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) > enemyDrawDistance) continue;
+		if (BaseMove::GetDistance(p_enemySlime[i]->GetArea(), p_adjustmentMachine->GetArea()) > 250) continue;
 		if (HitCheck_Capsule_Capsule(
-			p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, 50.0f, 0.0f)), 140.0f,
-			p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 70.0f))
+			p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, p_enemySlime[i]->GetHeight(), 0.0f)), p_enemySlime[i]->GetWidth()
+			, p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, p_adjustmentMachine->GetHeight(), 0.0f)), p_adjustmentMachine->GetWidth()))
 		{
-			p_enemySlime[i]->HitCircleReturn(p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)));
+			p_enemySlime[i]->HitCircleReturn(p_adjustmentMachine->GetArea()
+				, p_adjustmentMachine->GetWidth() >= p_enemySlime[i]->GetWidth() ? p_adjustmentMachine->GetWidth() : p_enemySlime[i]->GetWidth());
 		}
 	}
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
-		if (BaseMove::GetDistance(p_enemyCrayonHuman[i]->GetArea(), p_adjustmentMachine->GetArea()) > 250
-			|| BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()) > enemyDrawDistance) continue;
+		if (BaseMove::GetDistance(p_enemyCrayonHuman[i]->GetArea(), p_adjustmentMachine->GetArea()) > 250) continue;
 		if (HitCheck_Capsule_Capsule(
-			p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, 130.0f, 0.0f)), 70.0f,
-			p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 70.0f))
+			p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, p_enemyCrayonHuman[i]->GetHeight(), 0.0f)), p_enemyCrayonHuman[i]->GetWidth()
+			, p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, p_adjustmentMachine->GetHeight(), 0.0f)), p_adjustmentMachine->GetWidth()))
 		{
-			p_enemyCrayonHuman[i]->HitCircleReturn(p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)));
+			p_enemyCrayonHuman[i]->HitCircleReturn(p_adjustmentMachine->GetArea()
+				, p_adjustmentMachine->GetWidth() >= p_enemyCrayonHuman[i]->GetWidth() ? p_adjustmentMachine->GetWidth() : p_enemyCrayonHuman[i]->GetWidth());
 		}
 	}
 	// 近くかどうかで見た目を変える
@@ -204,25 +205,25 @@ void MainMove3::AttackProcess()
 	/// キャラクターを押し出す
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
-		if (BaseMove::GetDistance(p_enemySlime[i]->GetArea(), p_character->GetArea()) > 250
-			|| BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) > enemyDrawDistance) continue;
+		if (BaseMove::GetDistance(p_enemySlime[i]->GetArea(), p_character->GetArea()) > 250) continue;
 		if (HitCheck_Capsule_Capsule(
-			p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, 50.0f, 0.0f)), 140.0f,
-			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f))
+			p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, p_enemySlime[i]->GetHeight(), 0.0f)), p_enemySlime[i]->GetWidth(),
+			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth()))
 		{
-			p_enemySlime[i]->HitCircleReturn(p_character->GetArea(), VGet(0.0f, 140.0f, 0.0f));
+			p_enemySlime[i]->HitCircleReturn(p_character->GetArea()
+				, p_character->GetWidth() >= p_enemySlime[i]->GetWidth() ? p_character->GetWidth() : p_enemySlime[i]->GetWidth());
 			//p_character->HitCircleReturn(p_enemySlime[i]->GetArea(), VGet(0.0f, 140.0f, 0.0f));
 		}
 	}
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
-		if (BaseMove::GetDistance(p_enemyCrayonHuman[i]->GetArea(), p_character->GetArea()) > 250
-			|| BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()) < enemyDrawDistance) continue;
+		if (BaseMove::GetDistance(p_enemyCrayonHuman[i]->GetArea(), p_character->GetArea()) > 250) continue;
 		if (HitCheck_Capsule_Capsule(
-			p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, 130.0f, 0.0f)), 70.0f,
-			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f))
+			p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, p_enemyCrayonHuman[i]->GetHeight(), 0.0f)), p_enemyCrayonHuman[i]->GetWidth(),
+			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth()))
 		{
-			p_enemyCrayonHuman[i]->HitCircleReturn(p_character->GetArea(), VGet(0.0f, 70.0f, 0.0f));
+			p_enemyCrayonHuman[i]->HitCircleReturn(p_character->GetArea()
+				, p_character->GetWidth() >= p_enemyCrayonHuman[i]->GetWidth() ? p_character->GetWidth() : p_enemyCrayonHuman[i]->GetWidth());
 			//p_character->HitCircleReturn(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, 70.0f, 0.0f));
 		}
 	}
@@ -231,16 +232,15 @@ void MainMove3::AttackProcess()
 	/// 敵同士で押し出す
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
-		if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) <= enemyDrawDistance) continue;
 		for (int j = 0; j != enemySlimeNum; ++j)
 		{
-			if (i == j || BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) > enemyDrawDistance) continue;
+			if (i == j) continue;
 			if (BaseMove::GetDistance(p_enemySlime[i]->GetArea(), p_enemySlime[j]->GetArea()) > 250) continue;
 			if (HitCheck_Capsule_Capsule(
-				p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, 50.0f, 0.0f)), 140.0f,
-				p_enemySlime[j]->GetArea(), VAdd(p_enemySlime[j]->GetArea(), VGet(0.0f, 50.0f, 0.0f)), 140.0f))
+				p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, p_enemySlime[i]->GetHeight(), 0.0f)), p_enemySlime[i]->GetWidth(),
+				p_enemySlime[j]->GetArea(), VAdd(p_enemySlime[j]->GetArea(), VGet(0.0f, p_enemySlime[j]->GetHeight(), 0.0f)), p_enemySlime[j]->GetWidth()))
 			{
-				p_enemySlime[i]->HitCircleReturn(p_enemySlime[j]->GetArea(), VGet(0.0f, 140.0f, 0.0f));
+				p_enemySlime[i]->HitCircleReturn(p_enemySlime[j]->GetArea(), p_enemySlime[j]->GetWidth());
 				//p_character->HitCircleReturn(p_enemySlime[i]->GetArea(), VGet(0.0f, 140.0f, 0.0f));
 			}
 		}
@@ -249,26 +249,26 @@ void MainMove3::AttackProcess()
 		{
 			if (BaseMove::GetDistance(p_enemySlime[i]->GetArea(), p_enemyCrayonHuman[j]->GetArea()) > 250) continue;
 			if (HitCheck_Capsule_Capsule(
-				p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, 50.0f, 0.0f)), 140.0f
-				, p_enemyCrayonHuman[j]->GetArea(), VAdd(p_enemyCrayonHuman[j]->GetArea(), VGet(0.0f, 130.0f, 0.0f)), 70.0f))
+				p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, p_enemySlime[i]->GetHeight(), 0.0f)), p_enemySlime[i]->GetWidth()
+				, p_enemyCrayonHuman[j]->GetArea(), VAdd(p_enemyCrayonHuman[j]->GetArea(), VGet(0.0f, p_enemyCrayonHuman[j]->GetHeight(), 0.0f)), p_enemyCrayonHuman[j]->GetWidth()))
 			{
-				p_enemySlime[i]->HitCircleReturn(p_enemyCrayonHuman[j]->GetArea(), VGet(0.0f, 140.0f, 0.0f));
+				p_enemySlime[i]->HitCircleReturn(p_enemyCrayonHuman[j]->GetArea()
+					, p_enemyCrayonHuman[j]->GetWidth() >= p_enemySlime[i]->GetWidth() ? p_enemyCrayonHuman[j]->GetWidth() : p_enemySlime[i]->GetWidth());
 				//p_character->HitCircleReturn(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, 70.0f, 0.0f));
 			}
 		}
 	}
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
-		if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()) > enemyDrawDistance) continue;
 		for (int j = 0; j != enemyCrayonHumanNum; ++j)
 		{
 			if (i == j) continue;
 			if (BaseMove::GetDistance(p_enemyCrayonHuman[i]->GetArea(), p_enemyCrayonHuman[j]->GetArea()) > 250) continue;
 			if (HitCheck_Capsule_Capsule(
-				p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, 130.0f, 0.0f)), 70.0f
-				, p_enemyCrayonHuman[j]->GetArea(), VAdd(p_enemyCrayonHuman[j]->GetArea(), VGet(0.0f, 130.0f, 0.0f)), 70.0f))
+				p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, p_enemyCrayonHuman[i]->GetHeight(), 0.0f)), p_enemyCrayonHuman[i]->GetWidth()
+				, p_enemyCrayonHuman[j]->GetArea(), VAdd(p_enemyCrayonHuman[j]->GetArea(), VGet(0.0f, p_enemyCrayonHuman[i]->GetHeight(), 0.0f)), p_enemyCrayonHuman[i]->GetWidth()))
 			{
-				p_enemyCrayonHuman[i]->HitCircleReturn(p_enemyCrayonHuman[j]->GetArea(), VGet(0.0f, 70.0f, 0.0f));
+				p_enemyCrayonHuman[i]->HitCircleReturn(p_enemyCrayonHuman[j]->GetArea(), p_enemyCrayonHuman[i]->GetWidth());
 				//p_character->HitCircleReturn(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, 70.0f, 0.0f));
 			}
 		}
@@ -277,10 +277,11 @@ void MainMove3::AttackProcess()
 		{
 			if (BaseMove::GetDistance(p_enemyCrayonHuman[i]->GetArea(), p_enemySlime[j]->GetArea()) > 250) continue;
 			if (HitCheck_Capsule_Capsule(
-				p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, 130.0f, 0.0f)), 70.0f
-				, p_enemySlime[j]->GetArea(), VAdd(p_enemySlime[j]->GetArea(), VGet(0.0f, 50.0f, 0.0f)), 140.0f))
+				p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, p_enemyCrayonHuman[i]->GetHeight(), 0.0f)), p_enemyCrayonHuman[i]->GetWidth()
+				, p_enemySlime[j]->GetArea(), VAdd(p_enemySlime[j]->GetArea(), VGet(0.0f, p_enemySlime[j]->GetHeight(), 0.0f)), p_enemySlime[j]->GetWidth()))
 			{
-				p_enemyCrayonHuman[i]->HitCircleReturn(p_enemySlime[j]->GetArea(), VGet(0.0f, 140.0f, 0.0f));
+				p_enemyCrayonHuman[i]->HitCircleReturn(p_enemySlime[j]->GetArea()
+					, p_enemySlime[j]->GetWidth() >= p_enemyCrayonHuman[i]->GetWidth() ? p_enemySlime[j]->GetWidth() : p_enemyCrayonHuman[i]->GetWidth());
 				//p_character->HitCircleReturn(p_enemySlime[i]->GetArea(), VGet(0.0f, 140.0f, 0.0f));
 			}
 		}
@@ -367,6 +368,7 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	p_character = new CharacterSword(v_file[EFILE::charaModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel]
 		, v_file[EFILE::paneruModel], v_file[EFILE::stairsRoadCollModel]
 		, v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3], v_file[EFILE::charaTex4]);
+	charaSonmeEnemyDamageCount = 0;
 
 	// カメラの初期化
 	p_camera = new Camera(p_character->GetArea(), v_file[EFILE::stageCollModel]);
@@ -374,7 +376,7 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	// パネルの初期化
 	for (int i = 0; i != 10; ++i)
 	{
-		p_stagePaneru[i]= new StagePaneru(v_file[EFILE::paneruModel], VGet(500.0f * i, 300.0f * i, 100.0f * i));
+		p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(500.0f * i, 300.0f * i, 100.0f * i));
 		p_character->SetPaneruArea(p_stagePaneru[i]->GetArea(), i);
 	}
 
@@ -434,7 +436,7 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
 		p_enemyCrayonHuman[i] = new EnemyMove3CrayonHuman(v_file[EFILE::crayonHumanModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
-			, v_file[EFILE::crayonHumanTex0], VGet(-1500.0f + (i * 150.0f), 0.0f, -1000.0f));
+			, v_file[EFILE::crayonHumanTex0], VGet(-1500.0f + (i * 150.0f), 0.0f, -1000.0f), 0.0f);
 	}
 
 	// ドロップアイテムの初期化
@@ -567,7 +569,6 @@ void MainMove3::Draw()
 
 	DrawFormatString(1020, 20, GetColor(0, 0, 0), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
 
-
 #ifdef _DEBUG
 	if (MyDebug::enemyThreeSlimeSearchLineDrawFlag)
 	{
@@ -604,6 +605,7 @@ void MainMove3::Process()
 {
 	// キャラクターのプロセス
 	p_character->Process(p_camera->GetAngle());
+	charaSonmeEnemyDamageCount = 0;
 
 	// カメラのプロセス
 	p_camera->Process(p_character->GetArea());
@@ -611,14 +613,33 @@ void MainMove3::Process()
 	// 敵スライムのプロセス
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
-		if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) <= enemyDrawDistance) p_enemySlime[i]->Process();
-		else p_enemySlime[i]->SetPositionReset();
+		p_enemySlime[i]->Process();
+		p_enemySlime[i]->SetCharacterArea(p_character->GetArea(), BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()));
+		if (p_enemySlime[i]->GetAttackDamage()
+			&& p_character->GetArea().y <= p_enemySlime[i]->GetArea().y + p_enemySlime[i]->GetHeight()
+			&& p_character->GetArea().y + p_character->GetHeight() >= p_enemySlime[i]->GetArea().y)
+		{
+			if (charaSonmeEnemyDamageCount++ < 2)
+			{
+				p_character->SetDamage();
+			}
+		}
 	}
 
 	// 敵クレヨンヒューマンのプロセス
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
-		if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()) <= enemyDrawDistance) p_enemyCrayonHuman[i]->Process();
+		p_enemyCrayonHuman[i]->Process();
+		p_enemyCrayonHuman[i]->SetCharacterArea(p_character->GetArea(), BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()));
+		if (p_enemyCrayonHuman[i]->GetAttackDamage()
+			&& p_character->GetArea().y <= p_enemyCrayonHuman[i]->GetArea().y + p_enemyCrayonHuman[i]->GetHeight()
+			&& p_character->GetArea().y + p_character->GetHeight() >= p_enemyCrayonHuman[i]->GetArea().y)
+		{
+			if (charaSonmeEnemyDamageCount++ < 2)
+			{
+				p_character->SetDamage();
+			}
+		}
 	}
 
 	// ドロップアイテム

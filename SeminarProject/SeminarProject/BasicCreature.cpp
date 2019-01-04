@@ -399,7 +399,7 @@ BasicCreature::BasicCreature(const int collStageHandle, bool anotherMoveChara) :
 	}
 	else
 	{
-		MV1SetScale(stageHandle, VGet(0.7f, 0.7f, 0.7f));
+		MV1SetScale(stageHandle, VGet(0.73f, 0.73f, 0.73f));
 	}
 	MV1SetupCollInfo(stageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
 	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新

@@ -95,10 +95,6 @@ void EnemyMove3Slime::AutoMoveProcess()
 	}
 }
 
-void EnemyMove3Slime::AttackMoveProcess()
-{
-}
-
 
 void EnemyMove3Slime::FallProcess()
 {
@@ -169,7 +165,7 @@ void EnemyMove3Slime::FallProcess()
 
 
 EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
-	, const int tex0, const VECTOR area) : BasicCreature(collStageHandle)
+	, const int tex0, const VECTOR area, const float rotationY) : BasicCreature(collStageHandle)
 {
 	// 3Dモデルの読み込み
 	this->modelHandle = -1;
@@ -199,6 +195,7 @@ EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandl
 	direZAngle = 0.0f;
 	nextDireXAngle = 0.0f;
 	nextDireZAngle = 0.0f;
+	firstArea = area;
 	
 	// 足元の影に関する
 	shadowHeight = 25.0f;
@@ -240,8 +237,8 @@ EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandl
 		}
 	}
 
-	active = false;
-
+	// 第二引数の回転角度をセット
+	MV1SetRotationXYZ(this->modelHandle, VGet(0.0f, rotationY, 0.0f));
 	// モデルの座標を更新
 	MV1SetPosition(this->modelHandle, this->area);
 }
@@ -281,7 +278,6 @@ void EnemyMove3Slime::Draw()
 
 	BasicObject::ShadowFoot();
 
-	
 #ifdef _DEBUG
 	if (MyDebug::enemyThreeSlimeDrawFlag)
 	{
@@ -296,8 +292,10 @@ void EnemyMove3Slime::Process()
 	// 直前の座標
 	preArea = area;
 
+
 	// 動きのプロセス
 	AutoMoveProcess();
+
 
 	// モーション
 	Player_AnimProcess();
@@ -332,6 +330,13 @@ void EnemyMove3Slime::Process()
 		area.y = 0.5f;
 	}
 
+	// アクティブだが画面外にいることが多くなったら初期値に戻す
+	if (notViewCount > 10)
+	{
+		moveCount = 0;
+		SetPositionReset();
+	}
+
 	// 第二引数の回転角度をセット
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, direXAngle + direZAngle, 0.0f));
 	// 指定位置にモデルを配置
@@ -364,7 +369,13 @@ void EnemyMove3Slime::TextureReload()
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 }
 
-void EnemyMove3Slime::SetCharacterArea(const VECTOR characterArea)
+void EnemyMove3Slime::SetPositionReset()
 {
-
+	if (area.x != firstArea.x
+		&& area.y != firstArea.y
+		&& area.z != firstArea.z)
+	{
+		moveCount = 0;
+		area = firstArea;
+	}
 }

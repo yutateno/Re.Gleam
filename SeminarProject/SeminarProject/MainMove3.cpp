@@ -42,12 +42,12 @@ void MainMove3::ShadowDraw()
 	// 敵スライム
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
-		p_enemySlime[i]->Draw();
+		if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) <= enemyDrawDistance) p_enemySlime[i]->Draw();
 	}
 	// 敵クレヨンヒューマン
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
-		p_enemyCrayonHuman[i]->Draw();
+		if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()) <= enemyDrawDistance) p_enemyCrayonHuman[i]->Draw();
 	}
 	// キャラクター
 	p_character->Draw();
@@ -92,12 +92,12 @@ void MainMove3::ShadowDraw()
 	// 敵スライム
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
-		p_enemySlime[i]->Draw();
+		if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) <= enemyDrawDistance) p_enemySlime[i]->Draw();
 	}
 	// 敵クレヨンヒューマン
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
-		p_enemyCrayonHuman[i]->Draw();
+		if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()) <= enemyDrawDistance) p_enemyCrayonHuman[i]->Draw();
 	}
 	BaseMove::ShadowAnotherCharaSetUpAfter();
 
@@ -144,12 +144,12 @@ void MainMove3::ShadowDraw()
 	// 敵スライム
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
-		p_enemySlime[i]->Draw();
+		if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) <= enemyDrawDistance) p_enemySlime[i]->Draw();
 	}
 	// 敵クレヨンヒューマン
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
-		p_enemyCrayonHuman[i]->Draw();
+		if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()) <= enemyDrawDistance) p_enemyCrayonHuman[i]->Draw();
 	}
 	// キャラクター
 	p_character->Draw();
@@ -170,7 +170,8 @@ void MainMove3::AttackProcess()
 	}
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
-		if (BaseMove::GetDistance(p_enemySlime[i]->GetArea(), p_adjustmentMachine->GetArea()) > 250) continue;
+		if (BaseMove::GetDistance(p_enemySlime[i]->GetArea(), p_adjustmentMachine->GetArea()) > 250
+			|| BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) > enemyDrawDistance) continue;
 		if (HitCheck_Capsule_Capsule(
 			p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, 50.0f, 0.0f)), 140.0f,
 			p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 70.0f))
@@ -180,7 +181,8 @@ void MainMove3::AttackProcess()
 	}
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
-		if (BaseMove::GetDistance(p_enemyCrayonHuman[i]->GetArea(), p_adjustmentMachine->GetArea()) > 250) continue;
+		if (BaseMove::GetDistance(p_enemyCrayonHuman[i]->GetArea(), p_adjustmentMachine->GetArea()) > 250
+			|| BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()) > enemyDrawDistance) continue;
 		if (HitCheck_Capsule_Capsule(
 			p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, 130.0f, 0.0f)), 70.0f,
 			p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 100.0f, 0.0f)), 70.0f))
@@ -202,7 +204,8 @@ void MainMove3::AttackProcess()
 	/// キャラクターを押し出す
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
-		if (BaseMove::GetDistance(p_enemySlime[i]->GetArea(), p_character->GetArea()) > 250) continue;
+		if (BaseMove::GetDistance(p_enemySlime[i]->GetArea(), p_character->GetArea()) > 250
+			|| BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) > enemyDrawDistance) continue;
 		if (HitCheck_Capsule_Capsule(
 			p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, 50.0f, 0.0f)), 140.0f,
 			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f))
@@ -213,7 +216,8 @@ void MainMove3::AttackProcess()
 	}
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
-		if (BaseMove::GetDistance(p_enemyCrayonHuman[i]->GetArea(), p_character->GetArea()) > 250) continue;
+		if (BaseMove::GetDistance(p_enemyCrayonHuman[i]->GetArea(), p_character->GetArea()) > 250
+			|| BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()) < enemyDrawDistance) continue;
 		if (HitCheck_Capsule_Capsule(
 			p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, 130.0f, 0.0f)), 70.0f,
 			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f))
@@ -227,9 +231,10 @@ void MainMove3::AttackProcess()
 	/// 敵同士で押し出す
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
+		if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) <= enemyDrawDistance) continue;
 		for (int j = 0; j != enemySlimeNum; ++j)
 		{
-			if (i == j) continue;
+			if (i == j || BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) > enemyDrawDistance) continue;
 			if (BaseMove::GetDistance(p_enemySlime[i]->GetArea(), p_enemySlime[j]->GetArea()) > 250) continue;
 			if (HitCheck_Capsule_Capsule(
 				p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, 50.0f, 0.0f)), 140.0f,
@@ -254,6 +259,7 @@ void MainMove3::AttackProcess()
 	}
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
+		if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()) > enemyDrawDistance) continue;
 		for (int j = 0; j != enemyCrayonHumanNum; ++j)
 		{
 			if (i == j) continue;
@@ -421,14 +427,14 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
 		p_enemySlime[i] = new EnemyMove3Slime(v_file[EFILE::slimeModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
-			, v_file[EFILE::slimeTex0], VGet(1000.0f - (i * 150.0f), 1000.0f, 1000.0f));
+			, v_file[EFILE::slimeTex0], VGet(1000.0f - (i * 150.0f), 0.0f, 1000.0f), 0.0f);
 	}
 
 	// 敵クレヨンヒューマンの初期化
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
 		p_enemyCrayonHuman[i] = new EnemyMove3CrayonHuman(v_file[EFILE::crayonHumanModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
-			, v_file[EFILE::crayonHumanTex0], VGet(-1500.0f + (i * 150.0f), 1000.0f, -1000.0f));
+			, v_file[EFILE::crayonHumanTex0], VGet(-1500.0f + (i * 150.0f), 0.0f, -1000.0f));
 	}
 
 	// ドロップアイテムの初期化
@@ -559,8 +565,39 @@ void MainMove3::Draw()
 		}
 	}
 
-	printfDx("%s\n", HitCheck_Line_Triangle(p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0, 160, 0)), VAdd(p_enemyCrayonHuman[0]->GetArea(), VGet(0, 130.0f / 2.0f, 0)), VAdd(p_enemyCrayonHuman[0]->GetArea(), VGet(1000, 130.0f / 2.0f, 1000)), VAdd(p_enemyCrayonHuman[0]->GetArea(), VGet(-1000, 130.0f / 2.0f, -1000))).HitFlag ? "true" : "false");
 	DrawFormatString(1020, 20, GetColor(0, 0, 0), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
+
+
+#ifdef _DEBUG
+	if (MyDebug::enemyThreeSlimeSearchLineDrawFlag)
+	{
+		for (int i = 0; i != enemySlimeNum; ++i)
+		{
+			if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) <= 1500)
+			{
+				DrawLine3D(VAdd(p_character->GetArea(), VGet(0, 50, 0)), VAdd(p_enemySlime[i]->GetArea(), VGet(0, 50, 0)), GetColor(255, 0, 0));
+			}
+			else if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) <= 2500)
+			{
+				DrawLine3D(VAdd(p_character->GetArea(), VGet(0, 50, 0)), VAdd(p_enemySlime[i]->GetArea(), VGet(0, 50, 0)), GetColor(0, 0, 255));
+			}
+		}
+	}
+	if (MyDebug::enemyThreeCrayonHumanSearchLineDrawFlag)
+	{
+		for (int i = 0; i != enemyCrayonHumanNum; ++i)
+		{
+			if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()) <= 1500)
+			{
+				DrawLine3D(VAdd(p_character->GetArea(), VGet(0, 50, 0)), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0, 50, 0)), GetColor(255, 0, 0));
+			}
+			else if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()) <= 2500)
+			{
+				DrawLine3D(VAdd(p_character->GetArea(), VGet(0, 50, 0)), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0, 50, 0)), GetColor(0, 0, 255));
+			}
+		}
+	}
+#endif // _DEBUG
 }
 
 void MainMove3::Process()
@@ -574,13 +611,14 @@ void MainMove3::Process()
 	// 敵スライムのプロセス
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
-		p_enemySlime[i]->Process();
+		if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) <= enemyDrawDistance) p_enemySlime[i]->Process();
+		else p_enemySlime[i]->SetPositionReset();
 	}
 
 	// 敵クレヨンヒューマンのプロセス
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
-		p_enemyCrayonHuman[i]->Process();
+		if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()) <= enemyDrawDistance) p_enemyCrayonHuman[i]->Process();
 	}
 
 	// ドロップアイテム

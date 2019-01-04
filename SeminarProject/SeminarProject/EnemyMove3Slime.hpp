@@ -20,11 +20,17 @@ private:
 	// 次の左右のキャラ向きを扱う変数
 	float nextDireXAngle;
 
+	// 初期座標
+	VECTOR firstArea;
+
 
 	/// モーションに関して----------
 
 	// モーションのID
 	enum MOTION { idle, attack };
+
+	// モーションプロセス
+	void MotionProcess();
 
 
 	/// 階段に関して--------------
@@ -44,14 +50,8 @@ private:
 	// 動きのプロセス
 	void AutoMoveProcess();
 
-	// キャラクターに向かうような行動
-	void AttackMoveProcess();
-
 	// 動きのカウント
 	int moveCount;
-
-	// キャラクターが近いので描画してプロセスを働かせる
-	bool active;
 
 	
 	/// 落下に関して
@@ -84,7 +84,7 @@ private:
 public:
 	// コンストラクタ
 	EnemyMove3Slime(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
-		, const int tex0, const VECTOR area);
+		, const int tex0, const VECTOR area, const float rotationY);
 
 	// デストラクタ
 	~EnemyMove3Slime();
@@ -99,10 +99,7 @@ public:
 	// テクスチャの切り替え
 	void TextureReload();
 
-	// キャラクターの座標を把握する
-	void SetCharacterArea(const VECTOR characterArea);
-
-	// アクティブかどうか
-	const bool GetActive() const { return active; }
+	// 座標を初期値に戻す
+	void SetPositionReset();
 };
 

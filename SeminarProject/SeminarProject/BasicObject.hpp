@@ -11,6 +11,9 @@ protected:
 	// モデルの高さ
 	float modelHeight;
 
+	// 画面外に外れて描画させなくするまでのカウント
+	int notViewCount;
+
 
 	/// 足元影に関する----------------
 
@@ -48,9 +51,6 @@ private:
 
 	// ステージハンドル
 	int stageHandle;
-
-	// 画面外に外れて描画させなくするまでのカウント
-	int notViewCount;
 
 	// オプションでの回転数
 	int optionRotaCount;

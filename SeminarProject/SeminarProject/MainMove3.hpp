@@ -78,6 +78,12 @@ private:
 	// 何個のドロップアイテムを手に持ったか
 	int catchDropItemNum;
 
+	// 敵の描画する距離
+	const int enemyDrawDistance = 2500;
+
+	// 敵がキャラクターを認識する範囲
+	const int enemyAttackDistance = 1500;
+
 
 	/// 精密機械------------------------------
 

@@ -165,8 +165,7 @@ void BasicObject::Draw()
 	}
 	else
 	{
-		notViewCount++;
-		if (notViewCount <= 50)
+		if (++notViewCount <= 10)
 		{
 			MV1DrawModel(modelHandle);
 		}

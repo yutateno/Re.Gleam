@@ -207,8 +207,8 @@ void MainMove3::AttackProcess()
 			p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, 50.0f, 0.0f)), 140.0f,
 			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f))
 		{
-			//p_enemySlime[i]->HitCircleReturn(p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)));
-			p_character->HitCircleReturn(p_enemySlime[i]->GetArea(), VGet(0.0f, 140.0f, 0.0f));
+			p_enemySlime[i]->HitCircleReturn(p_character->GetArea(), VGet(0.0f, 140.0f, 0.0f));
+			//p_character->HitCircleReturn(p_enemySlime[i]->GetArea(), VGet(0.0f, 140.0f, 0.0f));
 		}
 	}
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
@@ -218,8 +218,8 @@ void MainMove3::AttackProcess()
 			p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, 130.0f, 0.0f)), 70.0f,
 			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)), 50.0f))
 		{
-			//p_enemyCrayonHuman[i]->HitCircleReturn(p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, 160.0f, 0.0f)));
-			p_character->HitCircleReturn(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, 70.0f, 0.0f));
+			p_enemyCrayonHuman[i]->HitCircleReturn(p_character->GetArea(), VGet(0.0f, 70.0f, 0.0f));
+			//p_character->HitCircleReturn(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, 70.0f, 0.0f));
 		}
 	}
 
@@ -502,7 +502,7 @@ void MainMove3::Draw()
 		}
 	}
 
-
+	printfDx("%s\n", HitCheck_Line_Triangle(p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0, 160, 0)), VAdd(p_enemyCrayonHuman[0]->GetArea(), VGet(0, 130.0f / 2.0f, 0)), VAdd(p_enemyCrayonHuman[0]->GetArea(), VGet(1000, 130.0f / 2.0f, 1000)), VAdd(p_enemyCrayonHuman[0]->GetArea(), VGet(-1000, 130.0f / 2.0f, -1000))).HitFlag ? "true" : "false");
 	DrawFormatString(1020, 20, GetColor(0, 0, 0), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
 }
 

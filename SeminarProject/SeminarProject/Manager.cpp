@@ -13,11 +13,6 @@ void Manager::SceneChange()
 	case ESceneNumber::FIRSTMOVE:
 		BASICPARAM::startFeedNow = true;
 		feedCount = 255;
-		for (int i = 0; i != optionDrawNum; ++i)
-		{
-			int temp = i + 14;
-			optionDrawMedia[i] = p_loadThread->GetFile()[temp];
-		}
 		p_baseMove = new MainMove1(p_loadThread->GetFile());
 		p_baseMove->SetScene(BASICPARAM::e_nowScene);
 		POINTER_RELEASE(p_loadThread);
@@ -435,8 +430,8 @@ void Manager::OptionDraw()
 Manager::Manager()
 {
 	// 初期化
-	BASICPARAM::e_preScene = ESceneNumber::FIRSTLOAD;
-	BASICPARAM::e_nowScene = ESceneNumber::FIRSTLOAD;
+	BASICPARAM::e_preScene = ESceneNumber::SECONDLOAD;
+	BASICPARAM::e_nowScene = ESceneNumber::SECONDLOAD;
 	BASICPARAM::e_preTextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::e_TextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::nowCameraOrtho = false;
@@ -469,19 +464,6 @@ Manager::Manager()
 	move1str[12] = "media\\こっち\\media\\move1\\hida.pyn";
 	move1str[13] = "media\\こっち\\media\\move1\\mighi.pyn";
 
-	// オプション用画像
-	move1str[14] = "media\\こっち\\media\\option\\BGM.pyn";
-	move1str[15] = "media\\こっち\\media\\option\\camera.pyn";
-	move1str[16] = "media\\こっち\\media\\option\\D型.pyn";
-	move1str[17] = "media\\こっち\\media\\option\\P型.pyn";
-	move1str[18] = "media\\こっち\\media\\option\\SE.pyn";
-	move1str[19] = "media\\こっち\\media\\option\\Sound.pyn";
-	move1str[20] = "media\\こっち\\media\\option\\遠近法.pyn";
-	move1str[21] = "media\\こっち\\media\\option\\色覚調整.pyn";
-	move1str[22] = "media\\こっち\\media\\option\\正射影.pyn";
-	move1str[23] = "media\\こっち\\media\\option\\通常色.pyn";
-	move1str[24] = "media\\こっち\\media\\option\\横反転.pyn";
-	move1str[25] = "media\\こっち\\media\\option\\縦反転.pyn";
 
 	// モデルデータ
 	load1[0] = ELOADFILE::mv1model;
@@ -506,20 +488,6 @@ Manager::Manager()
 	// コントローラー説明
 	load1[12] = ELOADFILE::graph;
 	load1[13] = ELOADFILE::graph;
-
-	// オプション用画像
-	load1[14] = ELOADFILE::graph;
-	load1[15] = ELOADFILE::graph;
-	load1[16] = ELOADFILE::graph;
-	load1[17] = ELOADFILE::graph;
-	load1[18] = ELOADFILE::graph;
-	load1[19] = ELOADFILE::graph;
-	load1[20] = ELOADFILE::graph;
-	load1[21] = ELOADFILE::graph;
-	load1[22] = ELOADFILE::graph;
-	load1[23] = ELOADFILE::graph;
-	load1[24] = ELOADFILE::graph;
-	load1[25] = ELOADFILE::graph;
 	/// ---------------------------------------------------------------------------------------------------
 
 
@@ -834,6 +802,18 @@ Manager::Manager()
 	{
 		optionDrawMedia[i] = -1;
 	}
+	LoadFile::MyLoad("media\\こっち\\media\\option\\BGM.pyn", optionDrawMedia[0], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\option\\camera.pyn", optionDrawMedia[1], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\option\\D型.pyn", optionDrawMedia[2], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\option\\P型.pyn", optionDrawMedia[3], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\option\\SE.pyn", optionDrawMedia[4], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\option\\Sound.pyn", optionDrawMedia[5], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\option\\遠近法.pyn", optionDrawMedia[6], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\option\\色覚調整.pyn", optionDrawMedia[7], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\option\\正射影.pyn", optionDrawMedia[8], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\option\\通常色.pyn", optionDrawMedia[9], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\option\\横反転.pyn", optionDrawMedia[10], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\option\\縦反転.pyn", optionDrawMedia[11], ELOADFILE::graph);
 
 
 	// フェード処理に関する

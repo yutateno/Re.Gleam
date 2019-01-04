@@ -5,7 +5,7 @@ void EnemyMove3Slime::MoveProcess()
 {
 	std::random_device rnd;     // 非決定的な乱数生成器を生成
 	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
-	std::uniform_int_distribution<> randInX(0, 200);			// X座標用乱数
+	std::uniform_int_distribution<> randInX(-200, 200);			// X座標用乱数
 	std::uniform_int_distribution<> moveTurn(0, 314);				// Z座標用乱数
 
 	moveCount++;
@@ -97,7 +97,7 @@ void EnemyMove3Slime::MoveProcess()
 
 
 EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
-	, const int tex0, const VECTOR area) : BasicCreature(collStageHandle, true)
+	, const int tex0, const VECTOR area) : BasicCreature(collStageHandle)
 {
 	// 3Dモデルの読み込み
 	this->modelHandle = -1;
@@ -208,7 +208,12 @@ void EnemyMove3Slime::Draw()
 	BasicObject::ShadowFoot();
 
 	
-	DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+#ifdef _DEBUG
+	if (MyDebug::enemyThreeSlimeDrawFlag)
+	{
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWigth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+	}
+#endif // _DEBUG
 }
 
 

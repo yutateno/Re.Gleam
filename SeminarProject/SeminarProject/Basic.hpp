@@ -126,6 +126,9 @@ namespace MyDebug
 	extern bool dropItemOneDrawFlag;
 	extern bool stageDrawFlag;
 	extern bool moveOneDrawFlag;
+	extern bool enemyThreeSlimeDrawFlag;
+	extern bool enemyThreeCrayonHumanDrawFlag;
+	extern bool enemyThreeCrayonHumanSearchAreaDrawFlag;
 
 	void Init();
 

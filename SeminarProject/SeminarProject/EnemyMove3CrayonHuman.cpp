@@ -96,6 +96,74 @@ void EnemyMove3CrayonHuman::MoveProcess()
 }
 
 
+void EnemyMove3CrayonHuman::FallProcess()
+{
+	// 足元に何もなかったら
+	if (fallCount > 1)
+	{
+		// 飛ぶコマンドで飛んでいなかったら
+		if (!jumpNow)
+		{
+			jumpNow = true;				// 飛んでいる
+
+			jumpPower = fallJumpPower;	// 落下速度を加える
+		}
+	}
+
+
+	// 飛んでいる
+	if (jumpNow)
+	{
+		flyCount++;
+		preJumpNow = true;
+		walkSpeed = 10.0f;
+		animSpeed = 1.0f;
+		jumpPower -= gravity;			// 落下重力を加え続ける
+		area.y += jumpPower;			// Y座標に加え続ける
+
+
+		// ジャンプにて最頂点に到達したら
+		if (jumpPower <= flyJumpPower / 2.0f)
+		{
+			jumpUpNow = false;			// 落下に切り替える
+
+			//// 地面に触れたら
+			//if (fallCount <= 1)
+			//{
+			//	if (CheckHitKey(KEY_INPUT_G) >= 1)
+			//	{
+			//		printfDx("asdas\n");
+			//	}
+			//	jumpPower = 0.0f;
+			//	jumpUpNow = false;
+			//}
+		}
+
+
+		area.y -= 10.5f;
+	}
+
+
+	if (!jumpNow && preJumpNow && flyCount > 10)
+	{
+		flyCount = 0;
+		preJumpNow = false;
+	}
+
+
+	if (hitDimNum == 0 && area.y >= 10.0f)
+	{
+		// 飛ぶコマンドで飛んでいなかったら
+		if (!jumpNow)
+		{
+			jumpNow = true;				// 飛んでいる
+
+			jumpPower = fallJumpPower;	// 落下速度を加える
+		}
+	}
+}
+
+
 EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
 	, const int tex0, const VECTOR area) : BasicCreature(collStageHandle)
 {
@@ -247,8 +315,17 @@ void EnemyMove3CrayonHuman::Process()
 		}
 	}
 
+	// 落下のプロセス
+	FallProcess();
+
 	// ステージのあたり判定
 	StageHit();
+
+	// 要らないけど不安なので一応
+	if (area.y < 0.0f)
+	{
+		area.y = 0.5f;
+	}
 
 	// 第二引数の回転角度をセット
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, direXAngle + direZAngle, 0.0f));

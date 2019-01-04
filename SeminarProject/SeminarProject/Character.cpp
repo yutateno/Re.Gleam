@@ -249,6 +249,13 @@ void Character::Process(const float getAngle)
 	StageHit();
 
 
+	// 要らないけど不安なので一応
+	if (area.y < 0.0f)
+	{
+		area.y = 0.5f;
+	}
+
+
 	// 第二引数の回転角度をセット
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));
 

@@ -447,6 +447,18 @@ void CharacterSword::JumpProcess()
 			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::landing2, area);
 		}
 	}
+
+
+	if (hitDimNum == 0 && area.y >= 10.0f)
+	{
+		// 飛ぶコマンドで飛んでいなかったら
+		if (!jumpNow)
+		{
+			jumpNow = true;				// 飛んでいる
+
+			jumpPower = fallJumpPower;	// 落下速度を加える
+		}
+	}
 }
 
 
@@ -749,15 +761,10 @@ void CharacterSword::Process(const float getAngle)
 	StageHit();
 
 
-	if (hitDimNum == 0 && area.y >= 10.0f)
+	// 要らないけど不安なので一応
+	if (area.y < 0.0f)
 	{
-		// 飛ぶコマンドで飛んでいなかったら
-		if (!jumpNow)
-		{
-			jumpNow = true;				// 飛んでいる
-
-			jumpPower = fallJumpPower;	// 落下速度を加える
-		}
+		area.y = 0.5f;
 	}
 
 

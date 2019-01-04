@@ -120,20 +120,22 @@ void EnemyMove1::Process()
 void EnemyMove1::NearChara(const VECTOR characterArea)
 {
 	// ƒvƒŒƒCƒ„[‚É‚¿‚±‚¤‚æ‚ê
-	if (characterArea.x <= area.x)
+	if (characterArea.x < area.x - 4.0f)
 	{
 		area.x -= 2.0f;
 	}
-	else
+	else if( characterArea.x > area.x + 4.0f)
 	{
 		area.x += 2.0f;
 	}
-	if (characterArea.z <= area.z)
+	else{}
+	if (characterArea.z < area.z - 4.0f)
 	{
 		area.z -= 2.0f;
 	}
-	else
+	else if(characterArea.z > area.z + 4.0f)
 	{
 		area.z += 2.0f;
 	}
+	else{}
 }

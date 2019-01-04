@@ -47,6 +47,27 @@ private:
 	int moveCount;
 
 
+	/// 落下に関して
+
+	// 重力
+	float gravity;
+
+	// ジャンプ力
+	float flyJumpPower;
+
+	// 浮いているときにY軸に与える力
+	float fallJumpPower;
+
+	// ジャンププロセス
+	void FallProcess();
+
+	// ジャンプから床についたかどうか
+	bool preJumpNow;
+
+	// 浮いているフレーム数
+	int flyCount;
+
+
 	/// テクスチャに関して---------------
 
 	// テクスチャの相対IDを後ろにつけて

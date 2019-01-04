@@ -421,14 +421,14 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
 		p_enemySlime[i] = new EnemyMove3Slime(v_file[EFILE::slimeModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
-			, v_file[EFILE::slimeTex0], VGet(1000.0f - (i * 150.0f), 0.0f, 1000.0f));
+			, v_file[EFILE::slimeTex0], VGet(1000.0f - (i * 150.0f), 1000.0f, 1000.0f));
 	}
 
 	// 敵クレヨンヒューマンの初期化
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
 		p_enemyCrayonHuman[i] = new EnemyMove3CrayonHuman(v_file[EFILE::crayonHumanModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
-			, v_file[EFILE::crayonHumanTex0], VGet(-1500.0f + (i * 150.0f), 0.0f, -1000.0f));
+			, v_file[EFILE::crayonHumanTex0], VGet(-1500.0f + (i * 150.0f), 1000.0f, -1000.0f));
 	}
 
 	// ドロップアイテムの初期化

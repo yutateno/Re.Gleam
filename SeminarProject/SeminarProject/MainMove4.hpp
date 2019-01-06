@@ -8,14 +8,11 @@
 #include "StagePaneru.hpp"
 #include "AdjustmentMachine.hpp"
 #include "StageStairsRoad.hpp"
-#include "EnemyMove3Slime.hpp"
-#include "EnemyMove3CrayonHuman.hpp"
-#include "DropItemMove3.hpp"
 
 #include <random>
 
 
-class MainMove3 : public BaseMove
+class MainMove4 : public BaseMove
 {
 private:
 	// ロードで渡されるファイル
@@ -23,12 +20,11 @@ private:
 		stageCollModel, charaModel, paneruModel, stairsDrawModel, stairsCollModel
 		, streetLightModel, skyBoxModel, stageDrawModel, charaTex0, charaTex1
 		, charaTex2, charaTex3, charaTex4, stairsTex0, streetLightTex0, streetLightTex1
-		, skyBoxTex0, se_ballPickUp, terminalModel, terminalTex0, terminalTex1
-		, terminalDesc, stairsRoadDrawModel, stairsRoadTex0, stairsRoadTex1
+		, skyBoxTex0, terminalModel, terminalTex0, terminalTex1, terminalDesc
+		, stairsRoadDrawModel, stairsRoadTex0, stairsRoadTex1
 		, stairsRoadCollModel, se_jump, se_footCorridor, se_foot, se_landing
 		, se_landingSecond, se_attackOne, se_attackTwo, se_attackThrid
-		, se_ballPickUp2, bgm_Main, slimeModel, slimeTex0, crayonHumanModel
-		, crayonHumanTex0, dropItemModel, dropItemTex0
+		, bgm_Main
 	};
 
 
@@ -61,26 +57,6 @@ private:
 
 	/// 敵---------------------
 
-	// スライムのポインタ
-	EnemyMove3Slime* p_enemySlime[10];
-
-	// スライムの数
-	const int enemySlimeNum = 10;
-
-	// クレヨンヒューマンのポインタ
-	EnemyMove3CrayonHuman* p_enemyCrayonHuman[10];
-
-	// クレヨンヒューマンの数
-	const int enemyCrayonHumanNum = 10;
-
-	// ドロップアイテム
-	DropItemMove3* p_dropItem[20];
-
-	int dropItemSE;
-
-	// 何個のドロップアイテムを手に持ったか
-	int catchDropItemNum;
-
 
 	/// 精密機械------------------------------
 
@@ -111,10 +87,10 @@ private:
 
 public:
 	// コンストラクタ
-	MainMove3(const std::vector<int> v_file);
+	MainMove4(const std::vector<int> v_file);
 
 	// デストラクタ
-	~MainMove3();
+	~MainMove4();
 
 	// 描画
 	void Draw() override;

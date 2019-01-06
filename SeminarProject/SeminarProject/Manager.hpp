@@ -5,6 +5,7 @@
 #include "MainMove1.hpp"
 #include "MainMove2.hpp"
 #include "MainMove3.hpp"
+#include "MainMove4.hpp"
 
 
 class Manager
@@ -58,6 +59,18 @@ private:
 
 	// ムーブ3のロードの種類
 	ELOADFILE load3[42];
+
+
+	/// ムーブ4に関する--------------
+
+	// ムーブ4のロード数
+	const int max4 = 34;
+
+	// ムーブ4のロードファイル
+	std::string move4str[34];
+
+	// ムーブ4のロードの種類
+	ELOADFILE load4[34];
 
 
 	// アンチエイリアスの画像

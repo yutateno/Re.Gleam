@@ -159,6 +159,12 @@
     <ClCompile Include="DropItemMove3.cpp">
       <Filter>ソース ファイル\Actor\Drop</Filter>
     </ClCompile>
+    <ClCompile Include="MainMove4.cpp">
+      <Filter>ソース ファイル\MoveLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyMove4.cpp">
+      <Filter>ソース ファイル\Actor\Creature\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseMove.hpp">
@@ -247,6 +253,12 @@
     </ClInclude>
     <ClInclude Include="DropItemMove3.hpp">
       <Filter>ヘッダー ファイル\Actor\Drop</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMove4.hpp">
+      <Filter>ヘッダー ファイル\MoveLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyMove4.hpp">
+      <Filter>ヘッダー ファイル\Actor\Creature\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

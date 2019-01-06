@@ -633,7 +633,7 @@ void MainMove3::Process()
 	if (CheckHitKey(KEY_INPUT_Z) == 1)
 	{
 		BASICPARAM::endFeedNow = true;
-		BaseMove::SetScene(ESceneNumber::FIRSTLOAD);
+		BaseMove::SetScene(ESceneNumber::FORTHLOAD);
 	}
 #endif
 }

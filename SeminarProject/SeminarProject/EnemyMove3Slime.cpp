@@ -318,6 +318,17 @@ void EnemyMove3Slime::Draw()
 	{
 		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
 	}
+	if (MyDebug::enemyThreeSlimeSearchLineDrawFlag)
+	{
+		if (playerCharaDistance <= 1500)
+		{
+			DrawLine3D(playerCharaArea, area, GetColor(0, 0, 255));
+			if (playerCharaDistance <= 250)
+			{
+				DrawLine3D(playerCharaArea, area, GetColor(255, 0, 0));
+			}
+		}
+	}
 #endif // _DEBUG
 }
 
@@ -328,15 +339,15 @@ void EnemyMove3Slime::Process()
 	preArea = area;
 
 
-	// 動きのプロセス
-	if (playerCharaDistance > 1500)
-	{
-		AutoMoveProcess();
-	}
-	else
-	{
-		ChaseMoveProcess();
-	}
+	//// 動きのプロセス
+	//if (playerCharaDistance > 1500)
+	//{
+	//	AutoMoveProcess();
+	//}
+	//else
+	//{
+	//	ChaseMoveProcess();
+	//}
 
 	MotionProcess();
 

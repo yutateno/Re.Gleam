@@ -3,7 +3,7 @@
 
 void EnemyMove3CrayonHuman::MotionProcess()
 {
-	if (playerCharaDistance <= 250)
+	if (playerCharaDistance <= 200 && charaLookAt)
 	{
 		Player_PlayAnim(MOTION::damage);
 		attackFrame += animSpeed;
@@ -315,7 +315,23 @@ void EnemyMove3CrayonHuman::Draw()
 	}
 	//if (MyDebug::enemyThreeCrayonHumanSearchAreaDrawFlag)
 	//{
-		DrawTriangle3D(VAdd(area, VGet(0, modelHeight / 2.0f, 0)), VAdd(area, VGet(1000, modelHeight / 2.0f, 1000)), VAdd(area, VGet(-1000, modelHeight / 2.0f, -1000)), GetColor(255, 255, 255), true);
+	//	DrawTriangle3D(VAdd(area, VGet(0, modelHeight / 2.0f, 0)), VAdd(area, VGet(1000, modelHeight / 2.0f, 1000)), VAdd(area, VGet(-1000, modelHeight / 2.0f, -1000)), GetColor(255, 255, 255), true);
+	//}
+
+	//if (MyDebug::enemyThreeCrayonHumanSearchLineDrawFlag)
+	//{
+		if (playerCharaDistance <= 1500)
+		{
+			DrawLine3D(playerCharaArea, area, GetColor(0, 0, 255));
+			if (charaLookAt)
+			{
+				DrawLine3D(playerCharaArea, area, GetColor(0, 255, 0));
+			}
+			if (playerCharaDistance <= 200)
+			{
+				DrawLine3D(playerCharaArea, area, GetColor(255, 0, 0));
+			}
+		}
 	//}
 #endif // _DEBUG
 }
@@ -332,7 +348,14 @@ void EnemyMove3CrayonHuman::Process()
 	}
 	else
 	{
-		ChaseMoveProcess();
+		if (charaLookAt)
+		{
+			ChaseMoveProcess();
+		}
+		else
+		{
+			AutoMoveProcess();
+		}
 	}
 
 	MotionProcess();
@@ -370,8 +393,35 @@ void EnemyMove3CrayonHuman::Process()
 		area.y = 0.5f;
 	}
 
+	// atan2 ‚ðŽg—p‚µ‚ÄŠp“x‚ðŽæ“¾
+	charaLookAtAngle = atan2(VSub(area, playerCharaArea).x, VSub(area, playerCharaArea).z);
+
+	if (fabsf(charaLookAtAngle) + (DX_PI_F / 6) > fabsf(direXAngle + direZAngle)
+		&& fabsf(charaLookAtAngle) - (DX_PI_F / 6) < fabsf(direXAngle + direZAngle)
+		&& playerCharaDistance <= 1500)
+	{
+		direXAngle = 0.0f;
+		direZAngle = charaLookAtAngle;
+		charaLookAt = true;
+	}
+	else
+	{
+		charaLookAt = false;
+	}
+	
+	// atan2 ‚ÅŽæ“¾‚µ‚½Šp“x‚É‚R‚cƒ‚ƒfƒ‹‚ð³–Ê‚ÉŒü‚©‚¹‚é‚½‚ß‚Ì•â³’l( DX_PI_F )‚ð
+	// ‘«‚µ‚½’l‚ð‚R‚cƒ‚ƒfƒ‹‚Ì YŽ²‰ñ“]’l‚Æ‚µ‚ÄÝ’è
+	//MV1SetRotationXYZ(ModelHandle2, VGet(0.0f, charaLookAngle + DX_PI_F, 0.0f));
+
 	// ‘æ“ñˆø”‚Ì‰ñ“]Šp“x‚ðƒZƒbƒg
-	MV1SetRotationXYZ(modelHandle, VGet(0.0f, direXAngle + direZAngle, 0.0f));
+	if (charaLookAt)
+	{
+		MV1SetRotationXYZ(modelHandle, VGet(0.0f, charaLookAtAngle, 0.0f));
+	}
+	else
+	{
+		MV1SetRotationXYZ(modelHandle, VGet(0.0f, direXAngle + direZAngle, 0.0f));
+	}
 	// Žw’èˆÊ’u‚Éƒ‚ƒfƒ‹‚ð”z’u
 	MV1SetPosition(modelHandle, area);
 }

@@ -68,10 +68,10 @@ private:
 	const int enemySlimeNum = 10;
 
 	// クレヨンヒューマンのポインタ
-	EnemyMove3CrayonHuman* p_enemyCrayonHuman[10];
+	EnemyMove3CrayonHuman* p_enemyCrayonHuman[1];
 
 	// クレヨンヒューマンの数
-	const int enemyCrayonHumanNum = 10;
+	const int enemyCrayonHumanNum = 1;
 
 	// ドロップアイテム
 	DropItemMove3* p_dropItem[20];

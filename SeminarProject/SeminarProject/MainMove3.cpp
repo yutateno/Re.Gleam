@@ -568,37 +568,6 @@ void MainMove3::Draw()
 	}
 
 	DrawFormatString(1020, 20, GetColor(0, 0, 0), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
-
-#ifdef _DEBUG
-	if (MyDebug::enemyThreeSlimeSearchLineDrawFlag)
-	{
-		for (int i = 0; i != enemySlimeNum; ++i)
-		{
-			if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) <= 1500)
-			{
-				DrawLine3D(VAdd(p_character->GetArea(), VGet(0, 50, 0)), VAdd(p_enemySlime[i]->GetArea(), VGet(0, 50, 0)), GetColor(255, 0, 0));
-			}
-			else if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()) <= 2500)
-			{
-				DrawLine3D(VAdd(p_character->GetArea(), VGet(0, 50, 0)), VAdd(p_enemySlime[i]->GetArea(), VGet(0, 50, 0)), GetColor(0, 0, 255));
-			}
-		}
-	}
-	if (MyDebug::enemyThreeCrayonHumanSearchLineDrawFlag)
-	{
-		for (int i = 0; i != enemyCrayonHumanNum; ++i)
-		{
-			if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()) <= 1500)
-			{
-				DrawLine3D(VAdd(p_character->GetArea(), VGet(0, 50, 0)), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0, 50, 0)), GetColor(255, 0, 0));
-			}
-			else if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()) <= 2500)
-			{
-				DrawLine3D(VAdd(p_character->GetArea(), VGet(0, 50, 0)), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0, 50, 0)), GetColor(0, 0, 255));
-			}
-		}
-	}
-#endif // _DEBUG
 }
 
 void MainMove3::Process()

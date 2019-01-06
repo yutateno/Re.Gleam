@@ -25,6 +25,12 @@ private:
 	// キャラクターとの距離
 	int playerCharaDistance;
 
+	// キャラクターを向いている場合の向き
+	float charaLookAtAngle;
+
+	// キャラクターを視認できたかどうか
+	bool charaLookAt;
+
 
 	/// モーションに関して----------
 

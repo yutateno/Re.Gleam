@@ -430,8 +430,8 @@ void Manager::OptionDraw()
 Manager::Manager()
 {
 	// èâä˙âª
-	BASICPARAM::e_preScene = ESceneNumber::SECONDLOAD;
-	BASICPARAM::e_nowScene = ESceneNumber::SECONDLOAD;
+	BASICPARAM::e_preScene = ESceneNumber::THIRDLOAD;
+	BASICPARAM::e_nowScene = ESceneNumber::THIRDLOAD;
 	BASICPARAM::e_preTextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::e_TextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::nowCameraOrtho = false;

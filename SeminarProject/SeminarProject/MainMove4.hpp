@@ -12,6 +12,10 @@
 #include <random>
 
 
+/*
+人を集めるシーン
+敵を倒して元通りに戻せ
+*/
 class MainMove4 : public BaseMove
 {
 private:

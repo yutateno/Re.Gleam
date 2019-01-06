@@ -339,15 +339,15 @@ void EnemyMove3Slime::Process()
 	preArea = area;
 
 
-	//// 動きのプロセス
-	//if (playerCharaDistance > 1500)
-	//{
-	//	AutoMoveProcess();
-	//}
-	//else
-	//{
-	//	ChaseMoveProcess();
-	//}
+	// 動きのプロセス
+	if (playerCharaDistance > 1500)
+	{
+		AutoMoveProcess();
+	}
+	else
+	{
+		ChaseMoveProcess();
+	}
 
 	MotionProcess();
 

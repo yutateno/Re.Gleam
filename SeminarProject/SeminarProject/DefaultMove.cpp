@@ -1,7 +1,7 @@
-#include "MainMove4.hpp"
+#include "DefaultMove.hpp"
 
 
-void MainMove4::ShadowDraw()
+void DefaultMove::ShadowDraw()
 {
 	/// セットアップ
 	BaseMove::ShadowCharaSetUpBefore();
@@ -129,7 +129,7 @@ void MainMove4::ShadowDraw()
 }
 
 
-void MainMove4::AttackProcess()
+void DefaultMove::AttackProcess()
 {
 	/// 精算機械に関する-------------------------------------------------------------------------------------------------------------------
 	// 当たっていたら押し出す
@@ -152,14 +152,14 @@ void MainMove4::AttackProcess()
 }
 
 
-void MainMove4::ThsTextureReload()
+void DefaultMove::ThsTextureReload()
 {
-	ths = std::thread(&MainMove4::ThsTextureReload, this);
+	ths = std::thread(&DefaultMove::ThsTextureReload, this);
 	ths.join();
 }
 
 
-MainMove4::MainMove4(const std::vector<int> v_file)
+DefaultMove::DefaultMove(const std::vector<int> v_file)
 {
 	BASICPARAM::paneruDrawFlag = false;
 
@@ -267,7 +267,7 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 }
 
 
-MainMove4::~MainMove4()
+DefaultMove::~DefaultMove()
 {
 	// 精密機械
 	GRAPHIC_RELEASE(adjustmentDescDraw);
@@ -323,7 +323,7 @@ MainMove4::~MainMove4()
 }
 
 
-void MainMove4::Draw()
+void DefaultMove::Draw()
 {
 	BaseMove::SkyBoxDraw();
 
@@ -344,7 +344,7 @@ void MainMove4::Draw()
 }
 
 
-void MainMove4::Process()
+void DefaultMove::Process()
 {
 	// キャラクターのプロセス
 	p_character->Process(p_camera->GetAngle());
@@ -365,19 +365,19 @@ void MainMove4::Process()
 	if (CheckHitKey(KEY_INPUT_Z) == 1)
 	{
 		BASICPARAM::endFeedNow = true;
-		BaseMove::SetScene(ESceneNumber::FIFTHLOAD);
+		BaseMove::SetScene(ESceneNumber::THIRDLOAD);
 	}
 #endif
 }
 
 
-void MainMove4::CameraProcess()
+void DefaultMove::CameraProcess()
 {
 	p_camera->SetUp();
 }
 
 
-void MainMove4::TextureReload()
+void DefaultMove::TextureReload()
 {
 	// キャラクター
 	p_character->TextureReload();
@@ -414,13 +414,13 @@ void MainMove4::TextureReload()
 }
 
 
-void MainMove4::OptionActorModel()
+void DefaultMove::OptionActorModel()
 {
 	p_character->OptionActorDraw();
 }
 
 
-void MainMove4::OptionActorModelBefore()
+void DefaultMove::OptionActorModelBefore()
 {
 	p_character->OptionActorDrawBefore();
 }

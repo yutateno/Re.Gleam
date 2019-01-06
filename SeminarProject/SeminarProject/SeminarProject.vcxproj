@@ -166,6 +166,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterSword.cpp" />
+    <ClCompile Include="DefaultMove.cpp" />
     <ClCompile Include="DropItemMove1.cpp" />
     <ClCompile Include="DropItemMove2.cpp" />
     <ClCompile Include="DropItemMove3.cpp" />
@@ -182,6 +183,7 @@
     <ClCompile Include="MainMove2.cpp" />
     <ClCompile Include="MainMove3.cpp" />
     <ClCompile Include="MainMove4.cpp" />
+    <ClCompile Include="MainMove5.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="OrdinaryPerson.cpp" />
     <ClCompile Include="SoundProcess.cpp" />
@@ -200,6 +202,7 @@
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="Character.hpp" />
     <ClInclude Include="CharacterSword.hpp" />
+    <ClInclude Include="DefaultMove.hpp" />
     <ClInclude Include="DropItemMove1.hpp" />
     <ClInclude Include="DropItemMove2.hpp" />
     <ClInclude Include="DropItemMove3.hpp" />
@@ -215,6 +218,7 @@
     <ClInclude Include="MainMove2.hpp" />
     <ClInclude Include="MainMove3.hpp" />
     <ClInclude Include="MainMove4.hpp" />
+    <ClInclude Include="MainMove5.hpp" />
     <ClInclude Include="Manager.hpp" />
     <ClInclude Include="OrdinaryPerson.hpp" />
     <ClInclude Include="SoundProcess.hpp" />

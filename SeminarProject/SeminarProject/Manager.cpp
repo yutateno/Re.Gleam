@@ -63,6 +63,22 @@ void Manager::SceneChange()
 		POINTER_RELEASE(p_loadThread);
 		break;
 
+
+	case ESceneNumber::FIFTHLOAD:
+		p_loadThread = new LoadThread();
+		POINTER_RELEASE(p_baseMove);
+		break;
+
+
+	case ESceneNumber::FIFTHMOVE:
+		BASICPARAM::startFeedNow = true;
+		feedCount = 255;
+		p_baseMove = new MainMove5(p_loadThread->GetFile());
+		p_baseMove->SetScene(BASICPARAM::e_nowScene);
+		POINTER_RELEASE(p_loadThread);
+		break;
+
+
 	default:
 		break;
 	}
@@ -904,6 +920,119 @@ Manager::Manager()
 	/// --------------------------------------------------------------------
 
 
+	/// ムーブ5のロード素材-------------------------------------------------
+	// モデルデータ
+	move5str[0] = "media\\こっち\\media\\ステージモデル\\move1_hantei.myn";
+	move5str[1] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.myn";			// 5
+	move5str[2] = "media\\こっち\\media\\paneru\\paneru.myn";
+	move5str[3] = "media\\こっち\\media\\kaidan\\kaidan.myn";						// 1
+	move5str[4] = "media\\こっち\\media\\kaidan\\kaidan_hantei.myn";
+	move5str[5] = "media\\こっち\\media\\街灯\\Gaitou.myn";							// 2
+	move5str[6] = "media\\こっち\\media\\スカイボックス\\SkyDome.myn";				// 1
+	move5str[7] = "media\\こっち\\media\\ステージモデル\\move1_graphic.myn";
+
+	// キャラのテクスチャデータ
+	move5str[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn";
+	move5str[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_hair.pyn";
+	move5str[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_wear.pyn";
+	move5str[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_face.pyn";
+	move5str[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_ex.pyn";
+
+	// 階段のテクスチャデータ
+	move5str[13] = "media\\こっち\\media\\kaidan\\whiteblack\\kaidan.pyn";
+
+	// 街灯のテクスチャデータ
+	move5str[14] = "media\\こっち\\media\\街灯\\whiteblack\\body_col.pyn";
+	move5str[15] = "media\\こっち\\media\\街灯\\whiteblack\\lamp_COLandems.pyn";
+
+	// スカイボックスのテクスチャデータ
+	move5str[16] = "media\\こっち\\media\\スカイボックス\\whiteblack\\BlueSky.byn";
+
+	// 精算機械データ
+	move5str[17] = "media\\こっち\\media\\Terminal\\terminal.myn";					// 2
+
+	// 精算機械テクスチャ
+	move5str[18] = "media\\こっち\\media\\Terminal\\whiteblack\\Terminal.pyn";
+	move5str[19] = "media\\こっち\\media\\Terminal\\whiteblack\\T_display.pyn";
+
+	// 精密機械の補助説明
+	move5str[20] = "media\\こっち\\media\\Terminal\\push.pyn";
+
+	// 階段とそのあとの床データ
+	move5str[21] = "media\\こっち\\media\\階段と床合体\\kaidan_yuka1.myn";			// 2
+
+	// 階段とそのあとの床のテクスチャデータ
+	move5str[22] = "media\\こっち\\media\\階段と床合体\\whiteblack\\kaidan.pyn";
+	move5str[23] = "media\\こっち\\media\\階段と床合体\\whiteblack\\yuka.pyn";
+
+	// 階段と床のあたり判定データ
+	move5str[24] = "media\\こっち\\media\\階段と床合体\\kaidan_yuka1_hantei.myn";
+
+	// キャラクター周りの3DSE
+	move5str[25] = "media\\こっち\\media\\sound\\ジャンプ.wyn";
+	move5str[26] = "media\\こっち\\media\\sound\\足音（廊下っぽいの）.wyn";
+	move5str[27] = "media\\こっち\\media\\sound\\足音.wyn";
+	move5str[28] = "media\\こっち\\media\\sound\\着地.wyn";
+	move5str[29] = "media\\こっち\\media\\sound\\着地２.wyn";
+
+	// キャラクターの攻撃の音
+	move5str[30] = "media\\こっち\\media\\sound\\piano攻撃音1.wyn";
+	move5str[31] = "media\\こっち\\media\\sound\\piano攻撃音2.wyn";
+	move5str[32] = "media\\こっち\\media\\sound\\piano攻撃音3.wyn";
+
+	// BGM
+	move5str[33] = "media\\こっち\\media\\sound\\通常bgm.wyn";
+
+	load5[0] = ELOADFILE::mv1model;
+	load5[1] = ELOADFILE::mv1model;
+	load5[2] = ELOADFILE::mv1model;
+	load5[3] = ELOADFILE::mv1model;
+	load5[4] = ELOADFILE::mv1model;
+	load5[5] = ELOADFILE::mv1model;
+	load5[6] = ELOADFILE::mv1model;
+	load5[7] = ELOADFILE::mv1model;
+
+	load5[8] = ELOADFILE::graph;
+	load5[9] = ELOADFILE::graph;
+	load5[10] = ELOADFILE::graph;
+	load5[11] = ELOADFILE::graph;
+	load5[12] = ELOADFILE::graph;
+
+	load5[13] = ELOADFILE::graph;
+
+	load5[14] = ELOADFILE::graph;
+	load5[15] = ELOADFILE::graph;
+
+	load5[16] = ELOADFILE::graph;
+
+	load5[17] = ELOADFILE::mv1model;
+
+	load5[18] = ELOADFILE::graph;
+	load5[19] = ELOADFILE::graph;
+
+	load5[20] = ELOADFILE::graph;
+
+	load5[21] = ELOADFILE::mv1model;
+
+	load5[22] = ELOADFILE::graph;
+	load5[23] = ELOADFILE::graph;
+
+	load5[24] = ELOADFILE::mv1model;
+
+	load5[25] = ELOADFILE::sound3DSource;
+	load5[26] = ELOADFILE::sound3DSource;
+	load5[27] = ELOADFILE::sound3DSource;
+	load5[28] = ELOADFILE::sound3DSource;
+	load5[29] = ELOADFILE::sound3DSource;
+
+	load5[30] = ELOADFILE::sound3DSource;
+	load5[31] = ELOADFILE::sound3DSource;
+	load5[32] = ELOADFILE::sound3DSource;
+
+	load5[33] = ELOADFILE::soundStream;
+	/// --------------------------------------------------------------------
+
+
 	// メモリの初期化
 	p_baseMove = nullptr;
 	p_loadThread = nullptr;
@@ -1026,6 +1155,19 @@ void Manager::Update()
 				BASICPARAM::endFeedNow = true;						// 終了フェードのフラッグを立てる
 				preLoadScene = true;								// 直前がロードだったら
 				BASICPARAM::e_nowScene = ESceneNumber::FORTHMOVE;	// 次のシーンを指定する
+			}
+		}
+		// 五番目のムーブのロードだったら
+		else if (BASICPARAM::e_preScene == ESceneNumber::FIFTHLOAD)
+		{
+			p_loadThread->Process(max5, move5str, load5);		// ロードをする
+
+			// ロードが終了したら
+			if (p_loadThread->GetNum() >= max5)
+			{
+				BASICPARAM::endFeedNow = true;						// 終了フェードのフラッグを立てる
+				preLoadScene = true;								// 直前がロードだったら
+				BASICPARAM::e_nowScene = ESceneNumber::FIFTHMOVE;	// 次のシーンを指定する
 			}
 		}
 		// ロードではなくゲームだったら
@@ -1239,4 +1381,5 @@ void Manager::Update()
 			}
 		}
 	}
+	printfDx("%d\n", BASICPARAM::e_nowScene);
 }

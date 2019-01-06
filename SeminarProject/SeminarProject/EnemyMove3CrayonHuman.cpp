@@ -313,13 +313,9 @@ void EnemyMove3CrayonHuman::Draw()
 	{
 		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
 	}
-	//if (MyDebug::enemyThreeCrayonHumanSearchAreaDrawFlag)
-	//{
-	//	DrawTriangle3D(VAdd(area, VGet(0, modelHeight / 2.0f, 0)), VAdd(area, VGet(1000, modelHeight / 2.0f, 1000)), VAdd(area, VGet(-1000, modelHeight / 2.0f, -1000)), GetColor(255, 255, 255), true);
-	//}
 
-	//if (MyDebug::enemyThreeCrayonHumanSearchLineDrawFlag)
-	//{
+	if (MyDebug::enemyThreeCrayonHumanSearchLineDrawFlag)
+	{
 		if (playerCharaDistance <= 1500)
 		{
 			DrawLine3D(playerCharaArea, area, GetColor(0, 0, 255));
@@ -332,7 +328,7 @@ void EnemyMove3CrayonHuman::Draw()
 				DrawLine3D(playerCharaArea, area, GetColor(255, 0, 0));
 			}
 		}
-	//}
+	}
 #endif // _DEBUG
 }
 

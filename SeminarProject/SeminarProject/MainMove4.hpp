@@ -8,6 +8,7 @@
 #include "StagePaneru.hpp"
 #include "AdjustmentMachine.hpp"
 #include "StageStairsRoad.hpp"
+#include "OrdinaryPerson.hpp"
 
 #include <random>
 
@@ -28,7 +29,7 @@ private:
 		, stairsRoadDrawModel, stairsRoadTex0, stairsRoadTex1
 		, stairsRoadCollModel, se_jump, se_footCorridor, se_foot, se_landing
 		, se_landingSecond, se_attackOne, se_attackTwo, se_attackThrid
-		, bgm_Main
+		, bgm_Main, ordiPersonModel, ordiPersonTex0
 	};
 
 
@@ -57,6 +58,15 @@ private:
 
 	// 多くの敵にダメージ受けた時に代表二体のみ受けるようにするカウント
 	int charaSonmeEnemyDamageCount;
+
+
+	/// 人------------------------------
+
+	// 人のポインタ
+	OrdinaryPerson* p_ordinaryPerson[50];
+
+	// 人の数
+	const int ordinaryNum = 50;
 
 
 	/// 敵---------------------

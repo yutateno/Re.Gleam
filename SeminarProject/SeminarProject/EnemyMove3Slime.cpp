@@ -227,6 +227,7 @@ EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandl
 	nextDireZAngle = 0.0f;
 	playerCharaArea = VGet(0, 0, 0);
 	playerCharaDistance = 0;
+	moveCount = 0;
 	
 	// ‘«Œ³‚Ì‰e‚ÉŠÖ‚·‚é
 	shadowHeight = 25.0f;

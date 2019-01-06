@@ -870,6 +870,10 @@ Manager::Manager()
 	// BGM
 	move4str[33] = "media\\Ç±Ç¡Çø\\media\\sound\\í èÌbgm.wyn";
 
+	// êlÇÃÉfÅ[É^
+	move4str[34] = "media\\Ç±Ç¡Çø\\media\\move4\\àÍî êlÅQÇªÇÃÇP\\human1_motionALL.myn";
+	move4str[35] = "media\\Ç±Ç¡Çø\\media\\move4\\àÍî êlÅQÇªÇÃÇP\\human1_motionALL.fbm\\normal\\human_col.pyn";
+
 	load4[0] = ELOADFILE::mv1model;
 	load4[1] = ELOADFILE::mv1model;
 	load4[2] = ELOADFILE::mv1model;
@@ -917,6 +921,9 @@ Manager::Manager()
 	load4[32] = ELOADFILE::sound3DSource;
 
 	load4[33] = ELOADFILE::soundStream;
+
+	load4[34] = ELOADFILE::mv1model;
+	load4[35] = ELOADFILE::graph;
 	/// --------------------------------------------------------------------
 
 
@@ -1381,5 +1388,4 @@ void Manager::Update()
 			}
 		}
 	}
-	printfDx("%d\n", BASICPARAM::e_nowScene);
 }

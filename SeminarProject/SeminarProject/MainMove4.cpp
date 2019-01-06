@@ -39,6 +39,11 @@ void MainMove4::ShadowDraw()
 	}
 	// 精密機械
 	p_adjustmentMachine->Draw();
+	// 人
+	for (int i = 0; i != ordinaryNum; ++i)
+	{
+		p_ordinaryPerson[i]->Draw();
+	}
 	// キャラクター
 	p_character->Draw();
 	BaseMove::ShadowCharaSetUpAfter();
@@ -79,6 +84,11 @@ void MainMove4::ShadowDraw()
 	}
 	// 精密機械
 	p_adjustmentMachine->Draw();
+	// 人
+	for (int i = 0; i != ordinaryNum; ++i)
+	{
+		p_ordinaryPerson[i]->Draw();
+	}
 	BaseMove::ShadowAnotherCharaSetUpAfter();
 
 	/// 描画
@@ -121,6 +131,11 @@ void MainMove4::ShadowDraw()
 	}
 	// 精密機械
 	p_adjustmentMachine->Draw();
+	// 人
+	for (int i = 0; i != ordinaryNum; ++i)
+	{
+		p_ordinaryPerson[i]->Draw();
+	}
 	// キャラクター
 	p_character->Draw();
 	BaseMove::ShadowNoMoveDrawAfter();
@@ -173,6 +188,10 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 	for (int i = 0; i != 10; ++i)
 	{
 		p_stagePaneru[i] = nullptr;
+	}
+	for (int i = 0; i != ordinaryNum; ++i)
+	{
+		p_ordinaryPerson[i] = nullptr;
 	}
 	vp_stageStairs.clear();
 	vp_stageStairsRoad.clear();
@@ -244,6 +263,13 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 	}
 	adjustmentDescDraw = v_file[EFILE::terminalDesc];
 
+	// 人の初期化
+	for (int i = 0; i != ordinaryNum; ++i)
+	{
+		p_ordinaryPerson[i] = new OrdinaryPerson(v_file[EFILE::ordiPersonModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
+			, v_file[EFILE::ordiPersonTex0], VGet(-1000.0f + i * 100.0f, i + 200.0f, 1000.0f), 0.0f);
+	}
+
 	// スカイボックス
 	BaseMove::SetInitSkyBox(v_file[EFILE::skyBoxModel], v_file[EFILE::skyBoxTex0]);
 
@@ -269,6 +295,11 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 
 MainMove4::~MainMove4()
 {
+	// 人
+	for (int i = 0; i != ordinaryNum; ++i)
+	{
+		POINTER_RELEASE(p_ordinaryPerson[i]);
+	}
 	// 精密機械
 	GRAPHIC_RELEASE(adjustmentDescDraw);
 	POINTER_RELEASE(p_adjustmentMachine);
@@ -354,6 +385,13 @@ void MainMove4::Process()
 	p_camera->Process(p_character->GetArea());
 
 
+	// 人
+	for (int i = 0; i != ordinaryNum; ++i)
+	{
+		p_ordinaryPerson[i]->Process();
+	}
+
+
 	BaseMove::ShadowArea(p_character->GetArea());
 
 	AttackProcess();
@@ -381,6 +419,12 @@ void MainMove4::TextureReload()
 {
 	// キャラクター
 	p_character->TextureReload();
+
+	// 人
+	for (int i = 0; i != ordinaryNum; ++i)
+	{
+		p_ordinaryPerson[i]->TextureReload();
+	}
 
 	// 精密機械
 	p_adjustmentMachine->TextureReload();

@@ -225,6 +225,7 @@ EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int co
 	nextDireZAngle = 0.0f;
 	playerCharaArea = VGet(0, 0, 0);
 	playerCharaDistance = 3000;
+	moveCount = 0;
 
 	// ‘«Œ³‚Ì‰e‚ÉŠÖ‚·‚é
 	shadowHeight = 65.0f;

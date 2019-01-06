@@ -365,7 +365,7 @@ void MainMove5::Process()
 	if (CheckHitKey(KEY_INPUT_Z) == 1)
 	{
 		BASICPARAM::endFeedNow = true;
-		BaseMove::SetScene(ESceneNumber::THIRDLOAD);
+		BaseMove::SetScene(ESceneNumber::FIRSTLOAD);
 	}
 #endif
 }

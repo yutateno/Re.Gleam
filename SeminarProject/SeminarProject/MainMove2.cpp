@@ -1017,7 +1017,7 @@ void MainMove2::Process()
 	if (p_character->GetArea().y >= 3550.0f)
 	{
 		BASICPARAM::endFeedNow = true;
-		BaseMove::SetScene(ESceneNumber::FIRSTLOAD);
+		BaseMove::SetScene(ESceneNumber::THIRDLOAD);
 	}
 
 

@@ -526,8 +526,26 @@ void CharacterSword::AnimProcess()
 
 
 CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle, const int paneruHandle, const int stairsRoadHandle
-	, const int tex0, const int tex1, const int tex2, const int tex3, const int tex4) : BasicCreature(collStageHandle, true)
+	, const int tex0, const int tex1, const int tex2, const int tex3, const int tex4) : BasicCreature(true)
 {
+	// ステージのコリジョン情報の更新
+	stageHandle = -1;
+	stageHandle = MV1DuplicateModel(collStageHandle);
+	MV1SetScale(stageHandle, VGet(0.73f, 0.73f, 0.73f));
+	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
+	MV1SetupCollInfo(stageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
+	MV1SetFrameVisible(stageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1RefreshCollInfo(stageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+
+	// ステージのコリジョン情報の更新
+	shadowStageHandle = -1;
+	shadowStageHandle = MV1DuplicateModel(collStageHandle);
+	MV1SetScale(shadowStageHandle, VGet(0.8f, 0.8f, 0.8f));
+	MV1SetPosition(shadowStageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
+	MV1SetupCollInfo(shadowStageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
+	MV1SetFrameVisible(shadowStageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1RefreshCollInfo(shadowStageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+
 	// ３Ｄモデルの読み込み
 	this->modelHandle = -1;
 	this->modelHandle = MV1DuplicateModel(modelHandle);
@@ -581,7 +599,7 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 
 
 	// 足元の影に関する
-	shadowHeight = 20.0f;
+	shadowHeight = 750.0f;
 	shadowSize = 50.0f;
 
 
@@ -665,6 +683,8 @@ CharacterSword::~CharacterSword()
 	}
 
 	MODEL_RELEASE(modelHandle);
+	MODEL_RELEASE(shadowStageHandle);
+	MODEL_RELEASE(stageHandle);
 }
 
 void CharacterSword::SetStairsArea(const VECTOR stairsArea, const int num, const float angle)
@@ -771,7 +791,7 @@ void CharacterSword::Process(const float getAngle)
 	JumpProcess();
 
 	// ステージのあたり判定
-	StageHit();
+	ActorHit(stageHandle);
 
 
 	// 要らないけど不安なので一応
@@ -856,9 +876,36 @@ void CharacterSword::TextureReload()
 // 描画
 void CharacterSword::Draw()
 {
+	int setShadowNum = 0;
+
 	BasicObject::Draw();		// 基本的なものを引っ張ってくる
 
-	BasicObject::ShadowFoot();
+	// パネルでの足影
+	if (BASICPARAM::paneruDrawFlag)
+	{
+		for (int i = 0; i != 10; ++i)
+		{
+			setShadowNum += BasicObject::ShadowFoot(paneruHandle[i]);
+		}
+	}
+
+	// 階段での足影
+	if (setShadowNum != 0) return;
+	for (int i = 0; i != BASICPARAM::stairsNum; ++i)
+	{
+		setShadowNum += BasicObject::ShadowFoot(v_stairsHandle[i]);
+	}
+
+	// 階段と床での足影
+	if (setShadowNum != 0) return;
+	for (int i = 0; i != BASICPARAM::stairsRoadNum; ++i)
+	{
+		setShadowNum += BasicObject::ShadowFoot(v_stairsRoadHandle[i]);
+	}
+
+	// ステージの足影
+	if (setShadowNum != 0) return;
+	BasicObject::ShadowFoot(shadowStageHandle);
 
 #ifdef _DEBUG
 	if(MyDebug::characterSwordDrawFlag)

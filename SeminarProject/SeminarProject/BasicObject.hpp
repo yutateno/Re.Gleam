@@ -27,7 +27,7 @@ protected:
 	float shadowSize;
 
 	// 足元影のプロセス
-	void ShadowFoot();
+	bool ShadowFoot(int shadowModel);
 
 	// 足元影のエリア
 	VECTOR area;
@@ -51,10 +51,6 @@ private:
 	// 影のハンドル
 	int shadowHandle;
 
-
-	// ステージハンドル
-	int stageHandle;
-
 	// オプションでの回転数
 	int optionRotaCount;
 
@@ -66,7 +62,7 @@ public:
 	BasicObject();
 
 	// コピーコンストラクタ
-	BasicObject(const int collStageHandle, bool anotherMoveChara = false);
+	BasicObject(bool shadowDo);
 
 	// デストラクタ
 	virtual ~BasicObject();

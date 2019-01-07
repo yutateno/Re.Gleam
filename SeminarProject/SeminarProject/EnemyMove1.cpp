@@ -47,8 +47,18 @@ void EnemyMove1::MoveProcess()
 
 
 // コンストラクタ
-EnemyMove1::EnemyMove1(const int collStageHandle, const float areaX, const float areaZ, const float color) : BasicCreature(collStageHandle)
+EnemyMove1::EnemyMove1(const int collStageHandle, const float areaX, const float areaZ, const float color) : BasicCreature(true)
 {
+	stageHandle = -1;
+	// ステージのコリジョン情報の更新
+	shadowStageHandle = -1;
+	shadowStageHandle = MV1DuplicateModel(collStageHandle);
+	MV1SetScale(shadowStageHandle, VGet(0.8f, 0.8f, 0.8f));
+	MV1SetPosition(shadowStageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
+	MV1SetupCollInfo(shadowStageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
+	MV1SetFrameVisible(shadowStageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1RefreshCollInfo(shadowStageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+
 	// モデルの向きと位置
 	this->area = VGet(areaX, 40.0f, areaZ);
 
@@ -76,13 +86,14 @@ EnemyMove1::EnemyMove1(const int collStageHandle, const float areaX, const float
 // デストラクタ
 EnemyMove1::~EnemyMove1()
 {
+	MODEL_RELEASE(shadowStageHandle);
 }
 
 
 // 描画
 void EnemyMove1::Draw()
 {
-	BasicObject::ShadowFoot();
+	BasicObject::ShadowFoot(shadowStageHandle);
 
 
 	// Ｚバッファを有効にする

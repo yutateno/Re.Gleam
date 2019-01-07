@@ -2,19 +2,10 @@
 #include <typeinfo.h>
 
 // 足の影
-void BasicObject::ShadowFoot()
+bool BasicObject::ShadowFoot(int shadowModel)
 {
-	// ライティングを無効にする
-	SetUseLighting(FALSE);
-
-	// Ｚバッファを有効にする
-	SetUseZBuffer3D(TRUE);
-
-	// テクスチャアドレスモードを CLAMP にする( テクスチャの端より先は端のドットが延々続く )
-	SetTextureAddressMode(DX_TEXADDRESS_CLAMP);
-
 	// プレイヤーの直下に存在する地面のポリゴンを取得
-	ShadowHitResDim = MV1CollCheck_Capsule(stageHandle, -1, area, VAdd(area, VGet(0.0f, shadowHeight, 0.0f)), shadowSize);
+	ShadowHitResDim = MV1CollCheck_Capsule(shadowModel, -1, area, VAdd(area, VGet(0.0f, -shadowHeight, 0.0f)), shadowSize);
 
 	// 頂点データで変化が無い部分をセット
 	ShadowVertex[0].dif = GetColorU8(255, 255, 255, 255);
@@ -26,6 +17,16 @@ void BasicObject::ShadowFoot()
 
 	// 球の直下に存在するポリゴンの数だけ繰り返し
 	ShadowHitRes = ShadowHitResDim.Dim;
+	if (ShadowHitResDim.HitNum == 0) return false;
+
+	// ライティングを無効にする
+	SetUseLighting(FALSE);
+
+	// Ｚバッファを有効にする
+	SetUseZBuffer3D(TRUE);
+
+	// テクスチャアドレスモードを CLAMP にする( テクスチャの端より先は端のドットが延々続く )
+	SetTextureAddressMode(DX_TEXADDRESS_CLAMP);
 	for (int i = 0; i != ShadowHitResDim.HitNum; ++i, ++ShadowHitRes)
 	{
 		// ポリゴンの座標は地面ポリゴンの座標
@@ -78,13 +79,19 @@ void BasicObject::ShadowFoot()
 
 	// Ｚバッファを無効にする
 	SetUseZBuffer3D(FALSE);
+
+	return true;
 }
 
 
 
 BasicObject::BasicObject()
 {
+	shadowHandle = -1;
+
 	notViewCount = 0;
+
+	optionRotaCount = 0;
 
 
 	// 初期化
@@ -98,22 +105,12 @@ BasicObject::BasicObject()
 	ZeroMemory(ShadowVertex, sizeof(ShadowVertex));
 }
 
-BasicObject::BasicObject(const int collStageHandle, bool anotherMoveChara)
+BasicObject::BasicObject(bool shadowDo)
 {
-	shadowHandle = 0;
-	stageHandle = 0;
+	shadowHandle = -1;
 
 	// 影の読み込み
 	LoadFile::MyLoad("media\\こっち\\media\\Shadow.tyn", shadowHandle, ELOADFILE::graph);
-
-
-	// ステージのコリジョン情報の更新
-	stageHandle = MV1DuplicateModel(collStageHandle);
-	MV1SetScale(stageHandle, VGet(0.8f, 0.8f, 0.8f));
-	MV1SetupCollInfo(stageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
-	MV1SetFrameVisible(stageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(stageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 
 	notViewCount = 0;
 
@@ -135,26 +132,11 @@ BasicObject::BasicObject(const int collStageHandle, bool anotherMoveChara)
 BasicObject::~BasicObject()
 {
 	GRAPHIC_RELEASE(shadowHandle);
-	MODEL_RELEASE(stageHandle);
 }
 
 // 描画
 void BasicObject::Draw()
 {
-	/*if (modelHeight >= 40.0f)
-	{
-		if (!CheckCameraViewClip(VAdd(area, VGet(0.0f, 30.0f, 0.0f))))
-		{
-			MV1DrawModel(modelHandle);
-		}
-	}
-	else
-	{
-		if (!CheckCameraViewClip(VAdd(area, VGet(0.0f, 10.0f, 0.0f))))
-		{
-			MV1DrawModel(modelHandle);
-		}
-	}*/
 	if (!CheckCameraViewClip(area) && !CheckCameraViewClip(VAdd(area, VGet(0.0f, modelHeight, 0.0f))) && !CheckCameraViewClip(VAdd(area, VGet(0.0f, modelHeight / 2.0f, 0.0f))))
 	{
 		MV1DrawModel(modelHandle);

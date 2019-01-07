@@ -194,8 +194,26 @@ void EnemyMove3CrayonHuman::FallProcess()
 
 
 EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
-	, const int tex0, const VECTOR area, const float rotationY) : BasicCreature(collStageHandle)
+	, const int tex0, const VECTOR area, const float rotationY) : BasicCreature(true)
 {
+	// ステージのコリジョン情報の更新
+	stageHandle = -1;
+	stageHandle = MV1DuplicateModel(collStageHandle);
+	MV1SetScale(stageHandle, VGet(0.75f, 0.75f, 0.75f));
+	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
+	MV1SetupCollInfo(stageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
+	MV1SetFrameVisible(stageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1RefreshCollInfo(stageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+
+	// ステージのコリジョン情報の更新
+	shadowStageHandle = -1;
+	shadowStageHandle = MV1DuplicateModel(collStageHandle);
+	MV1SetScale(shadowStageHandle, VGet(0.8f, 0.8f, 0.8f));
+	MV1SetPosition(shadowStageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
+	MV1SetupCollInfo(shadowStageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
+	MV1SetFrameVisible(shadowStageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1RefreshCollInfo(shadowStageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+
 	// 3Dモデルの読み込み
 	this->modelHandle = -1;
 	this->modelHandle = MV1DuplicateModel(modelHandle);
@@ -301,13 +319,15 @@ EnemyMove3CrayonHuman::~EnemyMove3CrayonHuman()
 	}
 
 	MODEL_RELEASE(modelHandle);
+	MODEL_RELEASE(shadowStageHandle);
+	MODEL_RELEASE(stageHandle);
 }
 
 void EnemyMove3CrayonHuman::Draw()
 {
 	BasicObject::Draw();		// 基本的なものを引っ張ってくる
 
-	BasicObject::ShadowFoot();
+	BasicObject::ShadowFoot(shadowStageHandle);
 
 
 #ifdef _DEBUG
@@ -383,7 +403,7 @@ void EnemyMove3CrayonHuman::Process()
 	FallProcess();
 
 	// ステージのあたり判定
-	StageHit();
+	ActorHit(stageHandle);
 
 	// 要らないけど不安なので一応
 	if (area.y < 0.0f)

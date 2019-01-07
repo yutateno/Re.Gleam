@@ -193,8 +193,26 @@ void EnemyMove4::FallProcess()
 
 
 EnemyMove4::EnemyMove4(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
-	, const int tex0, const VECTOR area, const float rotationY) : BasicCreature(collStageHandle)
+	, const int tex0, const VECTOR area, const float rotationY) : BasicCreature(true)
 {
+	// ステージのコリジョン情報の更新
+	stageHandle = -1;
+	stageHandle = MV1DuplicateModel(collStageHandle);
+	MV1SetScale(stageHandle, VGet(0.75f, 0.75f, 0.75f));
+	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
+	MV1SetupCollInfo(stageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
+	MV1SetFrameVisible(stageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1RefreshCollInfo(stageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+
+	// ステージのコリジョン情報の更新
+	shadowStageHandle = -1;
+	shadowStageHandle = MV1DuplicateModel(collStageHandle);
+	MV1SetScale(shadowStageHandle, VGet(0.8f, 0.8f, 0.8f));
+	MV1SetPosition(shadowStageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
+	MV1SetupCollInfo(shadowStageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
+	MV1SetFrameVisible(shadowStageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1RefreshCollInfo(shadowStageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+
 	// 3Dモデルの読み込み
 	this->modelHandle = -1;
 	this->modelHandle = MV1DuplicateModel(modelHandle);
@@ -300,17 +318,19 @@ EnemyMove4::~EnemyMove4()
 	}
 
 	MODEL_RELEASE(modelHandle);
+	MODEL_RELEASE(shadowStageHandle);
+	MODEL_RELEASE(stageHandle);
 }
 
 void EnemyMove4::Draw()
 {
 	BasicObject::Draw();		// 基本的なものを引っ張ってくる
 
-	BasicObject::ShadowFoot();
+	BasicObject::ShadowFoot(shadowStageHandle);
 
 
 #ifdef _DEBUG
-	static float aaaaaaaaaaaaaaa = modelHeight;
+	/*static float aaaaaaaaaaaaaaa = modelHeight;
 	static float bbbbbbbbbbbbbb = modelWidth;
 	if (CheckHitKey(KEY_INPUT_Y) == 1)
 	{
@@ -327,10 +347,10 @@ void EnemyMove4::Draw()
 	if (CheckHitKey(KEY_INPUT_J) == 1)
 	{
 		bbbbbbbbbbbbbb -= 0.1f;
-	}
+	}*/
 	if (MyDebug::enemyThreeCrayonHumanDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, aaaaaaaaaaaaaaa, 0.0f)), bbbbbbbbbbbbbb, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
 	}
 
 	if (MyDebug::enemyThreeCrayonHumanSearchLineDrawFlag)
@@ -400,7 +420,7 @@ void EnemyMove4::Process()
 	FallProcess();
 
 	// ステージのあたり判定
-	StageHit();
+	ActorHit(stageHandle);
 
 	// 要らないけど不安なので一応
 	if (area.y < 0.0f)

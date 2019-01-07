@@ -3,6 +3,8 @@
 
 EnemyMove2::EnemyMove2(const VECTOR area, const int modelHandle, const int tex0) : BasicCreature()
 {
+	shadowStageHandle = -1;
+	stageHandle = -1;
 	// À•W‚ğİ’è
 	this->area = VAdd(area, VGet(0.0f, 10.0f, 0.0f));
 

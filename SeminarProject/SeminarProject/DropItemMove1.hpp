@@ -11,7 +11,7 @@ private:
 
 public:
 	// コンストラクタ
-	DropItemMove1(const int draw, const int collStageHandle, const int tex0);
+	DropItemMove1(const int draw, const int tex0);
 
 	// デストラクタ
 	~DropItemMove1();

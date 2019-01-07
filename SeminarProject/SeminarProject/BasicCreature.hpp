@@ -62,11 +62,14 @@ protected:
 
 	/// 当たり判定-----------------------------
 
-	// 動いているかどうか
-	bool moveFlag;						
+	// ステージハンドル
+	int stageHandle;
 
-	// 当たり判定を行う
-	void StageHit();					
+	// 影用ステージハンドル
+	int shadowStageHandle;
+
+	// 動いているかどうか
+	bool moveFlag;
 
 	// 当たり判定を行う
 	void ActorHit(int stageHandle);	
@@ -106,10 +109,7 @@ private:
 	float preMotionPlayTime;	
 
 
-	/// 当たり判定-------------------------------------------
-
-	// ステージハンドル
-	int stageHandle;					
+	/// 当たり判定-------------------------------------------				
 
 	// 判定する壁の数
 	int wallNum;					
@@ -145,7 +145,7 @@ public:
 	BasicCreature();
 
 	// コピーコンストラクタ
-	BasicCreature(const int collStageHandle, bool anotherMoveChara = false);
+	BasicCreature(bool shadowDo);
 
 	// デストラクタ
 	virtual ~BasicCreature();

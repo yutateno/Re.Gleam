@@ -98,12 +98,6 @@ void BasicCreature::Player_AnimProcess()
 
 
 // ステージのあたり判定処理
-void BasicCreature::StageHit()
-{
-	ActorHit(stageHandle);
-}
-
-// ステージのあたり判定処理
 void BasicCreature::ActorHit(int stageHandle)
 {
 	// プレイヤーをカプセルとしてステージとのコリジョン情報を調べる(OBB形式)
@@ -389,23 +383,8 @@ BasicCreature::BasicCreature() :BasicObject()
 }
 
 // コンストラクタ
-BasicCreature::BasicCreature(const int collStageHandle, bool anotherMoveChara) :BasicObject(collStageHandle, anotherMoveChara)
+BasicCreature::BasicCreature(bool shadowDo) :BasicObject(shadowDo)
 {
-	// ステージのコリジョン情報の更新
-	stageHandle = MV1DuplicateModel(collStageHandle);
-	if (!anotherMoveChara)
-	{
-		MV1SetScale(stageHandle, VGet(0.75f, 0.75f, 0.75f));
-	}
-	else
-	{
-		MV1SetScale(stageHandle, VGet(0.73f, 0.73f, 0.73f));
-	}
-	MV1SetupCollInfo(stageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
-	MV1SetFrameVisible(stageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(stageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-
 	// 当たり判定に関する
 	wallNum = 0;
 	floorNum = 0;
@@ -443,7 +422,6 @@ BasicCreature::BasicCreature(const int collStageHandle, bool anotherMoveChara) :
 // デストラクタ
 BasicCreature::~BasicCreature()
 {
-	MODEL_RELEASE(stageHandle);
 }
 
 

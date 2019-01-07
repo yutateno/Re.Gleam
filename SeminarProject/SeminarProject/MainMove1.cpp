@@ -397,7 +397,7 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 	p_camera = new Camera(p_character->GetArea(), v_file[EFILE::collStage]);
 	
 	// —‚¿‚Ä‚éŒ•‰Šú‰»
-	p_dropItem = new DropItemMove1(v_file[EFILE::sword], v_file[EFILE::collStage], v_file[EFILE::swordTex0]);
+	p_dropItem = new DropItemMove1(v_file[EFILE::sword], v_file[EFILE::swordTex0]);
 
 	
 	/// ‹Ê¶¬‚ÉŠÖ‚·‚é‰Šú‰»---------------------------------------------------------------

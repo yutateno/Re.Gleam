@@ -1,7 +1,7 @@
 #include "DropItemMove1.hpp"
 
 
-DropItemMove1::DropItemMove1(const int draw, const int collStageHandle, const int tex0) : BasicObject(collStageHandle)
+DropItemMove1::DropItemMove1(const int draw, const int tex0) : BasicObject()
 {
 	// èâä˙à íuÇê›íË
 	area = VGet(1000.0f, 0.0f, 1000.0f);
@@ -39,9 +39,6 @@ DropItemMove1::~DropItemMove1()
 
 void DropItemMove1::Draw()
 {
-	BasicObject::ShadowFoot();
-
-
 	BasicObject::Draw();
 
 #ifdef _DEBUG

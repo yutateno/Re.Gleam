@@ -66,7 +66,7 @@ public:
 	BasicObject();
 
 	// コピーコンストラクタ
-	BasicObject(const int collStageHandle);
+	BasicObject(const int collStageHandle, bool anotherMoveChara = false);
 
 	// デストラクタ
 	virtual ~BasicObject();

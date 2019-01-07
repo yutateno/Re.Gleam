@@ -1053,7 +1053,7 @@ Manager::Manager()
 
 
 	// 画面に関する
-	gaussianScreen = MakeScreen(BASICPARAM::winWidth, BASICPARAM::winHeight);
+	gaussianScreen = MakeScreen(1920, 1080);
 
 
 	// オプションに関する
@@ -1090,7 +1090,7 @@ Manager::Manager()
 
 	// アンチエイリアシングに関する
 	SetCreateDrawValidGraphMultiSample(4, 4);			// 4x4のアンチエイリアシングモードにする
-	antiAliasScreen = MakeScreen(BASICPARAM::winWidth, BASICPARAM::winHeight, false);	// アンチエイリアシング用の画面を作成
+	antiAliasScreen = MakeScreen(1920, 1080, false);	// アンチエイリアシング用の画面を作成
 	SetCreateDrawValidGraphMultiSample(0, 0);			// 元に戻す
 }
 

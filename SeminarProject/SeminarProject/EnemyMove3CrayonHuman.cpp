@@ -7,7 +7,7 @@ void EnemyMove3CrayonHuman::MotionProcess()
 	{
 		Player_PlayAnim(MOTION::damage);
 		attackFrame += animSpeed;
-		if (attackFrame >= MV1GetAnimTotalTime(modelHandle, MOTION::damage))
+		if (attackFrame > MV1GetAnimTotalTime(modelHandle, MOTION::damage))
 		{
 			attackDamageNow = true;
 			attackFrame = 0.0f;
@@ -19,6 +19,7 @@ void EnemyMove3CrayonHuman::MotionProcess()
 	}
 	else
 	{
+		if (attackDamageNow) attackDamageNow = false;
 		Player_PlayAnim(MOTION::idle);
 	}
 }
@@ -228,8 +229,8 @@ EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int co
 	moveCount = 0;
 
 	// ‘«Œ³‚Ì‰e‚ÉŠÖ‚·‚é
-	shadowHeight = 65.0f;
-	shadowSize = 35.0f;
+	shadowHeight = 20.0f;
+	shadowSize = 70.0f;
 
 	// ‚»‚ê‚¼‚ê‚Ì‘¬“x
 	walkSpeed = 6.0f;

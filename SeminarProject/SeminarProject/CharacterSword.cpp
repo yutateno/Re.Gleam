@@ -495,22 +495,30 @@ void CharacterSword::AnimProcess()
 		}
 		else
 		{
-			// “®‚¢‚Ä‚¢‚é
-			if (moveFlag)
+			if (damageFlag)
 			{
-				// •à‚­‘¬“x‚ÌŽž
-				//if (walkNow)
-				//{
-				//	Player_PlayAnim(MOTION::walk);
-				//}
-				//else
-				//{
-					Player_PlayAnim(MOTION::dash);
-				//}
+				Player_PlayAnim(MOTION::damage);
+				damageFlag = false;
 			}
 			else
 			{
-				Player_PlayAnim(MOTION::idle);
+				// “®‚¢‚Ä‚¢‚é
+				if (moveFlag)
+				{
+					// •à‚­‘¬“x‚ÌŽž
+					//if (walkNow)
+					//{
+					//	Player_PlayAnim(MOTION::walk);
+					//}
+					//else
+					//{
+					Player_PlayAnim(MOTION::dash);
+					//}
+				}
+				else
+				{
+					Player_PlayAnim(MOTION::idle);
+				}
 			}
 		}
 	}
@@ -703,7 +711,7 @@ void CharacterSword::SetStairsRoadArea(const VECTOR stairsRoadArea, const int nu
 
 void CharacterSword::SetDamage()
 {
-	Player_PlayAnim(MOTION::damage);
+	damageFlag = true;
 }
 
 

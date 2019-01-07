@@ -5,9 +5,10 @@ void EnemyMove3Slime::MotionProcess()
 {
 	if (playerCharaDistance <= 250)
 	{
+		if (attackDamageNow) attackDamageNow = false;
 		Player_PlayAnim(MOTION::attack);
 		attackFrame += animSpeed;
-		if (attackFrame >= MV1GetAnimTotalTime(modelHandle, MOTION::attack))
+		if (attackFrame > MV1GetAnimTotalTime(modelHandle, MOTION::attack))
 		{
 			attackDamageNow = true;
 			attackFrame = 0.0f;
@@ -19,6 +20,7 @@ void EnemyMove3Slime::MotionProcess()
 	}
 	else
 	{
+		if (attackDamageNow) attackDamageNow = false;
 		Player_PlayAnim(MOTION::idle);
 	}
 }
@@ -230,8 +232,8 @@ EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandl
 	moveCount = 0;
 	
 	// ‘«Œ³‚Ì‰e‚ÉŠÖ‚·‚é
-	shadowHeight = 25.0f;
-	shadowSize = 70.0f;
+	shadowHeight = 1.0f;
+	shadowSize = 140.0f;
 
 	// ‚»‚ê‚¼‚ê‚Ì‘¬“x
 	walkSpeed = 6.0f;

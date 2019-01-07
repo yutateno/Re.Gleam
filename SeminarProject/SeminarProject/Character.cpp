@@ -7,13 +7,13 @@ void Character::MoveProcess()
 	if (moveFlag)
 	{
 		animSpeed = 1.0f;
-		if (walkSpeed < 20.0f)
+		if (walkSpeed < 10.0f)
 		{
 			walkSpeed += 2.5f;
 		}
 		else
 		{
-			walkSpeed = 20.0f;
+			walkSpeed = 10.0f;
 		}
 	}
 	else

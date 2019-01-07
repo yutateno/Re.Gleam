@@ -24,8 +24,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	SetUseLarge3DPositionSupport(TRUE);		// 巨大な座標値をサポート
 
-	SetGraphMode(1920, 1080, BASICPARAM::bitColor);					// 1920x1080xdefaultbit
+	SetGraphMode(BASICPARAM::winWidth, BASICPARAM::winHeight, BASICPARAM::bitColor);					// 1920x1080xdefaultbit
 
+	
+	GetDefaultState(&BASICPARAM::winWidth, &BASICPARAM::winHeight, &BASICPARAM::bitColor);		// ウィンドウデフォルト値を得る
+
+
+	SetWindowSize(BASICPARAM::winWidth, BASICPARAM::winHeight);		// ウィンドウサイズに合わせてゲームサイズを変更
+
+	BASICPARAM::winWidth = 1920;
+	BASICPARAM::winHeight = 1080;
+	BASICPARAM::bitColor = 32;
 
 	if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理
 	{
@@ -56,10 +65,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Effekseer_Set2DSetting(1920, 1080);
 
 	/// --------------------------------------------------------------------------------
-
-	GetDefaultState(&BASICPARAM::winWidth, &BASICPARAM::winHeight, &BASICPARAM::bitColor);		// ウィンドウデフォルト値を得る
-
-	SetWindowSize(BASICPARAM::winWidth, BASICPARAM::winHeight);		// ウィンドウサイズに合わせてゲームサイズを変更
 
 	SetAlwaysRunFlag(TRUE);		// 裏でもアクティブにする
 

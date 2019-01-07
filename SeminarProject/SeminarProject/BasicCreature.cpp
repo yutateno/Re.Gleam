@@ -389,7 +389,7 @@ BasicCreature::BasicCreature() :BasicObject()
 }
 
 // コンストラクタ
-BasicCreature::BasicCreature(const int collStageHandle, bool anotherMoveChara) :BasicObject(collStageHandle)
+BasicCreature::BasicCreature(const int collStageHandle, bool anotherMoveChara) :BasicObject(collStageHandle, anotherMoveChara)
 {
 	// ステージのコリジョン情報の更新
 	stageHandle = MV1DuplicateModel(collStageHandle);

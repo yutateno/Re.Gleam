@@ -87,6 +87,9 @@ private:
 	// 攻撃のプロセス
 	void AttackProcess();
 
+	// ダメージを受けているかどうか
+	bool damageFlag;
+
 
 	/// ジャンプに関して------------------
 

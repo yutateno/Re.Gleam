@@ -13,12 +13,18 @@ private:
 	// 左右のキャラ向きを扱う変数
 	float direXAngle;
 
+	// 残像用描画
+	VECTOR preDrawArea;
+
 
 	/// モーションに関して--------------------------------------------------------------------------------------
 
 	// 動きのID
 	enum MOTION { idle, action1, action2, action3, skyAction1, skyAction2, skyAction3, dash, walk, jump, fall
 				, damage, death, gunAction, gunActionWalk, nagiharai, handUp};
+
+	// 瞬間的に早くできるとき
+	int moveFastWaitCount;
 
 
 

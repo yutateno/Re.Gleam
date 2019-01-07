@@ -6,21 +6,36 @@ void CharacterSword::MoveProcess()
 	// スムーズに動かせる
 	if (moveFlag)
 	{
-		animSpeed = 0.75f;
-		if (walkSpeed < 30.0f)
-		{
-			walkNow = true;
-			walkSpeed += 5.0f;
-		}
-		else
-		{
-			walkNow = false;
-			walkSpeed = 30.0f;
-		}
-
-
 		if (!jumpNow)
 		{
+			if (animSpeed > 0.75f)
+			{
+				animSpeed -= 0.02f;
+			}
+			else
+			{
+				animSpeed = 0.75f;
+			}
+			if (walkSpeed < 29.0f)
+			{
+				walkNow = true;
+				walkSpeed += 5.0f;
+			}
+			else if (walkSpeed > 31.0f)
+			{
+				walkNow = true;
+				walkSpeed -= 5.0f;
+				modelWidth -= 3.6f;
+				blendCount -= 10;
+			}
+			else
+			{
+				walkNow = true;
+				walkSpeed = 30.0f;
+				modelWidth = 50.0f;
+				blendCount = 0;
+			}
+
 			if (flyCount <= 10) flyCount = 0;
 			underWalkCount++;
 			if (underWalkCount == 1)
@@ -60,6 +75,36 @@ void CharacterSword::MoveProcess()
 				}
 			}
 		}
+		else
+		{
+			if (animSpeed > 1.0f)
+			{
+				animSpeed -= 0.02f;
+			}
+			else
+			{
+				animSpeed = 1.0f;
+			}
+			if (walkSpeed < 14.0f)
+			{
+				walkNow = true;
+				walkSpeed += 5.0f;
+			}
+			else if (walkSpeed > 16.0f)
+			{
+				walkNow = true;
+				walkSpeed -= 5.0f;
+				modelWidth -= 3.6f;
+				blendCount -= 10;
+			}
+			else
+			{
+				walkNow = true;
+				walkSpeed = 16.0f;
+				modelWidth = 50.0f;
+				blendCount = 0;
+			}
+		}
 	}
 	else
 	{
@@ -75,6 +120,32 @@ void CharacterSword::MoveProcess()
 			walkNow = false;
 			walkSpeed = 0.0f;
 		}
+	}
+
+
+	// 移動速度が最大でRBを押したときに早くする
+	if (((walkSpeed >= 29.0f && walkSpeed <= 31.0f) || (jumpNow && walkSpeed >= 14.0f && walkSpeed <= 16.0f))
+		&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::SHOULDER_RB) == 1
+		&& moveFastWaitCount == 0)
+	{
+		if (jumpNow)
+		{
+			moveFastWaitCount = 99;
+			walkSpeed = 85.0f;
+			modelWidth = 85.0f;
+		}
+		else
+		{
+			moveFastWaitCount = 34;
+			walkSpeed = 100.0f;
+			modelWidth = 100.0f;
+		}
+		blendCount = 140;
+		animSpeed = 1.0f;
+	}
+	if (moveFastWaitCount > 0)
+	{
+		moveFastWaitCount--;
 	}
 
 	// 左スティックが前に押されたら前進する
@@ -406,8 +477,8 @@ void CharacterSword::JumpProcess()
 		flyCount++;
 		underWalkCount = 0;
 		preJumpNow = true;
-		walkSpeed = 10.0f;
-		animSpeed = 1.0f;
+		//walkSpeed = 10.0f;
+		//animSpeed = 1.0f;
 		jumpPower -= gravity;			// 落下重力を加え続ける
 		area.y += jumpPower;			// Y座標に加え続ける
 		
@@ -585,11 +656,14 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	// モデルの基本情報
 	modelHeight = 160.0f;
 	modelWidth = 50.0f;
+	blendCount = 0;
+	moveFastWaitCount = 0;
 
 
 	// モデルの向きと位置
 	area = VGet(0.0f, 50.0f, 0.0f);
 	preArea = area;
+	preDrawArea = area;
 	direXAngle = 0.0f;
 	direZAngle = 0.0f;
 	walkNow = false;
@@ -811,8 +885,11 @@ void CharacterSword::Process(const float getAngle)
 
 	// 第二引数の回転角度をセット
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));
-	// 指定位置にモデルを配置
-	MV1SetPosition(modelHandle, area);
+	if (walkSpeed != 100.0f)
+	{
+		// 指定位置にモデルを配置
+		MV1SetPosition(modelHandle, area);
+	}
 }
 
 
@@ -885,6 +962,39 @@ void CharacterSword::TextureReload()
 void CharacterSword::Draw()
 {
 	int setShadowNum = 0;
+
+	if (blendCount != 0)
+	{
+		VECTOR temp = area;
+		preDrawArea = preArea;
+		area = preDrawArea;
+		// 指定位置にモデルを配置
+		MV1SetPosition(modelHandle, area);
+		MV1SetMaterialDrawBlendMode(this->modelHandle, 0, DX_BLENDMODE_ALPHA);
+		MV1SetMaterialDrawBlendMode(this->modelHandle, 1, DX_BLENDMODE_ALPHA);
+		MV1SetMaterialDrawBlendMode(this->modelHandle, 2, DX_BLENDMODE_ALPHA);
+		MV1SetMaterialDrawBlendMode(this->modelHandle, 3, DX_BLENDMODE_ALPHA);
+		MV1SetMaterialDrawBlendMode(this->modelHandle, 4, DX_BLENDMODE_ALPHA);
+		MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
+		MV1SetMaterialDrawBlendParam(this->modelHandle, 1, blendCount);
+		MV1SetMaterialDrawBlendParam(this->modelHandle, 2, blendCount);
+		MV1SetMaterialDrawBlendParam(this->modelHandle, 3, blendCount);
+		MV1SetMaterialDrawBlendParam(this->modelHandle, 4, blendCount);
+		MV1DrawModel(modelHandle);
+		area = temp;
+		MV1SetMaterialDrawBlendMode(this->modelHandle, 0, DX_BLENDMODE_ALPHA);
+		MV1SetMaterialDrawBlendMode(this->modelHandle, 1, DX_BLENDMODE_ALPHA);
+		MV1SetMaterialDrawBlendMode(this->modelHandle, 2, DX_BLENDMODE_ALPHA);
+		MV1SetMaterialDrawBlendMode(this->modelHandle, 3, DX_BLENDMODE_ALPHA);
+		MV1SetMaterialDrawBlendMode(this->modelHandle, 4, DX_BLENDMODE_ALPHA);
+		MV1SetMaterialDrawBlendParam(this->modelHandle, 0, 255);
+		MV1SetMaterialDrawBlendParam(this->modelHandle, 1, 255);
+		MV1SetMaterialDrawBlendParam(this->modelHandle, 2, 255);
+		MV1SetMaterialDrawBlendParam(this->modelHandle, 3, 255);
+		MV1SetMaterialDrawBlendParam(this->modelHandle, 4, 255);
+		// 指定位置にモデルを配置
+		MV1SetPosition(modelHandle, area);
+	}
 
 	BasicObject::Draw();		// 基本的なものを引っ張ってくる
 

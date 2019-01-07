@@ -381,29 +381,28 @@ void EnemyMove3CrayonHuman::Process()
 	// モーション
 	Player_AnimProcess();
 
-	// 階段のあたり判定
-	if (BASICPARAM::stairsNum != 0)
-	{
-		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
-		{
-			ActorHit(v_stairsHandle[i]);
-		}
-	}
+	int setCollHitNum = 0;
 
 	// 階段と床のあたり判定
-	if (BASICPARAM::stairsRoadNum != 0)
+	for (int i = 0; i != BASICPARAM::stairsRoadNum; ++i)
 	{
-		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
-		{
-			ActorHit(v_stairsRoadHandle[i]);
-		}
+		setCollHitNum += ActorHit(v_stairsRoadHandle[i]);
 	}
 
-	// 落下のプロセス
-	FallProcess();
+	// 階段のあたり判定
+	if (setCollHitNum == 0)
+	{
+		for (int i = 0; i != BASICPARAM::stairsNum; ++i)
+		{
+			setCollHitNum += ActorHit(v_stairsHandle[i]);
+		}
+	}
 
 	// ステージのあたり判定
 	ActorHit(stageHandle);
+
+	// 落下のプロセス
+	FallProcess();
 
 	// 要らないけど不安なので一応
 	if (area.y < 0.0f)

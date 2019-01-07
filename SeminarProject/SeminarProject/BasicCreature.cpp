@@ -98,7 +98,7 @@ void BasicCreature::Player_AnimProcess()
 
 
 // ステージのあたり判定処理
-void BasicCreature::ActorHit(int stageHandle)
+bool BasicCreature::ActorHit(int stageHandle)
 {
 	// プレイヤーをカプセルとしてステージとのコリジョン情報を調べる(OBB形式)
 	m_hitDim = MV1CollCheck_Capsule(stageHandle, -1, area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth);
@@ -137,6 +137,14 @@ void BasicCreature::ActorHit(int stageHandle)
 				floorNum++;
 			}
 		}
+	}
+
+	if (floorNum == 0 && wallNum == 0)
+	{
+		// 検出した情報を解放する
+		MV1CollResultPolyDimTerminate(m_hitDim);
+
+		return false;
 	}
 
 	// 床判定
@@ -343,6 +351,8 @@ void BasicCreature::ActorHit(int stageHandle)
 
 	// 検出した情報を解放する
 	MV1CollResultPolyDimTerminate(m_hitDim);
+
+	return true;
 }
 
 

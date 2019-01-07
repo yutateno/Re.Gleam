@@ -139,7 +139,6 @@ void EnemyMove1::NearChara(const VECTOR characterArea)
 	{
 		area.x += 2.0f;
 	}
-	else{}
 	if (characterArea.z < area.z - 4.0f)
 	{
 		area.z -= 2.0f;
@@ -148,5 +147,4 @@ void EnemyMove1::NearChara(const VECTOR characterArea)
 	{
 		area.z += 2.0f;
 	}
-	else{}
 }

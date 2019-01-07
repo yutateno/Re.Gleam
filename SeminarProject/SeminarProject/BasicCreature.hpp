@@ -72,7 +72,7 @@ protected:
 	bool moveFlag;
 
 	// “–‚½‚è”»’è‚ğs‚¤
-	void ActorHit(int stageHandle);	
+	bool ActorHit(int stageHandle);	
 
 	// ƒ|ƒŠƒSƒ“ŒŸ’m‚µ‚Ä‚¢‚é”
 	int hitDimNum;

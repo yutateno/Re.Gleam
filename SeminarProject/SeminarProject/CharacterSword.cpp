@@ -766,32 +766,40 @@ void CharacterSword::Process(const float getAngle)
 
 	hitDimNum = 0;
 
-	// 階段のあたり判定
-	for (int i = 0; i != BASICPARAM::stairsNum; ++i)
-	{
-		ActorHit(v_stairsHandle[i]);
-	}
-
-	// 階段と床のあたり判定
-	for (int i = 0; i != BASICPARAM::stairsRoadNum; ++i)
-	{
-		ActorHit(v_stairsRoadHandle[i]);
-	}
+	int setCollHitNum = 0;
 
 	// パネルのあたり判定
 	if (BASICPARAM::paneruDrawFlag)
 	{
 		for (int i = 0; i != 10; ++i)
 		{
-			ActorHit(paneruHandle[i]);
+			setCollHitNum += ActorHit(paneruHandle[i]);
 		}
 	}
 
-	// ジャンプのプロセス
-	JumpProcess();
+	// 階段と床のあたり判定
+	if (setCollHitNum == 0)
+	{
+		for (int i = 0; i != BASICPARAM::stairsRoadNum; ++i)
+		{
+			setCollHitNum += ActorHit(v_stairsRoadHandle[i]);
+		}
+	}
+
+	// 階段のあたり判定
+	if (setCollHitNum == 0)
+	{
+		for (int i = 0; i != BASICPARAM::stairsNum; ++i)
+		{
+			setCollHitNum += ActorHit(v_stairsHandle[i]);
+		}
+	}
 
 	// ステージのあたり判定
 	ActorHit(stageHandle);
+
+	// ジャンプのプロセス
+	JumpProcess();
 
 
 	// 要らないけど不安なので一応

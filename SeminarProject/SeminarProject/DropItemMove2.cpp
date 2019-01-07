@@ -83,29 +83,28 @@ void DropItemMove2::StolenChara(const VECTOR characterArea)
 {
 	if (deathNow || !aliveNow) return;
 
-	if (characterArea.x <= area.x)
+	// ƒvƒŒƒCƒ„[‚É‚¿‚±‚¤‚æ‚ê
+	if (characterArea.x < area.x - 20.0f)
 	{
 		area.x -= 10.0f;
 	}
-	else
+	else if (characterArea.x > area.x + 20.0f)
 	{
 		area.x += 10.0f;
 	}
-
-	if (characterArea.z <= area.z)
+	if (characterArea.z < area.z - 20.0f)
 	{
 		area.z -= 10.0f;
 	}
-	else
+	else if (characterArea.z > area.z + 20.0f)
 	{
 		area.z += 10.0f;
 	}
-
-	if ((characterArea.y + 80.0f) <= area.y)
+	if ((characterArea.y + 80.0f) < area.y - 4.0f)
 	{
 		area.y -= 2.0f;
 	}
-	else
+	else if ((characterArea.y + 80.0f) > area.y + 4.0f)
 	{
 		area.y += 2.0f;
 	}

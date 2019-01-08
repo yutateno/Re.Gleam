@@ -546,7 +546,6 @@ void MainMove3::Draw()
 	BaseMove::SkyBoxDraw();
 
 
-	ShadowDraw();
 
 
 	for (int i = 0, n = enemySlimeNum + enemyCrayonHumanNum; i != n; ++i)
@@ -555,8 +554,7 @@ void MainMove3::Draw()
 		p_dropItem[i]->Draw();
 	}
 
-
-	p_character->Draw();
+	ShadowDraw();
 
 
 	if (p_adjustmentMachine->GetCanTouch())

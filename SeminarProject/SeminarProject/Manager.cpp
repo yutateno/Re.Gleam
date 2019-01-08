@@ -143,7 +143,7 @@ void Manager::OptionProcess()
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
 		{
 			// îíçïâÊëúÇ≈ÇÕÇ»Ç©Ç¡ÇΩÇÁí èÌêFÇ…ïœÇ¶ÇÈ
-			if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK) BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
+			/*if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK) */BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
 			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
 			{
 				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
@@ -153,7 +153,7 @@ void Manager::OptionProcess()
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorP)
 		{
 			// îíçïâÊëúÇ≈ÇÕÇ»Ç©Ç¡ÇΩÇÁPå^ï‚ê≥êFÇ…ïœÇ¶ÇÈ
-			if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK) BASICPARAM::e_TextureColor = ETextureColor::P_CORRECTION;
+			/*if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK) */BASICPARAM::e_TextureColor = ETextureColor::P_CORRECTION;
 			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
 			{
 				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
@@ -163,7 +163,7 @@ void Manager::OptionProcess()
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorD)
 		{
 			// îíçïâÊëúÇ≈ÇÕÇ»Ç©Ç¡ÇΩÇÁDå^ï‚ê≥êFÇ…ïœÇ¶ÇÈ
-			if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK) BASICPARAM::e_TextureColor = ETextureColor::D_CORRECTION;
+			/*if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK) */BASICPARAM::e_TextureColor = ETextureColor::D_CORRECTION;
 			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
 			{
 				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
@@ -461,8 +461,8 @@ void Manager::OptionDraw()
 Manager::Manager()
 {
 	// èâä˙âª
-	BASICPARAM::e_preScene = ESceneNumber::FIRSTLOAD;
-	BASICPARAM::e_nowScene = ESceneNumber::FIRSTLOAD;
+	BASICPARAM::e_preScene = ESceneNumber::THIRDLOAD;
+	BASICPARAM::e_nowScene = ESceneNumber::THIRDLOAD;
 	BASICPARAM::e_preTextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::e_TextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::nowCameraOrtho = false;

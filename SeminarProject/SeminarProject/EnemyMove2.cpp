@@ -19,32 +19,7 @@ EnemyMove2::EnemyMove2(const VECTOR area, const int modelHandle, const int tex0)
 
 
 	// テクスチャ適応
-	textureHandle = -1;
-	textureHandle = tex0;
-	/*switch (BASICPARAM::e_TextureColor)
-	{
-	case ETextureColor::WHITEBLACK:
-		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\whiteblack\\tex.pyn", textureHandle, ELOADFILE::graph);
-		break;
-
-	case ETextureColor::NORMAL:
-		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\normal\\tex.pyn", textureHandle, ELOADFILE::graph);
-		break;
-
-	case ETextureColor::D_CORRECTION:
-		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\D\\tex.pyn", textureHandle, ELOADFILE::graph);
-		break;
-
-	case ETextureColor::P_CORRECTION:
-		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\P\\tex.pyn", textureHandle, ELOADFILE::graph);
-		break;
-
-	default:
-		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\normal\\tex.pyn", textureHandle, ELOADFILE::graph);
-		break;
-	}*/
-
-	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle, false);
+	MV1SetTextureGraphHandle(this->modelHandle, 0, tex0, false);
 
 	MV1SetMaterialDrawBlendMode(this->modelHandle, 0, DX_BLENDMODE_ALPHA);
 
@@ -57,18 +32,12 @@ EnemyMove2::EnemyMove2(const VECTOR area, const int modelHandle, const int tex0)
 
 EnemyMove2::~EnemyMove2()
 {
-	GRAPHIC_RELEASE(textureHandle);
 	MODEL_RELEASE(modelHandle);
 }
 
 void EnemyMove2::Draw()
 {
 	if (eraseExistence) return;
-
-	/*if (!deathFlag)
-	{
-		BasicObject::ShadowFoot();
-	}*/
 
 	BasicObject::Draw();
 
@@ -85,8 +54,6 @@ void EnemyMove2::Draw()
 void EnemyMove2::Process()
 {
 	if (eraseExistence) return;
-	// ステージのあたり判定
-	//StageHit();
 
 
 	// ダメージ受けた時
@@ -113,35 +80,4 @@ void EnemyMove2::Process()
 	}
 
 	MV1SetPosition(this->modelHandle, area);
-}
-
-void EnemyMove2::TextureReload()
-{
-	if (eraseExistence) return;
-	GRAPHIC_RELEASE(textureHandle);
-
-	switch (BASICPARAM::e_TextureColor)
-	{
-	case ETextureColor::WHITEBLACK:
-		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\whiteblack\\tex.pyn", textureHandle, ELOADFILE::graph);
-		break;
-
-	case ETextureColor::NORMAL:
-		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\normal\\tex.pyn", textureHandle, ELOADFILE::graph);
-		break;
-
-	case ETextureColor::D_CORRECTION:
-		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\D\\tex.pyn", textureHandle, ELOADFILE::graph);
-		break;
-
-	case ETextureColor::P_CORRECTION:
-		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\P\\tex.pyn", textureHandle, ELOADFILE::graph);
-		break;
-
-	default:
-		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\normal\\tex.pyn", textureHandle, ELOADFILE::graph);
-		break;
-	}
-
-	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle, false);
 }

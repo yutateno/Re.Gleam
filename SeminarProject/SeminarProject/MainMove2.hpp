@@ -163,7 +163,7 @@ private:
 
 
 	// 非同期テクスチャ切り替え
-	void ThsTextureReload() override;
+	void ThsTextureReload() override {};
 
 
 	/// Effekseer関連-----------------------
@@ -193,7 +193,7 @@ public:
 	void CameraProcess() override;
 
 	// テクスチャの切り替え
-	void TextureReload() override;
+	void TextureReload() override {};
 
 	// オプション画面でのモデル表示
 	void OptionActorModel() override;

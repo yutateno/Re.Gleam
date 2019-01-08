@@ -872,8 +872,6 @@ void MainMove2::Draw()
 		BaseMove::SkyBoxDraw();
 
 
-		ShadowDraw();
-
 		if (!p_adjustmentMachine->GetCanTouch())
 		{
 			p_adjustmentMachine->Draw();
@@ -887,7 +885,8 @@ void MainMove2::Draw()
 		}
 
 
-		p_character->Draw();
+		ShadowDraw();
+
 
 		if (p_adjustmentMachine->GetCanTouch())
 		{
@@ -1040,59 +1039,11 @@ void MainMove2::CameraProcess()
 }
 
 
-
-void MainMove2::ThsTextureReload()
-{
-	// キャラクター
-	p_character->TextureReload();
-
-	// 精密機械
-	p_adjustmentMachine->TextureReload();
-
-	// 敵
-	for (int i = 0, n = enemyNum; i != n; ++i)
-	{
-		if (p_enemy[i]->GetDeathFlag()) continue;
-		p_enemy[i]->TextureReload();
-	}
-
-	// ドロップアイテム
-	for (int i = 0, n = enemyNum * 5; i != n; ++i)
-	{
-		if (p_dropItem[i]->GetDeath()) continue;
-		p_dropItem[i]->TextureReload();
-	}
-
-	// 階段
-	for (int i = 0, n = static_cast<int>(vp_stageStairs.size()); i != n; ++i)
-	{
-		vp_stageStairs[i]->TextureReload();
-	}
-
-	// 街灯
-	for (int i = 0, n = static_cast<int>(vp_stageStreetLight.size()); i != n; ++i)
-	{
-		vp_stageStreetLight[i]->TextureReload();
-	}
-
-	// 階段と床
-	for (int i = 0, n = static_cast<int>(vp_stageStairsRoad.size()); i != n; ++i)
-	{
-		vp_stageStairsRoad[i]->TextureReload();
-	}
-}
-
-
-void MainMove2::TextureReload()
-{
-	ths = std::thread(&MainMove2::ThsTextureReload, this);
-	ths.join();
-}
-
 void MainMove2::OptionActorModel()
 {
 	p_character->OptionActorDraw();
 }
+
 
 void MainMove2::OptionActorModelBefore()
 {

@@ -1,6 +1,7 @@
 #pragma once
 #include "BasicCreature.hpp"
 
+#include <random>
 
 class CharacterSword : public BasicCreature
 {
@@ -96,6 +97,27 @@ private:
 	// ダメージを受けているかどうか
 	bool damageFlag;
 
+	// ダメージカウント
+	int damageCount;
+
+	// 直前のダメージカウント
+	int preDamageCount;
+
+	// ダメージのブレンド数値
+	int damageBlend[10];
+
+	// ダメージ表示画像
+	int damageDraw[3];
+
+	// ダメージを受けていないカウント
+	int notDamegaCount;
+
+	// ダメージ表示画像のフレーム
+	int damageDrawFrame;
+
+	// ダメージ画像のID
+	int damageDrawID;
+
 
 	/// ジャンプに関して------------------
 
@@ -129,6 +151,11 @@ private:
 	int textureHandle2;
 	int textureHandle3;
 	int textureHandle4;
+
+
+	/// エフェクトに関して
+	int effeckBack[10];
+	int playingEfBack;
 
 
 public:

@@ -331,9 +331,6 @@ void DefaultMove::Draw()
 	ShadowDraw();
 
 
-	p_character->Draw();
-
-
 	if (p_adjustmentMachine->GetCanTouch())
 	{
 		if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175)

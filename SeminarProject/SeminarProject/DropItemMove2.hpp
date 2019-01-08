@@ -6,9 +6,6 @@
 class DropItemMove2 : public BasicObject
 {
 private:
-	// テクスチャ
-	int textureHandle;
-
 	// 回転用変数
 	int rotationY;
 
@@ -40,9 +37,6 @@ public:
 
 	// キャラクターが近づいたら
 	void StolenChara(const VECTOR characterArea);
-
-	// テクスチャ切り替え
-	void TextureReload();
 
 	// 存在を一生消す
 	void SetDeath(bool death) { deathNow = death; }

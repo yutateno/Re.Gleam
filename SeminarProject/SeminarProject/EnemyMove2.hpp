@@ -4,11 +4,6 @@
 
 class EnemyMove2 : public BasicCreature
 {
-private:
-	// テクスチャ
-	int textureHandle;
-
-
 public:
 	// コンストラクタ
 	EnemyMove2(const VECTOR area, const int modelHandle, const int tex0);
@@ -22,9 +17,6 @@ public:
 
 	// プロセス
 	void Process();
-
-	// テクスチャ切り替え
-	void TextureReload();
 
 	
 	/// ゲッターセッター

@@ -31,11 +31,7 @@ DropItemMove2::DropItemMove2(const int draw, VECTOR area, const int tex0) : Basi
 
 
 	// テクスチャ適応
-	textureHandle = -1;
-
-	textureHandle = tex0;
-
-	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle, true);
+	MV1SetTextureGraphHandle(this->modelHandle, 0, tex0, true);
 
 
 	// モデルのサイズを変更
@@ -48,7 +44,6 @@ DropItemMove2::DropItemMove2(const int draw, VECTOR area, const int tex0) : Basi
 
 DropItemMove2::~DropItemMove2()
 {
-	GRAPHIC_RELEASE(textureHandle);
 	MODEL_RELEASE(modelHandle);
 }
 
@@ -108,37 +103,4 @@ void DropItemMove2::StolenChara(const VECTOR characterArea)
 	{
 		area.y += 2.0f;
 	}
-}
-
-
-void DropItemMove2::TextureReload()
-{
-	if (deathNow) return;
-
-	GRAPHIC_RELEASE(textureHandle);
-
-	switch (BASICPARAM::e_TextureColor)
-	{
-	case ETextureColor::WHITEBLACK:
-		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\whiteblack\\tex.pyn", textureHandle, ELOADFILE::graph);
-		break;
-
-	case ETextureColor::NORMAL:
-		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\normal\\tex.pyn", textureHandle, ELOADFILE::graph);
-		break;
-
-	case ETextureColor::D_CORRECTION:
-		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\D\\tex.pyn", textureHandle, ELOADFILE::graph);
-		break;
-
-	case ETextureColor::P_CORRECTION:
-		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\P\\tex.pyn", textureHandle, ELOADFILE::graph);
-		break;
-
-	default:
-		LoadFile::MyLoad("media\\こっち\\media\\ブロック\\normal\\tex.pyn", textureHandle, ELOADFILE::graph);
-		break;
-	}
-
-	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle, false);
 }

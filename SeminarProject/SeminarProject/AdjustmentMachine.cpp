@@ -67,9 +67,6 @@ void AdjustmentMachine::Draw()
 		canTouch = true;
 	}
 
-
-	BasicObject::Draw();
-
 #ifdef _DEBUG
 	if (MyDebug::adjustmentMachineDrawFlag)
 	{

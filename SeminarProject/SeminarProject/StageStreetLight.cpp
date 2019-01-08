@@ -35,11 +35,6 @@ StageStreetLight::~StageStreetLight()
 	MODEL_RELEASE(modelHandle);
 }
 
-void StageStreetLight::Draw()
-{
-	BasicObject::Draw();
-}
-
 void StageStreetLight::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle0);

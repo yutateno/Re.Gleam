@@ -37,12 +37,6 @@ EnemyMove2::~EnemyMove2()
 
 void EnemyMove2::Draw()
 {
-	if (eraseExistence) return;
-
-	BasicObject::Draw();
-
-
-
 #ifdef _DEBUG
 	if (MyDebug::enemyTwoDrawFlag)
 	{

@@ -49,13 +49,6 @@ DropItemMove3::~DropItemMove3()
 	MODEL_RELEASE(modelHandle);
 }
 
-void DropItemMove3::Draw()
-{
-	if (deathNow || !aliveNow) return;
-
-	BasicObject::Draw();
-}
-
 void DropItemMove3::Process()
 {
 	if (deathNow || !aliveNow) return;

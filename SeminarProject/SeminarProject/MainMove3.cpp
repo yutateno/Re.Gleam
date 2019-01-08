@@ -89,7 +89,7 @@ void MainMove3::ShadowDraw()
 	{
 		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
 		{
-			vp_stageStairs[i]->Draw();
+			vp_stageStairs[i]->ModelDraw();
 		}
 	}
 	// 街灯
@@ -97,7 +97,7 @@ void MainMove3::ShadowDraw()
 	{
 		for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
 		{
-			vp_stageStreetLight[i]->Draw();
+			vp_stageStreetLight[i]->ModelDraw();
 		}
 	}
 	// 階段と床
@@ -105,7 +105,7 @@ void MainMove3::ShadowDraw()
 	{
 		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
 		{
-			vp_stageStairsRoad[i]->Draw();
+			vp_stageStairsRoad[i]->ModelDraw();
 		}
 	}
 	// パネル
@@ -113,23 +113,23 @@ void MainMove3::ShadowDraw()
 	{
 		for (int i = 0; i != 10; ++i)
 		{
-			p_stagePaneru[i]->Draw();
+			p_stagePaneru[i]->ModelDraw();
 		}
 	}
 	// 精密機械
-	p_adjustmentMachine->Draw();
+	p_adjustmentMachine->ModelDraw();
 	// 敵スライム
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
-		p_enemySlime[i]->Draw();
+		p_enemySlime[i]->ModelDraw();
 	}
 	// 敵クレヨンヒューマン
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
-		p_enemyCrayonHuman[i]->Draw();
+		p_enemyCrayonHuman[i]->ModelDraw();
 	}
 	// キャラクター
-	p_character->Draw();
+	p_character->ModelDraw();
 	BaseMove::ShadowCharaSetUpAfter();
 
 	/// キャラクター以外再セットアップ
@@ -139,7 +139,7 @@ void MainMove3::ShadowDraw()
 	{
 		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
 		{
-			vp_stageStairs[i]->Draw();
+			vp_stageStairs[i]->ModelDraw();
 		}
 	}
 	// 街灯
@@ -147,7 +147,7 @@ void MainMove3::ShadowDraw()
 	{
 		for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
 		{
-			vp_stageStreetLight[i]->Draw();
+			vp_stageStreetLight[i]->ModelDraw();
 		}
 	}
 	// 階段と床
@@ -155,7 +155,7 @@ void MainMove3::ShadowDraw()
 	{
 		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
 		{
-			vp_stageStairsRoad[i]->Draw();
+			vp_stageStairsRoad[i]->ModelDraw();
 		}
 	}
 	// パネル
@@ -163,20 +163,20 @@ void MainMove3::ShadowDraw()
 	{
 		for (int i = 0; i != 10; ++i)
 		{
-			p_stagePaneru[i]->Draw();
+			p_stagePaneru[i]->ModelDraw();
 		}
 	}
 	// 精密機械
-	p_adjustmentMachine->Draw();
+	p_adjustmentMachine->ModelDraw();
 	// 敵スライム
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
-		p_enemySlime[i]->Draw();
+		p_enemySlime[i]->ModelDraw();
 	}
 	// 敵クレヨンヒューマン
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
-		p_enemyCrayonHuman[i]->Draw();
+		p_enemyCrayonHuman[i]->ModelDraw();
 	}
 	BaseMove::ShadowAnotherCharaSetUpAfter();
 
@@ -191,7 +191,7 @@ void MainMove3::ShadowDraw()
 	{
 		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
 		{
-			vp_stageStairs[i]->Draw();
+			vp_stageStairs[i]->ModelDraw();
 		}
 	}
 	// 街灯
@@ -199,7 +199,7 @@ void MainMove3::ShadowDraw()
 	{
 		for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
 		{
-			vp_stageStreetLight[i]->Draw();
+			vp_stageStreetLight[i]->ModelDraw();
 		}
 	}
 	// 階段と床
@@ -207,7 +207,7 @@ void MainMove3::ShadowDraw()
 	{
 		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
 		{
-			vp_stageStairsRoad[i]->Draw();
+			vp_stageStairsRoad[i]->ModelDraw();
 		}
 	}
 	// パネル
@@ -215,26 +215,28 @@ void MainMove3::ShadowDraw()
 	{
 		for (int i = 0; i != 10; ++i)
 		{
-			p_stagePaneru[i]->Draw();
+			p_stagePaneru[i]->ModelDraw();
 		}
 	}
 	// 精密機械
-	p_adjustmentMachine->Draw();
+	p_adjustmentMachine->ModelDraw();
 	// 敵スライム
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
-		p_enemySlime[i]->Draw();
+		p_enemySlime[i]->ModelDraw();
 	}
 	// 敵クレヨンヒューマン
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
-		p_enemyCrayonHuman[i]->Draw();
+		p_enemyCrayonHuman[i]->ModelDraw();
 	}
 	// キャラクター
-	p_character->Draw();
+	p_character->ModelDraw();
 	BaseMove::ShadowNoMoveDrawAfter();
 	BaseMove::ShadowAnotherCharaDrawAfter();
 	BaseMove::ShadowCharaDrawAfter();
+	// キャラクター
+	p_character->ModelDraw();
 }
 
 void MainMove3::AttackProcess()
@@ -670,14 +672,26 @@ void MainMove3::Draw()
 {
 	BaseMove::SkyBoxDraw();
 
-
+	// 敵スライム
+	for (int i = 0; i != enemySlimeNum; ++i)
+	{
+		p_enemySlime[i]->Draw();
+	}
+	// 敵クレヨンヒューマン
+	for (int i = 0; i != enemyCrayonHumanNum; ++i)
+	{
+		p_enemyCrayonHuman[i]->Draw();
+	}
 
 
 	for (int i = 0, n = enemySlimeNum + enemyCrayonHumanNum; i != n; ++i)
 	{
-		if (p_dropItem[i]->GetDeath()) continue;
-		p_dropItem[i]->Draw();
+		if (p_dropItem[i]->GetDeath() || !p_dropItem[i]->GetAlive()) continue;
+		p_dropItem[i]->ModelDraw();
 	}
+
+	// キャラクター
+	p_character->Draw();
 
 	ShadowDraw();
 

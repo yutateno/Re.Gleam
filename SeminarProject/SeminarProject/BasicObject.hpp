@@ -69,7 +69,7 @@ public:
 
 
 	// 描画
-	void Draw();
+	void ModelDraw();
 
 	// オプション用モデル描画
 	void OptionActorDraw();

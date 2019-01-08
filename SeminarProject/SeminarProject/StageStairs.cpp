@@ -30,11 +30,6 @@ StageStairs::~StageStairs()
 	MODEL_RELEASE(modelHandle);
 }
 
-void StageStairs::Draw()
-{
-	BasicObject::Draw();
-}
-
 void StageStairs::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle);

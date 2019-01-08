@@ -332,8 +332,6 @@ EnemyMove3Slime::~EnemyMove3Slime()
 
 void EnemyMove3Slime::Draw()
 {
-	BasicObject::Draw();		// Šî–{“I‚È‚à‚Ì‚ðˆø‚Á’£‚Á‚Ä‚­‚é
-
 	BasicObject::ShadowFoot(shadowStageHandle);
 
 #ifdef _DEBUG

@@ -1000,8 +1000,6 @@ void CharacterSword::Draw()
 		MV1SetPosition(modelHandle, area);
 	}
 
-	BasicObject::Draw();		// 基本的なものを引っ張ってくる
-
 
 	// パネルでの足影
 	if (BASICPARAM::paneruDrawFlag)

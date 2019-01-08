@@ -35,11 +35,6 @@ StageStairsRoad::~StageStairsRoad()
 	MODEL_RELEASE(modelHandle);
 }
 
-void StageStairsRoad::Draw()
-{
-	BasicObject::Draw();
-}
-
 void StageStairsRoad::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle1);

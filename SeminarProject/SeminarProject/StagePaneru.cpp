@@ -20,8 +20,3 @@ StagePaneru::~StagePaneru()
 {
 	MODEL_RELEASE(modelHandle);
 }
-
-void StagePaneru::Draw()
-{
-	BasicObject::Draw();
-}

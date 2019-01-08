@@ -33,9 +33,6 @@ public:
 	~DropItemMove3();
 
 
-	// •`‰æ
-	void Draw();
-
 	// ƒvƒƒZƒX
 	void Process();
 

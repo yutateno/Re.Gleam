@@ -10,7 +10,7 @@ void MainMove5::ShadowDraw()
 	{
 		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
 		{
-			vp_stageStairs[i]->Draw();
+			vp_stageStairs[i]->ModelDraw();
 		}
 	}
 	// 街灯
@@ -18,7 +18,7 @@ void MainMove5::ShadowDraw()
 	{
 		for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
 		{
-			vp_stageStreetLight[i]->Draw();
+			vp_stageStreetLight[i]->ModelDraw();
 		}
 	}
 	// 階段と床
@@ -26,7 +26,7 @@ void MainMove5::ShadowDraw()
 	{
 		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
 		{
-			vp_stageStairsRoad[i]->Draw();
+			vp_stageStairsRoad[i]->ModelDraw();
 		}
 	}
 	// パネル
@@ -34,13 +34,13 @@ void MainMove5::ShadowDraw()
 	{
 		for (int i = 0; i != 10; ++i)
 		{
-			p_stagePaneru[i]->Draw();
+			p_stagePaneru[i]->ModelDraw();
 		}
 	}
 	// 精密機械
-	p_adjustmentMachine->Draw();
+	p_adjustmentMachine->ModelDraw();
 	// キャラクター
-	p_character->Draw();
+	p_character->ModelDraw();
 	BaseMove::ShadowCharaSetUpAfter();
 
 	/// キャラクター以外再セットアップ
@@ -50,7 +50,7 @@ void MainMove5::ShadowDraw()
 	{
 		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
 		{
-			vp_stageStairs[i]->Draw();
+			vp_stageStairs[i]->ModelDraw();
 		}
 	}
 	// 街灯
@@ -58,7 +58,7 @@ void MainMove5::ShadowDraw()
 	{
 		for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
 		{
-			vp_stageStreetLight[i]->Draw();
+			vp_stageStreetLight[i]->ModelDraw();
 		}
 	}
 	// 階段と床
@@ -66,7 +66,7 @@ void MainMove5::ShadowDraw()
 	{
 		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
 		{
-			vp_stageStairsRoad[i]->Draw();
+			vp_stageStairsRoad[i]->ModelDraw();
 		}
 	}
 	// パネル
@@ -74,11 +74,11 @@ void MainMove5::ShadowDraw()
 	{
 		for (int i = 0; i != 10; ++i)
 		{
-			p_stagePaneru[i]->Draw();
+			p_stagePaneru[i]->ModelDraw();
 		}
 	}
 	// 精密機械
-	p_adjustmentMachine->Draw();
+	p_adjustmentMachine->ModelDraw();
 	BaseMove::ShadowAnotherCharaSetUpAfter();
 
 	/// 描画
@@ -92,7 +92,7 @@ void MainMove5::ShadowDraw()
 	{
 		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
 		{
-			vp_stageStairs[i]->Draw();
+			vp_stageStairs[i]->ModelDraw();
 		}
 	}
 	// 街灯
@@ -100,7 +100,7 @@ void MainMove5::ShadowDraw()
 	{
 		for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
 		{
-			vp_stageStreetLight[i]->Draw();
+			vp_stageStreetLight[i]->ModelDraw();
 		}
 	}
 	// 階段と床
@@ -108,7 +108,7 @@ void MainMove5::ShadowDraw()
 	{
 		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
 		{
-			vp_stageStairsRoad[i]->Draw();
+			vp_stageStairsRoad[i]->ModelDraw();
 		}
 	}
 	// パネル
@@ -116,16 +116,18 @@ void MainMove5::ShadowDraw()
 	{
 		for (int i = 0; i != 10; ++i)
 		{
-			p_stagePaneru[i]->Draw();
+			p_stagePaneru[i]->ModelDraw();
 		}
 	}
 	// 精密機械
-	p_adjustmentMachine->Draw();
+	p_adjustmentMachine->ModelDraw();
 	// キャラクター
-	p_character->Draw();
+	p_character->ModelDraw();
 	BaseMove::ShadowNoMoveDrawAfter();
 	BaseMove::ShadowAnotherCharaDrawAfter();
 	BaseMove::ShadowCharaDrawAfter();
+	// キャラクター
+	p_character->ModelDraw();
 }
 
 
@@ -327,6 +329,8 @@ void MainMove5::Draw()
 {
 	BaseMove::SkyBoxDraw();
 
+	// キャラクター
+	p_character->Draw();
 
 	ShadowDraw();
 

@@ -523,7 +523,8 @@ void MainMove1::Draw()
 
 
 	// ƒLƒƒƒ‰ƒNƒ^[‚ð•`‰æ
-	p_character->Draw();				
+	p_character->ModelDraw();
+	p_character->Draw();
 
 
 	for (int i = 0; i < enemyNum; ++i)
@@ -541,7 +542,7 @@ void MainMove1::Draw()
 	if (catchEnemyNum == 30 && lightEventCount >= 100)
 	{
 		// Œ•‚ð•`‰æ
-		p_dropItem->Draw();				
+		p_dropItem->ModelDraw();				
 	}
 
 
@@ -575,6 +576,7 @@ void MainMove1::Draw()
 	}
 
 #ifdef _DEBUG
+	p_dropItem->Draw();
 	if (MyDebug::moveOneDrawFlag)
 	{
 		for (int i = 0; i < enemyNum; ++i)

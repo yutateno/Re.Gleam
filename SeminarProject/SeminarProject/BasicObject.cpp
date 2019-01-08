@@ -135,7 +135,7 @@ BasicObject::~BasicObject()
 }
 
 // •`‰æ
-void BasicObject::Draw()
+void BasicObject::ModelDraw()
 {
 	if (!CheckCameraViewClip(area) && !CheckCameraViewClip(VAdd(area, VGet(0.0f, modelHeight, 0.0f))) && !CheckCameraViewClip(VAdd(area, VGet(0.0f, modelHeight / 2.0f, 0.0f))))
 	{

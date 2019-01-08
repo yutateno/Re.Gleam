@@ -325,8 +325,6 @@ EnemyMove3CrayonHuman::~EnemyMove3CrayonHuman()
 
 void EnemyMove3CrayonHuman::Draw()
 {
-	BasicObject::Draw();		// Šî–{“I‚È‚à‚Ì‚ðˆø‚Á’£‚Á‚Ä‚­‚é
-
 	BasicObject::ShadowFoot(shadowStageHandle);
 
 

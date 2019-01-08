@@ -29,9 +29,6 @@ public:
 	~DropItemMove2();
 
 
-	// •`‰æ
-	void Draw();
-
 	// ƒvƒƒZƒX
 	void Process();
 

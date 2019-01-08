@@ -324,8 +324,6 @@ EnemyMove4::~EnemyMove4()
 
 void EnemyMove4::Draw()
 {
-	BasicObject::Draw();		// Šî–{“I‚È‚à‚Ì‚ðˆø‚Á’£‚Á‚Ä‚­‚é
-
 	BasicObject::ShadowFoot(shadowStageHandle);
 
 

@@ -39,8 +39,6 @@ DropItemMove1::~DropItemMove1()
 
 void DropItemMove1::Draw()
 {
-	BasicObject::Draw();
-
 #ifdef _DEBUG
 	if (MyDebug::dropItemOneDrawFlag)
 	{

@@ -296,9 +296,6 @@ void Character::PositionReset()
 // •`‰æ
 void Character::Draw()
 {
-	BasicObject::Draw();
-
-
 	BasicObject::ShadowFoot(shadowStageHandle);
 
 #ifdef _DEBUG

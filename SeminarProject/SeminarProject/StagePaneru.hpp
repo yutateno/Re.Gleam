@@ -11,8 +11,5 @@ public:
 	// デストラクタ
 	~StagePaneru();
 
-
-	// 描画
-	void Draw();
 };
 

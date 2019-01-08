@@ -367,35 +367,35 @@ void MainMove2::ShadowDraw()
 	// 敵
 	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
-		if (!p_enemy[i]->GetEraseExistence()) p_enemy[i]->Draw();
+		if (!p_enemy[i]->GetEraseExistence()) p_enemy[i]->ModelDraw();
 	}
 	// 階段
 	for (int i = 0, n = static_cast<int>(vp_stageStairs.size()); i != n; ++i)
 	{
-		vp_stageStairs[i]->Draw();
+		vp_stageStairs[i]->ModelDraw();
 	}
 	// 街灯
 	for (int i = 0, n = static_cast<int>(vp_stageStreetLight.size()); i != n; ++i)
 	{
-		vp_stageStreetLight[i]->Draw();
+		vp_stageStreetLight[i]->ModelDraw();
 	}
 	// 階段と床
 	for (int i = 0, n = static_cast<int>(vp_stageStairsRoad.size()); i != n; ++i)
 	{
-		vp_stageStairsRoad[i]->Draw();
+		vp_stageStairsRoad[i]->ModelDraw();
 	}
 	// パネル
 	if (BASICPARAM::paneruDrawFlag)
 	{
 		for (int i = 0; i != 10; ++i)
 		{
-			p_stagePaneru[i]->Draw();
+			p_stagePaneru[i]->ModelDraw();
 		}
 	}
 	// 精密機械
-	if(p_adjustmentMachine->GetCanTouch()) p_adjustmentMachine->Draw();
+	if(p_adjustmentMachine->GetCanTouch()) p_adjustmentMachine->ModelDraw();
 	// キャラクター
-	p_character->Draw();
+	p_character->ModelDraw();
 	BaseMove::ShadowCharaSetUpAfter();
 
 
@@ -404,33 +404,33 @@ void MainMove2::ShadowDraw()
 	// 階段
 	for (int i = 0, n = static_cast<int>(vp_stageStairs.size()); i != n; ++i)
 	{
-		vp_stageStairs[i]->Draw();
+		vp_stageStairs[i]->ModelDraw();
 	}
 	// 敵
 	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
-		if (!p_enemy[i]->GetEraseExistence())	p_enemy[i]->Draw();
+		if (!p_enemy[i]->GetEraseExistence())	p_enemy[i]->ModelDraw();
 	}
 	// 階段
 	for (int i = 0, n = static_cast<int>(vp_stageStreetLight.size()); i != n; ++i)
 	{
-		vp_stageStreetLight[i]->Draw();
+		vp_stageStreetLight[i]->ModelDraw();
 	}
 	// 階段と床
 	for (int i = 0, n = static_cast<int>(vp_stageStairsRoad.size()); i != n; ++i)
 	{
-		vp_stageStairsRoad[i]->Draw();
+		vp_stageStairsRoad[i]->ModelDraw();
 	}
 	// パネル
 	if (BASICPARAM::paneruDrawFlag)
 	{
 		for (int i = 0; i != 10; ++i)
 		{
-			p_stagePaneru[i]->Draw();
+			p_stagePaneru[i]->ModelDraw();
 		}
 	}
 	// 精密機械
-	if (p_adjustmentMachine->GetCanTouch()) p_adjustmentMachine->Draw();
+	if (p_adjustmentMachine->GetCanTouch()) p_adjustmentMachine->ModelDraw();
 	BaseMove::ShadowAnotherCharaSetUpAfter();
 
 
@@ -443,38 +443,40 @@ void MainMove2::ShadowDraw()
 	// 敵
 	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
-		if (!p_enemy[i]->GetEraseExistence()) p_enemy[i]->Draw();
+		if (!p_enemy[i]->GetEraseExistence()) p_enemy[i]->ModelDraw();
 	}
 	// 階段
 	for (int i = 0, n = static_cast<int>(vp_stageStairs.size()); i != n; ++i)
 	{
-		vp_stageStairs[i]->Draw();
+		vp_stageStairs[i]->ModelDraw();
 	}
 	// 街灯
 	for (int i = 0, n = static_cast<int>(vp_stageStreetLight.size()); i != n; ++i)
 	{
-		vp_stageStreetLight[i]->Draw();
+		vp_stageStreetLight[i]->ModelDraw();
 	}
 	// 階段と床
 	for (int i = 0, n = static_cast<int>(vp_stageStairsRoad.size()); i != n; ++i)
 	{
-		vp_stageStairsRoad[i]->Draw();
+		vp_stageStairsRoad[i]->ModelDraw();
 	}
 	// パネル
 	if (BASICPARAM::paneruDrawFlag)
 	{
 		for (int i = 0; i != 10; ++i)
 		{
-			p_stagePaneru[i]->Draw();
+			p_stagePaneru[i]->ModelDraw();
 		}
 	}
 	// 精密機械
-	if (p_adjustmentMachine->GetCanTouch()) p_adjustmentMachine->Draw();
+	if (p_adjustmentMachine->GetCanTouch()) p_adjustmentMachine->ModelDraw();
 	// キャラクター
-	p_character->Draw();
+	p_character->ModelDraw();
 	BaseMove::ShadowNoMoveDrawAfter();
 	BaseMove::ShadowAnotherCharaDrawAfter();
 	BaseMove::ShadowCharaDrawAfter();
+	// キャラクター
+	p_character->ModelDraw();
 }
 
 
@@ -880,9 +882,12 @@ void MainMove2::Draw()
 
 		for (int i = 0, n = enemyNum * 5; i != n; ++i)
 		{
-			if (p_dropItem[i]->GetDeath()) continue;
-			p_dropItem[i]->Draw();
+			if (p_dropItem[i]->GetDeath() || !p_dropItem[i]->GetAlive()) continue;
+			p_dropItem[i]->ModelDraw();
 		}
+
+		// キャラクター
+		p_character->Draw();
 
 
 		ShadowDraw();
@@ -903,6 +908,14 @@ void MainMove2::Draw()
 	//{
 		AdjustmentDraw();
 	//}
+
+#ifdef _DEBUG
+		// 敵
+		for (int i = 0, n = enemyNum; i != n; ++i)
+		{
+			p_enemy[i]->Draw();
+		}
+#endif // _DEBUG
 }
 
 

@@ -22,9 +22,6 @@ public:
 	~StageStairsRoad();
 
 
-	// 描画
-	void Draw();
-
 	// テクスチャ切り替え
 	void TextureReload();
 

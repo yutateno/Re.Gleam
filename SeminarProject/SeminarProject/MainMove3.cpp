@@ -368,7 +368,7 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	p_character = new CharacterSword(v_file[EFILE::charaModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel]
 		, v_file[EFILE::paneruModel], v_file[EFILE::stairsRoadCollModel]
 		, v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3], v_file[EFILE::charaTex4]);
-	charaSonmeEnemyDamageCount = 0;
+	charaSomeEnemyDamageCount = 0;
 
 	// カメラの初期化
 	p_camera = new Camera(p_character->GetArea(), v_file[EFILE::stageCollModel]);
@@ -468,10 +468,56 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	SoundProcess::Load(v_file[EFILE::bgm_Main], SoundProcess::ESOUNDNAME_BGM::normalBGM);
 
 	SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 255, 255);
+
+	// ダメージ演出
+	damageCount = 0;
+	preDamageCount = damageCount;
+	notDamageCount = 0;
+	damageDrawFrame = 0;
+	damageDrawID = 0;
+	damageDraw[0] = LoadGraph("media\\こっち\\media\\damage\\damage1.png");
+	damageDraw[1] = LoadGraph("media\\こっち\\media\\damage\\damage2.png");
+	damageDraw[2] = LoadGraph("media\\こっち\\media\\damage\\damage3.png");
+	damageBlend[0] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl1.png");
+	damageBlend[1] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl2.png");
+	damageBlend[2] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl3.png");
+	damageBlend[3] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl4.png");
+	damageBlend[4] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl5.png");
+	damageBlend[5] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl6.png");
+	damageBlend[6] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl7.png");
+	damageBlend[7] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl8.png");
+	damageBlend[8] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl9.png");
+	damageBlend[9] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl10.png");
+	// エフェクト読み込み
+	effeckBack[0] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\one.efk");
+	effeckBack[1] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\two.efk");
+	effeckBack[2] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\three.efk");
+	effeckBack[3] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\four.efk");
+	effeckBack[4] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\five.efk");
+	effeckBack[5] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\six.efk");
+	effeckBack[6] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\seven.efk");
+	effeckBack[7] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\eight.efk");
+	effeckBack[8] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\nine.efk");
+	effeckBack[9] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\ten.efk");
+	playingEfBack = -1;
 }
 
 MainMove3::~MainMove3()
 {
+	// ダメージ演出
+	StopEffekseer2DEffect(playingEfBack);
+	for (int i = 0; i != 10; ++i)
+	{
+		DeleteEffekseerEffect(effeckBack[i]);
+	}
+	for (int i = 0; i != 3; ++i)
+	{
+		GRAPHIC_RELEASE(damageDraw[i]);
+	}
+	for (int i = 0; i != 10; ++i)
+	{
+		GRAPHIC_RELEASE(damageBlend[i]);
+	}
 	// ドロップアイテム
 	for (int i = 0, n = enemySlimeNum + enemyCrayonHumanNum; i != n; ++i)
 	{
@@ -565,6 +611,171 @@ void MainMove3::Draw()
 		}
 	}
 
+	// エフェクトを再生する。
+	if (preDamageCount != damageCount / 10)
+	{
+		preDamageCount = damageCount / 10;
+		switch (damageCount)
+		{
+		case 1:
+			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
+			playingEfBack = PlayEffekseer2DEffect(effeckBack[0]);
+			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
+			// 再生中のエフェクトを移動する。
+			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
+			break;
+
+		case 2:
+			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
+			playingEfBack = PlayEffekseer2DEffect(effeckBack[1]);
+			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
+			// 再生中のエフェクトを移動する。
+			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
+			break;
+
+		case 3:
+			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
+			playingEfBack = PlayEffekseer2DEffect(effeckBack[2]);
+			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
+			// 再生中のエフェクトを移動する。
+			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
+			break;
+
+		case 4:
+			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
+			playingEfBack = PlayEffekseer2DEffect(effeckBack[3]);
+			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
+			// 再生中のエフェクトを移動する。
+			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
+			break;
+
+		case 5:
+			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
+			playingEfBack = PlayEffekseer2DEffect(effeckBack[4]);
+			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
+			// 再生中のエフェクトを移動する。
+			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
+			break;
+
+		case 6:
+			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
+			playingEfBack = PlayEffekseer2DEffect(effeckBack[5]);
+			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
+			// 再生中のエフェクトを移動する。
+			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
+			break;
+
+		case 7:
+			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
+			playingEfBack = PlayEffekseer2DEffect(effeckBack[6]);
+			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
+			// 再生中のエフェクトを移動する。
+			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
+			break;
+
+		case 8:
+			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
+			playingEfBack = PlayEffekseer2DEffect(effeckBack[7]);
+			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
+			// 再生中のエフェクトを移動する。
+			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
+			break;
+
+		case 9:
+			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
+			playingEfBack = PlayEffekseer2DEffect(effeckBack[8]);
+			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
+			// 再生中のエフェクトを移動する。
+			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
+			break;
+
+		case 10:
+			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
+			playingEfBack = PlayEffekseer2DEffect(effeckBack[9]);
+			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
+			// 再生中のエフェクトを移動する。
+			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
+			break;
+
+		default:
+			break;
+		}
+	}
+	if (damageCount == 0)
+	{
+		if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
+	}
+
+
+	if (damageDrawFrame > 0)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(damageDrawFrame * 25.5));		//ブレンドモードをα(128/255)に設定
+		DrawGraph(0, 0, damageDraw[damageDrawID], true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
+	}
+
+	if (damageCount > 0)
+	{
+		if (damageCount <= 10) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(damageCount * 25.5));		//ブレンドモードをα(128/255)に設定
+		DrawGraph(0, 0, damageBlend[0], true);
+		if (damageCount <= 10) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
+	}
+	if (damageCount > 10)
+	{
+		if (damageCount <= 20) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>((damageCount - 10) * 25.5));		//ブレンドモードをα(128/255)に設定
+		DrawGraph(0, 0, damageBlend[1], true);
+		if (damageCount <= 20) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
+	}
+	if (damageCount > 20)
+	{
+		if (damageCount <= 30) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>((damageCount - 20) * 25.5));		//ブレンドモードをα(128/255)に設定
+		DrawGraph(0, 0, damageBlend[2], true);
+		if (damageCount <= 30) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
+	}
+	if (damageCount > 30)
+	{
+		if (damageCount <= 40) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>((damageCount - 30) * 25.5));		//ブレンドモードをα(128/255)に設定
+		DrawGraph(0, 0, damageBlend[3], true);
+		if (damageCount <= 40) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
+	}
+	if (damageCount > 40)
+	{
+		if (damageCount <= 50) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>((damageCount - 40) * 25.5));		//ブレンドモードをα(128/255)に設定
+		DrawGraph(0, 0, damageBlend[4], true);
+		if (damageCount <= 50) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
+	}
+	if (damageCount > 50)
+	{
+		if (damageCount <= 60) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>((damageCount - 50) * 25.5));		//ブレンドモードをα(128/255)に設定
+		DrawGraph(0, 0, damageBlend[5], true);
+		if (damageCount <= 60) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
+	}
+	if (damageCount > 60)
+	{
+		if (damageCount <= 70) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>((damageCount - 60) * 25.5));		//ブレンドモードをα(128/255)に設定
+		DrawGraph(0, 0, damageBlend[6], true);
+		if (damageCount <= 70) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
+	}
+	if (damageCount > 70)
+	{
+		if (damageCount <= 80) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>((damageCount - 70) * 25.5));		//ブレンドモードをα(128/255)に設定
+		DrawGraph(0, 0, damageBlend[7], true);
+		if (damageCount <= 80) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
+	}
+	if (damageCount > 80)
+	{
+		if (damageCount <= 90) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>((damageCount - 80) * 25.5));		//ブレンドモードをα(128/255)に設定
+		DrawGraph(0, 0, damageBlend[8], true);
+		if (damageCount <= 90) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
+	}
+	if (damageCount > 90)
+	{
+		if (damageCount <= 100) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>((damageCount - 90) * 25.5));		//ブレンドモードをα(128/255)に設定
+		DrawGraph(0, 0, damageBlend[9], true);
+		if (damageCount <= 100) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
+	}
+
+
 	DrawFormatString(1020, 20, GetColor(0, 0, 0), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
 }
 
@@ -572,7 +783,13 @@ void MainMove3::Process()
 {
 	// キャラクターのプロセス
 	p_character->Process(p_camera->GetAngle());
-	charaSonmeEnemyDamageCount = 0;
+	charaSomeEnemyDamageCount = 0;
+
+	notDamageCount++;
+	if (notDamageCount > 100 && damageCount > 0 && (notDamageCount - 100) % 10 == 0) damageCount--;
+
+	if (damageDrawFrame > 0) damageDrawFrame--;
+
 
 	// カメラのプロセス
 	p_camera->Process(p_character->GetArea());
@@ -586,9 +803,20 @@ void MainMove3::Process()
 			&& p_character->GetArea().y <= p_enemySlime[i]->GetArea().y + p_enemySlime[i]->GetHeight()
 			&& p_character->GetArea().y + p_character->GetHeight() >= p_enemySlime[i]->GetArea().y)
 		{
-			if (charaSonmeEnemyDamageCount++ < 2)
+			if (charaSomeEnemyDamageCount++ < 2)
 			{
 				p_character->SetDamage();
+
+				notDamageCount = 0;
+				if (damageCount < 100)	damageCount++;
+				if (damageDrawFrame == 0)
+				{
+					std::random_device rnd;     // 非決定的な乱数生成器を生成
+					std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+					std::uniform_int_distribution<> blood(0, 2);        // X座標用乱数
+					damageDrawID = blood(mt);
+					damageDrawFrame = 10;
+				}
 			}
 		}
 	}
@@ -602,9 +830,20 @@ void MainMove3::Process()
 			&& p_character->GetArea().y <= p_enemyCrayonHuman[i]->GetArea().y + p_enemyCrayonHuman[i]->GetHeight()
 			&& p_character->GetArea().y + p_character->GetHeight() >= p_enemyCrayonHuman[i]->GetArea().y)
 		{
-			if (charaSonmeEnemyDamageCount++ < 2)
+			if (charaSomeEnemyDamageCount++ < 2)
 			{
 				p_character->SetDamage();
+
+				notDamageCount = 0;
+				if (damageCount < 100)	damageCount++;
+				if (damageDrawFrame == 0)
+				{
+					std::random_device rnd;     // 非決定的な乱数生成器を生成
+					std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+					std::uniform_int_distribution<> blood(0, 2);        // X座標用乱数
+					damageDrawID = blood(mt);
+					damageDrawFrame = 10;
+				}
 			}
 		}
 	}

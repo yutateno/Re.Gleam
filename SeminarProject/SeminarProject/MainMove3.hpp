@@ -60,7 +60,28 @@ private:
 	CharacterSword* p_character;
 
 	// 多くの敵にダメージ受けた時に代表二体のみ受けるようにするカウント
-	int charaSonmeEnemyDamageCount;
+	int charaSomeEnemyDamageCount;
+
+	// ダメージ数値
+	int damageCount;
+
+	// 直前のダメージカウント
+	int preDamageCount;
+
+	// ダメージのブレンド数値
+	int damageBlend[10];
+
+	// ダメージ表示画像
+	int damageDraw[3];
+
+	// ダメージを受けていないカウント
+	int notDamageCount;
+
+	// ダメージ表示画像のフレーム
+	int damageDrawFrame;
+
+	// ダメージ画像のID
+	int damageDrawID;
 
 
 	/// 敵---------------------
@@ -111,6 +132,12 @@ private:
 
 	// 非同期テクスチャ切り替え
 	void ThsTextureReload() override;
+
+
+	/// エフェクトに関して
+	
+	int effeckBack[10];
+	int playingEfBack;
 
 
 public:

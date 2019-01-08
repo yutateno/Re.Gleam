@@ -142,8 +142,10 @@ private:
 
 	/// エフェクトに関して
 	
-	int effeckBack[10];
-	int playingEfBack;
+	int effeckBack[10];		// ダメージ演出の10種類
+	int playingEfDamage;		// ダメージ演出用
+	int effectAttack;
+	int playingEfAttack;
 
 
 public:

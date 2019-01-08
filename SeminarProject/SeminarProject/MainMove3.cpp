@@ -241,6 +241,58 @@ void MainMove3::ShadowDraw()
 
 void MainMove3::AttackProcess()
 {
+	/// 敵に関する--------------------------------------------------------------------------------------------------------
+	for (int i = 0, n = enemyCrayonHumanNum; i != n; ++i)
+	{
+		if (p_enemyCrayonHuman[i]->GetDeathFlag()) continue;
+
+		// 攻撃中だったら
+		if (p_character->GetAttackNow())
+		{
+			p_enemyCrayonHuman[i]->HitLineReturn(p_character->GetAttackFirstFrameArea(), p_character->GetAttackEndFrameArea());
+		}
+
+
+		// 攻撃でダメージを受けたら
+		if (p_enemyCrayonHuman[i]->GetDamageFlag())
+		{
+			printfDx("crayon\n");
+			// バイブレーションさせる
+			DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 30, 7500, 7500);
+
+			// エフェクトを再生する。
+			playingEfAttack = PlayEffekseer3DEffect(effectAttack);
+			SetScalePlayingEffekseer3DEffect(playingEfAttack, 10, 10, 10);
+			// 再生中のエフェクトを移動する。
+			SetPosPlayingEffekseer3DEffect(playingEfAttack, p_character->GetAttackEndFrameArea().x, p_character->GetAttackEndFrameArea().y, p_character->GetAttackEndFrameArea().z);
+		}
+	}
+	for (int i = 0, n = enemySlimeNum; i != n; ++i)
+	{
+		if (p_enemySlime[i]->GetDeathFlag()) continue;
+
+		// 攻撃中だったら
+		if (p_character->GetAttackNow())
+		{
+			p_enemySlime[i]->HitLineReturn(p_character->GetAttackFirstFrameArea(), p_character->GetAttackEndFrameArea());
+		}
+
+
+		// 攻撃でダメージを受けたら
+		if (p_enemySlime[i]->GetDamageFlag())
+		{
+			printfDx("slime\n");
+			// バイブレーションさせる
+			DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 30, 7500, 7500);
+
+			// エフェクトを再生する。
+			playingEfAttack = PlayEffekseer3DEffect(effectAttack);
+			SetScalePlayingEffekseer3DEffect(playingEfAttack, 10, 10, 10);
+			// 再生中のエフェクトを移動する。
+			SetPosPlayingEffekseer3DEffect(playingEfAttack, p_character->GetAttackEndFrameArea().x, p_character->GetAttackEndFrameArea().y, p_character->GetAttackEndFrameArea().z);
+		}
+	}
+
 	/// 精算機械に関する-------------------------------------------------------------------------------------------------------------------
 	// 当たっていたら押し出す
 	if (HitCheck_Capsule_Capsule(
@@ -283,9 +335,10 @@ void MainMove3::AttackProcess()
 	}
 
 
-	/// キャラクターを押し出す
+	/// キャラクターから押し出される
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
+		if (p_enemySlime[i]->GetDeathFlag()) continue;
 		if (BaseMove::GetDistance(p_enemySlime[i]->GetArea(), p_character->GetArea()) > 250) continue;
 		if (HitCheck_Capsule_Capsule(
 			p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, p_enemySlime[i]->GetHeight(), 0.0f)), p_enemySlime[i]->GetWidth(),
@@ -298,6 +351,7 @@ void MainMove3::AttackProcess()
 	}
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
+		if (p_enemyCrayonHuman[i]->GetDeathFlag()) continue;
 		if (BaseMove::GetDistance(p_enemyCrayonHuman[i]->GetArea(), p_character->GetArea()) > 250) continue;
 		if (HitCheck_Capsule_Capsule(
 			p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, p_enemyCrayonHuman[i]->GetHeight(), 0.0f)), p_enemyCrayonHuman[i]->GetWidth(),
@@ -313,8 +367,10 @@ void MainMove3::AttackProcess()
 	/// 敵同士で押し出す
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
+		if (p_enemySlime[i]->GetDeathFlag()) continue;
 		for (int j = 0; j != enemySlimeNum; ++j)
 		{
+			if (p_enemySlime[j]->GetDeathFlag()) continue;
 			if (i == j) continue;
 			if (BaseMove::GetDistance(p_enemySlime[i]->GetArea(), p_enemySlime[j]->GetArea()) > 250) continue;
 			if (HitCheck_Capsule_Capsule(
@@ -328,6 +384,7 @@ void MainMove3::AttackProcess()
 
 		for (int j = 0; j != enemyCrayonHumanNum; ++j)
 		{
+			if (p_enemyCrayonHuman[j]->GetDeathFlag()) continue;
 			if (BaseMove::GetDistance(p_enemySlime[i]->GetArea(), p_enemyCrayonHuman[j]->GetArea()) > 250) continue;
 			if (HitCheck_Capsule_Capsule(
 				p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, p_enemySlime[i]->GetHeight(), 0.0f)), p_enemySlime[i]->GetWidth()
@@ -341,8 +398,10 @@ void MainMove3::AttackProcess()
 	}
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
+		if (p_enemyCrayonHuman[i]->GetDeathFlag()) continue;
 		for (int j = 0; j != enemyCrayonHumanNum; ++j)
 		{
+			if (p_enemyCrayonHuman[j]->GetDeathFlag()) continue;
 			if (i == j) continue;
 			if (BaseMove::GetDistance(p_enemyCrayonHuman[i]->GetArea(), p_enemyCrayonHuman[j]->GetArea()) > 250) continue;
 			if (HitCheck_Capsule_Capsule(
@@ -356,6 +415,7 @@ void MainMove3::AttackProcess()
 
 		for (int j = 0; j != enemySlimeNum; ++j)
 		{
+			if (p_enemySlime[j]->GetDeathFlag()) continue;
 			if (BaseMove::GetDistance(p_enemyCrayonHuman[i]->GetArea(), p_enemySlime[j]->GetArea()) > 250) continue;
 			if (HitCheck_Capsule_Capsule(
 				p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, p_enemyCrayonHuman[i]->GetHeight(), 0.0f)), p_enemyCrayonHuman[i]->GetWidth()
@@ -580,13 +640,17 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	effeckBack[7] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\eight.efk");
 	effeckBack[8] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\nine.efk");
 	effeckBack[9] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\ten.efk");
-	playingEfBack = -1;
+	playingEfDamage = -1;
+	effectAttack = LoadEffekseerEffect("media\\こっち\\media\\Effect\\characterAttack.efk");
+	playingEfAttack = -1;
 }
 
 MainMove3::~MainMove3()
 {
+	StopEffekseer3DEffect(playingEfAttack);
+	DeleteEffekseerEffect(effectAttack);
 	// ダメージ演出
-	StopEffekseer2DEffect(playingEfBack);
+	StopEffekseer2DEffect(playingEfDamage);
 	for (int i = 0; i != 10; ++i)
 	{
 		DeleteEffekseerEffect(effeckBack[i]);
@@ -708,95 +772,16 @@ void MainMove3::Draw()
 	if (preDamageCount != damageCount / 10)
 	{
 		preDamageCount = damageCount / 10;
-		switch (damageCount)
-		{
-		case 1:
-			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
-			playingEfBack = PlayEffekseer2DEffect(effeckBack[0]);
-			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
-			// 再生中のエフェクトを移動する。
-			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
-			break;
 
-		case 2:
-			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
-			playingEfBack = PlayEffekseer2DEffect(effeckBack[1]);
-			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
-			// 再生中のエフェクトを移動する。
-			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
-			break;
-
-		case 3:
-			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
-			playingEfBack = PlayEffekseer2DEffect(effeckBack[2]);
-			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
-			// 再生中のエフェクトを移動する。
-			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
-			break;
-
-		case 4:
-			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
-			playingEfBack = PlayEffekseer2DEffect(effeckBack[3]);
-			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
-			// 再生中のエフェクトを移動する。
-			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
-			break;
-
-		case 5:
-			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
-			playingEfBack = PlayEffekseer2DEffect(effeckBack[4]);
-			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
-			// 再生中のエフェクトを移動する。
-			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
-			break;
-
-		case 6:
-			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
-			playingEfBack = PlayEffekseer2DEffect(effeckBack[5]);
-			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
-			// 再生中のエフェクトを移動する。
-			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
-			break;
-
-		case 7:
-			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
-			playingEfBack = PlayEffekseer2DEffect(effeckBack[6]);
-			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
-			// 再生中のエフェクトを移動する。
-			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
-			break;
-
-		case 8:
-			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
-			playingEfBack = PlayEffekseer2DEffect(effeckBack[7]);
-			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
-			// 再生中のエフェクトを移動する。
-			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
-			break;
-
-		case 9:
-			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
-			playingEfBack = PlayEffekseer2DEffect(effeckBack[8]);
-			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
-			// 再生中のエフェクトを移動する。
-			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
-			break;
-
-		case 10:
-			if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
-			playingEfBack = PlayEffekseer2DEffect(effeckBack[9]);
-			SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
-			// 再生中のエフェクトを移動する。
-			SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
-			break;
-
-		default:
-			break;
-		}
+		if (IsEffekseer2DEffectPlaying(playingEfDamage) == 0) StopEffekseer2DEffect(playingEfDamage);
+		playingEfDamage = PlayEffekseer2DEffect(effeckBack[preDamageCount - 1]);
+		SetScalePlayingEffekseer2DEffect(playingEfDamage, 100, 100, 100);
+		// 再生中のエフェクトを移動する。
+		SetPosPlayingEffekseer2DEffect(playingEfDamage, 960, 540, 0);
 	}
 	if (damageCount == 0)
 	{
-		if (IsEffekseer2DEffectPlaying(playingEfBack) == 0) StopEffekseer2DEffect(playingEfBack);
+		if (IsEffekseer2DEffectPlaying(playingEfDamage) == 0) StopEffekseer2DEffect(playingEfDamage);
 	}
 
 

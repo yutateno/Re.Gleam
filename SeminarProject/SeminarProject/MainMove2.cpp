@@ -507,7 +507,7 @@ void MainMove2::AttackProcess()
 		if (p_enemy[i]->GetDamageFlag())
 		{
 			// バイブレーションさせる
-			DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 30, 1000, 1000);
+			DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 30, 7500, 7500);
 
 			// エフェクトを再生する。
 			playingEfAttack = PlayEffekseer3DEffect(effectAttack);

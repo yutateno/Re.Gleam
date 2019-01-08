@@ -53,7 +53,7 @@ void CharacterSword::MoveProcess()
 			if (leftFootArea < MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y + 1.0f
 				&& leftFootArea > MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y - 1.0f)
 			{
-				underWalkCount = 7;
+				underWalkCount = 2;
 				if (area.y >= 10.0f)
 				{
 					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);

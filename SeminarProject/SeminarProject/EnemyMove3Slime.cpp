@@ -375,6 +375,11 @@ void EnemyMove3Slime::Process()
 	// ƒ‚[ƒVƒ‡ƒ“
 	Player_AnimProcess();
 
+	if (damageHit)
+	{
+		damageHit = false;
+	}
+
 	int setCollHitNum = 0;
 
 	// ŠK’i‚Æ°‚Ì‚ ‚½‚è”»’è

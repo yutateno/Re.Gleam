@@ -150,7 +150,7 @@ void MainMove1::LightProcess()
 		// ライトを合計三つ有効にする
 		SetLightEnableHandle(lightHandle[2], TRUE);
 	}
-	else if (catchEnemyNum == 4)
+	else if (catchEnemyNum >= 4 && catchEnemyNum <= 5)
 	{
 		// イベントが何も起きていなかったら
 		if (!lightEventStart && !lightEventEnd)
@@ -169,7 +169,7 @@ void MainMove1::LightProcess()
 			SetLightEnableHandle(lightHandle[3], TRUE);		
 		}
 	}
-	else if (catchEnemyNum >= 5 && catchEnemyNum <= 6)
+	else if (catchEnemyNum <= 6)
 	{
 		// エンドイベントフラッグが立っていたらおろさせる
 		if (lightEventEnd) lightEventEnd = false;

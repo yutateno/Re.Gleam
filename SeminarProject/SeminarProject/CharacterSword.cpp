@@ -53,7 +53,7 @@ void CharacterSword::MoveProcess()
 			if (leftFootArea < MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y + 1.0f
 				&& leftFootArea > MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y - 1.0f)
 			{
-				underWalkCount = 2;
+				underWalkCount = 7;
 				if (area.y >= 10.0f)
 				{
 					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
@@ -411,40 +411,43 @@ void CharacterSword::AttackProcess()
 		}
 
 
+		if (attackFrame < animSpeed)
+		{
+			// 左スティックが前に押されたら前を向く
+			if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
+			{
+				direXAngle = 0.0f;
+				direZAngle = 0.0f;
+			}
+			// 左スティックが後ろに押されたら後ろを向く
+			if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y))
+			{
+				direXAngle = 0.0f;
+				direZAngle = DX_PI_F;
+			}
+
+			// 左スティックが左に押されたら左を向く
+			if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X))
+			{
+				direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, false);
+				if (direZAngle != 0.0f)
+				{
+					direXAngle = -direXAngle;
+				}
+			}
+			// 左スティックが右に押されたら右を向く
+			else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
+			{
+				direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, true);
+				if (direZAngle != 0.0f)
+				{
+					direXAngle = -direXAngle;
+				}
+			}
+		}
+
+
 		attackFrame += animSpeed;
-
-
-		// 左スティックが前に押されたら前を向く
-		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
-		{
-			direXAngle = 0.0f;
-			direZAngle = 0.0f;
-		}
-		// 左スティックが後ろに押されたら後ろを向く
-		if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y))
-		{
-			direXAngle = 0.0f;
-			direZAngle = DX_PI_F;
-		}
-
-		// 左スティックが左に押されたら左を向く
-		if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X))
-		{
-			direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, false);
-			if (direZAngle != 0.0f)
-			{
-				direXAngle = -direXAngle;
-			}
-		}
-		// 左スティックが右に押されたら右を向く
-		else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
-		{
-			direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, true);
-			if (direZAngle != 0.0f)
-			{
-				direXAngle = -direXAngle;
-			}
-		}
 	}
 }
 

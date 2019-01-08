@@ -41,10 +41,6 @@ void StageStairs::TextureReload()
 
 	switch (BASICPARAM::e_TextureColor)
 	{
-	case ETextureColor::WHITEBLACK:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\kaidan\\whiteblack\\kaidan.pyn", textureHandle, ELOADFILE::graph);
-		break;
-
 	case ETextureColor::NORMAL:
 		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\kaidan\\normal\\kaidan.pyn", textureHandle, ELOADFILE::graph);
 		break;

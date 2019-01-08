@@ -47,11 +47,6 @@ void StageStreetLight::TextureReload()
 
 	switch (BASICPARAM::e_TextureColor)
 	{
-	case ETextureColor::WHITEBLACK:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠX“”\\whiteblack\\body_col.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠX“”\\whiteblack\\lamp_COLandems.pyn", textureHandle1, ELOADFILE::graph);
-		break;
-
 	case ETextureColor::NORMAL:
 		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠX“”\\normal\\body_col.pyn", textureHandle0, ELOADFILE::graph);
 		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠX“”\\normal\\lamp_COLandems.pyn", textureHandle1, ELOADFILE::graph);

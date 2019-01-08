@@ -744,6 +744,21 @@ Manager::Manager()
 	move3str[40] = "media\\こっち\\media\\move3\\インク的な\\ink.myn";
 	move3str[41] = "media\\こっち\\media\\move3\\インク的な\\correction\\normal\\ink.pyn";
 
+	// ダメージ演出画像
+	move3str[42] = "media\\こっち\\media\\damage\\damage1\\whiteblack.pyn";
+	move3str[43] = "media\\こっち\\media\\damage\\damage2\\whiteblack.pyn";
+	move3str[44] = "media\\こっち\\media\\damage\\damage3\\whiteblack.pyn";
+	move3str[45] = "media\\こっち\\media\\damage\\Blood\\bl1\\whiteblack.pyn";
+	move3str[46] = "media\\こっち\\media\\damage\\Blood\\bl2\\whiteblack.pyn";
+	move3str[47] = "media\\こっち\\media\\damage\\Blood\\bl3\\whiteblack.pyn";
+	move3str[48] = "media\\こっち\\media\\damage\\Blood\\bl4\\whiteblack.pyn";
+	move3str[49] = "media\\こっち\\media\\damage\\Blood\\bl5\\whiteblack.pyn";
+	move3str[50] = "media\\こっち\\media\\damage\\Blood\\bl6\\whiteblack.pyn";
+	move3str[51] = "media\\こっち\\media\\damage\\Blood\\bl7\\whiteblack.pyn";
+	move3str[52] = "media\\こっち\\media\\damage\\Blood\\bl8\\whiteblack.pyn";
+	move3str[53] = "media\\こっち\\media\\damage\\Blood\\bl9\\whiteblack.pyn";
+	move3str[54] = "media\\こっち\\media\\damage\\Blood\\bl10\\whiteblack.pyn";
+
 	load3[0] = ELOADFILE::mv1model;
 	load3[1] = ELOADFILE::mv1model;
 	load3[2] = ELOADFILE::mv1model;
@@ -804,6 +819,20 @@ Manager::Manager()
 
 	load3[40] = ELOADFILE::mv1model;
 	load3[41] = ELOADFILE::graph;
+
+	load3[42] = ELOADFILE::graph;
+	load3[43] = ELOADFILE::graph;
+	load3[44] = ELOADFILE::graph;
+	load3[45] = ELOADFILE::graph;
+	load3[46] = ELOADFILE::graph;
+	load3[47] = ELOADFILE::graph;
+	load3[48] = ELOADFILE::graph;
+	load3[49] = ELOADFILE::graph;
+	load3[50] = ELOADFILE::graph;
+	load3[51] = ELOADFILE::graph;
+	load3[52] = ELOADFILE::graph;
+	load3[53] = ELOADFILE::graph;
+	load3[54] = ELOADFILE::graph;
 	/// --------------------------------------------------------------------
 
 

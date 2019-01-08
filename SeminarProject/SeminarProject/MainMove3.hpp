@@ -33,6 +33,9 @@ private:
 		, se_landingSecond, se_attackOne, se_attackTwo, se_attackThrid
 		, se_ballPickUp2, bgm_Main, slimeModel, slimeTex0, crayonHumanModel
 		, crayonHumanTex0, dropItemModel, dropItemTex0
+		, damageDraw0, damageDraw1, damageDraw2, damageBlood0, damageBlood1
+		, damageBlood2, damageBlood3, damageBlood4, damageBlood5, damageBlood6
+		, damageBlood7, damageBlood8, damageBlood9
 	};
 
 
@@ -82,6 +85,9 @@ private:
 
 	// ダメージ画像のID
 	int damageDrawID;
+
+	// ダメージ画像の色覚差し替え
+	void DamageTextureReload();
 
 
 	/// 敵---------------------

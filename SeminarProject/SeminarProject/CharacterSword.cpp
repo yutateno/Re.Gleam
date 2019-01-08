@@ -918,14 +918,6 @@ void CharacterSword::TextureReload()
 
 	switch (BASICPARAM::e_TextureColor)
 	{
-	case ETextureColor::WHITEBLACK:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_hair.pyn", textureHandle1, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_wear.pyn", textureHandle2, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_face.pyn", textureHandle3, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_ex.pyn", textureHandle4, ELOADFILE::graph);
-		break;
-
 	case ETextureColor::NORMAL:
 		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\sword_Tex.pyn", textureHandle0, ELOADFILE::graph);
 		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_hair.pyn", textureHandle1, ELOADFILE::graph);

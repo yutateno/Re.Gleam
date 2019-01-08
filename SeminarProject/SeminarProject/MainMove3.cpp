@@ -1,6 +1,85 @@
 #include "MainMove3.hpp"
 
 
+void MainMove3::DamageTextureReload()
+{
+	for (int i = 0; i != 3; ++i)
+	{
+		GRAPHIC_RELEASE(damageDraw[i]);
+	}
+	for (int i = 0; i != 10; ++i)
+	{
+		GRAPHIC_RELEASE(damageBlend[i]);
+	}
+
+	switch (BASICPARAM::e_TextureColor)
+	{
+	case ETextureColor::NORMAL:
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage1\\normal.pyn", damageDraw[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage2\\normal.pyn", damageDraw[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage3\\normal.pyn", damageDraw[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl1\\normal.pyn", damageBlend[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl2\\normal.pyn", damageBlend[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl3\\normal.pyn", damageBlend[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl4\\normal.pyn", damageBlend[3], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl5\\normal.pyn", damageBlend[4], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl6\\normal.pyn", damageBlend[5], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl7\\normal.pyn", damageBlend[6], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl8\\normal.pyn", damageBlend[7], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl9\\normal.pyn", damageBlend[8], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl10\\normal.pyn", damageBlend[9], ELOADFILE::graph);
+		break;
+
+	case ETextureColor::D_CORRECTION:
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage1\\D.pyn", damageDraw[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage2\\D.pyn", damageDraw[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage3\\D.pyn", damageDraw[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl1\\D.pyn", damageBlend[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl2\\D.pyn", damageBlend[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl3\\D.pyn", damageBlend[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl4\\D.pyn", damageBlend[3], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl5\\D.pyn", damageBlend[4], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl6\\D.pyn", damageBlend[5], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl7\\D.pyn", damageBlend[6], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl8\\D.pyn", damageBlend[7], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl9\\D.pyn", damageBlend[8], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl10\\D.pyn", damageBlend[9], ELOADFILE::graph);
+		break;
+
+	case ETextureColor::P_CORRECTION:
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage1\\P.pyn", damageDraw[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage2\\P.pyn", damageDraw[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage3\\P.pyn", damageDraw[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl1\\P.pyn", damageBlend[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl2\\P.pyn", damageBlend[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl3\\P.pyn", damageBlend[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl4\\P.pyn", damageBlend[3], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl5\\P.pyn", damageBlend[4], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl6\\P.pyn", damageBlend[5], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl7\\P.pyn", damageBlend[6], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl8\\P.pyn", damageBlend[7], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl9\\P.pyn", damageBlend[8], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl10\\P.pyn", damageBlend[9], ELOADFILE::graph);
+		break;
+
+	default:
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage1\\normal.pyn", damageDraw[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage2\\normal.pyn", damageDraw[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage3\\normal.pyn", damageDraw[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl1\\normal.pyn", damageBlend[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl2\\normal.pyn", damageBlend[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl3\\normal.pyn", damageBlend[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl4\\normal.pyn", damageBlend[3], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl5\\normal.pyn", damageBlend[4], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl6\\normal.pyn", damageBlend[5], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl7\\normal.pyn", damageBlend[6], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl8\\normal.pyn", damageBlend[7], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl9\\normal.pyn", damageBlend[8], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl10\\normal.pyn", damageBlend[9], ELOADFILE::graph);
+		break;
+	}
+}
+
 void MainMove3::ShadowDraw()
 {
 	/// セットアップ
@@ -475,19 +554,19 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	notDamageCount = 0;
 	damageDrawFrame = 0;
 	damageDrawID = 0;
-	damageDraw[0] = LoadGraph("media\\こっち\\media\\damage\\damage1.png");
-	damageDraw[1] = LoadGraph("media\\こっち\\media\\damage\\damage2.png");
-	damageDraw[2] = LoadGraph("media\\こっち\\media\\damage\\damage3.png");
-	damageBlend[0] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl1.png");
-	damageBlend[1] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl2.png");
-	damageBlend[2] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl3.png");
-	damageBlend[3] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl4.png");
-	damageBlend[4] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl5.png");
-	damageBlend[5] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl6.png");
-	damageBlend[6] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl7.png");
-	damageBlend[7] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl8.png");
-	damageBlend[8] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl9.png");
-	damageBlend[9] = LoadGraph("media\\こっち\\media\\damage\\Blood\\bl10.png");
+	damageDraw[0] = v_file[EFILE::damageDraw0];
+	damageDraw[1] = v_file[EFILE::damageDraw1];
+	damageDraw[2] = v_file[EFILE::damageDraw2];
+	damageBlend[0] = v_file[EFILE::damageBlood0];
+	damageBlend[1] = v_file[EFILE::damageBlood1];
+	damageBlend[2] = v_file[EFILE::damageBlood2];
+	damageBlend[3] = v_file[EFILE::damageBlood3];
+	damageBlend[4] = v_file[EFILE::damageBlood4];
+	damageBlend[5] = v_file[EFILE::damageBlood5];
+	damageBlend[6] = v_file[EFILE::damageBlood6];
+	damageBlend[7] = v_file[EFILE::damageBlood7];
+	damageBlend[8] = v_file[EFILE::damageBlood8];
+	damageBlend[9] = v_file[EFILE::damageBlood9];
 	// エフェクト読み込み
 	effeckBack[0] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\one.efk");
 	effeckBack[1] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\two.efk");
@@ -882,6 +961,9 @@ void MainMove3::CameraProcess()
 
 void MainMove3::TextureReload()
 {
+	// ダメージ演出
+	DamageTextureReload();
+
 	// キャラクター
 	p_character->TextureReload();
 

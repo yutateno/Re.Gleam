@@ -85,11 +85,6 @@ void AdjustmentMachine::TextureReload()
 
 	switch (BASICPARAM::e_TextureColor)
 	{
-	case ETextureColor::WHITEBLACK:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\Terminal\\whiteblack\\Terminal.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\Terminal\\whiteblack\\T_display.pyn", textureHandle1, ELOADFILE::graph);
-		break;
-
 	case ETextureColor::NORMAL:
 		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\Terminal\\normal\\Terminal.pyn", textureHandle0, ELOADFILE::graph);
 		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\Terminal\\normal\\T_display.pyn", textureHandle1, ELOADFILE::graph);

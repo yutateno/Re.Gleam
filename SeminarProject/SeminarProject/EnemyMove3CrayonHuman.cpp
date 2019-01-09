@@ -3,24 +3,35 @@
 
 void EnemyMove3CrayonHuman::MotionProcess()
 {
-	if (playerCharaDistance <= 200 && charaLookAt)
+	if (!deathFlag)
 	{
-		Player_PlayAnim(MOTION::damage);
-		attackFrame += animSpeed;
-		if (attackFrame > MV1GetAnimTotalTime(modelHandle, MOTION::damage))
+		if (playerCharaDistance <= 200 && charaLookAt)
 		{
-			attackDamageNow = true;
-			attackFrame = 0.0f;
+			Player_PlayAnim(MOTION::damage);
+			attackFrame += animSpeed;
+			if (attackFrame > MV1GetAnimTotalTime(modelHandle, MOTION::damage))
+			{
+				attackDamageNow = true;
+				attackFrame = 0.0f;
+			}
+			else
+			{
+				attackDamageNow = false;
+			}
 		}
 		else
 		{
-			attackDamageNow = false;
+			if (attackDamageNow) attackDamageNow = false;
+			Player_PlayAnim(MOTION::idle);
 		}
 	}
 	else
 	{
-		if (attackDamageNow) attackDamageNow = false;
-		Player_PlayAnim(MOTION::idle);
+		Player_PlayAnim(MOTION::death);
+		if (this->totalTime >= MV1GetAttachAnimTotalTime(modelHandle, MOTION::death))
+		{
+			deathMotionEnd = true;
+		}
 	}
 }
 
@@ -222,6 +233,8 @@ EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int co
 	textureHandle0 = -1;
 	textureHandle0 = tex0;
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
+	MV1SetMaterialDrawBlendMode(this->modelHandle, 0, DX_BLENDMODE_ALPHA);
+	MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
 
 	// 3Dモデルのアニメーションをアタッチする
 	attachNum = MOTION::idle;
@@ -234,6 +247,7 @@ EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int co
 	// モデルの基本情報
 	modelHeight = 130.0f;
 	modelWidth = 70.0f;
+	deathMotionEnd = false;
 
 	// モデルの向きと位置
 	this->area = area;
@@ -257,6 +271,7 @@ EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int co
 	// 攻撃
 	attackFrame = 0;
 	attackDamageNow = false;
+	damageCount = 0;
 
 	// 階段
 	v_stairsHandle.clear();
@@ -327,6 +342,8 @@ EnemyMove3CrayonHuman::~EnemyMove3CrayonHuman()
 
 void EnemyMove3CrayonHuman::Draw()
 {
+	if (deathFlag) return;
+
 	BasicObject::ShadowFoot(shadowStageHandle);
 
 
@@ -356,6 +373,33 @@ void EnemyMove3CrayonHuman::Draw()
 
 void EnemyMove3CrayonHuman::Process()
 {
+	if (eraseExistence) return;
+
+	// 死んだとき
+	if (deathFlag)
+	{
+		if (!deathMotionEnd)
+		{
+			MotionProcess();
+
+			// モーション
+			Player_AnimProcess();
+		}
+
+		if (blendCount >= 0)
+		{
+			blendCount -= 5;
+		}
+		else
+		{
+			eraseExistence = true;
+		}
+
+		MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
+
+		return;
+	}
+
 	// 直前の座標
 	preArea = area;
 
@@ -381,8 +425,13 @@ void EnemyMove3CrayonHuman::Process()
 	// モーション
 	Player_AnimProcess();
 
-	if (damageHit)
+	if (damageHit && !deathFlag)
 	{
+		walkSpeed = -3.0f;
+		if (++damageCount >= 3.0f)
+		{
+			deathFlag = true;
+		}
 		damageHit = false;
 	}
 

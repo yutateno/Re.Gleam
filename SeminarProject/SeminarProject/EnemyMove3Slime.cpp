@@ -225,6 +225,9 @@ EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandl
 	textureHandle0 = -1;
 	textureHandle0 = tex0;
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
+	MV1SetMaterialDrawBlendMode(this->modelHandle, 0, DX_BLENDMODE_ALPHA);
+	MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
+
 
 	// 3Dモデルのアニメーションをアタッチする
 	attachNum = MOTION::idle;
@@ -260,6 +263,7 @@ EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandl
 	// 攻撃
 	attackFrame = 0.0f;
 	attackDamageNow = false;
+	damageCount = 0;
 
 	// 階段
 	v_stairsHandle.clear();
@@ -334,6 +338,8 @@ EnemyMove3Slime::~EnemyMove3Slime()
 
 void EnemyMove3Slime::Draw()
 {
+	if (deathFlag) return;
+
 	BasicObject::ShadowFoot(shadowStageHandle);
 
 #ifdef _DEBUG
@@ -358,6 +364,25 @@ void EnemyMove3Slime::Draw()
 
 void EnemyMove3Slime::Process()
 {
+	if (eraseExistence) return;
+
+	// 死んだとき
+	if (deathFlag)
+	{	
+		if (blendCount >= 0)
+		{
+			blendCount -= 5;
+		}
+		else
+		{
+			eraseExistence = true;
+		}
+
+		MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
+
+		return;
+	}
+
 	// 直前の座標
 	preArea = area;
 
@@ -379,6 +404,16 @@ void EnemyMove3Slime::Process()
 
 	if (damageHit)
 	{
+		damageHit = false;
+	}
+
+	if (damageHit && !deathFlag)
+	{
+		walkSpeed = -3.0f;
+		if (++damageCount >= 3.0f)
+		{
+			deathFlag = true;
+		}
 		damageHit = false;
 	}
 

@@ -68,6 +68,9 @@ private:
 	// UŒ‚‚É‚æ‚é‚ ‚½‚è‚ğ‚³‚¹‚é‚©‚Ç‚¤‚©
 	bool attackDamageNow;
 
+	// UŒ‚‚ğó‚¯‚½”’l
+	int damageCount;
+
 	
 	/// —‰º‚ÉŠÖ‚µ‚Ä
 

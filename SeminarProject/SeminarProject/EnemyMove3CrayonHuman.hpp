@@ -40,6 +40,9 @@ private:
 	// モーションのプロセス
 	void MotionProcess();
 
+	// 死んだモーションが終わったかどうか
+	bool deathMotionEnd;
+
 
 	/// 階段に関して--------------
 
@@ -72,6 +75,9 @@ private:
 
 	// 攻撃によるあたりをさせるかどうか
 	bool attackDamageNow;
+
+	// 攻撃を受けた数値
+	int damageCount;
 
 
 	/// 落下に関して

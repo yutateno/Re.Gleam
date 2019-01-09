@@ -400,6 +400,9 @@ void EnemyMove3CrayonHuman::Process()
 		return;
 	}
 
+
+	if (notViewCount > 3) return;
+
 	// ’¼‘O‚ÌÀ•W
 	preArea = area;
 

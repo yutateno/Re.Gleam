@@ -383,6 +383,8 @@ void EnemyMove3Slime::Process()
 		return;
 	}
 
+	if (notViewCount > 3) return;
+
 	// ’¼‘O‚ÌÀ•W
 	preArea = area;
 

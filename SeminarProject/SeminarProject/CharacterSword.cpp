@@ -315,9 +315,65 @@ void CharacterSword::AttackProcess()
 	if (attackFrame == 0 && !jumpNow) jumpAttackDo = false;
 
 
+
+	// 攻撃フラッグが立ったら
+	if (attackNow)
+	{
+		attackMotionEnd = false;
+		if (walkSpeed < 60.0f)
+		{
+			walkSpeed += 20.0f;
+		}
+		else
+		{
+			walkSpeed = 60.0f;
+		}
+
+
+		if (attackFrame < animSpeed)
+		{
+			// 左スティックが前に押されたら前を向く
+			if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
+			{
+				direXAngle = 0.0f;
+				direZAngle = 0.0f;
+			}
+			// 左スティックが後ろに押されたら後ろを向く
+			if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y))
+			{
+				direXAngle = 0.0f;
+				direZAngle = DX_PI_F;
+			}
+
+			// 左スティックが左に押されたら左を向く
+			if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X))
+			{
+				direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, false);
+				if (direZAngle != 0.0f)
+				{
+					direXAngle = -direXAngle;
+				}
+			}
+			// 左スティックが右に押されたら右を向く
+			else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
+			{
+				direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, true);
+				if (direZAngle != 0.0f)
+				{
+					direXAngle = -direXAngle;
+				}
+			}
+		}
+
+
+		attackFrame += animSpeed;
+	}
+
+
 	// 攻撃モーションの終盤当たりで次の行動を決める
 	if (attackFrame >= 9.0f)
 	{
+		attackMotionEnd = true;
 		// 次の攻撃へ移行するとフラッグが立っていたら
 		if (attackNext)
 		{
@@ -394,60 +450,6 @@ void CharacterSword::AttackProcess()
 			attackNumber = MOTION::action1;
 			preAttackNumber = attackNumber;
 		}
-	}
-
-
-
-	// 攻撃フラッグが立ったら
-	if (attackNow)
-	{
-		if (walkSpeed < 60.0f)
-		{
-			walkSpeed += 20.0f;
-		}
-		else
-		{
-			walkSpeed = 60.0f;
-		}
-
-
-		if (attackFrame < animSpeed)
-		{
-			// 左スティックが前に押されたら前を向く
-			if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
-			{
-				direXAngle = 0.0f;
-				direZAngle = 0.0f;
-			}
-			// 左スティックが後ろに押されたら後ろを向く
-			if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y))
-			{
-				direXAngle = 0.0f;
-				direZAngle = DX_PI_F;
-			}
-
-			// 左スティックが左に押されたら左を向く
-			if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X))
-			{
-				direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, false);
-				if (direZAngle != 0.0f)
-				{
-					direXAngle = -direXAngle;
-				}
-			}
-			// 左スティックが右に押されたら右を向く
-			else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
-			{
-				direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, true);
-				if (direZAngle != 0.0f)
-				{
-					direXAngle = -direXAngle;
-				}
-			}
-		}
-
-
-		attackFrame += animSpeed;
 	}
 }
 
@@ -700,6 +702,7 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	attackNumber = MOTION::action1;
 	preAttackNumber = MOTION::action1;
 	jumpAttackDo = false;
+	attackMotionEnd = true;
 
 
 	// ジャンプに関して

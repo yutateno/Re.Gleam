@@ -97,6 +97,9 @@ private:
 	// ダメージを受けているかどうか
 	bool damageFlag;
 
+	// 一つの攻撃モーションが終わったかどうか
+	bool attackMotionEnd;
+
 
 	/// ジャンプに関して------------------
 
@@ -182,5 +185,7 @@ public:
 
 	// 攻撃を受けている
 	void SetDamage();
+
+	const bool GetAttackMotionEnd() const { return attackMotionEnd; }
 };
 

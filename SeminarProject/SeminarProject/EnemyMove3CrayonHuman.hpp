@@ -40,9 +40,6 @@ private:
 	// モーションのプロセス
 	void MotionProcess();
 
-	// 死んだモーションが終わったかどうか
-	bool deathMotionEnd;
-
 
 	/// 階段に関して--------------
 

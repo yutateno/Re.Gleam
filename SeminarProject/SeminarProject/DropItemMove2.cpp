@@ -47,13 +47,6 @@ DropItemMove2::~DropItemMove2()
 	MODEL_RELEASE(modelHandle);
 }
 
-//void DropItemMove2::Draw()
-//{
-//	if (deathNow || !aliveNow) return;
-//
-//	BasicObject::Draw();
-//}
-
 
 void DropItemMove2::Process()
 {

@@ -403,20 +403,15 @@ void EnemyMove3Slime::Process()
 
 	// ƒ‚[ƒVƒ‡ƒ“
 	Player_AnimProcess();
-
-	if (damageHit)
-	{
-		damageHit = false;
-	}
-
+	
 	if (damageHit && !deathFlag)
 	{
+		damageHit = false;
 		walkSpeed = -3.0f;
 		if (++damageCount >= 3.0f)
 		{
 			deathFlag = true;
 		}
-		damageHit = false;
 	}
 
 	int setCollHitNum = 0;

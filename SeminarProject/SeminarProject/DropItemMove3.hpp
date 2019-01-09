@@ -46,7 +46,7 @@ public:
 	void SetDeath(bool death) { deathNow = death; }
 
 	// ‘¶İ‚ğ‹–‚³‚ê‚½‚©‚Ç‚¤‚©
-	void SetAlive(bool alive, VECTOR dropArea) { aliveNow = alive; area = dropArea; }
+	void SetAlive(bool alive, VECTOR dropArea);
 
 	// ‘¶İ‚ğˆê¶Á‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©“n‚·
 	const bool GetDeath() { return deathNow; }

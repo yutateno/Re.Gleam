@@ -28,10 +28,6 @@ void EnemyMove3CrayonHuman::MotionProcess()
 	else
 	{
 		Player_PlayAnim(MOTION::death);
-		if (this->totalTime >= MV1GetAttachAnimTotalTime(modelHandle, MOTION::death))
-		{
-			deathMotionEnd = true;
-		}
 	}
 }
 
@@ -123,7 +119,6 @@ void EnemyMove3CrayonHuman::ChaseMoveProcess()
 	{
 		area.x += walkSpeed;
 	}
-	else {}
 	if (playerCharaArea.z < area.z - walkSpeed + 2.0f)
 	{
 		area.z -= walkSpeed;
@@ -132,7 +127,6 @@ void EnemyMove3CrayonHuman::ChaseMoveProcess()
 	{
 		area.z += walkSpeed;
 	}
-	else {}
 }
 
 
@@ -247,7 +241,6 @@ EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int co
 	// モデルの基本情報
 	modelHeight = 130.0f;
 	modelWidth = 70.0f;
-	deathMotionEnd = false;
 
 	// モデルの向きと位置
 	this->area = area;
@@ -378,13 +371,10 @@ void EnemyMove3CrayonHuman::Process()
 	// 死んだとき
 	if (deathFlag)
 	{
-		if (!deathMotionEnd)
-		{
-			MotionProcess();
+		MotionProcess();
 
-			// モーション
-			Player_AnimProcess();
-		}
+		// モーション
+		Player_AnimProcess();
 
 		if (blendCount >= 0)
 		{
@@ -430,12 +420,12 @@ void EnemyMove3CrayonHuman::Process()
 
 	if (damageHit && !deathFlag)
 	{
+		damageHit = false;
 		walkSpeed = -3.0f;
 		if (++damageCount >= 3.0f)
 		{
 			deathFlag = true;
 		}
-		damageHit = false;
 	}
 
 	int setCollHitNum = 0;

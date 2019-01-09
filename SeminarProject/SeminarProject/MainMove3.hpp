@@ -95,17 +95,26 @@ private:
 	// スライムのポインタ
 	EnemyMove3Slime* p_enemySlime[10];
 
+	// スライムのダメージ瞬間
+	bool enemySlimeDamage[10];
+
 	// スライムの数
 	const int enemySlimeNum = 10;
 
 	// クレヨンヒューマンのポインタ
 	EnemyMove3CrayonHuman* p_enemyCrayonHuman[10];
 
+	// スライムのダメージ瞬間
+	bool enemyCrayonHumanDamage[10];
+
 	// クレヨンヒューマンの数
 	const int enemyCrayonHumanNum = 10;
 
+	// ドロップアイテムの数
+	const int dropItemNum = 100;
+
 	// ドロップアイテム
-	DropItemMove3* p_dropItem[20];
+	DropItemMove3* p_dropItem[100];
 
 	int dropItemSE;
 

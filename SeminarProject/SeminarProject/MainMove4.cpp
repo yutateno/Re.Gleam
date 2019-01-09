@@ -360,6 +360,8 @@ void MainMove4::Draw()
 {
 	BaseMove::SkyBoxDraw();
 
+	ShadowDraw();
+
 	// 人
 	for (int i = 0; i != ordinaryNum; ++i)
 	{
@@ -368,8 +370,6 @@ void MainMove4::Draw()
 
 	// キャラクター
 	p_character->Draw();
-
-	ShadowDraw();
 
 
 	if (p_adjustmentMachine->GetCanTouch())

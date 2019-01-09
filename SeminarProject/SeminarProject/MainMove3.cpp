@@ -246,8 +246,13 @@ void MainMove3::AttackProcess()
 	{
 		if (p_enemyCrayonHuman[i]->GetDeathFlag()) continue;
 
+		if (p_character->GetAttackMotionEnd())
+		{
+			enemyCrayonHumanDamage[i] = false;
+		}
+
 		// 攻撃中だったら
-		if (p_character->GetAttackNow())
+		if (p_character->GetAttackNow() && !enemyCrayonHumanDamage[i])
 		{
 			p_enemyCrayonHuman[i]->HitLineReturn(p_character->GetAttackFirstFrameArea(), p_character->GetAttackEndFrameArea());
 		}
@@ -256,7 +261,7 @@ void MainMove3::AttackProcess()
 		// 攻撃でダメージを受けたら
 		if (p_enemyCrayonHuman[i]->GetDamageFlag())
 		{
-			printfDx("crayon\n");
+			enemyCrayonHumanDamage[i] = true;
 			// バイブレーションさせる
 			DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 30, 7500, 7500);
 
@@ -271,8 +276,13 @@ void MainMove3::AttackProcess()
 	{
 		if (p_enemySlime[i]->GetDeathFlag()) continue;
 
+		if (p_character->GetAttackMotionEnd())
+		{
+			enemySlimeDamage[i] = false;
+		}
+
 		// 攻撃中だったら
-		if (p_character->GetAttackNow())
+		if (p_character->GetAttackNow() && !enemySlimeDamage[i])
 		{
 			p_enemySlime[i]->HitLineReturn(p_character->GetAttackFirstFrameArea(), p_character->GetAttackEndFrameArea());
 		}
@@ -281,7 +291,7 @@ void MainMove3::AttackProcess()
 		// 攻撃でダメージを受けたら
 		if (p_enemySlime[i]->GetDamageFlag())
 		{
-			printfDx("slime\n");
+			enemySlimeDamage[i] = true;
 			// バイブレーションさせる
 			DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 30, 7500, 7500);
 
@@ -430,7 +440,7 @@ void MainMove3::AttackProcess()
 
 
 	/// ドロップに関する--------------------------------------------------------------------------------------
-	for (int i = 0, n = enemySlimeNum + enemyCrayonHumanNum; i != n; ++i)
+	for (int i = 0, n = dropItemNum; i != n; ++i)
 	{
 		if (p_dropItem[i]->GetDeath() || !p_dropItem[i]->GetAlive() || !p_dropItem[i]->GetCanCatch()) continue;
 
@@ -446,18 +456,18 @@ void MainMove3::AttackProcess()
 			p_dropItem[i]->SetDeath(true);			// 生きさせない
 
 			/// SEの再生をランダムにする-----------------------------------------------------------------------------
-			//std::random_device rnd;     // 非決定的な乱数生成器を生成
-			//std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
-			//std::uniform_int_distribution<> randPawnSE(0, 1);        // 乱数
+			std::random_device rnd;     // 非決定的な乱数生成器を生成
+			std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+			std::uniform_int_distribution<> randPawnSE(0, 1);        // 乱数
 
-			//if (randPawnSE(mt) == 0)
-			//{
-			//	SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, p_dropItem[i]->GetArea());
-			//}
-			//else
-			//{
-			//	SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp2, p_dropItem[i]->GetArea());
-			//}
+			if (randPawnSE(mt) == 0)
+			{
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, p_dropItem[i]->GetArea());
+			}
+			else
+			{
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp2, p_dropItem[i]->GetArea());
+			}
 			/// -----------------------------------------------------------------------------------------------------
 		}
 	}
@@ -492,7 +502,7 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	{
 		p_enemyCrayonHuman[i] = nullptr;
 	}
-	for (int i = 0, n = enemySlimeNum + enemyCrayonHumanNum; i != n; ++i)
+	for (int i = 0, n = dropItemNum; i != n; ++i)
 	{
 		p_dropItem[i] = nullptr;
 	}
@@ -571,6 +581,7 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	{
 		p_enemySlime[i] = new EnemyMove3Slime(v_file[EFILE::slimeModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
 			, v_file[EFILE::slimeTex0], VGet(1000.0f - (i * 150.0f), 0.0f, 1000.0f), 0.0f);
+		enemySlimeDamage[i] = false;
 	}
 
 	// 敵クレヨンヒューマンの初期化
@@ -578,11 +589,12 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	{
 		p_enemyCrayonHuman[i] = new EnemyMove3CrayonHuman(v_file[EFILE::crayonHumanModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
 			, v_file[EFILE::crayonHumanTex0], VGet(-1500.0f + (i * 150.0f), 0.0f, -1000.0f), 0.0f);
+		enemyCrayonHumanDamage[i] = false;
 	}
 
 	// ドロップアイテムの初期化
 	catchDropItemNum = 0;
-	for (int i = 0, n = enemySlimeNum + enemyCrayonHumanNum; i != n; ++i)
+	for (int i = 0, n = dropItemNum; i != n; ++i)
 	{
 		p_dropItem[i] = new DropItemMove3(v_file[EFILE::dropItemModel], p_character->GetArea(), v_file[EFILE::dropItemTex0]);
 	}
@@ -664,7 +676,7 @@ MainMove3::~MainMove3()
 		GRAPHIC_RELEASE(damageBlend[i]);
 	}
 	// ドロップアイテム
-	for (int i = 0, n = enemySlimeNum + enemyCrayonHumanNum; i != n; ++i)
+	for (int i = 0, n = dropItemNum; i != n; ++i)
 	{
 		POINTER_RELEASE(p_dropItem[i]);
 	}
@@ -736,19 +748,23 @@ void MainMove3::Draw()
 {
 	BaseMove::SkyBoxDraw();
 
+	ShadowDraw();
+
 	// 敵スライム
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
+		if (p_enemySlime[i]->GetDeathFlag()) continue;
 		p_enemySlime[i]->Draw();
 	}
 	// 敵クレヨンヒューマン
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
+		if (p_enemyCrayonHuman[i]->GetDeathFlag()) continue;
 		p_enemyCrayonHuman[i]->Draw();
 	}
 
 
-	for (int i = 0, n = enemySlimeNum + enemyCrayonHumanNum; i != n; ++i)
+	for (int i = 0, n = dropItemNum; i != n; ++i)
 	{
 		if (p_dropItem[i]->GetDeath() || !p_dropItem[i]->GetAlive()) continue;
 		p_dropItem[i]->ModelDraw();
@@ -756,8 +772,6 @@ void MainMove3::Draw()
 
 	// キャラクター
 	p_character->Draw();
-
-	ShadowDraw();
 
 
 	if (p_adjustmentMachine->GetCanTouch())
@@ -872,10 +886,27 @@ void MainMove3::Process()
 	// カメラのプロセス
 	p_camera->Process(p_character->GetArea());
 
+	// ドロップアイテム
+	for (int i = 0, n = dropItemNum; i != n; ++i)
+	{
+		if (p_dropItem[i]->GetDeath()) continue;
+		p_dropItem[i]->Process();
+	}
+
 	// 敵スライムのプロセス
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
+		if (p_enemySlime[i]->GetEraseExistence())
+		{
+			if (!p_dropItem[(i * 5)]->GetDeath() && !p_dropItem[(i * 5)]->GetAlive()) p_dropItem[(i * 5)]->SetAlive(true, p_enemySlime[i]->GetArea());
+			if (!p_dropItem[(i * 5) + 1]->GetDeath() && !p_dropItem[(i * 5) + 1]->GetAlive()) p_dropItem[(i * 5) + 1]->SetAlive(true, p_enemySlime[i]->GetArea());
+			if (!p_dropItem[(i * 5) + 2]->GetDeath() && !p_dropItem[(i * 5) + 2]->GetAlive()) p_dropItem[(i * 5) + 2]->SetAlive(true, p_enemySlime[i]->GetArea());
+			if (!p_dropItem[(i * 5) + 3]->GetDeath() && !p_dropItem[(i * 5) + 3]->GetAlive()) p_dropItem[(i * 5) + 3]->SetAlive(true, p_enemySlime[i]->GetArea());
+			if (!p_dropItem[(i * 5) + 4]->GetDeath() && !p_dropItem[(i * 5) + 4]->GetAlive()) p_dropItem[(i * 5) + 4]->SetAlive(true, p_enemySlime[i]->GetArea());
+			continue;
+		}
 		p_enemySlime[i]->Process();
+		if (p_enemySlime[i]->GetDeathFlag()) continue;
 		p_enemySlime[i]->SetCharacterArea(p_character->GetArea(), BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()));
 		if (p_enemySlime[i]->GetAttackDamage()
 			&& p_character->GetArea().y <= p_enemySlime[i]->GetArea().y + p_enemySlime[i]->GetHeight()
@@ -902,7 +933,18 @@ void MainMove3::Process()
 	// 敵クレヨンヒューマンのプロセス
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
+		if (p_enemyCrayonHuman[i]->GetEraseExistence())
+		{
+			int temp = enemySlimeNum * 5;
+			if (!p_dropItem[(i * 5) + temp]->GetDeath() && !p_dropItem[(i * 5) + temp]->GetAlive()) p_dropItem[(i * 5) + temp]->SetAlive(true, p_enemyCrayonHuman[i]->GetArea());
+			if (!p_dropItem[(i * 5) + 1 + temp]->GetDeath() && !p_dropItem[(i * 5) + 1 + temp]->GetAlive()) p_dropItem[(i * 5) + 1 + temp]->SetAlive(true, p_enemyCrayonHuman[i]->GetArea());
+			if (!p_dropItem[(i * 5) + 2 + temp]->GetDeath() && !p_dropItem[(i * 5) + 2 + temp]->GetAlive()) p_dropItem[(i * 5) + 2 + temp]->SetAlive(true, p_enemyCrayonHuman[i]->GetArea());
+			if (!p_dropItem[(i * 5) + 3 + temp]->GetDeath() && !p_dropItem[(i * 5) + 3 + temp]->GetAlive()) p_dropItem[(i * 5) + 3 + temp]->SetAlive(true, p_enemyCrayonHuman[i]->GetArea());
+			if (!p_dropItem[(i * 5) + 4 + temp]->GetDeath() && !p_dropItem[(i * 5) + 4 + temp]->GetAlive()) p_dropItem[(i * 5) + 4 + temp]->SetAlive(true, p_enemyCrayonHuman[i]->GetArea());
+			continue;
+		}
 		p_enemyCrayonHuman[i]->Process();
+		if (p_enemyCrayonHuman[i]->GetDeathFlag()) continue;
 		p_enemyCrayonHuman[i]->SetCharacterArea(p_character->GetArea(), BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()));
 		if (p_enemyCrayonHuman[i]->GetAttackDamage()
 			&& p_character->GetArea().y <= p_enemyCrayonHuman[i]->GetArea().y + p_enemyCrayonHuman[i]->GetHeight()
@@ -924,17 +966,6 @@ void MainMove3::Process()
 				}
 			}
 		}
-	}
-
-	// ドロップアイテム
-	for (int i = 0, n = enemySlimeNum + enemyCrayonHumanNum; i != n; ++i)
-	{
-		/*if (CheckHitKey(KEY_INPUT_Y) == 1)
-		{
-			if (!p_dropItem[i]->GetDeath()) p_dropItem[i]->SetAlive(true, p_character->GetArea());
-		}*/
-		if (p_dropItem[i]->GetDeath()) continue;
-		p_dropItem[i]->Process();
 	}
 
 	BaseMove::ShadowArea(p_character->GetArea());
@@ -1011,7 +1042,7 @@ void MainMove3::TextureReload()
 	}
 
 	// ドロップアイテム
-	for (int i = 0, n = enemySlimeNum + enemyCrayonHumanNum; i != n; ++i)
+	for (int i = 0, n = dropItemNum; i != n; ++i)
 	{
 		if (p_dropItem[i]->GetDeath()) continue;
 		p_dropItem[i]->TextureReload();

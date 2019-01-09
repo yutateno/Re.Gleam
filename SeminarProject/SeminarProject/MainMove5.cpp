@@ -329,10 +329,10 @@ void MainMove5::Draw()
 {
 	BaseMove::SkyBoxDraw();
 
+	ShadowDraw();
+
 	// キャラクター
 	p_character->Draw();
-
-	ShadowDraw();
 
 
 	if (p_adjustmentMachine->GetCanTouch())

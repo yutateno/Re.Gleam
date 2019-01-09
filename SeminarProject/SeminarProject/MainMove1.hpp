@@ -46,7 +46,7 @@ private:
 	const int enemyNum = 30;
 
 	// それぞれの敵が所持するもの
-	struct EnemyAggre
+	struct SEnemyAggre
 	{
 		// 敵のポインタ
 		EnemyMove1* p_enemyMove;
@@ -56,7 +56,7 @@ private:
 	};
 
 	// 敵の構造体を所持
-	EnemyAggre s_enemyAggre[30];
+	SEnemyAggre s_enemyAggre[30];
 
 
 	/// カメラ-------------------

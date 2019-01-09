@@ -873,12 +873,13 @@ void MainMove2::Draw()
 //	{
 		BaseMove::SkyBoxDraw();
 
+		ShadowDraw();
 
 		if (!p_adjustmentMachine->GetCanTouch())
 		{
 			p_adjustmentMachine->Draw();
+			p_adjustmentMachine->ModelDraw();
 		}
-
 
 		for (int i = 0, n = enemyNum * 5; i != n; ++i)
 		{
@@ -888,9 +889,6 @@ void MainMove2::Draw()
 
 		// キャラクター
 		p_character->Draw();
-
-
-		ShadowDraw();
 
 
 		if (p_adjustmentMachine->GetCanTouch())
@@ -937,11 +935,11 @@ void MainMove2::Process()
 		{
 			if (p_enemy[i]->GetEraseExistence())
 			{
-				if (!p_dropItem[(i * 5)]->GetDeath()) p_dropItem[(i * 5)]->SetAlive(true);
-				if (!p_dropItem[(i * 5) + 1]->GetDeath()) p_dropItem[(i * 5) + 1]->SetAlive(true);
-				if (!p_dropItem[(i * 5) + 2]->GetDeath()) p_dropItem[(i * 5) + 2]->SetAlive(true);
-				if (!p_dropItem[(i * 5) + 3]->GetDeath()) p_dropItem[(i * 5) + 3]->SetAlive(true);
-				if (!p_dropItem[(i * 5) + 4]->GetDeath()) p_dropItem[(i * 5) + 4]->SetAlive(true);
+				if (!p_dropItem[(i * 5)]->GetDeath() && !p_dropItem[(i * 5)]->GetAlive()) p_dropItem[(i * 5)]->SetAlive(true);
+				if (!p_dropItem[(i * 5) + 1]->GetDeath() && !p_dropItem[(i * 5) + 1]->GetAlive()) p_dropItem[(i * 5) + 1]->SetAlive(true);
+				if (!p_dropItem[(i * 5) + 2]->GetDeath() && !p_dropItem[(i * 5) + 2]->GetAlive()) p_dropItem[(i * 5) + 2]->SetAlive(true);
+				if (!p_dropItem[(i * 5) + 3]->GetDeath() && !p_dropItem[(i * 5) + 3]->GetAlive()) p_dropItem[(i * 5) + 3]->SetAlive(true);
+				if (!p_dropItem[(i * 5) + 4]->GetDeath() && !p_dropItem[(i * 5) + 4]->GetAlive()) p_dropItem[(i * 5) + 4]->SetAlive(true);
 				continue;
 			}
 			p_enemy[i]->Process();

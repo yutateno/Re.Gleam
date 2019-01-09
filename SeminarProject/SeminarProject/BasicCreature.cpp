@@ -512,6 +512,8 @@ void BasicCreature::HitLineReturn(VECTOR hitOneArea, VECTOR hitTwoArea)
 {
 	MV1_COLL_RESULT_POLY HitPoly;
 
+	MV1RefreshCollInfo(modelHandle, -1);
+
 	HitPoly = MV1CollCheck_Line(modelHandle, -1, hitOneArea, hitTwoArea);
 	
 	// “–‚½‚Á‚½‚©‚Ç‚¤‚©‚Åˆ—‚ğ•ªŠò

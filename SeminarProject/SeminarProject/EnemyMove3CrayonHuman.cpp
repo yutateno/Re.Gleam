@@ -292,6 +292,8 @@ EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int co
 
 	// モデルの座標を更新
 	MV1SetPosition(this->modelHandle, this->area);
+
+	MV1SetupCollInfo(this->modelHandle, -1);
 }
 
 EnemyMove3CrayonHuman::~EnemyMove3CrayonHuman()

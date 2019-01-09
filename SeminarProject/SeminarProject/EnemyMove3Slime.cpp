@@ -297,6 +297,8 @@ EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandl
 	MV1SetRotationXYZ(this->modelHandle, VGet(0.0f, rotationY, 0.0f));
 	// モデルの座標を更新
 	MV1SetPosition(this->modelHandle, this->area);
+
+	MV1SetupCollInfo(this->modelHandle, -1);
 }
 
 

@@ -28,6 +28,9 @@ EnemyMove2::EnemyMove2(const VECTOR area, const int modelHandle, const int tex0)
 
 	// 座標にモデルを配置
 	MV1SetPosition(this->modelHandle, area);
+
+
+	MV1SetupCollInfo(this->modelHandle, -1);
 }
 
 EnemyMove2::~EnemyMove2()

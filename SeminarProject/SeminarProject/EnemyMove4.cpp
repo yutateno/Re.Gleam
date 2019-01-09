@@ -291,6 +291,8 @@ EnemyMove4::EnemyMove4(const int modelHandle, const int collStageHandle, const i
 
 	// モデルの座標を更新
 	MV1SetPosition(this->modelHandle, this->area);
+
+	MV1SetupCollInfo(this->modelHandle, -1);
 }
 
 EnemyMove4::~EnemyMove4()

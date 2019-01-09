@@ -730,6 +730,8 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	MV1SetPosition(this->modelHandle, area);
 
 	SoundProcess::SetCharaArea(area);
+
+	MV1SetupCollInfo(this->modelHandle, -1);
 }
 
 

@@ -617,8 +617,8 @@ void Manager::OptionDraw()
 Manager::Manager()
 {
 	// 初期化
-	BASICPARAM::e_preScene = ESceneNumber::FIRSTLOAD;
-	BASICPARAM::e_nowScene = ESceneNumber::FIRSTLOAD;
+	BASICPARAM::e_preScene = ESceneNumber::THIRDLOAD;
+	BASICPARAM::e_nowScene = ESceneNumber::THIRDLOAD;
 	BASICPARAM::e_preTextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::e_TextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::nowCameraOrtho = false;
@@ -932,6 +932,15 @@ Manager::Manager()
 	move3str[53] = "media\\こっち\\media\\damage\\Blood\\bl9\\whiteblack.pyn";
 	move3str[54] = "media\\こっち\\media\\damage\\Blood\\bl10\\whiteblack.pyn";
 
+	// 敵の攻撃音
+	move3str[55] = "media\\こっち\\media\\sound\\殴る音（爆発）.wyn";
+
+	// クレヨンの死ぬ音
+	move3str[56] = "media\\こっち\\media\\sound\\クレヨンの死(2).wyn";
+
+	// 攻撃BGM
+	move3str[57] = "media\\こっち\\media\\sound\\戦闘BGM.wyn";
+
 	load3[0] = ELOADFILE::mv1model;
 	load3[1] = ELOADFILE::mv1model;
 	load3[2] = ELOADFILE::mv1model;
@@ -1006,6 +1015,11 @@ Manager::Manager()
 	load3[52] = ELOADFILE::graph;
 	load3[53] = ELOADFILE::graph;
 	load3[54] = ELOADFILE::graph;
+
+	load3[55] = ELOADFILE::sound3DSource;
+	load3[56] = ELOADFILE::sound3DSource;
+
+	load3[57] = ELOADFILE::soundStream;
 	/// --------------------------------------------------------------------
 
 

@@ -406,6 +406,11 @@ void MainMove3::AttackProcess()
 		// 攻撃でダメージを受けたら
 		if (p_enemyCrayonHuman[i]->GetDamageFlag())
 		{
+			if (!nowBattleBGM)
+			{
+				nowBattleBGM = true;
+				SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::battleBGM);
+			}
 			enemyCrayonHumanDamage[i] = true;
 			// バイブレーションさせる
 			DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 30, 7500, 7500);
@@ -436,6 +441,11 @@ void MainMove3::AttackProcess()
 		// 攻撃でダメージを受けたら
 		if (p_enemySlime[i]->GetDamageFlag())
 		{
+			if (!nowBattleBGM)
+			{
+				nowBattleBGM = true;
+				SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::battleBGM);
+			}
 			enemySlimeDamage[i] = true;
 			// バイブレーションさせる
 			DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 30, 7500, 7500);
@@ -768,6 +778,7 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	BaseMove::ShadowNoMoveSetUpAfter();
 
 	// サウンドのロード
+	nowBattleBGM = false;
 	SoundProcess::Load(v_file[EFILE::se_attackOne], SoundProcess::ESOUNDNAME_SE::pianoAttack1);
 	SoundProcess::Load(v_file[EFILE::se_attackThrid], SoundProcess::ESOUNDNAME_SE::pianoAttack3);
 	SoundProcess::Load(v_file[EFILE::se_attackTwo], SoundProcess::ESOUNDNAME_SE::pianoAttack2);
@@ -779,13 +790,17 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	SoundProcess::Load(v_file[EFILE::se_landing], SoundProcess::ESOUNDNAME_SE::landing);
 	SoundProcess::Load(v_file[EFILE::se_landingSecond], SoundProcess::ESOUNDNAME_SE::landing2);
 	SoundProcess::Load(v_file[EFILE::bgm_Main], SoundProcess::ESOUNDNAME_BGM::normalBGM);
+	SoundProcess::Load(v_file[EFILE::enemyAttackSE], SoundProcess::ESOUNDNAME_SE::strikeBomb);
+	SoundProcess::Load(v_file[EFILE::crayonDeadSE], SoundProcess::ESOUNDNAME_SE::crayonDie);
+	SoundProcess::Load(v_file[EFILE::fightBGM], SoundProcess::ESOUNDNAME_BGM::battleBGM);
 
+	//SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::battleBGM, 0, 0);
 	SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 255, 255);
 
 	// ダメージ演出
 	damageCount = 0;
 	preDamageCount = damageCount;
-	notDamageCount = 0;
+	notDamageCount = 101;
 	damageDrawFrame = 0;
 	damageDrawID = 0;
 	damageDraw[0] = v_file[EFILE::damageDraw0];
@@ -1088,7 +1103,11 @@ void MainMove3::Process()
 
 		notDamageCount++;
 		if (notDamageCount > 100 && damageCount > 0 && (notDamageCount - 100) % 10 == 0) damageCount--;
-
+		if (notDamageCount > 100 && nowBattleBGM)
+		{
+			nowBattleBGM = false;
+			SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::normalBGM);
+		}
 		if (damageDrawFrame > 0) damageDrawFrame--;
 
 
@@ -1169,8 +1188,16 @@ void MainMove3::Process()
 				&& p_character->GetArea().y <= p_enemySlime[i]->GetArea().y + p_enemySlime[i]->GetHeight()
 				&& p_character->GetArea().y + p_character->GetHeight() >= p_enemySlime[i]->GetArea().y)
 			{
+				if (!nowBattleBGM)
+				{
+					nowBattleBGM = true;
+					SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::battleBGM);
+				}
+
 				if (charaSomeEnemyDamageCount++ < 2)
 				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::strikeBomb, p_enemySlime[i]->GetArea(), 180);
+
 					p_character->SetDamage();
 
 					notDamageCount = 0;
@@ -1256,8 +1283,16 @@ void MainMove3::Process()
 				&& p_character->GetArea().y <= p_enemyCrayonHuman[i]->GetArea().y + p_enemyCrayonHuman[i]->GetHeight()
 				&& p_character->GetArea().y + p_character->GetHeight() >= p_enemyCrayonHuman[i]->GetArea().y)
 			{
+				if (!nowBattleBGM)
+				{
+					nowBattleBGM = true;
+					SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::battleBGM);
+				}
+
 				if (charaSomeEnemyDamageCount++ < 2)
 				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::strikeBomb, p_enemyCrayonHuman[i]->GetArea(), 180);
+
 					p_character->SetDamage();
 
 					notDamageCount = 0;
@@ -1279,6 +1314,14 @@ void MainMove3::Process()
 		AttackProcess();
 
 		BaseMove::SkyBoxProcess(p_character->GetArea());
+
+
+		if (p_character->GetArea().y >= 3550.0f)
+		{
+			BASICPARAM::endFeedNow = true;
+			BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
+			BaseMove::SetScene(ESceneNumber::THIRDLOAD);
+		}
 	}
 	else
 	{

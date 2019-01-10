@@ -424,6 +424,7 @@ void EnemyMove3CrayonHuman::Process()
 		walkSpeed = -3.0f;
 		if (++damageCount >= 3.0f)
 		{
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::crayonDie, area);
 			deathFlag = true;
 		}
 	}

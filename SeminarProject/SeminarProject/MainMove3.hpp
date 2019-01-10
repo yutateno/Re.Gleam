@@ -35,7 +35,8 @@ private:
 		, crayonHumanTex0, dropItemModel, dropItemTex0
 		, damageDraw0, damageDraw1, damageDraw2, damageBlood0, damageBlood1
 		, damageBlood2, damageBlood3, damageBlood4, damageBlood5, damageBlood6
-		, damageBlood7, damageBlood8, damageBlood9
+		, damageBlood7, damageBlood8, damageBlood9, enemyAttackSE, crayonDeadSE
+		, fightBGM
 	};
 
 
@@ -179,6 +180,10 @@ private:
 	int playingEfDamage;		// ダメージ演出用
 	int effectAttack;
 	int playingEfAttack;
+
+	
+	// BGMの切り替えが行われたかどうか
+	bool nowBattleBGM;
 
 
 public:

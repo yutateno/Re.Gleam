@@ -23,5 +23,8 @@ public:
 
 	// 座標を設定する
 	void SetArea(const VECTOR area) { this->area = area; }
+
+	// オプション用モデル描画の後始末
+	void OptionActorDrawAfter() override {}
 };
 

@@ -117,8 +117,8 @@ private:
 	// オプション画面の選択ボタン
 	EOptionSelectButton optionSelectButtonNum;
 
-	// スティックの押し倒しかどうかを調べる(DLLXinputでやるべきなんだろうかとりあえず
-	int optionControllStick[2];
+	// 左スティックのY軸押し倒しかどうかを調べる(DLLXinputでやるべきなんだろうかとりあえず
+	int optionControllLeftStickY[2];
 
 	// 現選択の最小
 	int optionSelectMin;
@@ -133,13 +133,17 @@ private:
 	std::thread thsTexture;
 
 	// オプション用画像ID
-	enum class EOptionDraw { BGM, Camera, ColorD, ColorP, SE, Sound, Perspective, Color, Ortho, ColorNormal, HorizonReturn, VerticalReturn };
+	enum class EOptionDraw { BGM, Camera, ColorD, ColorP, SE, Sound, Perspective, Color, Ortho
+		, ColorNormal, HorizonReturn, VerticalReturn, nextPage, prevPage, optionEnd };
 
 	// オプション用画像
-	int optionDrawMedia[12];
+	int optionDrawMedia[15];
 
 	// オプション用画像個数
-	const int optionDrawNum = 12;
+	const int optionDrawNum = 15;
+
+	// オプションのページ目
+	int optionPageNowNumber;
 
 
 

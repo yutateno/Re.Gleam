@@ -171,4 +171,7 @@ public:
 
 	// 描画から消すかどうか
 	const bool GetEraseExistence() const { return eraseExistence; }
+
+	// オプション用モデル描画の後始末
+	void OptionActorDrawAfter() override {}
 };

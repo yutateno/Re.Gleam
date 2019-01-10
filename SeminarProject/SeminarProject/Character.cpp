@@ -292,6 +292,12 @@ void Character::PositionReset()
 	area = VGet(0.0f, 0.0f, 0.0f);
 }
 
+void Character::OptionActorDrawAfter()
+{
+	MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));
+	MV1SetPosition(modelHandle, area);
+}
+
 
 // •`‰æ
 void Character::Draw()

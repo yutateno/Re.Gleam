@@ -77,6 +77,9 @@ public:
 	// オプション用モデル描画の準備
 	void OptionActorDrawBefore();
 
+	// オプション用モデル描画の後始末
+	virtual void OptionActorDrawAfter() = 0;
+
 
 	/// ゲッターセッター
 

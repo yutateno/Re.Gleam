@@ -18,5 +18,5 @@ public:
 
 
 	// •`‰æ
-	void Draw();				
+	void Draw();
 };

@@ -1202,3 +1202,8 @@ void MainMove3::OptionActorModelBefore()
 {
 	p_character->OptionActorDrawBefore();
 }
+
+void MainMove3::OptionActorModelAfter()
+{
+	p_character->OptionActorDrawAfter();
+}

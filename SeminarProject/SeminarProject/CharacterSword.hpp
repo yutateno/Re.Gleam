@@ -71,6 +71,27 @@ private:
 	int leftUnderTouchFrame;
 
 
+	/// walkSpeedの各々の状況の最大値
+
+	// 攻撃中の最大移動値
+	const float maxWalkSpeedAttack = 60.0f;
+
+	// 瞬間加速時の最大移動量
+	const float maxWalkSpeedFast = 85.0f;		// 元100.0f
+
+	// 空中で瞬間加速時の最大移動量
+	const float maxWalkSpeedFlyFast = 80.0f;		// 元85.0f
+
+	// 通常時の最大移動量
+	const float maxWalkSpeedNormal = 30.0f;
+
+	// 空中時の最大移動量
+	const float maxWalkSpeedFly = 15.0f;
+
+	// 瞬間加速時の再使用待機時間
+	const int maxFastMoveWaitCount = 34;
+
+
 	/// 攻撃に関して-----------------------
 
 	// 今攻撃しているかどうか
@@ -200,5 +221,8 @@ public:
 
 	// 最も近くてロックオンしている敵
 	void SetMostNearEnemyArea(VECTOR enemyArea = VGet(0, -1000, 0)) { mostNearEnemyArea = enemyArea; }
+
+	// オプション用モデル描画の後始末
+	void OptionActorDrawAfter() override;
 };
 

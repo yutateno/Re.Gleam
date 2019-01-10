@@ -424,3 +424,8 @@ void DefaultMove::OptionActorModelBefore()
 {
 	p_character->OptionActorDrawBefore();
 }
+
+void DefaultMove::OptionActorModelAfter()
+{
+	p_character->OptionActorDrawAfter();
+}

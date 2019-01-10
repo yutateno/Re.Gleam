@@ -303,26 +303,28 @@ void Manager::OptionProcess()
 	// スティックの一回押し倒しで更新するよう調整。
 	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
 	{
-		if(optionControllStick[0] < 2) optionControllStick[0]++;
+		if(optionControllLeftStickY[0] < 2) optionControllLeftStickY[0]++;
 	}
 	else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) < 0)
 	{
-		if (optionControllStick[1] < 2) optionControllStick[1]++;
+		if (optionControllLeftStickY[1] < 2) optionControllLeftStickY[1]++;
 	}
 	else
 	{
-		optionControllStick[0] = 0;
-		optionControllStick[1] = 0;
+		optionControllLeftStickY[0] = 0;
+		optionControllLeftStickY[1] = 0;
 	}
-	if (optionControllStick[0] == 1)
+	if (optionControllLeftStickY[0] == 1)
 	{
 		int temp = static_cast<int>(optionSelectButtonNum);
 		optionSelectButtonNum = static_cast<EOptionSelectButton>(temp > optionSelectMin ? --temp : temp);
+		if (optionSelectButtonNum == EOptionSelectButton::ColorSelect) optionPageNowNumber = 0;
 	}
-	if (optionControllStick[1] == 1)
+	if (optionControllLeftStickY[1] == 1)
 	{
 		int temp = static_cast<int>(optionSelectButtonNum);
 		optionSelectButtonNum = static_cast<EOptionSelectButton>(temp < optionSelectMax ? ++temp : temp);
+		if (optionSelectButtonNum == EOptionSelectButton::Camera) optionPageNowNumber = 1;
 	}
 }
 
@@ -335,126 +337,138 @@ void Manager::OptionDraw()
 	///　モデル表示-------------------------------------------------------------
 	p_baseMove->OptionActorModel();
 
-	/// サウンド関係オプション-----------------------------------------------
-	// UI:Sound
-	DrawGraph(95, 95, optionDrawMedia[static_cast<int>(EOptionDraw::Sound)], false);
-	if (optionSelectButtonNum == EOptionSelectButton::Sound)
+	DrawGraph(1600, 800, optionDrawMedia[static_cast<int>(EOptionDraw::optionEnd)], true);
+
+	if (optionPageNowNumber == 0)
 	{
-		DrawBox(95, 95, 95 + 211, 95 + 86, GetColor(255, 0, 0), false);
-	}
+		/// サウンド関係オプション-----------------------------------------------
+		// UI:Sound
+		DrawGraph(95, 95, optionDrawMedia[static_cast<int>(EOptionDraw::Sound)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::Sound)
+		{
+			DrawBox(95, 95, 95 + 211, 95 + 86, GetColor(255, 0, 0), false);
+		}
 
-	// UI:BGM
-	DrawGraph(381, 114, optionDrawMedia[static_cast<int>(EOptionDraw::BGM)], false);
-	if (optionSelectButtonNum == EOptionSelectButton::BGM)
+		// UI:BGM
+		DrawGraph(381, 114, optionDrawMedia[static_cast<int>(EOptionDraw::BGM)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::BGM)
+		{
+			DrawBox(381, 114, 381 + 87, 114 + 58, GetColor(255, 0, 0), false);
+		}
+
+		// UI:BGMバー
+		DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(200, 200, 200), true);
+		DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(0, 0, 0), false);
+		if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
+		{
+			DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(255, 0, 0), false);
+		}
+		DrawBox(546 - 5 + static_cast<int>(SoundProcess::GetBGMVolumeEntire() * 547)
+			, 100 - 10, 546 + 5 + static_cast<int>(SoundProcess::GetBGMVolumeEntire() * 548)
+			, 100 + 81 + 10, GetColor(0, 125, 125), true);
+
+		// UI:SE
+		DrawGraph(385, 266, optionDrawMedia[static_cast<int>(EOptionDraw::SE)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::SE)
+		{
+			DrawBox(385, 266, 385 + 86, 266 + 58, GetColor(255, 0, 0), false);
+		}
+
+		// UI:SEバー
+		DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(200, 200, 200), true);
+		DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(0, 0, 0), false);
+		if (optionSelectButtonNum == EOptionSelectButton::SESelect)
+		{
+			DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(255, 0, 0), false);
+		}
+		DrawBox(548 - 5 + static_cast<int>(SoundProcess::GetSEVolumeEntire() * 547)
+			, 255 - 10, 548 + 5 + static_cast<int>(SoundProcess::GetSEVolumeEntire() * 547)
+			, 255 + 78 + 10, GetColor(0, 125, 125), true);
+
+
+		/// 色覚に関するオプション----------------------------------------------
+		// UI:色覚調整
+		if (BASICPARAM::e_nowScene < ESceneNumber::THIRDMOVE) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
+		DrawGraph(96, 413, optionDrawMedia[static_cast<int>(EOptionDraw::Color)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::ColorSelect)
+		{
+			DrawBox(96, 413, 96 + 112, 413 + 76, GetColor(255, 0, 0), false);
+		}
+
+		// UI:通常色
+		DrawGraph(385, 427, optionDrawMedia[static_cast<int>(EOptionDraw::ColorNormal)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
+		{
+			DrawBox(385, 427, 385 + 83, 427 + 58, GetColor(255, 0, 0), false);
+		}
+
+		// UI:P型
+		DrawGraph(386, 550, optionDrawMedia[static_cast<int>(EOptionDraw::ColorP)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::ColorP)
+		{
+			DrawBox(386, 550, 386 + 83, 550 + 59, GetColor(255, 0, 0), false);
+		}
+
+		// UI:D型
+		DrawGraph(385, 682, optionDrawMedia[static_cast<int>(EOptionDraw::ColorD)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::ColorD)
+		{
+			DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(255, 0, 0), false);
+		}
+		if (BASICPARAM::e_nowScene < ESceneNumber::THIRDMOVE) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+		// 次のページ
+		DrawGraph(96, 815, optionDrawMedia[static_cast<int>(EOptionDraw::nextPage)], false);
+	}
+	else if (optionPageNowNumber == 1)
 	{
-		DrawBox(381, 114, 381 + 87, 114 + 58, GetColor(255, 0, 0), false);
+		// 前のページへ
+		DrawGraph(96, 95, optionDrawMedia[static_cast<int>(EOptionDraw::prevPage)], false);
+
+		/// カメラの関するオプション------------------------------------------------
+		// カメラ
+		DrawGraph(95, 247, optionDrawMedia[static_cast<int>(EOptionDraw::Camera)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::Camera)
+		{
+			DrawBox(95, 247, 95 + 109, 247 + 68, GetColor(255, 0, 0), false);
+		}
+
+		// 遠近法
+		if (BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
+		DrawGraph(385, 267, optionDrawMedia[static_cast<int>(EOptionDraw::Perspective)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective)
+		{
+			DrawBox(385, 267, 385 + 83, 267 + 58, GetColor(255, 0, 0), false);
+		}
+		if (BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+		// 正射影
+		if (!BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
+		DrawGraph(385, 400, optionDrawMedia[static_cast<int>(EOptionDraw::Ortho)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::CameraOrtho)
+		{
+			DrawBox(385, 400, 385 + 83, 400 + 58, GetColor(255, 0, 0), false);
+		}
+		if (!BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+		// 横反転
+		if (!BASICPARAM::cameraHorizonReturn) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
+		DrawGraph(385, 513, optionDrawMedia[static_cast<int>(EOptionDraw::HorizonReturn)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::CameraHReturn)
+		{
+			DrawBox(385, 513, 385 + 83, 513 + 58, GetColor(255, 0, 0), false);
+		}
+		if (!BASICPARAM::cameraHorizonReturn) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+		// 縦反転
+		if (!BASICPARAM::cameraVerticalReturn) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
+		DrawGraph(385, 646, optionDrawMedia[static_cast<int>(EOptionDraw::VerticalReturn)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::CameraVReturn)
+		{
+			DrawBox(385, 646, 385 + 83, 646 + 58, GetColor(255, 0, 0), false);
+		}
+		if (!BASICPARAM::cameraVerticalReturn) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 	}
-
-	// UI:BGMバー
-	DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(200, 200, 200), true);
-	DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(0, 0, 0), false);
-	if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
-	{
-		DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(255, 0, 0), false);
-	}
-	DrawBox(546 - 5 + static_cast<int>(SoundProcess::GetBGMVolumeEntire() * 547)
-		, 100 - 10, 546 + 5 + static_cast<int>(SoundProcess::GetBGMVolumeEntire() * 548)
-		, 100 + 81 + 10, GetColor(0, 125, 125), true);
-
-	// UI:SE
-	DrawGraph(385, 266, optionDrawMedia[static_cast<int>(EOptionDraw::SE)], false);
-	if (optionSelectButtonNum == EOptionSelectButton::SE)
-	{
-		DrawBox(385, 266, 385 + 86, 266 + 58, GetColor(255, 0, 0), false);
-	}
-
-	// UI:SEバー
-	DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(200, 200, 200), true);
-	DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(0, 0, 0), false);
-	if (optionSelectButtonNum == EOptionSelectButton::SESelect)
-	{
-		DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(255, 0, 0), false);
-	}
-	DrawBox(548 - 5 + static_cast<int>(SoundProcess::GetSEVolumeEntire() * 547)
-		, 255 - 10, 548 + 5 + static_cast<int>(SoundProcess::GetSEVolumeEntire() * 547)
-		, 255 + 78 + 10, GetColor(0, 125, 125), true);
-
-
-	/// 色覚に関するオプション----------------------------------------------
-	// UI:色覚調整
-	if (BASICPARAM::e_nowScene < ESceneNumber::THIRDMOVE) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
-	DrawGraph(96, 413, optionDrawMedia[static_cast<int>(EOptionDraw::Color)], false);
-	if (optionSelectButtonNum == EOptionSelectButton::ColorSelect)
-	{
-		DrawBox(96, 413, 96 + 112, 413 + 76, GetColor(255, 0, 0), false);
-	}
-
-	// UI:通常色
-	DrawGraph(385, 427, optionDrawMedia[static_cast<int>(EOptionDraw::ColorNormal)], false);
-	if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
-	{
-		DrawBox(385, 427, 385 + 83, 427 + 58, GetColor(255, 0, 0), false);
-	}
-
-	// UI:P型
-	DrawGraph(386, 550, optionDrawMedia[static_cast<int>(EOptionDraw::ColorP)], false);
-	if (optionSelectButtonNum == EOptionSelectButton::ColorP)
-	{
-		DrawBox(386, 550, 386 + 83, 550 + 59, GetColor(255, 0, 0), false);
-	}
-
-	// UI:D型
-	DrawGraph(385, 682, optionDrawMedia[static_cast<int>(EOptionDraw::ColorD)], false);
-	if (optionSelectButtonNum == EOptionSelectButton::ColorD)
-	{
-		DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(255, 0, 0), false);
-	}
-	if (BASICPARAM::e_nowScene < ESceneNumber::THIRDMOVE) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-
-
-	/// カメラの関するオプション------------------------------------------------
-	// カメラ
-	DrawGraph(95, 843, optionDrawMedia[static_cast<int>(EOptionDraw::Camera)], false);
-	if (optionSelectButtonNum == EOptionSelectButton::Camera)
-	{
-		DrawBox(95, 843, 95 + 109, 843 + 68, GetColor(255, 0, 0), false);
-	}
-
-	// 遠近法
-	if (BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
-	DrawGraph(385, 843, optionDrawMedia[static_cast<int>(EOptionDraw::Perspective)], false);
-	if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective)
-	{
-		DrawBox(385, 843, 385 + 83, 843 + 58, GetColor(255, 0, 0), false);
-	}
-	if (BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-
-	// 正射影
-	if (!BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
-	DrawGraph(385, 970, optionDrawMedia[static_cast<int>(EOptionDraw::Ortho)], false);
-	if (optionSelectButtonNum == EOptionSelectButton::CameraOrtho)
-	{
-		DrawBox(385, 970, 385 + 83, 970 + 58, GetColor(255, 0, 0), false);
-	}
-	if (!BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-
-	// 横反転
-	if (!BASICPARAM::cameraHorizonReturn) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
-	DrawGraph(568, 843, optionDrawMedia[static_cast<int>(EOptionDraw::HorizonReturn)], false);
-	if (optionSelectButtonNum == EOptionSelectButton::CameraHReturn)
-	{
-		DrawBox(568, 843, 568 + 83, 843 + 58, GetColor(255, 0, 0), false);
-	}
-	if (!BASICPARAM::cameraHorizonReturn) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-
-	// 縦反転
-	if (!BASICPARAM::cameraVerticalReturn) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
-	DrawGraph(568, 970, optionDrawMedia[static_cast<int>(EOptionDraw::VerticalReturn)], false);
-	if (optionSelectButtonNum == EOptionSelectButton::CameraVReturn)
-	{
-		DrawBox(568, 970, 568 + 83, 970 + 58, GetColor(255, 0, 0), false);
-	}
-	if (!BASICPARAM::cameraVerticalReturn) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 }
 
 
@@ -1098,8 +1112,9 @@ Manager::Manager()
 
 	// オプションに関する
 	optionMenuNow = false;
-	optionControllStick[0] = 0;
-	optionControllStick[1] = 0;
+	optionControllLeftStickY[0] = 0;
+	optionControllLeftStickY[1] = 0;
+	optionPageNowNumber = 0;
 	optionSelectMin = 0;
 	optionSelectMax = 2;
 	seDoWaitTimer = 0;
@@ -1119,7 +1134,9 @@ Manager::Manager()
 	LoadFile::MyLoad("media\\こっち\\media\\option\\通常色.pyn", optionDrawMedia[9], ELOADFILE::graph);
 	LoadFile::MyLoad("media\\こっち\\media\\option\\横反転.pyn", optionDrawMedia[10], ELOADFILE::graph);
 	LoadFile::MyLoad("media\\こっち\\media\\option\\縦反転.pyn", optionDrawMedia[11], ELOADFILE::graph);
-
+	LoadFile::MyLoad("media\\こっち\\media\\option\\nextPage.pyn", optionDrawMedia[12], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\option\\prevPage.pyn", optionDrawMedia[13], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\option\\optionEnd.pyn", optionDrawMedia[14], ELOADFILE::graph);
 
 	// フェード処理に関する
 	feedCount = 0;
@@ -1277,6 +1294,8 @@ void Manager::Update()
 						// オプションメニューのボタン位置を初期化
 						optionSelectButtonNum = EOptionSelectButton::Sound;
 
+						optionPageNowNumber = 0;
+
 
 						// サウンド音量をオプションメニュー用に下げるよう命令
 						SoundProcess::SetOptionMenuNow(true);
@@ -1332,6 +1351,7 @@ void Manager::Update()
 				// オプション画面から戻る
 				if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1)
 				{
+					p_baseMove->OptionActorModelAfter();
 					p_baseMove->CameraProcess();			// カメラ切り替え
 					SoundProcess::SetOptionMenuNow(false);		// サウンド音量をオプション用から戻す
 					optionMenuNow = false;

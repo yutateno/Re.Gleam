@@ -92,5 +92,8 @@ public:
 
 	// テクスチャの切り替え
 	void TextureReload();
+
+	// オプション用モデル描画の後始末
+	void OptionActorDrawAfter() override {}
 };
 

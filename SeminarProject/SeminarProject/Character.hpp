@@ -56,4 +56,7 @@ public:
 
 	// 位置を初期化
 	void PositionReset();
+
+	// オプション用モデル描画の後始末
+	void OptionActorDrawAfter() override;
 };

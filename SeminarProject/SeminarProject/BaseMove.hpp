@@ -140,6 +140,9 @@ public:
 	// オプション画面でのモデル表示の準備
 	virtual void OptionActorModelBefore() = 0;
 
+	// オプション画面でのモデル表示の後始末
+	virtual void OptionActorModelAfter() = 0;
+
 
 	/// ゲッターセッター------------------------------
 

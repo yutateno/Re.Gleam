@@ -16,12 +16,12 @@ void CharacterSword::MoveProcess()
 			{
 				animSpeed = 0.75f;
 			}
-			if (walkSpeed < 29.0f)
+			if (walkSpeed < maxWalkSpeedNormal - 1.0f)
 			{
 				walkNow = true;
 				walkSpeed += 5.0f;
 			}
-			else if (walkSpeed > 31.0f)
+			else if (walkSpeed > maxWalkSpeedNormal + 1.0f)
 			{
 				walkNow = true;
 				walkSpeed -= 5.0f;
@@ -31,7 +31,7 @@ void CharacterSword::MoveProcess()
 			else
 			{
 				walkNow = true;
-				walkSpeed = 30.0f;
+				walkSpeed = maxWalkSpeedNormal;
 				modelWidth = 50.0f;
 				blendCount = 0;
 			}
@@ -85,12 +85,12 @@ void CharacterSword::MoveProcess()
 			{
 				animSpeed = 1.0f;
 			}
-			if (walkSpeed < 14.0f)
+			if (walkSpeed < maxWalkSpeedFly - 1.0f)
 			{
 				walkNow = true;
 				walkSpeed += 5.0f;
 			}
-			else if (walkSpeed > 16.0f)
+			else if (walkSpeed > maxWalkSpeedFly + 1.0f)
 			{
 				walkNow = true;
 				walkSpeed -= 5.0f;
@@ -100,7 +100,7 @@ void CharacterSword::MoveProcess()
 			else
 			{
 				walkNow = true;
-				walkSpeed = 16.0f;
+				walkSpeed = maxWalkSpeedFly;
 				modelWidth = 50.0f;
 				blendCount = 0;
 			}
@@ -127,13 +127,14 @@ void CharacterSword::MoveProcess()
 	{
 		moveFastWaitCount--;
 	}
-	if (!jumpNow && moveFastWaitCount > 34)
+	if (!jumpNow && moveFastWaitCount > maxFastMoveWaitCount)
 	{
 		moveFastWaitCount = 0;
 	}
 
 	// 移動速度が最大でRBを押したときに早くする
-	if (((walkSpeed >= 29.0f && walkSpeed <= 31.0f) || (jumpNow && walkSpeed >= 14.0f && walkSpeed <= 16.0f))
+	if (((walkSpeed >= maxWalkSpeedNormal - 1.0f && walkSpeed <= maxWalkSpeedNormal + 1.0f)
+		|| (jumpNow && walkSpeed >= maxWalkSpeedFly - 1.0f && walkSpeed <= maxWalkSpeedFly + 1.0f))
 		&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::SHOULDER_RB) == 1
 		&& moveFastWaitCount == 0)
 	{
@@ -141,15 +142,15 @@ void CharacterSword::MoveProcess()
 		{
 			jumpPower = 0.0f;
 			jumpUpNow = false;
-			moveFastWaitCount = 99;
-			walkSpeed = 85.0f;
-			modelWidth = 85.0f;
+			moveFastWaitCount = maxFastMoveWaitCount * 3;
+			walkSpeed = maxWalkSpeedFlyFast;
+			modelWidth = maxWalkSpeedFlyFast * 1.5f;;
 		}
 		else
 		{
-			moveFastWaitCount = 34;
-			walkSpeed = 100.0f;
-			modelWidth = 100.0f;
+			moveFastWaitCount = maxFastMoveWaitCount;
+			walkSpeed = maxWalkSpeedFast;
+			modelWidth = maxWalkSpeedFast * 1.5f;
 		}
 		blendCount = 140;
 		animSpeed = 1.0f;
@@ -320,13 +321,13 @@ void CharacterSword::AttackProcess()
 	if (attackNow)
 	{
 		attackMotionEnd = false;
-		if (walkSpeed < 60.0f)
+		if (walkSpeed < maxWalkSpeedAttack)
 		{
 			walkSpeed += 20.0f;
 		}
 		else
 		{
-			walkSpeed = 60.0f;
+			walkSpeed = maxWalkSpeedAttack;
 		}
 
 
@@ -904,7 +905,7 @@ void CharacterSword::Process(const float getAngle)
 	ActorHit(stageHandle);
 
 	// ジャンプのプロセス
-	if (moveFastWaitCount < 90)
+	if (moveFastWaitCount < (maxFastMoveWaitCount * 3) - 9)
 	{
 		JumpProcess();
 	}
@@ -925,7 +926,7 @@ void CharacterSword::Process(const float getAngle)
 	{
 		MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));
 	}
-	if (walkSpeed != 100.0f)
+	if (walkSpeed != maxWalkSpeedFast)
 	{
 		// 指定位置にモデルを配置
 		MV1SetPosition(modelHandle, area);
@@ -997,7 +998,7 @@ void CharacterSword::Draw()
 	if (blendCount != 0)
 	{
 		VECTOR temp = area;
-		if (moveFastWaitCount == 99 || walkSpeed == 100.0f)
+		if (moveFastWaitCount == maxFastMoveWaitCount * 3 || walkSpeed == maxWalkSpeedFast)
 		{
 			preDrawArea = preArea;
 		}
@@ -1064,4 +1065,10 @@ void CharacterSword::Draw()
 		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
 	}
 #endif // _DEBUG
+}
+
+void CharacterSword::OptionActorDrawAfter()
+{
+	MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));
+	MV1SetPosition(modelHandle, area);
 }

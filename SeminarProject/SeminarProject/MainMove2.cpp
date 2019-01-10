@@ -1172,3 +1172,8 @@ void MainMove2::OptionActorModelBefore()
 {
 	p_character->OptionActorDrawBefore();
 }
+
+void MainMove2::OptionActorModelAfter()
+{
+	p_character->OptionActorDrawAfter();
+}

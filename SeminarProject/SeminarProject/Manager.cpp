@@ -617,8 +617,8 @@ void Manager::OptionDraw()
 Manager::Manager()
 {
 	// èâä˙âª
-	BASICPARAM::e_preScene = ESceneNumber::SECONDLOAD;
-	BASICPARAM::e_nowScene = ESceneNumber::SECONDLOAD;
+	BASICPARAM::e_preScene = ESceneNumber::FIRSTLOAD;
+	BASICPARAM::e_nowScene = ESceneNumber::FIRSTLOAD;
 	BASICPARAM::e_preTextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::e_TextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::nowCameraOrtho = false;
@@ -1074,7 +1074,7 @@ Manager::Manager()
 
 	// êlÇÃÉfÅ[É^
 	move4str[34] = "media\\Ç±Ç¡Çø\\media\\move4\\àÍî êlÅQÇªÇÃÇP\\human1_motionALL.myn";
-	move4str[35] = "media\\Ç±Ç¡Çø\\media\\move4\\àÍî êlÅQÇªÇÃÇP\\human1_motionALL.fbm\\normal\\human_col.pyn";
+	move4str[35] = "media\\Ç±Ç¡Çø\\media\\move4\\àÍî êlÅQÇªÇÃÇP\\human1_motionALL.fbm\\whiteblack\\human_col.pyn";
 
 	load4[0] = ELOADFILE::mv1model;
 	load4[1] = ELOADFILE::mv1model;

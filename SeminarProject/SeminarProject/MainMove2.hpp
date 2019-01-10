@@ -205,7 +205,7 @@ public:
 	void CameraProcess() override;
 
 	// テクスチャの切り替え
-	void TextureReload() override {};
+	void TextureReload() override {}
 
 	// オプション画面でのモデル表示
 	void OptionActorModel() override;

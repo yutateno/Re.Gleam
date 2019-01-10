@@ -26,14 +26,12 @@ void CharacterSword::MoveProcess()
 				walkNow = true;
 				walkSpeed -= 5.0f;
 				modelWidth -= 3.6f;
-				blendCount -= 10;
 			}
 			else
 			{
 				walkNow = true;
 				walkSpeed = maxWalkSpeedNormal;
 				modelWidth = 50.0f;
-				blendCount = 0;
 			}
 
 			if (flyCount <= 10) flyCount = 0;
@@ -95,14 +93,12 @@ void CharacterSword::MoveProcess()
 				walkNow = true;
 				walkSpeed -= 5.0f;
 				modelWidth -= 3.6f;
-				blendCount -= 10;
 			}
 			else
 			{
 				walkNow = true;
 				walkSpeed = maxWalkSpeedFly;
 				modelWidth = 50.0f;
-				blendCount = 0;
 			}
 		}
 	}
@@ -1029,6 +1025,7 @@ void CharacterSword::Draw()
 		MV1SetMaterialDrawBlendParam(this->modelHandle, 4, 255);
 		// 指定位置にモデルを配置
 		MV1SetPosition(modelHandle, area);
+		blendCount -= 10;
 	}
 
 

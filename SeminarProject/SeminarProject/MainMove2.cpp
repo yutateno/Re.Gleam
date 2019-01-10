@@ -128,7 +128,6 @@ void MainMove2::AdjustmentProcess()
 
 void MainMove2::AdjustmentDraw()
 {
-	/// オペレーターのフェード表現に関する-----------------------------------------------------------
 	if (adjustmentSceneFeed >= 50)
 	{
 		DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, GetColor(247, 247, 247), true);
@@ -281,7 +280,7 @@ void MainMove2::AdjustmentDraw()
 	//	DrawGraph(0, 0, adjustmentDrawScreen, true);
 	//}
 
-
+	/// オペレーターのフェード表現に関する-----------------------------------------------------------
 	if (adjustmentSceneFeed >= 5 && adjustmentSceneFeed <= 55)
 	{
 		DrawBox(0, 108 * 0, BASICPARAM::winWidth, 108 * 1, GetColor(0, 0, 0), true);
@@ -1070,6 +1069,46 @@ void MainMove2::Process()
 		AttackProcess();
 
 		BaseMove::SkyBoxProcess(p_character->GetArea());
+
+
+		if (p_character->GetArea().y >= 2500.0f)
+		{
+			if (bgmOnceVolumeChange != 5) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 200, 200);
+			bgmOnceVolumeChange = 5;
+		}
+		else if (p_character->GetArea().y >= 2000.0f)
+		{
+			if (bgmOnceVolumeChange != 4) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 170, 170);
+			bgmOnceVolumeChange = 4;
+		}
+		else if (p_character->GetArea().y >= 1500.0f)
+		{
+			if (bgmOnceVolumeChange != 3) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 150, 150);
+			bgmOnceVolumeChange = 3;
+		}
+		else if (p_character->GetArea().y >= 1000.0f)
+		{
+			if (bgmOnceVolumeChange != 2) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 100, 100);
+			bgmOnceVolumeChange = 2;
+		}
+		else if (p_character->GetArea().y >= 500.0f)
+		{
+			if (bgmOnceVolumeChange != 1) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 50, 50);
+			bgmOnceVolumeChange = 1;
+		}
+		else
+		{
+			if (bgmOnceVolumeChange != 0) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 0, 0);
+			bgmOnceVolumeChange = 0;
+		}
+
+
+		if (p_character->GetArea().y >= 3550.0f)
+		{
+			BASICPARAM::endFeedNow = true;
+			BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
+			BaseMove::SetScene(ESceneNumber::THIRDLOAD);
+		}
 	}
 	else
 	{
@@ -1103,50 +1142,11 @@ void MainMove2::Process()
 		}
 	}
 
-
-	if (p_character->GetArea().y >= 2500.0f)
-	{
-		if (bgmOnceVolumeChange != 5) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 200, 200);
-		bgmOnceVolumeChange = 5;
-	}
-	else if (p_character->GetArea().y >= 2000.0f)
-	{
-		if (bgmOnceVolumeChange != 4) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 170, 170);
-		bgmOnceVolumeChange = 4;
-	}
-	else if (p_character->GetArea().y >= 1500.0f)
-	{
-		if (bgmOnceVolumeChange != 3) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 150, 150);
-		bgmOnceVolumeChange = 3;
-	}
-	else if (p_character->GetArea().y >= 1000.0f)
-	{
-		if (bgmOnceVolumeChange != 2) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 100, 100);
-		bgmOnceVolumeChange = 2;
-	}
-	else if (p_character->GetArea().y >= 500.0f)
-	{
-		if (bgmOnceVolumeChange != 1) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 50, 50);
-		bgmOnceVolumeChange = 1;
-	}
-	else
-	{
-		if (bgmOnceVolumeChange != 0) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 0, 0);
-		bgmOnceVolumeChange = 0;
-	}
-
-
-	if (p_character->GetArea().y >= 3550.0f)
-	{
-		BASICPARAM::endFeedNow = true;
-		BaseMove::SetScene(ESceneNumber::THIRDLOAD);
-	}
-
-
 #ifdef _DEBUG
 	if (CheckHitKey(KEY_INPUT_Z) == 1)
 	{
 		BASICPARAM::endFeedNow = true;
+		BASICPARAM::e_TextureColor = ETextureColor::D_CORRECTION;
 		BaseMove::SetScene(ESceneNumber::THIRDLOAD);
 	}
 #endif

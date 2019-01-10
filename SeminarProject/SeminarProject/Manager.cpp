@@ -85,6 +85,148 @@ void Manager::SceneChange()
 }
 
 
+void Manager::Move4TextureReload()
+{
+	switch (BASICPARAM::e_TextureColor)
+	{
+	case ETextureColor::NORMAL:
+		if (!BASICPARAM::charaTextureWhiteBlack)
+		{
+			// キャラのテクスチャデータ
+			move4str[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\sword_Tex.pyn";
+			move4str[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_hair.pyn";
+			move4str[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_wear.pyn";
+			move4str[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn";
+			move4str[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn";
+		}
+		if (!BASICPARAM::enemyTextureWhiteBlack)
+		{
+		}
+		if (!BASICPARAM::lightStreetTextureWhiteBlack)
+		{
+			// 街灯のテクスチャデータ
+			move4str[14] = "media\\こっち\\media\\街灯\\normal\\body_col.pyn";
+			move4str[15] = "media\\こっち\\media\\街灯\\normal\\lamp_COLandems.pyn";
+		}
+		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
+		{
+			// 階段とそのあとの床のテクスチャデータ
+			move4str[22] = "media\\こっち\\media\\階段と床合体\\normal\\kaidan.pyn";
+			move4str[23] = "media\\こっち\\media\\階段と床合体\\normal\\yuka.pyn";
+		}
+		if (!BASICPARAM::stairsTextureWhiteBlack)
+		{
+			// 階段のテクスチャデータ
+			move4str[13] = "media\\こっち\\media\\kaidan\\normal\\kaidan.pyn";
+		}
+		if (!BASICPARAM::anothreTextureWhiteBlack)
+		{
+			// 人のデータ
+			move4str[35] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\normal\\human_col.pyn";
+
+			// スカイボックスのテクスチャデータ
+			move4str[16] = "media\\こっち\\media\\スカイボックス\\normal\\BlueSky.byn";
+
+			// 精算機械テクスチャ
+			move4str[18] = "media\\こっち\\media\\Terminal\\normal\\Terminal.pyn";
+			move4str[19] = "media\\こっち\\media\\Terminal\\normal\\T_display.pyn";
+		}
+		break;
+		
+	case ETextureColor::P_CORRECTION:
+		if (!BASICPARAM::charaTextureWhiteBlack)
+		{
+			// キャラのテクスチャデータ
+			move4str[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\sword_Tex.pyn";
+			move4str[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_hair.pyn";
+			move4str[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_wear.pyn";
+			move4str[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_face.pyn";
+			move4str[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_ex.pyn";
+		}
+		if (!BASICPARAM::enemyTextureWhiteBlack)
+		{
+		}
+		if (!BASICPARAM::lightStreetTextureWhiteBlack)
+		{
+			// 街灯のテクスチャデータ
+			move4str[14] = "media\\こっち\\media\\街灯\\P\\body_col.pyn";
+			move4str[15] = "media\\こっち\\media\\街灯\\P\\lamp_COLandems.pyn";
+		}
+		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
+		{
+			// 階段とそのあとの床のテクスチャデータ
+			move4str[22] = "media\\こっち\\media\\階段と床合体\\P\\kaidan.pyn";
+			move4str[23] = "media\\こっち\\media\\階段と床合体\\P\\yuka.pyn";
+		}
+		if (!BASICPARAM::stairsTextureWhiteBlack)
+		{
+			// 階段のテクスチャデータ
+			move4str[13] = "media\\こっち\\media\\kaidan\\P\\kaidan.pyn";
+		}
+		if (!BASICPARAM::anothreTextureWhiteBlack)
+		{
+			// 人のデータ
+			move4str[35] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\P\\human_col.pyn";
+
+			// スカイボックスのテクスチャデータ
+			move4str[16] = "media\\こっち\\media\\スカイボックス\\P\\BlueSky.byn";
+
+			// 精算機械テクスチャ
+			move4str[18] = "media\\こっち\\media\\Terminal\\P\\Terminal.pyn";
+			move4str[19] = "media\\こっち\\media\\Terminal\\P\\T_display.pyn";
+		}
+		break;
+
+	case ETextureColor::D_CORRECTION:
+		if (!BASICPARAM::charaTextureWhiteBlack)
+		{
+			// キャラのテクスチャデータ
+			move4str[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\sword_Tex.pyn";
+			move4str[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_hair.pyn";
+			move4str[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_wear.pyn";
+			move4str[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_face.pyn";
+			move4str[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_ex.pyn";
+		}
+		if (!BASICPARAM::enemyTextureWhiteBlack)
+		{
+		}
+		if (!BASICPARAM::lightStreetTextureWhiteBlack)
+		{
+			// 街灯のテクスチャデータ
+			move4str[14] = "media\\こっち\\media\\街灯\\D\\body_col.pyn";
+			move4str[15] = "media\\こっち\\media\\街灯\\D\\lamp_COLandems.pyn";
+		}
+		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
+		{
+			// 階段とそのあとの床のテクスチャデータ
+			move4str[22] = "media\\こっち\\media\\階段と床合体\\D\\kaidan.pyn";
+			move4str[23] = "media\\こっち\\media\\階段と床合体\\D\\yuka.pyn";
+		}
+		if (!BASICPARAM::stairsTextureWhiteBlack)
+		{
+			// 階段のテクスチャデータ
+			move4str[13] = "media\\こっち\\media\\kaidan\\D\\kaidan.pyn";
+		}
+		if (!BASICPARAM::anothreTextureWhiteBlack)
+		{
+			// 人のデータ
+			move4str[35] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\D\\human_col.pyn";
+
+			// スカイボックスのテクスチャデータ
+			move4str[16] = "media\\こっち\\media\\スカイボックス\\D\\BlueSky.byn";
+
+			// 精算機械テクスチャ
+			move4str[18] = "media\\こっち\\media\\Terminal\\D\\Terminal.pyn";
+			move4str[19] = "media\\こっち\\media\\Terminal\\D\\T_display.pyn";
+		}
+		break;
+
+	default:
+		break;
+	}
+}
+
+
 void Manager::OptionProcess()
 {
 	///-----------------------------------------------------------------------------------------------------------
@@ -482,6 +624,12 @@ Manager::Manager()
 	BASICPARAM::nowCameraOrtho = false;
 	BASICPARAM::cameraHorizonReturn = false;
 	BASICPARAM::cameraVerticalReturn = false;
+	BASICPARAM::charaTextureWhiteBlack = true;
+	BASICPARAM::enemyTextureWhiteBlack = true;
+	BASICPARAM::lightStreetTextureWhiteBlack = true;
+	BASICPARAM::stairsRoadTextureWhiteBlack = true;
+	BASICPARAM::stairsTextureWhiteBlack = true;
+	BASICPARAM::anothreTextureWhiteBlack = true;
 
 
 	/// シーン１の素材ファイル-----------------------------------------------------------------------------
@@ -1367,6 +1515,11 @@ void Manager::Update()
 		// 現在のシーンの終了フェードが終わったら
 		if (!BASICPARAM::endFeedNow)
 		{
+			if (BASICPARAM::e_preScene == ESceneNumber::THIRDMOVE)
+			{
+				Move4TextureReload();
+			}
+
 			// シーンを変える
 			SceneChange();
 

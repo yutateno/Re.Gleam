@@ -80,6 +80,151 @@ void MainMove3::DamageTextureReload()
 	}
 }
 
+void MainMove3::AdjustmentProcess()
+{
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
+	{
+		if (CheckHitKey(KEY_INPUT_1) == 1)
+		{
+			if (BASICPARAM::charaTextureWhiteBlack)
+			{
+				// ダメージ演出
+				DamageTextureReload();
+
+				// キャラクター
+				p_character->TextureReload();
+				BASICPARAM::charaTextureWhiteBlack = false;
+			}
+		}
+		if (CheckHitKey(KEY_INPUT_2) == 1)
+		{
+			if (BASICPARAM::anothreTextureWhiteBlack)
+			{
+				// 精密機械
+				p_adjustmentMachine->TextureReload();
+				BASICPARAM::anothreTextureWhiteBlack = false;
+			}
+		}
+		if (CheckHitKey(KEY_INPUT_3) == 1)
+		{
+			if (BASICPARAM::enemyTextureWhiteBlack)
+			{
+				BASICPARAM::enemyTextureWhiteBlack = false;
+			}
+		}
+		if (CheckHitKey(KEY_INPUT_4) == 1)
+		{
+			if (BASICPARAM::lightStreetTextureWhiteBlack)
+			{
+				if (BASICPARAM::streetLightNum != 0)
+				{
+					for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
+					{
+						vp_stageStreetLight[i]->TextureReload();
+					}
+				}
+				BASICPARAM::lightStreetTextureWhiteBlack = false;
+			}
+		}
+		if (CheckHitKey(KEY_INPUT_5) == 1)
+		{
+			if (BASICPARAM::stairsRoadTextureWhiteBlack)
+			{
+				if (BASICPARAM::stairsRoadNum != 0)
+				{
+					for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+					{
+						vp_stageStairsRoad[i]->TextureReload();
+					}
+				}
+				BASICPARAM::stairsRoadTextureWhiteBlack = false;
+			}
+		}
+		if (CheckHitKey(KEY_INPUT_6) == 1)
+		{
+			if (BASICPARAM::stairsTextureWhiteBlack)
+			{
+				if (BASICPARAM::stairsNum != 0)
+				{
+					for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+					{
+						vp_stageStairs[i]->TextureReload();
+					}
+				}
+				BASICPARAM::stairsTextureWhiteBlack = false;
+			}
+		}
+	}
+
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
+	{
+		adjustmentFeedNow = true;
+		adjustmentStartFeed = false;
+	}
+
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::SHOULDER_RB) == 1
+		&& !BASICPARAM::paneruDrawFlag)
+	{
+		BASICPARAM::paneruDrawFlag = true;
+	}
+}
+
+void MainMove3::AdjustmentDraw()
+{
+	if (adjustmentSceneFeed >= 50)
+	{
+		DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, GetColor(247, 247, 247), true);
+
+		DrawFormatString(50, 50, 255, "1: charaTextureWhiteBlack : %s\n", BASICPARAM::charaTextureWhiteBlack ? "true" : "false");
+		DrawFormatString(50, 150, 255, "3: enemyTextureWhiteBlack : %s\n", BASICPARAM::enemyTextureWhiteBlack ? "true" : "false");
+		DrawFormatString(50, 250, 255, "6: stairsTextureWhiteBlack : %s\n", BASICPARAM::stairsTextureWhiteBlack ? "true" : "false");
+		DrawFormatString(50, 350, 255, "5: stairsRoadTextureWhiteBlack : %s\n", BASICPARAM::stairsRoadTextureWhiteBlack ? "true" : "false");
+		DrawFormatString(50, 450, 255, "4: lightStreetTextureWhiteBlack : %s\n", BASICPARAM::lightStreetTextureWhiteBlack ? "true" : "false");
+		DrawFormatString(50, 550, 255, "2: anothreTextureWhiteBlack : %s\n", BASICPARAM::anothreTextureWhiteBlack ? "true" : "false");
+	}
+
+	if (adjustmentSceneFeed >= 5 && adjustmentSceneFeed <= 55)
+	{
+		DrawBox(0, 108 * 0, BASICPARAM::winWidth, 108 * 1, GetColor(0, 0, 0), true);
+	}
+	if (adjustmentSceneFeed >= 10 && adjustmentSceneFeed <= 60)
+	{
+		DrawBox(0, 108 * 1, BASICPARAM::winWidth, 108 * 2, GetColor(0, 0, 0), true);
+	}
+	if (adjustmentSceneFeed >= 15 && adjustmentSceneFeed <= 65)
+	{
+		DrawBox(0, 108 * 2, BASICPARAM::winWidth, 108 * 3, GetColor(0, 0, 0), true);
+	}
+	if (adjustmentSceneFeed >= 20 && adjustmentSceneFeed <= 70)
+	{
+		DrawBox(0, 108 * 3, BASICPARAM::winWidth, 108 * 4, GetColor(0, 0, 0), true);
+	}
+	if (adjustmentSceneFeed >= 25 && adjustmentSceneFeed <= 75)
+	{
+		DrawBox(0, 108 * 4, BASICPARAM::winWidth, 108 * 5, GetColor(0, 0, 0), true);
+	}
+	if (adjustmentSceneFeed >= 30 && adjustmentSceneFeed <= 80)
+	{
+		DrawBox(0, 108 * 5, BASICPARAM::winWidth, 108 * 6, GetColor(0, 0, 0), true);
+	}
+	if (adjustmentSceneFeed >= 35 && adjustmentSceneFeed <= 85)
+	{
+		DrawBox(0, 108 * 6, BASICPARAM::winWidth, 108 * 7, GetColor(0, 0, 0), true);
+	}
+	if (adjustmentSceneFeed >= 40 && adjustmentSceneFeed <= 90)
+	{
+		DrawBox(0, 108 * 7, BASICPARAM::winWidth, 108 * 8, GetColor(0, 0, 0), true);
+	}
+	if (adjustmentSceneFeed >= 45 && adjustmentSceneFeed <= 95)
+	{
+		DrawBox(0, 108 * 8, BASICPARAM::winWidth, 108 * 9, GetColor(0, 0, 0), true);
+	}
+	if (adjustmentSceneFeed >= 50 && adjustmentSceneFeed <= 100)
+	{
+		DrawBox(0, 108 * 9, BASICPARAM::winWidth, 108 * 10, GetColor(0, 0, 0), true);
+	}
+}
+
 void MainMove3::ShadowDraw()
 {
 	/// セットアップ
@@ -334,6 +479,15 @@ void MainMove3::AttackProcess()
 				, p_adjustmentMachine->GetWidth() >= p_enemyCrayonHuman[i]->GetWidth() ? p_adjustmentMachine->GetWidth() : p_enemyCrayonHuman[i]->GetWidth());
 		}
 	}
+	// 距離が近かくで触れるボタン押したら
+	if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175
+		&& !p_character->GetAttackNow() && p_character->GetArea().y <= 10.0f
+		&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
+	{
+		adjustmentFeedNow = true;
+		adjustmentStartFeed = true;
+		changeAdjustmentScene = true;
+	}
 	// 近くかどうかで見た目を変える
 	if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 250)
 	{
@@ -575,6 +729,9 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 		p_adjustmentMachine->CatchDropItem();
 	}
 	adjustmentDescDraw = v_file[EFILE::terminalDesc];
+	changeAdjustmentScene = false;
+	adjustmentSceneFeed = 0;
+	adjustmentFeedNow = false;
 
 	// 敵スライムの初期化
 	for (int i = 0; i != enemySlimeNum; ++i)
@@ -916,207 +1073,244 @@ void MainMove3::Draw()
 
 
 	DrawFormatString(1020, 20, GetColor(0, 0, 0), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
+
+
+	AdjustmentDraw();
 }
 
 void MainMove3::Process()
 {
-	// キャラクターのプロセス
-	p_character->Process(p_camera->GetAngle());
-	charaSomeEnemyDamageCount = 0;
-
-	notDamageCount++;
-	if (notDamageCount > 100 && damageCount > 0 && (notDamageCount - 100) % 10 == 0) damageCount--;
-
-	if (damageDrawFrame > 0) damageDrawFrame--;
-
-
-	// カメラのプロセス
-	p_camera->Process(p_character->GetArea());
-
-	// ドロップアイテム
-	for (int i = 0, n = dropItemNum; i != n; ++i)
+	if (!changeAdjustmentScene)
 	{
-		if (p_dropItem[i]->GetDeath()) continue;
-		p_dropItem[i]->Process();
-	}
+		// キャラクターのプロセス
+		p_character->Process(p_camera->GetAngle());
+		charaSomeEnemyDamageCount = 0;
 
-	// 敵スライムのプロセス
-	for (int i = 0; i != enemySlimeNum; ++i)
-	{
-		if (p_enemySlime[i]->GetEraseExistence())
+		notDamageCount++;
+		if (notDamageCount > 100 && damageCount > 0 && (notDamageCount - 100) % 10 == 0) damageCount--;
+
+		if (damageDrawFrame > 0) damageDrawFrame--;
+
+
+		// カメラのプロセス
+		p_camera->Process(p_character->GetArea());
+
+		// ドロップアイテム
+		for (int i = 0, n = dropItemNum; i != n; ++i)
 		{
-			if (i == lockONNowEnemyID && lockOnEnemySlime)
-			{
-				mostNearEnemyDistance = 10000;
-				lockONNowEnemyID = 0;
-				p_character->SetMostNearEnemyArea();
-			}
-			if (!p_dropItem[(i * 5)]->GetDeath() && !p_dropItem[(i * 5)]->GetAlive()) p_dropItem[(i * 5)]->SetAlive(true, p_enemySlime[i]->GetArea());
-			if (!p_dropItem[(i * 5) + 1]->GetDeath() && !p_dropItem[(i * 5) + 1]->GetAlive()) p_dropItem[(i * 5) + 1]->SetAlive(true, p_enemySlime[i]->GetArea());
-			if (!p_dropItem[(i * 5) + 2]->GetDeath() && !p_dropItem[(i * 5) + 2]->GetAlive()) p_dropItem[(i * 5) + 2]->SetAlive(true, p_enemySlime[i]->GetArea());
-			if (!p_dropItem[(i * 5) + 3]->GetDeath() && !p_dropItem[(i * 5) + 3]->GetAlive()) p_dropItem[(i * 5) + 3]->SetAlive(true, p_enemySlime[i]->GetArea());
-			if (!p_dropItem[(i * 5) + 4]->GetDeath() && !p_dropItem[(i * 5) + 4]->GetAlive()) p_dropItem[(i * 5) + 4]->SetAlive(true, p_enemySlime[i]->GetArea());
-			continue;
+			if (p_dropItem[i]->GetDeath()) continue;
+			p_dropItem[i]->Process();
 		}
-		p_enemySlime[i]->Process();
 
-		if (p_enemySlime[i]->GetDeathFlag()) continue;
-
-		if (lockOnEnemySlime)
+		// 敵スライムのプロセス
+		for (int i = 0; i != enemySlimeNum; ++i)
 		{
-			if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[lockONNowEnemyID]->GetArea())
-				>= BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()))
+			if (p_enemySlime[i]->GetEraseExistence())
 			{
-				lockOnEnemySlime = true;
-				mostNearEnemyDistance = BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea());
-				mostNearEnemyScreenArea = ConvWorldPosToScreenPos(p_enemySlime[i]->GetArea());
-				lockONNowEnemyID = i;
-				if (mostNearEnemyDistance < 250)
+				if (i == lockONNowEnemyID && lockOnEnemySlime)
 				{
-					p_character->SetMostNearEnemyArea(p_enemySlime[i]->GetArea());
-				}
-				else
-				{
+					mostNearEnemyDistance = 10000;
+					lockONNowEnemyID = 0;
 					p_character->SetMostNearEnemyArea();
 				}
+				if (!p_dropItem[(i * 5)]->GetDeath() && !p_dropItem[(i * 5)]->GetAlive()) p_dropItem[(i * 5)]->SetAlive(true, p_enemySlime[i]->GetArea());
+				if (!p_dropItem[(i * 5) + 1]->GetDeath() && !p_dropItem[(i * 5) + 1]->GetAlive()) p_dropItem[(i * 5) + 1]->SetAlive(true, p_enemySlime[i]->GetArea());
+				if (!p_dropItem[(i * 5) + 2]->GetDeath() && !p_dropItem[(i * 5) + 2]->GetAlive()) p_dropItem[(i * 5) + 2]->SetAlive(true, p_enemySlime[i]->GetArea());
+				if (!p_dropItem[(i * 5) + 3]->GetDeath() && !p_dropItem[(i * 5) + 3]->GetAlive()) p_dropItem[(i * 5) + 3]->SetAlive(true, p_enemySlime[i]->GetArea());
+				if (!p_dropItem[(i * 5) + 4]->GetDeath() && !p_dropItem[(i * 5) + 4]->GetAlive()) p_dropItem[(i * 5) + 4]->SetAlive(true, p_enemySlime[i]->GetArea());
+				continue;
+			}
+			p_enemySlime[i]->Process();
+
+			if (p_enemySlime[i]->GetDeathFlag()) continue;
+
+			if (lockOnEnemySlime)
+			{
+				if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[lockONNowEnemyID]->GetArea())
+					>= BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()))
+				{
+					lockOnEnemySlime = true;
+					mostNearEnemyDistance = BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea());
+					mostNearEnemyScreenArea = ConvWorldPosToScreenPos(p_enemySlime[i]->GetArea());
+					lockONNowEnemyID = i;
+					if (mostNearEnemyDistance < 250)
+					{
+						p_character->SetMostNearEnemyArea(p_enemySlime[i]->GetArea());
+					}
+					else
+					{
+						p_character->SetMostNearEnemyArea();
+					}
+				}
+			}
+			else
+			{
+				if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[lockONNowEnemyID]->GetArea())
+					>= BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()))
+				{
+					lockOnEnemySlime = true;
+					mostNearEnemyDistance = BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea());
+					mostNearEnemyScreenArea = ConvWorldPosToScreenPos(p_enemySlime[i]->GetArea());
+					lockONNowEnemyID = i;
+					if (mostNearEnemyDistance < 250)
+					{
+						p_character->SetMostNearEnemyArea(p_enemySlime[i]->GetArea());
+					}
+					else
+					{
+						p_character->SetMostNearEnemyArea();
+					}
+				}
+			}
+
+			p_enemySlime[i]->SetCharacterArea(p_character->GetArea(), BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()));
+
+			if (p_enemySlime[i]->GetAttackDamage()
+				&& p_character->GetArea().y <= p_enemySlime[i]->GetArea().y + p_enemySlime[i]->GetHeight()
+				&& p_character->GetArea().y + p_character->GetHeight() >= p_enemySlime[i]->GetArea().y)
+			{
+				if (charaSomeEnemyDamageCount++ < 2)
+				{
+					p_character->SetDamage();
+
+					notDamageCount = 0;
+					if (damageCount < 100)	damageCount++;
+					if (damageDrawFrame == 0)
+					{
+						std::random_device rnd;     // 非決定的な乱数生成器を生成
+						std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+						std::uniform_int_distribution<> blood(0, 2);        // X座標用乱数
+						damageDrawID = blood(mt);
+						damageDrawFrame = 10;
+					}
+				}
+			}
+		}
+
+		// 敵クレヨンヒューマンのプロセス
+		for (int i = 0; i != enemyCrayonHumanNum; ++i)
+		{
+			if (p_enemyCrayonHuman[i]->GetEraseExistence())
+			{
+				if (i == lockONNowEnemyID && !lockOnEnemySlime)
+				{
+					mostNearEnemyDistance = 10000;
+					lockONNowEnemyID = 0;
+					p_character->SetMostNearEnemyArea();
+				}
+				int temp = enemySlimeNum * 5;
+				if (!p_dropItem[(i * 5) + temp]->GetDeath() && !p_dropItem[(i * 5) + temp]->GetAlive()) p_dropItem[(i * 5) + temp]->SetAlive(true, p_enemyCrayonHuman[i]->GetArea());
+				if (!p_dropItem[(i * 5) + 1 + temp]->GetDeath() && !p_dropItem[(i * 5) + 1 + temp]->GetAlive()) p_dropItem[(i * 5) + 1 + temp]->SetAlive(true, p_enemyCrayonHuman[i]->GetArea());
+				if (!p_dropItem[(i * 5) + 2 + temp]->GetDeath() && !p_dropItem[(i * 5) + 2 + temp]->GetAlive()) p_dropItem[(i * 5) + 2 + temp]->SetAlive(true, p_enemyCrayonHuman[i]->GetArea());
+				if (!p_dropItem[(i * 5) + 3 + temp]->GetDeath() && !p_dropItem[(i * 5) + 3 + temp]->GetAlive()) p_dropItem[(i * 5) + 3 + temp]->SetAlive(true, p_enemyCrayonHuman[i]->GetArea());
+				if (!p_dropItem[(i * 5) + 4 + temp]->GetDeath() && !p_dropItem[(i * 5) + 4 + temp]->GetAlive()) p_dropItem[(i * 5) + 4 + temp]->SetAlive(true, p_enemyCrayonHuman[i]->GetArea());
+				continue;
+			}
+
+			p_enemyCrayonHuman[i]->Process();
+
+			if (p_enemyCrayonHuman[i]->GetDeathFlag()) continue;
+
+			if (lockOnEnemySlime)
+			{
+				if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[lockONNowEnemyID]->GetArea())
+					>= BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()))
+				{
+					lockOnEnemySlime = false;
+					mostNearEnemyDistance = BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea());
+					mostNearEnemyScreenArea = ConvWorldPosToScreenPos(p_enemyCrayonHuman[i]->GetArea());
+					lockONNowEnemyID = i;
+					if (mostNearEnemyDistance < 250)
+					{
+						p_character->SetMostNearEnemyArea(p_enemyCrayonHuman[i]->GetArea());
+					}
+					else
+					{
+						p_character->SetMostNearEnemyArea();
+					}
+				}
+			}
+			else
+			{
+				if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[lockONNowEnemyID]->GetArea())
+					>= BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()))
+				{
+					lockOnEnemySlime = false;
+					mostNearEnemyDistance = BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea());
+					mostNearEnemyScreenArea = ConvWorldPosToScreenPos(p_enemyCrayonHuman[i]->GetArea());
+					lockONNowEnemyID = i;
+					if (mostNearEnemyDistance < 250)
+					{
+						p_character->SetMostNearEnemyArea(p_enemyCrayonHuman[i]->GetArea());
+					}
+					else
+					{
+						p_character->SetMostNearEnemyArea();
+					}
+				}
+			}
+
+			p_enemyCrayonHuman[i]->SetCharacterArea(p_character->GetArea(), BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()));
+
+			if (p_enemyCrayonHuman[i]->GetAttackDamage()
+				&& p_character->GetArea().y <= p_enemyCrayonHuman[i]->GetArea().y + p_enemyCrayonHuman[i]->GetHeight()
+				&& p_character->GetArea().y + p_character->GetHeight() >= p_enemyCrayonHuman[i]->GetArea().y)
+			{
+				if (charaSomeEnemyDamageCount++ < 2)
+				{
+					p_character->SetDamage();
+
+					notDamageCount = 0;
+					if (damageCount < 100)	damageCount++;
+					if (damageDrawFrame == 0)
+					{
+						std::random_device rnd;     // 非決定的な乱数生成器を生成
+						std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+						std::uniform_int_distribution<> blood(0, 2);        // X座標用乱数
+						damageDrawID = blood(mt);
+						damageDrawFrame = 10;
+					}
+				}
+			}
+		}
+
+		BaseMove::ShadowArea(p_character->GetArea());
+
+		AttackProcess();
+
+		BaseMove::SkyBoxProcess(p_character->GetArea());
+	}
+	else
+	{
+		if (adjustmentStartFeed)
+		{
+			if (adjustmentSceneFeed <= 100)
+			{
+				adjustmentSceneFeed++;
+			}
+			else
+			{
+				adjustmentFeedNow = false;
 			}
 		}
 		else
 		{
-			if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[lockONNowEnemyID]->GetArea())
-				>= BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()))
+			if (adjustmentSceneFeed >= 0)
 			{
-				lockOnEnemySlime = true;
-				mostNearEnemyDistance = BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea());
-				mostNearEnemyScreenArea = ConvWorldPosToScreenPos(p_enemySlime[i]->GetArea());
-				lockONNowEnemyID = i;
-				if (mostNearEnemyDistance < 250)
-				{
-					p_character->SetMostNearEnemyArea(p_enemySlime[i]->GetArea());
-				}
-				else
-				{
-					p_character->SetMostNearEnemyArea();
-				}
+				adjustmentSceneFeed--;
+			}
+			else
+			{
+				changeAdjustmentScene = false;
+				adjustmentFeedNow = false;
 			}
 		}
 
-		p_enemySlime[i]->SetCharacterArea(p_character->GetArea(), BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()));
-
-		if (p_enemySlime[i]->GetAttackDamage()
-			&& p_character->GetArea().y <= p_enemySlime[i]->GetArea().y + p_enemySlime[i]->GetHeight()
-			&& p_character->GetArea().y + p_character->GetHeight() >= p_enemySlime[i]->GetArea().y)
+		if (!adjustmentFeedNow)
 		{
-			if (charaSomeEnemyDamageCount++ < 2)
-			{
-				p_character->SetDamage();
-
-				notDamageCount = 0;
-				if (damageCount < 100)	damageCount++;
-				if (damageDrawFrame == 0)
-				{
-					std::random_device rnd;     // 非決定的な乱数生成器を生成
-					std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
-					std::uniform_int_distribution<> blood(0, 2);        // X座標用乱数
-					damageDrawID = blood(mt);
-					damageDrawFrame = 10;
-				}
-			}
+			AdjustmentProcess();
 		}
 	}
-
-	// 敵クレヨンヒューマンのプロセス
-	for (int i = 0; i != enemyCrayonHumanNum; ++i)
-	{
-		if (p_enemyCrayonHuman[i]->GetEraseExistence())
-		{
-			if (i == lockONNowEnemyID && !lockOnEnemySlime)
-			{
-				mostNearEnemyDistance = 10000;
-				lockONNowEnemyID = 0;
-				p_character->SetMostNearEnemyArea();
-			}
-			int temp = enemySlimeNum * 5;
-			if (!p_dropItem[(i * 5) + temp]->GetDeath() && !p_dropItem[(i * 5) + temp]->GetAlive()) p_dropItem[(i * 5) + temp]->SetAlive(true, p_enemyCrayonHuman[i]->GetArea());
-			if (!p_dropItem[(i * 5) + 1 + temp]->GetDeath() && !p_dropItem[(i * 5) + 1 + temp]->GetAlive()) p_dropItem[(i * 5) + 1 + temp]->SetAlive(true, p_enemyCrayonHuman[i]->GetArea());
-			if (!p_dropItem[(i * 5) + 2 + temp]->GetDeath() && !p_dropItem[(i * 5) + 2 + temp]->GetAlive()) p_dropItem[(i * 5) + 2 + temp]->SetAlive(true, p_enemyCrayonHuman[i]->GetArea());
-			if (!p_dropItem[(i * 5) + 3 + temp]->GetDeath() && !p_dropItem[(i * 5) + 3 + temp]->GetAlive()) p_dropItem[(i * 5) + 3 + temp]->SetAlive(true, p_enemyCrayonHuman[i]->GetArea());
-			if (!p_dropItem[(i * 5) + 4 + temp]->GetDeath() && !p_dropItem[(i * 5) + 4 + temp]->GetAlive()) p_dropItem[(i * 5) + 4 + temp]->SetAlive(true, p_enemyCrayonHuman[i]->GetArea());
-			continue;
-		}
-
-		p_enemyCrayonHuman[i]->Process();
-		
-		if (p_enemyCrayonHuman[i]->GetDeathFlag()) continue;
-
-		if (lockOnEnemySlime)
-		{
-			if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[lockONNowEnemyID]->GetArea())
-				>= BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()))
-			{
-				lockOnEnemySlime = false;
-				mostNearEnemyDistance = BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea());
-				mostNearEnemyScreenArea = ConvWorldPosToScreenPos(p_enemyCrayonHuman[i]->GetArea());
-				lockONNowEnemyID = i;
-				if (mostNearEnemyDistance < 250)
-				{
-					p_character->SetMostNearEnemyArea(p_enemyCrayonHuman[i]->GetArea());
-				}
-				else
-				{
-					p_character->SetMostNearEnemyArea();
-				}
-			}
-		}
-		else
-		{
-			if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[lockONNowEnemyID]->GetArea())
-				>= BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()))
-			{
-				lockOnEnemySlime = false;
-				mostNearEnemyDistance = BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea());
-				mostNearEnemyScreenArea = ConvWorldPosToScreenPos(p_enemyCrayonHuman[i]->GetArea());
-				lockONNowEnemyID = i;
-				if (mostNearEnemyDistance < 250)
-				{
-					p_character->SetMostNearEnemyArea(p_enemyCrayonHuman[i]->GetArea());
-				}
-				else
-				{
-					p_character->SetMostNearEnemyArea();
-				}
-			}
-		}
-
-		p_enemyCrayonHuman[i]->SetCharacterArea(p_character->GetArea(), BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()));
-		
-		if (p_enemyCrayonHuman[i]->GetAttackDamage()
-			&& p_character->GetArea().y <= p_enemyCrayonHuman[i]->GetArea().y + p_enemyCrayonHuman[i]->GetHeight()
-			&& p_character->GetArea().y + p_character->GetHeight() >= p_enemyCrayonHuman[i]->GetArea().y)
-		{
-			if (charaSomeEnemyDamageCount++ < 2)
-			{
-				p_character->SetDamage();
-
-				notDamageCount = 0;
-				if (damageCount < 100)	damageCount++;
-				if (damageDrawFrame == 0)
-				{
-					std::random_device rnd;     // 非決定的な乱数生成器を生成
-					std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
-					std::uniform_int_distribution<> blood(0, 2);        // X座標用乱数
-					damageDrawID = blood(mt);
-					damageDrawFrame = 10;
-				}
-			}
-		}
-	}
-
-	BaseMove::ShadowArea(p_character->GetArea());
-
-	AttackProcess();
-
-	BaseMove::SkyBoxProcess(p_character->GetArea());
 
 
 #ifdef _DEBUG
@@ -1135,39 +1329,54 @@ void MainMove3::CameraProcess()
 
 void MainMove3::TextureReload()
 {
-	// ダメージ演出
-	DamageTextureReload();
+	if (!BASICPARAM::charaTextureWhiteBlack)
+	{
+		// ダメージ演出
+		DamageTextureReload();
 
-	// キャラクター
-	p_character->TextureReload();
+		// キャラクター
+		p_character->TextureReload();
+	}
 
-	// 精密機械
-	p_adjustmentMachine->TextureReload();
+	if (!BASICPARAM::anothreTextureWhiteBlack)
+	{
+		// 精密機械
+		p_adjustmentMachine->TextureReload();
+	}
 
 	// 階段
-	if (BASICPARAM::stairsNum != 0)
+	if (!BASICPARAM::stairsTextureWhiteBlack)
 	{
-		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+		if (BASICPARAM::stairsNum != 0)
 		{
-			vp_stageStairs[i]->TextureReload();
+			for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+			{
+				vp_stageStairs[i]->TextureReload();
+			}
 		}
 	}
 
 	// 街灯
-	if (BASICPARAM::streetLightNum != 0)
+	if (!BASICPARAM::lightStreetTextureWhiteBlack)
 	{
-		for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
+		if (BASICPARAM::streetLightNum != 0)
 		{
-			vp_stageStreetLight[i]->TextureReload();
+			for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
+			{
+				vp_stageStreetLight[i]->TextureReload();
+			}
 		}
 	}
 
 	// 階段と床
-	if (BASICPARAM::stairsRoadNum != 0)
+	if (!BASICPARAM::stairsRoadTextureWhiteBlack)
 	{
-		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+		if (BASICPARAM::stairsRoadNum != 0)
 		{
-			vp_stageStairsRoad[i]->TextureReload();
+			for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+			{
+				vp_stageStairsRoad[i]->TextureReload();
+			}
 		}
 	}
 

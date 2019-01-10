@@ -22,6 +22,12 @@ std::vector<VECTOR> BASICPARAM::v_stairsRoadArea;
 std::vector<float> BASICPARAM::v_stairsRoadAngle;
 bool BASICPARAM::cameraHorizonReturn;
 bool BASICPARAM::cameraVerticalReturn;
+bool BASICPARAM::charaTextureWhiteBlack;
+bool BASICPARAM::enemyTextureWhiteBlack;
+bool BASICPARAM::stairsTextureWhiteBlack;
+bool BASICPARAM::stairsRoadTextureWhiteBlack;
+bool BASICPARAM::lightStreetTextureWhiteBlack;
+bool BASICPARAM::anothreTextureWhiteBlack;
 
 
 // debug

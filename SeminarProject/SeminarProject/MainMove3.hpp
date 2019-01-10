@@ -136,6 +136,24 @@ private:
 	// 精密機械の説明補助画像
 	int adjustmentDescDraw;
 
+	// 精密機械のシーンに移行
+	bool changeAdjustmentScene;
+
+	// 精密機械のプロセス
+	void AdjustmentProcess();
+
+	// 精密機械の描画
+	void AdjustmentDraw();
+
+	// 精密機械のシーンへのフェード
+	int adjustmentSceneFeed;
+
+	// 精密機械のフェードが終了したかどうか
+	bool adjustmentFeedNow;
+
+	// 精密機械の方に移るフェードかどうか
+	bool adjustmentStartFeed;
+
 
 	/// カメラ------------------
 

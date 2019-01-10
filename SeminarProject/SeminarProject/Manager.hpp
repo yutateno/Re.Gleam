@@ -73,6 +73,9 @@ private:
 	// ムーブ4のロードの種類
 	ELOADFILE load4[36];
 
+	// ムーブ4でロードするテクスチャを初期から変更する
+	void Move4TextureReload();
+
 
 	/// ムーブ5に関する--------------
 

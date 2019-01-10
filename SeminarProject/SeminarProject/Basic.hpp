@@ -88,6 +88,26 @@ namespace BASICPARAM
 
 	// カメラの縦反転するかどうか
 	extern bool cameraVerticalReturn;
+
+	/// 白黒から変えたかどうか
+
+	// キャラクターのテクスチャが白黒かどうか
+	extern bool charaTextureWhiteBlack;
+
+	// 敵のテクスチャが白黒かどうか
+	extern bool enemyTextureWhiteBlack;
+
+	// 階段のテクスチャが白黒かどうか
+	extern bool stairsTextureWhiteBlack;
+
+	// 階段と床のテクスチャが白黒かどうか
+	extern bool stairsRoadTextureWhiteBlack;
+
+	// 街灯のテクスチャが白黒かどうか
+	extern bool lightStreetTextureWhiteBlack;
+
+	// その他のテクスチャが白黒かどうか
+	extern bool anothreTextureWhiteBlack;
 }
 
 

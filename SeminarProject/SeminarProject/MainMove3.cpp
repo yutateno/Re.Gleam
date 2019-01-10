@@ -591,6 +591,9 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 			, v_file[EFILE::crayonHumanTex0], VGet(-1500.0f + (i * 150.0f), 0.0f, -1000.0f), 0.0f);
 		enemyCrayonHumanDamage[i] = false;
 	}
+	mostNearEnemyDistance = 10000;
+	lockONNowEnemyID = 0;
+	lockOnEnemySlime = false;
 
 	// ドロップアイテムの初期化
 	catchDropItemNum = 0;
@@ -782,6 +785,50 @@ void MainMove3::Draw()
 		}
 	}
 
+	if (mostNearEnemyDistance <= 1000)
+	{
+		if (lockOnEnemySlime)
+		{
+			if (!p_enemySlime[lockONNowEnemyID]->GetEraseExistence())
+			{
+				if (mostNearEnemyDistance < 250)
+				{
+					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x - 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - p_enemySlime[lockONNowEnemyID]->GetHeight() / 2.0f)
+						, static_cast<int>(mostNearEnemyScreenArea.x + 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - p_enemySlime[lockONNowEnemyID]->GetHeight() / 2.0f), GetColor(255, 255, 255), false);
+					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y - 20.0f - p_enemySlime[lockONNowEnemyID]->GetHeight() / 2.0f)
+						, static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - p_enemySlime[lockONNowEnemyID]->GetHeight() / 2.0f), GetColor(255, 255, 255), false);
+				}
+				else
+				{
+					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x - 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - p_enemySlime[lockONNowEnemyID]->GetHeight() / 2.0f)
+						, static_cast<int>(mostNearEnemyScreenArea.x + 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - p_enemySlime[lockONNowEnemyID]->GetHeight() / 2.0f), GetColor(125, 125, 125), false);
+					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y - 20.0f - p_enemySlime[lockONNowEnemyID]->GetHeight() / 2.0f)
+						, static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - p_enemySlime[lockONNowEnemyID]->GetHeight() / 2.0f), GetColor(125, 125, 125), false);
+				}
+			}
+		}
+		else
+		{
+			if (!p_enemyCrayonHuman[lockONNowEnemyID]->GetEraseExistence())
+			{
+				if (mostNearEnemyDistance < 250)
+				{
+					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x - 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - p_enemyCrayonHuman[lockONNowEnemyID]->GetHeight() / 2.0f)
+						, static_cast<int>(mostNearEnemyScreenArea.x + 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - p_enemyCrayonHuman[lockONNowEnemyID]->GetHeight() / 2.0f), GetColor(255, 255, 255), false);
+					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y - 20.0f - p_enemyCrayonHuman[lockONNowEnemyID]->GetHeight() / 2.0f)
+						, static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - p_enemyCrayonHuman[lockONNowEnemyID]->GetHeight() / 2.0f), GetColor(255, 255, 255), false);
+				}
+				else
+				{
+					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x - 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - p_enemyCrayonHuman[lockONNowEnemyID]->GetHeight() / 2.0f)
+						, static_cast<int>(mostNearEnemyScreenArea.x + 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - p_enemyCrayonHuman[lockONNowEnemyID]->GetHeight() / 2.0f), GetColor(125, 125, 125), false);
+					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y - 20.0f - p_enemyCrayonHuman[lockONNowEnemyID]->GetHeight() / 2.0f)
+						, static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - p_enemyCrayonHuman[lockONNowEnemyID]->GetHeight() / 2.0f), GetColor(125, 125, 125), false);
+				}
+			}
+		}
+	}
+
 	// エフェクトを再生する。
 	if (preDamageCount != damageCount / 10)
 	{
@@ -898,6 +945,12 @@ void MainMove3::Process()
 	{
 		if (p_enemySlime[i]->GetEraseExistence())
 		{
+			if (i == lockONNowEnemyID && lockOnEnemySlime)
+			{
+				mostNearEnemyDistance = 10000;
+				lockONNowEnemyID = 0;
+				p_character->SetMostNearEnemyArea();
+			}
 			if (!p_dropItem[(i * 5)]->GetDeath() && !p_dropItem[(i * 5)]->GetAlive()) p_dropItem[(i * 5)]->SetAlive(true, p_enemySlime[i]->GetArea());
 			if (!p_dropItem[(i * 5) + 1]->GetDeath() && !p_dropItem[(i * 5) + 1]->GetAlive()) p_dropItem[(i * 5) + 1]->SetAlive(true, p_enemySlime[i]->GetArea());
 			if (!p_dropItem[(i * 5) + 2]->GetDeath() && !p_dropItem[(i * 5) + 2]->GetAlive()) p_dropItem[(i * 5) + 2]->SetAlive(true, p_enemySlime[i]->GetArea());
@@ -906,8 +959,50 @@ void MainMove3::Process()
 			continue;
 		}
 		p_enemySlime[i]->Process();
+
 		if (p_enemySlime[i]->GetDeathFlag()) continue;
+
+		if (lockOnEnemySlime)
+		{
+			if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[lockONNowEnemyID]->GetArea())
+				>= BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()))
+			{
+				lockOnEnemySlime = true;
+				mostNearEnemyDistance = BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea());
+				mostNearEnemyScreenArea = ConvWorldPosToScreenPos(p_enemySlime[i]->GetArea());
+				lockONNowEnemyID = i;
+				if (mostNearEnemyDistance < 250)
+				{
+					p_character->SetMostNearEnemyArea(p_enemySlime[i]->GetArea());
+				}
+				else
+				{
+					p_character->SetMostNearEnemyArea();
+				}
+			}
+		}
+		else
+		{
+			if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[lockONNowEnemyID]->GetArea())
+				>= BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()))
+			{
+				lockOnEnemySlime = true;
+				mostNearEnemyDistance = BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea());
+				mostNearEnemyScreenArea = ConvWorldPosToScreenPos(p_enemySlime[i]->GetArea());
+				lockONNowEnemyID = i;
+				if (mostNearEnemyDistance < 250)
+				{
+					p_character->SetMostNearEnemyArea(p_enemySlime[i]->GetArea());
+				}
+				else
+				{
+					p_character->SetMostNearEnemyArea();
+				}
+			}
+		}
+
 		p_enemySlime[i]->SetCharacterArea(p_character->GetArea(), BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[i]->GetArea()));
+
 		if (p_enemySlime[i]->GetAttackDamage()
 			&& p_character->GetArea().y <= p_enemySlime[i]->GetArea().y + p_enemySlime[i]->GetHeight()
 			&& p_character->GetArea().y + p_character->GetHeight() >= p_enemySlime[i]->GetArea().y)
@@ -935,6 +1030,12 @@ void MainMove3::Process()
 	{
 		if (p_enemyCrayonHuman[i]->GetEraseExistence())
 		{
+			if (i == lockONNowEnemyID && !lockOnEnemySlime)
+			{
+				mostNearEnemyDistance = 10000;
+				lockONNowEnemyID = 0;
+				p_character->SetMostNearEnemyArea();
+			}
 			int temp = enemySlimeNum * 5;
 			if (!p_dropItem[(i * 5) + temp]->GetDeath() && !p_dropItem[(i * 5) + temp]->GetAlive()) p_dropItem[(i * 5) + temp]->SetAlive(true, p_enemyCrayonHuman[i]->GetArea());
 			if (!p_dropItem[(i * 5) + 1 + temp]->GetDeath() && !p_dropItem[(i * 5) + 1 + temp]->GetAlive()) p_dropItem[(i * 5) + 1 + temp]->SetAlive(true, p_enemyCrayonHuman[i]->GetArea());
@@ -943,9 +1044,52 @@ void MainMove3::Process()
 			if (!p_dropItem[(i * 5) + 4 + temp]->GetDeath() && !p_dropItem[(i * 5) + 4 + temp]->GetAlive()) p_dropItem[(i * 5) + 4 + temp]->SetAlive(true, p_enemyCrayonHuman[i]->GetArea());
 			continue;
 		}
+
 		p_enemyCrayonHuman[i]->Process();
+		
 		if (p_enemyCrayonHuman[i]->GetDeathFlag()) continue;
+
+		if (lockOnEnemySlime)
+		{
+			if (BaseMove::GetDistance(p_character->GetArea(), p_enemySlime[lockONNowEnemyID]->GetArea())
+				>= BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()))
+			{
+				lockOnEnemySlime = false;
+				mostNearEnemyDistance = BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea());
+				mostNearEnemyScreenArea = ConvWorldPosToScreenPos(p_enemyCrayonHuman[i]->GetArea());
+				lockONNowEnemyID = i;
+				if (mostNearEnemyDistance < 250)
+				{
+					p_character->SetMostNearEnemyArea(p_enemyCrayonHuman[i]->GetArea());
+				}
+				else
+				{
+					p_character->SetMostNearEnemyArea();
+				}
+			}
+		}
+		else
+		{
+			if (BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[lockONNowEnemyID]->GetArea())
+				>= BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()))
+			{
+				lockOnEnemySlime = false;
+				mostNearEnemyDistance = BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea());
+				mostNearEnemyScreenArea = ConvWorldPosToScreenPos(p_enemyCrayonHuman[i]->GetArea());
+				lockONNowEnemyID = i;
+				if (mostNearEnemyDistance < 250)
+				{
+					p_character->SetMostNearEnemyArea(p_enemyCrayonHuman[i]->GetArea());
+				}
+				else
+				{
+					p_character->SetMostNearEnemyArea();
+				}
+			}
+		}
+
 		p_enemyCrayonHuman[i]->SetCharacterArea(p_character->GetArea(), BaseMove::GetDistance(p_character->GetArea(), p_enemyCrayonHuman[i]->GetArea()));
+		
 		if (p_enemyCrayonHuman[i]->GetAttackDamage()
 			&& p_character->GetArea().y <= p_enemyCrayonHuman[i]->GetArea().y + p_enemyCrayonHuman[i]->GetHeight()
 			&& p_character->GetArea().y + p_character->GetHeight() >= p_enemyCrayonHuman[i]->GetArea().y)

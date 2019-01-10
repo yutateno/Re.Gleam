@@ -593,9 +593,9 @@ Manager::Manager()
 	move2str[38] = "media\\こっち\\media\\sound\\着地２.wyn";
 
 	// キャラクターの攻撃の音
-	move2str[39] = "media\\こっち\\media\\sound\\piano攻撃音1.wyn";
-	move2str[40] = "media\\こっち\\media\\sound\\piano攻撃音2.wyn";
-	move2str[41] = "media\\こっち\\media\\sound\\piano攻撃音3.wyn";
+	move2str[39] = "media\\こっち\\media\\sound\\ピアノコンボ一発目.wyn";
+	move2str[40] = "media\\こっち\\media\\sound\\ピアノコンボ二発目.wyn";
+	move2str[41] = "media\\こっち\\media\\sound\\ピアノコンボ三発目.wyn";
 
 	// ドロップアイテムのSEの二種類目
 	move2str[42] = "media\\こっち\\media\\sound\\たま拾う音2.wyn";
@@ -733,9 +733,9 @@ Manager::Manager()
 	move3str[30] = "media\\こっち\\media\\sound\\着地２.wyn";
 
 	// キャラクターの攻撃の音
-	move3str[31] = "media\\こっち\\media\\sound\\piano攻撃音1.wyn";
-	move3str[32] = "media\\こっち\\media\\sound\\piano攻撃音2.wyn";
-	move3str[33] = "media\\こっち\\media\\sound\\piano攻撃音3.wyn";
+	move3str[31] = "media\\こっち\\media\\sound\\ピアノコンボ一発目.wyn";
+	move3str[32] = "media\\こっち\\media\\sound\\ピアノコンボ二発目.wyn";
+	move3str[33] = "media\\こっち\\media\\sound\\ピアノコンボ三発目.wyn";
 
 	// ドロップアイテムのSEの二種類目
 	move3str[34] = "media\\こっち\\media\\sound\\たま拾う音2.wyn";
@@ -903,9 +903,9 @@ Manager::Manager()
 	move4str[29] = "media\\こっち\\media\\sound\\着地２.wyn";
 
 	// キャラクターの攻撃の音
-	move4str[30] = "media\\こっち\\media\\sound\\piano攻撃音1.wyn";
-	move4str[31] = "media\\こっち\\media\\sound\\piano攻撃音2.wyn";
-	move4str[32] = "media\\こっち\\media\\sound\\piano攻撃音3.wyn";
+	move4str[30] = "media\\こっち\\media\\sound\\ピアノコンボ一発目.wyn";
+	move4str[31] = "media\\こっち\\media\\sound\\ピアノコンボ二発目.wyn";
+	move4str[32] = "media\\こっち\\media\\sound\\ピアノコンボ三発目.wyn";
 
 	// BGM
 	move4str[33] = "media\\こっち\\media\\sound\\通常bgm.wyn";
@@ -1023,9 +1023,9 @@ Manager::Manager()
 	move5str[29] = "media\\こっち\\media\\sound\\着地２.wyn";
 
 	// キャラクターの攻撃の音
-	move5str[30] = "media\\こっち\\media\\sound\\piano攻撃音1.wyn";
-	move5str[31] = "media\\こっち\\media\\sound\\piano攻撃音2.wyn";
-	move5str[32] = "media\\こっち\\media\\sound\\piano攻撃音3.wyn";
+	move5str[30] = "media\\こっち\\media\\sound\\ピアノコンボ一発目.wyn";
+	move5str[31] = "media\\こっち\\media\\sound\\ピアノコンボ二発目.wyn";
+	move5str[32] = "media\\こっち\\media\\sound\\ピアノコンボ三発目.wyn";
 
 	// BGM
 	move5str[33] = "media\\こっち\\media\\sound\\通常bgm.wyn";

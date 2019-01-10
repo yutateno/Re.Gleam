@@ -121,6 +121,12 @@ private:
 	// 何個のドロップアイテムを手に持ったか
 	int catchDropItemNum;
 
+	// 一番キャラクターに近い敵
+	int mostNearEnemyDistance;
+	VECTOR mostNearEnemyScreenArea;
+	int lockONNowEnemyID;
+	bool lockOnEnemySlime;
+
 
 	/// 精密機械------------------------------
 

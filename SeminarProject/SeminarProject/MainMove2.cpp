@@ -499,6 +499,7 @@ void MainMove2::AttackProcess()
 		// 攻撃中だったら
 		if (p_character->GetAttackNow())
 		{
+			if (nextOperationUIFeed[static_cast<int>(EOPERATION_UI::attack)] != 0) nextOperationUIFeed[static_cast<int>(EOPERATION_UI::attack)] = 0;
 			p_enemy[i]->HitLineReturn(p_character->GetAttackFirstFrameArea(), p_character->GetAttackEndFrameArea());
 		}
 
@@ -663,6 +664,23 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	p_character	 = new CharacterSword(v_file[EFILE::characterAttack], v_file[EFILE::stage], v_file[EFILE::stairsColl], v_file[EFILE::paneru], v_file[EFILE::stairsRoadColl]
 		, v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3], v_file[EFILE::charaTex4]);
 
+	// 操作説明画像の初期化
+	operationUIDraw[static_cast<int>(EOPERATION_UI::attack)] = v_file[EFILE::attackUI];
+	operationUIDraw[static_cast<int>(EOPERATION_UI::jump)] = v_file[EFILE::jumpUI];
+	operationUIDraw[static_cast<int>(EOPERATION_UI::fastSpeed)] = v_file[EFILE::fastSpeedUI];
+	operationUIDraw[static_cast<int>(EOPERATION_UI::option)] = v_file[EFILE::optionUI];
+	for (int i = 0; i != 2; ++i)
+	{
+		operationUIFeed[i] = 255;
+		nextOperationUIFeed[i] = 255;
+	}
+	for (int i = 3; i != 4; ++i)
+	{
+		operationUIFeed[i] = 0;
+		nextOperationUIFeed[i] = 0;
+	}
+	opeFastOptionEnd = false;
+
 
 	// カメラの初期化
 	p_camera	 = new Camera(p_character->GetArea(), v_file[EFILE::stage]);
@@ -717,6 +735,8 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 		}
 		p_enemy[i] = new EnemyMove2(VGet(tempX, 0.0f, tempZ), v_file[EFILE::block], v_file[EFILE::blockTex0]);
 	}
+	mostNearEnemyDistance = 10000;
+	lockONNowEnemyID = 0;
 
 
 	// ドロップアイテムの初期化
@@ -858,6 +878,12 @@ MainMove2::~MainMove2()
 		POINTER_RELEASE(p_enemy[i]);
 	}
 
+	/// 説明画像に関する
+	for (int i = 0; i != 4; ++i)
+	{
+		GRAPHIC_RELEASE(operationUIDraw[i]);
+	}
+
 	/// キャラクターに関する
 	POINTER_RELEASE(p_character);
 
@@ -899,6 +925,51 @@ void MainMove2::Draw()
 			}
 		}
 
+		for (int i = 0; i != 4; ++i)
+		{
+			// 最大光度から減っていたら減らすようにする
+			if (operationUIFeed[i] < nextOperationUIFeed[i]) operationUIFeed[i]++;
+			if (operationUIFeed[i] > nextOperationUIFeed[i]) operationUIFeed[i]--;
+
+			/// ブレンドする----------------------------------------------
+			// 説明画像の光度が0以上だったら
+			if (operationUIFeed[i] > 0)
+			{
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, operationUIFeed[i]);
+
+				// 左スティック説明画像
+				if (i % 2 == 0)
+				{
+					DrawGraph(100, 100, operationUIDraw[i], true);
+				}
+				else
+				{
+					// 右スティック説明画像
+					DrawGraph(1200, 100, operationUIDraw[i], true);
+				}
+
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+			}
+		}
+
+		if (mostNearEnemyDistance <= 1000 && !p_enemy[lockONNowEnemyID]->GetEraseExistence())
+		{
+			if (mostNearEnemyDistance < 250)
+			{
+				DrawBox(static_cast<int>(mostNearEnemyScreenArea.x - 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f)
+					, static_cast<int>(mostNearEnemyScreenArea.x + 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f), GetColor(255, 255, 255), false);
+				DrawBox(static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y - 20.0f - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f)
+					, static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f), GetColor(255, 255, 255), false);
+			}
+			else
+			{
+				DrawBox(static_cast<int>(mostNearEnemyScreenArea.x - 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f)
+					, static_cast<int>(mostNearEnemyScreenArea.x + 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f), GetColor(125, 125, 125), false);
+				DrawBox(static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y - 20.0f - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f)
+					, static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f), GetColor(125, 125, 125), false);
+			}
+		}
+
 		DrawFormatString(1020, 20, GetColor(0, 0, 0), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
 
 	//}
@@ -925,6 +996,26 @@ void MainMove2::Process()
 		// キャラクターのプロセスを呼ぶ
 		p_character->Process(p_camera->GetAngle());		
 
+		if (nextOperationUIFeed[static_cast<int>(EOPERATION_UI::jump)] != 0
+			&& p_character->GetArea().y > 50.0f)
+		{
+			nextOperationUIFeed[static_cast<int>(EOPERATION_UI::jump)] = 0;
+		}
+		if (nextOperationUIFeed[static_cast<int>(EOPERATION_UI::fastSpeed)] != 0
+			&& p_character->GetMoveFastWaitCount())
+		{
+			opeFastOptionEnd = true;
+			nextOperationUIFeed[static_cast<int>(EOPERATION_UI::fastSpeed)] = 0;
+			nextOperationUIFeed[static_cast<int>(EOPERATION_UI::option)] = 0;
+		}
+		
+		if (operationUIFeed[static_cast<int>(EOPERATION_UI::attack)] == 0
+			&& operationUIFeed[static_cast<int>(EOPERATION_UI::jump)] == 0
+			&& !opeFastOptionEnd)
+		{
+			nextOperationUIFeed[static_cast<int>(EOPERATION_UI::fastSpeed)] = 255;
+			nextOperationUIFeed[static_cast<int>(EOPERATION_UI::option)] = 255;
+		}
 
 		// カメラのプロセスを呼ぶ
 		p_camera->Process(p_character->GetArea());		
@@ -935,6 +1026,12 @@ void MainMove2::Process()
 		{
 			if (p_enemy[i]->GetEraseExistence())
 			{
+				if (i == lockONNowEnemyID)
+				{
+					mostNearEnemyDistance = 10000;
+					lockONNowEnemyID = 0;
+					p_character->SetMostNearEnemyArea();
+				}
 				if (!p_dropItem[(i * 5)]->GetDeath() && !p_dropItem[(i * 5)]->GetAlive()) p_dropItem[(i * 5)]->SetAlive(true);
 				if (!p_dropItem[(i * 5) + 1]->GetDeath() && !p_dropItem[(i * 5) + 1]->GetAlive()) p_dropItem[(i * 5) + 1]->SetAlive(true);
 				if (!p_dropItem[(i * 5) + 2]->GetDeath() && !p_dropItem[(i * 5) + 2]->GetAlive()) p_dropItem[(i * 5) + 2]->SetAlive(true);
@@ -943,6 +1040,21 @@ void MainMove2::Process()
 				continue;
 			}
 			p_enemy[i]->Process();
+			if (BaseMove::GetDistance(p_character->GetArea(), p_enemy[lockONNowEnemyID]->GetArea())
+				>= BaseMove::GetDistance(p_character->GetArea(), p_enemy[i]->GetArea()))
+			{
+				mostNearEnemyDistance = BaseMove::GetDistance(p_character->GetArea(), p_enemy[i]->GetArea());
+				mostNearEnemyScreenArea = ConvWorldPosToScreenPos(p_enemy[i]->GetArea());
+				lockONNowEnemyID = i;
+				if (mostNearEnemyDistance < 250)
+				{
+					p_character->SetMostNearEnemyArea(p_enemy[i]->GetArea());
+				}
+				else
+				{
+					p_character->SetMostNearEnemyArea();
+				}
+			}
 		}
 
 		// ドロップアイテム

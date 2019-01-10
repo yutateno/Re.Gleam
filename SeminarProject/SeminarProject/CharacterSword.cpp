@@ -703,6 +703,7 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	preAttackNumber = MOTION::action1;
 	jumpAttackDo = false;
 	attackMotionEnd = true;
+	mostNearEnemyArea = VGet(0, -1000, 0);
 
 
 	// ジャンプに関して
@@ -836,6 +837,21 @@ void CharacterSword::Process(const float getAngle)
 		angle = getAngle;	// カメラ向きのアングル
 	}
 
+	if (!moveFlag && attackNow && !(mostNearEnemyArea.y >= -1001.0f && mostNearEnemyArea.y <= -999.0f))
+	{
+		// atan2 を使用して角度を取得
+		mostNearEnemyDire = atan2(VSub(area, mostNearEnemyArea).x, VSub(area, mostNearEnemyArea).z);
+
+		direXAngle = mostNearEnemyDire;
+		direZAngle = 0.0f;
+		angle = 0.0f;
+
+
+		// atan2 で取得した角度に３Ｄモデルを正面に向かせるための補正値( DX_PI_F )を
+		// 足した値を３Ｄモデルの Y軸回転値として設定
+		//MV1SetRotationXYZ(ModelHandle2, VGet(0.0f, charaLookAngle + DX_PI_F, 0.0f));
+	}
+
 	// 動きのプロセス
 	if (!attackNow)
 	{
@@ -900,9 +916,15 @@ void CharacterSword::Process(const float getAngle)
 		area.y = 0.5f;
 	}
 
-
 	// 第二引数の回転角度をセット
-	MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));
+	if (!moveFlag && attackNow && !(mostNearEnemyArea.y >= -1001.0f && mostNearEnemyArea.y <= -999.0f))
+	{
+		MV1SetRotationXYZ(modelHandle, VGet(0.0f,mostNearEnemyDire, 0.0f));
+	}
+	else
+	{
+		MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));
+	}
 	if (walkSpeed != 100.0f)
 	{
 		// 指定位置にモデルを配置

@@ -41,13 +41,13 @@ private:
 	/// ムーブ２に関する--------------
 
 	// ムーブ2のロード数
-	const int max2 = 44;
+	const int max2 = 48;
 
 	// ムーブ2のロードファイル
-	std::string move2str[44];
+	std::string move2str[48];
 
 	// ムーブ2のロードの種類
-	ELOADFILE load2[44];
+	ELOADFILE load2[48];
 
 
 	/// ムーブ3に関する--------------

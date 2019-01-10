@@ -29,7 +29,7 @@ private:
 		, block2D, character2D, streetLight2D, stairs2D, terminal2D, stairsRoad2D
 		, jump3DSE, footCorridor3DSE, foot3DSE, landing3DSE, landingSecond3DSE
 		, charaAttackOne3DSE, charaAttackTwo3DSE, charaAttackThree3DSE
-		, se_ballPickUp2, nextStageBGM
+		, se_ballPickUp2, nextStageBGM, attackUI, jumpUI, fastSpeedUI, optionUI
 	};
 
 
@@ -76,6 +76,13 @@ private:
 	// キャラクターのポインタ
 	CharacterSword* p_character;
 
+	// 操作の説明画像
+	enum class EOPERATION_UI { attack, jump, fastSpeed, option };
+	int operationUIDraw[4];
+	int operationUIFeed[4];
+	int nextOperationUIFeed[4];
+	bool opeFastOptionEnd;
+
 
 	/// 敵---------------------
 
@@ -92,6 +99,11 @@ private:
 
 	// 何個のドロップアイテムを手に持ったか
 	int catchDropItemNum;
+
+	// 一番キャラクターに近い敵
+	int mostNearEnemyDistance;
+	VECTOR mostNearEnemyScreenArea;
+	int lockONNowEnemyID;
 
 
 	/// 精算機械-----------------------------------------------------------------------

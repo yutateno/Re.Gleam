@@ -603,6 +603,12 @@ Manager::Manager()
 	// 次のステージでのBGMを流す
 	move2str[43] = "media\\こっち\\media\\sound\\通常bgm.wyn";
 
+	// 操作の説明
+	move2str[44] = "media\\こっち\\media\\move2\\attackTrans.pyn";
+	move2str[45] = "media\\こっち\\media\\move2\\jumpTrans.pyn";
+	move2str[46] = "media\\こっち\\media\\move2\\fastSpeedTrans.pyn";
+	move2str[47] = "media\\こっち\\media\\move2\\optionTrans.pyn";
+
 
 	load2[0] = ELOADFILE::mv1model;
 	load2[1] = ELOADFILE::mv1model;
@@ -660,6 +666,11 @@ Manager::Manager()
 	load2[42] = ELOADFILE::sound3DSource;
 
 	load2[43] = ELOADFILE::soundStream;
+
+	load2[44] = ELOADFILE::graph;
+	load2[45] = ELOADFILE::graph;
+	load2[46] = ELOADFILE::graph;
+	load2[47] = ELOADFILE::graph;
 	/// ---------------------------------------------------------------------------------------------------
 
 

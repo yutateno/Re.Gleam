@@ -100,6 +100,12 @@ private:
 	// 一つの攻撃モーションが終わったかどうか
 	bool attackMotionEnd;
 
+	// 最も近い敵
+	VECTOR mostNearEnemyArea;
+
+	// 最も近い敵をロックオンしたときの向き
+	float mostNearEnemyDire;
+
 
 	/// ジャンプに関して------------------
 
@@ -186,6 +192,13 @@ public:
 	// 攻撃を受けている
 	void SetDamage();
 
+	// 速度早い動きをしたかどうか
+	const bool GetMoveFastWaitCount() const { return moveFastWaitCount > 0 ? true : false; }
+
+	// 攻撃の最後のモーション
 	const bool GetAttackMotionEnd() const { return attackMotionEnd; }
+
+	// 最も近くてロックオンしている敵
+	void SetMostNearEnemyArea(VECTOR enemyArea = VGet(0, -1000, 0)) { mostNearEnemyArea = enemyArea; }
 };
 

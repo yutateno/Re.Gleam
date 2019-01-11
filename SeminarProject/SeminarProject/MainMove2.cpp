@@ -1,35 +1,41 @@
 #include "MainMove2.hpp"
 
 
-
-
+// 精密機械のプロセス
 void MainMove2::AdjustmentProcess()
 {
+	// Aボタンを押したら
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
 	{
+		// 配置するオブジェクトを選択していないとき
 		if (!adjustmentSelectObject)
 		{
+			// 階段にカーソルがのっているとき
 			if (adjustmentSelectObjectNumber == AdjustmentObject::Stairs
 				/*&& catchDropItemNum >= 15*/)
 			{
 				catchDropItemNum -= 15;
 				adjustmentSelectObject = true;
 			}
+			// 階段と床にカーソルがのっているとき
 			else if (adjustmentSelectObjectNumber == AdjustmentObject::StairsRoad
 				/*&& catchDropItemNum >= 45*/)
 			{
 				catchDropItemNum -= 45;
 				adjustmentSelectObject = true;
 			}
+			// 街灯にカーソルがのっているとき
 			else if (adjustmentSelectObjectNumber == AdjustmentObject::StreetLight
 				/*&& catchDropItemNum >= 5*/)
 			{
 				catchDropItemNum -= 5;
 				adjustmentSelectObject = true;
 			}
-		}
+		} /// if (!adjustmentSelectObject)
+		// 配置するオブジェクトを選択してあるとき
 		else
 		{
+			// キャラクターと配置予定の階段が被っていたら
 			if (adjustmentSelectObjectNumber == AdjustmentObject::Stairs
 				&& adjustmentArrangementArea.x + 120.0f > p_character->GetArea().x
 				&& adjustmentArrangementArea.x - 120.0f < p_character->GetArea().x
@@ -38,6 +44,7 @@ void MainMove2::AdjustmentProcess()
 			{
 				return;
 			}
+			// キャラクターと配置予定の階段と床が被っていたら
 			else if (adjustmentSelectObjectNumber == AdjustmentObject::StairsRoad
 				&& adjustmentArrangementArea.x + 500.0f > p_character->GetArea().x
 				&& adjustmentArrangementArea.x - 500.0f < p_character->GetArea().x
@@ -46,53 +53,69 @@ void MainMove2::AdjustmentProcess()
 			{
 				return;
 			}
+
+			// 配置する
 			adjustmentSelectObject = false;
 			AdjuctmentCreate(adjustmentArrangementArea, adjustmentSelectObjectNumber, adjustmentArrangementDire);
-		}
-	}
+		} /// else (!if (!adjustmentSelectObject))
+	} /// if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
+
+
+	// Bボタンが押されたら
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
 	{
+		// オブジェクトを選択して配置するシーンじゃなかったら
 		if (!adjustmentSelectObject)
 		{
+			// 精密機械のシーンから戻る
 			adjustmentFeedNow = true;
 			adjustmentStartFeed = false;
 		}
 	}
 
+
+	// オブジェクトを選択し終えて配置するシーンのとき
 	if (adjustmentSelectObject)
 	{
+		// 画面外に出ない位置で左スティックを右に押されたら
 		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0
 			&& adjustmentArrangementArea.x > -4500.0f)
 		{
 			adjustmentArrangementArea.x -= 10.0f;
 		}
+		// 画面外に出ない位置で左スティックを左に
 		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) < 0
 			&& adjustmentArrangementArea.x < 4500.0f)
 		{
 			adjustmentArrangementArea.x += 10.0f;
 		}
+		// 画面外に出ない位置で左スティックを上に
 		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0
 			&& adjustmentArrangementArea.z > -4500.0f)
 		{
 			adjustmentArrangementArea.z -= 10.0f;
 		}
+		// 画面外に出ない位置で左スティックを下に
 		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) < 0
 			&& adjustmentArrangementArea.z < 4500.0f)
 		{
 			adjustmentArrangementArea.z += 10.0f;
 		}
+		// 右スティックを右に
 		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) > 0)
 		{
 			adjustmentArrangementDire += DX_PI_F / 60;
 		}
+		// 右スティックを左に
 		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) < 0)
 		{
 			adjustmentArrangementDire -= DX_PI_F / 60;
 		}
-	}
+	} /// if (adjustmentSelectObject)
+	// オブジェクトを選択するシーンのとき
 	else
 	{
-		// スティックの一回押し倒しで更新するよう調整。
+		/// スティックの一回押し倒しで更新するよう調整----------------------------------------------------------------------
 		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) < 0)
 		{
 			if (adjustmentControllStick[0] < 2) adjustmentControllStick[0]++;
@@ -106,30 +129,41 @@ void MainMove2::AdjustmentProcess()
 			adjustmentControllStick[0] = 0;
 			adjustmentControllStick[1] = 0;
 		}
+		/// ---------------------------------------------------------------------------------------------------------------
+
+		
+		// カーソルを右に移動
 		if (adjustmentControllStick[0] == 1)
 		{
 			int temp = static_cast<int>(adjustmentSelectObjectNumber);
 			adjustmentSelectObjectNumber = static_cast<AdjustmentObject>(temp > 0 ? --temp : temp);
 		}
+		// カーソルを左に移動
 		if (adjustmentControllStick[1] == 1)
 		{
 			int temp = static_cast<int>(adjustmentSelectObjectNumber);
 			adjustmentSelectObjectNumber = static_cast<AdjustmentObject>(temp < 2 ? ++temp : temp);
 		}
-		
+
+
+		// RBボタンが押されたら
 		if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::SHOULDER_RB) == 1
 			&& !BASICPARAM::paneruDrawFlag)
 		{
+			// 次のシーンへ行くためのパネルを描画するように処理
 			BASICPARAM::paneruDrawFlag = true;
 		}
-	}
-}
+	} /// else (!if (adjustmentSelectObject))
+} /// void MainMove2::AdjustmentProcess()
 
 
+// 精密機械の描画
 void MainMove2::AdjustmentDraw()
 {
+	// フェードシーンの描画が切り替わるシーン以上の数値へ行ったら
 	if (adjustmentSceneFeed >= 50)
 	{
+		// 背景
 		DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, GetColor(247, 247, 247), true);
 
 
@@ -186,24 +220,29 @@ void MainMove2::AdjustmentDraw()
 			, 0.1, p_character->GetAngle() - DX_PI, adjustment2DDraw[1], true);
 
 
-		// 配置するオブジェクトについて
+		// 配置したオブジェクトを配置するとき
 		if (adjustmentSelectObject)
 		{
+			// ボタン説明
 			DrawFormatString(30, 60, GetColor(0, 0, 0), "Aボタンで配置");
 
+			/// 半透明でオブジェクトを表示-------------------------------------------------------------
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
+			// 階段の表示
 			if (adjustmentSelectObjectNumber==AdjustmentObject::Stairs)
 			{
 				DrawRotaGraph(static_cast<int>((4500 - adjustmentArrangementArea.x) / 9000 * 1920)
 					, static_cast<int>((4500 + adjustmentArrangementArea.z) / 9000 * 1080)
 					, 0.22, adjustmentArrangementDire, adjustment2DDraw[3], true);
 			}
+			// 階段と床の表示
 			else if (adjustmentSelectObjectNumber == AdjustmentObject::StairsRoad)
 			{
 				DrawRotaGraph(static_cast<int>((4500 - adjustmentArrangementArea.x) / 9000 * 1920)
 					, static_cast<int>((4500 + adjustmentArrangementArea.z) / 9000 * 1080)
 					, 0.75, adjustmentArrangementDire, adjustment2DDraw[5], true);
 			}
+			// 街灯の表示
 			else if (adjustmentSelectObjectNumber == AdjustmentObject::StreetLight)
 			{
 				DrawRotaGraph(static_cast<int>((4500 - adjustmentArrangementArea.x) / 9000 * 1920)
@@ -211,31 +250,40 @@ void MainMove2::AdjustmentDraw()
 					, 0.15, adjustmentArrangementDire, adjustment2DDraw[2], true);
 			}
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-		}
+			/// -------------------------------------------------------------------------------------------
+		} /// if (adjustmentSelectObject)
+		// 配置するオブジェクトを選択していないとき
 		else
 		{
+			// ボックス表示
 			DrawBox(0, 0, 980, 540, GetColor(255, 255, 255), true);
 			DrawBox(0, 0, 980, 540, GetColor(0, 0, 0), false);
 
+			// 操作説明
 			DrawFormatString(10, 10, GetColor(0, 0, 0), "Aボタンで決定");
 
+			// 階段表示
 			if (catchDropItemNum < 15) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
 			DrawRotaGraph(120, 120, 0.22, 0.0, adjustment2DDraw[3], true);
 			DrawFormatString(50, 170, GetColor(0, 0, 0), "階段: 15ブロック");
 			if (catchDropItemNum < 15) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
+			// 階段と床表示
 			if (catchDropItemNum < 45) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
 			DrawRotaGraph(320, 130, 0.75, 0.0, adjustment2DDraw[5], true);
 			DrawFormatString(240, 250, GetColor(0, 0, 0), "階段＆床: 45ブロック");
 			if (catchDropItemNum < 45) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
+			// 街灯表示
 			if (catchDropItemNum < 5) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
 			DrawRotaGraph(500, 120, 0.15, 0.0, adjustment2DDraw[2], true);
 			DrawFormatString(430, 170, GetColor(0, 0, 0), "街灯: 5ブロック");
 			if (catchDropItemNum < 5) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
+			// パネル説明
 			DrawFormatString(20, 350, GetColor(0, 0, 0), "RBボタンで次のステージへの道");
 
+			// 階段でのカーソル表示
 			if (adjustmentSelectObjectNumber == AdjustmentObject::Stairs)
 			{
 				if (catchDropItemNum < 15)
@@ -247,6 +295,7 @@ void MainMove2::AdjustmentDraw()
 					DrawBox(30, 30, 200, 230, GetColor(255, 0, 0), false);
 				}
 			}
+			// 階段と床のカーソル表示
 			else if (adjustmentSelectObjectNumber == AdjustmentObject::StairsRoad)
 			{
 				if (catchDropItemNum < 45)
@@ -258,6 +307,7 @@ void MainMove2::AdjustmentDraw()
 					DrawBox(230, 30, 420, 280, GetColor(255, 0, 0), false);
 				}
 			}
+			// 街灯のカーソル表示
 			else if (adjustmentSelectObjectNumber == AdjustmentObject::StreetLight)
 			{
 				if (catchDropItemNum < 5)
@@ -270,11 +320,13 @@ void MainMove2::AdjustmentDraw()
 				}
 			}
 
+			// 戻る説明
 			DrawFormatString(30, 500, GetColor(0, 0, 0), "Bボタンで戻る");
 
+			// 現在の取得ドロップ数表示
 			DrawFormatString(1020, 20, GetColor(0, 0, 0), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
-		}
-	}
+		} /// else (!if (adjustmentSelectObject))
+	} /// if (adjustmentSceneFeed >= 50)
 	//else
 	//{
 	//	DrawGraph(0, 0, adjustmentDrawScreen, true);
@@ -323,42 +375,48 @@ void MainMove2::AdjustmentDraw()
 	}
 	/// ---------------------------------------------------------------------------------------------
 
-}
+} /// void MainMove2::AdjustmentDraw()
 
 
+// 精密機械でオブジェクトの生成プロセス
 void MainMove2::AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID, float direction)
 {
+	// どのオブジェクトが選択されたか
 	switch (obujectID)
 	{
+	// 階段が選択されていたら
 	case AdjustmentObject::Stairs:
-		vp_stageStairs.push_back(new StageStairs(stairsHandle, area, stairsTexture0, DX_PI_F + direction));
-		p_character->SetStairsArea(vp_stageStairs[BASICPARAM::stairsNum]->GetArea(), BASICPARAM::stairsNum, DX_PI_F + direction);
-		BASICPARAM::stairsNum++;
-		BASICPARAM::v_stairsArea.push_back(area);
-		BASICPARAM::v_stairsAngle.push_back(DX_PI_F + direction);
+		vp_stageStairs.push_back(new StageStairs(stairsHandle, area, stairsTexture0, DX_PI_F + direction));		// 生成
+		p_character->SetStairsArea(vp_stageStairs[BASICPARAM::stairsNum]->GetArea(), BASICPARAM::stairsNum, DX_PI_F + direction);	// キャラクターに対して当たり判定生成
+		BASICPARAM::stairsNum++;									// 全体で確認できるように階段の個数を追加
+		BASICPARAM::v_stairsArea.push_back(area);					// 全体で確認できるように場所を追加
+		BASICPARAM::v_stairsAngle.push_back(DX_PI_F + direction);	// 全体で確認できるように角度を追加
 		break;
 
+	// 街灯が選択されていたら
 	case AdjustmentObject::StreetLight:
-		vp_stageStreetLight.push_back(new StageStreetLight(streetLightHandle, area, streetLightTexture0, streetLightTexture1, direction));
-		BASICPARAM::streetLightNum++;
-		BASICPARAM::v_streetLightArea.push_back(area);
-		BASICPARAM::v_streetLightAngle.push_back(direction);
+		vp_stageStreetLight.push_back(new StageStreetLight(streetLightHandle, area, streetLightTexture0, streetLightTexture1, direction));	// 生成
+		BASICPARAM::streetLightNum++;								// 全体で確認できるように街灯の個数を追加
+		BASICPARAM::v_streetLightArea.push_back(area);				// 全体で確認できるように場所を追加
+		BASICPARAM::v_streetLightAngle.push_back(direction);		// 全体で確認できるように角度を追加
 		break;
 
+	// 階段と床が千tなくされていたら
 	case AdjustmentObject::StairsRoad:
-		vp_stageStairsRoad.push_back(new StageStairsRoad(stairsRoadHandle, area, stairsRoadTexture0, stairsRoadTexture1, DX_PI_F + direction));
-		p_character->SetStairsRoadArea(vp_stageStairsRoad[BASICPARAM::stairsRoadNum]->GetArea(), BASICPARAM::stairsRoadNum, DX_PI_F + direction);
-		BASICPARAM::stairsRoadNum++;
-		BASICPARAM::v_stairsRoadArea.push_back(area);
-		BASICPARAM::v_stairsRoadAngle.push_back(DX_PI_F + direction);
+		vp_stageStairsRoad.push_back(new StageStairsRoad(stairsRoadHandle, area, stairsRoadTexture0, stairsRoadTexture1, DX_PI_F + direction));		// 生成
+		p_character->SetStairsRoadArea(vp_stageStairsRoad[BASICPARAM::stairsRoadNum]->GetArea(), BASICPARAM::stairsRoadNum, DX_PI_F + direction);	// キャラクターに対してあたり判定生成
+		BASICPARAM::stairsRoadNum++;									// 全体で確認できるように階段と床の個数を追加
+		BASICPARAM::v_stairsRoadArea.push_back(area);					// 全体で確認できるように場所を追加
+		BASICPARAM::v_stairsRoadAngle.push_back(DX_PI_F + direction);	// 全体で確認できるように角度を追加
 		break;
 
 	default:
 		break;
 	}
-}
+} /// void MainMove2::AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID, float direction)
 
 
+// シャドウマップでの影を描画
 void MainMove2::ShadowDraw()
 {
 	/// セットアップ
@@ -476,17 +534,19 @@ void MainMove2::ShadowDraw()
 	BaseMove::ShadowCharaDrawAfter();
 	// キャラクター
 	p_character->ModelDraw();
-}
+} /// void MainMove2::ShadowDraw()
 
 
+// 攻撃とあたり判定のプロセス
 void MainMove2::AttackProcess()
 {
 	/// 敵に関する--------------------------------------------------------------------------------------------------------
 	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
+		// 死んでいたら次へ
 		if (p_enemy[i]->GetDeathFlag()) continue;
 
-		// 当たっていたら押し出す
+		// 当たっていたらプレイヤーを押し出す
 		if (HitCheck_Capsule_Capsule(
 			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth(),
 			p_enemy[i]->GetArea(), VAdd(p_enemy[i]->GetArea(), VGet(0.0f, p_enemy[i]->GetHeight(), 0.0f)), p_enemy[i]->GetWidth()))
@@ -495,10 +555,11 @@ void MainMove2::AttackProcess()
 				, p_enemy[i]->GetWidth() >= p_character->GetWidth() ? p_enemy[i]->GetWidth() : p_character->GetWidth());
 		}
 
-		// 攻撃中だったら
+
+		// プレイヤーが攻撃中だったら
 		if (p_character->GetAttackNow())
 		{
-			if (nextOperationUIFeed[static_cast<int>(EOPERATION_UI::attack)] != 0) nextOperationUIFeed[static_cast<int>(EOPERATION_UI::attack)] = 0;
+			// 敵に剣が触れたかどうか調べる
 			p_enemy[i]->HitLineReturn(p_character->GetAttackFirstFrameArea(), p_character->GetAttackEndFrameArea());
 		}
 
@@ -512,16 +573,15 @@ void MainMove2::AttackProcess()
 			// エフェクトを再生する。
 			playingEfAttack = PlayEffekseer3DEffect(effectAttack);
 			SetScalePlayingEffekseer3DEffect(playingEfAttack, 10, 10, 10);
-			// 再生中のエフェクトを移動する。
 			SetPosPlayingEffekseer3DEffect(playingEfAttack, p_character->GetAttackEndFrameArea().x, p_character->GetAttackEndFrameArea().y, p_character->GetAttackEndFrameArea().z);
 		}
-	}
+	} /// for (int i = 0, n = enemyNum; i != n; ++i)
 
 
 	/// 精算機械に関する-------------------------------------------------------------------------------------------------------------------
 	if (p_adjustmentMachine->GetCanTouch())
 	{
-		// 当たっていたら押し出す
+		// 当たっていたらプレイヤーを押し出す
 		if (HitCheck_Capsule_Capsule(
 			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth(),
 			p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, p_adjustmentMachine->GetHeight(), 0.0f)), p_adjustmentMachine->GetWidth()))
@@ -530,16 +590,20 @@ void MainMove2::AttackProcess()
 				, p_adjustmentMachine->GetWidth() >= p_character->GetWidth() ? p_adjustmentMachine->GetWidth() : p_character->GetWidth());
 		}
 
-		// 距離が近かくで触れるボタン押したら
+		// 距離が近かくで触れるボタン(Bボタン)を押したら
 		if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175
 			&& !p_character->GetAttackNow() && p_character->GetArea().y <= 10.0f
 			&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
 		{
+			// 精密機械のシーンへ移行
 			//GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, adjustmentDrawScreen);
 			adjustmentFeedNow = true;
 			adjustmentStartFeed = true;
 			changeAdjustmentScene = true;
 		}
+
+		
+		// プレイヤーとの距離で精密機械のパネルのテクスチャを変える
 		if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 250)
 		{
 			p_adjustmentMachine->ChangeDisplayTexture(true);
@@ -548,22 +612,28 @@ void MainMove2::AttackProcess()
 		{
 			p_adjustmentMachine->ChangeDisplayTexture(false);
 		}
-	}
+	} /// if (p_adjustmentMachine->GetCanTouch())
 	
 
 	/// ドロップに関する--------------------------------------------------------------------------------------
 	for (int i = 0, n = enemyNum * 5; i != n; ++i)
 	{
+		// もう拾われているかどうかで次へ
 		if (p_dropItem[i]->GetDeath() || !p_dropItem[i]->GetAlive() || !p_dropItem[i]->GetCanCatch()) continue;
 
+
+		// 精密機械がドロップ数を十分手に入れていたら
 		if (p_adjustmentMachine->GetFullDropItem())
 		{
+			// プレイヤーが近かったら
 			if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 500)
 			{
+				// プレイヤーに近づく
 				p_dropItem[i]->StolenChara(p_character->GetArea());
 			}
 
 
+			// プレイヤーとの距離が取られる距離だったら
 			if (BaseMove::GetDistance(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 75)
 			{
 				catchDropItemNum++;
@@ -574,6 +644,7 @@ void MainMove2::AttackProcess()
 				std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
 				std::uniform_int_distribution<> randPawnSE(0, 1);        // 乱数
 
+				// ドロップアイテムを取得するSEを流す
 				if (randPawnSE(mt) == 0)
 				{
 					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, p_dropItem[i]->GetArea());
@@ -584,9 +655,11 @@ void MainMove2::AttackProcess()
 				}
 				/// -----------------------------------------------------------------------------------------------------
 			}
-		}
+		} /// if (p_adjustmentMachine->GetFullDropItem())
+		// 精密機械がドロップ数を十分に手に入れていなかったら
 		else
 		{
+			// 精密機械との距離が近かったら
 			if (BaseMove::GetDistance(p_adjustmentMachine->GetArea(), p_dropItem[i]->GetArea()) <= 75)
 			{
 				p_adjustmentMachine->CatchDropItem();
@@ -597,6 +670,7 @@ void MainMove2::AttackProcess()
 				std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
 				std::uniform_int_distribution<> randPawnSE(0, 1);        // 乱数
 
+				// ドロップ取得のSEを流す
 				if (randPawnSE(mt) == 0)
 				{
 					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, p_dropItem[i]->GetArea());
@@ -608,10 +682,11 @@ void MainMove2::AttackProcess()
 				/// -----------------------------------------------------------------------------------------------------
 			}
 
+			// 精密機械へ向かう
 			p_dropItem[i]->StolenChara(p_adjustmentMachine->GetArea());
-		}
-	}
-}
+		} /// else (!if (p_adjustmentMachine->GetFullDropItem()))
+	} /// for (int i = 0, n = enemyNum * 5; i != n; ++i)
+} /// void MainMove2::AttackProcess()
 
 
 MainMove2::MainMove2(const std::vector<int> v_file)
@@ -662,6 +737,7 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	// キャラクターの初期化
 	p_character	 = new CharacterSword(v_file[EFILE::characterAttack], v_file[EFILE::stage], v_file[EFILE::stairsColl], v_file[EFILE::paneru], v_file[EFILE::stairsRoadColl]
 		, v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3], v_file[EFILE::charaTex4]);
+
 
 	// 操作説明画像の初期化
 	operationUIDraw[static_cast<int>(EOPERATION_UI::attack)] = v_file[EFILE::attackUI];
@@ -805,17 +881,20 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 0, 0);
 	bgmOnceVolumeChange = 0;
 
+
 	// エフェクト読み込み
 	effectAttack = LoadEffekseerEffect("media\\こっち\\media\\Effect\\characterAttack.efk");
 	playingEfAttack = -1;
-}
+} /// MainMove2::MainMove2(const std::vector<int> v_file)
 
 
 MainMove2::~MainMove2()
 {
+	/// エフェクトに関する
 	StopEffekseer3DEffect(playingEfAttack);
 	DeleteEffekseerEffect(effectAttack);
 	//GRAPHIC_RELEASE(adjustmentDrawScreen);
+
 
 	/// 精密機械に関する
 	GRAPHIC_RELEASE(adjustmentDescriptionDraw);
@@ -824,11 +903,13 @@ MainMove2::~MainMove2()
 		GRAPHIC_RELEASE(adjustment2DDraw[i]);
 	}
 
+
 	/// パネルに関する
 	for (int i = 0; i != 10; ++i)
 	{
 		POINTER_RELEASE(p_stagePaneru[i]);
 	}
+
 
 	/// 街灯に関する
 	MODEL_RELEASE(streetLightHandle);
@@ -841,6 +922,7 @@ MainMove2::~MainMove2()
 	vp_stageStreetLight.clear();
 	vp_stageStreetLight.shrink_to_fit();
 
+	
 	/// 階段に関する
 	MODEL_RELEASE(stairsHandle);
 	GRAPHIC_RELEASE(stairsTexture0);
@@ -850,6 +932,7 @@ MainMove2::~MainMove2()
 	}
 	vp_stageStairs.clear();
 	vp_stageStairs.shrink_to_fit();
+
 
 	/// 階段と床に関する
 	MODEL_RELEASE(stairsRoadHandle);
@@ -862,8 +945,10 @@ MainMove2::~MainMove2()
 	vp_stageStairsRoad.clear();
 	vp_stageStairsRoad.shrink_to_fit();
 
+
 	/// カメラに関する
 	POINTER_RELEASE(p_camera);
+
 
 	/// ドロップアイテムに関する
 	for (int i = 0, n = enemyNum * 5; i != n; ++i)
@@ -871,11 +956,13 @@ MainMove2::~MainMove2()
 		POINTER_RELEASE(p_dropItem[i]);
 	}
 
+
 	/// 敵に関する
 	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
 		POINTER_RELEASE(p_enemy[i]);
 	}
+
 
 	/// 説明画像に関する
 	for (int i = 0; i != 4; ++i)
@@ -883,12 +970,14 @@ MainMove2::~MainMove2()
 		GRAPHIC_RELEASE(operationUIDraw[i]);
 	}
 
+
 	/// キャラクターに関する
 	POINTER_RELEASE(p_character);
 
+
 	/// ステージに関する
 	POINTER_RELEASE(p_stage);
-}
+} /// MainMove2::~MainMove2()
 
 
 // 描画
@@ -896,54 +985,69 @@ void MainMove2::Draw()
 {
 //	if (!changeAdjustmentScene)
 //	{
+
+		// スカイボックスの描画
 		BaseMove::SkyBoxDraw();
 
+		
+		// 影の描画
 		ShadowDraw();
 
+
+		// ドロップ数が集まる前の精密機械の描画
 		if (!p_adjustmentMachine->GetCanTouch())
 		{
 			p_adjustmentMachine->Draw();
 			p_adjustmentMachine->ModelDraw();
 		}
 
+
+		// ドロップアイテムの描画
 		for (int i = 0, n = enemyNum * 5; i != n; ++i)
 		{
 			if (p_dropItem[i]->GetDeath() || !p_dropItem[i]->GetAlive()) continue;
 			p_dropItem[i]->ModelDraw();
 		}
 
+
 		// キャラクター
 		p_character->Draw();
 
 
+		// 精密機械へのドロップ数が十分だったとき
 		if (p_adjustmentMachine->GetCanTouch())
 		{
+			// 精密機械の頭上に起動操作の説明描画
 			if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175)
 			{
 				DrawBillboard3D(VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 200.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, adjustmentDescriptionDraw, false);
 			}
 		}
 
+
+		// プレイヤーの操作説明描画
 		for (int i = 0; i != 4; ++i)
 		{
-			// 最大光度から減っていたら減らすようにする
+			// ブレンド値を変移させる
 			if (operationUIFeed[i] < nextOperationUIFeed[i]) operationUIFeed[i]++;
 			if (operationUIFeed[i] > nextOperationUIFeed[i]) operationUIFeed[i]--;
 
-			/// ブレンドする----------------------------------------------
-			// 説明画像の光度が0以上だったら
+
+			/// 描画画像をブレンドする----------------------------------------------
+			// 説明画像のブレンド値が0以上だったら
 			if (operationUIFeed[i] > 0)
 			{
 				SetDrawBlendMode(DX_BLENDMODE_ALPHA, operationUIFeed[i]);
 
-				// 左スティック説明画像
+				// 左の画像
 				if (i % 2 == 0)
 				{
 					DrawGraph(100, 100, operationUIDraw[i], true);
 				}
+				// 右の画像
 				else
 				{
-					// 右スティック説明画像
+
 					DrawGraph(1200, 100, operationUIDraw[i], true);
 				}
 
@@ -951,8 +1055,11 @@ void MainMove2::Draw()
 			}
 		}
 
+
+		// プレイヤーから近い敵に対してロックオンのような描画をスクリーン座標にさせる
 		if (mostNearEnemyDistance <= 1000 && !p_enemy[lockONNowEnemyID]->GetEraseExistence())
 		{
+			// 距離が攻撃で当たるくらいの距離だったら
 			if (mostNearEnemyDistance < 250)
 			{
 				DrawBox(static_cast<int>(mostNearEnemyScreenArea.x - 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f)
@@ -960,6 +1067,7 @@ void MainMove2::Draw()
 				DrawBox(static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y - 20.0f - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f)
 					, static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f), GetColor(255, 255, 255), false);
 			}
+			// 攻撃は当たらないが近かったら
 			else
 			{
 				DrawBox(static_cast<int>(mostNearEnemyScreenArea.x - 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f)
@@ -969,11 +1077,14 @@ void MainMove2::Draw()
 			}
 		}
 
+		
+		// 取得したドロップ数の表示
 		DrawFormatString(1020, 20, GetColor(0, 0, 0), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
 
 	//}
 	////else
 	//{
+		// 精密機械のシーンの描画
 		AdjustmentDraw();
 	//}
 
@@ -984,37 +1095,57 @@ void MainMove2::Draw()
 			p_enemy[i]->Draw();
 		}
 #endif // _DEBUG
-}
+} /// void MainMove2::Draw()
 
 
 // メインプロセス
 void MainMove2::Process()
 {
+	// 精密機械のシーンじゃなかったら
 	if (!changeAdjustmentScene)
 	{
 		// キャラクターのプロセスを呼ぶ
 		p_character->Process(p_camera->GetAngle());		
 
+
+		// 初めて攻撃をしたら
+		if (p_character->GetAttackNow() && nextOperationUIFeed[static_cast<int>(EOPERATION_UI::attack)] != 0)
+		{
+			// 攻撃の操作説明UIを消す
+			nextOperationUIFeed[static_cast<int>(EOPERATION_UI::attack)] = 0;
+		}
+
+
+		// 初めてジャンプをしたら
 		if (nextOperationUIFeed[static_cast<int>(EOPERATION_UI::jump)] != 0
 			&& p_character->GetArea().y > 50.0f)
 		{
+			// ジャンプの操作説明UIを消す
 			nextOperationUIFeed[static_cast<int>(EOPERATION_UI::jump)] = 0;
 		}
+
+
+		// 初めて瞬間移動をしたら
 		if (nextOperationUIFeed[static_cast<int>(EOPERATION_UI::fastSpeed)] != 0
 			&& p_character->GetMoveFastWaitCount())
 		{
+			// 瞬間移動とオプション画面への操作説明UIを消す
 			opeFastOptionEnd = true;
 			nextOperationUIFeed[static_cast<int>(EOPERATION_UI::fastSpeed)] = 0;
 			nextOperationUIFeed[static_cast<int>(EOPERATION_UI::option)] = 0;
 		}
 		
+
+		// 攻撃とジャンプの操作説明UIを消したら
 		if (operationUIFeed[static_cast<int>(EOPERATION_UI::attack)] == 0
 			&& operationUIFeed[static_cast<int>(EOPERATION_UI::jump)] == 0
 			&& !opeFastOptionEnd)
 		{
+			// 瞬間移動とオプション画面への操作説明UIを表示させる
 			nextOperationUIFeed[static_cast<int>(EOPERATION_UI::fastSpeed)] = 255;
 			nextOperationUIFeed[static_cast<int>(EOPERATION_UI::option)] = 255;
 		}
+
 
 		// カメラのプロセスを呼ぶ
 		p_camera->Process(p_character->GetArea());		
@@ -1023,14 +1154,20 @@ void MainMove2::Process()
 		// 敵のプロセス
 		for (int i = 0, n = enemyNum; i != n; ++i)
 		{
+			// 敵が消滅したら
 			if (p_enemy[i]->GetEraseExistence())
 			{
+				// ロックオン対象だったら
 				if (i == lockONNowEnemyID)
 				{
+					// 除外させる
 					mostNearEnemyDistance = 10000;
 					lockONNowEnemyID = 0;
 					p_character->SetMostNearEnemyArea();
 				}
+
+
+				// ドロップアイテムを描画させる
 				if (!p_dropItem[(i * 5)]->GetDeath() && !p_dropItem[(i * 5)]->GetAlive()) p_dropItem[(i * 5)]->SetAlive(true);
 				if (!p_dropItem[(i * 5) + 1]->GetDeath() && !p_dropItem[(i * 5) + 1]->GetAlive()) p_dropItem[(i * 5) + 1]->SetAlive(true);
 				if (!p_dropItem[(i * 5) + 2]->GetDeath() && !p_dropItem[(i * 5) + 2]->GetAlive()) p_dropItem[(i * 5) + 2]->SetAlive(true);
@@ -1038,23 +1175,35 @@ void MainMove2::Process()
 				if (!p_dropItem[(i * 5) + 4]->GetDeath() && !p_dropItem[(i * 5) + 4]->GetAlive()) p_dropItem[(i * 5) + 4]->SetAlive(true);
 				continue;
 			}
+
+
+			// 敵のプロセスを呼ぶ
 			p_enemy[i]->Process();
+
+
+			// 敵とプレイヤーの距離がロックオン対象より近かったら
 			if (BaseMove::GetDistance(p_character->GetArea(), p_enemy[lockONNowEnemyID]->GetArea())
 				>= BaseMove::GetDistance(p_character->GetArea(), p_enemy[i]->GetArea()))
 			{
+				// ロックオン対象を更新する
 				mostNearEnemyDistance = BaseMove::GetDistance(p_character->GetArea(), p_enemy[i]->GetArea());
 				mostNearEnemyScreenArea = ConvWorldPosToScreenPos(p_enemy[i]->GetArea());
 				lockONNowEnemyID = i;
+
+
+				// ロックオンの距離より近かったら
 				if (mostNearEnemyDistance < 250)
 				{
 					p_character->SetMostNearEnemyArea(p_enemy[i]->GetArea());
 				}
+				// ロックオンできない距離だったら除外する
 				else
 				{
 					p_character->SetMostNearEnemyArea();
 				}
 			}
-		}
+		} /// for (int i = 0, n = enemyNum; i != n; ++i)
+
 
 		// ドロップアイテム
 		for (int i = 0, n = enemyNum * 5; i != n; ++i)
@@ -1064,13 +1213,19 @@ void MainMove2::Process()
 		}
 
 
+		// シャドウマップのプレイヤーの位置を更新
 		BaseMove::ShadowArea(p_character->GetArea());
 
+
+		// 攻撃プロセスを呼ぶ
 		AttackProcess();
 
+
+		// スカイボックスのプレイヤーの位置を更新
 		BaseMove::SkyBoxProcess(p_character->GetArea());
 
 
+		/// プレイヤーの座標にて次のシーンのBGMを流す---------------------------------------------------------------------
 		if (p_character->GetArea().y >= 2500.0f)
 		{
 			if (bgmOnceVolumeChange != 5) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 200, 200);
@@ -1101,17 +1256,20 @@ void MainMove2::Process()
 			if (bgmOnceVolumeChange != 0) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 0, 0);
 			bgmOnceVolumeChange = 0;
 		}
+		/// ------------------------------------------------------------------------------------------------------------------
 
 
+		// プレイヤーの位置にて次のシーンへ移動する
 		if (p_character->GetArea().y >= 3550.0f)
 		{
 			BASICPARAM::endFeedNow = true;
 			BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
 			BaseMove::SetScene(ESceneNumber::THIRDLOAD);
 		}
-	}
+	} /// if (!changeAdjustmentScene)
 	else
 	{
+		// 精密機械から通常へのフェードシーンが始まったら
 		if (adjustmentStartFeed)
 		{
 			if (adjustmentSceneFeed <= 100)
@@ -1123,6 +1281,7 @@ void MainMove2::Process()
 				adjustmentFeedNow = false;
 			}
 		}
+		// 通常から精密機械へのフェードシーンが始めまったら
 		else
 		{
 			if (adjustmentSceneFeed >= 0)
@@ -1136,11 +1295,13 @@ void MainMove2::Process()
 			}
 		}
 
+		
+		// 精密機械へのフェードシーンが終わったらプロセスを呼ぶ
 		if (!adjustmentFeedNow)
 		{
 			AdjustmentProcess();
 		}
-	}
+	} /// else (!if (!changeAdjustmentScene))
 
 #ifdef _DEBUG
 	if (CheckHitKey(KEY_INPUT_Z) == 1)
@@ -1150,9 +1311,10 @@ void MainMove2::Process()
 		BaseMove::SetScene(ESceneNumber::THIRDLOAD);
 	}
 #endif
-}
+} /// void MainMove2::Process()
 
 
+// カメラの再セットアップ
 void MainMove2::CameraProcess()
 {
 	//if (!changeAdjustmentScene)
@@ -1162,17 +1324,21 @@ void MainMove2::CameraProcess()
 }
 
 
+// オプション画面モデル用の表示
 void MainMove2::OptionActorModel()
 {
 	p_character->OptionActorDraw();
 }
 
 
+// オプション画面モデルの準備
 void MainMove2::OptionActorModelBefore()
 {
 	p_character->OptionActorDrawBefore();
 }
 
+
+// オプション画面モデルの解消
 void MainMove2::OptionActorModelAfter()
 {
 	p_character->OptionActorDrawAfter();

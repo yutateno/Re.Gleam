@@ -63,7 +63,7 @@ void DropItemMove3::Process()
 		moveAreaY = (sin(-DX_PI_F / 2 + DX_PI_F / 30 * flyAroundFrame) + 1) / 2 * 120;
 	}
 
-	printfDx("%f\n", area.x);
+	//printfDx("%f\n", area.x);
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, rotationY * DX_PI_F / 180.0f, 0.0f));
 	MV1SetPosition(this->modelHandle, VGet(area.x, area.y + moveAreaY, area.z));
 }

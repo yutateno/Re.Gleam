@@ -338,7 +338,7 @@ EnemyMove3Slime::~EnemyMove3Slime()
 
 void EnemyMove3Slime::Draw()
 {
-	if (deathFlag) return;
+	if (deathFlag || eraseExistence) return;
 
 	BasicObject::ShadowFoot(shadowStageHandle);
 

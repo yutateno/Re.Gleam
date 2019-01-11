@@ -335,7 +335,7 @@ EnemyMove3CrayonHuman::~EnemyMove3CrayonHuman()
 
 void EnemyMove3CrayonHuman::Draw()
 {
-	if (deathFlag) return;
+	if (deathFlag || eraseExistence) return;
 
 	BasicObject::ShadowFoot(shadowStageHandle);
 

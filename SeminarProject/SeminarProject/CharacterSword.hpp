@@ -55,9 +55,6 @@ private:
 	// Œü‚¢‚Ä‚¢‚é‚©‚Ç‚¤‚©
 	bool m_direction[4];
 
-	// •à‚Ä‚¢‚é‚©‚Ç‚¤‚©
-	bool walkNow;
-
 	// “®‚«‚ÌƒvƒƒZƒX
 	void MoveProcess();
 

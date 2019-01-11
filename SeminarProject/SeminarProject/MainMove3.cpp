@@ -266,11 +266,13 @@ void MainMove3::ShadowDraw()
 	// 敵スライム
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
+		if (p_enemySlime[i]->GetDeathFlag() || p_enemySlime[i]->GetEraseExistence()) continue;
 		p_enemySlime[i]->ModelDraw();
 	}
 	// 敵クレヨンヒューマン
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
+		if (p_enemyCrayonHuman[i]->GetDeathFlag() || p_enemyCrayonHuman[i]->GetEraseExistence()) continue;
 		p_enemyCrayonHuman[i]->ModelDraw();
 	}
 	// キャラクター
@@ -316,11 +318,13 @@ void MainMove3::ShadowDraw()
 	// 敵スライム
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
+		if (p_enemySlime[i]->GetEraseExistence()) continue;
 		p_enemySlime[i]->ModelDraw();
 	}
 	// 敵クレヨンヒューマン
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
+		if (p_enemyCrayonHuman[i]->GetEraseExistence()) continue;
 		p_enemyCrayonHuman[i]->ModelDraw();
 	}
 	BaseMove::ShadowAnotherCharaSetUpAfter();
@@ -368,11 +372,13 @@ void MainMove3::ShadowDraw()
 	// 敵スライム
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
+		if (p_enemySlime[i]->GetEraseExistence()) continue;
 		p_enemySlime[i]->ModelDraw();
 	}
 	// 敵クレヨンヒューマン
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
+		if (p_enemyCrayonHuman[i]->GetEraseExistence()) continue;
 		p_enemyCrayonHuman[i]->ModelDraw();
 	}
 	// キャラクター
@@ -698,7 +704,7 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	// 階段と床の初期化
 	if (BASICPARAM::stairsRoadNum != 0)
 	{
-		vp_stageStairsRoad.resize(BASICPARAM::stairsRoadNum);
+		vp_stageStairsRoad.resize(BASICPARAM::stairsRoadNum + 1);
 		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
 		{
 			vp_stageStairsRoad[i] = nullptr;
@@ -711,19 +717,19 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	// 街灯の初期化
 	if (BASICPARAM::streetLightNum != 0)
 	{
-		vp_stageStreetLight.resize(BASICPARAM::streetLightNum);
+		vp_stageStreetLight.resize(BASICPARAM::streetLightNum + 1);
 		for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
 		{
 			vp_stageStreetLight[i] = nullptr;
 			vp_stageStreetLight[i] = new StageStreetLight(v_file[EFILE::streetLightModel], BASICPARAM::v_streetLightArea[i]
-				, v_file[EFILE::streetLightTex0], v_file[EFILE::streetLightTex1], BASICPARAM::v_stairsAngle[i]);
+				, v_file[EFILE::streetLightTex0], v_file[EFILE::streetLightTex1], BASICPARAM::v_streetLightAngle[i]);
 		}
 	}
 
 	// 階段の初期化
 	if (BASICPARAM::stairsNum != 0)
 	{
-		vp_stageStairs.resize(BASICPARAM::stairsNum);
+		vp_stageStairs.resize(BASICPARAM::stairsNum + 1);
 		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
 		{
 			vp_stageStairs[i] = nullptr;

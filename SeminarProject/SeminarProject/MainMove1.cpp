@@ -629,16 +629,19 @@ void MainMove1::CameraProcess()
 	p_camera->SetUp();
 }
 
+// オプション描画モデルの描画処理
 void MainMove1::OptionActorModel()
 {
 	p_character->OptionActorDraw();
 }
 
+// オプション画面モデルの描画前処理
 void MainMove1::OptionActorModelBefore()
 {
 	p_character->OptionActorDrawBefore();
 }
 
+// オプション画面モデルの描画後処理
 void MainMove1::OptionActorModelAfter()
 {
 	p_character->OptionActorDrawAfter();

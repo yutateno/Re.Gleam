@@ -4,58 +4,51 @@
 // 動きのプロセス
 void OrdinaryPerson::MoveProcess()
 {
+	// ランダム数値取得
 	std::random_device rnd;     // 非決定的な乱数生成器を生成
 	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
 	std::uniform_int_distribution<> randInX(-200, 200);			// X座標用乱数
 	std::uniform_int_distribution<> moveTurn(0, 314);				// Z座標用乱数
 
-	moveCount++;
 
-	// スムーズに動かせる
-	if (moveFlag)
+	moveCount++;	// 動きのカウントを加算
+
+
+	animSpeed = 0.75f;			// モーションの速度を決める
+
+	
+	// 移動が直進方向だったら
+	if (direXAngle == 0.0f)
 	{
-		animSpeed = 0.75f;
-		if (direXAngle == 0.0f)
+		if (walkSpeed < 6.0f)
 		{
-			if (walkSpeed < 6.0f)
-			{
-				walkSpeed += 2.5f;
-			}
-			else
-			{
-				walkSpeed = 6.0f;
-			}
-		}
-		else	// 斜め方向
-		{
-			if (walkSpeed < 3.0f)
-			{
-				walkSpeed += 1.0f;
-			}
-			else
-			{
-				walkSpeed = 3.0f;
-			}
-		}
-	}
-	else
-	{
-		animSpeed = 0.5f;
-		if (walkSpeed > 0.0f)
-		{
-			walkSpeed -= 3.0f;
+			walkSpeed += 2.5f;
 		}
 		else
 		{
-			walkSpeed = 0.0f;
+			walkSpeed = 6.0f;
+		}
+	}
+	// 移動が斜め方向だったら
+	else
+	{
+		if (walkSpeed < 3.0f)
+		{
+			walkSpeed += 1.0f;
+		}
+		else
+		{
+			walkSpeed = 3.0f;
 		}
 	}
 
 
+	// 移動カウントが400以上だったらリセットする
 	if (moveCount >= 400)
 	{
 		moveCount = 0;
 	}
+	//移動カウントが100だったら移動先を決める
 	else if (moveCount == 100)
 	{
 		nextDireZAngle = moveTurn(mt) / 100.0f;
@@ -66,11 +59,14 @@ void OrdinaryPerson::MoveProcess()
 		}
 	}
 
+
+	// 移動方向に動かす
 	area.x += sinf(angle + direXAngle + direZAngle) * -walkSpeed;
 	area.z += cosf(angle + direXAngle + direZAngle) * -walkSpeed;
-	moveFlag = true;
 	Player_PlayAnim(MOTION::walk);
 
+
+	// 移動先の向きと違ったら
 	if (nextDireXAngle != direXAngle)
 	{
 		if (direXAngle > nextDireXAngle)
@@ -82,6 +78,9 @@ void OrdinaryPerson::MoveProcess()
 			direXAngle += 0.01f;
 		}
 	}
+
+
+	// 移動先の向きと違ったら
 	if (nextDireZAngle != direZAngle)
 	{
 		if (direZAngle > nextDireZAngle)
@@ -93,15 +92,16 @@ void OrdinaryPerson::MoveProcess()
 			direZAngle += 0.01f;
 		}
 	}
-}
+} /// void OrdinaryPerson::MoveProcess()
 
 
+// 落下処理
 void OrdinaryPerson::FallProcess()
 {
 	// 足元に何もなかったら
 	if (fallCount > 1)
 	{
-		// 飛ぶコマンドで飛んでいなかったら
+		// 落下中じゃなかったら
 		if (!jumpNow)
 		{
 			jumpNow = true;				// 飛んでいる
@@ -111,7 +111,7 @@ void OrdinaryPerson::FallProcess()
 	}
 
 
-	// 飛んでいる
+	// 落下している
 	if (jumpNow)
 	{
 		flyCount++;
@@ -123,27 +123,14 @@ void OrdinaryPerson::FallProcess()
 
 
 		// ジャンプにて最頂点に到達したら
-		if (jumpPower <= flyJumpPower / 2.0f)
-		{
-			jumpUpNow = false;			// 落下に切り替える
-
-			//// 地面に触れたら
-			//if (fallCount <= 1)
-			//{
-			//	if (CheckHitKey(KEY_INPUT_G) >= 1)
-			//	{
-			//		printfDx("asdas\n");
-			//	}
-			//	jumpPower = 0.0f;
-			//	jumpUpNow = false;
-			//}
-		}
+		if (jumpPower <= flyJumpPower / 2.0f) jumpUpNow = false;			// 落下に切り替える
 
 
 		area.y -= 10.5f;
 	}
 
 
+	// 着地していたら
 	if (!jumpNow && preJumpNow && flyCount > 10)
 	{
 		flyCount = 0;
@@ -151,9 +138,10 @@ void OrdinaryPerson::FallProcess()
 	}
 
 
+	// 誤差で空中浮遊判定だったら
 	if (hitDimNum == 0 && area.y >= 10.0f)
 	{
-		// 飛ぶコマンドで飛んでいなかったら
+		// 飛んでいなかったら
 		if (!jumpNow)
 		{
 			jumpNow = true;				// 飛んでいる
@@ -161,13 +149,14 @@ void OrdinaryPerson::FallProcess()
 			jumpPower = fallJumpPower;	// 落下速度を加える
 		}
 	}
-}
+} /// void OrdinaryPerson::FallProcess()
 
 
+// コンストラクタ
 OrdinaryPerson::OrdinaryPerson(const int modelHandle, const int collStageHandle, const int stairsHandle
 	, const int stairsRoadHandle, const int tex0, const VECTOR area, const float rotationY) : BasicCreature(true)
 {
-	// ステージのコリジョン情報の更新
+	// あたり判定用のステージのコリジョン情報の更新
 	stageHandle = -1;
 	stageHandle = MV1DuplicateModel(collStageHandle);
 	MV1SetScale(stageHandle, VGet(0.75f, 0.75f, 0.75f));
@@ -176,7 +165,8 @@ OrdinaryPerson::OrdinaryPerson(const int modelHandle, const int collStageHandle,
 	MV1SetFrameVisible(stageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 	MV1RefreshCollInfo(stageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 
-	// ステージのコリジョン情報の更新
+
+	// 足影判定用のステージのコリジョン情報の更新
 	shadowStageHandle = -1;
 	shadowStageHandle = MV1DuplicateModel(collStageHandle);
 	MV1SetScale(shadowStageHandle, VGet(0.8f, 0.8f, 0.8f));
@@ -185,9 +175,11 @@ OrdinaryPerson::OrdinaryPerson(const int modelHandle, const int collStageHandle,
 	MV1SetFrameVisible(shadowStageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 	MV1RefreshCollInfo(shadowStageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 
+
 	// ３Ｄモデルの読み込み
 	this->modelHandle = 0;
 	this->modelHandle = MV1DuplicateModel(modelHandle);
+
 
 	// テクスチャの適応
 	textureHandle0 = -1;
@@ -226,8 +218,6 @@ OrdinaryPerson::OrdinaryPerson(const int modelHandle, const int collStageHandle,
 	// それぞれの速度
 	walkSpeed = 0.0f;
 	animSpeed = 0.5f;
-
-
 	moveCount = 0;
 
 
@@ -268,14 +258,19 @@ OrdinaryPerson::OrdinaryPerson(const int modelHandle, const int collStageHandle,
 	MV1SetRotationXYZ(this->modelHandle, VGet(0.0f, rotationY, 0.0f));
 	// モデルの座標を更新
 	MV1SetPosition(this->modelHandle, this->area);
-}
+} /// OrdinaryPerson::OrdinaryPerson(const int modelHandle, const int collStageHandle, const int stairsHandle
+/// , const int stairsRoadHandle, const int tex0, const VECTOR area, const float rotationY) : BasicCreature(true)
 
 
 
+// デストラクタ
 OrdinaryPerson::~OrdinaryPerson()
 {
+	// テクスチャ開放
 	GRAPHIC_RELEASE(textureHandle0);
 
+
+	// 階段と床解放
 	if (BASICPARAM::stairsRoadNum != 0)
 	{
 		for (int i = 0, n = v_stairsRoadHandle.size(); i != n; ++i)
@@ -286,6 +281,8 @@ OrdinaryPerson::~OrdinaryPerson()
 		v_stairsRoadHandle.shrink_to_fit();
 	}
 
+
+	// 階段開放
 	if (BASICPARAM::stairsNum != 0)
 	{
 		for (int i = 0, n = v_stairsHandle.size(); i != n; ++i)
@@ -296,10 +293,18 @@ OrdinaryPerson::~OrdinaryPerson()
 		v_stairsHandle.shrink_to_fit();
 	}
 
+
+	// モデル開放
 	MODEL_RELEASE(modelHandle);
+
+
+	// 影用ステージハンドル開放
 	MODEL_RELEASE(shadowStageHandle);
+
+
+	// あたり判定用ステージハンドル開放
 	MODEL_RELEASE(stageHandle);
-}
+} /// OrdinaryPerson::~OrdinaryPerson()
 
 
 // メインプロセス
@@ -347,7 +352,7 @@ void OrdinaryPerson::Process()
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, direXAngle + direZAngle, 0.0f));
 	// 指定位置にモデルを配置
 	MV1SetPosition(modelHandle, area);
-}
+} /// void OrdinaryPerson::Process()
 
 void OrdinaryPerson::TextureReload()
 {

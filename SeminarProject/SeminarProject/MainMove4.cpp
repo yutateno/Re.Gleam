@@ -241,7 +241,7 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 		{
 			vp_stageStreetLight[i] = nullptr;
 			vp_stageStreetLight[i] = new StageStreetLight(v_file[EFILE::streetLightModel], BASICPARAM::v_streetLightArea[i]
-				, v_file[EFILE::streetLightTex0], v_file[EFILE::streetLightTex1], BASICPARAM::v_stairsAngle[i]);
+				, v_file[EFILE::streetLightTex0], v_file[EFILE::streetLightTex1], BASICPARAM::v_streetLightAngle[i]);
 		}
 	}
 

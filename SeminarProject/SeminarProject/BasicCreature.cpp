@@ -1,5 +1,6 @@
 #include "BasicCreature.hpp"
 
+
 // 使うアニメーション管理
 void BasicCreature::Player_PlayAnim(int attach)
 {
@@ -12,6 +13,8 @@ void BasicCreature::Player_PlayAnim(int attach)
 			MV1DetachAnim(modelHandle, preAttach);
 			preAttach = -1;
 		}
+
+
 		// 今のモーションを入れる
 		preAttach = attachMotion;
 		preMotionPlayTime = nowPlayTime;
@@ -25,6 +28,7 @@ void BasicCreature::Player_PlayAnim(int attach)
 		// 動作時間を初期化する
 		nowPlayTime = 0.0f;
 
+
 		// ブレンド率は直前のモーションが有効ではない場合は１．０ｆ( 再生中のモーション１が１００％の状態 )にする
 		if (preMotionPlayTime == -1)
 		{
@@ -34,8 +38,9 @@ void BasicCreature::Player_PlayAnim(int attach)
 		{
 			motionBlendTime = 0.0f;
 		}
-	}
-}
+	} /// if (attachNum != attach)
+} /// void BasicCreature::Player_PlayAnim(int attach)
+
 
 // 全てのアニメーションの管理
 void BasicCreature::Player_AnimProcess()
@@ -50,11 +55,13 @@ void BasicCreature::Player_AnimProcess()
 		}
 	}
 
+
 	// 再生している現在のモーションの処理
 	if (attachMotion != -1)
 	{
 		// モーションの総時間を取得
 		totalTime = MV1GetAttachAnimTotalTime(modelHandle, attachMotion);
+
 
 		// 再生時間を進める
 		nowPlayTime += animSpeed;
@@ -66,6 +73,7 @@ void BasicCreature::Player_AnimProcess()
 			nowPlayTime = fmodf(nowPlayTime, totalTime);
 		}
 
+
 		// 変更した再生時間をモデルに反映させる
 		MV1SetAttachAnimTime(modelHandle, attachMotion, nowPlayTime);
 
@@ -73,14 +81,17 @@ void BasicCreature::Player_AnimProcess()
 		MV1SetAttachAnimBlendRate(modelHandle, attachMotion, motionBlendTime);
 	}
 
+
 	// 再生している直前のモーションの処理
 	if (preAttach != -1)
 	{
 		// アニメーションの総時間を取得
 		totalTime = MV1GetAttachAnimTotalTime(modelHandle, preAttach);
 
+
 		// 再生時間を進める
 		preMotionPlayTime += animSpeed;
+
 
 		// 再生時間が総時間に到達していたら再生時間をループさせる
 		if (preMotionPlayTime > totalTime)
@@ -88,13 +99,14 @@ void BasicCreature::Player_AnimProcess()
 			preMotionPlayTime = fmodf(preMotionPlayTime, totalTime);
 		}
 
+
 		// 変更した再生時間をモデルに反映させる
 		MV1SetAttachAnimTime(modelHandle, preAttach, preMotionPlayTime);
 
 		// アニメーション２のモデルに対する反映率をセット
 		MV1SetAttachAnimBlendRate(modelHandle, preAttach, (1.0f - motionBlendTime));
 	}
-}
+} /// void BasicCreature::Player_AnimProcess()
 
 
 // ステージのあたり判定処理
@@ -103,11 +115,13 @@ bool BasicCreature::ActorHit(int stageHandle)
 	// プレイヤーをカプセルとしてステージとのコリジョン情報を調べる(OBB形式)
 	m_hitDim = MV1CollCheck_Capsule(stageHandle, -1, area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth);
 
+
 	// ポリゴンの数を再初期化
 	wallNum = 0;
 	floorNum = 0;
 
 	hitDimNum += m_hitDim.HitNum;
+
 
 	// 検出された数だけ調べる
 	for (int i = 0, n = m_hitDim.HitNum; i != n; ++i)
@@ -139,6 +153,8 @@ bool BasicCreature::ActorHit(int stageHandle)
 		}
 	}
 
+
+	// どこにもあたっていなかったら
 	if (floorNum == 0 && wallNum == 0)
 	{
 		// 検出した情報を解放する
@@ -147,16 +163,20 @@ bool BasicCreature::ActorHit(int stageHandle)
 		return false;
 	}
 
+
 	// 床判定
 	if (floorNum != 0)
 	{
 		fallCount++;			// 浮いているとする
 
+
+		// 落下中だった
 		if (!jumpUpNow)
 		{
 			hitFlag = false;		// 当たってないとする
 
 			maxYHit = 0.0f;			// 初期化する
+
 
 			for (int i = 0; i != floorNum; ++i)
 			{
@@ -164,29 +184,29 @@ bool BasicCreature::ActorHit(int stageHandle)
 
 				if (jumpNow)
 				{
-					lineResult = HitCheck_Line_Triangle(VAdd(area, VGet(0.0f, modelHeight, 0.0f)), VAdd(area, VGet(0.0f, -5.0f, 0.0f)), mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]);
+					lineResult = HitCheck_Line_Triangle(VAdd(area, VGet(0.0f, modelHeight, 0.0f)), VAdd(area, VGet(0.0f, -5.0f, 0.0f))
+						, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]);
 				}
 				else
 				{
-					lineResult = HitCheck_Line_Triangle(VAdd(area, VGet(0.0f, modelHeight, 0.0f)), VAdd(area, VGet(0.0f, -20.0f, 0.0f)), mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]);
+					lineResult = HitCheck_Line_Triangle(VAdd(area, VGet(0.0f, modelHeight, 0.0f)), VAdd(area, VGet(0.0f, -20.0f, 0.0f))
+						, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]);
 				}
+
 
 				// 当たってなかったら何もしない
-				if (!lineResult.HitFlag)
-				{
-					continue;
-				}
+				if (!lineResult.HitFlag) continue;
+
 
 				// 既に当たったポリゴンがあって今まで検出したものより低かったら何もしない
-				if (hitFlag && maxYHit > lineResult.Position.y)
-				{
-					continue;
-				}
+				if (hitFlag && maxYHit > lineResult.Position.y) continue;
+
 
 				// 接触したY座標を保持する
 				maxYHit = lineResult.Position.y;
 				hitFlag = true;
 			}
+
 
 			// 床に当たったかどうかで処理
 			if (hitFlag)
@@ -197,7 +217,8 @@ bool BasicCreature::ActorHit(int stageHandle)
 
 				jumpNow = false;
 			}
-		}
+		} /// if (!jumpUpNow)
+		// 上昇中だったら
 		else
 		{
 			minYHit = 0.0f;
@@ -210,22 +231,20 @@ bool BasicCreature::ActorHit(int stageHandle)
 
 				lineResult = HitCheck_Line_Triangle(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]);
 
+
 				// 当たってなかったら何もしない
-				if (!lineResult.HitFlag)
-				{
-					continue;
-				}
+				if (!lineResult.HitFlag) continue;
+
 
 				// 既に当たったポリゴンがあって今まで検出したものより低かったら何もしない
-				if (hitFlag && minYHit < lineResult.Position.y)
-				{
-					continue;
-				}
+				if (hitFlag && minYHit < lineResult.Position.y) continue;
+
 
 				// 接触したY座標を保持する
 				minYHit = lineResult.Position.y;
 				hitFlag = true;
 			}
+
 
 			// 床に当たったかどうかで処理
 			if (hitFlag)
@@ -236,19 +255,21 @@ bool BasicCreature::ActorHit(int stageHandle)
 
 				jumpUpNow = false;
 			}
-		}
-	}
+		} /// else(!if (!jumpUpNow))
+	} /// if (floorNum != 0)
 	//else	// 床に触れていない
 	//{
 	//	area.y -= 0.75f;
 	//}
+
 
 	// 壁判定
 	if (wallNum != 0)
 	{
 		hitFlag = false;	// 壁には当たってないとする
 
-		// 移動しているかどうかで判断を変える
+
+		// 移動しているとき
 		if (moveFlag)
 		{
 			for (int i = 0; i != wallNum; ++i)
@@ -257,13 +278,17 @@ bool BasicCreature::ActorHit(int stageHandle)
 
 				mainPoly = wallPoly[i];			// 今の調べるポリゴン情報を渡す
 
+
 				// 当たっているかどうかを調べる
-				if (HitCheck_Capsule_Triangle(VAdd(area, VGet(0.0f, modelHeight, 0.0f)), VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == false)
+				if (HitCheck_Capsule_Triangle(VAdd(area, VGet(0.0f, modelHeight, 0.0f)), VAdd(area, VGet(0.0f, modelHeight, 0.0f))
+					, modelWidth, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == false)
 				{
 					continue;			// 当たっていないので次！
 				}
 
+
 				hitFlag = true;			// 当たっているとする
+
 
 				// 移動しているので次の座標で当たっていないか判定
 				for (j = 0; j != wallNum; ++j)
@@ -271,12 +296,14 @@ bool BasicCreature::ActorHit(int stageHandle)
 					mainPoly = wallPoly[j];			// 今の調べるポリゴン情報を渡す
 
 					// 当たっているかどうかを調べる
-					if (HitCheck_Capsule_Triangle(VAdd(area, VGet(0.0f, modelHeight, 0.0f)), VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == TRUE)
+					if (HitCheck_Capsule_Triangle(VAdd(area, VGet(0.0f, modelHeight, 0.0f)), VAdd(area, VGet(0.0f, modelHeight, 0.0f))
+						, modelWidth, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == TRUE)
 					{
 						jumpUpNow = false;
 						break;			// 当たっていたので抜ける
 					}
 				}
+
 
 				// 移動先で当たらなかったので判定を消す
 				if (j == wallNum)
@@ -285,15 +312,18 @@ bool BasicCreature::ActorHit(int stageHandle)
 					break;
 				}
 			}
-		}
+		} /// if (moveFlag)
+		// 移動していないとき
 		else
 		{
 			for (int i = 0; i != wallNum; ++i)
 			{
 				mainPoly = wallPoly[i];			// 今の調べるポリゴン情報を渡す
 
+
 				// 当たっているかどうかを調べる
-				if (HitCheck_Capsule_Triangle(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == TRUE)
+				if (HitCheck_Capsule_Triangle(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth
+					, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == TRUE)
 				{
 					hitFlag = true;
 					break;			// 当たっていたので抜ける
@@ -301,11 +331,14 @@ bool BasicCreature::ActorHit(int stageHandle)
 			}
 		}
 
+
 		// 当たっていたので押し出す
 		if (hitFlag)
 		{
 			int j, k;
-			// 判定数を32とする
+
+
+			// 判定数だけ調べる
 			for (int i = 0; i != 64; ++i)
 			{
 				// 壁ポリゴンの数だけ繰り返し
@@ -313,49 +346,53 @@ bool BasicCreature::ActorHit(int stageHandle)
 				{
 					mainPoly = wallPoly[j];
 
+
 					// 当たっているかどうかを調べる
-					if (HitCheck_Capsule_Triangle(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == false)
+					if (HitCheck_Capsule_Triangle(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth
+						, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == false)
 					{
 						continue;
 					}
+
 
 					VECTOR slideVec = VCross(VSub(area, preArea), mainPoly->Normal);
 					slideVec = VCross(mainPoly->Normal, slideVec);
 					area = VAdd(preArea, slideVec);
 
+
 					for (k = 0; k != wallNum; ++k)
 					{
 						// 当たっていたらループを抜ける
 						mainPoly = wallPoly[k];
-						if (HitCheck_Capsule_Triangle(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == TRUE)
+
+
+						if (HitCheck_Capsule_Triangle(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth
+							, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) == TRUE)
 						{
 							break;
 						}
 					}
 
 					// 全てのポリゴンと当たっていなかったので抜ける
-					if (k == wallNum)
-					{
-						break;
-					}
-				}
+					if (k == wallNum) break;
+				} /// for (j = 0; j != wallNum; ++j)
+
 
 				// 判定を調べる前に全てのポリゴンと当たっていなかったので抜ける
-				if (j != wallNum)
-				{
-					break;
-				}
-			}
-		}
-	}
+				if (j != wallNum) break;
+			} /// for (int i = 0; i != 64; ++i)
+		} /// if (hitFlag)
+	} /// if (wallNum != 0)
+
 
 	// 検出した情報を解放する
 	MV1CollResultPolyDimTerminate(m_hitDim);
 
 	return true;
-}
+} /// bool BasicCreature::ActorHit(int stageHandle)
 
 
+// コンストラクタ
 BasicCreature::BasicCreature() :BasicObject()
 {
 	// 当たり判定に関する
@@ -366,16 +403,16 @@ BasicCreature::BasicCreature() :BasicObject()
 	minYHit = 0.0f;
 	moveFlag = false;
 
+
 	// モーション関連
 	nowPlayTime = 0.0f;
 	motionBlendTime = 0.0f;
 	preAttach = -1;
 	preMotionPlayTime = 0.0f;
 
+
 	fallCount = 0;
-
 	angle = 0.0f;
-
 	damageHit = false;
 	deathFlag = false;
 	eraseExistence = false;
@@ -390,9 +427,10 @@ BasicCreature::BasicCreature() :BasicObject()
 	nextArea = VGet(0, 0, 0);
 	modelWidth = 0;
 	ZeroMemory(floorPoly, sizeof(floorPoly));
-}
+} /// BasicCreature::BasicCreature() :BasicObject()
 
-// コンストラクタ
+
+// コピーコンストラクタ
 BasicCreature::BasicCreature(bool shadowDo) :BasicObject(shadowDo)
 {
 	// 当たり判定に関する
@@ -409,10 +447,9 @@ BasicCreature::BasicCreature(bool shadowDo) :BasicObject(shadowDo)
 	preAttach = -1;
 	preMotionPlayTime = 0.0f;
 
+
 	fallCount = 0;
-
 	angle = 0.0f;
-
 	damageHit = false;
 	deathFlag = false;
 	eraseExistence = false;
@@ -427,7 +464,8 @@ BasicCreature::BasicCreature(bool shadowDo) :BasicObject(shadowDo)
 	nextArea = VGet(0, 0, 0);
 	modelWidth = 0;
 	ZeroMemory(floorPoly, sizeof(floorPoly));
-}
+} /// BasicCreature::BasicCreature(bool shadowDo) :BasicObject(shadowDo)
+
 
 // デストラクタ
 BasicCreature::~BasicCreature()
@@ -435,79 +473,49 @@ BasicCreature::~BasicCreature()
 }
 
 
+// 直前の座標に戻す
 void BasicCreature::SetAreaReturn()
 {
 	area = preArea;
 }
 
 
+// 自分が押し出される処理
 void BasicCreature::HitCircleReturn(VECTOR hitOneArea, float width)
 {
-	//VECTOR v01, v02, outv;
+	VECTOR subVec;
+	float length;
+	VECTOR pushVec;
 
-	//// 頂点０から頂点１へのベクトルを算出
-	//v01 = VGet(hitOneArea.x + (hitOneArea.x - area.x) - hitOneArea.x, hitTwoArea.y / 2.0f - hitOneArea.y, hitOneArea.z - (hitOneArea.z - area.z) - hitOneArea.z);
 
-	//// 頂点０から頂点２へのベクトルを算出
-	//v02 = VGet(hitOneArea.x - (hitOneArea.x - area.x) - hitOneArea.x, hitTwoArea.y / 2.0f - hitOneArea.y, hitOneArea.z + (hitOneArea.z - area.z) - hitOneArea.z);
-
-	//// 二つのベクトルの外積を計算( 二つのベクトルに垂直なベクトルの算出 )
-	//// outv.x = v01.y * v02.z - v01.z * v02.y ;
-	//// outv.y = v01.z * v02.x - v01.x * v02.z ;
-	//// outv.z = v01.x * v02.y - v01.y * v02.x ;
-	//outv = VCross(v01, v02);
-
-	//// 外積の値が長さ１とは限らないので、正規化( 長さを１にする )、これが法線です
-	//// float r = sqrt( outv.x * outv.x + outv.y * outv.y + outv.z * outv.z ) ;
-	//// outv.x /= r ;
-	//// outv.y /= r ;
-	//// outv.z /= r ;
-	//outv = VNorm(outv);
-
-	////printfDx("%f\t%f\t%f\n", outv.x, outv.y, outv.z);
-
-	//VECTOR slideVec = VCross(VSub(area, preArea), outv);
-	//slideVec = VCross(outv, slideVec);
-	//area = VAdd(preArea, slideVec);
-
-	// 当たっていたら ch が chk から離れる処理をする
-
-	VECTOR ChkChToChVec;
-	float Length;
-	VECTOR PushVec;
-
-		// chk_ch から ch へのベクトルを算出
-	ChkChToChVec = VSub(area, hitOneArea);
+	// ベクトル差を算出
+	subVec = VSub(area, hitOneArea);
 
 	// Ｙ軸は見ない
-	ChkChToChVec.y = 0.0f;
+	subVec.y = 0.0f;
 
 	// 二人の距離を算出
-	Length = VSize(ChkChToChVec);
+	length = VSize(subVec);
 
-	// chk_ch から ch へのベクトルを正規化( ベクトルの長さを 1.0f にする )
-	PushVec = VScale(ChkChToChVec, 1.0f / Length);
+	// ベクトル差を正規化
+	pushVec = VScale(subVec, 1.0f / length);
 
-	// 押し出す距離を算出、もし二人の距離から二人の大きさを引いた値に押し出し力を足して離れてしまう場合は、ぴったりくっつく距離に移動する
-	if (Length - width < 0)
+
+	// 二人の距離が相手の幅より小さかったら押し出す処理をする
+	if (length - width < 0)
 	{
-		float TempY;
+		float tempY;
 
-		TempY = area.y;
-		area = VAdd(hitOneArea, VScale(PushVec, width));
+		tempY = area.y;
+		area = VAdd(hitOneArea, VScale(pushVec, width));
 
 		// Ｙ座標は変化させない
-		area.y = TempY;
+		area.y = tempY;
 	}
-	//else
-	//{
-	//	// 押し出し
-	//	area = VAdd(area, VScale(PushVec, power));
-	//}
-	//area = VSub(area, tempArea);
-}
+} /// void BasicCreature::HitCircleReturn(VECTOR hitOneArea, float width)
 
 
+// 二点間が自分に触れたらダメージを受けるようにする
 void BasicCreature::HitLineReturn(VECTOR hitOneArea, VECTOR hitTwoArea)
 {
 	MV1_COLL_RESULT_POLY HitPoly;
@@ -516,6 +524,7 @@ void BasicCreature::HitLineReturn(VECTOR hitOneArea, VECTOR hitTwoArea)
 
 	HitPoly = MV1CollCheck_Line(modelHandle, -1, hitOneArea, hitTwoArea);
 	
+
 	// 当たったかどうかで処理を分岐
 	if (HitPoly.HitFlag == 1 && !damageHit)
 	{

@@ -4,16 +4,6 @@
 // 動きのプロセス
 void OrdinaryPerson::MoveProcess()
 {
-	// ランダム数値取得
-	std::random_device rnd;     // 非決定的な乱数生成器を生成
-	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
-	std::uniform_int_distribution<> randInX(-200, 200);			// X座標用乱数
-	std::uniform_int_distribution<> moveTurn(0, 314);				// Z座標用乱数
-
-
-	moveCount++;	// 動きのカウントを加算
-
-
 	animSpeed = 0.75f;			// モーションの速度を決める
 
 	
@@ -51,6 +41,14 @@ void OrdinaryPerson::MoveProcess()
 	//移動カウントが100だったら移動先を決める
 	else if (moveCount == 100)
 	{
+		// ランダム数値取得
+		std::random_device rnd;     // 非決定的な乱数生成器を生成
+		std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+		std::uniform_int_distribution<> randInX(-200, 200);			// X座標用乱数
+		std::uniform_int_distribution<> moveTurn(0, 314);				// Z座標用乱数
+
+
+		// 移動先を更新
 		nextDireZAngle = moveTurn(mt) / 100.0f;
 		nextDireXAngle = randInX(mt) / 100.0f;
 		if (nextDireZAngle != 0.0f)
@@ -58,12 +56,6 @@ void OrdinaryPerson::MoveProcess()
 			nextDireXAngle = -nextDireXAngle;
 		}
 	}
-
-
-	// 移動方向に動かす
-	area.x += sinf(angle + direXAngle + direZAngle) * -walkSpeed;
-	area.z += cosf(angle + direXAngle + direZAngle) * -walkSpeed;
-	Player_PlayAnim(MOTION::walk);
 
 
 	// 移動先の向きと違ったら
@@ -92,6 +84,22 @@ void OrdinaryPerson::MoveProcess()
 			direZAngle += 0.01f;
 		}
 	}
+
+
+	// 移動方向に動かす
+	Player_PlayAnim(MOTION::walk);
+	float tempX = area.x + sinf(direXAngle + direZAngle) * -walkSpeed;
+	float tempZ = area.z + cosf(direXAngle + direZAngle) * -walkSpeed;
+	if (tempX >= 4500.0f || tempX <= -4500.0f || tempZ >= 4500.0f || tempZ <= -4500.0f)
+	{
+		moveCount = 100;
+		return;
+	}
+	area.x += sinf(angle + direXAngle + direZAngle) * -walkSpeed;
+	area.z += cosf(angle + direXAngle + direZAngle) * -walkSpeed;
+
+
+	moveCount++;	// 動きのカウントを加算
 } /// void OrdinaryPerson::MoveProcess()
 
 
@@ -120,10 +128,6 @@ void OrdinaryPerson::FallProcess()
 		animSpeed = 1.0f;
 		jumpPower -= gravity;			// 落下重力を加え続ける
 		area.y += jumpPower;			// Y座標に加え続ける
-
-
-		// ジャンプにて最頂点に到達したら
-		if (jumpPower <= flyJumpPower / 2.0f) jumpUpNow = false;			// 落下に切り替える
 
 
 		area.y -= 10.5f;
@@ -219,6 +223,7 @@ OrdinaryPerson::OrdinaryPerson(const int modelHandle, const int collStageHandle,
 	walkSpeed = 0.0f;
 	animSpeed = 0.5f;
 	moveCount = 0;
+	jumpUpNow = false;
 
 
 	// 階段

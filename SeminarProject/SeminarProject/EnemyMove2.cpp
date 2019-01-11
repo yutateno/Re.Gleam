@@ -69,20 +69,26 @@ void EnemyMove2::Process()
 		damageHit = false;
 	}
 
+
 	// Ž€‚ñ‚¾‚Æ‚«
 	if (deathFlag)
 	{
+		// ƒ‚ƒfƒ‹‚Ì“§‰ß’l‚ª0ˆÈã‚¾‚Á‚½‚ç
 		if (blendCount >= 0)
 		{
 			blendCount -= 5;
 		}
+		// ƒ‚ƒfƒ‹‚ª“§‰ß‚µ‚½‚ç
 		else
 		{
+			// ‘¶Ý‚ðÁ‚µ‚½‚±‚Æ‚É‚·‚é
 			eraseExistence = true;
 		}
 
+
 		MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
 	}
+
 
 	MV1SetPosition(this->modelHandle, area);
 } /// void EnemyMove2::Process()

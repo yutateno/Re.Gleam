@@ -35,7 +35,7 @@ private:
 	/// モーションに関して----------
 
 	// モーションのID
-	enum MOTION { walk, idle, damage, death };
+	enum MOTION { idle, walk, dash, attack, attack2, attack3, damage, death };
 
 	// モーションのプロセス
 	void MotionProcess();

@@ -1,10 +1,14 @@
 #include "EnemyMove2.hpp"
 
 
+// コンストラクタ
 EnemyMove2::EnemyMove2(const VECTOR area, const int modelHandle, const int tex0) : BasicCreature()
 {
+	// 変数の初期化
 	shadowStageHandle = -1;
 	stageHandle = -1;
+
+
 	// 座標を設定
 	this->area = VAdd(area, VGet(0.0f, 10.0f, 0.0f));
 
@@ -20,9 +24,7 @@ EnemyMove2::EnemyMove2(const VECTOR area, const int modelHandle, const int tex0)
 
 	// テクスチャ適応
 	MV1SetTextureGraphHandle(this->modelHandle, 0, tex0, false);
-
 	MV1SetMaterialDrawBlendMode(this->modelHandle, 0, DX_BLENDMODE_ALPHA);
-
 	MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
 
 
@@ -31,13 +33,17 @@ EnemyMove2::EnemyMove2(const VECTOR area, const int modelHandle, const int tex0)
 
 
 	MV1SetupCollInfo(this->modelHandle, -1);
-}
+} /// EnemyMove2::EnemyMove2(const VECTOR area, const int modelHandle, const int tex0) : BasicCreature()
 
+
+// デストラクタ
 EnemyMove2::~EnemyMove2()
 {
 	MODEL_RELEASE(modelHandle);
 }
 
+
+// 描画
 void EnemyMove2::Draw()
 {
 #ifdef _DEBUG
@@ -48,6 +54,8 @@ void EnemyMove2::Draw()
 #endif // _DEBUG
 }
 
+
+// プロセス
 void EnemyMove2::Process()
 {
 	if (eraseExistence) return;
@@ -77,4 +85,4 @@ void EnemyMove2::Process()
 	}
 
 	MV1SetPosition(this->modelHandle, area);
-}
+} /// void EnemyMove2::Process()

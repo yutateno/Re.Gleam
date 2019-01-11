@@ -4,7 +4,7 @@
 // 動きのプロセス
 void EnemyMove1::MoveProcess()
 {
-	// 上昇させる
+	// 上昇中のとき
 	if (upNow)
 	{
 		// 上昇中
@@ -21,7 +21,7 @@ void EnemyMove1::MoveProcess()
 			shadowSize = 60.0f;
 		}
 	}
-	// 下降させる
+	// 下降中ののとき
 	else
 	{
 		// 下降中
@@ -38,19 +38,24 @@ void EnemyMove1::MoveProcess()
 			shadowSize = 90.0f;
 		}
 	}
+
+
 	// 始発をゆっくりさせる
 	if (flyMove < 0.5f)
 	{
 		flyMove += 0.05f;
 	}
-}
+} /// void EnemyMove1::MoveProcess()
 
 
 // コンストラクタ
 EnemyMove1::EnemyMove1(const int collStageHandle, const float areaX, const float areaZ, const float color) : BasicCreature(true)
 {
+	// あたり判定のステージのコリジョン情報の更新
 	stageHandle = -1;
-	// ステージのコリジョン情報の更新
+
+
+	// 足影判定用のステージのコリジョン情報の更新
 	shadowStageHandle = -1;
 	shadowStageHandle = MV1DuplicateModel(collStageHandle);
 	MV1SetScale(shadowStageHandle, VGet(0.8f, 0.8f, 0.8f));
@@ -59,8 +64,10 @@ EnemyMove1::EnemyMove1(const int collStageHandle, const float areaX, const float
 	MV1SetFrameVisible(shadowStageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 	MV1RefreshCollInfo(shadowStageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
 
+
 	// モデルの向きと位置
 	this->area = VGet(areaX, 40.0f, areaZ);
+
 
 	// マテリアル
 	material.Diffuse = GetColorF(0.0f, 0.0f, 1.0f, 0.0f);
@@ -69,18 +76,21 @@ EnemyMove1::EnemyMove1(const int collStageHandle, const float areaX, const float
 	material.Emissive = GetColorF(color, color, 1.0f, 0.0f);
 	material.Power = 10.0f;
 
+
 	// モデルの基本情報
 	modelHeight = 10.0f;
 	modelWidth = 10.0f;
 
+	
 	// 足元の影に関する
 	shadowHeight = 70.0f;
 	shadowSize = 90.0f;
 
+
 	// 動きに関する
 	upNow = true;
 	flyMove = 0.0f;
-}
+} /// EnemyMove1::EnemyMove1(const int collStageHandle, const float areaX, const float areaZ, const float color) : BasicCreature(true)
 
 
 // デストラクタ

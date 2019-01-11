@@ -1325,8 +1325,7 @@ void MainMove3::Process()
 		if (p_character->GetArea().y >= 3550.0f)
 		{
 			BASICPARAM::endFeedNow = true;
-			BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
-			BaseMove::SetScene(ESceneNumber::THIRDLOAD);
+			BaseMove::SetScene(ESceneNumber::FORTHLOAD);
 		}
 	}
 	else

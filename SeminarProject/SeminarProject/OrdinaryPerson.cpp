@@ -312,13 +312,17 @@ void OrdinaryPerson::Process()
 {
 	preArea = area;		// 直前の座標
 
+
 	// 動きのプロセス
 	MoveProcess();
+
 
 	// モーションの実態
 	Player_AnimProcess();
 
-	int setCollHitNum = 0;
+
+	int setCollHitNum = 0;		// あたり判定の個数がいくつか
+
 
 	// 階段と床のあたり判定
 	for (int i = 0; i != BASICPARAM::stairsRoadNum; ++i)
@@ -326,21 +330,26 @@ void OrdinaryPerson::Process()
 		setCollHitNum += ActorHit(v_stairsRoadHandle[i]);
 	}
 
-	// 階段のあたり判定
+
+	// どこにもあたっていなかったら
 	if (setCollHitNum == 0)
 	{
+		// 階段のあたり判定
 		for (int i = 0; i != BASICPARAM::stairsNum; ++i)
 		{
 			setCollHitNum += ActorHit(v_stairsHandle[i]);
 		}
 	}
 
+
 	// ステージのあたり判定
 	ActorHit(stageHandle);
 
+	
 	// 落下のプロセス
 	FallProcess();
 
+	
 	// 要らないけど不安なので一応
 	if (area.y < 0.0f)
 	{
@@ -354,6 +363,8 @@ void OrdinaryPerson::Process()
 	MV1SetPosition(modelHandle, area);
 } /// void OrdinaryPerson::Process()
 
+
+// 一般人のテクスチャ差し替え
 void OrdinaryPerson::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle0);

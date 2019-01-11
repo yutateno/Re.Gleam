@@ -1,14 +1,21 @@
 #include "EnemyMove3CrayonHuman.hpp"
 
 
+// モーションのプロセス
 void EnemyMove3CrayonHuman::MotionProcess()
 {
+	// 死んでいなかったら
 	if (!deathFlag)
 	{
+		// キャラクターとの距離が近くてキャラクターを視認していたら
 		if (playerCharaDistance <= 200 && charaLookAt)
 		{
+			// 攻撃の処理をする
 			Player_PlayAnim(MOTION::damage);
 			attackFrame += animSpeed;
+
+
+			// モーションの終了
 			if (attackFrame > MV1GetAnimTotalTime(modelHandle, MOTION::damage))
 			{
 				attackDamageNow = true;
@@ -29,7 +36,7 @@ void EnemyMove3CrayonHuman::MotionProcess()
 	{
 		Player_PlayAnim(MOTION::death);
 	}
-}
+} /// void EnemyMove3CrayonHuman::MotionProcess()
 
 void EnemyMove3CrayonHuman::AutoMoveProcess()
 {

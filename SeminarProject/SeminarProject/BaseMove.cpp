@@ -4,79 +4,77 @@ bool BaseMove::endFlag;		// 終了フラッグ
 ESceneNumber BaseMove::scene;	// 現在のシーン
 
 
-// シャドウマップへの描画の準備
+// プレイヤーのシャドウマップへの準備
 void BaseMove::ShadowCharaSetUpBefore()
 {
 	ShadowMap_DrawSetup(shadowMapCharaHandle);
 }
 
-// シャドウマップへの描画を終了
-void BaseMove::ShadowCharaSetUpAfter()
-{
-	ShadowMap_DrawEnd();
-}
 
-// シャドウマップへの描画の準備
+// プレイヤー以外のシャドウマップへの準備
 void BaseMove::ShadowAnotherCharaSetUpBefore()
 {
 	ShadowMap_DrawSetup(shadowMapAnotherCharaHandle);
 }
 
-// シャドウマップへの描画を終了
-void BaseMove::ShadowAnotherCharaSetUpAfter()
-{
-	ShadowMap_DrawEnd();
-}
 
-// シャドウマップへの描画の準備
+// ステージのシャドウマップへの描画の準備
 void BaseMove::ShadowNoMoveSetUpBefore()
 {
 	ShadowMap_DrawSetup(shadowMapNoMoveHandle);
 }
 
-// シャドウマップへの描画を終了
-void BaseMove::ShadowNoMoveSetUpAfter()
+
+// シャドウマップの終了
+void BaseMove::ShadowSetUpAfter()
 {
 	ShadowMap_DrawEnd();
 }
 
 
-// 描画に使用するシャドウマップを設定
+// プレイヤーの描画に使用するシャドウマップを設定
 void BaseMove::ShadowCharaDrawBefore()
 {
 	SetUseShadowMap(0, shadowMapCharaHandle);
 }
 
-// 描画に使用するシャドウマップの設定を解除
+
+// プレイヤーの描画に使用するシャドウマップの設定を解除
 void BaseMove::ShadowCharaDrawAfter()
 {
 	SetUseShadowMap(0, -1);
 }
 
-// 描画に使用するシャドウマップを設定
+
+// プレイヤー以外の描画に使用するシャドウマップを設定
 void BaseMove::ShadowAnotherCharaDrawBefore()
 {
 	SetUseShadowMap(1, shadowMapAnotherCharaHandle);
 }
 
-// 描画に使用するシャドウマップの設定を解除
+
+// プレイヤー以外の描画に使用するシャドウマップの設定を解除
 void BaseMove::ShadowAnotherCharaDrawAfter()
 {
 	SetUseShadowMap(1, -1);
 }
 
-// 描画に使用するシャドウマップを設定
+
+// ステージの描画に使用するシャドウマップを設定
 void BaseMove::ShadowNoMoveDrawBefore()
 {
 	SetUseShadowMap(2, shadowMapNoMoveHandle);
 }
 
-// 描画に使用するシャドウマップの設定を解除
+
+// ステージの描画に使用するシャドウマップの設定を解除
 void BaseMove::ShadowNoMoveDrawAfter()
 {
 	SetUseShadowMap(2, -1);
 }
 
+
+// シャドウマップの中心座標をプレイヤーに更新
 void BaseMove::ShadowArea(const VECTOR charaArea)
 {
 	SetShadowMapDrawArea(shadowMapCharaHandle, VAdd(charaArea, shadowCharaLowArea), VAdd(charaArea, shadowCharaHighArea));
@@ -84,13 +82,7 @@ void BaseMove::ShadowArea(const VECTOR charaArea)
 }
 
 
-// 二つのキャラの直線的距離
-int BaseMove::GetDistance(const VECTOR alpha, const VECTOR beta)
-{
-	double distance = sqrt((alpha.x - beta.x) * (alpha.x - beta.x) + (alpha.z - beta.z) * (alpha.z - beta.z));
-	return (int)distance;
-}
-
+// スカイボックスの描画
 void BaseMove::SkyBoxDraw()
 {
 	// ライティングを無効にする
@@ -105,41 +97,53 @@ void BaseMove::SkyBoxDraw()
 	SetUseZBuffer3D(FALSE);
 }
 
+
+// スカイボックスのプロセス
 void BaseMove::SkyBoxProcess(const VECTOR characterArea)
 {
+	// ポジションをプレイヤー中心にする
 	MV1SetPosition(skyBoxUp, characterArea);
 	MV1SetPosition(skyBoxUnder, characterArea);
 }
 
+
+// スカイボックスの初期化
 void BaseMove::SetInitSkyBox(const int skyBoxUp, const int tex0)
 {
 	/// スカイボックスの上に関する-----------------------------------------
-	// 読み込み
+	// モデル読み込み
 	this->skyBoxUp = MV1DuplicateModel(skyBoxUp);
 	
+
 	// テクスチャ適応
 	textureHandle = -1;
 	textureHandle = tex0;
 	MV1SetTextureGraphHandle(this->skyBoxUp, 0, textureHandle, false);
+
 
 	// スケール変更
 	MV1SetScale(this->skyBoxUp, VGet(170.0f, 170.0f, 170.0f));
 
 
 	/// スカイボックスの下に関する-------------------------------------------
-	// 読み込み
+	// モデル読み込み
 	this->skyBoxUnder = MV1DuplicateModel(this->skyBoxUp);
+
 
 	// テクスチャ適応
 	MV1SetTextureGraphHandle(this->skyBoxUnder, 0, textureHandle, false);
 
+
 	// スケール変更
 	MV1SetScale(this->skyBoxUnder, VGet(170.0f, 170.0f, 170.0f));
 
+
 	// ロケーション変更
 	MV1SetRotationXYZ(this->skyBoxUnder, VGet(DX_PI_F, 0.0f, 0.0f));
-}
+} /// void BaseMove::SetInitSkyBox(const int skyBoxUp, const int tex0)
 
+
+// スカイボックスのテクスチャ差し替え
 void BaseMove::SkyTextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle);
@@ -170,9 +174,11 @@ void BaseMove::SkyTextureReload()
 	MV1SetTextureGraphHandle(this->skyBoxUp, 0, textureHandle, false);
 }
 
+
+// コンストラクタ
 BaseMove::BaseMove()
 {
-	SetLightEnable(TRUE);
+	SetLightEnable(TRUE);	// 光源を有効にする
 
 
 	// フォグに関する
@@ -202,9 +208,11 @@ BaseMove::BaseMove()
 	SetShadowMapDrawArea(shadowMapNoMoveHandle, shadowNoMoveLowArea, shadowNoMoveHighArea);
 
 
-	lightDire = VGet(-0.5f, -0.7f, 0.5f);
 	// ライトの方向を設定
+	lightDire = VGet(-0.5f, -0.7f, 0.5f);
 	SetLightDirection(lightDire);
+
+
 	// シャドウマップが想定するライトの方向もセット
 	SetShadowMapLightDirection(shadowMapCharaHandle, lightDire);
 	SetShadowMapLightDirection(shadowMapAnotherCharaHandle, lightDire);
@@ -217,6 +225,8 @@ BaseMove::BaseMove()
 	textureHandle = -1;
 }
 
+
+// デストラクタ
 BaseMove::~BaseMove()
 {
 	// シャドウマップの削除

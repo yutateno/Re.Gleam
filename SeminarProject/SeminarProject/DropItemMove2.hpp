@@ -32,8 +32,8 @@ public:
 	// プロセス
 	void Process();
 
-	// キャラクターが近づいたら
-	void StolenChara(const VECTOR characterArea);
+	// 引数の座標に近づく
+	void ChaseActor(const VECTOR chaseArea);
 
 	// 存在を一生消す
 	void SetDeath(bool death) { deathNow = death; }

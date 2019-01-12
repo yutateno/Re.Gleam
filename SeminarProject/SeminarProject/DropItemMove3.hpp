@@ -36,8 +36,8 @@ public:
 	// プロセス
 	void Process();
 
-	// キャラクターが近づいたら
-	void StolenChara(const VECTOR characterArea);
+	// 引数の座標に対して近づく処理
+	void ChaseActor(const VECTOR chaseArea);
 
 	// テクスチャ切り替え
 	void TextureReload();
@@ -46,7 +46,7 @@ public:
 	void SetDeath(bool death) { deathNow = death; }
 
 	// 存在を許されたかどうか
-	void SetAlive(bool alive, VECTOR dropArea);
+	void SetAlive(VECTOR dropArea, bool alive = true);
 
 	// 存在を一生消しているかどうか渡す
 	const bool GetDeath() { return deathNow; }

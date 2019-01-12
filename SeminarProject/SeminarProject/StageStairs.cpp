@@ -1,6 +1,7 @@
 #include "StageStairs.hpp"
 
 
+// コンストラクタ
 StageStairs::StageStairs(const int draw, const VECTOR area, const int tex0, const float angle) : BasicObject()
 {
 	// 座標設定
@@ -24,12 +25,20 @@ StageStairs::StageStairs(const int draw, const VECTOR area, const int tex0, cons
 	MV1SetPosition(modelHandle, this->area);
 }
 
+
+// デストラクタ
 StageStairs::~StageStairs()
 {
+	// テクスチャ解放
 	GRAPHIC_RELEASE(textureHandle);
+
+	
+	// モデル開放
 	MODEL_RELEASE(modelHandle);
 }
 
+
+// テクスチャ差し替え
 void StageStairs::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle);

@@ -63,15 +63,15 @@ protected:
 
 	// 設定シャドウマップ０番：主人公
 	void ShadowCharaSetUpBefore();
-	void ShadowCharaSetUpAfter();
 
 	// 設定シャドウマップ１番：主人公以外
 	void ShadowAnotherCharaSetUpBefore();
-	void ShadowAnotherCharaSetUpAfter();
 
 	// 設定シャドウマップ２番：動かないもの
 	void ShadowNoMoveSetUpBefore();
-	void ShadowNoMoveSetUpAfter();
+
+	// シャドウマップの描画終了
+	void ShadowSetUpAfter();
 
 	/// 描画へ使用する
 
@@ -93,7 +93,11 @@ protected:
 
 
 	// 二つのモデルの距離
-	int GetDistance(const VECTOR alpha, const VECTOR beta);
+	template<class T>
+	T GetDistance(const VECTOR alpha, const VECTOR beta)
+	{
+		return static_cast<T>(sqrt((alpha.x - beta.x) * (alpha.x - beta.x) + (alpha.z - beta.z) * (alpha.z - beta.z)));
+	}
 
 
 	/// スカイボックスに関して-----------------------------
@@ -109,9 +113,6 @@ protected:
 
 	// スカイボックスのテクスチャ変更
 	void SkyTextureReload();
-
-	// 非同期テクスチャの切り替え
-	virtual void ThsTextureReload() = 0;
 
 	std::thread ths;
 
@@ -133,6 +134,9 @@ public:
 
 	// テクスチャの切り替え
 	virtual void TextureReload() = 0;
+
+	// 非同期テクスチャの切り替え
+	virtual void ThsTextureReload() = 0;
 
 	// オプション画面でのモデル表示
 	virtual void OptionActorModel() = 0;

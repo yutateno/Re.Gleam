@@ -1,7 +1,9 @@
 #include "StageStairsRoad.hpp"
 
 
-StageStairsRoad::StageStairsRoad(const int draw, const VECTOR area, const int tex0, const int tex1, const float angle) : BasicObject()
+// コンストラクタ
+StageStairsRoad::StageStairsRoad(const int draw, const VECTOR area
+	, const int tex0, const int tex1, const float angle) : BasicObject()
 {
 	// 座標設定
 	this->area = area;
@@ -28,13 +30,20 @@ StageStairsRoad::StageStairsRoad(const int draw, const VECTOR area, const int te
 }
 
 
+// デストラクタ
 StageStairsRoad::~StageStairsRoad()
 {
+	// テクスチャ開放
 	GRAPHIC_RELEASE(textureHandle1);
 	GRAPHIC_RELEASE(textureHandle0);
+
+
+	// モデル開放
 	MODEL_RELEASE(modelHandle);
 }
 
+
+// テクスチャ差し替え
 void StageStairsRoad::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle1);

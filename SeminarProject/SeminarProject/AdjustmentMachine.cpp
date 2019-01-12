@@ -1,8 +1,10 @@
 #include "AdjustmentMachine.hpp"
 
 
+// コンストラクタ
 AdjustmentMachine::AdjustmentMachine(const int draw, const VECTOR area, const int tex0, const int tex1): BasicObject()
 {
+	// 座標初期化
 	this->area = area;
 
 
@@ -10,10 +12,11 @@ AdjustmentMachine::AdjustmentMachine(const int draw, const VECTOR area, const in
 	this->modelHandle = 0;
 	this->modelHandle = MV1DuplicateModel(draw);
 
-	canTouch = true;
 	
+	// 情報初期化
 	modelHeight = 100.0f;
 	modelWidth = 70.0f;
+
 
 	// ムーブ2用の変数
 	if (BASICPARAM::e_nowScene <= ESceneNumber::SECONDMOVE)
@@ -23,36 +26,48 @@ AdjustmentMachine::AdjustmentMachine(const int draw, const VECTOR area, const in
 		dropCount = 0;
 		nextBlendCount = 0;
 	}
+	else
+	{
+		canTouch = true;
+	}
 
 
 	// テクスチャ適応
 	textureHandle0 = -1;
 	textureHandle1 = -1;
 	textureHandleDisplayBlack = -1;
-
 	textureHandle0 = tex0;
 	textureHandle1 = tex1;
 	LoadFile::MyLoad("media\\こっち\\media\\Terminal\\T_displayblack.pyn", textureHandleDisplayBlack, ELOADFILE::graph);
-
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandleDisplayBlack, false);
+	MV1SetMaterialDrawBlendMode(this->modelHandle, 0, DX_BLENDMODE_ALPHA);
+	MV1SetMaterialDrawBlendMode(this->modelHandle, 1, DX_BLENDMODE_ALPHA);
 
 
 	// 座標にモデルを配置
-	MV1SetMaterialDrawBlendMode(this->modelHandle, 0, DX_BLENDMODE_ALPHA);
-	MV1SetMaterialDrawBlendMode(this->modelHandle, 1, DX_BLENDMODE_ALPHA);
 	MV1SetPosition(this->modelHandle, area);
-}
+} /// AdjustmentMachine::AdjustmentMachine(const int draw, const VECTOR area, const int tex0, const int tex1): BasicObject()
 
+
+// デストラクタ
 AdjustmentMachine::~AdjustmentMachine()
 {
+	// テクスチャ開放
 	GRAPHIC_RELEASE(textureHandle0);
 	GRAPHIC_RELEASE(textureHandle1);
+	GRAPHIC_RELEASE(textureHandleDisplayBlack);
+
+
+	// モデル開放
 	MODEL_RELEASE(modelHandle);
 }
 
+
+// 描画
 void AdjustmentMachine::Draw()
 {
+	// ムーブ2以下で透過がまだされていたら
 	if (BASICPARAM::e_nowScene <= ESceneNumber::SECONDMOVE
 		&& blendCount < 255)
 	{
@@ -64,7 +79,7 @@ void AdjustmentMachine::Draw()
 	}
 	else
 	{
-		canTouch = true;
+		if(!canTouch) canTouch = true;
 	}
 
 #ifdef _DEBUG
@@ -75,6 +90,8 @@ void AdjustmentMachine::Draw()
 #endif // _DEBUG
 }
 
+
+// テクスチャ差し替え
 void AdjustmentMachine::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle0);
@@ -107,6 +124,8 @@ void AdjustmentMachine::TextureReload()
 	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle1, false);
 }
 
+
+// ディスプレイのテクスチャを切り替える
 void AdjustmentMachine::ChangeDisplayTexture(bool touchNow)
 {
 	if (touchNow)

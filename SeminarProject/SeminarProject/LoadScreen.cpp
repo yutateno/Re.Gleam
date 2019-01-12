@@ -1,14 +1,19 @@
 #include "LoadScreen.hpp"
 
+
+// コンストラクタ
 LoadScreen::LoadScreen()
 {
+	// 情報初期化
 	for (int i = 0; i != 6; ++i)
 	{
 		draw[i] = -1;
 	}
 	endDraw = 0;
+	walkCount = 0;
 
 
+	// 状態に応じて読み込む2Dモデルを変更
 	switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::NORMAL:
@@ -66,10 +71,10 @@ LoadScreen::LoadScreen()
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\ex\\normal\\jamp2.pyn", endDraw, ELOADFILE::graph);
 		break;
 	}
+} /// LoadScreen::LoadScreen()
 
-	walkCount = 0;
-}
 
+// デストラクタ
 LoadScreen::~LoadScreen()
 {
 	for (int i = 0; i != 6; ++i)
@@ -79,13 +84,18 @@ LoadScreen::~LoadScreen()
 	GRAPHIC_RELEASE(endDraw);
 }
 
+
+// プロセス
 void LoadScreen::Process(const int num, const int max)
 {
 	if (++walkCount > 5) walkCount = 0;
 
+
+	// 読み込み個数に応じて右から左に走らせる
 	if (num < max)
 	{
-		DrawGraph(BASICPARAM::winWidth - (num * static_cast<int>(BASICPARAM::winWidth / max)), BASICPARAM::winHeight - 260, draw[walkCount], true);
+		DrawGraph(BASICPARAM::winWidth - (num * static_cast<int>(BASICPARAM::winWidth / max))
+			, BASICPARAM::winHeight - 260, draw[walkCount], true);
 	}
 	else
 	{

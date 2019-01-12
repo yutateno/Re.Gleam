@@ -85,9 +85,6 @@ private:
 
 
 
-	// 非同期テクスチャ切り替え
-	void ThsTextureReload() override;
-
 
 public:
 	// コンストラクタ
@@ -107,6 +104,9 @@ public:
 
 	// テクスチャの切り替え
 	void TextureReload() override;
+
+	// 非同期テクスチャ切り替え
+	void ThsTextureReload() override;
 
 	// オプション画面でのモデル表示
 	void OptionActorModel() override;

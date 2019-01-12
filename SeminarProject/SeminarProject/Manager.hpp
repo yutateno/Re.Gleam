@@ -37,6 +37,9 @@ private:
 	// ムーブ1のロードの種類
 	ELOADFILE load1[14];
 
+	// ムーブ1のロードの初期化
+	void InitMove1Load();
+
 
 	/// ムーブ２に関する--------------
 
@@ -48,6 +51,9 @@ private:
 
 	// ムーブ2のロードの種類
 	ELOADFILE load2[48];
+
+	// ムーブ2のロードの初期化
+	void InitMove2Load();
 
 
 	/// ムーブ3に関する--------------
@@ -61,6 +67,9 @@ private:
 	// ムーブ3のロードの種類
 	ELOADFILE load3[58];
 
+	// ムーブ3のロードの初期化
+	void InitMove3Load();
+
 
 	/// ムーブ4に関する--------------
 
@@ -73,20 +82,26 @@ private:
 	// ムーブ4のロードの種類
 	ELOADFILE load4[36];
 
+	// ムーブ4のロードの初期化
+	void InitMove4Load();
+
 	// ムーブ4でロードするテクスチャを初期から変更する
 	void Move4TextureReload();
 
 
 	/// ムーブ5に関する--------------
 
-	// ムーブ4のロード数
+	// ムーブ5のロード数
 	const int max5 = 34;
 
-	// ムーブ4のロードファイル
+	// ムーブ5のロードファイル
 	std::string move5str[34];
 
-	// ムーブ4のロードの種類
+	// ムーブ5のロードの種類
 	ELOADFILE load5[34];
+
+	// ムーブ5のロードの初期化
+	void InitMove5Load();
 
 
 	// アンチエイリアスの画像

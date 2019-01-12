@@ -46,7 +46,7 @@ private:
 	const int enemyNum = 30;
 
 	// それぞれの敵が所持するもの
-	struct SEnemyAggre
+	struct SLightBall
 	{
 		// 敵のポインタ
 		EnemyMove1* p_enemyMove;
@@ -56,7 +56,7 @@ private:
 	};
 
 	// 敵の構造体を所持
-	SEnemyAggre s_enemyAggre[30];
+	SLightBall s_lightBall[30];
 
 
 	/// カメラ-------------------
@@ -129,10 +129,6 @@ private:
 	int nextExplanationDrawFeed;
 
 
-	// テクスチャの差し替えだがこのムーブでは使わない
-	void ThsTextureReload() override {}
-
-
 	/// エフェクト関連------------------
 	int effeckBack;
 	int playingEfBack;
@@ -157,6 +153,9 @@ public:
 
 	// テクスチャの切り替え
 	void TextureReload() override {}
+
+	// テクスチャの差し替えだがこのムーブでは使わない
+	void ThsTextureReload() override {}
 
 	// オプション画面でのモデル表示
 	void OptionActorModel() override;

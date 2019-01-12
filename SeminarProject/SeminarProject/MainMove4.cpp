@@ -1,6 +1,7 @@
 #include "MainMove4.hpp"
 
 
+// シャドウマップの描画
 void MainMove4::ShadowDraw()
 {
 	/// セットアップ
@@ -46,7 +47,7 @@ void MainMove4::ShadowDraw()
 	}
 	// キャラクター
 	p_character->ModelDraw();
-	BaseMove::ShadowCharaSetUpAfter();
+
 
 	/// キャラクター以外再セットアップ
 	BaseMove::ShadowAnotherCharaSetUpBefore();
@@ -89,7 +90,8 @@ void MainMove4::ShadowDraw()
 	{
 		p_ordinaryPerson[i]->ModelDraw();
 	}
-	BaseMove::ShadowAnotherCharaSetUpAfter();
+	BaseMove::ShadowSetUpAfter();
+
 
 	/// 描画
 	BaseMove::ShadowNoMoveDrawBefore();
@@ -143,13 +145,14 @@ void MainMove4::ShadowDraw()
 	BaseMove::ShadowCharaDrawAfter();
 	// キャラクター
 	p_character->ModelDraw();
-}
+} /// void MainMove4::ShadowDraw()
 
 
+// 当たり判定のプロセス
 void MainMove4::AttackProcess()
 {
 	/// 精算機械に関する-------------------------------------------------------------------------------------------------------------------
-	// 当たっていたら押し出す
+	// 当たっていたらプレイヤーを押し出す
 	if (HitCheck_Capsule_Capsule(
 		p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth()
 		, p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, p_adjustmentMachine->GetHeight(), 0.0f)), p_adjustmentMachine->GetWidth()))
@@ -157,27 +160,34 @@ void MainMove4::AttackProcess()
 		p_character->HitCircleReturn(p_adjustmentMachine->GetArea()
 			, p_adjustmentMachine->GetWidth() >= p_character->GetWidth() ? p_adjustmentMachine->GetWidth() : p_character->GetWidth());
 	}
-	// 近くかどうかで見た目を変える
-	if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 250)
+
+
+	// プレイヤーが近かったら
+	if (BaseMove::GetDistance<int>(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 250)
 	{
 		p_adjustmentMachine->ChangeDisplayTexture(true);
 	}
+	// プレイヤーが遠かったら
 	else
 	{
 		p_adjustmentMachine->ChangeDisplayTexture(false);
 	}
-}
+	/// 精算機械に関する-------------------------------------------------------------------------------------------------------------------
+} /// void MainMove4::AttackProcess()
 
 
+// テクスチャの非同期読み込み
 void MainMove4::ThsTextureReload()
 {
-	ths = std::thread(&MainMove4::ThsTextureReload, this);
+	ths = std::thread(&MainMove4::TextureReload, this);
 	ths.join();
 }
 
 
+// コンストラクタ
 MainMove4::MainMove4(const std::vector<int> v_file)
 {
+	// パネルの描画をさせない
 	BASICPARAM::paneruDrawFlag = false;
 
 
@@ -210,8 +220,10 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 		, v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3], v_file[EFILE::charaTex4]);
 	charaSonmeEnemyDamageCount = 0;
 
+
 	// カメラの初期化
-	p_camera = new Camera(p_character->GetArea(), v_file[EFILE::stageCollModel]);
+	p_camera = new Camera(p_character->GetArea());
+
 
 	// パネルの初期化
 	for (int i = 0; i != 10; ++i)
@@ -219,6 +231,7 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 		p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(500.0f * i, 300.0f * i, 100.0f * i));
 		p_character->SetPaneruArea(p_stagePaneru[i]->GetArea(), i);
 	}
+
 
 	// 階段と床の初期化
 	if (BASICPARAM::stairsRoadNum != 0)
@@ -233,6 +246,7 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 		}
 	}
 
+
 	// 街灯の初期化
 	if (BASICPARAM::streetLightNum != 0)
 	{
@@ -244,6 +258,7 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 				, v_file[EFILE::streetLightTex0], v_file[EFILE::streetLightTex1], BASICPARAM::v_streetLightAngle[i]);
 		}
 	}
+
 
 	// 階段の初期化
 	if (BASICPARAM::stairsNum != 0)
@@ -257,6 +272,7 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 		}
 	}
 
+
 	// 精密機械の初期化
 	p_adjustmentMachine = new AdjustmentMachine(v_file[EFILE::terminalModel], VGet(-1000.0f, 0.0f, -500.0f), v_file[EFILE::terminalTex0], v_file[EFILE::terminalTex1]);
 	for (int i = 0; i != 15; ++i)
@@ -265,6 +281,7 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 	}
 	adjustmentDescDraw = v_file[EFILE::terminalDesc];
 
+
 	// 人の初期化
 	for (int i = 0; i != ordinaryNum; ++i)
 	{
@@ -272,13 +289,16 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 			, v_file[EFILE::ordiPersonTex0], VGet(-1000.0f + i * 100.0f, i + 200.0f, 1000.0f), 0.0f);
 	}
 
+
 	// スカイボックス
 	BaseMove::SetInitSkyBox(v_file[EFILE::skyBoxModel], v_file[EFILE::skyBoxTex0]);
+
 
 	// ステージの床
 	BaseMove::ShadowNoMoveSetUpBefore();
 	p_stage->Draw();
-	BaseMove::ShadowNoMoveSetUpAfter();
+	BaseMove::ShadowSetUpAfter();
+
 
 	// サウンドのロード
 	SoundProcess::Load(v_file[EFILE::se_attackOne], SoundProcess::ESOUNDNAME_SE::pianoAttack1);
@@ -292,9 +312,10 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 	SoundProcess::Load(v_file[EFILE::bgm_Main], SoundProcess::ESOUNDNAME_BGM::normalBGM);
 
 	SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 255, 255);
-}
+} /// MainMove4::MainMove4(const std::vector<int> v_file)
 
 
+// デストラクタ
 MainMove4::~MainMove4()
 {
 	// 人
@@ -302,9 +323,12 @@ MainMove4::~MainMove4()
 	{
 		POINTER_RELEASE(p_ordinaryPerson[i]);
 	}
+
+
 	// 精密機械
 	GRAPHIC_RELEASE(adjustmentDescDraw);
 	POINTER_RELEASE(p_adjustmentMachine);
+
 
 	// 階段
 	if (BASICPARAM::stairsNum != 0)
@@ -317,6 +341,7 @@ MainMove4::~MainMove4()
 		vp_stageStairs.shrink_to_fit();
 	}
 
+
 	// 街灯
 	if (BASICPARAM::streetLightNum != 0)
 	{
@@ -327,6 +352,7 @@ MainMove4::~MainMove4()
 		vp_stageStreetLight.clear();
 		vp_stageStreetLight.shrink_to_fit();
 	}
+
 
 	// 階段と床
 	if (BASICPARAM::stairsRoadNum != 0)
@@ -339,28 +365,37 @@ MainMove4::~MainMove4()
 		vp_stageStairsRoad.shrink_to_fit();
 	}
 
+
 	// パネル
 	for (int i = 0; i != 10; ++i)
 	{
 		POINTER_RELEASE(p_stagePaneru[i]);
 	}
 
+
 	// カメラ
 	POINTER_RELEASE(p_camera);
+
 
 	// キャラクター
 	POINTER_RELEASE(p_character);
 
+
 	// ステージ
 	POINTER_RELEASE(p_stage);
-}
+} /// MainMove4::~MainMove4()
 
 
+// 描画
 void MainMove4::Draw()
 {
+	// スカイボックスを描画
 	BaseMove::SkyBoxDraw();
 
+
+	// シャドウマップを描画
 	ShadowDraw();
+
 
 	// 人
 	for (int i = 0; i != ordinaryNum; ++i)
@@ -368,25 +403,23 @@ void MainMove4::Draw()
 		p_ordinaryPerson[i]->Draw();
 	}
 
-	// キャラクター
-	p_character->Draw();
 
-
-	if (p_adjustmentMachine->GetCanTouch())
+	// 精密機械との距離が近いとき
+	if (BaseMove::GetDistance<int>(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175)
 	{
-		if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175)
-		{
-			DrawBillboard3D(VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 200.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, adjustmentDescDraw, false);
-		}
+		// 説明画像を表示
+		DrawBillboard3D(VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 200.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, adjustmentDescDraw, false);
 	}
-}
+} /// void MainMove4::Draw()
 
 
+// プロセス
 void MainMove4::Process()
 {
 	// キャラクターのプロセス
 	p_character->Process(p_camera->GetAngle());
-	charaSonmeEnemyDamageCount = 0;
+	charaSonmeEnemyDamageCount = 0;				// ダメージを受けた個体数を初期化する
+
 
 	// カメラのプロセス
 	p_camera->Process(p_character->GetArea());
@@ -399,10 +432,15 @@ void MainMove4::Process()
 	}
 
 
+	// シャドウマップの座標を更新
 	BaseMove::ShadowArea(p_character->GetArea());
 
+	
+	// 当たり判定プロセス
 	AttackProcess();
 
+
+	// スカイボックスの座標を更新
 	BaseMove::SkyBoxProcess(p_character->GetArea());
 
 
@@ -413,19 +451,22 @@ void MainMove4::Process()
 		BaseMove::SetScene(ESceneNumber::FIFTHLOAD);
 	}
 #endif
-}
+} /// void MainMove4::Process()
 
 
+// カメラの再セットアップ
 void MainMove4::CameraProcess()
 {
 	p_camera->SetUp();
 }
 
 
+// テクスチャの差し替え
 void MainMove4::TextureReload()
 {
 	// キャラクター
 	p_character->TextureReload();
+
 
 	// 人
 	for (int i = 0; i != ordinaryNum; ++i)
@@ -433,8 +474,10 @@ void MainMove4::TextureReload()
 		p_ordinaryPerson[i]->TextureReload();
 	}
 
+
 	// 精密機械
 	p_adjustmentMachine->TextureReload();
+
 
 	// 階段
 	if (BASICPARAM::stairsNum != 0)
@@ -445,6 +488,7 @@ void MainMove4::TextureReload()
 		}
 	}
 
+
 	// 街灯
 	if (BASICPARAM::streetLightNum != 0)
 	{
@@ -453,6 +497,7 @@ void MainMove4::TextureReload()
 			vp_stageStreetLight[i]->TextureReload();
 		}
 	}
+
 
 	// 階段と床
 	if (BASICPARAM::stairsRoadNum != 0)
@@ -465,17 +510,21 @@ void MainMove4::TextureReload()
 }
 
 
+// オプション画面モデルの描画
 void MainMove4::OptionActorModel()
 {
 	p_character->OptionActorDraw();
 }
 
 
+// オプション画面モデルの描画の準備
 void MainMove4::OptionActorModelBefore()
 {
 	p_character->OptionActorDrawBefore();
 }
 
+
+// オプション画面モデルの描画の後始末
 void MainMove4::OptionActorModelAfter()
 {
 	p_character->OptionActorDrawAfter();

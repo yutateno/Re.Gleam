@@ -158,6 +158,11 @@ private:
 
 	// スティックの押し倒しかどうかを調べる(DLLXinputでやるべきなんだろうかとりあえず
 	int adjustmentControllStick[2];
+
+	// オブジェクト生成個数
+	const int createStairsNeedNum = 10;
+	const int createStreetLightNeedNum = 20;
+	const int createStairsRoadNeedNum = 5;
 	/// -------------------------------------------------------------------------------
 
 
@@ -172,10 +177,6 @@ private:
 
 	// 攻撃のプロセス
 	void AttackProcess();
-
-
-	// 非同期テクスチャ切り替え
-	void ThsTextureReload() override {};
 
 
 	/// Effekseer関連-----------------------
@@ -206,6 +207,9 @@ public:
 
 	// テクスチャの切り替え
 	void TextureReload() override {}
+
+	// 非同期テクスチャ切り替え
+	void ThsTextureReload() override {};
 
 	// オプション画面でのモデル表示
 	void OptionActorModel() override;

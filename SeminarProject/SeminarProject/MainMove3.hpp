@@ -169,11 +169,6 @@ private:
 	void AttackProcess();
 
 
-
-	// 非同期テクスチャ切り替え
-	void ThsTextureReload() override;
-
-
 	/// エフェクトに関して
 	
 	int effeckBack[10];		// ダメージ演出の10種類
@@ -204,6 +199,9 @@ public:
 
 	// テクスチャの切り替え
 	void TextureReload() override;
+
+	// 非同期テクスチャ切り替え
+	void ThsTextureReload() override;
 
 	// オプション画面でのモデル表示
 	void OptionActorModel() override;

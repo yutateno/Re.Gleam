@@ -1,6 +1,7 @@
 #include "MainMove5.hpp"
 
 
+// シャドウマップの描画
 void MainMove5::ShadowDraw()
 {
 	/// セットアップ
@@ -41,7 +42,7 @@ void MainMove5::ShadowDraw()
 	p_adjustmentMachine->ModelDraw();
 	// キャラクター
 	p_character->ModelDraw();
-	BaseMove::ShadowCharaSetUpAfter();
+
 
 	/// キャラクター以外再セットアップ
 	BaseMove::ShadowAnotherCharaSetUpBefore();
@@ -79,7 +80,8 @@ void MainMove5::ShadowDraw()
 	}
 	// 精密機械
 	p_adjustmentMachine->ModelDraw();
-	BaseMove::ShadowAnotherCharaSetUpAfter();
+	BaseMove::ShadowSetUpAfter();
+
 
 	/// 描画
 	BaseMove::ShadowNoMoveDrawBefore();
@@ -128,13 +130,14 @@ void MainMove5::ShadowDraw()
 	BaseMove::ShadowCharaDrawAfter();
 	// キャラクター
 	p_character->ModelDraw();
-}
+} /// void MainMove5::ShadowDraw()
 
 
+// 当たり判定のプロセス
 void MainMove5::AttackProcess()
 {
 	/// 精算機械に関する-------------------------------------------------------------------------------------------------------------------
-	// 当たっていたら押し出す
+	// 当たっていたらプレイヤーを押し出す
 	if (HitCheck_Capsule_Capsule(
 		p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth()
 		, p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, p_adjustmentMachine->GetHeight(), 0.0f)), p_adjustmentMachine->GetWidth()))
@@ -142,27 +145,34 @@ void MainMove5::AttackProcess()
 		p_character->HitCircleReturn(p_adjustmentMachine->GetArea()
 			, p_adjustmentMachine->GetWidth() >= p_character->GetWidth() ? p_adjustmentMachine->GetWidth() : p_character->GetWidth());
 	}
-	// 近くかどうかで見た目を変える
-	if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 250)
+
+
+	// プレイヤーと距離が近かったら
+	if (BaseMove::GetDistance<int>(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 250)
 	{
 		p_adjustmentMachine->ChangeDisplayTexture(true);
 	}
+	// プレイヤーと距離が遠かったら
 	else
 	{
 		p_adjustmentMachine->ChangeDisplayTexture(false);
 	}
+	/// 精算機械に関する-------------------------------------------------------------------------------------------------------------------
 }
 
 
+// テクスチャの非同期読み込み
 void MainMove5::ThsTextureReload()
 {
-	ths = std::thread(&MainMove5::ThsTextureReload, this);
+	ths = std::thread(&MainMove5::TextureReload, this);
 	ths.join();
 }
 
 
+// コンストラクタ
 MainMove5::MainMove5(const std::vector<int> v_file)
 {
+	// パネルの表示を消す
 	BASICPARAM::paneruDrawFlag = false;
 
 
@@ -191,8 +201,10 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 		, v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3], v_file[EFILE::charaTex4]);
 	charaSonmeEnemyDamageCount = 0;
 
+
 	// カメラの初期化
-	p_camera = new Camera(p_character->GetArea(), v_file[EFILE::stageCollModel]);
+	p_camera = new Camera(p_character->GetArea());
+
 
 	// パネルの初期化
 	for (int i = 0; i != 10; ++i)
@@ -200,6 +212,7 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 		p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(500.0f * i, 300.0f * i, 100.0f * i));
 		p_character->SetPaneruArea(p_stagePaneru[i]->GetArea(), i);
 	}
+
 
 	// 階段と床の初期化
 	if (BASICPARAM::stairsRoadNum != 0)
@@ -214,6 +227,7 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 		}
 	}
 
+
 	// 街灯の初期化
 	if (BASICPARAM::streetLightNum != 0)
 	{
@@ -225,6 +239,7 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 				, v_file[EFILE::streetLightTex0], v_file[EFILE::streetLightTex1], BASICPARAM::v_streetLightAngle[i]);
 		}
 	}
+
 
 	// 階段の初期化
 	if (BASICPARAM::stairsNum != 0)
@@ -238,6 +253,7 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 		}
 	}
 
+
 	// 精密機械の初期化
 	p_adjustmentMachine = new AdjustmentMachine(v_file[EFILE::terminalModel], VGet(-1000.0f, 0.0f, -500.0f), v_file[EFILE::terminalTex0], v_file[EFILE::terminalTex1]);
 	for (int i = 0; i != 15; ++i)
@@ -246,13 +262,16 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 	}
 	adjustmentDescDraw = v_file[EFILE::terminalDesc];
 
+
 	// スカイボックス
 	BaseMove::SetInitSkyBox(v_file[EFILE::skyBoxModel], v_file[EFILE::skyBoxTex0]);
+
 
 	// ステージの床
 	BaseMove::ShadowNoMoveSetUpBefore();
 	p_stage->Draw();
-	BaseMove::ShadowNoMoveSetUpAfter();
+	BaseMove::ShadowSetUpAfter();
+
 
 	// サウンドのロード
 	SoundProcess::Load(v_file[EFILE::se_attackOne], SoundProcess::ESOUNDNAME_SE::pianoAttack1);
@@ -266,14 +285,16 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 	SoundProcess::Load(v_file[EFILE::bgm_Main], SoundProcess::ESOUNDNAME_BGM::normalBGM);
 
 	SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 255, 255);
-}
+} /// MainMove5::MainMove5(const std::vector<int> v_file)
 
 
+// デストラクタ
 MainMove5::~MainMove5()
 {
 	// 精密機械
 	GRAPHIC_RELEASE(adjustmentDescDraw);
 	POINTER_RELEASE(p_adjustmentMachine);
+
 
 	// 階段
 	if (BASICPARAM::stairsNum != 0)
@@ -286,6 +307,7 @@ MainMove5::~MainMove5()
 		vp_stageStairs.shrink_to_fit();
 	}
 
+
 	// 街灯
 	if (BASICPARAM::streetLightNum != 0)
 	{
@@ -296,6 +318,7 @@ MainMove5::~MainMove5()
 		vp_stageStreetLight.clear();
 		vp_stageStreetLight.shrink_to_fit();
 	}
+
 
 	// 階段と床
 	if (BASICPARAM::stairsRoadNum != 0)
@@ -308,57 +331,65 @@ MainMove5::~MainMove5()
 		vp_stageStairsRoad.shrink_to_fit();
 	}
 
+
 	// パネル
 	for (int i = 0; i != 10; ++i)
 	{
 		POINTER_RELEASE(p_stagePaneru[i]);
 	}
 
+
 	// カメラ
 	POINTER_RELEASE(p_camera);
+
 
 	// キャラクター
 	POINTER_RELEASE(p_character);
 
+
 	// ステージ
 	POINTER_RELEASE(p_stage);
-}
+} /// MainMove5::~MainMove5()
 
 
+// 描画
 void MainMove5::Draw()
 {
-	BaseMove::SkyBoxDraw();
-
-	ShadowDraw();
-
-	// キャラクター
-	p_character->Draw();
+	BaseMove::SkyBoxDraw();		// スカイボックスを描画
 
 
-	if (p_adjustmentMachine->GetCanTouch())
+	ShadowDraw();		// シャドウマップを描画
+
+
+	// 精密機械と距離が近かったら
+	if (BaseMove::GetDistance<int>(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175)
 	{
-		if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175)
-		{
-			DrawBillboard3D(VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 200.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, adjustmentDescDraw, false);
-		}
+		// 説明画像を表示する
+		DrawBillboard3D(VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 200.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, adjustmentDescDraw, false);
 	}
-}
+} /// void MainMove5::Draw()
 
 
+// プロセス
 void MainMove5::Process()
 {
 	// キャラクターのプロセス
 	p_character->Process(p_camera->GetAngle());
-	charaSonmeEnemyDamageCount = 0;
+	charaSonmeEnemyDamageCount = 0;					// 攻撃している敵の数を初期化
+
 
 	// カメラのプロセス
 	p_camera->Process(p_character->GetArea());
 
 
+	// シャドウマップの位置を更新
 	BaseMove::ShadowArea(p_character->GetArea());
 
-	AttackProcess();
 
+	AttackProcess();		// 当たり判定のプロセス
+
+	
+	// スカイボックスの位置を更新
 	BaseMove::SkyBoxProcess(p_character->GetArea());
 
 
@@ -369,22 +400,26 @@ void MainMove5::Process()
 		BaseMove::SetScene(ESceneNumber::FIRSTLOAD);
 	}
 #endif
-}
+} /// void MainMove5::Process()
 
 
+// カメラの再セットアップ
 void MainMove5::CameraProcess()
 {
 	p_camera->SetUp();
 }
 
 
+// テクスチャの読み込み
 void MainMove5::TextureReload()
 {
 	// キャラクター
 	p_character->TextureReload();
 
+
 	// 精密機械
 	p_adjustmentMachine->TextureReload();
+
 
 	// 階段
 	if (BASICPARAM::stairsNum != 0)
@@ -395,6 +430,7 @@ void MainMove5::TextureReload()
 		}
 	}
 
+
 	// 街灯
 	if (BASICPARAM::streetLightNum != 0)
 	{
@@ -404,6 +440,7 @@ void MainMove5::TextureReload()
 		}
 	}
 
+
 	// 階段と床
 	if (BASICPARAM::stairsRoadNum != 0)
 	{
@@ -412,20 +449,24 @@ void MainMove5::TextureReload()
 			vp_stageStairsRoad[i]->TextureReload();
 		}
 	}
-}
+} /// void MainMove5::TextureReload()
 
 
+// オプション画面モデルの描画
 void MainMove5::OptionActorModel()
 {
 	p_character->OptionActorDraw();
 }
 
 
+// オプション画面モデルの描画の準備
 void MainMove5::OptionActorModelBefore()
 {
 	p_character->OptionActorDrawBefore();
 }
 
+
+// オプション画面モデルの描画の後始末
 void MainMove5::OptionActorModelAfter()
 {
 	p_character->OptionActorDrawAfter();

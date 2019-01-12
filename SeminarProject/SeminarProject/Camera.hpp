@@ -20,10 +20,6 @@ private:
 	// キャラクターのアングル
 	float angle;
 
-
-	// 当たり判定用ステージ
-	int stageHandle;
-
 	// 正射影カメラ用の座標
 	float orthoArea;
 
@@ -37,7 +33,7 @@ private:
 
 public:
 	// キャラの位置を引数に取ったコンストラクタ
-	Camera(const VECTOR charaarea, const int collStageHandle);
+	Camera(const VECTOR charaarea);
 
 	// デストラクタ
 	~Camera();

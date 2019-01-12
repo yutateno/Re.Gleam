@@ -1,6 +1,7 @@
 #include "DropItemMove1.hpp"
 
 
+// コンストラクタ
 DropItemMove1::DropItemMove1(const int draw, const int tex0) : BasicObject()
 {
 	// 初期位置を設定
@@ -25,18 +26,20 @@ DropItemMove1::DropItemMove1(const int draw, const int tex0) : BasicObject()
 
 	// モデルのサイズを変更
 	MV1SetScale(this->modelHandle, VGet(0.2f, 0.2f, 0.2f));
-
 	// モデルの座標を更新
 	MV1SetPosition(this->modelHandle, area);
 }
 
 
+// デストラクタ
 DropItemMove1::~DropItemMove1()
 {
 	GRAPHIC_RELEASE(textureHandle);
 	MODEL_RELEASE(modelHandle);
 }
 
+
+// 描画
 void DropItemMove1::Draw()
 {
 #ifdef _DEBUG

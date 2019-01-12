@@ -1,6 +1,7 @@
 #include "DropItemMove2.hpp"
 
 
+// コンストラクタ
 DropItemMove2::DropItemMove2(const int draw, VECTOR area, const int tex0) : BasicObject()
 {
 	// 初期位置を設定
@@ -21,12 +22,11 @@ DropItemMove2::DropItemMove2(const int draw, VECTOR area, const int tex0) : Basi
 	this->modelHandle = -1;
 	this->modelHandle = MV1DuplicateModel(draw);
 
+
+	// 情報初期化
 	rotationY = 0;
-
 	flyAroundFrame = 0;
-
 	deathNow = false;
-
 	aliveNow = false;
 
 
@@ -36,24 +36,31 @@ DropItemMove2::DropItemMove2(const int draw, VECTOR area, const int tex0) : Basi
 
 	// モデルのサイズを変更
 	MV1SetScale(this->modelHandle, VGet(0.2f, 0.2f, 0.2f));
-
 	// モデルの座標を更新
 	MV1SetPosition(this->modelHandle, this->area);
-}
+} /// DropItemMove2::DropItemMove2(const int draw, VECTOR area, const int tex0) : BasicObject()
 
 
+// デストラクタ
 DropItemMove2::~DropItemMove2()
 {
+	// モデル開放
 	MODEL_RELEASE(modelHandle);
 }
 
 
+// プロセス
 void DropItemMove2::Process()
 {
+	// 生きていないか死んでいるか
 	if (deathNow || !aliveNow) return;
 
+
+	// 常に回転させる
 	if (++rotationY >= 180) rotationY = 0;
 
+
+	// 飛び散る処理
 	if (flyAroundFrame++ < 60)
 	{
 		area.x += nextAreaX / 60.0f;
@@ -62,37 +69,41 @@ void DropItemMove2::Process()
 		moveAreaY = (sin(-DX_PI_F / 2 + DX_PI_F / 30 * flyAroundFrame) + 1) / 2 * 120;
 	}
 
+
+	// 回転と座標更新
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, rotationY * DX_PI_F / 180.0f, 0.0f));
 	MV1SetPosition(this->modelHandle, VGet(area.x, area.y + moveAreaY, area.z));
 }
 
 
-void DropItemMove2::StolenChara(const VECTOR characterArea)
+// 引数の座標に対して近づく
+void DropItemMove2::ChaseActor(const VECTOR chaseArea)
 {
 	if (deathNow || !aliveNow) return;
 
-	// プレイヤーにちこうよれ
-	if (characterArea.x < area.x - 20.0f)
+
+	// 近づく処理
+	if (chaseArea.x < area.x - 20.0f)
 	{
 		area.x -= 10.0f;
 	}
-	else if (characterArea.x > area.x + 20.0f)
+	else if (chaseArea.x > area.x + 20.0f)
 	{
 		area.x += 10.0f;
 	}
-	if (characterArea.z < area.z - 20.0f)
+	if (chaseArea.z < area.z - 20.0f)
 	{
 		area.z -= 10.0f;
 	}
-	else if (characterArea.z > area.z + 20.0f)
+	else if (chaseArea.z > area.z + 20.0f)
 	{
 		area.z += 10.0f;
 	}
-	if ((characterArea.y + 80.0f) < area.y - 4.0f)
+	if ((chaseArea.y + 80.0f) < area.y - 4.0f)
 	{
 		area.y -= 2.0f;
 	}
-	else if ((characterArea.y + 80.0f) > area.y + 4.0f)
+	else if ((chaseArea.y + 80.0f) > area.y + 4.0f)
 	{
 		area.y += 2.0f;
 	}

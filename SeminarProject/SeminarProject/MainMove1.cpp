@@ -7,12 +7,12 @@ void MainMove1::ActorHit()
 	for (int i = 0; i < enemyNum; ++i)
 	{
 		// 生存していたら
-		if (s_enemyAggre[i].aliveNow)
+		if (s_lightBall[i].aliveNow)
 		{
 			// プレイヤーと玉が接触したら
-			if (BaseMove::GetDistance(p_character->GetArea(), s_enemyAggre[i].p_enemyMove->GetArea()) <= 60)
+			if (BaseMove::GetDistance<int>(p_character->GetArea(), s_lightBall[i].p_enemyMove->GetArea()) <= 60)
 			{
-				s_enemyAggre[i].aliveNow = false;			// 生きさせない
+				s_lightBall[i].aliveNow = false;			// 生きさせない
 				
 
 				/// 状況に応じてBGMの音量を調整----------------------------------------------------------
@@ -48,7 +48,7 @@ void MainMove1::ActorHit()
 					break;
 				default:
 					break;
-				}
+				} /// switch (++catchEnemyNum)
 				/// ---------------------------------------------------------------------------------------
 
 
@@ -56,6 +56,7 @@ void MainMove1::ActorHit()
 				std::random_device rnd;     // 非決定的な乱数生成器を生成
 				std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
 				std::uniform_int_distribution<> randPawnSE(0, 1);        // 乱数
+
 
 				if (randPawnSE(mt) == 0)
 				{
@@ -69,7 +70,7 @@ void MainMove1::ActorHit()
 
 
 
-				/// 説明書に関する-----------------------------
+				/// 操作説明に関する-----------------------------
 				if (catchEnemyNum == 1)
 				{
 					// ブレンドが200になるようにする
@@ -90,20 +91,20 @@ void MainMove1::ActorHit()
 					// ブレンドが0になるようにする
 					nextExplanationDrawFeed = 0;
 				}
-			}
+			} /// if (BaseMove::GetDistance<int>(p_character->GetArea(), s_lightBall[i].p_enemyMove->GetArea()) <= 60)
 			// プレイヤーと玉との距離がある程度近くなったら
-			else if (BaseMove::GetDistance(p_character->GetArea(), s_enemyAggre[i].p_enemyMove->GetArea()) <= 300)
+			else if (BaseMove::GetDistance<int>(p_character->GetArea(), s_lightBall[i].p_enemyMove->GetArea()) <= 300)
 			{
 				// 玉をプレイヤーに近づくようにする
-				s_enemyAggre[i].p_enemyMove->NearChara(p_character->GetArea());
+				s_lightBall[i].p_enemyMove->NearChara(p_character->GetArea());
 			}
 		}
-	}
+	} /// for (int i = 0; i < enemyNum; ++i)
 
 	
 	// 玉をすべて手に入れ、エンドイベントが終わってかつ剣に触れたら次のシーンに移行させる
 	if (catchEnemyNum==30 && lightEventCount >= 100
-		&& BaseMove::GetDistance(p_character->GetArea(), p_dropItem->GetArea()) <= 60)
+		&& BaseMove::GetDistance<int>(p_character->GetArea(), p_dropItem->GetArea()) <= 60)
 	{
 		BASICPARAM::endFeedNow = true;
 		BaseMove::SetScene(ESceneNumber::SECONDLOAD);
@@ -116,7 +117,7 @@ void MainMove1::ActorHit()
 		BaseMove::SetScene(ESceneNumber::SECONDLOAD);
 	}
 #endif
-}
+} /// void MainMove1::ActorHit()
 
 
 
@@ -334,6 +335,7 @@ void MainMove1::LightProcess()
 	{
 		lightEventCount++;		// カウントを続ける
 
+
 		// 光源の明るさを広げる
 		lightRange[0] = lightRangePreMax + lightEventCount * lightRangeSpeed;
 		lightRange[1] = lightRangePreMax + lightEventCount * lightRangeSpeed;
@@ -359,8 +361,8 @@ void MainMove1::LightProcess()
 				p_character->PositionReset();			// キャラクターのポジションを元に戻す
 			}
 		}
-	}
-}
+	} /// if (lightEventStart)
+} /// void MainMove1::LightProcess()
 
 
 // コンストラクタ
@@ -368,10 +370,8 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 {	
 	// 自然光源を一切遮断
 	SetLightEnable(FALSE);	
-
 	// フォグを有効にする
 	SetFogEnable(FALSE);
-
 	// 背景色に関する
 	backgroundColor = GetColor(0, 0, 0);
 
@@ -383,19 +383,23 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 	p_dropItem = nullptr;
 	for (int i = 0; i != enemyNum; ++i)
 	{
-		s_enemyAggre[i].p_enemyMove = nullptr;
+		s_lightBall[i].p_enemyMove = nullptr;
 	}
 
 
 	// ステージ初期化
 	p_stage = new Stage(v_file[EFILE::drawStage]);	
 
+
 	// キャラクター初期化
-	p_character = new Character(v_file[EFILE::character], v_file[EFILE::collStage], v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3]);		
+	p_character = new Character(v_file[EFILE::character], v_file[EFILE::collStage]
+		, v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3]);		
 	
+
 	// カメラ初期化
-	p_camera = new Camera(p_character->GetArea(), v_file[EFILE::collStage]);
+	p_camera = new Camera(p_character->GetArea());
 	
+
 	// 落ちてる剣初期化
 	p_dropItem = new DropItemMove1(v_file[EFILE::sword], v_file[EFILE::swordTex0]);
 
@@ -418,7 +422,6 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 		{
 			tempX -= 400.0f;
 		}
-
 		// 玉のY座標設定
 		float tempZ = static_cast<float>(randInZ(mt));
 		if (tempZ <= 400.0f && tempZ >= 0.0f)
@@ -430,13 +433,12 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 			tempZ -= 400.0f;
 		}
 
+
 		// 生きてるようにする
-		s_enemyAggre[i].aliveNow = true;
-
+		s_lightBall[i].aliveNow = true;
 		// 玉初期化
-		s_enemyAggre[i].p_enemyMove = new EnemyMove1(v_file[1], tempX, tempZ, color(mt) / 100.0f);
+		s_lightBall[i].p_enemyMove = new EnemyMove1(v_file[1], tempX, tempZ, color(mt) / 100.0f);
 	}
-
 	// 玉を手に入れた数を初期化
 	catchEnemyNum = 0;		
 
@@ -468,11 +470,9 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 	//  左スティック操作の説明の初期化
 	stickLeftDraw = -1;
 	stickLeftDraw = v_file[EFILE::explanationLeftStick];
-
 	// 右スティック操作の説明の初期化
 	stickRightDraw = -1;
 	stickRightDraw = v_file[EFILE::explanationRightStick];
-
 	// フェードカウントの初期化
 	explanationDrawFeed = 255;
 	nextExplanationDrawFeed = 255;
@@ -487,28 +487,46 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 	// エフェクト読み込み
 	effeckBack = LoadEffekseerEffect("media\\こっち\\media\\Effect\\moveOneBack.efk");
 	playingEfBack = -1;
-}
+} /// MainMove1::MainMove1(const std::vector<int> v_file)
 
 
 // デストラクタ
 MainMove1::~MainMove1()
 {
+	// エフェクト開放
 	StopEffekseer2DEffect(playingEfBack);
 	DeleteEffekseerEffect(effeckBack);
 
+
+	// 光源開放
 	for (int i = 0; i != lightNum; ++i)
 	{
 		LIGHT_RELEASE(lightHandle[i]);
 	}
+
+
+	// 敵開放
 	for (int i = 0; i < enemyNum; ++i)
 	{
-		POINTER_RELEASE(s_enemyAggre[i].p_enemyMove);
+		POINTER_RELEASE(s_lightBall[i].p_enemyMove);
 	}
+
+
+	// ドロップアイテム(剣)開放
 	POINTER_RELEASE(p_dropItem);
+
+
+	// カメラ開放
 	POINTER_RELEASE(p_camera);
+
+	
+	// キャラクター開放
 	POINTER_RELEASE(p_character);
+
+
+	// ステージ開放
 	POINTER_RELEASE(p_stage);
-}
+} /// MainMove1::~MainMove1() /// MainMove1::~MainMove1()
 
 
 // 描画
@@ -530,10 +548,10 @@ void MainMove1::Draw()
 	for (int i = 0; i < enemyNum; ++i)
 	{
 		// 玉が生存していたら
-		if (s_enemyAggre[i].aliveNow)
+		if (s_lightBall[i].aliveNow)
 		{
 			// 玉を描画
-			s_enemyAggre[i].p_enemyMove->Draw();		
+			s_lightBall[i].p_enemyMove->Draw();
 		}
 	}
 
@@ -554,24 +572,23 @@ void MainMove1::Draw()
 
 
 		/// ブレンドする----------------------------------------------
-
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, explanationDrawFeed);
 
 		// 左スティック説明画像
 		DrawGraph(100, 100, stickLeftDraw, true);
-
 		// 右スティック説明画像
 		DrawGraph(1200, 100, stickRightDraw, true);
 
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 	}
 
+
+	// エフェクトが再生されていなかったら
 	if (IsEffekseer2DEffectPlaying(playingEfBack) != 0)
 	{
 		// エフェクトを再生する。
 		playingEfBack = PlayEffekseer2DEffect(effeckBack);
 		SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
-		// 再生中のエフェクトを移動する。
 		SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
 	}
 
@@ -581,15 +598,15 @@ void MainMove1::Draw()
 	{
 		for (int i = 0; i < enemyNum; ++i)
 		{
-			if (BaseMove::GetDistance(p_character->GetArea(), s_enemyAggre[i].p_enemyMove->GetArea()) <= 500)
+			if (BaseMove::GetDistance<int>(p_character->GetArea(), s_lightBall[i].p_enemyMove->GetArea()) <= 500)
 			{
-				DrawLine3D(VAdd(p_character->GetArea(), VGet(0.0f, 80.0f, 0.0f)), VAdd(s_enemyAggre[i].p_enemyMove->GetArea(), VGet(0.0f, 60.0f, 0.0f)), GetColor(255, 0, 0));
+				DrawLine3D(VAdd(p_character->GetArea(), VGet(0.0f, 80.0f, 0.0f)), VAdd(s_lightBall[i].p_enemyMove->GetArea(), VGet(0.0f, 60.0f, 0.0f)), GetColor(255, 0, 0));
 			}
 		}
 	}
 #endif // _DEBUG
 
-}
+} /// void MainMove1::Draw()
 
 
 // メインプロセス
@@ -606,10 +623,10 @@ void MainMove1::Process()
 	for (int i = 0; i < enemyNum; ++i)
 	{
 		// 生きていたら
-		if (s_enemyAggre[i].aliveNow)
+		if (s_lightBall[i].aliveNow)
 		{
 			// 玉のプロセスを呼ぶ
-			s_enemyAggre[i].p_enemyMove->Process();					
+			s_lightBall[i].p_enemyMove->Process();
 		}
 	}
 
@@ -620,7 +637,7 @@ void MainMove1::Process()
 
 	// ライトのプロセスを呼ぶ
 	LightProcess();		
-}
+} /// void MainMove1::Process()
 
 
 // カメラの再セットアップ
@@ -629,17 +646,20 @@ void MainMove1::CameraProcess()
 	p_camera->SetUp();
 }
 
+
 // オプション描画モデルの描画処理
 void MainMove1::OptionActorModel()
 {
 	p_character->OptionActorDraw();
 }
 
+
 // オプション画面モデルの描画前処理
 void MainMove1::OptionActorModelBefore()
 {
 	p_character->OptionActorDrawBefore();
 }
+
 
 // オプション画面モデルの描画後処理
 void MainMove1::OptionActorModelAfter()

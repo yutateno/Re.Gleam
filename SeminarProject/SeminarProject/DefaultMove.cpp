@@ -41,7 +41,6 @@ void DefaultMove::ShadowDraw()
 	p_adjustmentMachine->ModelDraw();
 	// キャラクター
 	p_character->ModelDraw();
-	BaseMove::ShadowCharaSetUpAfter();
 
 	/// キャラクター以外再セットアップ
 	BaseMove::ShadowAnotherCharaSetUpBefore();
@@ -79,7 +78,7 @@ void DefaultMove::ShadowDraw()
 	}
 	// 精密機械
 	p_adjustmentMachine->ModelDraw();
-	BaseMove::ShadowAnotherCharaSetUpAfter();
+	BaseMove::ShadowSetUpAfter();
 
 	/// 描画
 	BaseMove::ShadowNoMoveDrawBefore();
@@ -141,7 +140,7 @@ void DefaultMove::AttackProcess()
 			, p_adjustmentMachine->GetWidth() >= p_character->GetWidth() ? p_adjustmentMachine->GetWidth() : p_character->GetWidth());
 	}
 	// 近くかどうかで見た目を変える
-	if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 250)
+	if (BaseMove::GetDistance<int>(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 250)
 	{
 		p_adjustmentMachine->ChangeDisplayTexture(true);
 	}
@@ -154,7 +153,7 @@ void DefaultMove::AttackProcess()
 
 void DefaultMove::ThsTextureReload()
 {
-	ths = std::thread(&DefaultMove::ThsTextureReload, this);
+	ths = std::thread(&DefaultMove::TextureReload, this);
 	ths.join();
 }
 
@@ -190,7 +189,7 @@ DefaultMove::DefaultMove(const std::vector<int> v_file)
 	charaSonmeEnemyDamageCount = 0;
 
 	// カメラの初期化
-	p_camera = new Camera(p_character->GetArea(), v_file[EFILE::stageCollModel]);
+	p_camera = new Camera(p_character->GetArea());
 
 	// パネルの初期化
 	for (int i = 0; i != 10; ++i)
@@ -250,7 +249,7 @@ DefaultMove::DefaultMove(const std::vector<int> v_file)
 	// ステージの床
 	BaseMove::ShadowNoMoveSetUpBefore();
 	p_stage->Draw();
-	BaseMove::ShadowNoMoveSetUpAfter();
+	BaseMove::ShadowSetUpAfter();
 
 	// サウンドのロード
 	SoundProcess::Load(v_file[EFILE::se_attackOne], SoundProcess::ESOUNDNAME_SE::pianoAttack1);
@@ -336,7 +335,7 @@ void DefaultMove::Draw()
 
 	if (p_adjustmentMachine->GetCanTouch())
 	{
-		if (BaseMove::GetDistance(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175)
+		if (BaseMove::GetDistance<int>(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175)
 		{
 			DrawBillboard3D(VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 200.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, adjustmentDescDraw, false);
 		}

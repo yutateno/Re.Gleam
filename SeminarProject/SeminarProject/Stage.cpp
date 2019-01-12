@@ -3,17 +3,19 @@
 // コンストラクタ
 Stage::Stage(const int drawStageHandle)
 {
+	// モデルハンドル受け渡し
 	this->drawStageHandle = MV1DuplicateModel(drawStageHandle);
+	// サイズを設定
 	MV1SetScale(this->drawStageHandle, VGet(0.75f, 0.75f, 0.75f));
-	
-
 	// 座標を指定
 	MV1SetPosition(this->drawStageHandle, VGet(0, 0, 0));
 }
 
+
 // デストラクタ
 Stage::~Stage()
 {
+	// モデル開放
 	MODEL_RELEASE(drawStageHandle);
 }
 

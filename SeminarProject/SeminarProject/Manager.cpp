@@ -1,15 +1,20 @@
 #include "Manager.hpp"
 
+
+// シーン変更
 void Manager::SceneChange()
 {
+	// 今のシーン
 	switch (BASICPARAM::e_nowScene)
 	{
+	// ムーブ1のロード
 	case ESceneNumber::FIRSTLOAD:
 		p_loadThread = new LoadThread();
 		POINTER_RELEASE(p_baseMove);
 		break;
 
 
+	// ムーブ1
 	case ESceneNumber::FIRSTMOVE:
 		BASICPARAM::startFeedNow = true;
 		feedCount = 255;
@@ -19,12 +24,14 @@ void Manager::SceneChange()
 		break;
 
 
+	// ムーブ2のロード
 	case ESceneNumber::SECONDLOAD:
 		p_loadThread = new LoadThread();
 		POINTER_RELEASE(p_baseMove);
 		break;
 
 
+	// ムーブ2
 	case ESceneNumber::SECONDMOVE:
 		BASICPARAM::startFeedNow = true;
 		feedCount = 255;
@@ -34,12 +41,14 @@ void Manager::SceneChange()
 		break;
 
 
+	// ムーブ3のロード
 	case ESceneNumber::THIRDLOAD:
 		p_loadThread = new LoadThread();
 		POINTER_RELEASE(p_baseMove);
 		break;
 
 
+	// ムーブ3
 	case ESceneNumber::THIRDMOVE:
 		BASICPARAM::startFeedNow = true;
 		feedCount = 255;
@@ -49,12 +58,14 @@ void Manager::SceneChange()
 		break;
 
 
+	// ムーブ4のロード
 	case ESceneNumber::FORTHLOAD:
 		p_loadThread = new LoadThread();
 		POINTER_RELEASE(p_baseMove);
 		break;
 
 
+	// ムーブ4
 	case ESceneNumber::FORTHMOVE:
 		BASICPARAM::startFeedNow = true;
 		feedCount = 255;
@@ -64,12 +75,14 @@ void Manager::SceneChange()
 		break;
 
 
+	// ムーブ5のロード
 	case ESceneNumber::FIFTHLOAD:
 		p_loadThread = new LoadThread();
 		POINTER_RELEASE(p_baseMove);
 		break;
 
 
+	// ムーブ5
 	case ESceneNumber::FIFTHMOVE:
 		BASICPARAM::startFeedNow = true;
 		feedCount = 255;
@@ -81,558 +94,13 @@ void Manager::SceneChange()
 
 	default:
 		break;
-	}
-}
+	} /// switch (BASICPARAM::e_nowScene)
+} /// void Manager::SceneChange()
 
 
-void Manager::Move4TextureReload()
+// ムーブ1の読み込み素材の初期化
+void Manager::InitMove1Load()
 {
-	switch (BASICPARAM::e_TextureColor)
-	{
-	case ETextureColor::NORMAL:
-		if (!BASICPARAM::charaTextureWhiteBlack)
-		{
-			// キャラのテクスチャデータ
-			move4str[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\sword_Tex.pyn";
-			move4str[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_hair.pyn";
-			move4str[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_wear.pyn";
-			move4str[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn";
-			move4str[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn";
-		}
-		if (!BASICPARAM::enemyTextureWhiteBlack)
-		{
-		}
-		if (!BASICPARAM::lightStreetTextureWhiteBlack)
-		{
-			// 街灯のテクスチャデータ
-			move4str[14] = "media\\こっち\\media\\街灯\\normal\\body_col.pyn";
-			move4str[15] = "media\\こっち\\media\\街灯\\normal\\lamp_COLandems.pyn";
-		}
-		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
-		{
-			// 階段とそのあとの床のテクスチャデータ
-			move4str[22] = "media\\こっち\\media\\階段と床合体\\normal\\kaidan.pyn";
-			move4str[23] = "media\\こっち\\media\\階段と床合体\\normal\\yuka.pyn";
-		}
-		if (!BASICPARAM::stairsTextureWhiteBlack)
-		{
-			// 階段のテクスチャデータ
-			move4str[13] = "media\\こっち\\media\\kaidan\\normal\\kaidan.pyn";
-		}
-		if (!BASICPARAM::anothreTextureWhiteBlack)
-		{
-			// 人のデータ
-			move4str[35] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\normal\\human_col.pyn";
-
-			// スカイボックスのテクスチャデータ
-			move4str[16] = "media\\こっち\\media\\スカイボックス\\normal\\BlueSky.byn";
-
-			// 精算機械テクスチャ
-			move4str[18] = "media\\こっち\\media\\Terminal\\normal\\Terminal.pyn";
-			move4str[19] = "media\\こっち\\media\\Terminal\\normal\\T_display.pyn";
-		}
-		break;
-		
-	case ETextureColor::P_CORRECTION:
-		if (!BASICPARAM::charaTextureWhiteBlack)
-		{
-			// キャラのテクスチャデータ
-			move4str[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\sword_Tex.pyn";
-			move4str[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_hair.pyn";
-			move4str[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_wear.pyn";
-			move4str[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_face.pyn";
-			move4str[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_ex.pyn";
-		}
-		if (!BASICPARAM::enemyTextureWhiteBlack)
-		{
-		}
-		if (!BASICPARAM::lightStreetTextureWhiteBlack)
-		{
-			// 街灯のテクスチャデータ
-			move4str[14] = "media\\こっち\\media\\街灯\\P\\body_col.pyn";
-			move4str[15] = "media\\こっち\\media\\街灯\\P\\lamp_COLandems.pyn";
-		}
-		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
-		{
-			// 階段とそのあとの床のテクスチャデータ
-			move4str[22] = "media\\こっち\\media\\階段と床合体\\P\\kaidan.pyn";
-			move4str[23] = "media\\こっち\\media\\階段と床合体\\P\\yuka.pyn";
-		}
-		if (!BASICPARAM::stairsTextureWhiteBlack)
-		{
-			// 階段のテクスチャデータ
-			move4str[13] = "media\\こっち\\media\\kaidan\\P\\kaidan.pyn";
-		}
-		if (!BASICPARAM::anothreTextureWhiteBlack)
-		{
-			// 人のデータ
-			move4str[35] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\P\\human_col.pyn";
-
-			// スカイボックスのテクスチャデータ
-			move4str[16] = "media\\こっち\\media\\スカイボックス\\P\\BlueSky.byn";
-
-			// 精算機械テクスチャ
-			move4str[18] = "media\\こっち\\media\\Terminal\\P\\Terminal.pyn";
-			move4str[19] = "media\\こっち\\media\\Terminal\\P\\T_display.pyn";
-		}
-		break;
-
-	case ETextureColor::D_CORRECTION:
-		if (!BASICPARAM::charaTextureWhiteBlack)
-		{
-			// キャラのテクスチャデータ
-			move4str[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\sword_Tex.pyn";
-			move4str[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_hair.pyn";
-			move4str[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_wear.pyn";
-			move4str[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_face.pyn";
-			move4str[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_ex.pyn";
-		}
-		if (!BASICPARAM::enemyTextureWhiteBlack)
-		{
-		}
-		if (!BASICPARAM::lightStreetTextureWhiteBlack)
-		{
-			// 街灯のテクスチャデータ
-			move4str[14] = "media\\こっち\\media\\街灯\\D\\body_col.pyn";
-			move4str[15] = "media\\こっち\\media\\街灯\\D\\lamp_COLandems.pyn";
-		}
-		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
-		{
-			// 階段とそのあとの床のテクスチャデータ
-			move4str[22] = "media\\こっち\\media\\階段と床合体\\D\\kaidan.pyn";
-			move4str[23] = "media\\こっち\\media\\階段と床合体\\D\\yuka.pyn";
-		}
-		if (!BASICPARAM::stairsTextureWhiteBlack)
-		{
-			// 階段のテクスチャデータ
-			move4str[13] = "media\\こっち\\media\\kaidan\\D\\kaidan.pyn";
-		}
-		if (!BASICPARAM::anothreTextureWhiteBlack)
-		{
-			// 人のデータ
-			move4str[35] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\D\\human_col.pyn";
-
-			// スカイボックスのテクスチャデータ
-			move4str[16] = "media\\こっち\\media\\スカイボックス\\D\\BlueSky.byn";
-
-			// 精算機械テクスチャ
-			move4str[18] = "media\\こっち\\media\\Terminal\\D\\Terminal.pyn";
-			move4str[19] = "media\\こっち\\media\\Terminal\\D\\T_display.pyn";
-		}
-		break;
-
-	default:
-		break;
-	}
-}
-
-
-void Manager::OptionProcess()
-{
-	///-----------------------------------------------------------------------------------------------------------
-	// 常時
-	if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
-	{
-		// BGMバーの動きでサウンドのBGM音量を変更する
-		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
-		{
-			SoundProcess::SetBGMVolumeEntire(SoundProcess::GetBGMVolumeEntire() < 1.00f ? SoundProcess::GetBGMVolumeEntire() + 0.01f : SoundProcess::GetBGMVolumeEntire());
-		}
-		else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) < 0)
-		{
-			SoundProcess::SetBGMVolumeEntire(SoundProcess::GetBGMVolumeEntire() > 0.00f ? SoundProcess::GetBGMVolumeEntire() - 0.01f : SoundProcess::GetBGMVolumeEntire());
-		}
-	}
-	else if (optionSelectButtonNum == EOptionSelectButton::SESelect)
-	{
-		// 61カウントのたびにSEを鳴らす
-		if (++seDoWaitTimer > 60)
-		{
-			seDoWaitTimer = 0;
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPawnHigh);
-		}
-
-
-		// SEバーの動きでサウンドのSE音量を変更する
-		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
-		{
-			SoundProcess::SetSEVolumeEntire(SoundProcess::GetSEVolumeEntire() < 1.00f ? SoundProcess::GetSEVolumeEntire() + 0.01f : SoundProcess::GetSEVolumeEntire());
-		}
-		else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) < 0)
-		{
-			SoundProcess::SetSEVolumeEntire(SoundProcess::GetSEVolumeEntire() > 0.00f ? SoundProcess::GetSEVolumeEntire() - 0.01f : SoundProcess::GetSEVolumeEntire());
-		}
-	}
-	///-----------------------------------------------------------------------------------------------------------
-
-
-	///-----------------------------------------------------------------------------------------------------------
-	// 決定ボタンを押したときの動作
-	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
-	{
-		if (optionSelectButtonNum == EOptionSelectButton::BGM)
-		{
-			optionSelectButtonNum = EOptionSelectButton::BGMSelect;
-			optionSelectMin = 8;
-			optionSelectMax = 8;
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::SE)
-		{
-			optionSelectButtonNum = EOptionSelectButton::SESelect;
-			optionSelectMin = 9;
-			optionSelectMax = 9;
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
-		{
-			// 白黒画像ではなかったら通常色に変える
-			/*if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK) */BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
-			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
-			{
-				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
-				p_baseMove->TextureReload();		// テクスチャ切り替え
-			}
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::ColorP)
-		{
-			// 白黒画像ではなかったらP型補正色に変える
-			/*if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK) */BASICPARAM::e_TextureColor = ETextureColor::P_CORRECTION;
-			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
-			{
-				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
-				p_baseMove->TextureReload();		// テクスチャ切り替え
-			}
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::ColorD)
-		{
-			// 白黒画像ではなかったらD型補正色に変える
-			/*if (BASICPARAM::e_TextureColor != ETextureColor::WHITEBLACK) */BASICPARAM::e_TextureColor = ETextureColor::D_CORRECTION;
-			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
-			{
-				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
-				p_baseMove->TextureReload();		// テクスチャ切り替え
-			}
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::ColorSelect
-			&& BASICPARAM::e_nowScene >= ESceneNumber::THIRDMOVE)
-		{
-			optionSelectButtonNum = EOptionSelectButton::ColorNormal;
-			optionSelectMin = 5;
-			optionSelectMax = 7;
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::Sound)
-		{
-			SoundProcess::SetOptionMenuNow(false);				// サウンドの音量をオプション用からやめる
-			optionSelectButtonNum = EOptionSelectButton::BGM;
-			optionSelectMin = 3;
-			optionSelectMax = 4;
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
-		{
-			optionSelectButtonNum = EOptionSelectButton::BGM;
-			optionSelectMin = 3;
-			optionSelectMax = 4;
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::SESelect)
-		{
-			optionSelectButtonNum = EOptionSelectButton::SE;
-			optionSelectMin = 3;
-			optionSelectMax = 4;
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::Camera)
-		{
-			optionSelectButtonNum = EOptionSelectButton::CameraPerspective;
-			optionSelectMin = 10;
-			optionSelectMax = 13;
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective)
-		{
-			BASICPARAM::nowCameraOrtho = false;
-			//p_baseMove->CameraProcess();		// カメラ切り替え
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::CameraOrtho)
-		{
-			BASICPARAM::nowCameraOrtho = true;
-			//p_baseMove->CameraProcess();		// カメラ切り替え
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::CameraHReturn)
-		{
-			BASICPARAM::cameraHorizonReturn = !BASICPARAM::cameraHorizonReturn;
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::CameraVReturn)
-		{
-			BASICPARAM::cameraVerticalReturn = !BASICPARAM::cameraVerticalReturn;
-		}
-	}
-	///-----------------------------------------------------------------------------------------------------------
-
-
-	///-----------------------------------------------------------------------------------------------------------
-	// 戻るボタンを押したときの動作
-	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
-	{
-		if (optionSelectButtonNum == EOptionSelectButton::BGM)
-		{
-			SoundProcess::SetOptionMenuNow(true);					// サウンドの音量をオプション用からに戻す
-			optionSelectButtonNum = EOptionSelectButton::Sound;
-			optionSelectMin = 0;
-			optionSelectMax = 2;
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::SE)
-		{
-			SoundProcess::SetOptionMenuNow(true);					// サウンドの音量をオプション用からに戻す
-			optionSelectButtonNum = EOptionSelectButton::Sound;
-			optionSelectMin = 0;
-			optionSelectMax = 2;
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
-		{
-			optionSelectButtonNum = EOptionSelectButton::ColorSelect;
-			optionSelectMin = 0;
-			optionSelectMax = 2;
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::ColorP)
-		{
-			optionSelectButtonNum = EOptionSelectButton::ColorSelect;
-			optionSelectMin = 0;
-			optionSelectMax = 2;
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::ColorD)
-		{
-			optionSelectButtonNum = EOptionSelectButton::ColorSelect;
-			optionSelectMin = 0;
-			optionSelectMax = 2;
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
-		{
-			optionSelectButtonNum = EOptionSelectButton::BGM;
-			optionSelectMin = 3;
-			optionSelectMax = 4;
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::SESelect)
-		{
-			optionSelectButtonNum = EOptionSelectButton::SE;
-			optionSelectMin = 3;
-			optionSelectMax = 4;
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective)
-		{
-			optionSelectButtonNum = EOptionSelectButton::Camera;
-			optionSelectMin = 0;
-			optionSelectMax = 2;
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::CameraOrtho)
-		{
-			optionSelectButtonNum = EOptionSelectButton::Camera;
-			optionSelectMin = 0;
-			optionSelectMax = 2;
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::CameraHReturn)
-		{
-			optionSelectButtonNum = EOptionSelectButton::Camera;
-			optionSelectMin = 0;
-			optionSelectMax = 2;
-		}
-		else if (optionSelectButtonNum == EOptionSelectButton::CameraVReturn)
-		{
-			optionSelectButtonNum = EOptionSelectButton::Camera;
-			optionSelectMin = 0;
-			optionSelectMax = 2;
-		}
-	}
-	///-----------------------------------------------------------------------------------------------------------
-
-
-	// スティックの一回押し倒しで更新するよう調整。
-	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
-	{
-		if(optionControllLeftStickY[0] < 2) optionControllLeftStickY[0]++;
-	}
-	else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) < 0)
-	{
-		if (optionControllLeftStickY[1] < 2) optionControllLeftStickY[1]++;
-	}
-	else
-	{
-		optionControllLeftStickY[0] = 0;
-		optionControllLeftStickY[1] = 0;
-	}
-	if (optionControllLeftStickY[0] == 1)
-	{
-		int temp = static_cast<int>(optionSelectButtonNum);
-		optionSelectButtonNum = static_cast<EOptionSelectButton>(temp > optionSelectMin ? --temp : temp);
-		if (optionSelectButtonNum == EOptionSelectButton::ColorSelect) optionPageNowNumber = 0;
-	}
-	if (optionControllLeftStickY[1] == 1)
-	{
-		int temp = static_cast<int>(optionSelectButtonNum);
-		optionSelectButtonNum = static_cast<EOptionSelectButton>(temp < optionSelectMax ? ++temp : temp);
-		if (optionSelectButtonNum == EOptionSelectButton::Camera) optionPageNowNumber = 1;
-	}
-}
-
-
-void Manager::OptionDraw()
-{
-	// 背景
-	DrawGraph(0, 0, gaussianScreen, false);
-
-	///　モデル表示-------------------------------------------------------------
-	p_baseMove->OptionActorModel();
-
-	DrawGraph(1600, 800, optionDrawMedia[static_cast<int>(EOptionDraw::optionEnd)], true);
-
-	if (optionPageNowNumber == 0)
-	{
-		/// サウンド関係オプション-----------------------------------------------
-		// UI:Sound
-		DrawGraph(95, 95, optionDrawMedia[static_cast<int>(EOptionDraw::Sound)], false);
-		if (optionSelectButtonNum == EOptionSelectButton::Sound)
-		{
-			DrawBox(95, 95, 95 + 211, 95 + 86, GetColor(255, 0, 0), false);
-		}
-
-		// UI:BGM
-		DrawGraph(381, 114, optionDrawMedia[static_cast<int>(EOptionDraw::BGM)], false);
-		if (optionSelectButtonNum == EOptionSelectButton::BGM)
-		{
-			DrawBox(381, 114, 381 + 87, 114 + 58, GetColor(255, 0, 0), false);
-		}
-
-		// UI:BGMバー
-		DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(200, 200, 200), true);
-		DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(0, 0, 0), false);
-		if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
-		{
-			DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(255, 0, 0), false);
-		}
-		DrawBox(546 - 5 + static_cast<int>(SoundProcess::GetBGMVolumeEntire() * 547)
-			, 100 - 10, 546 + 5 + static_cast<int>(SoundProcess::GetBGMVolumeEntire() * 548)
-			, 100 + 81 + 10, GetColor(0, 125, 125), true);
-
-		// UI:SE
-		DrawGraph(385, 266, optionDrawMedia[static_cast<int>(EOptionDraw::SE)], false);
-		if (optionSelectButtonNum == EOptionSelectButton::SE)
-		{
-			DrawBox(385, 266, 385 + 86, 266 + 58, GetColor(255, 0, 0), false);
-		}
-
-		// UI:SEバー
-		DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(200, 200, 200), true);
-		DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(0, 0, 0), false);
-		if (optionSelectButtonNum == EOptionSelectButton::SESelect)
-		{
-			DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(255, 0, 0), false);
-		}
-		DrawBox(548 - 5 + static_cast<int>(SoundProcess::GetSEVolumeEntire() * 547)
-			, 255 - 10, 548 + 5 + static_cast<int>(SoundProcess::GetSEVolumeEntire() * 547)
-			, 255 + 78 + 10, GetColor(0, 125, 125), true);
-
-
-		/// 色覚に関するオプション----------------------------------------------
-		// UI:色覚調整
-		if (BASICPARAM::e_nowScene < ESceneNumber::THIRDMOVE) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
-		DrawGraph(96, 413, optionDrawMedia[static_cast<int>(EOptionDraw::Color)], false);
-		if (optionSelectButtonNum == EOptionSelectButton::ColorSelect)
-		{
-			DrawBox(96, 413, 96 + 112, 413 + 76, GetColor(255, 0, 0), false);
-		}
-
-		// UI:通常色
-		DrawGraph(385, 427, optionDrawMedia[static_cast<int>(EOptionDraw::ColorNormal)], false);
-		if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
-		{
-			DrawBox(385, 427, 385 + 83, 427 + 58, GetColor(255, 0, 0), false);
-		}
-
-		// UI:P型
-		DrawGraph(386, 550, optionDrawMedia[static_cast<int>(EOptionDraw::ColorP)], false);
-		if (optionSelectButtonNum == EOptionSelectButton::ColorP)
-		{
-			DrawBox(386, 550, 386 + 83, 550 + 59, GetColor(255, 0, 0), false);
-		}
-
-		// UI:D型
-		DrawGraph(385, 682, optionDrawMedia[static_cast<int>(EOptionDraw::ColorD)], false);
-		if (optionSelectButtonNum == EOptionSelectButton::ColorD)
-		{
-			DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(255, 0, 0), false);
-		}
-		if (BASICPARAM::e_nowScene < ESceneNumber::THIRDMOVE) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-
-		// 次のページ
-		DrawGraph(96, 815, optionDrawMedia[static_cast<int>(EOptionDraw::nextPage)], false);
-	}
-	else if (optionPageNowNumber == 1)
-	{
-		// 前のページへ
-		DrawGraph(96, 95, optionDrawMedia[static_cast<int>(EOptionDraw::prevPage)], false);
-
-		/// カメラの関するオプション------------------------------------------------
-		// カメラ
-		DrawGraph(95, 247, optionDrawMedia[static_cast<int>(EOptionDraw::Camera)], false);
-		if (optionSelectButtonNum == EOptionSelectButton::Camera)
-		{
-			DrawBox(95, 247, 95 + 109, 247 + 68, GetColor(255, 0, 0), false);
-		}
-
-		// 遠近法
-		if (BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
-		DrawGraph(385, 267, optionDrawMedia[static_cast<int>(EOptionDraw::Perspective)], false);
-		if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective)
-		{
-			DrawBox(385, 267, 385 + 83, 267 + 58, GetColor(255, 0, 0), false);
-		}
-		if (BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-
-		// 正射影
-		if (!BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
-		DrawGraph(385, 400, optionDrawMedia[static_cast<int>(EOptionDraw::Ortho)], false);
-		if (optionSelectButtonNum == EOptionSelectButton::CameraOrtho)
-		{
-			DrawBox(385, 400, 385 + 83, 400 + 58, GetColor(255, 0, 0), false);
-		}
-		if (!BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-
-		// 横反転
-		if (!BASICPARAM::cameraHorizonReturn) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
-		DrawGraph(385, 513, optionDrawMedia[static_cast<int>(EOptionDraw::HorizonReturn)], false);
-		if (optionSelectButtonNum == EOptionSelectButton::CameraHReturn)
-		{
-			DrawBox(385, 513, 385 + 83, 513 + 58, GetColor(255, 0, 0), false);
-		}
-		if (!BASICPARAM::cameraHorizonReturn) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-
-		// 縦反転
-		if (!BASICPARAM::cameraVerticalReturn) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
-		DrawGraph(385, 646, optionDrawMedia[static_cast<int>(EOptionDraw::VerticalReturn)], false);
-		if (optionSelectButtonNum == EOptionSelectButton::CameraVReturn)
-		{
-			DrawBox(385, 646, 385 + 83, 646 + 58, GetColor(255, 0, 0), false);
-		}
-		if (!BASICPARAM::cameraVerticalReturn) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-	}
-}
-
-
-Manager::Manager()
-{
-	// 初期化
-	BASICPARAM::e_preScene = ESceneNumber::FIRSTLOAD;
-	BASICPARAM::e_nowScene = ESceneNumber::FIRSTLOAD;
-	BASICPARAM::e_preTextureColor = ETextureColor::WHITEBLACK;
-	BASICPARAM::e_TextureColor = ETextureColor::WHITEBLACK;
-	BASICPARAM::nowCameraOrtho = false;
-	BASICPARAM::cameraHorizonReturn = false;
-	BASICPARAM::cameraVerticalReturn = false;
-	BASICPARAM::charaTextureWhiteBlack = true;
-	BASICPARAM::enemyTextureWhiteBlack = true;
-	BASICPARAM::lightStreetTextureWhiteBlack = true;
-	BASICPARAM::stairsRoadTextureWhiteBlack = true;
-	BASICPARAM::stairsTextureWhiteBlack = true;
-	BASICPARAM::anothreTextureWhiteBlack = true;
-
-
-	/// シーン１の素材ファイル-----------------------------------------------------------------------------
 	// モデルデータ
 	move1str[0] = "media\\こっち\\media\\ステージモデル\\move1_graphic.myn";
 	move1str[1] = "media\\こっち\\media\\ステージモデル\\move1_hantei.myn";
@@ -681,10 +149,12 @@ Manager::Manager()
 	// コントローラー説明
 	load1[12] = ELOADFILE::graph;
 	load1[13] = ELOADFILE::graph;
-	/// ---------------------------------------------------------------------------------------------------
+} /// void Manager::InitMove1Load()
 
 
-	/// シーン２の素材ファイル-----------------------------------------------------------------------------
+// ムーブ2の読み込み素材の初期化
+void Manager::InitMove2Load()
+{
 	// モデルデータ
 	move2str[0] = "media\\こっち\\media\\ステージモデル\\move1_hantei.myn";
 	move2str[1] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.myn";			// 5
@@ -833,10 +303,12 @@ Manager::Manager()
 	load2[45] = ELOADFILE::graph;
 	load2[46] = ELOADFILE::graph;
 	load2[47] = ELOADFILE::graph;
-	/// ---------------------------------------------------------------------------------------------------
+} /// void Manager::InitMove2Load()
 
 
-	/// ムーブ3のロード素材-------------------------------------------------
+// ムーブ3の読み込み素材の初期化
+void Manager::InitMove3Load()
+{
 	// モデルデータ
 	move3str[0] = "media\\こっち\\media\\ステージモデル\\move1_hantei.myn";
 	move3str[1] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.myn";			// 5
@@ -1020,10 +492,12 @@ Manager::Manager()
 	load3[56] = ELOADFILE::sound3DSource;
 
 	load3[57] = ELOADFILE::soundStream;
-	/// --------------------------------------------------------------------
+} /// void Manager::InitMove3Load()
 
 
-	/// ムーブ4のロード素材-------------------------------------------------
+// ムーブ4の読み込み素材の初期化
+void Manager::InitMove4Load()
+{
 	// モデルデータ
 	move4str[0] = "media\\こっち\\media\\ステージモデル\\move1_hantei.myn";
 	move4str[1] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.myn";			// 5
@@ -1140,10 +614,12 @@ Manager::Manager()
 
 	load4[34] = ELOADFILE::mv1model;
 	load4[35] = ELOADFILE::graph;
-	/// --------------------------------------------------------------------
+} /// void Manager::InitMove4Load()
 
 
-	/// ムーブ5のロード素材-------------------------------------------------
+// ムーブ5の読み込み素材の初期化
+void Manager::InitMove5Load()
+{
 	// モデルデータ
 	move5str[0] = "media\\こっち\\media\\ステージモデル\\move1_hantei.myn";
 	move5str[1] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.myn";			// 5
@@ -1253,7 +729,587 @@ Manager::Manager()
 	load5[32] = ELOADFILE::sound3DSource;
 
 	load5[33] = ELOADFILE::soundStream;
-	/// --------------------------------------------------------------------
+} /// void Manager::InitMove5Load()
+
+
+// ムーブ3の行動次第でムーブ4の読み込む素材を更新
+void Manager::Move4TextureReload()
+{
+	switch (BASICPARAM::e_TextureColor)
+	{
+	case ETextureColor::NORMAL:
+		if (!BASICPARAM::charaTextureWhiteBlack)
+		{
+			// キャラのテクスチャデータ
+			move4str[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\sword_Tex.pyn";
+			move4str[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_hair.pyn";
+			move4str[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_wear.pyn";
+			move4str[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn";
+			move4str[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn";
+		}
+		if (!BASICPARAM::enemyTextureWhiteBlack)
+		{
+		}
+		if (!BASICPARAM::lightStreetTextureWhiteBlack)
+		{
+			// 街灯のテクスチャデータ
+			move4str[14] = "media\\こっち\\media\\街灯\\normal\\body_col.pyn";
+			move4str[15] = "media\\こっち\\media\\街灯\\normal\\lamp_COLandems.pyn";
+		}
+		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
+		{
+			// 階段とそのあとの床のテクスチャデータ
+			move4str[22] = "media\\こっち\\media\\階段と床合体\\normal\\kaidan.pyn";
+			move4str[23] = "media\\こっち\\media\\階段と床合体\\normal\\yuka.pyn";
+		}
+		if (!BASICPARAM::stairsTextureWhiteBlack)
+		{
+			// 階段のテクスチャデータ
+			move4str[13] = "media\\こっち\\media\\kaidan\\normal\\kaidan.pyn";
+		}
+		if (!BASICPARAM::anothreTextureWhiteBlack)
+		{
+			// 人のデータ
+			move4str[35] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\normal\\human_col.pyn";
+
+			// スカイボックスのテクスチャデータ
+			move4str[16] = "media\\こっち\\media\\スカイボックス\\normal\\BlueSky.byn";
+
+			// 精算機械テクスチャ
+			move4str[18] = "media\\こっち\\media\\Terminal\\normal\\Terminal.pyn";
+			move4str[19] = "media\\こっち\\media\\Terminal\\normal\\T_display.pyn";
+		}
+		break;
+		
+
+	case ETextureColor::P_CORRECTION:
+		if (!BASICPARAM::charaTextureWhiteBlack)
+		{
+			// キャラのテクスチャデータ
+			move4str[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\sword_Tex.pyn";
+			move4str[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_hair.pyn";
+			move4str[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_wear.pyn";
+			move4str[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_face.pyn";
+			move4str[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_ex.pyn";
+		}
+		if (!BASICPARAM::enemyTextureWhiteBlack)
+		{
+		}
+		if (!BASICPARAM::lightStreetTextureWhiteBlack)
+		{
+			// 街灯のテクスチャデータ
+			move4str[14] = "media\\こっち\\media\\街灯\\P\\body_col.pyn";
+			move4str[15] = "media\\こっち\\media\\街灯\\P\\lamp_COLandems.pyn";
+		}
+		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
+		{
+			// 階段とそのあとの床のテクスチャデータ
+			move4str[22] = "media\\こっち\\media\\階段と床合体\\P\\kaidan.pyn";
+			move4str[23] = "media\\こっち\\media\\階段と床合体\\P\\yuka.pyn";
+		}
+		if (!BASICPARAM::stairsTextureWhiteBlack)
+		{
+			// 階段のテクスチャデータ
+			move4str[13] = "media\\こっち\\media\\kaidan\\P\\kaidan.pyn";
+		}
+		if (!BASICPARAM::anothreTextureWhiteBlack)
+		{
+			// 人のデータ
+			move4str[35] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\P\\human_col.pyn";
+
+			// スカイボックスのテクスチャデータ
+			move4str[16] = "media\\こっち\\media\\スカイボックス\\P\\BlueSky.byn";
+
+			// 精算機械テクスチャ
+			move4str[18] = "media\\こっち\\media\\Terminal\\P\\Terminal.pyn";
+			move4str[19] = "media\\こっち\\media\\Terminal\\P\\T_display.pyn";
+		}
+		break;
+
+
+	case ETextureColor::D_CORRECTION:
+		if (!BASICPARAM::charaTextureWhiteBlack)
+		{
+			// キャラのテクスチャデータ
+			move4str[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\sword_Tex.pyn";
+			move4str[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_hair.pyn";
+			move4str[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_wear.pyn";
+			move4str[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_face.pyn";
+			move4str[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_ex.pyn";
+		}
+		if (!BASICPARAM::enemyTextureWhiteBlack)
+		{
+		}
+		if (!BASICPARAM::lightStreetTextureWhiteBlack)
+		{
+			// 街灯のテクスチャデータ
+			move4str[14] = "media\\こっち\\media\\街灯\\D\\body_col.pyn";
+			move4str[15] = "media\\こっち\\media\\街灯\\D\\lamp_COLandems.pyn";
+		}
+		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
+		{
+			// 階段とそのあとの床のテクスチャデータ
+			move4str[22] = "media\\こっち\\media\\階段と床合体\\D\\kaidan.pyn";
+			move4str[23] = "media\\こっち\\media\\階段と床合体\\D\\yuka.pyn";
+		}
+		if (!BASICPARAM::stairsTextureWhiteBlack)
+		{
+			// 階段のテクスチャデータ
+			move4str[13] = "media\\こっち\\media\\kaidan\\D\\kaidan.pyn";
+		}
+		if (!BASICPARAM::anothreTextureWhiteBlack)
+		{
+			// 人のデータ
+			move4str[35] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\D\\human_col.pyn";
+
+			// スカイボックスのテクスチャデータ
+			move4str[16] = "media\\こっち\\media\\スカイボックス\\D\\BlueSky.byn";
+
+			// 精算機械テクスチャ
+			move4str[18] = "media\\こっち\\media\\Terminal\\D\\Terminal.pyn";
+			move4str[19] = "media\\こっち\\media\\Terminal\\D\\T_display.pyn";
+		}
+		break;
+
+
+	default:
+		break;
+	}
+} /// void Manager::Move4TextureReload()
+
+
+void Manager::OptionProcess()
+{
+	///常時-------------------------------------------------------------------------------------------------------
+	// BGM音量調整コマンドを選択していたら
+	if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
+	{
+		// 右にスティックを倒していたら
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
+		{
+			// BGMの設定音量を上げる
+			SoundProcess::SetBGMVolumeEntire(SoundProcess::GetBGMVolumeEntire() < 1.00f ? SoundProcess::GetBGMVolumeEntire() + 0.01f : SoundProcess::GetBGMVolumeEntire());
+		}
+		// 左にスティックを倒していたら
+		else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) < 0)
+		{
+			// BGMの設定音量を下げる
+			SoundProcess::SetBGMVolumeEntire(SoundProcess::GetBGMVolumeEntire() > 0.00f ? SoundProcess::GetBGMVolumeEntire() - 0.01f : SoundProcess::GetBGMVolumeEntire());
+		}
+	}
+	// SE音量調整コマンドを選択していたら
+	else if (optionSelectButtonNum == EOptionSelectButton::SESelect)
+	{
+		// 61カウントのたびにSEを鳴らす
+		if (++seDoWaitTimer > 60)
+		{
+			seDoWaitTimer = 0;
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPawnHigh);
+		}
+
+
+		// 右にスティックを倒していたら
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
+		{
+			// SEの設定音量を上げる
+			SoundProcess::SetSEVolumeEntire(SoundProcess::GetSEVolumeEntire() < 1.00f ? SoundProcess::GetSEVolumeEntire() + 0.01f : SoundProcess::GetSEVolumeEntire());
+		}
+		// 左にスティックを倒していたら
+		else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) < 0)
+		{
+			// SEの設定音量を下げる
+			SoundProcess::SetSEVolumeEntire(SoundProcess::GetSEVolumeEntire() > 0.00f ? SoundProcess::GetSEVolumeEntire() - 0.01f : SoundProcess::GetSEVolumeEntire());
+		}
+	}
+	///常時-------------------------------------------------------------------------------------------------------
+
+
+	///決定-------------------------------------------------------------------------------------------------------
+	// 決定ボタンを押したときの動作
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
+	{
+		// BGMにカーソルがあったとき
+		if (optionSelectButtonNum == EOptionSelectButton::BGM)
+		{
+			// BGM設定音量に移る
+			optionSelectButtonNum = EOptionSelectButton::BGMSelect;
+			optionSelectMin = 8;
+			optionSelectMax = 8;
+		}
+		// SEにカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::SE)
+		{
+			// SE設定音量に移る
+			optionSelectButtonNum = EOptionSelectButton::SESelect;
+			optionSelectMin = 9;
+			optionSelectMax = 9;
+		}
+		// テクスチャ色の通常にカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
+		{
+			// 通常色に変える
+			BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
+			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
+			{
+				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
+				p_baseMove->ThsTextureReload();		// テクスチャ切り替え
+			}
+		}
+		// テクスチャ色のP型にカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::ColorP)
+		{
+			// P型補正色に変える
+			BASICPARAM::e_TextureColor = ETextureColor::P_CORRECTION;
+			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
+			{
+				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
+				p_baseMove->ThsTextureReload();		// テクスチャ切り替え
+			}
+		}
+		// テクスチャ色のD型にカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::ColorD)
+		{
+			// D型補正色に変える
+			BASICPARAM::e_TextureColor = ETextureColor::D_CORRECTION;
+			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
+			{
+				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
+				p_baseMove->ThsTextureReload();		// テクスチャ切り替え
+			}
+		}
+		// 色覚選択にカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::ColorSelect
+			&& BASICPARAM::e_nowScene >= ESceneNumber::THIRDMOVE)
+		{
+			// 通常色にカーソルを移す
+			optionSelectButtonNum = EOptionSelectButton::ColorNormal;
+			optionSelectMin = 5;
+			optionSelectMax = 7;
+		}
+		// サウンドにカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::Sound)
+		{
+			// BGMにカーソルを移す
+			SoundProcess::SetOptionMenuNow(false);				// サウンドの音量をオプション用からやめる
+			optionSelectButtonNum = EOptionSelectButton::BGM;
+			optionSelectMin = 3;
+			optionSelectMax = 4;
+		}
+		// BGM選択にカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
+		{
+			// BGMの設定音量に移る
+			optionSelectButtonNum = EOptionSelectButton::BGM;
+			optionSelectMin = 3;
+			optionSelectMax = 4;
+		}
+		// SE選択にカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::SESelect)
+		{
+			// SEの設定音量に移る
+			optionSelectButtonNum = EOptionSelectButton::SE;
+			optionSelectMin = 3;
+			optionSelectMax = 4;
+		}
+		// カメラにカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::Camera)
+		{
+			// 遠近法カメラに移る
+			optionSelectButtonNum = EOptionSelectButton::CameraPerspective;
+			optionSelectMin = 10;
+			optionSelectMax = 13;
+		}
+		// 遠近法カメラにカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective)
+		{
+			// カメラを遠近法カメラに設定する
+			BASICPARAM::nowCameraOrtho = false;
+		}
+		// 正射影カメラにカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::CameraOrtho)
+		{
+			// カメラを正射影カメラに設定する
+			BASICPARAM::nowCameraOrtho = true;
+		}
+		// 横回転カメラにカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::CameraHReturn)
+		{
+			// 横回転のスティック方向を逆にする
+			BASICPARAM::cameraHorizonReturn = !BASICPARAM::cameraHorizonReturn;
+		}
+		// 縦回転カメラにカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::CameraVReturn)
+		{
+			// 縦回転のスティック方向を逆にする
+			BASICPARAM::cameraVerticalReturn = !BASICPARAM::cameraVerticalReturn;
+		}
+	} /// if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
+	///決定------------------------------------------------------------------------------------------------------
+
+
+	///戻る-------------------------------------------------------------------------------------------------------
+	// 戻るボタンを押したときの動作
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
+	{
+		// BGMにカーソルがあったとき
+		if (optionSelectButtonNum == EOptionSelectButton::BGM
+			|| optionSelectButtonNum == EOptionSelectButton::SE)
+		{
+			// サウンドにカーソルを移す
+			SoundProcess::SetOptionMenuNow(true);					// サウンドの音量をオプション用からに戻す
+			optionSelectButtonNum = EOptionSelectButton::Sound;
+			optionSelectMin = 0;
+			optionSelectMax = 2;
+		}
+		// 通常色にカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::ColorNormal
+			|| optionSelectButtonNum == EOptionSelectButton::ColorP
+			|| optionSelectButtonNum == EOptionSelectButton::ColorD)
+		{
+			// 色覚選択にカーソルを移す
+			optionSelectButtonNum = EOptionSelectButton::ColorSelect;
+			optionSelectMin = 0;
+			optionSelectMax = 2;
+		}
+		// BGM音量調整にカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
+		{
+			// BGMにカーソルを移す
+			optionSelectButtonNum = EOptionSelectButton::BGM;
+			optionSelectMin = 3;
+			optionSelectMax = 4;
+		}
+		// SE音量調整にカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::SESelect)
+		{
+			// SEにカーソルを移す
+			optionSelectButtonNum = EOptionSelectButton::SE;
+			optionSelectMin = 3;
+			optionSelectMax = 4;
+		}
+		// 遠近法カメラにカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective
+			|| optionSelectButtonNum == EOptionSelectButton::CameraOrtho
+			|| optionSelectButtonNum == EOptionSelectButton::CameraHReturn
+			|| optionSelectButtonNum == EOptionSelectButton::CameraVReturn)
+		{
+			// カメラにカーソルを移す
+			optionSelectButtonNum = EOptionSelectButton::Camera;
+			optionSelectMin = 0;
+			optionSelectMax = 2;
+		}
+	} /// if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
+	///-----------------------------------------------------------------------------------------------------------
+
+
+	// スティックの一回押し倒しで更新するよう調整。
+	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
+	{
+		if(optionControllLeftStickY[0] < 2) optionControllLeftStickY[0]++;
+	}
+	else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) < 0)
+	{
+		if (optionControllLeftStickY[1] < 2) optionControllLeftStickY[1]++;
+	}
+	else
+	{
+		optionControllLeftStickY[0] = 0;
+		optionControllLeftStickY[1] = 0;
+	}
+	if (optionControllLeftStickY[0] == 1)
+	{
+		int temp = static_cast<int>(optionSelectButtonNum);
+		optionSelectButtonNum = static_cast<EOptionSelectButton>(temp > optionSelectMin ? --temp : temp);
+		if (optionSelectButtonNum == EOptionSelectButton::ColorSelect) optionPageNowNumber = 0;
+	}
+	if (optionControllLeftStickY[1] == 1)
+	{
+		int temp = static_cast<int>(optionSelectButtonNum);
+		optionSelectButtonNum = static_cast<EOptionSelectButton>(temp < optionSelectMax ? ++temp : temp);
+		if (optionSelectButtonNum == EOptionSelectButton::Camera) optionPageNowNumber = 1;
+	}
+} /// void Manager::OptionProcess()
+
+
+void Manager::OptionDraw()
+{
+	// 背景
+	DrawGraph(0, 0, gaussianScreen, false);
+
+	///　モデル表示-------------------------------------------------------------
+	p_baseMove->OptionActorModel();
+
+	DrawGraph(1600, 800, optionDrawMedia[static_cast<int>(EOptionDraw::optionEnd)], true);
+
+	if (optionPageNowNumber == 0)
+	{
+		/// サウンド関係オプション-----------------------------------------------
+		// UI:Sound
+		DrawGraph(95, 95, optionDrawMedia[static_cast<int>(EOptionDraw::Sound)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::Sound)
+		{
+			DrawBox(95, 95, 95 + 211, 95 + 86, GetColor(255, 0, 0), false);
+		}
+
+		// UI:BGM
+		DrawGraph(381, 114, optionDrawMedia[static_cast<int>(EOptionDraw::BGM)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::BGM)
+		{
+			DrawBox(381, 114, 381 + 87, 114 + 58, GetColor(255, 0, 0), false);
+		}
+
+		// UI:BGMバー
+		DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(200, 200, 200), true);
+		DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(0, 0, 0), false);
+		if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
+		{
+			DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(255, 0, 0), false);
+		}
+		DrawBox(546 - 5 + static_cast<int>(SoundProcess::GetBGMVolumeEntire() * 547)
+			, 100 - 10, 546 + 5 + static_cast<int>(SoundProcess::GetBGMVolumeEntire() * 548)
+			, 100 + 81 + 10, GetColor(0, 125, 125), true);
+
+		// UI:SE
+		DrawGraph(385, 266, optionDrawMedia[static_cast<int>(EOptionDraw::SE)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::SE)
+		{
+			DrawBox(385, 266, 385 + 86, 266 + 58, GetColor(255, 0, 0), false);
+		}
+
+		// UI:SEバー
+		DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(200, 200, 200), true);
+		DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(0, 0, 0), false);
+		if (optionSelectButtonNum == EOptionSelectButton::SESelect)
+		{
+			DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(255, 0, 0), false);
+		}
+		DrawBox(548 - 5 + static_cast<int>(SoundProcess::GetSEVolumeEntire() * 547)
+			, 255 - 10, 548 + 5 + static_cast<int>(SoundProcess::GetSEVolumeEntire() * 547)
+			, 255 + 78 + 10, GetColor(0, 125, 125), true);
+
+
+		/// 色覚に関するオプション----------------------------------------------
+		// UI:色覚調整
+		if (BASICPARAM::e_nowScene < ESceneNumber::THIRDMOVE) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
+		DrawGraph(96, 413, optionDrawMedia[static_cast<int>(EOptionDraw::Color)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::ColorSelect)
+		{
+			DrawBox(96, 413, 96 + 112, 413 + 76, GetColor(255, 0, 0), false);
+		}
+
+		// UI:通常色
+		DrawGraph(385, 427, optionDrawMedia[static_cast<int>(EOptionDraw::ColorNormal)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
+		{
+			DrawBox(385, 427, 385 + 83, 427 + 58, GetColor(255, 0, 0), false);
+		}
+
+		// UI:P型
+		DrawGraph(386, 550, optionDrawMedia[static_cast<int>(EOptionDraw::ColorP)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::ColorP)
+		{
+			DrawBox(386, 550, 386 + 83, 550 + 59, GetColor(255, 0, 0), false);
+		}
+
+		// UI:D型
+		DrawGraph(385, 682, optionDrawMedia[static_cast<int>(EOptionDraw::ColorD)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::ColorD)
+		{
+			DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(255, 0, 0), false);
+		}
+		if (BASICPARAM::e_nowScene < ESceneNumber::THIRDMOVE) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+		// 次のページ
+		DrawGraph(96, 815, optionDrawMedia[static_cast<int>(EOptionDraw::nextPage)], false);
+	}
+	else if (optionPageNowNumber == 1)
+	{
+		// 前のページへ
+		DrawGraph(96, 95, optionDrawMedia[static_cast<int>(EOptionDraw::prevPage)], false);
+
+		/// カメラの関するオプション------------------------------------------------
+		// カメラ
+		DrawGraph(95, 247, optionDrawMedia[static_cast<int>(EOptionDraw::Camera)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::Camera)
+		{
+			DrawBox(95, 247, 95 + 109, 247 + 68, GetColor(255, 0, 0), false);
+		}
+
+		// 遠近法
+		if (BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
+		DrawGraph(385, 267, optionDrawMedia[static_cast<int>(EOptionDraw::Perspective)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective)
+		{
+			DrawBox(385, 267, 385 + 83, 267 + 58, GetColor(255, 0, 0), false);
+		}
+		if (BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+		// 正射影
+		if (!BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
+		DrawGraph(385, 400, optionDrawMedia[static_cast<int>(EOptionDraw::Ortho)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::CameraOrtho)
+		{
+			DrawBox(385, 400, 385 + 83, 400 + 58, GetColor(255, 0, 0), false);
+		}
+		if (!BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+		// 横反転
+		if (!BASICPARAM::cameraHorizonReturn) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
+		DrawGraph(385, 513, optionDrawMedia[static_cast<int>(EOptionDraw::HorizonReturn)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::CameraHReturn)
+		{
+			DrawBox(385, 513, 385 + 83, 513 + 58, GetColor(255, 0, 0), false);
+		}
+		if (!BASICPARAM::cameraHorizonReturn) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+		// 縦反転
+		if (!BASICPARAM::cameraVerticalReturn) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
+		DrawGraph(385, 646, optionDrawMedia[static_cast<int>(EOptionDraw::VerticalReturn)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::CameraVReturn)
+		{
+			DrawBox(385, 646, 385 + 83, 646 + 58, GetColor(255, 0, 0), false);
+		}
+		if (!BASICPARAM::cameraVerticalReturn) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	}
+}
+
+
+Manager::Manager()
+{
+	// 初期化
+	BASICPARAM::e_preScene = ESceneNumber::FIRSTLOAD;
+	BASICPARAM::e_nowScene = ESceneNumber::FIRSTLOAD;
+	BASICPARAM::e_preTextureColor = ETextureColor::WHITEBLACK;
+	BASICPARAM::e_TextureColor = ETextureColor::WHITEBLACK;
+	BASICPARAM::nowCameraOrtho = false;
+	BASICPARAM::cameraHorizonReturn = false;
+	BASICPARAM::cameraVerticalReturn = false;
+	BASICPARAM::charaTextureWhiteBlack = true;
+	BASICPARAM::enemyTextureWhiteBlack = true;
+	BASICPARAM::lightStreetTextureWhiteBlack = true;
+	BASICPARAM::stairsRoadTextureWhiteBlack = true;
+	BASICPARAM::stairsTextureWhiteBlack = true;
+	BASICPARAM::anothreTextureWhiteBlack = true;
+
+
+	// シーン１の素材ファイル
+	InitMove1Load();
+
+
+	// シーン２の素材ファイル
+	InitMove2Load();
+
+
+	// ムーブ3のロード素材
+	InitMove3Load();
+
+
+	// ムーブ4のロード素材
+	InitMove4Load();
+
+
+	// ムーブ5のロード素材
+	InitMove5Load();
 
 
 	// メモリの初期化

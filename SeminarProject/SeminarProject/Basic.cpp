@@ -48,6 +48,8 @@ bool MyDebug::enemyThreeSlimeDrawFlag = false;
 bool MyDebug::enemyThreeCrayonHumanDrawFlag = false;
 bool MyDebug::enemyThreeSlimeSearchLineDrawFlag = false;
 bool MyDebug::enemyThreeCrayonHumanSearchLineDrawFlag = false;
+bool MyDebug::enemyFourEnemyDrawFlag = false;
+bool MyDebug::enemyFourEnemySearchLineDrawFlag = false;
 
 void MyDebug::Init()
 {
@@ -65,6 +67,8 @@ void MyDebug::Init()
 	enemyThreeCrayonHumanDrawFlag = false;
 	enemyThreeSlimeSearchLineDrawFlag = false;
 	enemyThreeCrayonHumanSearchLineDrawFlag = false;
+	enemyFourEnemyDrawFlag = false;
+	enemyFourEnemySearchLineDrawFlag = false;
 }
 
 void MyDebug::DebugProcess()
@@ -161,6 +165,18 @@ void MyDebug::DebugProcess()
 		if (CheckHitKey(KEY_INPUT_R) == 1 && DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_BACK) == 1)
 		{
 			enemyThreeCrayonHumanSearchLineDrawFlag = !enemyThreeCrayonHumanSearchLineDrawFlag;
+		}
+
+		DrawFormatString(970, 270, GetColor(0, 0, 0), "enemyFourEnemyDrawFlag: T: %s", enemyFourEnemyDrawFlag ? "true" : "false");
+		if (CheckHitKey(KEY_INPUT_T) == 1 && DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_BACK) == 1)
+		{
+			enemyFourEnemyDrawFlag = !enemyFourEnemyDrawFlag;
+		}
+
+		DrawFormatString(970, 290, GetColor(0, 0, 0), "enemyFourEnemySearchLineDrawFlag: Y: %s", enemyFourEnemySearchLineDrawFlag ? "true" : "false");
+		if (CheckHitKey(KEY_INPUT_Y) == 1 && DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_BACK) == 1)
+		{
+			enemyFourEnemySearchLineDrawFlag = !enemyFourEnemySearchLineDrawFlag;
 		}
 	}
 }

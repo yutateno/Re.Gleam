@@ -45,6 +45,8 @@ void MainMove4::ShadowDraw()
 	{
 		p_ordinaryPerson[i]->ModelDraw();
 	}
+	// 敵
+	p_enemyMove->ModelDraw();
 	// キャラクター
 	p_character->ModelDraw();
 
@@ -90,6 +92,8 @@ void MainMove4::ShadowDraw()
 	{
 		p_ordinaryPerson[i]->ModelDraw();
 	}
+	// 敵
+	p_enemyMove->ModelDraw();
 	BaseMove::ShadowSetUpAfter();
 
 
@@ -138,6 +142,8 @@ void MainMove4::ShadowDraw()
 	{
 		p_ordinaryPerson[i]->ModelDraw();
 	}
+	// 敵
+	p_enemyMove->ModelDraw();
 	// キャラクター
 	p_character->ModelDraw();
 	BaseMove::ShadowNoMoveDrawAfter();
@@ -205,6 +211,7 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 	{
 		p_ordinaryPerson[i] = nullptr;
 	}
+	p_enemyMove = nullptr;
 	vp_stageStairs.clear();
 	vp_stageStairsRoad.clear();
 	vp_stageStreetLight.clear();
@@ -290,6 +297,11 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 	}
 
 
+	// 敵の初期化
+	p_enemyMove = new EnemyMove4(v_file[EFILE::enemyModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
+		, v_file[EFILE::enemyTex0], VGet(1000, 0, 1000), 0.0f);
+
+
 	// スカイボックス
 	BaseMove::SetInitSkyBox(v_file[EFILE::skyBoxModel], v_file[EFILE::skyBoxTex0]);
 
@@ -318,6 +330,10 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 // デストラクタ
 MainMove4::~MainMove4()
 {
+	// 敵
+	POINTER_RELEASE(p_enemyMove);
+
+
 	// 人
 	for (int i = 0; i != ordinaryNum; ++i)
 	{
@@ -404,6 +420,10 @@ void MainMove4::Draw()
 	}
 
 
+	// 敵
+	p_enemyMove->Draw();
+
+
 	// 精密機械との距離が近いとき
 	if (BaseMove::GetDistance<int>(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175)
 	{
@@ -430,6 +450,11 @@ void MainMove4::Process()
 	{
 		p_ordinaryPerson[i]->Process();
 	}
+
+
+	// 敵
+	p_enemyMove->Process();
+	p_enemyMove->SetCharacterArea(p_character->GetArea(), BaseMove::GetDistance<int>(p_character->GetArea(), p_enemyMove->GetArea()));
 
 
 	// シャドウマップの座標を更新
@@ -466,6 +491,10 @@ void MainMove4::TextureReload()
 {
 	// キャラクター
 	p_character->TextureReload();
+
+
+	// 敵
+	p_enemyMove->TextureReload();
 
 
 	// 人

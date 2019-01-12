@@ -59,14 +59,14 @@ void Manager::SceneChange()
 
 
 	// ムーブ4のロード
-	case ESceneNumber::FORTHLOAD:
+	case ESceneNumber::FOURTHLOAD:
 		p_loadThread = new LoadThread();
 		POINTER_RELEASE(p_baseMove);
 		break;
 
 
 	// ムーブ4
-	case ESceneNumber::FORTHMOVE:
+	case ESceneNumber::FOURTHMOVE:
 		BASICPARAM::startFeedNow = true;
 		feedCount = 255;
 		p_baseMove = new MainMove4(p_loadThread->GetFile());
@@ -564,6 +564,10 @@ void Manager::InitMove4Load()
 	move4str[34] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.myn";
 	move4str[35] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\whiteblack\\human_col.pyn";
 
+	// 敵のデータ
+	move4str[36] = "media\\こっち\\media\\move4\\人（敵）\\ene_human_motionALL.myn";
+	move4str[37] = "media\\こっち\\media\\move4\\人（敵）\\ene_human_motionALL.fbm\\whiteblack\\whiteblack.pyn";
+
 	load4[0] = ELOADFILE::mv1model;
 	load4[1] = ELOADFILE::mv1model;
 	load4[2] = ELOADFILE::mv1model;
@@ -614,6 +618,9 @@ void Manager::InitMove4Load()
 
 	load4[34] = ELOADFILE::mv1model;
 	load4[35] = ELOADFILE::graph;
+
+	load4[36] = ELOADFILE::mv1model;
+	load4[37] = ELOADFILE::graph;
 } /// void Manager::InitMove4Load()
 
 
@@ -749,6 +756,7 @@ void Manager::Move4TextureReload()
 		}
 		if (!BASICPARAM::enemyTextureWhiteBlack)
 		{
+			move4str[37] = "media\\こっち\\media\\move4\\人（敵）\\ene_human_motionALL.fbm\\whiteblack\\whiteblack.pyn";
 		}
 		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{
@@ -794,6 +802,7 @@ void Manager::Move4TextureReload()
 		}
 		if (!BASICPARAM::enemyTextureWhiteBlack)
 		{
+			move4str[37] = "media\\こっち\\media\\move4\\人（敵）\\ene_human_motionALL.fbm\\whiteblack\\whiteblack.pyn";
 		}
 		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{
@@ -839,6 +848,7 @@ void Manager::Move4TextureReload()
 		}
 		if (!BASICPARAM::enemyTextureWhiteBlack)
 		{
+			move4str[37] = "media\\こっち\\media\\move4\\人（敵）\\ene_human_motionALL.fbm\\whiteblack\\whiteblack.pyn";
 		}
 		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{
@@ -1347,8 +1357,8 @@ void Manager::OptionDraw()
 Manager::Manager()
 {
 	// 初期化
-	BASICPARAM::e_preScene = ESceneNumber::FIRSTLOAD;
-	BASICPARAM::e_nowScene = ESceneNumber::FIRSTLOAD;
+	BASICPARAM::e_preScene = ESceneNumber::THIRDLOAD;
+	BASICPARAM::e_nowScene = ESceneNumber::THIRDLOAD;
 	BASICPARAM::e_preTextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::e_TextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::nowCameraOrtho = false;
@@ -1504,7 +1514,7 @@ void Manager::Update()
 			}
 		}
 		// 四番目のムーブのロードだったら
-		else if (BASICPARAM::e_preScene == ESceneNumber::FORTHLOAD)
+		else if (BASICPARAM::e_preScene == ESceneNumber::FOURTHLOAD)
 		{
 			p_loadThread->Process(max4, move4str, load4);		// ロードをする
 
@@ -1514,7 +1524,7 @@ void Manager::Update()
 			{
 				BASICPARAM::endFeedNow = true;						// 終了フェードのフラッグを立てる
 				preLoadScene = true;								// 直前がロードだったら
-				BASICPARAM::e_nowScene = ESceneNumber::FORTHMOVE;	// 次のシーンを指定する
+				BASICPARAM::e_nowScene = ESceneNumber::FOURTHMOVE;	// 次のシーンを指定する
 			}
 		}
 		// 五番目のムーブのロードだったら

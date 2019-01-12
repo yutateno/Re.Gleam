@@ -13,7 +13,7 @@
 enum class ESceneNumber
 {
 	FIRSTLOAD, FIRSTMOVE, SECONDLOAD, SECONDMOVE, THIRDLOAD, THIRDMOVE
-	, FORTHLOAD, FORTHMOVE, FIFTHLOAD, FIFTHMOVE
+	, FOURTHLOAD, FOURTHMOVE, FIFTHLOAD, FIFTHMOVE
 };
 
 
@@ -150,6 +150,8 @@ namespace MyDebug
 	extern bool enemyThreeCrayonHumanDrawFlag;
 	extern bool enemyThreeSlimeSearchLineDrawFlag;
 	extern bool enemyThreeCrayonHumanSearchLineDrawFlag;
+	extern bool enemyFourEnemyDrawFlag;
+	extern bool enemyFourEnemySearchLineDrawFlag;
 
 	void Init();
 

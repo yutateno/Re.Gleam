@@ -9,6 +9,7 @@
 #include "AdjustmentMachine.hpp"
 #include "StageStairsRoad.hpp"
 #include "OrdinaryPerson.hpp"
+#include "EnemyMove4.hpp"
 
 #include <random>
 
@@ -29,7 +30,7 @@ private:
 		, stairsRoadDrawModel, stairsRoadTex0, stairsRoadTex1
 		, stairsRoadCollModel, se_jump, se_footCorridor, se_foot, se_landing
 		, se_landingSecond, se_attackOne, se_attackTwo, se_attackThrid
-		, bgm_Main, ordiPersonModel, ordiPersonTex0
+		, bgm_Main, ordiPersonModel, ordiPersonTex0, enemyModel, enemyTex0
 	};
 
 
@@ -70,6 +71,12 @@ private:
 
 
 	/// “G---------------------
+
+	// “G‚Ìƒ|ƒCƒ“ƒ^
+	EnemyMove4* p_enemyMove;
+
+	// “G‚Ì”
+	const int enemyNum = 1;
 
 
 	/// ¸–§‹@ŠB------------------------------

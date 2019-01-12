@@ -237,7 +237,7 @@ EnemyMove4::EnemyMove4(const int modelHandle, const int collStageHandle, const i
 	textureHandle0 = -1;
 	textureHandle0 = tex0;
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
-	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle0, true);
+	//MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle0, false);
 
 
 	// 3Dモデルのアニメーションをアタッチする
@@ -375,30 +375,12 @@ void EnemyMove4::Draw()
 
 
 #ifdef _DEBUG
-	/*static float aaaaaaaaaaaaaaa = modelHeight;
-	static float bbbbbbbbbbbbbb = modelWidth;
-	if (CheckHitKey(KEY_INPUT_Y) == 1)
-	{
-		aaaaaaaaaaaaaaa += 0.1f;
-	}
-	if (CheckHitKey(KEY_INPUT_H) == 1)
-	{
-		aaaaaaaaaaaaaaa -= 0.1f;
-	}
-	if (CheckHitKey(KEY_INPUT_U) == 1)
-	{
-		bbbbbbbbbbbbbb += 0.1f;
-	}
-	if (CheckHitKey(KEY_INPUT_J) == 1)
-	{
-		bbbbbbbbbbbbbb -= 0.1f;
-	}*/
-	if (MyDebug::enemyThreeCrayonHumanDrawFlag)
+	if (MyDebug::enemyFourEnemyDrawFlag)
 	{
 		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
 	}
 
-	if (MyDebug::enemyThreeCrayonHumanSearchLineDrawFlag)
+	if (MyDebug::enemyFourEnemySearchLineDrawFlag)
 	{
 		if (playerCharaDistance <= 1500)
 		{
@@ -425,24 +407,24 @@ void EnemyMove4::Process()
 
 
 	// プレイヤーを視認できる距離じゃなかったら
-	if (playerCharaDistance > 1500)
-	{
-		AutoMoveProcess();
-	}
-	// プレイヤーを視認できる距離だったら
-	else
-	{
-		// プレイヤーを視認したら
-		if (charaLookAt)
-		{
-			ChaseMoveProcess();
-		}
-		// プレイヤーを視認したら
-		else
-		{
-			AutoMoveProcess();
-		}
-	}
+	//if (playerCharaDistance > 1500)
+	//{
+	//	AutoMoveProcess();
+	//}
+	//// プレイヤーを視認できる距離だったら
+	//else
+	//{
+	//	// プレイヤーを視認したら
+	//	if (charaLookAt)
+	//	{
+	//		ChaseMoveProcess();
+	//	}
+	//	// プレイヤーを視認したら
+	//	else
+	//	{
+	//		AutoMoveProcess();
+	//	}
+	//}
 
 
 	MotionProcess();		// モーションプロセス

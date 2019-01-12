@@ -733,6 +733,7 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 {
 	// パネルを非表示にする
 	BASICPARAM::paneruDrawFlag = false;
+	BASICPARAM::charaTextureWhiteBlack = true;
 
 
 	// ポインタNULL初期化
@@ -1608,7 +1609,7 @@ void MainMove3::Process()
 		if (p_character->GetArea().y >= 3550.0f)
 		{
 			BASICPARAM::endFeedNow = true;
-			BaseMove::SetScene(ESceneNumber::FORTHLOAD);
+			BaseMove::SetScene(ESceneNumber::FOURTHLOAD);
 		}
 	} /// if (!changeAdjustmentScene)
 	// 精密機械のシーンだったら
@@ -1653,7 +1654,7 @@ void MainMove3::Process()
 	if (CheckHitKey(KEY_INPUT_Z) == 1)
 	{
 		BASICPARAM::endFeedNow = true;
-		BaseMove::SetScene(ESceneNumber::FORTHLOAD);
+		BaseMove::SetScene(ESceneNumber::FOURTHLOAD);
 	}
 #endif
 } /// void MainMove3::Process()

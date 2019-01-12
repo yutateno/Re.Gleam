@@ -1,5 +1,7 @@
 #include "Basic.hpp"
 
+
+// extern static 変数
 ESceneNumber BASICPARAM::e_preScene;		// 直前のシーン
 ESceneNumber BASICPARAM::e_nowScene;		// 今のシーン
 ETextureColor BASICPARAM::e_preTextureColor;	// 直前のテクスチャの色
@@ -30,7 +32,8 @@ bool BASICPARAM::lightStreetTextureWhiteBlack;
 bool BASICPARAM::anothreTextureWhiteBlack;
 
 
-// debug
+
+/// debug-----------------------------------------------------------------------------------------------------------------------
 #ifdef _DEBUG
 bool MyDebug::characterDrawFlag = false;
 bool MyDebug::characterSwordDrawFlag = false;
@@ -162,3 +165,4 @@ void MyDebug::DebugProcess()
 	}
 }
 #endif // _DEBUG
+/// debug-----------------------------------------------------------------------------------------------------------------------

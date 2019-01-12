@@ -2,10 +2,7 @@
 
 /// インクルードファイル-------------
 #include "DLLXinput.h"
-#include "DxLib.h"
 #include "EffekseerForDXLib.h"
-#define _USE_MATH_DEFINES
-#include <cmath>
 #include "SoundProcess.hpp"
 #include <vector>
 
@@ -19,11 +16,13 @@ enum class ESceneNumber
 	, FORTHLOAD, FORTHMOVE, FIFTHLOAD, FIFTHMOVE
 };
 
+
 // テクスチャの色
 enum class ETextureColor
 {
 	NORMAL, D_CORRECTION, P_CORRECTION, WHITEBLACK
 };
+
 
 namespace BASICPARAM
 {

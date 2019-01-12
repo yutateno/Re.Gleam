@@ -160,6 +160,9 @@ public:
 	// 武器の線分当たっているかどうか
 	void HitLineReturn(VECTOR hitOneArea, VECTOR hitTwoArea);
 
+	// オプション用モデル描画の後始末
+	void OptionActorDrawAfter() override {}
+
 
 	/// ゲッターセッター
 
@@ -171,7 +174,4 @@ public:
 
 	// 描画から消すかどうか
 	const bool GetEraseExistence() const { return eraseExistence; }
-
-	// オプション用モデル描画の後始末
-	void OptionActorDrawAfter() override {}
 };

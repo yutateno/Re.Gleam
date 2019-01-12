@@ -25,6 +25,7 @@ public:
 	// テクスチャ切り替え
 	void TextureReload();
 
+
 	// Y軸の回転
 	const float GetYAngle() const { return angle; }
 

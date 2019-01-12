@@ -20,7 +20,6 @@ private:
 	// ロード画面のポインタ
 	LoadScreen* p_loadScreen;
 
-
 	// 非同期を行うメソッド
 	void MyNextLoad(const std::string path, int& file, const ELOADFILE type);
 

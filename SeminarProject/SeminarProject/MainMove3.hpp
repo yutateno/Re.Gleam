@@ -117,15 +117,19 @@ private:
 	// ドロップアイテム
 	DropItemMove3* p_dropItem[100];
 
-	int dropItemSE;
-
 	// 何個のドロップアイテムを手に持ったか
 	int catchDropItemNum;
 
-	// 一番キャラクターに近い敵
+	// 一番プレイヤーに近い敵の距離
 	int mostNearEnemyDistance;
+
+	// 一番プレイヤーに近い敵のスクリーン座標
 	VECTOR mostNearEnemyScreenArea;
+
+	// ロックオンしている敵のID
 	int lockONNowEnemyID;
+
+	// ロックオンしている敵がスライムかどうか
 	bool lockOnEnemySlime;
 
 
@@ -188,11 +192,13 @@ public:
 	// デストラクタ
 	~MainMove3();
 
+
 	// 描画
 	void Draw() override;
 
 	// プロセス
 	void Process() override;
+
 
 	// カメラのプロセス
 	void CameraProcess() override;
@@ -212,4 +218,3 @@ public:
 	// オプション画面でのモデル表示の後始末
 	void OptionActorModelAfter() override;
 };
-

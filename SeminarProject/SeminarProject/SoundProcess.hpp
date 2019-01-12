@@ -3,6 +3,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
+
 namespace SoundProcess
 {
 	/// ƒQ[ƒ€‚É‚æ‚Á‚Ä•Ï‚í‚é•”•ª-------------------------------------------------------

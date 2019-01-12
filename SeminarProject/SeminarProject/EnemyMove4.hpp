@@ -2,6 +2,7 @@
 #include "BasicCreature.hpp"
 #include <random>
 
+
 class EnemyMove4 : public BasicCreature
 {
 private:
@@ -115,6 +116,7 @@ public:
 
 	// プロセス
 	void Process();
+
 
 	// テクスチャの切り替え
 	void TextureReload();

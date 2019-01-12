@@ -76,11 +76,22 @@ private:
 	// キャラクターのポインタ
 	CharacterSword* p_character;
 
-	// 操作の説明画像
+
+	/// 操作の説明画像---------------------------------------------
+
+	// 操作説明画像のID
 	enum class EOPERATION_UI { attack, jump, fastSpeed, option };
+
+	// 操作説明画像
 	int operationUIDraw[4];
+
+	// 操作説明画像の透過値
 	int operationUIFeed[4];
+
+	// 操作説明画像の次の透過予定値
 	int nextOperationUIFeed[4];
+
+	// 最初の2個の説明画像が終わったかどうか
 	bool opeFastOptionEnd;
 
 
@@ -94,8 +105,6 @@ private:
 
 	// ドロップアイテム（１体に対して５個
 	DropItemMove2* p_dropItem[250];
-
-	int dropItemSE;
 
 	// 何個のドロップアイテムを手に持ったか
 	int catchDropItemNum;
@@ -159,9 +168,13 @@ private:
 	// スティックの押し倒しかどうかを調べる(DLLXinputでやるべきなんだろうかとりあえず
 	int adjustmentControllStick[2];
 
-	// オブジェクト生成個数
+	// 階段オブジェクトに必要な生成個数
 	const int createStairsNeedNum = 10;
+
+	// 街灯オブジェクトに必要な生成個数
 	const int createStreetLightNeedNum = 20;
+
+	// 階段と床オブジェクトに必要な生成個数
 	const int createStairsRoadNeedNum = 5;
 	/// -------------------------------------------------------------------------------
 
@@ -202,6 +215,7 @@ public:
 	// プロセス
 	void Process() override;
 
+
 	// カメラのプロセス
 	void CameraProcess() override;
 
@@ -220,4 +234,3 @@ public:
 	// オプション画面でのモデル表示の後始末
 	void OptionActorModelAfter() override;
 };
-

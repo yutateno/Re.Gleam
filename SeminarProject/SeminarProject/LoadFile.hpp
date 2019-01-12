@@ -25,6 +25,7 @@ private:
 	// ファイル読み込み
 	static unsigned int file_size(std::ifstream &fin);
 
+
 public:
 	// コンストラクタ
 	LoadFile() {};

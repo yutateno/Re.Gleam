@@ -32,6 +32,7 @@ public:
 	// プロセス
 	void Process();
 
+
 	// キャラクターが近づいたら
 	void NearChara(const VECTOR characterArea);
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "BasicObject.hpp"
-
 #include <random>
+
 
 class DropItemMove3 : public BasicObject
 {
@@ -35,6 +35,7 @@ public:
 
 	// プロセス
 	void Process();
+
 
 	// 引数の座標に対して近づく処理
 	void ChaseActor(const VECTOR chaseArea);

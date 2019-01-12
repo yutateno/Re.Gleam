@@ -57,6 +57,7 @@ private:
 	// オプションでもモデル表示カウント
 	int optionModelDrawCount;
 
+
 public:
 	// コンストラクタ
 	BasicObject();

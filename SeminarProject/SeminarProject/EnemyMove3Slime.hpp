@@ -114,6 +114,7 @@ public:
 	// プロセス
 	void Process();
 
+
 	// テクスチャの切り替え
 	void TextureReload();
 

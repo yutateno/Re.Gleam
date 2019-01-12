@@ -164,7 +164,6 @@ private:
 	int optionPageNowNumber;
 
 
-
 public:
 	// コンストラクタ
 	Manager();
@@ -176,4 +175,3 @@ public:
 	// メインプロセス
 	void Update();
 };
-

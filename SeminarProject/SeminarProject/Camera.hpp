@@ -29,7 +29,9 @@ private:
 	// 回転を行う関数
 	void RLrotate(const float speed, float& axisOne, float& axisTwo);
 
+	// 上下回転用
 	VECTOR zRota;
+
 
 public:
 	// キャラの位置を引数に取ったコンストラクタ

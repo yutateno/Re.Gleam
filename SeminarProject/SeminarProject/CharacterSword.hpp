@@ -1,7 +1,7 @@
 #pragma once
 #include "BasicCreature.hpp"
-
 #include <random>
+
 
 class CharacterSword : public BasicCreature
 {
@@ -174,11 +174,18 @@ public:
 	// プロセス
 	void Process(const float getAngle);
 
+
 	// ポジションを初期化する
 	void PositionReset();
 
 	// テクスチャの切り替え
 	void TextureReload();
+
+	// 攻撃を受けている
+	void SetDamage();
+
+	// オプション用モデル描画の後始末
+	void OptionActorDrawAfter() override;
 
 
 	/// ゲッターセッター--------------------
@@ -207,9 +214,6 @@ public:
 	// キャラクターの向いている方向
 	const float GetAngle() const { return angle + direXAngle + direZAngle; }
 
-	// 攻撃を受けている
-	void SetDamage();
-
 	// 速度早い動きをしたかどうか
 	const bool GetMoveFastWaitCount() const { return moveFastWaitCount > 0 ? true : false; }
 
@@ -218,8 +222,5 @@ public:
 
 	// 最も近くてロックオンしている敵
 	void SetMostNearEnemyArea(VECTOR enemyArea = VGet(0, -1000, 0)) { mostNearEnemyArea = enemyArea; }
-
-	// オプション用モデル描画の後始末
-	void OptionActorDrawAfter() override;
 };
 

@@ -103,11 +103,13 @@ public:
 	// デストラクタ
 	~MainMove4();
 
+
 	// 描画
 	void Draw() override;
 
 	// プロセス
 	void Process() override;
+
 
 	// カメラのプロセス
 	void CameraProcess() override;
@@ -127,4 +129,3 @@ public:
 	// オプション画面でのモデル表示の後始末
 	void OptionActorModelAfter() override;
 };
-

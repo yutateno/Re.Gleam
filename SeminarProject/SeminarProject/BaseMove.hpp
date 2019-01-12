@@ -45,6 +45,9 @@ private:
 	// スカイボックスのハンドル
 	int skyBoxUp, skyBoxUnder;
 
+
+	/// テクスチャに関して
+
 	// テクスチャ
 	int textureHandle;
 
@@ -58,7 +61,6 @@ protected:
 
 
 	/// 影に関して-----------------------------------------------
-
 	/// 設定する
 
 	// 設定シャドウマップ０番：主人公
@@ -72,6 +74,7 @@ protected:
 
 	// シャドウマップの描画終了
 	void ShadowSetUpAfter();
+
 
 	/// 描画へ使用する
 
@@ -114,7 +117,12 @@ protected:
 	// スカイボックスのテクスチャ変更
 	void SkyTextureReload();
 
+
+	/// テクスチャに関して------
+
+	// 非同期用変数
 	std::thread ths;
+
 
 public:
 	// コンストラクタ

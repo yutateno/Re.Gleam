@@ -33,6 +33,7 @@ public:
 	// 描画
 	void Draw();
 
+
 	// テクスチャの切り替え
 	void TextureReload();
 

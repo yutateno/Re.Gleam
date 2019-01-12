@@ -1,7 +1,7 @@
 #pragma once
 #include "BasicObject.hpp"
-
 #include <random>
+
 
 class DropItemMove2 : public BasicObject
 {
@@ -21,6 +21,7 @@ private:
 	// 飛び散った先の座標
 	float nextAreaX, nextAreaZ, moveAreaY;
 
+
 public:
 	// コンストラクタ
 	DropItemMove2(const int draw, VECTOR area, const int tex0);
@@ -31,6 +32,7 @@ public:
 
 	// プロセス
 	void Process();
+
 
 	// 引数の座標に近づく
 	void ChaseActor(const VECTOR chaseArea);

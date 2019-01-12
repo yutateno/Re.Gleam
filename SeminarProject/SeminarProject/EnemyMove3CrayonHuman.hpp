@@ -2,6 +2,7 @@
 #include "BasicCreature.hpp"
 #include <random>
 
+
 class EnemyMove3CrayonHuman : public BasicCreature
 {
 private:
@@ -118,6 +119,7 @@ public:
 
 	// プロセス
 	void Process();
+
 
 	// テクスチャの切り替え
 	void TextureReload();

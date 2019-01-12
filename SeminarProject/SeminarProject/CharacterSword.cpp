@@ -686,7 +686,7 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	// あたり判定のステージのコリジョン情報の更新
 	stageHandle = -1;
 	stageHandle = MV1DuplicateModel(collStageHandle);
-	MV1SetScale(stageHandle, VGet(0.73f, 0.73f, 0.73f));
+	MV1SetScale(stageHandle, VGet(0.7f, 0.7f, 0.7f));
 	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
 	MV1SetupCollInfo(stageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
 	MV1SetFrameVisible(stageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）

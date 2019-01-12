@@ -76,11 +76,6 @@ void EnemyMove4::AutoMoveProcess()
 		// 移動先を更新
 		nextDireZAngle = moveTurn(mt) / 100.0f;
 		nextDireXAngle = randInX(mt) / 100.0f;
-		if (nextDireZAngle != 0.0f)
-		{
-			nextDireXAngle = -nextDireXAngle;
-		}
-
 	}
 
 
@@ -113,7 +108,13 @@ void EnemyMove4::AutoMoveProcess()
 	moveCount++;		// 移動カウントを加算
 	float tempX = area.x + sinf(direXAngle + direZAngle) * -walkSpeed;
 	float tempZ = area.z + cosf(direXAngle + direZAngle) * -walkSpeed;
-	// ステージ外に向かっていたら乱数を再暗算
+	// どうしようもなくなったら初期値に戻す
+	if (area.y < -modelHeight)
+	{
+		area = VGet(0, 0, 0);
+		moveCount = 100;
+		return;
+	}
 	if (tempX >= 5000.0f || tempX <= -5000.0f || tempZ >= 5000.0f || tempZ <= -5000.0f)
 	{
 		area.x += sinf(direXAngle + direZAngle) * walkSpeed * 2.0f;
@@ -475,13 +476,6 @@ void EnemyMove4::Process()
 
 
 	FallProcess();	// 落下のプロセス
-
-
-	// 要らないけど不安なので一応
-	if (area.y < 0.0f)
-	{
-		area.y = 0.5f;
-	}
 
 
 	// プレイヤーを視認できる方向

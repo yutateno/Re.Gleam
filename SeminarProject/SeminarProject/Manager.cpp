@@ -1099,140 +1099,201 @@ void Manager::OptionProcess()
 			optionSelectMax = 2;
 		}
 	} /// if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
-	///-----------------------------------------------------------------------------------------------------------
+	///戻る------------------------------------------------------------------------------------------------------
 
 
-	// スティックの一回押し倒しで更新するよう調整。
+	/// スティックの一回押し倒しで更新するよう調整-----------------------------------------------------------------
+	// 左スティックを上に倒したら
 	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
 	{
 		if(optionControllLeftStickY[0] < 2) optionControllLeftStickY[0]++;
 	}
+	// 左スティックを下に倒したら
 	else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) < 0)
 	{
 		if (optionControllLeftStickY[1] < 2) optionControllLeftStickY[1]++;
 	}
+	// 左スティックを特に弄ってなかったら
 	else
 	{
 		optionControllLeftStickY[0] = 0;
 		optionControllLeftStickY[1] = 0;
 	}
+
+
+	// 上にスティックを倒したとき
 	if (optionControllLeftStickY[0] == 1)
 	{
+		// カーソルを上に移動する
 		int temp = static_cast<int>(optionSelectButtonNum);
 		optionSelectButtonNum = static_cast<EOptionSelectButton>(temp > optionSelectMin ? --temp : temp);
 		if (optionSelectButtonNum == EOptionSelectButton::ColorSelect) optionPageNowNumber = 0;
 	}
+	// 下にスティックを倒したとき
 	if (optionControllLeftStickY[1] == 1)
 	{
+		// カーソルを下に移動する
 		int temp = static_cast<int>(optionSelectButtonNum);
 		optionSelectButtonNum = static_cast<EOptionSelectButton>(temp < optionSelectMax ? ++temp : temp);
 		if (optionSelectButtonNum == EOptionSelectButton::Camera) optionPageNowNumber = 1;
 	}
+	/// スティックの一回押し倒しで更新するよう調整-----------------------------------------------------------------
 } /// void Manager::OptionProcess()
 
 
+// オプション画面の描画
 void Manager::OptionDraw()
 {
 	// 背景
 	DrawGraph(0, 0, gaussianScreen, false);
 
-	///　モデル表示-------------------------------------------------------------
+
+	//　モデル表示
 	p_baseMove->OptionActorModel();
 
+
+	// オプションから戻る説明画像
 	DrawGraph(1600, 800, optionDrawMedia[static_cast<int>(EOptionDraw::optionEnd)], true);
 
+
+	// 一列目のオプションのとき
 	if (optionPageNowNumber == 0)
 	{
-		/// サウンド関係オプション-----------------------------------------------
+		/// サウンド関係オプション---------------------------------------------------------------
 		// UI:Sound
 		DrawGraph(95, 95, optionDrawMedia[static_cast<int>(EOptionDraw::Sound)], false);
+		// カーソルが当たっていたら
 		if (optionSelectButtonNum == EOptionSelectButton::Sound)
 		{
-			DrawBox(95, 95, 95 + 211, 95 + 86, GetColor(255, 0, 0), false);
+			DrawBox(95 + 5, 95 + 5, 95 + 211 - 5, 95 + 86 - 5, GetColor(50, 50, 200), false);
+			DrawBox(95 + 4, 95 + 4, 95 + 211 - 4, 95 + 86 - 4, GetColor(50, 50, 200), false);
+			DrawBox(95 + 3, 95 + 3, 95 + 211 - 3, 95 + 86 - 3, GetColor(50, 50, 200), false);
 		}
+
 
 		// UI:BGM
 		DrawGraph(381, 114, optionDrawMedia[static_cast<int>(EOptionDraw::BGM)], false);
+		// カーソルが当たっていたら
 		if (optionSelectButtonNum == EOptionSelectButton::BGM)
 		{
-			DrawBox(381, 114, 381 + 87, 114 + 58, GetColor(255, 0, 0), false);
+			DrawBox(381 + 5, 114 + 5, 381 + 87 - 5, 114 + 58 - 5, GetColor(50, 50, 200), false);
+			DrawBox(381 + 4, 114 + 4, 381 + 87 - 4, 114 + 58 - 4, GetColor(50, 50, 200), false);
+			DrawBox(381 + 3, 114 + 3, 381 + 87 - 3, 114 + 58 - 3, GetColor(50, 50, 200), false);
 		}
+
 
 		// UI:BGMバー
 		DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(200, 200, 200), true);
 		DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(0, 0, 0), false);
+		// カーソルが当たっていたら
 		if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
 		{
-			DrawBox(546, 100, 546 + 548, 100 + 81, GetColor(255, 0, 0), false);
+			DrawBox(546 + 5, 100 + 5, 546 + 548 - 5, 100 + 81 - 5, GetColor(50, 50, 200), false);
+			DrawBox(546 + 4, 100 + 4, 546 + 548 - 4, 100 + 81 - 4, GetColor(50, 50, 200), false);
+			DrawBox(546 + 3, 100 + 3, 546 + 548 - 3, 100 + 81 - 3, GetColor(50, 50, 200), false);
 		}
 		DrawBox(546 - 5 + static_cast<int>(SoundProcess::GetBGMVolumeEntire() * 547)
 			, 100 - 10, 546 + 5 + static_cast<int>(SoundProcess::GetBGMVolumeEntire() * 548)
-			, 100 + 81 + 10, GetColor(0, 125, 125), true);
+			, 100 + 81 + 10, GetColor(255, 255, 255), true);
+
 
 		// UI:SE
 		DrawGraph(385, 266, optionDrawMedia[static_cast<int>(EOptionDraw::SE)], false);
+		// カーソルが当たっていたら
 		if (optionSelectButtonNum == EOptionSelectButton::SE)
 		{
-			DrawBox(385, 266, 385 + 86, 266 + 58, GetColor(255, 0, 0), false);
+			DrawBox(385 + 5, 266 + 5, 385 + 86 - 5, 266 + 58 - 5, GetColor(50, 50, 200), false);
+			DrawBox(385 + 4, 266 + 4, 385 + 86 - 4, 266 + 58 - 4, GetColor(50, 50, 200), false);
+			DrawBox(385 + 3, 266 + 3, 385 + 86 - 3, 266 + 58 - 3, GetColor(50, 50, 200), false);
 		}
 
 		// UI:SEバー
 		DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(200, 200, 200), true);
 		DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(0, 0, 0), false);
+		// カーソルが当たっていたら
 		if (optionSelectButtonNum == EOptionSelectButton::SESelect)
 		{
-			DrawBox(548, 255, 548 + 547, 255 + 78, GetColor(255, 0, 0), false);
+			DrawBox(548 + 5, 255 + 5, 548 + 547 - 5, 255 + 78 - 5, GetColor(50, 50, 200), false);
+			DrawBox(548 + 4, 255 + 4, 548 + 547 - 4, 255 + 78 - 4, GetColor(50, 50, 200), false);
+			DrawBox(548 + 3, 255 + 3, 548 + 547 - 3, 255 + 78 - 3, GetColor(50, 50, 200), false);
 		}
 		DrawBox(548 - 5 + static_cast<int>(SoundProcess::GetSEVolumeEntire() * 547)
 			, 255 - 10, 548 + 5 + static_cast<int>(SoundProcess::GetSEVolumeEntire() * 547)
-			, 255 + 78 + 10, GetColor(0, 125, 125), true);
+			, 255 + 78 + 10, GetColor(255, 255, 255), true);
+		/// サウンド関係オプション---------------------------------------------------------------
 
 
-		/// 色覚に関するオプション----------------------------------------------
-		// UI:色覚調整
+		/// 色覚に関するオプション-----------------------------------------------------------------------
+		// 色覚補正できるムーブじゃなかったら
 		if (BASICPARAM::e_nowScene < ESceneNumber::THIRDMOVE) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
+
+
+		// UI:色覚調整
 		DrawGraph(96, 413, optionDrawMedia[static_cast<int>(EOptionDraw::Color)], false);
-		if (optionSelectButtonNum == EOptionSelectButton::ColorSelect)
-		{
-			DrawBox(96, 413, 96 + 112, 413 + 76, GetColor(255, 0, 0), false);
-		}
+
 
 		// UI:通常色
 		DrawGraph(385, 427, optionDrawMedia[static_cast<int>(EOptionDraw::ColorNormal)], false);
+		// カーソルが当たっていたら
 		if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
 		{
-			DrawBox(385, 427, 385 + 83, 427 + 58, GetColor(255, 0, 0), false);
+			DrawBox(385 + 5, 427 + 5, 385 + 83 - 5, 427 + 58 - 5, GetColor(50, 50, 200), false);
+			DrawBox(385 + 4, 427 + 4, 385 + 83 - 4, 427 + 58 - 4, GetColor(50, 50, 200), false);
+			DrawBox(385 + 3, 427 + 3, 385 + 83 - 3, 427 + 58 - 3, GetColor(50, 50, 200), false);
 		}
 
 		// UI:P型
 		DrawGraph(386, 550, optionDrawMedia[static_cast<int>(EOptionDraw::ColorP)], false);
+		// カーソルが当たっていたら
 		if (optionSelectButtonNum == EOptionSelectButton::ColorP)
 		{
-			DrawBox(386, 550, 386 + 83, 550 + 59, GetColor(255, 0, 0), false);
+			DrawBox(386 + 5, 550 + 5, 386 + 83 - 5, 550 + 59 - 5, GetColor(50, 50, 200), false);
+			DrawBox(386 + 4, 550 + 4, 386 + 83 - 4, 550 + 59 - 4, GetColor(50, 50, 200), false);
+			DrawBox(386 + 3, 550 + 3, 386 + 83 - 3, 550 + 59 - 3, GetColor(50, 50, 200), false);
 		}
 
 		// UI:D型
 		DrawGraph(385, 682, optionDrawMedia[static_cast<int>(EOptionDraw::ColorD)], false);
+		// カーソルが当たっていたら
 		if (optionSelectButtonNum == EOptionSelectButton::ColorD)
 		{
-			DrawBox(385, 682, 385 + 83, 682 + 58, GetColor(255, 0, 0), false);
+			DrawBox(385 + 5, 682 + 5, 385 + 83 - 5, 682 + 58 - 5, GetColor(50, 50, 200), false);
+			DrawBox(385 + 4, 682 + 4, 385 + 83 - 4, 682 + 58 - 4, GetColor(50, 50, 200), false);
+			DrawBox(385 + 3, 682 + 3, 385 + 83 - 3, 682 + 58 - 3, GetColor(50, 50, 200), false);
 		}
+
+
 		if (BASICPARAM::e_nowScene < ESceneNumber::THIRDMOVE) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+
+		// 色覚補正にカーソルが当たっていたら(ブレンドから逃がすため
+		if (optionSelectButtonNum == EOptionSelectButton::ColorSelect)
+		{
+			DrawBox(96 + 5, 413 + 5, 96 + 112 - 5, 413 + 76 - 5, GetColor(50, 50, 200), false);
+			DrawBox(96 + 4, 413 + 4, 96 + 112 - 4, 413 + 76 - 4, GetColor(50, 50, 200), false);
+			DrawBox(96 + 3, 413 + 3, 96 + 112 - 3, 413 + 76 - 3, GetColor(50, 50, 200), false);
+		}
+		/// 色覚に関するオプション-----------------------------------------------------------------------
+
 
 		// 次のページ
 		DrawGraph(96, 815, optionDrawMedia[static_cast<int>(EOptionDraw::nextPage)], false);
-	}
+	} /// if (optionPageNowNumber == 0)
+	// 二ページ目の時
 	else if (optionPageNowNumber == 1)
 	{
 		// 前のページへ
 		DrawGraph(96, 95, optionDrawMedia[static_cast<int>(EOptionDraw::prevPage)], false);
+
 
 		/// カメラの関するオプション------------------------------------------------
 		// カメラ
 		DrawGraph(95, 247, optionDrawMedia[static_cast<int>(EOptionDraw::Camera)], false);
 		if (optionSelectButtonNum == EOptionSelectButton::Camera)
 		{
-			DrawBox(95, 247, 95 + 109, 247 + 68, GetColor(255, 0, 0), false);
+			DrawBox(95 + 5, 247 + 5, 95 + 109 - 5, 247 + 68 - 5, GetColor(50, 50, 200), false);
+			DrawBox(95 + 4, 247 + 4, 95 + 109 - 4, 247 + 68 - 4, GetColor(50, 50, 200), false);
+			DrawBox(95 + 3, 247 + 3, 95 + 109 - 3, 247 + 68 - 3, GetColor(50, 50, 200), false);
 		}
 
 		// 遠近法
@@ -1240,7 +1301,9 @@ void Manager::OptionDraw()
 		DrawGraph(385, 267, optionDrawMedia[static_cast<int>(EOptionDraw::Perspective)], false);
 		if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective)
 		{
-			DrawBox(385, 267, 385 + 83, 267 + 58, GetColor(255, 0, 0), false);
+			DrawBox(385 + 5, 267 + 5, 385 + 83 - 5, 267 + 58 - 5, GetColor(50, 50, 200), false);
+			DrawBox(385 + 4, 267 + 4, 385 + 83 - 4, 267 + 58 - 4, GetColor(50, 50, 200), false);
+			DrawBox(385 + 3, 267 + 3, 385 + 83 - 3, 267 + 58 - 3, GetColor(50, 50, 200), false);
 		}
 		if (BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
@@ -1249,7 +1312,9 @@ void Manager::OptionDraw()
 		DrawGraph(385, 400, optionDrawMedia[static_cast<int>(EOptionDraw::Ortho)], false);
 		if (optionSelectButtonNum == EOptionSelectButton::CameraOrtho)
 		{
-			DrawBox(385, 400, 385 + 83, 400 + 58, GetColor(255, 0, 0), false);
+			DrawBox(385 + 5, 400 + 5, 385 + 83 - 5, 400 + 58 - 5, GetColor(50, 50, 200), false);
+			DrawBox(385 + 4, 400 + 4, 385 + 83 - 4, 400 + 58 - 4, GetColor(50, 50, 200), false);
+			DrawBox(385 + 3, 400 + 3, 385 + 83 - 3, 400 + 58 - 3, GetColor(50, 50, 200), false);
 		}
 		if (!BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
@@ -1258,7 +1323,9 @@ void Manager::OptionDraw()
 		DrawGraph(385, 513, optionDrawMedia[static_cast<int>(EOptionDraw::HorizonReturn)], false);
 		if (optionSelectButtonNum == EOptionSelectButton::CameraHReturn)
 		{
-			DrawBox(385, 513, 385 + 83, 513 + 58, GetColor(255, 0, 0), false);
+			DrawBox(385 + 5, 513 + 5, 385 + 83 - 5, 513 + 58 - 5, GetColor(50, 50, 200), false);
+			DrawBox(385 + 4, 513 + 4, 385 + 83 - 4, 513 + 58 - 4, GetColor(50, 50, 200), false);
+			DrawBox(385 + 3, 513 + 3, 385 + 83 - 3, 513 + 58 - 3, GetColor(50, 50, 200), false);
 		}
 		if (!BASICPARAM::cameraHorizonReturn) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
@@ -1267,13 +1334,16 @@ void Manager::OptionDraw()
 		DrawGraph(385, 646, optionDrawMedia[static_cast<int>(EOptionDraw::VerticalReturn)], false);
 		if (optionSelectButtonNum == EOptionSelectButton::CameraVReturn)
 		{
-			DrawBox(385, 646, 385 + 83, 646 + 58, GetColor(255, 0, 0), false);
+			DrawBox(385 + 5, 646 + 5, 385 + 83 - 5, 646 + 58 - 5, GetColor(50, 50, 200), false);
+			DrawBox(385 + 4, 646 + 4, 385 + 83 - 4, 646 + 58 - 4, GetColor(50, 50, 200), false);
+			DrawBox(385 + 3, 646 + 3, 385 + 83 - 3, 646 + 58 - 3, GetColor(50, 50, 200), false);
 		}
 		if (!BASICPARAM::cameraVerticalReturn) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-	}
-}
+	} /// else if (optionPageNowNumber == 1)
+} /// void Manager::OptionDraw()
 
 
+// コンストラクタ
 Manager::Manager()
 {
 	// 初期化
@@ -1319,8 +1389,6 @@ Manager::Manager()
 
 	// 最初のロードを生成
 	p_loadThread = new LoadThread();
-
-	// シーン開始なので
 	preLoadScene = false;
 
 
@@ -1356,6 +1424,7 @@ Manager::Manager()
 	LoadFile::MyLoad("media\\こっち\\media\\option\\prevPage.pyn", optionDrawMedia[13], ELOADFILE::graph);
 	LoadFile::MyLoad("media\\こっち\\media\\option\\optionEnd.pyn", optionDrawMedia[14], ELOADFILE::graph);
 
+
 	// フェード処理に関する
 	feedCount = 0;
 	BASICPARAM::endFeedNow = false;
@@ -1367,9 +1436,10 @@ Manager::Manager()
 	SetCreateDrawValidGraphMultiSample(4, 4);			// 4x4のアンチエイリアシングモードにする
 	antiAliasScreen = MakeScreen(1920, 1080, false);	// アンチエイリアシング用の画面を作成
 	SetCreateDrawValidGraphMultiSample(0, 0);			// 元に戻す
-}
+} /// Manager::Manager()
 
 
+// デストラクタ
 Manager::~Manager()
 {
 	for (int i = 0; i != optionDrawNum; ++i)
@@ -1378,10 +1448,14 @@ Manager::~Manager()
 	}
 	GRAPHIC_RELEASE(gaussianScreen);
 	GRAPHIC_RELEASE(antiAliasScreen);
+
+
 	POINTER_RELEASE(p_baseMove);
 	POINTER_RELEASE(p_loadThread);
 }
 
+
+// 更新
 void Manager::Update()
 {
 	// 今のシーンと直前のシーンが同じ
@@ -1391,6 +1465,7 @@ void Manager::Update()
 		if (BASICPARAM::e_preScene == ESceneNumber::FIRSTLOAD)		
 		{
 			p_loadThread->Process(max1, move1str, load1);		// ロードをする
+
 
 			// ロードが終了したら
 			if (p_loadThread->GetNum() >= max1)		
@@ -1405,6 +1480,7 @@ void Manager::Update()
 		{
 			p_loadThread->Process(max2, move2str, load2);		// ロードをする
 
+
 			// ロードが終了したら
 			if (p_loadThread->GetNum() >= max2)		
 			{
@@ -1417,6 +1493,7 @@ void Manager::Update()
 		else if (BASICPARAM::e_preScene == ESceneNumber::THIRDLOAD)
 		{
 			p_loadThread->Process(max3, move3str, load3);		// ロードをする
+
 
 			// ロードが終了したら
 			if (p_loadThread->GetNum() >= max3)
@@ -1431,6 +1508,7 @@ void Manager::Update()
 		{
 			p_loadThread->Process(max4, move4str, load4);		// ロードをする
 
+
 			// ロードが終了したら
 			if (p_loadThread->GetNum() >= max4)
 			{
@@ -1443,6 +1521,7 @@ void Manager::Update()
 		else if (BASICPARAM::e_preScene == ESceneNumber::FIFTHLOAD)
 		{
 			p_loadThread->Process(max5, move5str, load5);		// ロードをする
+
 
 			// ロードが終了したら
 			if (p_loadThread->GetNum() >= max5)
@@ -1457,6 +1536,7 @@ void Manager::Update()
 		{
 			preLoadScene = false;		// 直前がロードではないとする
 
+
 			// オプションメニューでないとき
 			if (!optionMenuNow)
 			{
@@ -1467,29 +1547,36 @@ void Manager::Update()
 					SetDrawScreen(antiAliasScreen);
 					ClearDrawScreen();
 
+
 					// ゲームに関する
 					p_baseMove->CameraProcess();
 					p_baseMove->Draw();
+
 
 					// Effekseerにより再生中のエフェクトを描画する。
 					DrawEffekseer3D();
 					// Effekseerにより再生中のエフェクトを描画する。
 					DrawEffekseer2D();
 
+
 					BASICPARAM::e_nowScene = p_baseMove->GetScene();
+
 
 					// アンチエイリアス画面に描画したものを裏画面に書き込む
 					SetDrawScreen(DX_SCREEN_BACK);
 					DrawGraph(0, 0, antiAliasScreen, false);
 
+
 					// ゲームに関する
 					p_baseMove->CameraProcess();				// SetDrawScreenを行うとカメラの設定がなくなるので再設定を行う
 					p_baseMove->Process();
+
 
 					// Effekseerにより再生中のエフェクトを更新する。
 					UpdateEffekseer3D();
 					// Effekseerにより再生中のエフェクトを更新する。
 					UpdateEffekseer2D();
+
 
 					// オプション画面に移行するコマンドを押されたら、またはウィンドウズが非アクティブになったら
 					if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1
@@ -1498,53 +1585,52 @@ void Manager::Update()
 						// 現在の画面をキャプチャする
 						GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, gaussianScreen);	
 
-						// 現在の画面にガウスフィルタかけてぼかす
-						GraphFilter(gaussianScreen, DX_GRAPH_FILTER_GAUSS, 8, 1400);	
+
+						GraphFilter(gaussianScreen, DX_GRAPH_FILTER_GAUSS, 8, 1400);	// 現在の画面にガウスフィルタかけてぼかす	
 
 
-						// オプション用のモデル表示の準備
-						p_baseMove->OptionActorModelBefore();
+						p_baseMove->OptionActorModelBefore();							// オプション用のモデル表示の準備
 						
 
-						// オプションメニューに移行するフラッグを立てる
-						optionMenuNow = true;
 
-						// オプションメニューのボタン位置を初期化
-						optionSelectButtonNum = EOptionSelectButton::Sound;
-
-						optionPageNowNumber = 0;
+						optionMenuNow = true;											// オプションメニューに移行するフラッグを立てる
 
 
-						// サウンド音量をオプションメニュー用に下げるよう命令
-						SoundProcess::SetOptionMenuNow(true);
+						optionSelectButtonNum = EOptionSelectButton::Sound;				// オプションメニューのボタン位置を初期化
+
+
+						optionPageNowNumber = 0;										// オプションのページを1ページ目にする
+
+
+						SoundProcess::SetOptionMenuNow(true);							// サウンド音量をオプションメニュー用に下げるよう命令
 
 					}
-
 #ifdef _DEBUG
 					MyDebug::DebugProcess();
 #endif // _DEBUG
-
-
 					ScreenFlip();
-				}
+				} /// if (!BASICPARAM::startFeedNow/* && !BASICPARAM::endFeedNow*/)
 				// 開始フェードが立っていたら
 				else
 				{
-					// フェードカウントを下げる
-					feedCount -= 5;				
+					feedCount -= 5;						// フェードカウントを下げる			
+
 
 					// 画面に関する一連
 					ClearDrawScreen();
 					SetDrawScreen(DX_SCREEN_BACK);
 
+
 					// ゲームに関する一連
 					p_baseMove->CameraProcess();
 					p_baseMove->Draw();
+
 
 					// フェードイン処理
 					SetDrawBlendMode(DX_BLENDMODE_ALPHA, feedCount);
 					DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, feedDraw, true);
 					SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
 
 					// フェードカウントが下がりまくったら開始フェードフラッグを下す
 					if (feedCount <= 0)
@@ -1553,18 +1639,21 @@ void Manager::Update()
 						BASICPARAM::startFeedNow = false;
 					}
 
+
 					ScreenFlip();
-				}
-			}
+				} /// else(!if (!BASICPARAM::startFeedNow/* && !BASICPARAM::endFeedNow*/))
+			} /// if (!optionMenuNow)
 			// オプションメニューのとき
 			else
 			{
 				// 画面に関する一連
 				ClearDrawScreen();
 
+
 				// オプションに関する
-				OptionProcess();
 				OptionDraw();
+				OptionProcess();
+
 
 				// オプション画面から戻る
 				if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1)
@@ -1575,10 +1664,11 @@ void Manager::Update()
 					optionMenuNow = false;
 				}
 
+
 				ScreenFlip();
-			}
-		}
-	}
+			} /// else(!if (!optionMenuNow))
+		} /// else
+	} /// if (BASICPARAM::e_nowScene == BASICPARAM::e_preScene)	
 	// シーンを移行するように指定されたら
 	else
 	{
@@ -1590,12 +1680,14 @@ void Manager::Update()
 				Move4TextureReload();
 			}
 
+
 			// シーンを変える
 			SceneChange();
 
+
 			// 直前のシーンと今のシーンを同じにする
 			BASICPARAM::e_preScene = BASICPARAM::e_nowScene;
-		}
+		} /// if (!BASICPARAM::endFeedNow)
 		// 現在のシーンの終了フェードのとき
 		else
 		{
@@ -1610,16 +1702,20 @@ void Manager::Update()
 				SetDrawScreen(DX_SCREEN_BACK);
 				ClearDrawScreen();
 
+
 				// ゲームの描画に関するのだけを残してゲームに関するもの
 				p_baseMove->CameraProcess();
 				p_baseMove->Draw();
+
 
 				// フェードアウト処理
 				SetDrawBlendMode(DX_BLENDMODE_ALPHA, feedCount);
 				DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, feedDraw, true);
 				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
+
 				ScreenFlip();
+
 
 				// フェードカウントが一定に達したらフラッグを下す
 				if (feedCount >= 255)
@@ -1636,7 +1732,7 @@ void Manager::Update()
 					feedCount = 0;
 					BASICPARAM::endFeedNow = false;
 				}
-			}
+			} /// if (!preLoadScene)
 			// 終了シーンがロードのとき
 			else
 			{
@@ -1652,15 +1748,19 @@ void Manager::Update()
 				SetDrawScreen(DX_SCREEN_BACK);
 				ClearDrawScreen();
 
+
 				// ゲームの描画に関するのだけを残してゲームに関するもの
 				p_loadThread->Draw();
+
 
 				// フェードアウト処理
 				SetDrawBlendMode(DX_BLENDMODE_ALPHA, feedCount);
 				DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, feedDraw, true);
 				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
+
 				ScreenFlip();
+
 
 				// フェードカウントが一定に達したらフラッグを下す
 				if (feedCount >= 255)
@@ -1668,7 +1768,7 @@ void Manager::Update()
 					feedCount = 0;
 					BASICPARAM::endFeedNow = false;
 				}
-			}
-		}
-	}
-}
+			} /// else(!if (!preLoadScene))
+		} /// else(!if (!BASICPARAM::endFeedNow))
+	} /// else(!if (BASICPARAM::e_nowScene == BASICPARAM::e_preScene))
+} /// void Manager::Update()

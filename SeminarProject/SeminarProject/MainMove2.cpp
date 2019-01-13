@@ -694,6 +694,11 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	vp_stageStairsRoad.clear();
 
 
+	// ムーブ説明
+	moveDescriptionDraw = v_file[EFILE::moveDescription];
+	moveDescriptionFrame = 750;
+
+
 	// 階段の初期化
 	stairsHandle = v_file[EFILE::stairs];
 	stairsTexture0 = v_file[EFILE::stairTex0];
@@ -947,6 +952,10 @@ MainMove2::~MainMove2()
 
 	/// ステージに関する
 	POINTER_RELEASE(p_stage);
+
+
+	/// 説明画像解放
+	GRAPHIC_RELEASE(moveDescriptionDraw);
 } /// MainMove2::~MainMove2()
 
 
@@ -1051,6 +1060,15 @@ void MainMove2::Draw()
 
 	// 精密機械のシーンの描画
 	AdjustmentDraw();
+
+
+	// ムーブ説明をする
+	if (moveDescriptionFrame-- > 0)
+	{
+		if (moveDescriptionFrame < 255) SetDrawBlendMode(DX_BLENDMODE_ALPHA, moveDescriptionFrame);
+		DrawGraph(960 - 266, 540 - 137, moveDescriptionDraw, true);
+		if (moveDescriptionFrame < 255) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	}
 
 #ifdef _DEBUG
 	// 敵

@@ -36,7 +36,7 @@ private:
 		, damageDraw0, damageDraw1, damageDraw2, damageBlood0, damageBlood1
 		, damageBlood2, damageBlood3, damageBlood4, damageBlood5, damageBlood6
 		, damageBlood7, damageBlood8, damageBlood9, enemyAttackSE, crayonDeadSE
-		, fightBGM
+		, fightBGM, moveDescription
 	};
 
 

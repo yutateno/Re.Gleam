@@ -19,7 +19,8 @@ private:
 	// ロードから渡されるファイルの順番
 	enum EFILE { drawStage, collStage, character, sword, sound, seBallHigh, seBall
 	, charaTex0, charaTex1, charaTex2, charaTex3, swordTex0
-	, explanationLeftStick, explanationRightStick};
+	, explanationLeftStick, explanationRightStick, moveDescription
+	};
 
 
 	/// ステージ--------------

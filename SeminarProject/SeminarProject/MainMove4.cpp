@@ -1,6 +1,87 @@
 #include "MainMove4.hpp"
 
 
+// ダメージ画像の色差し替え
+void MainMove4::DamageTextureReload()
+{
+	for (int i = 0; i != 3; ++i)
+	{
+		GRAPHIC_RELEASE(damageDraw[i]);
+	}
+	for (int i = 0; i != 10; ++i)
+	{
+		GRAPHIC_RELEASE(damageBlend[i]);
+	}
+
+	switch (BASICPARAM::e_TextureColor)
+	{
+	case ETextureColor::NORMAL:
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage1\\normal.pyn", damageDraw[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage2\\normal.pyn", damageDraw[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage3\\normal.pyn", damageDraw[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl1\\normal.pyn", damageBlend[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl2\\normal.pyn", damageBlend[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl3\\normal.pyn", damageBlend[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl4\\normal.pyn", damageBlend[3], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl5\\normal.pyn", damageBlend[4], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl6\\normal.pyn", damageBlend[5], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl7\\normal.pyn", damageBlend[6], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl8\\normal.pyn", damageBlend[7], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl9\\normal.pyn", damageBlend[8], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl10\\normal.pyn", damageBlend[9], ELOADFILE::graph);
+		break;
+
+	case ETextureColor::D_CORRECTION:
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage1\\D.pyn", damageDraw[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage2\\D.pyn", damageDraw[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage3\\D.pyn", damageDraw[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl1\\D.pyn", damageBlend[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl2\\D.pyn", damageBlend[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl3\\D.pyn", damageBlend[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl4\\D.pyn", damageBlend[3], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl5\\D.pyn", damageBlend[4], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl6\\D.pyn", damageBlend[5], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl7\\D.pyn", damageBlend[6], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl8\\D.pyn", damageBlend[7], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl9\\D.pyn", damageBlend[8], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl10\\D.pyn", damageBlend[9], ELOADFILE::graph);
+		break;
+
+	case ETextureColor::P_CORRECTION:
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage1\\P.pyn", damageDraw[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage2\\P.pyn", damageDraw[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage3\\P.pyn", damageDraw[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl1\\P.pyn", damageBlend[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl2\\P.pyn", damageBlend[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl3\\P.pyn", damageBlend[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl4\\P.pyn", damageBlend[3], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl5\\P.pyn", damageBlend[4], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl6\\P.pyn", damageBlend[5], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl7\\P.pyn", damageBlend[6], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl8\\P.pyn", damageBlend[7], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl9\\P.pyn", damageBlend[8], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl10\\P.pyn", damageBlend[9], ELOADFILE::graph);
+		break;
+
+	default:
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage1\\normal.pyn", damageDraw[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage2\\normal.pyn", damageDraw[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\damage3\\normal.pyn", damageDraw[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl1\\normal.pyn", damageBlend[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl2\\normal.pyn", damageBlend[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl3\\normal.pyn", damageBlend[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl4\\normal.pyn", damageBlend[3], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl5\\normal.pyn", damageBlend[4], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl6\\normal.pyn", damageBlend[5], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl7\\normal.pyn", damageBlend[6], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl8\\normal.pyn", damageBlend[7], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl9\\normal.pyn", damageBlend[8], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\damage\\Blood\\bl10\\normal.pyn", damageBlend[9], ELOADFILE::graph);
+		break;
+	}
+} /// void MainMove4::DamageTextureReload()
+
+
 // シャドウマップの描画
 void MainMove4::ShadowDraw()
 {
@@ -201,11 +282,11 @@ void MainMove4::AttackProcess()
 
 
 			// エフェクトを再生する。
-			//playingEfAttack = PlayEffekseer3DEffect(effectAttack);
-			//SetScalePlayingEffekseer3DEffect(playingEfAttack, 10, 10, 10);
+			playingEfAttack = PlayEffekseer3DEffect(effectAttack);
+			SetScalePlayingEffekseer3DEffect(playingEfAttack, 10, 10, 10);
 			// 再生中のエフェクトを移動する。
-			//SetPosPlayingEffekseer3DEffect(playingEfAttack, p_character->GetAttackEndFrameArea().x
-			//	, p_character->GetAttackEndFrameArea().y, p_character->GetAttackEndFrameArea().z);
+			SetPosPlayingEffekseer3DEffect(playingEfAttack, p_character->GetAttackEndFrameArea().x
+				, p_character->GetAttackEndFrameArea().y, p_character->GetAttackEndFrameArea().z);
 		}
 	} /// if (!p_enemyMove->GetDeathFlag())
 	else
@@ -335,6 +416,11 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 	vp_stageStreetLight.clear();
 
 
+	// ムーブ説明
+	moveDescriptionDraw = v_file[EFILE::moveDescription];
+	moveDescriptionFrame = 750;
+
+
 	// ステージの初期化
 	p_stage = new Stage(v_file[EFILE::stageDrawModel]);
 
@@ -343,7 +429,6 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 	p_character = new CharacterSword(v_file[EFILE::charaModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel]
 		, v_file[EFILE::paneruModel], v_file[EFILE::stairsRoadCollModel]
 		, v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3], v_file[EFILE::charaTex4]);
-	charaSonmeEnemyDamageCount = 0;
 
 
 	// カメラの初期化
@@ -445,15 +530,74 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 	SoundProcess::Load(v_file[EFILE::se_landingSecond], SoundProcess::ESOUNDNAME_SE::landing2);
 	SoundProcess::Load(v_file[EFILE::bgm_Main], SoundProcess::ESOUNDNAME_BGM::normalBGM);
 	SoundProcess::Load(v_file[EFILE::bgm_battle], SoundProcess::ESOUNDNAME_BGM::battleBGM);
+	SoundProcess::Load(v_file[EFILE::se_enemyDamage], SoundProcess::ESOUNDNAME_SE::strikeBomb);
 
 	SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::battleBGM, 255, 255);
 	// SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 255, 255);
+
+
+	// ダメージ演出
+	damageCount = 0;
+	preDamageCount = damageCount;
+	notDamageCount = 101;
+	damageDrawFrame = 0;
+	damageDrawID = 0;
+	damageDraw[0] = v_file[EFILE::damageDraw0];
+	damageDraw[1] = v_file[EFILE::damageDraw1];
+	damageDraw[2] = v_file[EFILE::damageDraw2];
+	damageBlend[0] = v_file[EFILE::damageBlood0];
+	damageBlend[1] = v_file[EFILE::damageBlood1];
+	damageBlend[2] = v_file[EFILE::damageBlood2];
+	damageBlend[3] = v_file[EFILE::damageBlood3];
+	damageBlend[4] = v_file[EFILE::damageBlood4];
+	damageBlend[5] = v_file[EFILE::damageBlood5];
+	damageBlend[6] = v_file[EFILE::damageBlood6];
+	damageBlend[7] = v_file[EFILE::damageBlood7];
+	damageBlend[8] = v_file[EFILE::damageBlood8];
+	damageBlend[9] = v_file[EFILE::damageBlood9];
+
+
+	// エフェクト読み込み
+	effeckBack[0] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\one.efk");
+	effeckBack[1] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\two.efk");
+	effeckBack[2] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\three.efk");
+	effeckBack[3] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\four.efk");
+	effeckBack[4] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\five.efk");
+	effeckBack[5] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\six.efk");
+	effeckBack[6] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\seven.efk");
+	effeckBack[7] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\eight.efk");
+	effeckBack[8] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\nine.efk");
+	effeckBack[9] = LoadEffekseerEffect("media\\こっち\\media\\Effect\\damagePerticle\\ten.efk");
+	playingEfDamage = -1;
+	effectAttack = LoadEffekseerEffect("media\\こっち\\media\\Effect\\characterAttack.efk");
+	playingEfAttack = -1;
 } /// MainMove4::MainMove4(const std::vector<int> v_file)
 
 
 // デストラクタ
 MainMove4::~MainMove4()
 {
+	// エフェクト開放
+	StopEffekseer3DEffect(playingEfAttack);
+	DeleteEffekseerEffect(effectAttack);
+
+
+	// ダメージ演出
+	StopEffekseer2DEffect(playingEfDamage);
+	for (int i = 0; i != 10; ++i)
+	{
+		DeleteEffekseerEffect(effeckBack[i]);
+	}
+	for (int i = 0; i != 3; ++i)
+	{
+		GRAPHIC_RELEASE(damageDraw[i]);
+	}
+	for (int i = 0; i != 10; ++i)
+	{
+		GRAPHIC_RELEASE(damageBlend[i]);
+	}
+
+
 	// 敵
 	POINTER_RELEASE(p_enemyMove);
 
@@ -523,6 +667,10 @@ MainMove4::~MainMove4()
 
 	// ステージ
 	POINTER_RELEASE(p_stage);
+
+
+	/// 説明画像解放
+	GRAPHIC_RELEASE(moveDescriptionDraw);
 } /// MainMove4::~MainMove4()
 
 
@@ -600,6 +748,115 @@ void MainMove4::Draw()
 		}
 	} /// if (!p_enemyMove->GetEraseExistence())
 	/// ロックオンに関する------------------------------------------------------------------------------------------------------------
+
+
+	/// ダメージに関する-----------------------------------------------------------------------------------------------------------
+	/// エフェクトを再生する-------------------------------------------------------------------------------
+	if (preDamageCount != damageCount / 10)
+	{
+		// ダメージカウントが10の倍数で次か前のエフェクトに切り替える
+		preDamageCount = damageCount / 10;
+
+
+		// エフェクトが再生中だったら
+		if (IsEffekseer2DEffectPlaying(playingEfDamage) == 0) StopEffekseer2DEffect(playingEfDamage);
+
+
+		// エフェクトを再生する
+		playingEfDamage = PlayEffekseer2DEffect(effeckBack[preDamageCount - 1]);
+		SetScalePlayingEffekseer2DEffect(playingEfDamage, 100, 100, 100);
+		SetPosPlayingEffekseer2DEffect(playingEfDamage, 960, 540, 0);
+	}
+	// ダメージを受けていなかったら
+	if (damageCount == 0)
+	{
+		// エフェクトを止める
+		if (IsEffekseer2DEffectPlaying(playingEfDamage) == 0) StopEffekseer2DEffect(playingEfDamage);
+	}
+	/// エフェクトを再生する-------------------------------------------------------------------------------
+
+
+	/// ダメージの演出
+	if (damageDrawFrame > 0)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(damageDrawFrame * 25.5));
+		DrawGraph(0, 0, damageDraw[damageDrawID], true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+
+
+	/// ダメージの蓄積で画面を埋め尽くす処理-----------------------------------------------
+	if (damageCount > 0)
+	{
+		if (damageCount <= 10) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(damageCount * 25.5));
+		DrawGraph(0, 0, damageBlend[0], true);
+		if (damageCount <= 10) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	if (damageCount > 10)
+	{
+		if (damageCount <= 20) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>((damageCount - 10) * 25.5));
+		DrawGraph(0, 0, damageBlend[1], true);
+		if (damageCount <= 20) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	if (damageCount > 20)
+	{
+		if (damageCount <= 30) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>((damageCount - 20) * 25.5));
+		DrawGraph(0, 0, damageBlend[2], true);
+		if (damageCount <= 30) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	if (damageCount > 30)
+	{
+		if (damageCount <= 40) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>((damageCount - 30) * 25.5));
+		DrawGraph(0, 0, damageBlend[3], true);
+		if (damageCount <= 40) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	if (damageCount > 40)
+	{
+		if (damageCount <= 50) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>((damageCount - 40) * 25.5));
+		DrawGraph(0, 0, damageBlend[4], true);
+		if (damageCount <= 50) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	if (damageCount > 50)
+	{
+		if (damageCount <= 60) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>((damageCount - 50) * 25.5));
+		DrawGraph(0, 0, damageBlend[5], true);
+		if (damageCount <= 60) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	if (damageCount > 60)
+	{
+		if (damageCount <= 70) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>((damageCount - 60) * 25.5));
+		DrawGraph(0, 0, damageBlend[6], true);
+		if (damageCount <= 70) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	if (damageCount > 70)
+	{
+		if (damageCount <= 80) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>((damageCount - 70) * 25.5));
+		DrawGraph(0, 0, damageBlend[7], true);
+		if (damageCount <= 80) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	if (damageCount > 80)
+	{
+		if (damageCount <= 90) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>((damageCount - 80) * 25.5));
+		DrawGraph(0, 0, damageBlend[8], true);
+		if (damageCount <= 90) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	if (damageCount > 90)
+	{
+		if (damageCount <= 100) SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>((damageCount - 90) * 25.5));
+		DrawGraph(0, 0, damageBlend[9], true);
+		if (damageCount <= 100) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	/// ダメージの蓄積で画面を埋め尽くす処理-----------------------------------------------
+	/// ダメージに関する-----------------------------------------------------------------------------------------------------------
+
+
+	// ムーブ説明をする
+	if (moveDescriptionFrame-- > 0)
+	{
+		if (moveDescriptionFrame < 255) SetDrawBlendMode(DX_BLENDMODE_ALPHA, moveDescriptionFrame);
+		DrawGraph(960 - 243, 540 - 141 - 70, moveDescriptionDraw, true);
+		if (moveDescriptionFrame < 255) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	}
 } /// void MainMove4::Draw()
 
 
@@ -608,7 +865,19 @@ void MainMove4::Process()
 {
 	// キャラクターのプロセス
 	p_character->Process(p_camera->GetAngle());
-	charaSonmeEnemyDamageCount = 0;				// ダメージを受けた個体数を初期化する
+
+
+	/// ダメージを受けていないカウント数で処理---------------------------------------------------------
+	notDamageCount++;
+
+
+	// ダメージを受けていなかったら回復させる
+	if (notDamageCount > 100 && damageCount > 0 && (notDamageCount - 100) % 10 == 0) damageCount--;
+
+
+	// ダメージ演出画像が残っていたらだんだん消す
+	if (damageDrawFrame > 0) damageDrawFrame--;
+	/// ダメージを受けていないカウント数で処理---------------------------------------------------------
 
 
 	// カメラのプロセス
@@ -659,29 +928,29 @@ void MainMove4::Process()
 				&& p_character->GetArea().y + p_character->GetHeight() >= p_enemyMove->GetArea().y)
 			{
 				// 攻撃SEを流す
-				//SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::strikeBomb, p_enemyMove->GetArea(), 180);
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::strikeBomb, p_enemyMove->GetArea(), 180);
 
 
 				p_character->SetDamage();		// プレイヤーにダメージを与える
 
 
-				//// ダメージを受けていないカウントが0じゃなかったら
-				//if (notDamageCount != 0) notDamageCount = 0;
+				// ダメージを受けていないカウントが0じゃなかったら
+				if (notDamageCount != 0) notDamageCount = 0;
 
 
-				//// ダメージ数値が100以下だったら
-				//if (damageCount < 100)	damageCount++;
+				// ダメージ数値が100以下だったら
+				if (damageCount < 100)	damageCount++;
 
 
-				//// ダメージ演出画像が出ていなかったら
-				//if (damageDrawFrame == 0)
-				//{
-				//	std::random_device rnd;     // 非決定的な乱数生成器を生成
-				//	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
-				//	std::uniform_int_distribution<> blood(0, 2);        // X座標用乱数
-				//	damageDrawID = blood(mt);		// ランダムでダメージ画像を表示する
-				//	damageDrawFrame = 10;			// 10フレームだけ表示するようにする
-				//}
+				// ダメージ演出画像が出ていなかったら
+				if (damageDrawFrame == 0)
+				{
+					std::random_device rnd;     // 非決定的な乱数生成器を生成
+					std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+					std::uniform_int_distribution<> blood(0, 2);        // X座標用乱数
+					damageDrawID = blood(mt);		// ランダムでダメージ画像を表示する
+					damageDrawFrame = 10;			// 10フレームだけ表示するようにする
+				}
 			}
 		} /// if (!p_enemyMove->GetDeathFlag())
 	} /// if (!p_enemyMove->GetEraseExistence())
@@ -727,54 +996,78 @@ void MainMove4::CameraProcess()
 // テクスチャの差し替え
 void MainMove4::TextureReload()
 {
-	// キャラクター
-	p_character->TextureReload();
+	// キャラクターのテクスチャが白黒指定じゃなかったら
+	if (!BASICPARAM::charaTextureWhiteBlack)
+	{
+		// ダメージ演出
+		DamageTextureReload();
+
+
+		// キャラクター
+		p_character->TextureReload();
+	}
 
 
 	// 敵
-	if (!p_enemyMove->GetDeathFlag())
+	if (!BASICPARAM::enemyTextureWhiteBlack)
 	{
-		p_enemyMove->TextureReload();
-	}
-
-
-	// 人
-	for (int i = 0; i != ordinaryNum; ++i)
-	{
-		p_ordinaryPerson[i]->TextureReload();
-	}
-
-
-	// 精密機械
-	p_adjustmentMachine->TextureReload();
-
-
-	// 階段
-	if (BASICPARAM::stairsNum != 0)
-	{
-		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+		if (!p_enemyMove->GetDeathFlag())
 		{
-			vp_stageStairs[i]->TextureReload();
+			p_enemyMove->TextureReload();
 		}
 	}
 
 
-	// 街灯
-	if (BASICPARAM::streetLightNum != 0)
+	// その他のテクスチャが白黒指定じゃなかったら
+	if (!BASICPARAM::anothreTextureWhiteBlack)
 	{
-		for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
+		// 精密機械
+		p_adjustmentMachine->TextureReload();
+
+
+		// 人
+		for (int i = 0; i != ordinaryNum; ++i)
 		{
-			vp_stageStreetLight[i]->TextureReload();
+			p_ordinaryPerson[i]->TextureReload();
 		}
 	}
 
 
-	// 階段と床
-	if (BASICPARAM::stairsRoadNum != 0)
+	// 階段のテクスチャが白黒指定じゃなかったら
+	if (!BASICPARAM::stairsTextureWhiteBlack)
 	{
-		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+		if (BASICPARAM::stairsNum != 0)
 		{
-			vp_stageStairsRoad[i]->TextureReload();
+			for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+			{
+				vp_stageStairs[i]->TextureReload();
+			}
+		}
+	}
+
+
+	// 街灯のテクスチャが白黒指定じゃなかったら
+	if (!BASICPARAM::lightStreetTextureWhiteBlack)
+	{
+		if (BASICPARAM::streetLightNum != 0)
+		{
+			for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
+			{
+				vp_stageStreetLight[i]->TextureReload();
+			}
+		}
+	}
+
+
+	// 階段と床のテクスチャが白黒指定じゃなかったら
+	if (!BASICPARAM::stairsRoadTextureWhiteBlack)
+	{
+		if (BASICPARAM::stairsRoadNum != 0)
+		{
+			for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+			{
+				vp_stageStairsRoad[i]->TextureReload();
+			}
 		}
 	}
 } /// void MainMove4::TextureReload()

@@ -387,6 +387,11 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 	}
 
 
+	// ムーブ説明
+	moveDescriptionDraw = v_file[EFILE::moveDescription];
+	moveDescriptionFrame = 750;
+
+
 	// ステージ初期化
 	p_stage = new Stage(v_file[EFILE::drawStage]);	
 
@@ -526,6 +531,10 @@ MainMove1::~MainMove1()
 
 	// ステージ開放
 	POINTER_RELEASE(p_stage);
+
+
+	// 説明画像解放
+	GRAPHIC_RELEASE(moveDescriptionDraw);
 } /// MainMove1::~MainMove1() /// MainMove1::~MainMove1()
 
 
@@ -591,6 +600,16 @@ void MainMove1::Draw()
 		SetScalePlayingEffekseer2DEffect(playingEfBack, 100, 100, 100);
 		SetPosPlayingEffekseer2DEffect(playingEfBack, 960, 540, 0);
 	}
+
+
+	// ムーブ説明をする
+	if (moveDescriptionFrame-- > 0)
+	{
+		if(moveDescriptionFrame < 255) SetDrawBlendMode(DX_BLENDMODE_ALPHA, moveDescriptionFrame);
+		DrawGraph(960 - 196, 540 - 143, moveDescriptionDraw, true);
+		if (moveDescriptionFrame < 255) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	}
+
 
 #ifdef _DEBUG
 	p_dropItem->Draw();

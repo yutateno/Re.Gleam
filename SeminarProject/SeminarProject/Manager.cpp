@@ -125,6 +125,9 @@ void Manager::InitMove1Load()
 		// コントローラー説明
 		move1str[12] = "media\\こっち\\media\\move1\\hida.pyn";
 		move1str[13] = "media\\こっち\\media\\move1\\mighi.pyn";
+
+		// ムーブ説明画像
+		move1str[14] = "media\\こっち\\media\\ムーブ説明\\move1.pyn";
 	}
 
 
@@ -152,6 +155,8 @@ void Manager::InitMove1Load()
 		// コントローラー説明
 		load1[12] = ELOADFILE::graph;
 		load1[13] = ELOADFILE::graph;
+
+		load1[14] = ELOADFILE::graph;
 	}
 } /// void Manager::InitMove1Load()
 
@@ -245,6 +250,9 @@ void Manager::InitMove2Load()
 		move2str[45] = "media\\こっち\\media\\move2\\jumpTrans.pyn";
 		move2str[46] = "media\\こっち\\media\\move2\\fastSpeedTrans.pyn";
 		move2str[47] = "media\\こっち\\media\\move2\\optionTrans.pyn";
+
+		// ムーブの説明
+		move2str[48] = "media\\こっち\\media\\ムーブ説明\\move2.pyn";
 	}
 
 
@@ -310,6 +318,8 @@ void Manager::InitMove2Load()
 		load2[45] = ELOADFILE::graph;
 		load2[46] = ELOADFILE::graph;
 		load2[47] = ELOADFILE::graph;
+
+		load2[48] = ELOADFILE::graph;
 	}
 } /// void Manager::InitMove2Load()
 
@@ -421,6 +431,9 @@ void Manager::InitMove3Load()
 
 		// 攻撃BGM
 		move3str[57] = "media\\こっち\\media\\sound\\戦闘BGM.wyn";
+
+		// ムーブ説明画像
+		move3str[58] = "media\\こっち\\media\\ムーブ説明\\move3.pyn";
 	}
 
 
@@ -504,6 +517,8 @@ void Manager::InitMove3Load()
 		load3[56] = ELOADFILE::sound3DSource;
 
 		load3[57] = ELOADFILE::soundStream;
+
+		load3[58] = ELOADFILE::graph;
 	}
 } /// void Manager::InitMove3Load()
 
@@ -584,6 +599,27 @@ void Manager::InitMove4Load()
 
 		// 攻撃BGM
 		move4str[38] = "media\\こっち\\media\\sound\\戦闘BGM.wyn";
+
+		// ムーブの説明画像
+		move4str[39] = "media\\こっち\\media\\ムーブ説明\\move4.pyn";
+
+		// ダメージ演出画像
+		move4str[40] = "media\\こっち\\media\\damage\\damage1\\whiteblack.pyn";
+		move4str[41] = "media\\こっち\\media\\damage\\damage2\\whiteblack.pyn";
+		move4str[42] = "media\\こっち\\media\\damage\\damage3\\whiteblack.pyn";
+		move4str[43] = "media\\こっち\\media\\damage\\Blood\\bl1\\whiteblack.pyn";
+		move4str[44] = "media\\こっち\\media\\damage\\Blood\\bl2\\whiteblack.pyn";
+		move4str[45] = "media\\こっち\\media\\damage\\Blood\\bl3\\whiteblack.pyn";
+		move4str[46] = "media\\こっち\\media\\damage\\Blood\\bl4\\whiteblack.pyn";
+		move4str[47] = "media\\こっち\\media\\damage\\Blood\\bl5\\whiteblack.pyn";
+		move4str[48] = "media\\こっち\\media\\damage\\Blood\\bl6\\whiteblack.pyn";
+		move4str[49] = "media\\こっち\\media\\damage\\Blood\\bl7\\whiteblack.pyn";
+		move4str[50] = "media\\こっち\\media\\damage\\Blood\\bl8\\whiteblack.pyn";
+		move4str[51] = "media\\こっち\\media\\damage\\Blood\\bl9\\whiteblack.pyn";
+		move4str[52] = "media\\こっち\\media\\damage\\Blood\\bl10\\whiteblack.pyn";
+
+		// 敵の攻撃音
+		move4str[53] = "media\\こっち\\media\\sound\\殴る音（爆発）.wyn";
 	}
 
 
@@ -643,6 +679,25 @@ void Manager::InitMove4Load()
 		load4[37] = ELOADFILE::graph;
 
 		load4[38] = ELOADFILE::soundStream;
+
+		load4[39] = ELOADFILE::graph;
+
+		load4[40] = ELOADFILE::graph;
+		load4[41] = ELOADFILE::graph;
+		load4[42] = ELOADFILE::graph;
+		load4[43] = ELOADFILE::graph;
+		load4[44] = ELOADFILE::graph;
+		load4[45] = ELOADFILE::graph;
+		load4[46] = ELOADFILE::graph;
+		load4[47] = ELOADFILE::graph;
+		load4[48] = ELOADFILE::graph;
+		load4[49] = ELOADFILE::graph;
+		load4[50] = ELOADFILE::graph;
+		load4[51] = ELOADFILE::graph;
+		load4[52] = ELOADFILE::graph;
+		load4[53] = ELOADFILE::graph;
+
+		load4[54] = ELOADFILE::sound3DSource;
 	}
 } /// void Manager::InitMove4Load()
 
@@ -869,6 +924,9 @@ void Manager::InitMove5Load()
 		// 一般人のデータ
 		move5str[36] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.myn";
 		move5str[37] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\whiteblack\\human_col.pyn";
+
+		// ムーブの説明画像
+		move5str[38] = "media\\こっち\\media\\ムーブ説明\\move5.pyn";
 	}
 
 
@@ -926,6 +984,8 @@ void Manager::InitMove5Load()
 
 		load5[36] = ELOADFILE::mv1model;
 		load5[37] = ELOADFILE::graph;
+
+		load5[38] = ELOADFILE::graph;
 	}
 } /// void Manager::InitMove5Load()
 
@@ -1548,8 +1608,8 @@ void Manager::OptionDraw()
 Manager::Manager()
 {
 	// 初期化
-	BASICPARAM::e_preScene = ESceneNumber::FOURTHLOAD;
-	BASICPARAM::e_nowScene = ESceneNumber::FOURTHLOAD;
+	BASICPARAM::e_preScene = ESceneNumber::FIRSTLOAD;
+	BASICPARAM::e_nowScene = ESceneNumber::FIRSTLOAD;
 	BASICPARAM::e_preTextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::e_TextureColor = ETextureColor::WHITEBLACK;
 	BASICPARAM::nowCameraOrtho = false;

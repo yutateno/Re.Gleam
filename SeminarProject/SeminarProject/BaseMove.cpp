@@ -223,6 +223,10 @@ BaseMove::BaseMove()
 	skyBoxUnder = -1;
 	skyBoxUp = -1;
 	textureHandle = -1;
+
+
+	// à–¾‰æ‘œ
+	moveDescriptionDraw = -1;
 }
 
 

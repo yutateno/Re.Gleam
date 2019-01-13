@@ -60,6 +60,15 @@ protected:
 	static ESceneNumber scene;
 
 
+	/// ムーブ毎の説明画像--------------
+
+	// ムーブ説明の画像
+	int moveDescriptionDraw;
+
+	// ムーブ説明のフレーム
+	int moveDescriptionFrame;
+
+
 	/// 影に関して-----------------------------------------------
 	/// 設定する
 

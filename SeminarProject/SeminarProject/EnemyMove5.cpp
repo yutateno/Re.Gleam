@@ -223,6 +223,7 @@ EnemyMove5::EnemyMove5(const int modelHandle, const int collStageHandle, const i
 	// 3Dモデルの読み込み
 	this->modelHandle = -1;
 	this->modelHandle = MV1DuplicateModel(modelHandle);
+	MV1SetScale(this->modelHandle, VGet(0.5f, 0.5f, 0.5f));
 
 
 	// テクスチャの適応
@@ -243,8 +244,8 @@ EnemyMove5::EnemyMove5(const int modelHandle, const int collStageHandle, const i
 
 
 	// モデルの基本情報
-	modelHeight = 130.0f;
-	modelWidth = 70.0f;
+	modelHeight = 96.0f;
+	modelWidth = 35.0f;
 
 
 	// モデルの向きと位置
@@ -260,8 +261,8 @@ EnemyMove5::EnemyMove5(const int modelHandle, const int collStageHandle, const i
 
 
 	// 足元の影に関する
-	shadowHeight = 65.0f;
-	shadowSize = 35.0f;
+	shadowHeight = 48.0f;
+	shadowSize = 17.0f;
 
 
 	// それぞれの速度
@@ -509,7 +510,7 @@ void EnemyMove5::Process()
 		&& fabsf(charaLookAtAngle) - (DX_PI_F / 4) < fabsf(direXAngle + direZAngle)
 		&& playerCharaDistance <= 1500)
 	{
-		direXAngle = 0.0f;
+		direXAngle = DX_PI_F;
 		direZAngle = charaLookAtAngle;
 		charaLookAt = true;
 		escapeFrame = 10;

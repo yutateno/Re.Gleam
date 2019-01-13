@@ -31,6 +31,7 @@ private:
 		, stairsRoadCollModel, se_jump, se_footCorridor, se_foot, se_landing
 		, se_landingSecond, se_attackOne, se_attackTwo, se_attackThrid
 		, bgm_Main, enemyModel, enemyTex0, ordinaryModel, ordinaryTex0
+		, moveDescription
 	};
 
 
@@ -61,10 +62,13 @@ private:
 	/// “G---------------------
 
 	// “G‚Ìƒ|ƒCƒ“ƒ^
-	EnemyMove5* p_enemyMove[10];
+	EnemyMove5* p_enemyMove[50];
 
 	// “G‚Ì”
-	const int enemyNum = 10;
+	const int enemyNum = 50;
+
+	// “G‚ğè‚É“ü‚ê‚½”
+	int enemyCatchNum;
 
 
 	/// ˆê”Êl------------------

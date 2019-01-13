@@ -768,6 +768,11 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	vp_stageStreetLight.clear();
 
 
+	// ムーブ説明
+	moveDescriptionDraw = v_file[EFILE::moveDescription];
+	moveDescriptionFrame = 750;
+
+
 	// ステージの初期化
 	p_stage = new Stage(v_file[EFILE::stageDrawModel]);
 
@@ -1089,6 +1094,10 @@ MainMove3::~MainMove3()
 
 	// ステージ
 	POINTER_RELEASE(p_stage);
+
+
+	/// 説明画像解放
+	GRAPHIC_RELEASE(moveDescriptionDraw);
 } /// MainMove3::~MainMove3()
 
 
@@ -1319,6 +1328,15 @@ void MainMove3::Draw()
 
 
 	AdjustmentDraw();		// 精密機械の描画
+
+
+	// ムーブ説明をする
+	if (moveDescriptionFrame-- > 0)
+	{
+		if (moveDescriptionFrame < 255) SetDrawBlendMode(DX_BLENDMODE_ALPHA, moveDescriptionFrame);
+		DrawGraph(960 - 268, 540 - 146 - 73, moveDescriptionDraw, true);
+		if (moveDescriptionFrame < 255) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	}
 } /// void MainMove3::Draw()
 
 
@@ -1779,7 +1797,7 @@ void MainMove3::TextureReload()
 	}
 
 
-	// 敵スライムのテクスチャが白黒指定じゃなかったら
+	// 敵スライム
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
 		if (p_enemySlime[i]->GetDeathFlag()) continue;
@@ -1787,7 +1805,7 @@ void MainMove3::TextureReload()
 	}
 
 
-	// 敵クレヨンヒューマンのテクスチャが白黒指定じゃなかったら
+	// 敵クレヨンヒューマン
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
 		if (p_enemyCrayonHuman[i]->GetDeathFlag()) continue;

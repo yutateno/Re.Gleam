@@ -31,7 +31,10 @@ private:
 		, stairsRoadCollModel, se_jump, se_footCorridor, se_foot, se_landing
 		, se_landingSecond, se_attackOne, se_attackTwo, se_attackThrid
 		, bgm_Main, ordiPersonModel, ordiPersonTex0, enemyModel, enemyTex0
-		, bgm_battle
+		, bgm_battle, moveDescription, damageDraw0, damageDraw1, damageDraw2
+		, damageBlood0, damageBlood1, damageBlood2, damageBlood3, damageBlood4
+		, damageBlood5, damageBlood6, damageBlood7, damageBlood8, damageBlood9
+		, se_enemyDamage
 	};
 
 
@@ -58,8 +61,29 @@ private:
 	// キャラクターのポインタ
 	CharacterSword* p_character;
 
-	// 多くの敵にダメージ受けた時に代表二体のみ受けるようにするカウント
-	int charaSonmeEnemyDamageCount;
+	// ダメージ数値
+	int damageCount;
+
+	// 直前のダメージカウント
+	int preDamageCount;
+
+	// ダメージのブレンド数値
+	int damageBlend[10];
+
+	// ダメージ表示画像
+	int damageDraw[3];
+
+	// ダメージを受けていないカウント
+	int notDamageCount;
+
+	// ダメージ表示画像のフレーム
+	int damageDrawFrame;
+
+	// ダメージ画像のID
+	int damageDrawID;
+
+	// ダメージ画像の色覚差し替え
+	void DamageTextureReload();
 
 
 	/// 人------------------------------
@@ -110,6 +134,14 @@ private:
 
 	// BGMの切り替えが行われたかどうか
 	bool nowBattleBGM;
+
+
+	/// エフェクトに関して
+
+	int effeckBack[10];		// ダメージ演出の10種類
+	int playingEfDamage;		// ダメージ演出用
+	int effectAttack;
+	int playingEfAttack;
 
 
 public:

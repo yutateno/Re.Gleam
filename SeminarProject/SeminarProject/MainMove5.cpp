@@ -116,45 +116,63 @@ void MainMove5::ShadowDraw()
 	// ステージ
 	p_stage->Draw();
 	// 階段
-	if (BASICPARAM::stairsNum != 0)
+	if (enemyCatchNum >= 40)
 	{
-		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+		if (BASICPARAM::stairsNum != 0)
 		{
-			vp_stageStairs[i]->ModelDraw();
+			for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+			{
+				vp_stageStairs[i]->ModelDraw();
+			}
 		}
 	}
 	// 街灯
-	if (BASICPARAM::streetLightNum != 0)
+	if (enemyCatchNum >= 20)
 	{
-		for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
+		if (BASICPARAM::streetLightNum != 0)
 		{
-			vp_stageStreetLight[i]->ModelDraw();
+			for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
+			{
+				vp_stageStreetLight[i]->ModelDraw();
+			}
 		}
 	}
 	// 階段と床
-	if (BASICPARAM::stairsRoadNum != 0)
+	if (enemyCatchNum >= 45)
 	{
-		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+		if (BASICPARAM::stairsRoadNum != 0)
 		{
-			vp_stageStairsRoad[i]->ModelDraw();
+			for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+			{
+				vp_stageStairsRoad[i]->ModelDraw();
+			}
 		}
 	}
 	// パネル
-	if (BASICPARAM::paneruDrawFlag)
+	if (enemyCatchNum >= 35)
 	{
-		for (int i = 0; i != 10; ++i)
+		if (BASICPARAM::paneruDrawFlag)
 		{
-			p_stagePaneru[i]->ModelDraw();
+			for (int i = 0; i != 10; ++i)
+			{
+				p_stagePaneru[i]->ModelDraw();
+			}
 		}
 	}
 	// 精密機械
-	p_adjustmentMachine->ModelDraw();
-	// 一般人
-	if (BASICPARAM::ordinaryPeopleNum != 0)
+	if (enemyCatchNum >= 5)
 	{
-		for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+		p_adjustmentMachine->ModelDraw();
+	}
+	// 一般人
+	if (enemyCatchNum >= 15)
+	{
+		if (BASICPARAM::ordinaryPeopleNum != 0)
 		{
-			vp_ordinaryPerson[i]->ModelDraw();
+			for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+			{
+				vp_ordinaryPerson[i]->ModelDraw();
+			}
 		}
 	}
 	// 敵
@@ -163,12 +181,18 @@ void MainMove5::ShadowDraw()
 		p_enemyMove[i]->ModelDraw();
 	}
 	// キャラクター
-	p_character->ModelDraw();
+	if (enemyCatchNum >= 30)
+	{
+		p_character->ModelDraw();
+	}
 	BaseMove::ShadowNoMoveDrawAfter();
 	BaseMove::ShadowAnotherCharaDrawAfter();
 	BaseMove::ShadowCharaDrawAfter();
 	// キャラクター
-	p_character->ModelDraw();
+	if (enemyCatchNum >= 30)
+	{
+		p_character->ModelDraw();
+	}
 } /// void MainMove5::ShadowDraw()
 
 
@@ -242,6 +266,7 @@ void MainMove5::AttackProcess()
 		{
 			// 死ぬ
 			p_enemyMove[i]->SetDie();
+			enemyCatchNum++;
 		}
 	}
 	/// プレイヤーから押し出される-----------------------------------------------------
@@ -286,8 +311,14 @@ void MainMove5::ThsTextureReload()
 // コンストラクタ
 MainMove5::MainMove5(const std::vector<int> v_file)
 {
-	// パネルの表示を消す
+	// 初期化
 	BASICPARAM::paneruDrawFlag = false;
+	BASICPARAM::lastCharaView = false;
+	BASICPARAM::lastOrdinaryView = false;
+	BASICPARAM::lastPaneruView = false;
+	BASICPARAM::lastStairsRoadView = false;
+	BASICPARAM::lastStairsView = false;
+	BASICPARAM::lastStreetLightView = false;
 
 
 	// ポインタNULL初期化
@@ -308,6 +339,11 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 	vp_stageStairsRoad.clear();
 	vp_stageStreetLight.clear();
 	vp_ordinaryPerson.clear();
+
+
+	// ムーブ説明
+	moveDescriptionDraw = v_file[EFILE::moveDescription];
+	moveDescriptionFrame = 750;
 
 
 	// ステージの初期化
@@ -388,9 +424,31 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 	std::uniform_int_distribution<> randInZ(-4000, 4000);        // Z座標用乱数
 	for (int i = 0; i != enemyNum; ++i)
 	{
+		// X座標設定
+		float tempX = static_cast<float>(randInX(mt));
+		if (tempX <= 200.0f && tempX >= 0.0f)
+		{
+			tempX += 200.0f;
+		}
+		if (tempX >= -200.0f && tempX <= 0.0f)
+		{
+			tempX -= 200.0f;
+		}
+
+		// Y座標設定
+		float tempZ = static_cast<float>(randInZ(mt));
+		if (tempZ <= 200.0f && tempZ >= 0.0f)
+		{
+			tempZ += 200.0f;
+		}
+		if (tempZ >= -200.0f && tempZ <= 0.0f)
+		{
+			tempZ -= 200.0f;
+		}
 		p_enemyMove[i] = new EnemyMove5(v_file[EFILE::enemyModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
-			, v_file[EFILE::enemyTex0], VGet(-1000.0f, 0, 1000.0f + (i * 200)), 0);
+			, v_file[EFILE::enemyTex0], VGet(tempX, 0.0f, tempZ), 0);
 	}
+	enemyCatchNum = 0;
 
 
 	// 一般人
@@ -533,6 +591,10 @@ MainMove5::~MainMove5()
 
 	// ステージ
 	POINTER_RELEASE(p_stage);
+
+
+	/// 説明画像解放
+	GRAPHIC_RELEASE(moveDescriptionDraw);
 } /// MainMove5::~MainMove5()
 
 
@@ -575,6 +637,15 @@ void MainMove5::Draw()
 	{
 		// 説明画像を表示する
 		DrawBillboard3D(VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 200.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, adjustmentDescDraw, false);
+	}
+
+
+	// ムーブ説明をする
+	if (moveDescriptionFrame-- > 0)
+	{
+		if (moveDescriptionFrame < 255) SetDrawBlendMode(DX_BLENDMODE_ALPHA, moveDescriptionFrame);
+		DrawGraph(960 - 291, 540 - 64 - 32, moveDescriptionDraw, true);
+		if (moveDescriptionFrame < 255) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 	}
 } /// void MainMove5::Draw()
 
@@ -633,6 +704,12 @@ void MainMove5::Process()
 	// 次のシーンへ移行する場所に居たら
 	if (p_character->GetArea().y >= 3550.0f)
 	{
+		if (enemyCatchNum >= 30) BASICPARAM::lastCharaView = true;
+		if (enemyCatchNum >= 15) BASICPARAM::lastOrdinaryView = true;
+		if (enemyCatchNum >= 35) BASICPARAM::lastPaneruView = true;
+		if (enemyCatchNum >= 45) BASICPARAM::lastStairsRoadView = true;
+		if (enemyCatchNum >= 40) BASICPARAM::lastStairsView = true;
+		if (enemyCatchNum >= 20) BASICPARAM::lastStreetLightView = true;
 		BASICPARAM::endFeedNow = true;
 		BaseMove::SetScene(ESceneNumber::FOURTHLOAD);
 	}
@@ -657,57 +734,77 @@ void MainMove5::CameraProcess()
 // テクスチャの読み込み
 void MainMove5::TextureReload()
 {
-	// キャラクター
-	p_character->TextureReload();
+	// キャラクターのテクスチャが白黒指定じゃなかったら
+	if (!BASICPARAM::charaTextureWhiteBlack)
+	{
+		// キャラクター
+		p_character->TextureReload();
+	}
 
 
-	// 精密機械
-	p_adjustmentMachine->TextureReload();
+	// その他のテクスチャが白黒指定じゃなかったら
+	if (!BASICPARAM::anothreTextureWhiteBlack)
+	{
+		// 精密機械
+		p_adjustmentMachine->TextureReload();
+
+
+		// 一般人
+		if (BASICPARAM::ordinaryPeopleNum != 0)
+		{
+			for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+			{
+				vp_ordinaryPerson[i]->TextureReload();
+			}
+		}
+	}
 
 
 	// 敵
-	for (int i = 0; i != enemyNum; ++i)
+	if (!BASICPARAM::enemyTextureWhiteBlack)
 	{
-		p_enemyMove[i]->TextureReload();
-	}
-
-
-	// 一般人
-	if (BASICPARAM::ordinaryPeopleNum != 0)
-	{
-		for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+		for (int i = 0; i != enemyNum; ++i)
 		{
-			vp_ordinaryPerson[i]->TextureReload();
+			p_enemyMove[i]->TextureReload();
 		}
 	}
 
 
-	// 階段
-	if (BASICPARAM::stairsNum != 0)
+	// 階段のテクスチャが白黒指定じゃなかったら
+	if (!BASICPARAM::stairsTextureWhiteBlack)
 	{
-		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+		if (BASICPARAM::stairsNum != 0)
 		{
-			vp_stageStairs[i]->TextureReload();
+			for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+			{
+				vp_stageStairs[i]->TextureReload();
+			}
 		}
 	}
 
 
-	// 街灯
-	if (BASICPARAM::streetLightNum != 0)
+	// 街灯のテクスチャが白黒指定じゃなかったら
+	if (!BASICPARAM::lightStreetTextureWhiteBlack)
 	{
-		for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
+		if (BASICPARAM::streetLightNum != 0)
 		{
-			vp_stageStreetLight[i]->TextureReload();
+			for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
+			{
+				vp_stageStreetLight[i]->TextureReload();
+			}
 		}
 	}
 
 
-	// 階段と床
-	if (BASICPARAM::stairsRoadNum != 0)
+	// 階段と床のテクスチャが白黒指定じゃなかったら
+	if (!BASICPARAM::stairsRoadTextureWhiteBlack)
 	{
-		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+		if (BASICPARAM::stairsRoadNum != 0)
 		{
-			vp_stageStairsRoad[i]->TextureReload();
+			for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+			{
+				vp_stageStairsRoad[i]->TextureReload();
+			}
 		}
 	}
 } /// void MainMove5::TextureReload()

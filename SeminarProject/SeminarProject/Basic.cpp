@@ -31,7 +31,12 @@ bool BASICPARAM::stairsRoadTextureWhiteBlack;
 bool BASICPARAM::lightStreetTextureWhiteBlack;
 bool BASICPARAM::anothreTextureWhiteBlack;
 int BASICPARAM::ordinaryPeopleNum;
-
+bool BASICPARAM::lastCharaView;
+bool BASICPARAM::lastStreetLightView;
+bool BASICPARAM::lastStairsView;
+bool BASICPARAM::lastStairsRoadView;
+bool BASICPARAM::lastPaneruView;
+bool BASICPARAM::lastOrdinaryView;
 
 
 /// debug-----------------------------------------------------------------------------------------------------------------------

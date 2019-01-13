@@ -110,6 +110,24 @@ namespace BASICPARAM
 
 	// 一般人の人数
 	extern int ordinaryPeopleNum;
+
+	// ムーブ5にてキャラを描画するようにしたかどうか
+	extern bool lastCharaView;
+
+	// ムーブ5にて街灯を描画するようにしたかどうか
+	extern bool lastStreetLightView;
+
+	// ムーブ5にて階段を描画するようにしたかどうか
+	extern bool lastStairsView;
+
+	// ムーブ5にて階段と床を描画するようにしたかどうか
+	extern bool lastStairsRoadView;
+
+	// ムーブ5にてパネルを描画するようにしたかどうか
+	extern bool lastPaneruView;
+
+	// ムーブ5にて一般人を描画するようにしたかどうか
+	extern bool lastOrdinaryView;
 }
 
 

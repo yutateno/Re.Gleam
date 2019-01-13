@@ -4,49 +4,58 @@
 // モーションプロセス
 void EnemyMove4::MotionProcess()
 {
-	// サイズが大きいときだったら
-	if (damageCount <= bigBodyChangeDamage)
+	// 死んでいなかったら
+	if (!deathFlag)
 	{
-		Player_PlayAnim(MOTION::idle);
-	}
-	// サイズが小さくなったら
-	else
-	{
-		// プレイヤーとの距離が攻撃範囲内でキャラクターを視認していたら
-		if (playerCharaDistance <= 200)
+		// サイズが大きいときだったら
+		if (damageCount <= bigBodyChangeDamage)
 		{
-			// ダメージを受けているとき
-			if (damageHit)
-			{
-				Player_PlayAnim(MOTION::damage);
-			}
-			// ダメージを受けていないとき
-			else
-			{
-				Player_PlayAnim(MOTION::attack);
-
-
-				attackFrame += animSpeed;
-				// 攻撃が終わったら
-				if (attackFrame >= MV1GetAnimTotalTime(modelHandle, MOTION::attack))
-				{
-					// フレームを初期化し、ダメージを反映させる
-					attackDamageNow = true;
-					attackFrame = 0.0f;
-				}
-				// 攻撃中だったら
-				else
-				{
-					// ダメージを反映させない
-					attackDamageNow = false;
-				}
-			}
+			Player_PlayAnim(MOTION::idle);
 		}
-		// プレイヤーと合い関せずだったら
+		// サイズが小さくなったら
 		else
 		{
-			Player_PlayAnim(MOTION::dash);
+			// プレイヤーとの距離が攻撃範囲内でキャラクターを視認していたら
+			if (playerCharaDistance <= 200)
+			{
+				// ダメージを受けているとき
+				if (damageHit)
+				{
+					Player_PlayAnim(MOTION::damage);
+				}
+				// ダメージを受けていないとき
+				else
+				{
+					Player_PlayAnim(MOTION::attack);
+
+
+					attackFrame += animSpeed;
+					// 攻撃が終わったら
+					if (attackFrame >= MV1GetAnimTotalTime(modelHandle, MOTION::attack))
+					{
+						// フレームを初期化し、ダメージを反映させる
+						attackDamageNow = true;
+						attackFrame = 0.0f;
+					}
+					// 攻撃中だったら
+					else
+					{
+						// ダメージを反映させない
+						attackDamageNow = false;
+					}
+				}
+			}
+			// プレイヤーと合い関せずだったら
+			else
+			{
+				Player_PlayAnim(MOTION::dash);
+			}
 		}
+	}
+	// 死んでいたら
+	else
+	{
+		Player_PlayAnim(MOTION::death);
 	}
 }
 
@@ -328,6 +337,38 @@ void EnemyMove4::UniqueModelDraw()
 // プロセス
 void EnemyMove4::Process()
 {
+	// 消滅していたら
+	if (eraseExistence) return;
+
+
+	// 死んだとき
+	if (deathFlag)
+	{
+		MotionProcess();	// モーションプロセス
+
+
+		Player_AnimProcess();		// モーションの実態
+
+
+		// 透過値が0以上だったら
+		if (blendCount >= 0)
+		{
+			blendCount -= 5;
+		}
+		else
+		{
+			eraseExistence = true;
+		}
+
+
+		MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
+		MV1SetMaterialDrawBlendParam(this->modelHandle, 1, blendCount);
+
+
+		return;
+	}
+
+
 	// 直前の座標
 	preArea = area;
 

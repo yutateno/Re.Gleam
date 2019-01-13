@@ -1,37 +1,13 @@
-#include "EnemyMove3CrayonHuman.hpp"
+#include "EnemyMove5.hpp"
 
 
 // モーションのプロセス
-void EnemyMove3CrayonHuman::MotionProcess()
+void EnemyMove5::MotionProcess()
 {
 	// 死んでいなかったら
 	if (!deathFlag)
 	{
-		// プレイヤーとの距離が近くてプレイヤーを視認していたら
-		if (playerCharaDistance <= 200 && charaLookAt)
-		{
-			// 攻撃の処理をする
-			Player_PlayAnim(MOTION::damage);
-			attackFrame += animSpeed;
-
-
-			// モーションの終了
-			if (attackFrame > MV1GetAnimTotalTime(modelHandle, MOTION::damage))
-			{
-				attackDamageNow = true;
-				attackFrame = 0.0f;
-			}
-			else
-			{
-				attackDamageNow = false;
-			}
-		}
-		// プレイヤーを視認していなかったら
-		else
-		{
-			if (attackDamageNow) attackDamageNow = false;
-			Player_PlayAnim(MOTION::idle);
-		}
+		Player_PlayAnim(MOTION::dash);
 	}
 	// 死んだら
 	else
@@ -42,7 +18,7 @@ void EnemyMove3CrayonHuman::MotionProcess()
 
 
 // 自動的な動きプロセス
-void EnemyMove3CrayonHuman::AutoMoveProcess()
+void EnemyMove5::AutoMoveProcess()
 {
 	// 直前方向だったら
 	if (direXAngle == 0.0f)
@@ -142,10 +118,10 @@ void EnemyMove3CrayonHuman::AutoMoveProcess()
 } /// void EnemyMove3CrayonHuman::AutoMoveProcess()
 
 
-// プレイヤーを追いかけるプロセス
-void EnemyMove3CrayonHuman::ChaseMoveProcess()
+// プレイヤーから逃げるプロセス
+void EnemyMove5::EscapeMoveProcess()
 {
-	walkSpeed = 7.0f;		// 移動速度を早めに設定
+	walkSpeed = -7.0f;		// 移動速度を早めに設定
 
 
 	// キャラクターに近づく
@@ -169,7 +145,7 @@ void EnemyMove3CrayonHuman::ChaseMoveProcess()
 
 
 // 落下処理
-void EnemyMove3CrayonHuman::FallProcess()
+void EnemyMove5::FallProcess()
 {
 	// 足元に何もなかったら
 	if (fallCount > 1)
@@ -221,7 +197,7 @@ void EnemyMove3CrayonHuman::FallProcess()
 
 
 // コンストラクタ
-EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
+EnemyMove5::EnemyMove5(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
 	, const int tex0, const VECTOR area, const float rotationY) : BasicCreature(true)
 {
 	// 当たり判定用ステージのコリジョン情報の更新
@@ -284,8 +260,8 @@ EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int co
 
 
 	// 足元の影に関する
-	shadowHeight = 20.0f;
-	shadowSize = 70.0f;
+	shadowHeight = 65.0f;
+	shadowSize = 35.0f;
 
 
 	// それぞれの速度
@@ -296,7 +272,6 @@ EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int co
 
 	// 攻撃
 	attackFrame = 0;
-	attackDamageNow = false;
 	damageCount = 0;
 
 
@@ -345,7 +320,7 @@ EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int co
 
 
 // デストラクタ
-EnemyMove3CrayonHuman::~EnemyMove3CrayonHuman()
+EnemyMove5::~EnemyMove5()
 {
 	// テクスチャ開放
 	GRAPHIC_RELEASE(textureHandle0);
@@ -362,7 +337,7 @@ EnemyMove3CrayonHuman::~EnemyMove3CrayonHuman()
 		v_stairsRoadHandle.shrink_to_fit();
 	}
 
-	
+
 	// 階段の解放
 	if (BASICPARAM::stairsNum != 0)
 	{
@@ -389,7 +364,7 @@ EnemyMove3CrayonHuman::~EnemyMove3CrayonHuman()
 
 
 // 描画
-void EnemyMove3CrayonHuman::Draw()
+void EnemyMove5::Draw()
 {
 	if (deathFlag || eraseExistence) return;
 
@@ -397,12 +372,12 @@ void EnemyMove3CrayonHuman::Draw()
 	BasicObject::ShadowFoot(shadowStageHandle);
 
 #ifdef _DEBUG
-	if (MyDebug::enemyThreeCrayonHumanDrawFlag)
+	if (MyDebug::enemyFifthEnemyDrawFlag)
 	{
 		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
 	}
 
-	if (MyDebug::enemyThreeCrayonHumanSearchLineDrawFlag)
+	if (MyDebug::enemyFifthEnemySearchLineDrawFlag)
 	{
 		if (playerCharaDistance <= 1500)
 		{
@@ -422,7 +397,7 @@ void EnemyMove3CrayonHuman::Draw()
 
 
 // プロセス
-void EnemyMove3CrayonHuman::Process()
+void EnemyMove5::Process()
 {
 	// 消滅していたら
 	if (eraseExistence) return;
@@ -472,9 +447,9 @@ void EnemyMove3CrayonHuman::Process()
 	else
 	{
 		// プレイヤーを視認できていたら
-		if (charaLookAt)
+		if (--escapeFrame > 0)
 		{
-			ChaseMoveProcess();		// プレイヤーを追いかける
+			EscapeMoveProcess();		// プレイヤーを追いかける
 		}
 		// プレイヤーを視認できていなかったら
 		else
@@ -494,15 +469,7 @@ void EnemyMove3CrayonHuman::Process()
 	if (damageHit && !deathFlag)
 	{
 		damageHit = false;
-		walkSpeed = -14.0f;
-
-		
-		// ダメージの数値が死ぬ値になったら
-		if (++damageCount >= 3.0f)
-		{
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::crayonDie, area);
-			deathFlag = true;
-		}
+		deathFlag = true;
 	}
 
 
@@ -538,13 +505,14 @@ void EnemyMove3CrayonHuman::Process()
 
 
 	// プレイヤーを視認出来たら
-	if (fabsf(charaLookAtAngle) + (DX_PI_F / 6) > fabsf(direXAngle + direZAngle)
-		&& fabsf(charaLookAtAngle) - (DX_PI_F / 6) < fabsf(direXAngle + direZAngle)
+	if (fabsf(charaLookAtAngle) + (DX_PI_F / 4) > fabsf(direXAngle + direZAngle)
+		&& fabsf(charaLookAtAngle) - (DX_PI_F / 4) < fabsf(direXAngle + direZAngle)
 		&& playerCharaDistance <= 1500)
 	{
 		direXAngle = 0.0f;
 		direZAngle = charaLookAtAngle;
 		charaLookAt = true;
+		escapeFrame = 10;
 	}
 	// プレイヤーを視認できなかったら
 	else
@@ -556,7 +524,7 @@ void EnemyMove3CrayonHuman::Process()
 	// プレイヤーを視認していたら
 	if (charaLookAt)
 	{
-		MV1SetRotationXYZ(modelHandle, VGet(0.0f, charaLookAtAngle, 0.0f));			// プレイヤーを向く方に回転させる
+		MV1SetRotationXYZ(modelHandle, VGet(0.0f, charaLookAtAngle + DX_PI_F, 0.0f));			// プレイヤーを向く方に回転させる
 	}
 	// プレイヤーを視認できなかったら
 	else
@@ -571,26 +539,26 @@ void EnemyMove3CrayonHuman::Process()
 
 
 // テクスチャを差し替える
-void EnemyMove3CrayonHuman::TextureReload()
+void EnemyMove5::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle0);
 
 	switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::NORMAL:
-		LoadFile::MyLoad("media\\こっち\\media\\move3\\人型クレヨン\\kureyon_,motionALL.fbm\\normal\\kre.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\childCLPH\\sd_,motionALL.fbm\\kureyon_,motionALL.fbm\\normal\\SDchar.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::D_CORRECTION:
-		LoadFile::MyLoad("media\\こっち\\media\\move3\\人型クレヨン\\kureyon_,motionALL.fbm\\D\\kre.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\childCLPH\\sd_,motionALL.fbm\\kureyon_,motionALL.fbm\\D\\SDchar.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::P_CORRECTION:
-		LoadFile::MyLoad("media\\こっち\\media\\move3\\人型クレヨン\\kureyon_,motionALL.fbm\\P\\kre.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\childCLPH\\sd_,motionALL.fbm\\kureyon_,motionALL.fbm\\P\\SDchar.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 
 	default:
-		LoadFile::MyLoad("media\\こっち\\media\\move3\\人型クレヨン\\kureyon_,motionALL.fbm\\normal\\kre.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\childCLPH\\sd_,motionALL.fbm\\kureyon_,motionALL.fbm\\normal\\SDchar.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 	}
 
@@ -599,7 +567,7 @@ void EnemyMove3CrayonHuman::TextureReload()
 
 
 // プレイヤーの位置と距離を取得する
-void EnemyMove3CrayonHuman::SetCharacterArea(const VECTOR characterArea, const int distance)
+void EnemyMove5::SetCharacterArea(const VECTOR characterArea, const int distance)
 {
 	playerCharaArea = characterArea;
 	playerCharaDistance = distance;

@@ -155,6 +155,8 @@ namespace MyDebug
 	extern bool enemyThreeCrayonHumanSearchLineDrawFlag;
 	extern bool enemyFourEnemyDrawFlag;
 	extern bool enemyFourEnemySearchLineDrawFlag;
+	extern bool enemyFifthEnemyDrawFlag;
+	extern bool enemyFifthEnemySearchLineDrawFlag;
 
 	void Init();
 

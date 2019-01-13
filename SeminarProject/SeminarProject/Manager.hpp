@@ -92,16 +92,19 @@ private:
 	/// ムーブ5に関する--------------
 
 	// ムーブ5のロード数
-	const int max5 = 34;
+	const int max5 = 38;
 
 	// ムーブ5のロードファイル
-	std::string move5str[34];
+	std::string move5str[38];
 
 	// ムーブ5のロードの種類
-	ELOADFILE load5[34];
+	ELOADFILE load5[38];
 
 	// ムーブ5のロードの初期化
 	void InitMove5Load();
+
+	// ムーブ5でロードするテクスチャを初期から変更する
+	void Move5TextureReload();
 
 
 	// アンチエイリアスの画像

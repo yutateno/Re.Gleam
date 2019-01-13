@@ -40,6 +40,19 @@ void MainMove5::ShadowDraw()
 	}
 	// 精密機械
 	p_adjustmentMachine->ModelDraw();
+	// 一般人
+	if (BASICPARAM::ordinaryPeopleNum != 0)
+	{
+		for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+		{
+			vp_ordinaryPerson[i]->ModelDraw();
+		}
+	}
+	// 敵
+	for (int i = 0; i != enemyNum; ++i)
+	{
+		p_enemyMove[i]->ModelDraw();
+	}
 	// キャラクター
 	p_character->ModelDraw();
 
@@ -80,6 +93,19 @@ void MainMove5::ShadowDraw()
 	}
 	// 精密機械
 	p_adjustmentMachine->ModelDraw();
+	// 一般人
+	if (BASICPARAM::ordinaryPeopleNum != 0)
+	{
+		for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+		{
+			vp_ordinaryPerson[i]->ModelDraw();
+		}
+	}
+	// 敵
+	for (int i = 0; i != enemyNum; ++i)
+	{
+		p_enemyMove[i]->ModelDraw();
+	}
 	BaseMove::ShadowSetUpAfter();
 
 
@@ -123,6 +149,19 @@ void MainMove5::ShadowDraw()
 	}
 	// 精密機械
 	p_adjustmentMachine->ModelDraw();
+	// 一般人
+	if (BASICPARAM::ordinaryPeopleNum != 0)
+	{
+		for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+		{
+			vp_ordinaryPerson[i]->ModelDraw();
+		}
+	}
+	// 敵
+	for (int i = 0; i != enemyNum; ++i)
+	{
+		p_enemyMove[i]->ModelDraw();
+	}
 	// キャラクター
 	p_character->ModelDraw();
 	BaseMove::ShadowNoMoveDrawAfter();
@@ -147,6 +186,34 @@ void MainMove5::AttackProcess()
 	}
 
 
+	// 敵に関する
+	for (int i = 0; i != enemyNum; ++i)
+	{
+		// ぶつかる距離だったら
+		if (BaseMove::GetDistance<int>(p_enemyMove[i]->GetArea(), p_adjustmentMachine->GetArea()) <= 250)
+		{
+			// 当たっていたとき
+			if (HitCheck_Capsule_Capsule(
+				p_enemyMove[i]->GetArea(), VAdd(p_enemyMove[i]->GetArea(), VGet(0.0f, p_enemyMove[i]->GetHeight(), 0.0f)), p_enemyMove[i]->GetWidth()
+				, p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, p_adjustmentMachine->GetHeight(), 0.0f)), p_adjustmentMachine->GetWidth()))
+			{
+				// 敵を押し出す
+				p_enemyMove[i]->HitCircleReturn(p_adjustmentMachine->GetArea()
+					, p_adjustmentMachine->GetWidth() >= p_enemyMove[i]->GetWidth() ? p_adjustmentMachine->GetWidth() : p_enemyMove[i]->GetWidth());
+			}
+		}
+	}
+
+
+	// プレイヤーとの距離が近くて、触れるボタン押したら
+	if (BaseMove::GetDistance<int>(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175
+		&& !p_character->GetAttackNow() && p_character->GetArea().y <= 10.0f
+		&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
+	{
+		BASICPARAM::paneruDrawFlag = true;
+	}
+
+
 	// プレイヤーと距離が近かったら
 	if (BaseMove::GetDistance<int>(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 250)
 	{
@@ -158,7 +225,54 @@ void MainMove5::AttackProcess()
 		p_adjustmentMachine->ChangeDisplayTexture(false);
 	}
 	/// 精算機械に関する-------------------------------------------------------------------------------------------------------------------
-}
+
+
+	/// プレイヤーに触れられたら-----------------------------------------------------
+	for (int i = 0; i != enemyNum; ++i)
+	{
+		// 死んでいるかプレイヤーとの距離が近くではなかったら
+		if (p_enemyMove[i]->GetDeathFlag()
+			|| BaseMove::GetDistance<int>(p_enemyMove[i]->GetArea(), p_character->GetArea()) > 250) continue;
+
+
+		// プレイヤーと当たっていたら
+		if (HitCheck_Capsule_Capsule(
+			p_enemyMove[i]->GetArea(), VAdd(p_enemyMove[i]->GetArea(), VGet(0.0f, p_enemyMove[i]->GetHeight(), 0.0f)), p_enemyMove[i]->GetWidth(),
+			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth()))
+		{
+			// 死ぬ
+			p_enemyMove[i]->SetDie();
+		}
+	}
+	/// プレイヤーから押し出される-----------------------------------------------------
+	
+
+	/// 敵同士で押し出す----------------------------------------------------------------
+	for (int i = 0; i != enemyNum; ++i)
+	{
+		// 死んでいたら
+		if (p_enemyMove[i]->GetDeathFlag()) continue;
+
+
+		for (int j = 0; j != enemyNum; ++j)
+		{
+			// 自分と自分で行わせないか死んでいるか距離が遠かったら
+			if (i == j || p_enemyMove[j]->GetDeathFlag()
+				|| BaseMove::GetDistance<int>(p_enemyMove[i]->GetArea(), p_enemyMove[j]->GetArea()) > 250) continue;
+
+
+			// 当たっていたら
+			if (HitCheck_Capsule_Capsule(
+				p_enemyMove[i]->GetArea(), VAdd(p_enemyMove[i]->GetArea(), VGet(0.0f, p_enemyMove[i]->GetHeight(), 0.0f)), p_enemyMove[i]->GetWidth(),
+				p_enemyMove[j]->GetArea(), VAdd(p_enemyMove[j]->GetArea(), VGet(0.0f, p_enemyMove[j]->GetHeight(), 0.0f)), p_enemyMove[j]->GetWidth()))
+			{
+				// 自分が押し出される
+				p_enemyMove[i]->HitCircleReturn(p_enemyMove[j]->GetArea(), p_enemyMove[j]->GetWidth());
+			}
+		}
+	} /// for (int i = 0; i != enemyNum; ++i)
+	/// 敵同士で押し出す----------------------------------------------------------------
+} /// void MainMove5::AttackProcess()
 
 
 // テクスチャの非同期読み込み
@@ -186,9 +300,14 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 	{
 		p_stagePaneru[i] = nullptr;
 	}
+	for (int i = 0; i != enemyNum; ++i)
+	{
+		p_enemyMove[i] = nullptr;
+	}
 	vp_stageStairs.clear();
 	vp_stageStairsRoad.clear();
 	vp_stageStreetLight.clear();
+	vp_ordinaryPerson.clear();
 
 
 	// ステージの初期化
@@ -199,7 +318,6 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 	p_character = new CharacterSword(v_file[EFILE::charaModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel]
 		, v_file[EFILE::paneruModel], v_file[EFILE::stairsRoadCollModel]
 		, v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3], v_file[EFILE::charaTex4]);
-	charaSonmeEnemyDamageCount = 0;
 
 
 	// カメラの初期化
@@ -263,6 +381,53 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 	adjustmentDescDraw = v_file[EFILE::terminalDesc];
 
 
+	// 敵の初期化
+	std::random_device rnd;     // 非決定的な乱数生成器を生成
+	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+	std::uniform_int_distribution<> randInX(-4000, 4000);        // X座標用乱数
+	std::uniform_int_distribution<> randInZ(-4000, 4000);        // Z座標用乱数
+	for (int i = 0; i != enemyNum; ++i)
+	{
+		p_enemyMove[i] = new EnemyMove5(v_file[EFILE::enemyModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
+			, v_file[EFILE::enemyTex0], VGet(-1000.0f, 0, 1000.0f + (i * 200)), 0);
+	}
+
+
+	// 一般人
+	if (BASICPARAM::ordinaryPeopleNum != 0)
+	{
+		vp_ordinaryPerson.resize(BASICPARAM::ordinaryPeopleNum);
+		for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+		{
+			// X座標設定
+			float tempX = static_cast<float>(randInX(mt));
+			if (tempX <= 200.0f && tempX >= 0.0f)
+			{
+				tempX += 200.0f;
+			}
+			if (tempX >= -200.0f && tempX <= 0.0f)
+			{
+				tempX -= 200.0f;
+			}
+
+			// Y座標設定
+			float tempZ = static_cast<float>(randInZ(mt));
+			if (tempZ <= 200.0f && tempZ >= 0.0f)
+			{
+				tempZ += 200.0f;
+			}
+			if (tempZ >= -200.0f && tempZ <= 0.0f)
+			{
+				tempZ -= 200.0f;
+			}
+			vp_ordinaryPerson[i] = nullptr;
+			vp_ordinaryPerson[i] = new OrdinaryPerson(v_file[EFILE::ordinaryModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel]
+				, v_file[EFILE::stairsRoadCollModel], v_file[EFILE::ordinaryTex0], VGet(tempX, 0.0f, tempZ), 0);
+			vp_ordinaryPerson[i]->SetAlive(VGet(tempX, 0.0f, tempZ));
+		}
+	}
+
+
 	// スカイボックス
 	BaseMove::SetInitSkyBox(v_file[EFILE::skyBoxModel], v_file[EFILE::skyBoxTex0]);
 
@@ -291,6 +456,25 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 // デストラクタ
 MainMove5::~MainMove5()
 {
+	// 一般人
+	if (BASICPARAM::ordinaryPeopleNum != 0)
+	{
+		for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+		{
+			POINTER_RELEASE(vp_ordinaryPerson[i]);
+		}
+		vp_ordinaryPerson.clear();
+		vp_ordinaryPerson.shrink_to_fit();
+	}
+
+
+	// 敵
+	for (int i = 0; i != enemyNum; ++i)
+	{
+		POINTER_RELEASE(p_enemyMove[i]);
+	}
+
+
 	// 精密機械
 	GRAPHIC_RELEASE(adjustmentDescDraw);
 	POINTER_RELEASE(p_adjustmentMachine);
@@ -361,6 +545,31 @@ void MainMove5::Draw()
 	ShadowDraw();		// シャドウマップを描画
 
 
+
+	// 一般人
+	if (BASICPARAM::ordinaryPeopleNum != 0)
+	{
+		for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+		{
+			vp_ordinaryPerson[i]->Draw();
+		}
+	}
+
+
+	// 敵
+	for (int i = 0; i != enemyNum; ++i)
+	{
+		// 死んでいたら
+		if (p_enemyMove[i]->GetDeathFlag()) continue;
+
+
+		p_enemyMove[i]->Draw();
+	}
+
+
+	p_character->Draw();	// キャラクターを描画
+
+
 	// 精密機械と距離が近かったら
 	if (BaseMove::GetDistance<int>(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175)
 	{
@@ -375,11 +584,39 @@ void MainMove5::Process()
 {
 	// キャラクターのプロセス
 	p_character->Process(p_camera->GetAngle());
-	charaSonmeEnemyDamageCount = 0;					// 攻撃している敵の数を初期化
 
 
 	// カメラのプロセス
 	p_camera->Process(p_character->GetArea());
+
+
+	// 一般人のプロセス
+	if (BASICPARAM::ordinaryPeopleNum != 0)
+	{
+		for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+		{
+			vp_ordinaryPerson[i]->Process();
+		}
+	}
+
+
+	// 敵に関する
+	for (int i = 0; i != enemyNum; ++i)
+	{
+		// 消滅したら
+		if (p_enemyMove[i]->GetEraseExistence()) continue;
+
+
+		p_enemyMove[i]->Process();			// プロセスを呼ぶ
+
+
+		// 死んでいなかったら
+		if (p_enemyMove[i]->GetDeathFlag()) continue;
+
+
+		// プレイヤーの位置と距離を取得する
+		p_enemyMove[i]->SetCharacterArea(p_character->GetArea(), BaseMove::GetDistance<int>(p_character->GetArea(), p_enemyMove[i]->GetArea()));
+	}
 
 
 	// シャドウマップの位置を更新
@@ -392,6 +629,13 @@ void MainMove5::Process()
 	// スカイボックスの位置を更新
 	BaseMove::SkyBoxProcess(p_character->GetArea());
 
+
+	// 次のシーンへ移行する場所に居たら
+	if (p_character->GetArea().y >= 3550.0f)
+	{
+		BASICPARAM::endFeedNow = true;
+		BaseMove::SetScene(ESceneNumber::FOURTHLOAD);
+	}
 
 #ifdef _DEBUG
 	if (CheckHitKey(KEY_INPUT_Z) == 1)
@@ -419,6 +663,23 @@ void MainMove5::TextureReload()
 
 	// 精密機械
 	p_adjustmentMachine->TextureReload();
+
+
+	// 敵
+	for (int i = 0; i != enemyNum; ++i)
+	{
+		p_enemyMove[i]->TextureReload();
+	}
+
+
+	// 一般人
+	if (BASICPARAM::ordinaryPeopleNum != 0)
+	{
+		for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+		{
+			vp_ordinaryPerson[i]->TextureReload();
+		}
+	}
 
 
 	// 階段

@@ -169,7 +169,6 @@ void MainMove4::ShadowDraw()
 // 当たり判定のプロセス
 void MainMove4::AttackProcess()
 {
-
 	/// 敵への攻撃に関する--------------------------------------------------------------------------------------------------------
 	// 死んでいなかったら
 	if (!p_enemyMove->GetDeathFlag())
@@ -211,7 +210,7 @@ void MainMove4::AttackProcess()
 	} /// if (!p_enemyMove->GetDeathFlag())
 	else
 	{
-		// 戦闘BGMが流れていなかったら
+		// 通常BGMが流れていなかったら
 		if (nowBattleBGM)
 		{
 			nowBattleBGM = false;
@@ -257,6 +256,15 @@ void MainMove4::AttackProcess()
 	else
 	{
 		p_adjustmentMachine->ChangeDisplayTexture(false);
+	}
+
+
+	// プレイヤーとの距離が近くて、触れるボタン押したら
+	if (BaseMove::GetDistance<int>(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175
+		&& !p_character->GetAttackNow() && p_character->GetArea().y <= 10.0f
+		&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
+	{
+		BASICPARAM::paneruDrawFlag = true;
 	}
 	/// 精算機械に関する-------------------------------------------------------------------------------------------------------------------
 
@@ -650,15 +658,6 @@ void MainMove4::Process()
 				&& p_character->GetArea().y <= p_enemyMove->GetArea().y + p_enemyMove->GetHeight()
 				&& p_character->GetArea().y + p_character->GetHeight() >= p_enemyMove->GetArea().y)
 			{
-				//// 戦闘BGMじゃなかったら
-				//if (!nowBattleBGM)
-				//{
-				//	// 戦闘BGMに切り替える
-				//	nowBattleBGM = true;
-				//	SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::battleBGM);
-				//}
-
-
 				// 攻撃SEを流す
 				//SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::strikeBomb, p_enemyMove->GetArea(), 180);
 
@@ -698,6 +697,14 @@ void MainMove4::Process()
 
 	// スカイボックスの座標を更新
 	BaseMove::SkyBoxProcess(p_character->GetArea());
+
+
+	// 次のシーンへ移行する場所に居たら
+	if (p_character->GetArea().y >= 3550.0f)
+	{
+		BASICPARAM::endFeedNow = true;
+		BaseMove::SetScene(ESceneNumber::FIFTHLOAD);
+	}
 
 
 #ifdef _DEBUG

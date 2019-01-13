@@ -175,6 +175,7 @@
     <ClCompile Include="EnemyMove3CrayonHuman.cpp" />
     <ClCompile Include="EnemyMove3Slime.cpp" />
     <ClCompile Include="EnemyMove4.cpp" />
+    <ClCompile Include="EnemyMove5.cpp" />
     <ClCompile Include="LoadFile.cpp" />
     <ClCompile Include="LoadScreen.cpp" />
     <ClCompile Include="LoadThread.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="EnemyMove3CrayonHuman.hpp" />
     <ClInclude Include="EnemyMove3Slime.hpp" />
     <ClInclude Include="EnemyMove4.hpp" />
+    <ClInclude Include="EnemyMove5.hpp" />
     <ClInclude Include="LoadFile.hpp" />
     <ClInclude Include="LoadScreen.hpp" />
     <ClInclude Include="LoadThread.hpp" />

@@ -734,6 +734,11 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	// パネルを非表示にする
 	BASICPARAM::paneruDrawFlag = false;
 	BASICPARAM::charaTextureWhiteBlack = true;
+	BASICPARAM::anothreTextureWhiteBlack = true;
+	BASICPARAM::enemyTextureWhiteBlack = true;
+	BASICPARAM::lightStreetTextureWhiteBlack = true;
+	BASICPARAM::stairsRoadTextureWhiteBlack = true;
+	BASICPARAM::stairsTextureWhiteBlack = true;
 
 
 	// ポインタNULL初期化
@@ -839,18 +844,64 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 
 
 	// 敵スライムの初期化
+	std::random_device rnd;     // 非決定的な乱数生成器を生成
+	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+	std::uniform_int_distribution<> randInX(-4000, 4000);        // X座標用乱数
+	std::uniform_int_distribution<> randInZ(-4000, 4000);        // Z座標用乱数
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
+		// X座標設定
+		float tempX = static_cast<float>(randInX(mt));
+		if (tempX <= 200.0f && tempX >= 0.0f)
+		{
+			tempX += 200.0f;
+		}
+		if (tempX >= -200.0f && tempX <= 0.0f)
+		{
+			tempX -= 200.0f;
+		}
+
+		// Y座標設定
+		float tempZ = static_cast<float>(randInZ(mt));
+		if (tempZ <= 200.0f && tempZ >= 0.0f)
+		{
+			tempZ += 200.0f;
+		}
+		if (tempZ >= -200.0f && tempZ <= 0.0f)
+		{
+			tempZ -= 200.0f;
+		}
 		p_enemySlime[i] = new EnemyMove3Slime(v_file[EFILE::slimeModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
-			, v_file[EFILE::slimeTex0], VGet(1000.0f - (i * 150.0f), 0.0f, 1000.0f), 0.0f);
+			, v_file[EFILE::slimeTex0], VGet(tempX, 0.0f, tempZ), 0.0f);
 		enemySlimeDamage[i] = false;
 	}
 
 	// 敵クレヨンヒューマンの初期化
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
+		// X座標設定
+		float tempX = static_cast<float>(randInX(mt));
+		if (tempX <= 200.0f && tempX >= 0.0f)
+		{
+			tempX += 200.0f;
+		}
+		if (tempX >= -200.0f && tempX <= 0.0f)
+		{
+			tempX -= 200.0f;
+		}
+
+		// Y座標設定
+		float tempZ = static_cast<float>(randInZ(mt));
+		if (tempZ <= 200.0f && tempZ >= 0.0f)
+		{
+			tempZ += 200.0f;
+		}
+		if (tempZ >= -200.0f && tempZ <= 0.0f)
+		{
+			tempZ -= 200.0f;
+		}
 		p_enemyCrayonHuman[i] = new EnemyMove3CrayonHuman(v_file[EFILE::crayonHumanModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
-			, v_file[EFILE::crayonHumanTex0], VGet(-1500.0f + (i * 150.0f), 0.0f, -1000.0f), 0.0f);
+			, v_file[EFILE::crayonHumanTex0], VGet(tempX, 0.0f, tempZ), 0.0f);
 		enemyCrayonHumanDamage[i] = false;
 	}
 	mostNearEnemyDistance = 10000;
@@ -1348,7 +1399,7 @@ void MainMove3::Process()
 			p_enemySlime[i]->Process();
 
 
-			// 死んでいなかったら
+			// 死んでいたら
 			if (p_enemySlime[i]->GetDeathFlag()) continue;
 
 

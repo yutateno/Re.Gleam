@@ -115,7 +115,7 @@ void EnemyMove3Slime::AutoMoveProcess()
 	float tempX = area.x + sinf(direXAngle + direZAngle) * -walkSpeed;
 	float tempZ = area.z + cosf(direXAngle + direZAngle) * -walkSpeed;
 	// ‚Ç‚¤‚µ‚æ‚¤‚à‚È‚­‚È‚Á‚½‚ç‰Šú’l‚É–ß‚·
-	if (area.y < -modelHeight)
+	if (area.y < -10)
 	{
 		area = VGet(0, 0, 0);
 		moveCount = 100;

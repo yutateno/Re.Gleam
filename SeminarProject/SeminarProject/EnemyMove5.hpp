@@ -3,7 +3,7 @@
 #include <random>
 
 
-class EnemyMove3CrayonHuman : public BasicCreature
+class EnemyMove5 : public BasicCreature
 {
 private:
 	/// それぞれの位置に関して-------------
@@ -32,11 +32,14 @@ private:
 	// キャラクターを視認できたかどうか
 	bool charaLookAt;
 
+	// 逃げるフレーム数
+	int escapeFrame;
+
 
 	/// モーションに関して----------
 
 	// モーションのID
-	enum MOTION { walk, idle, damage, death };
+	enum MOTION { dash, idle, death };
 
 	// モーションのプロセス
 	void MotionProcess();
@@ -60,19 +63,16 @@ private:
 	void AutoMoveProcess();
 
 	// 追うプロセス
-	void ChaseMoveProcess();
+	void EscapeMoveProcess();
 
 	// 動きのカウント
 	int moveCount;
-	
-	
+
+
 	/// 攻撃に関して
 
 	// 攻撃のフレーム
 	float attackFrame;
-
-	// 攻撃によるあたりをさせるかどうか
-	bool attackDamageNow;
 
 	// 攻撃を受けた数値
 	int damageCount;
@@ -107,11 +107,11 @@ private:
 
 public:
 	// コンストラクタ
-	EnemyMove3CrayonHuman(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
+	EnemyMove5(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
 		, const int tex0, const VECTOR area, const float rotationY);
 
 	// デストラクタ
-	~EnemyMove3CrayonHuman();
+	~EnemyMove5();
 
 
 	// 描画
@@ -127,10 +127,9 @@ public:
 	// キャラクターの座標と距離を把握する
 	void SetCharacterArea(const VECTOR characterArea, const int distance);
 
-	// 攻撃をダメージに反映するかどうか
-	const bool GetAttackDamage() const { return attackDamageNow; }
+	// 死んだかどうか
+	void SetDie() { this->damageHit = true; }
 
 	// オプション用モデル描画の後始末
 	void OptionActorDrawAfter() override {}
 };
-

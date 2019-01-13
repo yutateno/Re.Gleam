@@ -31,6 +31,7 @@ private:
 		, stairsRoadCollModel, se_jump, se_footCorridor, se_foot, se_landing
 		, se_landingSecond, se_attackOne, se_attackTwo, se_attackThrid
 		, bgm_Main, ordiPersonModel, ordiPersonTex0, enemyModel, enemyTex0
+		, bgm_battle
 	};
 
 
@@ -75,8 +76,14 @@ private:
 	// 敵のポインタ
 	EnemyMove4* p_enemyMove;
 
-	// 敵の数
-	const int enemyNum = 1;
+	// 敵がダメージ受けているかどうか
+	bool enemyDamage;
+
+	// 敵とプレイヤーの距離
+	int enemyAndPlayerDistance;
+
+	// 敵のスクリーン座標
+	VECTOR enemyScreenArea;
 
 
 	/// 精密機械------------------------------
@@ -101,6 +108,8 @@ private:
 	void AttackProcess();
 
 
+	// BGMの切り替えが行われたかどうか
+	bool nowBattleBGM;
 
 
 public:

@@ -467,7 +467,7 @@ void EnemyMove3Slime::Process()
 
 
 		// Ž€‚Ê‚­‚ç‚¢ƒ_ƒ[ƒW‚ðŽó‚¯‚½‚ç
-		if (++damageCount >= 3.0f)
+		if (++damageCount >= 3)
 		{
 			deathFlag = true;
 		}

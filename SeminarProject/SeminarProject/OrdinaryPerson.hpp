@@ -6,6 +6,15 @@
 class OrdinaryPerson : public BasicCreature
 {
 private:
+	/// モデルに関して
+
+	// 生存を許されたら
+	bool alive;
+
+	// 透過値を保存する
+	int aliveBlendCount;
+
+
 	/// それぞれの位置に関して---------------
 
 	// 前後のキャラ向きを扱う変数
@@ -96,5 +105,11 @@ public:
 
 	// オプション用モデル描画の後始末
 	void OptionActorDrawAfter() override {}
+
+	// 生存を許されたら座標を設定して生成
+	void SetAlive(VECTOR area, bool alive = true);
+
+	// 生存しているかどうかを渡す
+	const bool GetAlive() const { return alive; }
 };
 

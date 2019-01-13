@@ -105,7 +105,7 @@ private:
 	// クレヨンヒューマンのポインタ
 	EnemyMove3CrayonHuman* p_enemyCrayonHuman[10];
 
-	// スライムのダメージ瞬間
+	// スライムがダメージ受けているかどうか
 	bool enemyCrayonHumanDamage[10];
 
 	// クレヨンヒューマンの数

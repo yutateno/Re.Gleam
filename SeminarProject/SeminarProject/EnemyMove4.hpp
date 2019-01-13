@@ -29,8 +29,8 @@ private:
 	// キャラクターを向いている場合の向き
 	float charaLookAtAngle;
 
-	// キャラクターを視認できたかどうか
-	bool charaLookAt;
+	// サイズが等身になるまでのダメージ数
+	const int bigBodyChangeDamage = 15;
 
 
 	/// モーションに関して----------
@@ -56,9 +56,6 @@ private:
 
 	/// 動きに関して------------
 
-	// 動きのプロセス
-	void AutoMoveProcess();
-
 	// 追うプロセス
 	void ChaseMoveProcess();
 
@@ -73,6 +70,9 @@ private:
 
 	// 攻撃によるあたりをさせるかどうか
 	bool attackDamageNow;
+
+	// ダメージの数値
+	int damageCount;
 
 
 	/// 落下に関して
@@ -114,6 +114,9 @@ public:
 	// 描画
 	void Draw();
 
+	// モデル描画
+	void UniqueModelDraw();
+
 	// プロセス
 	void Process();
 
@@ -126,6 +129,9 @@ public:
 
 	// 攻撃をダメージに反映するかどうか
 	const bool GetAttackDamage() const { return attackDamageNow; }
+
+	// サイズでかいときかどうか
+	const bool GetBigNow() const { return damageCount <= bigBodyChangeDamage ? true : false; }
 
 	// オプション用モデル描画の後始末
 	void OptionActorDrawAfter() override {}

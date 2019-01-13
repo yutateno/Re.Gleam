@@ -107,6 +107,9 @@ namespace BASICPARAM
 
 	// その他のテクスチャが白黒かどうか
 	extern bool anothreTextureWhiteBlack;
+
+	// 一般人の人数
+	extern int ordinaryPeopleNum;
 }
 
 

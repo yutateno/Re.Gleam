@@ -30,6 +30,7 @@ bool BASICPARAM::stairsTextureWhiteBlack;
 bool BASICPARAM::stairsRoadTextureWhiteBlack;
 bool BASICPARAM::lightStreetTextureWhiteBlack;
 bool BASICPARAM::anothreTextureWhiteBlack;
+int BASICPARAM::ordinaryPeopleNum;
 
 
 

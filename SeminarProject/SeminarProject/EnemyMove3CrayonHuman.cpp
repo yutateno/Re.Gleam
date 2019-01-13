@@ -494,7 +494,7 @@ void EnemyMove3CrayonHuman::Process()
 	if (damageHit && !deathFlag)
 	{
 		damageHit = false;
-		walkSpeed = -3.0f;
+		walkSpeed = -14.0f;
 
 		
 		// ダメージの数値が死ぬ値になったら

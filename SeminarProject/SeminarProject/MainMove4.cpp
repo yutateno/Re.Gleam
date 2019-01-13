@@ -43,10 +43,14 @@ void MainMove4::ShadowDraw()
 	// 人
 	for (int i = 0; i != ordinaryNum; ++i)
 	{
+		if (!p_ordinaryPerson[i]->GetAlive()) continue;
 		p_ordinaryPerson[i]->ModelDraw();
 	}
 	// 敵
-	p_enemyMove->ModelDraw();
+	if (!p_enemyMove->GetEraseExistence())
+	{
+		p_enemyMove->UniqueModelDraw();
+	}
 	// キャラクター
 	p_character->ModelDraw();
 
@@ -90,10 +94,14 @@ void MainMove4::ShadowDraw()
 	// 人
 	for (int i = 0; i != ordinaryNum; ++i)
 	{
+		if (!p_ordinaryPerson[i]->GetAlive()) continue;
 		p_ordinaryPerson[i]->ModelDraw();
 	}
 	// 敵
-	p_enemyMove->ModelDraw();
+	if (!p_enemyMove->GetEraseExistence())
+	{
+		p_enemyMove->UniqueModelDraw();
+	}
 	BaseMove::ShadowSetUpAfter();
 
 
@@ -140,10 +148,14 @@ void MainMove4::ShadowDraw()
 	// 人
 	for (int i = 0; i != ordinaryNum; ++i)
 	{
+		if (!p_ordinaryPerson[i]->GetAlive()) continue;
 		p_ordinaryPerson[i]->ModelDraw();
 	}
 	// 敵
-	p_enemyMove->ModelDraw();
+	if (!p_enemyMove->GetEraseExistence())
+	{
+		p_enemyMove->UniqueModelDraw();
+	}
 	// キャラクター
 	p_character->ModelDraw();
 	BaseMove::ShadowNoMoveDrawAfter();
@@ -157,6 +169,58 @@ void MainMove4::ShadowDraw()
 // 当たり判定のプロセス
 void MainMove4::AttackProcess()
 {
+
+	/// 敵への攻撃に関する--------------------------------------------------------------------------------------------------------
+	// 死んでいなかったら
+	if (!p_enemyMove->GetDeathFlag())
+	{
+		// プレイヤーの攻撃モーションが終わったら
+		if (p_character->GetAttackMotionEnd()) enemyDamage = false;
+
+
+		// ダメージを受けていないがプレイヤーが攻撃中だったら
+		if (p_character->GetAttackNow() && !enemyDamage)
+		{
+			p_enemyMove->HitLineReturn(p_character->GetAttackFirstFrameArea(), p_character->GetAttackEndFrameArea());
+		}
+
+
+		// 攻撃でダメージを受けたら
+		if (p_enemyMove->GetDamageFlag())
+		{
+			// ダメージを受けているとする
+			enemyDamage = true;
+
+
+			// 一般人を生成させる
+			BASICPARAM::ordinaryPeopleNum++;
+			p_ordinaryPerson[BASICPARAM::ordinaryPeopleNum - 1]->SetAlive(p_enemyMove->GetArea());
+			
+
+			// バイブレーションさせる
+			DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 30, 10000, 10000);
+
+
+			// エフェクトを再生する。
+			//playingEfAttack = PlayEffekseer3DEffect(effectAttack);
+			//SetScalePlayingEffekseer3DEffect(playingEfAttack, 10, 10, 10);
+			// 再生中のエフェクトを移動する。
+			//SetPosPlayingEffekseer3DEffect(playingEfAttack, p_character->GetAttackEndFrameArea().x
+			//	, p_character->GetAttackEndFrameArea().y, p_character->GetAttackEndFrameArea().z);
+		}
+	} /// if (!p_enemyMove->GetDeathFlag())
+	else
+	{
+		// 戦闘BGMが流れていなかったら
+		if (nowBattleBGM)
+		{
+			nowBattleBGM = false;
+			SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::normalBGM);
+		}
+	}
+	/// 敵への攻撃に関する--------------------------------------------------------------------------------------------------------
+
+
 	/// 精算機械に関する-------------------------------------------------------------------------------------------------------------------
 	// 当たっていたらプレイヤーを押し出す
 	if (HitCheck_Capsule_Capsule(
@@ -165,6 +229,22 @@ void MainMove4::AttackProcess()
 	{
 		p_character->HitCircleReturn(p_adjustmentMachine->GetArea()
 			, p_adjustmentMachine->GetWidth() >= p_character->GetWidth() ? p_adjustmentMachine->GetWidth() : p_character->GetWidth());
+	}
+
+
+	// 敵に関する
+	// ぶつかる距離だったら
+	if (BaseMove::GetDistance<int>(p_enemyMove->GetArea(), p_adjustmentMachine->GetArea()) <= 250)
+	{
+		// 当たっていたとき
+		if (HitCheck_Capsule_Capsule(
+			p_enemyMove->GetArea(), VAdd(p_enemyMove->GetArea(), VGet(0.0f, p_enemyMove->GetHeight(), 0.0f)), p_enemyMove->GetWidth()
+			, p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, p_adjustmentMachine->GetHeight(), 0.0f)), p_adjustmentMachine->GetWidth()))
+		{
+			// 敵を押し出す
+			p_enemyMove->HitCircleReturn(p_adjustmentMachine->GetArea()
+				, p_adjustmentMachine->GetWidth() >= p_enemyMove->GetWidth() ? p_adjustmentMachine->GetWidth() : p_enemyMove->GetWidth());
+		}
 	}
 
 
@@ -179,6 +259,35 @@ void MainMove4::AttackProcess()
 		p_adjustmentMachine->ChangeDisplayTexture(false);
 	}
 	/// 精算機械に関する-------------------------------------------------------------------------------------------------------------------
+
+
+	/// キャラクターから押し出される----------------------------------------------------------------------------------------------------------------------
+	// 死んでいなくてプレイヤーとの距離が近かったら
+	if (!p_enemyMove->GetDeathFlag()
+		&& BaseMove::GetDistance<int>(p_enemyMove->GetArea(), p_character->GetArea()) <= 250)
+	{
+		// プレイヤーと当たっていたら
+		if (HitCheck_Capsule_Capsule(
+			p_enemyMove->GetArea(), VAdd(p_enemyMove->GetArea(), VGet(0.0f, p_enemyMove->GetHeight(), 0.0f)), p_enemyMove->GetWidth(),
+			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth()))
+		{
+			// サイズが大きかったら
+			if (p_enemyMove->GetBigNow())
+			{
+				// プレイヤーを押し出す
+				p_character->HitCircleReturn(p_enemyMove->GetArea()
+					, p_character->GetWidth() >= p_enemyMove->GetWidth() ? p_character->GetWidth() : p_enemyMove->GetWidth());
+			}
+			// サイズが大きくなかったら
+			else
+			{
+				// 敵を押し出す
+				p_enemyMove->HitCircleReturn(p_character->GetArea()
+					, p_character->GetWidth() >= p_enemyMove->GetWidth() ? p_character->GetWidth() : p_enemyMove->GetWidth());
+			}
+		}
+	}
+	/// キャラクターから押し出される----------------------------------------------------------------------------------------------------------------------
 } /// void MainMove4::AttackProcess()
 
 
@@ -193,8 +302,9 @@ void MainMove4::ThsTextureReload()
 // コンストラクタ
 MainMove4::MainMove4(const std::vector<int> v_file)
 {
-	// パネルの描画をさせない
+	// 初期化
 	BASICPARAM::paneruDrawFlag = false;
+	BASICPARAM::ordinaryPeopleNum = 0;
 
 
 	// ポインタNULL初期化
@@ -300,6 +410,9 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 	// 敵の初期化
 	p_enemyMove = new EnemyMove4(v_file[EFILE::enemyModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
 		, v_file[EFILE::enemyTex0], VGet(1000, 0, 1000), 0.0f);
+	enemyAndPlayerDistance = 0;
+	enemyScreenArea = VGet(0, 0, 0);
+	enemyDamage = false;
 
 
 	// スカイボックス
@@ -313,6 +426,7 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 
 
 	// サウンドのロード
+	nowBattleBGM = true;
 	SoundProcess::Load(v_file[EFILE::se_attackOne], SoundProcess::ESOUNDNAME_SE::pianoAttack1);
 	SoundProcess::Load(v_file[EFILE::se_attackThrid], SoundProcess::ESOUNDNAME_SE::pianoAttack3);
 	SoundProcess::Load(v_file[EFILE::se_attackTwo], SoundProcess::ESOUNDNAME_SE::pianoAttack2);
@@ -322,8 +436,10 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 	SoundProcess::Load(v_file[EFILE::se_landing], SoundProcess::ESOUNDNAME_SE::landing);
 	SoundProcess::Load(v_file[EFILE::se_landingSecond], SoundProcess::ESOUNDNAME_SE::landing2);
 	SoundProcess::Load(v_file[EFILE::bgm_Main], SoundProcess::ESOUNDNAME_BGM::normalBGM);
+	SoundProcess::Load(v_file[EFILE::bgm_battle], SoundProcess::ESOUNDNAME_BGM::battleBGM);
 
-	SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 255, 255);
+	SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::battleBGM, 255, 255);
+	// SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 255, 255);
 } /// MainMove4::MainMove4(const std::vector<int> v_file)
 
 
@@ -416,12 +532,23 @@ void MainMove4::Draw()
 	// 人
 	for (int i = 0; i != ordinaryNum; ++i)
 	{
+		// 存在を許されていなかったら
+		if (!p_ordinaryPerson[i]->GetAlive()) continue;
+
+
 		p_ordinaryPerson[i]->Draw();
 	}
 
 
 	// 敵
-	p_enemyMove->Draw();
+	if (!p_enemyMove->GetDeathFlag())
+	{
+		p_enemyMove->Draw();
+	}
+
+
+	// キャラクター
+	p_character->Draw();
 
 
 	// 精密機械との距離が近いとき
@@ -430,6 +557,41 @@ void MainMove4::Draw()
 		// 説明画像を表示
 		DrawBillboard3D(VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 200.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, adjustmentDescDraw, false);
 	}
+
+	/// ロックオンに関する------------------------------------------------------------------------------------------------------------
+	// 存在していたら
+	if (!p_enemyMove->GetEraseExistence())
+	{
+		// 攻撃範囲内だったら
+		if (enemyAndPlayerDistance < 250)
+		{
+			// 横棒
+			DrawBox(static_cast<int>(enemyScreenArea.x - 20.0f)
+				, static_cast<int>(enemyScreenArea.y - p_enemyMove->GetHeight() / 2.0f)
+				, static_cast<int>(enemyScreenArea.x + 20.0f)
+				, static_cast<int>(enemyScreenArea.y - p_enemyMove->GetHeight() / 2.0f), GetColor(255, 255, 255), false);
+			// 縦棒
+			DrawBox(static_cast<int>(enemyScreenArea.x)
+				, static_cast<int>(enemyScreenArea.y - 20.0f - p_enemyMove->GetHeight() / 2.0f)
+				, static_cast<int>(enemyScreenArea.x)
+				, static_cast<int>(enemyScreenArea.y + 20.0f - p_enemyMove->GetHeight() / 2.0f), GetColor(255, 255, 255), false);
+		}
+		// 攻撃範囲外だったら
+		else
+		{
+			// 横棒
+			DrawBox(static_cast<int>(enemyScreenArea.x - 20.0f)
+				, static_cast<int>(enemyScreenArea.y - p_enemyMove->GetHeight() / 2.0f)
+				, static_cast<int>(enemyScreenArea.x + 20.0f)
+				, static_cast<int>(enemyScreenArea.y - p_enemyMove->GetHeight() / 2.0f), GetColor(125, 125, 125), false);
+			// 縦棒
+			DrawBox(static_cast<int>(enemyScreenArea.x)
+				, static_cast<int>(enemyScreenArea.y - 20.0f - p_enemyMove->GetHeight() / 2.0f)
+				, static_cast<int>(enemyScreenArea.x)
+				, static_cast<int>(enemyScreenArea.y + 20.0f - p_enemyMove->GetHeight() / 2.0f), GetColor(125, 125, 125), false);
+		}
+	} /// if (!p_enemyMove->GetEraseExistence())
+	/// ロックオンに関する------------------------------------------------------------------------------------------------------------
 } /// void MainMove4::Draw()
 
 
@@ -453,9 +615,78 @@ void MainMove4::Process()
 
 
 	// 敵
-	p_enemyMove->Process();
-	p_enemyMove->SetCharacterArea(p_character->GetArea(), BaseMove::GetDistance<int>(p_character->GetArea(), p_enemyMove->GetArea()));
+	// 消滅していなかったら
+	if (!p_enemyMove->GetEraseExistence())
+	{
+		p_enemyMove->Process();		// プロセスを呼ぶ
 
+		
+		// 死んでいなかったら
+		if (!p_enemyMove->GetDeathFlag())
+		{
+			// ロックオンの情報を更新する
+			enemyAndPlayerDistance = BaseMove::GetDistance<int>(p_character->GetArea(), p_enemyMove->GetArea());
+			enemyScreenArea = ConvWorldPosToScreenPos(p_enemyMove->GetArea());
+
+
+			// プレイヤーから視認できる範囲だったら
+			if (enemyAndPlayerDistance < 250)
+			{
+				p_character->SetMostNearEnemyArea(p_enemyMove->GetArea());
+			}
+			// プレイヤーから視認できない範囲だったら
+			else
+			{
+				p_character->SetMostNearEnemyArea();
+			}
+
+
+			// プレイヤーの位置と距離を取得する
+			p_enemyMove->SetCharacterArea(p_character->GetArea(), enemyAndPlayerDistance);
+
+
+			// プレイヤーに対して攻撃出来たら
+			if (p_enemyMove->GetAttackDamage()
+				&& p_character->GetArea().y <= p_enemyMove->GetArea().y + p_enemyMove->GetHeight()
+				&& p_character->GetArea().y + p_character->GetHeight() >= p_enemyMove->GetArea().y)
+			{
+				//// 戦闘BGMじゃなかったら
+				//if (!nowBattleBGM)
+				//{
+				//	// 戦闘BGMに切り替える
+				//	nowBattleBGM = true;
+				//	SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::battleBGM);
+				//}
+
+
+				// 攻撃SEを流す
+				//SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::strikeBomb, p_enemyMove->GetArea(), 180);
+
+
+				p_character->SetDamage();		// プレイヤーにダメージを与える
+
+
+				//// ダメージを受けていないカウントが0じゃなかったら
+				//if (notDamageCount != 0) notDamageCount = 0;
+
+
+				//// ダメージ数値が100以下だったら
+				//if (damageCount < 100)	damageCount++;
+
+
+				//// ダメージ演出画像が出ていなかったら
+				//if (damageDrawFrame == 0)
+				//{
+				//	std::random_device rnd;     // 非決定的な乱数生成器を生成
+				//	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+				//	std::uniform_int_distribution<> blood(0, 2);        // X座標用乱数
+				//	damageDrawID = blood(mt);		// ランダムでダメージ画像を表示する
+				//	damageDrawFrame = 10;			// 10フレームだけ表示するようにする
+				//}
+			}
+		} /// if (!p_enemyMove->GetDeathFlag())
+	} /// if (!p_enemyMove->GetEraseExistence())
+	
 
 	// シャドウマップの座標を更新
 	BaseMove::ShadowArea(p_character->GetArea());
@@ -494,7 +725,10 @@ void MainMove4::TextureReload()
 
 
 	// 敵
-	p_enemyMove->TextureReload();
+	if (!p_enemyMove->GetDeathFlag())
+	{
+		p_enemyMove->TextureReload();
+	}
 
 
 	// 人
@@ -536,7 +770,7 @@ void MainMove4::TextureReload()
 			vp_stageStairsRoad[i]->TextureReload();
 		}
 	}
-}
+} /// void MainMove4::TextureReload()
 
 
 // オプション画面モデルの描画

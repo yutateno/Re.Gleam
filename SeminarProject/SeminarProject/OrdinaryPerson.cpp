@@ -45,16 +45,12 @@ void OrdinaryPerson::MoveProcess()
 		std::random_device rnd;     // 非決定的な乱数生成器を生成
 		std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
 		std::uniform_int_distribution<> randInX(-200, 200);			// X座標用乱数
-		std::uniform_int_distribution<> moveTurn(0, 314);				// Z座標用乱数
+		std::uniform_int_distribution<> moveTurn(-200, 200);		// Z座標用乱数
 
 
 		// 移動先を更新
 		nextDireZAngle = moveTurn(mt) / 100.0f;
 		nextDireXAngle = randInX(mt) / 100.0f;
-		if (nextDireZAngle != 0.0f)
-		{
-			nextDireXAngle = -nextDireXAngle;
-		}
 	}
 
 
@@ -88,18 +84,26 @@ void OrdinaryPerson::MoveProcess()
 
 	// 移動方向に動かす
 	Player_PlayAnim(MOTION::walk);
+	moveCount++;		// 移動カウントを加算
 	float tempX = area.x + sinf(direXAngle + direZAngle) * -walkSpeed;
 	float tempZ = area.z + cosf(direXAngle + direZAngle) * -walkSpeed;
-	if (tempX >= 4500.0f || tempX <= -4500.0f || tempZ >= 4500.0f || tempZ <= -4500.0f)
+	// どうしようもなくなったら初期値に戻す
+	if (area.y < -modelHeight)
 	{
+		area = VGet(0, 0, 0);
 		moveCount = 100;
 		return;
 	}
-	area.x += sinf(angle + direXAngle + direZAngle) * -walkSpeed;
-	area.z += cosf(angle + direXAngle + direZAngle) * -walkSpeed;
-
-
-	moveCount++;	// 動きのカウントを加算
+	// ステージ外に向かっていたら乱数を再暗算
+	if (tempX >= 5000.0f || tempX <= -5000.0f || tempZ >= 5000.0f || tempZ <= -5000.0f)
+	{
+		area.x += sinf(direXAngle + direZAngle) * walkSpeed * 2.0f;
+		area.z += cosf(direXAngle + direZAngle) * walkSpeed * 2.0f;
+		moveCount = 100;
+		return;
+	}
+	area.x += sinf(direXAngle + direZAngle) * -walkSpeed;
+	area.z += cosf(direXAngle + direZAngle) * -walkSpeed;
 } /// void OrdinaryPerson::MoveProcess()
 
 
@@ -203,6 +207,8 @@ OrdinaryPerson::OrdinaryPerson(const int modelHandle, const int collStageHandle,
 	// モデルの基本情報
 	modelHeight = 160.0f;
 	modelWidth = 50.0f;
+	alive = false;
+	aliveBlendCount = 0;
 
 
 	// モデルの向きと位置
@@ -315,6 +321,10 @@ OrdinaryPerson::~OrdinaryPerson()
 // メインプロセス
 void OrdinaryPerson::Process()
 {
+	// 生存を許してないとき
+	if (!alive) return;
+
+
 	preArea = area;		// 直前の座標
 
 
@@ -354,13 +364,6 @@ void OrdinaryPerson::Process()
 	// 落下のプロセス
 	FallProcess();
 
-	
-	// 要らないけど不安なので一応
-	if (area.y < 0.0f)
-	{
-		area.y = 0.5f;
-	}
-
 
 	// 第二引数の回転角度をセット
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, direXAngle + direZAngle, 0.0f));
@@ -397,9 +400,21 @@ void OrdinaryPerson::TextureReload()
 }
 
 
+// 生存を許されたら座標を決める
+void OrdinaryPerson::SetAlive(VECTOR area, bool alive)
+{
+	this->area = area;
+	this->alive = alive;
+}
+
+
 // 描画
 void OrdinaryPerson::Draw()
 {
+	// 生存を許してないとき
+	if (!alive) return;
+
+
 	BasicObject::ShadowFoot(shadowStageHandle);
 
 #ifdef _DEBUG

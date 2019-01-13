@@ -568,6 +568,9 @@ void Manager::InitMove4Load()
 	move4str[36] = "media\\こっち\\media\\move4\\人（敵）\\ene_human_motionALL.myn";
 	move4str[37] = "media\\こっち\\media\\move4\\人（敵）\\ene_human_motionALL.fbm\\whiteblack\\whiteblack.pyn";
 
+	// 攻撃BGM
+	move4str[38] = "media\\こっち\\media\\sound\\戦闘BGM.wyn";
+
 	load4[0] = ELOADFILE::mv1model;
 	load4[1] = ELOADFILE::mv1model;
 	load4[2] = ELOADFILE::mv1model;
@@ -621,6 +624,8 @@ void Manager::InitMove4Load()
 
 	load4[36] = ELOADFILE::mv1model;
 	load4[37] = ELOADFILE::graph;
+
+	load4[38] = ELOADFILE::soundStream;
 } /// void Manager::InitMove4Load()
 
 

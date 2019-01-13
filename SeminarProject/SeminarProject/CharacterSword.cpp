@@ -1028,6 +1028,11 @@ void CharacterSword::Process(const float getAngle)
 	{
 		area.y = 0.5f;
 	}
+	if (area.x >= 4900.0f || area.x <= -4900.0f
+		|| area.z >= 4900.0f || area.z <= -4900.0f)
+	{
+		area = VGet(0, 0, 0);
+	}
 
 
 	// “®‚¢‚Ä‚¢‚È‚¢ó‘Ô‚ÅƒƒbƒNƒIƒ“‚µ‚½“G‚ª‹ß‚­‚É‚¢‚ÄUŒ‚‚µ‚½‚Æ‚«

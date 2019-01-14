@@ -88,8 +88,8 @@ void MainMove3::AdjustmentProcess()
 	// 決定ボタンを押したら
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
 	{
-		// キーボードで1を押していたら
-		if (CheckHitKey(KEY_INPUT_1) == 1)
+		// キャラクターを選択していたら
+		if (adjustmentSelectTexChange == AdjustmentSelect::chara)
 		{
 			// キャラクター関係のテクスチャを白黒から戻す
 			if (BASICPARAM::charaTextureWhiteBlack)
@@ -103,8 +103,8 @@ void MainMove3::AdjustmentProcess()
 				BASICPARAM::charaTextureWhiteBlack = false;
 			}
 		}
-		// キーボードで2を押していたら
-		if (CheckHitKey(KEY_INPUT_2) == 1)
+		// その他を選択していたら
+		if (adjustmentSelectTexChange == AdjustmentSelect::anotherActor)
 		{
 			// そのほかのアクターのテクスチャを白黒から戻す
 			if (BASICPARAM::anothreTextureWhiteBlack)
@@ -114,8 +114,8 @@ void MainMove3::AdjustmentProcess()
 				BASICPARAM::anothreTextureWhiteBlack = false;
 			}
 		}
-		// キーボードで3を押していたら
-		if (CheckHitKey(KEY_INPUT_3) == 1)
+		// 敵を選択していたら
+		if (adjustmentSelectTexChange == AdjustmentSelect::enemy)
 		{
 			// 敵のテクスチャを白黒から戻す
 			if (BASICPARAM::enemyTextureWhiteBlack)
@@ -123,8 +123,8 @@ void MainMove3::AdjustmentProcess()
 				BASICPARAM::enemyTextureWhiteBlack = false;
 			}
 		}
-		// キーボードで4を押していたら
-		if (CheckHitKey(KEY_INPUT_4) == 1)
+		// 街灯を選択していたら
+		if (adjustmentSelectTexChange == AdjustmentSelect::streetLight)
 		{
 			// 街灯のテクスチャを白黒から戻す
 			if (BASICPARAM::lightStreetTextureWhiteBlack)
@@ -139,8 +139,8 @@ void MainMove3::AdjustmentProcess()
 				BASICPARAM::lightStreetTextureWhiteBlack = false;
 			}
 		}
-		// キーボードで5を押していたら
-		if (CheckHitKey(KEY_INPUT_5) == 1)
+		// 階段と床を選択していたら
+		if (adjustmentSelectTexChange == AdjustmentSelect::stairsRoad)
 		{
 			// 階段と床のテクスチャを白黒から戻す
 			if (BASICPARAM::stairsRoadTextureWhiteBlack)
@@ -155,8 +155,8 @@ void MainMove3::AdjustmentProcess()
 				BASICPARAM::stairsRoadTextureWhiteBlack = false;
 			}
 		}
-		// キーボードで6を押していたら
-		if (CheckHitKey(KEY_INPUT_6) == 1)
+		// 階段を選択していたら
+		if (adjustmentSelectTexChange == AdjustmentSelect::stairs)
 		{
 			// 階段のテクスチャを白黒から戻す
 			if (BASICPARAM::stairsTextureWhiteBlack)
@@ -172,6 +172,37 @@ void MainMove3::AdjustmentProcess()
 			}
 		}
 	} /// if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
+
+
+	/// スティックの一回押し倒しで更新するよう調整----------------------------------------------------------------------
+	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
+	{
+		if (adjustmentControllStick[0] < 2) adjustmentControllStick[0]++;
+	}
+	else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) < 0)
+	{
+		if (adjustmentControllStick[1] < 2) adjustmentControllStick[1]++;
+	}
+	else
+	{
+		adjustmentControllStick[0] = 0;
+		adjustmentControllStick[1] = 0;
+	}
+	/// ---------------------------------------------------------------------------------------------------------------
+
+
+	// カーソルを上に移動
+	if (adjustmentControllStick[0] == 1)
+	{
+		int temp = static_cast<int>(adjustmentSelectTexChange);
+		adjustmentSelectTexChange = static_cast<AdjustmentSelect>(temp > 0 ? --temp : temp);
+	}
+	// カーソルを下に移動
+	if (adjustmentControllStick[1] == 1)
+	{
+		int temp = static_cast<int>(adjustmentSelectTexChange);
+		adjustmentSelectTexChange = static_cast<AdjustmentSelect>(temp < 5 ? ++temp : temp);
+	}
 
 
 	// Bボタンが押されたら
@@ -199,13 +230,155 @@ void MainMove3::AdjustmentDraw()
 	if (adjustmentSceneFeed >= 50)
 	{
 		DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, GetColor(247, 247, 247), true);
+		// キャラクターの色に関する
+		if (!BASICPARAM::charaTextureWhiteBlack) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
+		DrawGraph(50, 50, adjustmentSelectTexDraw[0], true);
+		// 色が戻っていたら
+		if (!BASICPARAM::charaTextureWhiteBlack)
+		{
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
-		DrawFormatString(50, 50, 255, "1: charaTextureWhiteBlack : %s\n", BASICPARAM::charaTextureWhiteBlack ? "true" : "false");
-		DrawFormatString(50, 150, 255, "3: enemyTextureWhiteBlack : %s\n", BASICPARAM::enemyTextureWhiteBlack ? "true" : "false");
-		DrawFormatString(50, 250, 255, "6: stairsTextureWhiteBlack : %s\n", BASICPARAM::stairsTextureWhiteBlack ? "true" : "false");
-		DrawFormatString(50, 350, 255, "5: stairsRoadTextureWhiteBlack : %s\n", BASICPARAM::stairsRoadTextureWhiteBlack ? "true" : "false");
-		DrawFormatString(50, 450, 255, "4: lightStreetTextureWhiteBlack : %s\n", BASICPARAM::lightStreetTextureWhiteBlack ? "true" : "false");
-		DrawFormatString(50, 550, 255, "2: anothreTextureWhiteBlack : %s\n", BASICPARAM::anothreTextureWhiteBlack ? "true" : "false");
+
+			// キャラクターにカーソルが当たっていたら
+			if (adjustmentSelectTexChange == AdjustmentSelect::chara)
+			{
+				DrawBox(60, 60, 40 + 528, 40 + 60, GetColor(50, 50, 200), false);
+			}
+		}
+		// 戻っていなかったら
+		else
+		{
+			// キャラクターにカーソルが当たっていたら
+			if (adjustmentSelectTexChange == AdjustmentSelect::chara)
+			{
+				DrawBox(60, 60, 40 + 528, 40 + 60, GetColor(0, 0, 0), false);
+			}
+		}
+
+
+		// その他の色に関する
+		if (!BASICPARAM::anothreTextureWhiteBlack) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
+		DrawGraph(50, 150, adjustmentSelectTexDraw[1], true);
+		if (!BASICPARAM::anothreTextureWhiteBlack)
+		{
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+
+			// その他にカーソルが当たっていたら
+			if (adjustmentSelectTexChange == AdjustmentSelect::anotherActor)
+			{
+				DrawBox(60, 160, 40 + 528, 140 + 60, GetColor(50, 50, 200), false);
+			}
+		}
+		// 戻っていなかったら
+		else
+		{
+			// キャラクターにカーソルが当たっていたら
+			if (adjustmentSelectTexChange == AdjustmentSelect::anotherActor)
+			{
+				DrawBox(60, 160, 40 + 528, 140 + 60, GetColor(0, 0, 0), false);
+			}
+		}
+
+
+		// 敵の色に関する
+		if (!BASICPARAM::enemyTextureWhiteBlack) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
+		DrawGraph(50, 250, adjustmentSelectTexDraw[2], true);
+		if (!BASICPARAM::enemyTextureWhiteBlack)
+		{
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+
+			// 敵にカーソルが当たっていたら
+			if (adjustmentSelectTexChange == AdjustmentSelect::enemy)
+			{
+				DrawBox(60, 260, 40 + 528, 240 + 60, GetColor(50, 50, 200), false);
+			}
+		}
+		// 戻っていなかったら
+		else
+		{
+			// キャラクターにカーソルが当たっていたら
+			if (adjustmentSelectTexChange == AdjustmentSelect::enemy)
+			{
+				DrawBox(60, 260, 40 + 528, 240 + 60, GetColor(0, 0, 0), false);
+			}
+		}
+
+
+		// 街灯の色に関する
+		if (!BASICPARAM::lightStreetTextureWhiteBlack) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
+		DrawGraph(50, 350, adjustmentSelectTexDraw[3], true);
+		if (!BASICPARAM::lightStreetTextureWhiteBlack)
+		{
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+
+			// 街灯にカーソルが当たっていたら
+			if (adjustmentSelectTexChange == AdjustmentSelect::streetLight)
+			{
+				DrawBox(60, 360, 40 + 528, 340 + 60, GetColor(50, 50, 200), false);
+			}
+		}
+		// 戻っていなかったら
+		else
+		{
+			// キャラクターにカーソルが当たっていたら
+			if (adjustmentSelectTexChange == AdjustmentSelect::streetLight)
+			{
+				DrawBox(60, 360, 40 + 528, 340 + 60, GetColor(0, 0, 0), false);
+			}
+		}
+
+
+		// 階段と床に関する
+		if (!BASICPARAM::stairsRoadTextureWhiteBlack) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
+		DrawGraph(50, 450, adjustmentSelectTexDraw[4], true);
+		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
+		{
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+
+			// 階段と床にカーソルが当たっていたら
+			if (adjustmentSelectTexChange == AdjustmentSelect::stairsRoad)
+			{
+				DrawBox(60, 460, 40 + 528, 440 + 60, GetColor(50, 50, 200), false);
+			}
+		}
+		// 戻っていなかったら
+		else
+		{
+			// キャラクターにカーソルが当たっていたら
+			if (adjustmentSelectTexChange == AdjustmentSelect::stairsRoad)
+			{
+				DrawBox(60, 460, 40 + 528, 440 + 60, GetColor(0, 0, 0), false);
+			}
+		}
+
+
+		// 階段に関する
+		if (!BASICPARAM::stairsTextureWhiteBlack) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
+		DrawGraph(50, 550, adjustmentSelectTexDraw[5], true);
+		if (!BASICPARAM::stairsTextureWhiteBlack)
+		{
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+
+			// 階段にカーソルが当たっていたら
+			if (adjustmentSelectTexChange == AdjustmentSelect::stairs)
+			{
+				DrawBox(60, 560, 40 + 528, 540 + 60, GetColor(50, 50, 200), false);
+			}
+		}
+		// 戻っていなかったら
+		else
+		{
+			// キャラクターにカーソルが当たっていたら
+			if (adjustmentSelectTexChange == AdjustmentSelect::stairs)
+			{
+				DrawBox(60, 560, 40 + 528, 540 + 60, GetColor(0, 0, 0), false);
+			}
+		}
 	}
 
 
@@ -770,7 +943,7 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 
 	// ムーブ説明
 	moveDescriptionDraw = v_file[EFILE::moveDescription];
-	moveDescriptionFrame = 750;
+	moveDescriptionFrame = 400;
 
 
 	// ステージの初期化
@@ -846,6 +1019,12 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	changeAdjustmentScene = false;
 	adjustmentSceneFeed = 0;
 	adjustmentFeedNow = false;
+	adjustmentSelectTexDraw[0] = v_file[EFILE::adjustChara];
+	adjustmentSelectTexDraw[1] = v_file[EFILE::adjustAnother];
+	adjustmentSelectTexDraw[2] = v_file[EFILE::adjustEnemy];
+	adjustmentSelectTexDraw[3] = v_file[EFILE::adjustStreetLight];
+	adjustmentSelectTexDraw[4] = v_file[EFILE::adjustStairsRoad];
+	adjustmentSelectTexDraw[5] = v_file[EFILE::adjustStairs];
 
 
 	// 敵スライムの初期化
@@ -1037,6 +1216,10 @@ MainMove3::~MainMove3()
 
 
 	// 精密機械
+	for (int i = 0; i != 6; ++i)
+	{
+		GRAPHIC_RELEASE(adjustmentSelectTexDraw[i]);
+	}
 	GRAPHIC_RELEASE(adjustmentDescDraw);
 	POINTER_RELEASE(p_adjustmentMachine);
 

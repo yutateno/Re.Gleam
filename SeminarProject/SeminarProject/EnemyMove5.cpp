@@ -108,8 +108,7 @@ void EnemyMove5::AutoMoveProcess()
 	// ステージ外に向かっていたら乱数を再暗算
 	if (tempX >= 5000.0f || tempX <= -5000.0f || tempZ >= 5000.0f || tempZ <= -5000.0f)
 	{
-		area.x += sinf(direXAngle + direZAngle) * walkSpeed * 2.0f;
-		area.z += cosf(direXAngle + direZAngle) * walkSpeed * 2.0f;
+		area = VGet(0, 0, 0);
 		moveCount = 100;
 		return;
 	}

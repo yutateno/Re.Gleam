@@ -273,7 +273,7 @@ void MainMove2::AdjustmentDraw()
 			// 階段と床表示
 			if (catchDropItemNum < createStreetLightNeedNum) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
 			DrawRotaGraph(320, 130, 0.75, 0.0, adjustment2DDraw[5], true);
-			DrawFormatString(240, 250, GetColor(0, 0, 0), "階段＆床: %dブロック", createStreetLightNeedNum);
+			DrawFormatString(240, 250, GetColor(0, 0, 0), "階段と床: %dブロック", createStreetLightNeedNum);
 			if (catchDropItemNum < createStreetLightNeedNum) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
 			// 街灯表示
@@ -696,7 +696,7 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 
 	// ムーブ説明
 	moveDescriptionDraw = v_file[EFILE::moveDescription];
-	moveDescriptionFrame = 750;
+	moveDescriptionFrame = 400;
 
 
 	// 階段の初期化

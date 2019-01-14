@@ -31,7 +31,7 @@ private:
 		, stairsRoadCollModel, se_jump, se_footCorridor, se_foot, se_landing
 		, se_landingSecond, se_attackOne, se_attackTwo, se_attackThrid
 		, bgm_Main, enemyModel, enemyTex0, ordinaryModel, ordinaryTex0
-		, moveDescription
+		, moveDescription, se_saveOn
 	};
 
 
@@ -69,6 +69,9 @@ private:
 
 	// “G‚ğè‚É“ü‚ê‚½”
 	int enemyCatchNum;
+
+	// ˆê’è”è‚É“ü‚ê‚½‚Æ‚«‚ÉSE‚ğ—¬‚·
+	bool certainCatchSEDo;
 
 
 	/// ˆê”Êl------------------

@@ -343,7 +343,7 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 
 	// ムーブ説明
 	moveDescriptionDraw = v_file[EFILE::moveDescription];
-	moveDescriptionFrame = 750;
+	moveDescriptionFrame = 400;
 
 
 	// ステージの初期化
@@ -506,8 +506,10 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 	SoundProcess::Load(v_file[EFILE::se_landing], SoundProcess::ESOUNDNAME_SE::landing);
 	SoundProcess::Load(v_file[EFILE::se_landingSecond], SoundProcess::ESOUNDNAME_SE::landing2);
 	SoundProcess::Load(v_file[EFILE::bgm_Main], SoundProcess::ESOUNDNAME_BGM::normalBGM);
+	SoundProcess::Load(v_file[EFILE::se_saveOn], SoundProcess::ESOUNDNAME_SE::saveOn);
 
 	SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 255, 255);
+	certainCatchSEDo = false;
 } /// MainMove5::MainMove5(const std::vector<int> v_file)
 
 
@@ -699,6 +701,69 @@ void MainMove5::Process()
 	
 	// スカイボックスの位置を更新
 	BaseMove::SkyBoxProcess(p_character->GetArea());
+
+
+	/// 手に入れた数でSEを流す-------------------------------------------------
+	if (enemyCatchNum == 5)
+	{
+		if (!certainCatchSEDo)
+		{
+			certainCatchSEDo = true;
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
+		}
+	}
+	else if (enemyCatchNum == 15)
+	{
+		if (!certainCatchSEDo)
+		{
+			certainCatchSEDo = true;
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
+		}
+	}
+	else if (enemyCatchNum == 20)
+	{
+		if (!certainCatchSEDo)
+		{
+			certainCatchSEDo = true;
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
+		}
+	}
+	else if (enemyCatchNum == 30)
+	{
+		if (!certainCatchSEDo)
+		{
+			certainCatchSEDo = true;
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
+		}
+	}
+	else if (enemyCatchNum == 35)
+	{
+		if (!certainCatchSEDo)
+		{
+			certainCatchSEDo = true;
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
+		}
+	}
+	else if (enemyCatchNum == 40)
+	{
+		if (!certainCatchSEDo)
+		{
+			certainCatchSEDo = true;
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
+		}
+	}
+	else if (enemyCatchNum == 45)
+	{
+		if (!certainCatchSEDo)
+		{
+			certainCatchSEDo = true;
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
+		}
+	}
+	else
+	{
+		if (certainCatchSEDo) certainCatchSEDo = false;
+	}
 
 
 	// 次のシーンへ移行する場所に居たら

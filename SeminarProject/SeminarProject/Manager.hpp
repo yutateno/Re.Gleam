@@ -53,7 +53,7 @@ private:
 	/// ムーブ3に関する--------------
 
 	// ムーブ3のロード数
-	const int max3 = 59;
+	const int max3 = 65;
 
 	// ムーブ3のロードの初期化
 	void InitMove3Load();
@@ -74,7 +74,7 @@ private:
 	/// ムーブ5に関する--------------
 
 	// ムーブ5のロード数
-	const int max5 = 39;
+	const int max5 = 40;
 
 	// ムーブ5のロードの初期化
 	void InitMove5Load();

@@ -36,7 +36,8 @@ private:
 		, damageDraw0, damageDraw1, damageDraw2, damageBlood0, damageBlood1
 		, damageBlood2, damageBlood3, damageBlood4, damageBlood5, damageBlood6
 		, damageBlood7, damageBlood8, damageBlood9, enemyAttackSE, crayonDeadSE
-		, fightBGM, moveDescription
+		, fightBGM, moveDescription, adjustAnother, adjustChara, adjustEnemy
+		, adjustStairs, adjustStairsRoad, adjustStreetLight
 	};
 
 
@@ -158,6 +159,18 @@ private:
 
 	// 精密機械の方に移るフェードかどうか
 	bool adjustmentStartFeed;
+
+	// 精密機械から色を戻すするID
+	enum class AdjustmentSelect { chara, anotherActor, enemy, streetLight, stairsRoad, stairs };
+
+	// どのオブジェクトの色を取り戻すかどうか
+	AdjustmentSelect adjustmentSelectTexChange;
+	
+	// スティックの押し倒しかどうかを調べる(DLLXinputでやるべきなんだろうかとりあえず
+	int adjustmentControllStick[2];
+
+	// どのオブジェとの色を取り戻すか選択する画像
+	int adjustmentSelectTexDraw[6];
 
 
 	/// カメラ------------------

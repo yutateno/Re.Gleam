@@ -21,8 +21,6 @@ void Manager::SceneChange()
 		p_baseMove = new MainMove1(p_loadThread->GetFile());
 		p_baseMove->SetScene(BASICPARAM::e_nowScene);
 		POINTER_RELEASE(p_loadThread);
-		/*delete[] &move1str;
-		delete[] &load1;*/
 		moveStr.clear();
 		moveStr.shrink_to_fit();
 		loadType.clear();
@@ -44,8 +42,6 @@ void Manager::SceneChange()
 		p_baseMove = new MainMove2(p_loadThread->GetFile());
 		p_baseMove->SetScene(BASICPARAM::e_nowScene);
 		POINTER_RELEASE(p_loadThread);
-		/*delete[] & move2str;
-		delete[] & load2;*/
 		moveStr.clear();
 		moveStr.shrink_to_fit();
 		loadType.clear();
@@ -67,8 +63,6 @@ void Manager::SceneChange()
 		p_baseMove = new MainMove3(p_loadThread->GetFile());
 		p_baseMove->SetScene(BASICPARAM::e_nowScene);
 		POINTER_RELEASE(p_loadThread);
-		/*delete[] & move3str;
-		delete[] & load3;*/
 		moveStr.clear();
 		moveStr.shrink_to_fit();
 		loadType.clear();
@@ -90,8 +84,6 @@ void Manager::SceneChange()
 		p_baseMove = new MainMove4(p_loadThread->GetFile());
 		p_baseMove->SetScene(BASICPARAM::e_nowScene);
 		POINTER_RELEASE(p_loadThread);
-		/*delete[] & move4str;
-		delete[] & load4;*/
 		moveStr.clear();
 		moveStr.shrink_to_fit();
 		loadType.clear();
@@ -113,8 +105,6 @@ void Manager::SceneChange()
 		p_baseMove = new MainMove5(p_loadThread->GetFile());
 		p_baseMove->SetScene(BASICPARAM::e_nowScene);
 		POINTER_RELEASE(p_loadThread);
-		/*delete[] & move5str;
-		delete[] & load5;*/
 		moveStr.clear();
 		moveStr.shrink_to_fit();
 		loadType.clear();
@@ -469,6 +459,14 @@ void Manager::InitMove3Load()
 
 		// ムーブ説明画像
 		moveStr[58] = "media\\こっち\\media\\ムーブ説明\\move3.pyn";
+
+		// 精密機械での説明画像
+		moveStr[59] = "media\\こっち\\media\\move3\\UI\\another.pyn";
+		moveStr[60] = "media\\こっち\\media\\move3\\UI\\charaSelect.pyn";
+		moveStr[61] = "media\\こっち\\media\\move3\\UI\\enemy.pyn";
+		moveStr[62] = "media\\こっち\\media\\move3\\UI\\stairs.pyn";
+		moveStr[63] = "media\\こっち\\media\\move3\\UI\\stairsRoad.pyn";
+		moveStr[64] = "media\\こっち\\media\\move3\\UI\\streetLight.pyn";
 	}
 
 
@@ -555,6 +553,13 @@ void Manager::InitMove3Load()
 		loadType[57] = ELOADFILE::soundStream;
 
 		loadType[58] = ELOADFILE::graph;
+
+		loadType[59] = ELOADFILE::graph;
+		loadType[60] = ELOADFILE::graph;
+		loadType[61] = ELOADFILE::graph;
+		loadType[62] = ELOADFILE::graph;
+		loadType[63] = ELOADFILE::graph;
+		loadType[64] = ELOADFILE::graph;
 	}
 } /// void Manager::InitMove3Load()
 
@@ -966,6 +971,9 @@ void Manager::InitMove5Load()
 
 		// ムーブの説明画像
 		moveStr[38] = "media\\こっち\\media\\ムーブ説明\\move5.pyn";
+
+		// 取り戻したときに流すSE
+		moveStr[39] = "media\\こっち\\media\\sound\\saveon.wyn";
 	}
 
 
@@ -1026,6 +1034,8 @@ void Manager::InitMove5Load()
 		loadType[37] = ELOADFILE::graph;
 
 		loadType[38] = ELOADFILE::graph;
+
+		loadType[39] = ELOADFILE::soundmem;
 	}
 } /// void Manager::InitMove5Load()
 
@@ -1205,7 +1215,29 @@ void Manager::OptionProcess()
 		if (++seDoWaitTimer > 60)
 		{
 			seDoWaitTimer = 0;
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPawnHigh);
+			
+
+			// シーンに応じてSEを変える
+			if (BASICPARAM::e_nowScene == ESceneNumber::FIRSTMOVE)
+			{
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPawnHigh);
+			}
+			else if (BASICPARAM::e_nowScene == ESceneNumber::SECONDMOVE)
+			{
+				//SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack1);
+			}
+			else if (BASICPARAM::e_nowScene == ESceneNumber::THIRDMOVE)
+			{
+				//SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack2);
+			}
+			else if (BASICPARAM::e_nowScene == ESceneNumber::FOURTHMOVE)
+			{
+				//SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot);
+			}
+			else if (BASICPARAM::e_nowScene == ESceneNumber::FIFTHMOVE)
+			{
+				//SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack3);
+			}
 		}
 
 

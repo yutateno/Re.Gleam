@@ -418,7 +418,7 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 
 	// ムーブ説明
 	moveDescriptionDraw = v_file[EFILE::moveDescription];
-	moveDescriptionFrame = 750;
+	moveDescriptionFrame = 400;
 
 
 	// ステージの初期化

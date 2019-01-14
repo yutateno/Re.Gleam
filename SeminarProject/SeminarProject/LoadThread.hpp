@@ -33,7 +33,7 @@ public:
 
 
 	// çsÇ§
-	void Process(const int max, const std::string* path, const ELOADFILE* type);
+	void Process(const int max, const std::vector<std::string> path, const std::vector<ELOADFILE> type);
 
 	// ï`âÊ
 	void Draw();

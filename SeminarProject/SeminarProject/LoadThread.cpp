@@ -32,7 +32,7 @@ LoadThread::~LoadThread()
 
 
 // ÉvÉçÉZÉX
-void LoadThread::Process(const int max, const std::string* path, const ELOADFILE* type)
+void LoadThread::Process(const int max, const std::vector<std::string> path, const std::vector<ELOADFILE> type)
 {
 	if (num < max)
 	{

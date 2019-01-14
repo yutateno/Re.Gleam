@@ -25,17 +25,17 @@ private:
 	// 直前のシーンがロードかゲームかどうか
 	bool preLoadScene;
 
+	// ロードのファイル
+	std::vector<std::string> moveStr;
+
+	// ロードの種類
+	std::vector<ELOADFILE> loadType;
+
 
 	/// ムーブ１に関する----------------
 
 	// ムーブ1のロード数
 	const int max1 = 15;
-
-	// ムーブ1のロードファイル
-	std::string move1str[15];
-
-	// ムーブ1のロードの種類
-	ELOADFILE load1[15];
 
 	// ムーブ1のロードの初期化
 	void InitMove1Load();
@@ -46,12 +46,6 @@ private:
 	// ムーブ2のロード数
 	const int max2 = 49;
 
-	// ムーブ2のロードファイル
-	std::string move2str[49];
-
-	// ムーブ2のロードの種類
-	ELOADFILE load2[49];
-
 	// ムーブ2のロードの初期化
 	void InitMove2Load();
 
@@ -61,12 +55,6 @@ private:
 	// ムーブ3のロード数
 	const int max3 = 59;
 
-	// ムーブ3のロードファイル
-	std::string move3str[59];
-
-	// ムーブ3のロードの種類
-	ELOADFILE load3[59];
-
 	// ムーブ3のロードの初期化
 	void InitMove3Load();
 
@@ -75,12 +63,6 @@ private:
 
 	// ムーブ4のロード数
 	const int max4 = 54;
-
-	// ムーブ4のロードファイル
-	std::string move4str[54];
-
-	// ムーブ4のロードの種類
-	ELOADFILE load4[54];
 
 	// ムーブ4のロードの初期化
 	void InitMove4Load();
@@ -93,12 +75,6 @@ private:
 
 	// ムーブ5のロード数
 	const int max5 = 39;
-
-	// ムーブ5のロードファイル
-	std::string move5str[39];
-
-	// ムーブ5のロードの種類
-	ELOADFILE load5[39];
 
 	// ムーブ5のロードの初期化
 	void InitMove5Load();

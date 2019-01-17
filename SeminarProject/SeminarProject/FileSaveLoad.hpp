@@ -1,0 +1,17 @@
+#pragma once
+#include <iostream>
+#include <vector>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include "Basic.hpp"
+
+namespace FileSaveLoad
+{
+	// CSVÇ…èoóÕÇ∑ÇÈ
+	bool Save();
+
+
+	// CSVÇ©ÇÁì«Ç›çûÇﬁ
+	bool Load();
+}

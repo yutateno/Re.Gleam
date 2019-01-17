@@ -118,6 +118,240 @@ void Manager::SceneChange()
 } /// void Manager::SceneChange()
 
 
+// タイトルプロセス
+void Manager::TitleProcess()
+{
+	// 決定を押したら
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
+	{
+		if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::firstGame))
+		{
+			optionSelectMin = 0;
+			optionSelectMax = 4;
+			gameFirstStarting = false;
+			for (int i = 0; i != titleUINum; ++i)
+			{
+				GRAPHIC_RELEASE(titleUIDraw[i]);
+			}
+		}
+		else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::load))
+		{
+			optionSelectMin = 0;
+			optionSelectMax = 4;
+			FileSaveLoad::Load();
+			gameFirstStarting = false;
+			for (int i = 0; i != titleUINum; ++i)
+			{
+				GRAPHIC_RELEASE(titleUIDraw[i]);
+			}
+		}
+		else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::gameEnd))
+		{
+			gameEnd = true;
+		}
+		else
+		{
+			// ムーブ２を選択していたら
+			if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::bonusMove2))
+			{
+				BASICPARAM::e_nowScene = ESceneNumber::SECONDLOAD;
+				BASICPARAM::e_preScene = ESceneNumber::SECONDLOAD;
+			}
+			// ムーブ３を選択していたら
+			else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::bonusMove3))
+			{
+				BASICPARAM::stairsNum = 0;
+				BASICPARAM::streetLightNum = 0;
+				BASICPARAM::stairsRoadNum = 0;
+				BASICPARAM::v_stairsArea.clear();
+				BASICPARAM::v_stairsAngle.clear();
+				BASICPARAM::v_streetLightArea.clear();
+				BASICPARAM::v_streetLightAngle.clear();
+				BASICPARAM::v_stairsRoadArea.clear();
+				BASICPARAM::v_stairsRoadAngle.clear();
+				BASICPARAM::e_nowScene = ESceneNumber::THIRDLOAD;
+				BASICPARAM::e_preScene = ESceneNumber::THIRDLOAD;
+			}
+			// ムーブ４を選択していたら
+			else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::bonusMove4))
+			{
+				BASICPARAM::stairsNum = 0;
+				BASICPARAM::streetLightNum = 0;
+				BASICPARAM::stairsRoadNum = 0;
+				BASICPARAM::v_stairsArea.clear();
+				BASICPARAM::v_stairsAngle.clear();
+				BASICPARAM::v_streetLightArea.clear();
+				BASICPARAM::v_streetLightAngle.clear();
+				BASICPARAM::v_stairsRoadArea.clear();
+				BASICPARAM::v_stairsRoadAngle.clear();
+				BASICPARAM::charaTextureWhiteBlack = true;
+				BASICPARAM::anothreTextureWhiteBlack = true;
+				BASICPARAM::enemyTextureWhiteBlack = true;
+				BASICPARAM::lightStreetTextureWhiteBlack = true;
+				BASICPARAM::stairsRoadTextureWhiteBlack = true;
+				BASICPARAM::stairsTextureWhiteBlack = true;
+				BASICPARAM::e_nowScene = ESceneNumber::FOURTHLOAD;
+				BASICPARAM::e_preScene = ESceneNumber::FOURTHLOAD;
+			}
+			// ムーブ５を選択していたら
+			else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::bonusMove5))
+			{
+				BASICPARAM::stairsNum = 0;
+				BASICPARAM::streetLightNum = 0;
+				BASICPARAM::stairsRoadNum = 0;
+				BASICPARAM::v_stairsArea.clear();
+				BASICPARAM::v_stairsAngle.clear();
+				BASICPARAM::v_streetLightArea.clear();
+				BASICPARAM::v_streetLightAngle.clear();
+				BASICPARAM::v_stairsRoadArea.clear();
+				BASICPARAM::v_stairsRoadAngle.clear();
+				BASICPARAM::charaTextureWhiteBlack = true;
+				BASICPARAM::anothreTextureWhiteBlack = true;
+				BASICPARAM::enemyTextureWhiteBlack = true;
+				BASICPARAM::lightStreetTextureWhiteBlack = true;
+				BASICPARAM::stairsRoadTextureWhiteBlack = true;
+				BASICPARAM::stairsTextureWhiteBlack = true;
+				BASICPARAM::ordinaryPeopleNum = 0;
+				BASICPARAM::e_nowScene = ESceneNumber::FIFTHLOAD;
+				BASICPARAM::e_preScene = ESceneNumber::FIFTHLOAD;
+			}
+			//// ムーブ６を選択していたら
+			//else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::bonusMove6))
+			//{
+			//	BASICPARAM::stairsNum = 0;
+			//	BASICPARAM::streetLightNum = 0;
+			//	BASICPARAM::stairsRoadNum = 0;
+			//	BASICPARAM::v_stairsArea.clear();
+			//	BASICPARAM::v_stairsAngle.clear();
+			//	BASICPARAM::v_streetLightArea.clear();
+			//	BASICPARAM::v_streetLightAngle.clear();
+			//	BASICPARAM::v_stairsRoadArea.clear();
+			//	BASICPARAM::v_stairsRoadAngle.clear();
+			//	BASICPARAM::charaTextureWhiteBlack = true;
+			//	BASICPARAM::anothreTextureWhiteBlack = true;
+			//	BASICPARAM::enemyTextureWhiteBlack = true;
+			//	BASICPARAM::lightStreetTextureWhiteBlack = true;
+			//	BASICPARAM::stairsRoadTextureWhiteBlack = true;
+			//	BASICPARAM::stairsTextureWhiteBlack = true;
+			//	BASICPARAM::ordinaryPeopleNum = 0;
+			//	BASICPARAM::lastCharaView = false;
+			//	BASICPARAM::lastOrdinaryView = false;
+			//	BASICPARAM::lastPaneruView = false;
+			//	BASICPARAM::lastStairsRoadView = false;
+			//	BASICPARAM::lastStairsView = false;
+			//	BASICPARAM::lastStreetLightView = false;
+			//	BASICPARAM::e_nowScene = ESceneNumber::SECONDLOAD;
+			//	BASICPARAM::e_preScene = ESceneNumber::SECONDLOAD;
+			//} /// else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::bonusMove6))
+
+
+			optionSelectMin = 0;
+			optionSelectMax = 4;
+			gameFirstStarting = false;
+			for (int i = 0; i != titleUINum; ++i)
+			{
+				GRAPHIC_RELEASE(titleUIDraw[i]);
+			}
+		}
+	}
+
+
+	// LBとRBとBACKとXボタンを同時に押したら
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::SHOULDER_LB) >= 1
+		&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::SHOULDER_RB) >= 1
+		&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_BACK) >= 1
+		&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_X) == 1)
+	{
+		playBonus = true;
+		optionSelectMax = 8;
+	}
+
+
+	/// スティックの一回押し倒しで更新するよう調整-----------------------------------------------------------------
+	// 左スティックを上に倒したら
+	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
+	{
+		if (optionControllLeftStickY[0] < 2) optionControllLeftStickY[0]++;
+	}
+	// 左スティックを下に倒したら
+	else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) < 0)
+	{
+		if (optionControllLeftStickY[1] < 2) optionControllLeftStickY[1]++;
+	}
+	// 左スティックを特に弄ってなかったら
+	else
+	{
+		optionControllLeftStickY[0] = 0;
+		optionControllLeftStickY[1] = 0;
+	}
+
+
+	// 上にスティックを倒したとき
+	if (optionControllLeftStickY[0] == 1)
+	{
+		// カーソルを上に移動する
+		int temp = static_cast<int>(optionSelectButtonNum);
+		optionSelectButtonNum = static_cast<EOptionSelectButton>(temp > optionSelectMin ? --temp : temp);
+	}
+	// 下にスティックを倒したとき
+	if (optionControllLeftStickY[1] == 1)
+	{
+		// カーソルを下に移動する
+		int temp = static_cast<int>(optionSelectButtonNum);
+		optionSelectButtonNum = static_cast<EOptionSelectButton>(temp < optionSelectMax ? ++temp : temp);
+	}
+	/// スティックの一回押し倒しで更新するよう調整-----------------------------------------------------------------
+} /// void Manager::TitleProcess()
+
+
+// タイトル描画
+void Manager::TitleDraw()
+{
+	// ゲーム開始
+	DrawGraph(760, 340, titleUIDraw[static_cast<int>(ETitleDraw::firstGame)], false);
+	if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::firstGame))
+	{
+		DrawBox(760 + 5, 340 + 5, 760 + 400 - 5, 340 + 69 - 5, GetColor(50, 50, 200), false);
+		DrawBox(760 + 4, 340 + 4, 760 + 400 - 4, 340 + 69 - 4, GetColor(50, 50, 200), false);
+		DrawBox(760 + 3, 340 + 3, 760 + 400 - 3, 340 + 69 - 3, GetColor(50, 50, 200), false);
+	}
+
+
+	// ロード
+	DrawGraph(760, 471, titleUIDraw[static_cast<int>(ETitleDraw::load)], false);
+	if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::load))
+	{
+		DrawBox(760 + 5, 471 + 5, 760 + 400 - 5, 471 + 69 - 5, GetColor(50, 50, 200), false);
+		DrawBox(760 + 4, 471 + 4, 760 + 400 - 4, 471 + 69 - 4, GetColor(50, 50, 200), false);
+		DrawBox(760 + 3, 471 + 3, 760 + 400 - 3, 471 + 69 - 3, GetColor(50, 50, 200), false);
+	}
+
+
+	// ゲーム終了
+	DrawGraph(760, 600, titleUIDraw[static_cast<int>(ETitleDraw::gameEnd)], false);
+	if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::gameEnd))
+	{
+		DrawBox(760 + 5, 600 + 5, 760 + 400 - 5, 600 + 69 - 5, GetColor(50, 50, 200), false);
+		DrawBox(760 + 4, 600 + 4, 760 + 400 - 4, 600 + 69 - 4, GetColor(50, 50, 200), false);
+		DrawBox(760 + 3, 600 + 3, 760 + 400 - 3, 600 + 69 - 3, GetColor(50, 50, 200), false);
+	}
+
+
+	// おまけコマンドを打っていたら
+	if (playBonus)
+	{
+		// おまけ
+		DrawGraph(760, 730, titleUIDraw[static_cast<int>(optionSelectButtonNum)], false);
+		if (optionSelectButtonNum >= static_cast<EOptionSelectButton>(ETitleDraw::bonus))
+		{
+			DrawBox(760 + 5, 730 + 5, 760 + 400 - 5, 730 + 69 - 5, GetColor(50, 50, 200), false);
+			DrawBox(760 + 4, 730 + 4, 760 + 400 - 4, 730 + 69 - 4, GetColor(50, 50, 200), false);
+			DrawBox(760 + 3, 730 + 3, 760 + 400 - 3, 730 + 69 - 3, GetColor(50, 50, 200), false);
+		}
+	}
+} /// void Manager::TitleDraw()
+
+
 // ムーブ1の読み込み素材の初期化
 void Manager::InitMove1Load()
 {
@@ -1266,16 +1500,16 @@ void Manager::OptionProcess()
 		{
 			// BGM設定音量に移る
 			optionSelectButtonNum = EOptionSelectButton::BGMSelect;
-			optionSelectMin = 8;
-			optionSelectMax = 8;
+			optionSelectMin = 10;
+			optionSelectMax = 10;
 		}
 		// SEにカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::SE)
 		{
 			// SE設定音量に移る
 			optionSelectButtonNum = EOptionSelectButton::SESelect;
-			optionSelectMin = 9;
-			optionSelectMax = 9;
+			optionSelectMin = 11;
+			optionSelectMax = 11;
 		}
 		// テクスチャ色の通常にカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
@@ -1316,8 +1550,8 @@ void Manager::OptionProcess()
 		{
 			// 通常色にカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::ColorNormal;
-			optionSelectMin = 5;
-			optionSelectMax = 7;
+			optionSelectMin = 7;
+			optionSelectMax = 8;
 		}
 		// サウンドにカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::Sound)
@@ -1325,32 +1559,32 @@ void Manager::OptionProcess()
 			// BGMにカーソルを移す
 			SoundProcess::SetOptionMenuNow(false);				// サウンドの音量をオプション用からやめる
 			optionSelectButtonNum = EOptionSelectButton::BGM;
-			optionSelectMin = 3;
-			optionSelectMax = 4;
+			optionSelectMin = 5;
+			optionSelectMax = 6;
 		}
 		// BGM選択にカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
 		{
 			// BGMの設定音量に移る
 			optionSelectButtonNum = EOptionSelectButton::BGM;
-			optionSelectMin = 3;
-			optionSelectMax = 4;
+			optionSelectMin = 5;
+			optionSelectMax = 6;
 		}
 		// SE選択にカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::SESelect)
 		{
 			// SEの設定音量に移る
 			optionSelectButtonNum = EOptionSelectButton::SE;
-			optionSelectMin = 3;
-			optionSelectMax = 4;
+			optionSelectMin = 5;
+			optionSelectMax = 6;
 		}
 		// カメラにカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::Camera)
 		{
 			// 遠近法カメラに移る
 			optionSelectButtonNum = EOptionSelectButton::CameraPerspective;
-			optionSelectMin = 10;
-			optionSelectMax = 13;
+			optionSelectMin = 12;
+			optionSelectMax = 15;
 		}
 		// 遠近法カメラにカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective)
@@ -1376,6 +1610,18 @@ void Manager::OptionProcess()
 			// 縦回転のスティック方向を逆にする
 			BASICPARAM::cameraVerticalReturn = !BASICPARAM::cameraVerticalReturn;
 		}
+		// セーブにカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::DataSave)
+		{
+			// セーブする
+			FileSaveLoad::Save();
+		}
+		// ゲーム終了にカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::GameEnd)
+		{
+			// ゲームを終了する
+			gameEnd = true;
+		}
 	} /// if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
 	///決定------------------------------------------------------------------------------------------------------
 
@@ -1392,7 +1638,7 @@ void Manager::OptionProcess()
 			SoundProcess::SetOptionMenuNow(true);					// サウンドの音量をオプション用からに戻す
 			optionSelectButtonNum = EOptionSelectButton::Sound;
 			optionSelectMin = 0;
-			optionSelectMax = 2;
+			optionSelectMax = 4;
 		}
 		// 通常色にカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorNormal
@@ -1402,23 +1648,23 @@ void Manager::OptionProcess()
 			// 色覚選択にカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::ColorSelect;
 			optionSelectMin = 0;
-			optionSelectMax = 2;
+			optionSelectMax = 4;
 		}
 		// BGM音量調整にカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
 		{
 			// BGMにカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::BGM;
-			optionSelectMin = 3;
-			optionSelectMax = 4;
+			optionSelectMin = 5;
+			optionSelectMax = 6;
 		}
 		// SE音量調整にカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::SESelect)
 		{
 			// SEにカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::SE;
-			optionSelectMin = 3;
-			optionSelectMax = 4;
+			optionSelectMin = 5;
+			optionSelectMax = 6;
 		}
 		// 遠近法カメラにカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective
@@ -1429,7 +1675,7 @@ void Manager::OptionProcess()
 			// カメラにカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::Camera;
 			optionSelectMin = 0;
-			optionSelectMax = 2;
+			optionSelectMax = 4;
 		}
 	} /// if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
 	///戻る------------------------------------------------------------------------------------------------------
@@ -1575,6 +1821,7 @@ void Manager::OptionDraw()
 			DrawBox(385 + 3, 427 + 3, 385 + 83 - 3, 427 + 58 - 3, GetColor(50, 50, 200), false);
 		}
 
+
 		// UI:P型
 		DrawGraph(386, 550, optionDrawMedia[static_cast<int>(EOptionDraw::ColorP)], false);
 		// カーソルが当たっていたら
@@ -1584,6 +1831,7 @@ void Manager::OptionDraw()
 			DrawBox(386 + 4, 550 + 4, 386 + 83 - 4, 550 + 59 - 4, GetColor(50, 50, 200), false);
 			DrawBox(386 + 3, 550 + 3, 386 + 83 - 3, 550 + 59 - 3, GetColor(50, 50, 200), false);
 		}
+
 
 		// UI:D型
 		DrawGraph(385, 682, optionDrawMedia[static_cast<int>(EOptionDraw::ColorD)], false);
@@ -1629,6 +1877,7 @@ void Manager::OptionDraw()
 			DrawBox(95 + 3, 247 + 3, 95 + 109 - 3, 247 + 68 - 3, GetColor(50, 50, 200), false);
 		}
 
+
 		// 遠近法
 		if (BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
 		DrawGraph(385, 267, optionDrawMedia[static_cast<int>(EOptionDraw::Perspective)], false);
@@ -1639,6 +1888,7 @@ void Manager::OptionDraw()
 			DrawBox(385 + 3, 267 + 3, 385 + 83 - 3, 267 + 58 - 3, GetColor(50, 50, 200), false);
 		}
 		if (BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
 
 		// 正射影
 		if (!BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
@@ -1651,6 +1901,7 @@ void Manager::OptionDraw()
 		}
 		if (!BASICPARAM::nowCameraOrtho) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
+
 		// 横反転
 		if (!BASICPARAM::cameraHorizonReturn) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
 		DrawGraph(385, 513, optionDrawMedia[static_cast<int>(EOptionDraw::HorizonReturn)], false);
@@ -1662,6 +1913,7 @@ void Manager::OptionDraw()
 		}
 		if (!BASICPARAM::cameraHorizonReturn) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
+
 		// 縦反転
 		if (!BASICPARAM::cameraVerticalReturn) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
 		DrawGraph(385, 646, optionDrawMedia[static_cast<int>(EOptionDraw::VerticalReturn)], false);
@@ -1672,6 +1924,26 @@ void Manager::OptionDraw()
 			DrawBox(385 + 3, 646 + 3, 385 + 83 - 3, 646 + 58 - 3, GetColor(50, 50, 200), false);
 		}
 		if (!BASICPARAM::cameraVerticalReturn) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+
+		// セーブする
+		DrawGraph(95, 760, optionDrawMedia[static_cast<int>(EOptionDraw::dataSave)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::DataSave)
+		{
+			DrawBox(95 + 5, 760 + 5, 95 + 450 - 5, 760 + 69 - 5, GetColor(50, 50, 200), false);
+			DrawBox(95 + 4, 760 + 4, 95 + 450 - 4, 760 + 69 - 4, GetColor(50, 50, 200), false);
+			DrawBox(95 + 3, 760 + 3, 95 + 450 - 3, 760 + 69 - 3, GetColor(50, 50, 200), false);
+		}
+
+
+		// ゲームを終了する
+		DrawGraph(95, 880, optionDrawMedia[static_cast<int>(EOptionDraw::gameEnd)], false);
+		if (optionSelectButtonNum == EOptionSelectButton::GameEnd)
+		{
+			DrawBox(95 + 5, 880 + 5, 95 + 450 - 5, 880 + 69 - 5, GetColor(50, 50, 200), false);
+			DrawBox(95 + 4, 880 + 4, 95 + 450 - 4, 880 + 69 - 4, GetColor(50, 50, 200), false);
+			DrawBox(95 + 3, 880 + 3, 95 + 450 - 3, 880 + 69 - 3, GetColor(50, 50, 200), false);
+		}
 	} /// else if (optionPageNowNumber == 1)
 } /// void Manager::OptionDraw()
 
@@ -1706,6 +1978,35 @@ Manager::Manager()
 	p_loadThread = new LoadThread();
 	preLoadScene = false;
 
+	
+	// ゲームのシステムに関する
+	gameFirstStarting = FileSaveLoad::Load();
+	gameEnd = false;
+	for (int i = 0; i != titleUINum; ++i)
+	{
+		titleUIDraw[i] = -1;
+	}
+	if (gameFirstStarting)
+	{
+		LoadFile::MyLoad("media\\こっち\\media\\First\\gameStart.pyn", titleUIDraw[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\First\\dataLoad.pyn", titleUIDraw[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\First\\gameEnd.pyn", titleUIDraw[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\First\\omake.pyn", titleUIDraw[3], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\First\\omake2.pyn", titleUIDraw[4], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\First\\omake3.pyn", titleUIDraw[5], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\First\\omake4.pyn", titleUIDraw[6], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\First\\omake5.pyn", titleUIDraw[7], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\First\\omake6.pyn", titleUIDraw[8], ELOADFILE::graph);
+		optionSelectMin = 0;
+		optionSelectMax = 2;
+	}
+	else
+	{
+		optionSelectMin = 0;
+		optionSelectMax = 4;
+	}
+	playBonus = false;
+
 
 	// 画面に関する
 	gaussianScreen = MakeScreen(1920, 1080);
@@ -1716,8 +2017,6 @@ Manager::Manager()
 	optionControllLeftStickY[0] = 0;
 	optionControllLeftStickY[1] = 0;
 	optionPageNowNumber = 0;
-	optionSelectMin = 0;
-	optionSelectMax = 2;
 	seDoWaitTimer = 0;
 	for (int i = 0; i != optionDrawNum; ++i)
 	{
@@ -1738,6 +2037,10 @@ Manager::Manager()
 	LoadFile::MyLoad("media\\こっち\\media\\option\\nextPage.pyn", optionDrawMedia[12], ELOADFILE::graph);
 	LoadFile::MyLoad("media\\こっち\\media\\option\\prevPage.pyn", optionDrawMedia[13], ELOADFILE::graph);
 	LoadFile::MyLoad("media\\こっち\\media\\option\\optionEnd.pyn", optionDrawMedia[14], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\option\\gameEnd.pyn", optionDrawMedia[15], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\option\\save.pyn", optionDrawMedia[16], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\option\\yes.pyn", optionDrawMedia[17], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\option\\no.pyn", optionDrawMedia[18], ELOADFILE::graph);
 
 
 	// フェード処理に関する
@@ -1757,6 +2060,10 @@ Manager::Manager()
 // デストラクタ
 Manager::~Manager()
 {
+	for (int i = 0; i != titleUINum; ++i)
+	{
+		GRAPHIC_RELEASE(titleUIDraw[i]);
+	}
 	for (int i = 0; i != optionDrawNum; ++i)
 	{
 		GRAPHIC_RELEASE(optionDrawMedia[i]);
@@ -1773,337 +2080,352 @@ Manager::~Manager()
 // 更新
 void Manager::Update()
 {
-	// 今のシーンと直前のシーンが同じ
-	if (BASICPARAM::e_nowScene == BASICPARAM::e_preScene)		
+	// 最初の起動のとき
+	if (gameFirstStarting)
 	{
-		// 最初のムーブのロードだったら
-		if (BASICPARAM::e_preScene == ESceneNumber::FIRSTLOAD)		
+		TitleProcess();
+
+		ClearDrawScreen();
+
+		TitleDraw();
+
+		ScreenFlip();
+	} /// if (gameFirstStarting)
+	// 最初の起動でないとき(つまり通常時
+	else
+	{
+		// 今のシーンと直前のシーンが同じ
+		if (BASICPARAM::e_nowScene == BASICPARAM::e_preScene)
 		{
-			// シーン１の素材ファイル
-			InitMove1Load();
-
-
-			p_loadThread->Process(max1, moveStr, loadType);		// ロードをする
-
-
-			// ロードが終了したら
-			if (p_loadThread->GetNum() >= max1)		
+			// 最初のムーブのロードだったら
+			if (BASICPARAM::e_preScene == ESceneNumber::FIRSTLOAD)
 			{
-				BASICPARAM::endFeedNow = true;						// 終了フェードのフラッグを立てる
-				preLoadScene = true;								// 直前がロードだったとする
-				BASICPARAM::e_nowScene = ESceneNumber::FIRSTMOVE;	// 次のシーンを指定する
-			}
-		}
-		// 二番目のムーブのロードだったら
-		else if (BASICPARAM::e_preScene == ESceneNumber::SECONDLOAD)
-		{
-			// シーン２の素材ファイル
-			InitMove2Load();
+				// シーン１の素材ファイル
+				InitMove1Load();
 
 
-			p_loadThread->Process(max2, moveStr, loadType);		// ロードをする
+				p_loadThread->Process(max1, moveStr, loadType);		// ロードをする
 
 
-			// ロードが終了したら
-			if (p_loadThread->GetNum() >= max2)		
-			{
-				BASICPARAM::endFeedNow = true;						// 終了フェードのフラッグを立てる
-				preLoadScene = true;								// 直前がロードだったら
-				BASICPARAM::e_nowScene = ESceneNumber::SECONDMOVE;	// 次のシーンを指定する
-			}
-		}
-		// 三番目のムーブのロードだったら
-		else if (BASICPARAM::e_preScene == ESceneNumber::THIRDLOAD)
-		{
-			// ムーブ3のロード素材
-			InitMove3Load();
-
-
-			p_loadThread->Process(max3, moveStr, loadType);		// ロードをする
-
-
-			// ロードが終了したら
-			if (p_loadThread->GetNum() >= max3)
-			{
-				BASICPARAM::endFeedNow = true;						// 終了フェードのフラッグを立てる
-				preLoadScene = true;								// 直前がロードだったら
-				BASICPARAM::e_nowScene = ESceneNumber::THIRDMOVE;	// 次のシーンを指定する
-			}
-		}
-		// 四番目のムーブのロードだったら
-		else if (BASICPARAM::e_preScene == ESceneNumber::FOURTHLOAD)
-		{
-			// ムーブ4のロード素材
-			InitMove4Load();
-
-
-			Move4TextureReload();
-
-
-			p_loadThread->Process(max4, moveStr, loadType);		// ロードをする
-
-
-			// ロードが終了したら
-			if (p_loadThread->GetNum() >= max4)
-			{
-				BASICPARAM::endFeedNow = true;						// 終了フェードのフラッグを立てる
-				preLoadScene = true;								// 直前がロードだったら
-				BASICPARAM::e_nowScene = ESceneNumber::FOURTHMOVE;	// 次のシーンを指定する
-			}
-		}
-		// 五番目のムーブのロードだったら
-		else if (BASICPARAM::e_preScene == ESceneNumber::FIFTHLOAD)
-		{
-			// ムーブ5のロード素材
-			InitMove5Load();
-
-
-			Move5TextureReload();
-
-
-			p_loadThread->Process(max5, moveStr, loadType);		// ロードをする
-
-
-			// ロードが終了したら
-			if (p_loadThread->GetNum() >= max5)
-			{
-				BASICPARAM::endFeedNow = true;						// 終了フェードのフラッグを立てる
-				preLoadScene = true;								// 直前がロードだったら
-				BASICPARAM::e_nowScene = ESceneNumber::FIFTHMOVE;	// 次のシーンを指定する
-			}
-		}
-		// ロードではなくゲームだったら
-		else
-		{
-			preLoadScene = false;		// 直前がロードではないとする
-
-
-			// オプションメニューでないとき
-			if (!optionMenuNow)
-			{
-				// 開始フェードが終了していたら
-				if (!BASICPARAM::startFeedNow/* && !BASICPARAM::endFeedNow*/)
+				// ロードが終了したら
+				if (p_loadThread->GetNum() >= max1)
 				{
-					// アンチエイリアス画面に対して描画処理を行う
-					SetDrawScreen(antiAliasScreen);
+					BASICPARAM::endFeedNow = true;						// 終了フェードのフラッグを立てる
+					preLoadScene = true;								// 直前がロードだったとする
+					BASICPARAM::e_nowScene = ESceneNumber::FIRSTMOVE;	// 次のシーンを指定する
+				}
+			}
+			// 二番目のムーブのロードだったら
+			else if (BASICPARAM::e_preScene == ESceneNumber::SECONDLOAD)
+			{
+				// シーン２の素材ファイル
+				InitMove2Load();
+
+
+				p_loadThread->Process(max2, moveStr, loadType);		// ロードをする
+
+
+				// ロードが終了したら
+				if (p_loadThread->GetNum() >= max2)
+				{
+					BASICPARAM::endFeedNow = true;						// 終了フェードのフラッグを立てる
+					preLoadScene = true;								// 直前がロードだったら
+					BASICPARAM::e_nowScene = ESceneNumber::SECONDMOVE;	// 次のシーンを指定する
+				}
+			}
+			// 三番目のムーブのロードだったら
+			else if (BASICPARAM::e_preScene == ESceneNumber::THIRDLOAD)
+			{
+				// ムーブ3のロード素材
+				InitMove3Load();
+
+
+				p_loadThread->Process(max3, moveStr, loadType);		// ロードをする
+
+
+				// ロードが終了したら
+				if (p_loadThread->GetNum() >= max3)
+				{
+					BASICPARAM::endFeedNow = true;						// 終了フェードのフラッグを立てる
+					preLoadScene = true;								// 直前がロードだったら
+					BASICPARAM::e_nowScene = ESceneNumber::THIRDMOVE;	// 次のシーンを指定する
+				}
+			}
+			// 四番目のムーブのロードだったら
+			else if (BASICPARAM::e_preScene == ESceneNumber::FOURTHLOAD)
+			{
+				// ムーブ4のロード素材
+				InitMove4Load();
+
+
+				Move4TextureReload();
+
+
+				p_loadThread->Process(max4, moveStr, loadType);		// ロードをする
+
+
+				// ロードが終了したら
+				if (p_loadThread->GetNum() >= max4)
+				{
+					BASICPARAM::endFeedNow = true;						// 終了フェードのフラッグを立てる
+					preLoadScene = true;								// 直前がロードだったら
+					BASICPARAM::e_nowScene = ESceneNumber::FOURTHMOVE;	// 次のシーンを指定する
+				}
+			}
+			// 五番目のムーブのロードだったら
+			else if (BASICPARAM::e_preScene == ESceneNumber::FIFTHLOAD)
+			{
+				// ムーブ5のロード素材
+				InitMove5Load();
+
+
+				Move5TextureReload();
+
+
+				p_loadThread->Process(max5, moveStr, loadType);		// ロードをする
+
+
+				// ロードが終了したら
+				if (p_loadThread->GetNum() >= max5)
+				{
+					BASICPARAM::endFeedNow = true;						// 終了フェードのフラッグを立てる
+					preLoadScene = true;								// 直前がロードだったら
+					BASICPARAM::e_nowScene = ESceneNumber::FIFTHMOVE;	// 次のシーンを指定する
+				}
+			}
+			// ロードではなくゲームだったら
+			else
+			{
+				preLoadScene = false;		// 直前がロードではないとする
+
+
+				// オプションメニューでないとき
+				if (!optionMenuNow)
+				{
+					// 開始フェードが終了していたら
+					if (!BASICPARAM::startFeedNow/* && !BASICPARAM::endFeedNow*/)
+					{
+						// アンチエイリアス画面に対して描画処理を行う
+						SetDrawScreen(antiAliasScreen);
+						ClearDrawScreen();
+
+
+						// ゲームに関する
+						p_baseMove->CameraProcess();
+						p_baseMove->Draw();
+
+
+						// Effekseerにより再生中のエフェクトを描画する。
+						DrawEffekseer3D();
+						// Effekseerにより再生中のエフェクトを描画する。
+						DrawEffekseer2D();
+
+
+						BASICPARAM::e_nowScene = p_baseMove->GetScene();
+
+
+						// アンチエイリアス画面に描画したものを裏画面に書き込む
+						SetDrawScreen(DX_SCREEN_BACK);
+						DrawGraph(0, 0, antiAliasScreen, false);
+
+
+						// ゲームに関する
+						p_baseMove->CameraProcess();				// SetDrawScreenを行うとカメラの設定がなくなるので再設定を行う
+						p_baseMove->Process();
+
+
+						// Effekseerにより再生中のエフェクトを更新する。
+						UpdateEffekseer3D();
+						// Effekseerにより再生中のエフェクトを更新する。
+						UpdateEffekseer2D();
+
+
+						// オプション画面に移行するコマンドを押されたら、またはウィンドウズが非アクティブになったら
+						if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1
+							|| !GetWindowActiveFlag())
+						{
+							// 現在の画面をキャプチャする
+							GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, gaussianScreen);
+
+
+							GraphFilter(gaussianScreen, DX_GRAPH_FILTER_GAUSS, 8, 1400);	// 現在の画面にガウスフィルタかけてぼかす	
+
+
+							p_baseMove->OptionActorModelBefore();							// オプション用のモデル表示の準備
+
+
+
+							optionMenuNow = true;											// オプションメニューに移行するフラッグを立てる
+
+
+							optionSelectButtonNum = EOptionSelectButton::Sound;				// オプションメニューのボタン位置を初期化
+
+
+							optionPageNowNumber = 0;										// オプションのページを1ページ目にする
+
+
+							SoundProcess::SetOptionMenuNow(true);							// サウンド音量をオプションメニュー用に下げるよう命令
+
+						}
+#ifdef _DEBUG
+						MyDebug::DebugProcess();
+#endif // _DEBUG
+						ScreenFlip();
+					} /// if (!BASICPARAM::startFeedNow/* && !BASICPARAM::endFeedNow*/)
+					// 開始フェードが立っていたら
+					else
+					{
+						feedCount -= 5;						// フェードカウントを下げる			
+
+
+						// 画面に関する一連
+						ClearDrawScreen();
+						SetDrawScreen(DX_SCREEN_BACK);
+
+
+						// ゲームに関する一連
+						p_baseMove->CameraProcess();
+						p_baseMove->Draw();
+
+
+						// フェードイン処理
+						SetDrawBlendMode(DX_BLENDMODE_ALPHA, feedCount);
+						DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, feedDraw, true);
+						SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+
+						// フェードカウントが下がりまくったら開始フェードフラッグを下す
+						if (feedCount <= 0)
+						{
+							feedCount = 0;
+							BASICPARAM::startFeedNow = false;
+						}
+
+
+						ScreenFlip();
+					} /// else(!if (!BASICPARAM::startFeedNow/* && !BASICPARAM::endFeedNow*/))
+				} /// if (!optionMenuNow)
+				// オプションメニューのとき
+				else
+				{
+					// 画面に関する一連
 					ClearDrawScreen();
 
 
-					// ゲームに関する
-					p_baseMove->CameraProcess();
-					p_baseMove->Draw();
+					// オプションに関する
+					OptionDraw();
+					OptionProcess();
 
 
-					// Effekseerにより再生中のエフェクトを描画する。
-					DrawEffekseer3D();
-					// Effekseerにより再生中のエフェクトを描画する。
-					DrawEffekseer2D();
-
-
-					BASICPARAM::e_nowScene = p_baseMove->GetScene();
-
-
-					// アンチエイリアス画面に描画したものを裏画面に書き込む
-					SetDrawScreen(DX_SCREEN_BACK);
-					DrawGraph(0, 0, antiAliasScreen, false);
-
-
-					// ゲームに関する
-					p_baseMove->CameraProcess();				// SetDrawScreenを行うとカメラの設定がなくなるので再設定を行う
-					p_baseMove->Process();
-
-
-					// Effekseerにより再生中のエフェクトを更新する。
-					UpdateEffekseer3D();
-					// Effekseerにより再生中のエフェクトを更新する。
-					UpdateEffekseer2D();
-
-
-					// オプション画面に移行するコマンドを押されたら、またはウィンドウズが非アクティブになったら
-					if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1
-						|| !GetWindowActiveFlag())
+					// オプション画面から戻る
+					if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1)
 					{
-						// 現在の画面をキャプチャする
-						GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, gaussianScreen);	
-
-
-						GraphFilter(gaussianScreen, DX_GRAPH_FILTER_GAUSS, 8, 1400);	// 現在の画面にガウスフィルタかけてぼかす	
-
-
-						p_baseMove->OptionActorModelBefore();							// オプション用のモデル表示の準備
-						
-
-
-						optionMenuNow = true;											// オプションメニューに移行するフラッグを立てる
-
-
-						optionSelectButtonNum = EOptionSelectButton::Sound;				// オプションメニューのボタン位置を初期化
-
-
-						optionPageNowNumber = 0;										// オプションのページを1ページ目にする
-
-
-						SoundProcess::SetOptionMenuNow(true);							// サウンド音量をオプションメニュー用に下げるよう命令
-
+						p_baseMove->OptionActorModelAfter();
+						p_baseMove->CameraProcess();			// カメラ切り替え
+						SoundProcess::SetOptionMenuNow(false);		// サウンド音量をオプション用から戻す
+						optionMenuNow = false;
 					}
-#ifdef _DEBUG
-					MyDebug::DebugProcess();
-#endif // _DEBUG
+
+
 					ScreenFlip();
-				} /// if (!BASICPARAM::startFeedNow/* && !BASICPARAM::endFeedNow*/)
-				// 開始フェードが立っていたら
-				else
+				} /// else(!if (!optionMenuNow))
+			} /// else
+		} /// if (BASICPARAM::e_nowScene == BASICPARAM::e_preScene)	
+		// シーンを移行するように指定されたら
+		else
+		{
+			// 現在のシーンの終了フェードが終わったら
+			if (!BASICPARAM::endFeedNow)
+			{
+				// シーンを変える
+				SceneChange();
+
+
+				// 直前のシーンと今のシーンを同じにする
+				BASICPARAM::e_preScene = BASICPARAM::e_nowScene;
+			} /// if (!BASICPARAM::endFeedNow)
+			// 現在のシーンの終了フェードのとき
+			else
+			{
+				// 終了シーンがロードではないとき
+				if (!preLoadScene)
 				{
-					feedCount -= 5;						// フェードカウントを下げる			
+					// フェードを加算する
+					feedCount += 5;
 
 
 					// 画面に関する一連
-					ClearDrawScreen();
 					SetDrawScreen(DX_SCREEN_BACK);
+					ClearDrawScreen();
 
 
-					// ゲームに関する一連
+					// ゲームの描画に関するのだけを残してゲームに関するもの
 					p_baseMove->CameraProcess();
 					p_baseMove->Draw();
 
 
-					// フェードイン処理
+					// フェードアウト処理
 					SetDrawBlendMode(DX_BLENDMODE_ALPHA, feedCount);
 					DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, feedDraw, true);
 					SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
 
-					// フェードカウントが下がりまくったら開始フェードフラッグを下す
-					if (feedCount <= 0)
-					{
-						feedCount = 0;
-						BASICPARAM::startFeedNow = false;
-					}
-
-
 					ScreenFlip();
-				} /// else(!if (!BASICPARAM::startFeedNow/* && !BASICPARAM::endFeedNow*/))
-			} /// if (!optionMenuNow)
-			// オプションメニューのとき
-			else
-			{
-				// 画面に関する一連
-				ClearDrawScreen();
 
 
-				// オプションに関する
-				OptionDraw();
-				OptionProcess();
+					// フェードカウントが一定に達したらフラッグを下す
+					if (feedCount >= 255)
+					{
+						// エフェクトを終了する
+						DrawEffekseer2D_End();
+						DrawEffekseer3D_End();
 
 
-				// オプション画面から戻る
-				if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1)
+						// サウンドを解放する
+						SoundProcess::Release();
+
+
+						feedCount = 0;
+						BASICPARAM::endFeedNow = false;
+					}
+				} /// if (!preLoadScene)
+				// 終了シーンがロードのとき
+				else
 				{
-					p_baseMove->OptionActorModelAfter();
-					p_baseMove->CameraProcess();			// カメラ切り替え
-					SoundProcess::SetOptionMenuNow(false);		// サウンド音量をオプション用から戻す
-					optionMenuNow = false;
-				}
-
-
-				ScreenFlip();
-			} /// else(!if (!optionMenuNow))
-		} /// else
-	} /// if (BASICPARAM::e_nowScene == BASICPARAM::e_preScene)	
-	// シーンを移行するように指定されたら
-	else
-	{
-		// 現在のシーンの終了フェードが終わったら
-		if (!BASICPARAM::endFeedNow)
-		{
-			// シーンを変える
-			SceneChange();
-
-
-			// 直前のシーンと今のシーンを同じにする
-			BASICPARAM::e_preScene = BASICPARAM::e_nowScene;
-		} /// if (!BASICPARAM::endFeedNow)
-		// 現在のシーンの終了フェードのとき
-		else
-		{
-			// 終了シーンがロードではないとき
-			if (!preLoadScene)
-			{				
-				// フェードを加算する
-				feedCount += 5;
-
-
-				// 画面に関する一連
-				SetDrawScreen(DX_SCREEN_BACK);
-				ClearDrawScreen();
-
-
-				// ゲームの描画に関するのだけを残してゲームに関するもの
-				p_baseMove->CameraProcess();
-				p_baseMove->Draw();
-
-
-				// フェードアウト処理
-				SetDrawBlendMode(DX_BLENDMODE_ALPHA, feedCount);
-				DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, feedDraw, true);
-				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-
-
-				ScreenFlip();
-
-
-				// フェードカウントが一定に達したらフラッグを下す
-				if (feedCount >= 255)
-				{
-					// エフェクトを終了する
-					DrawEffekseer2D_End();
-					DrawEffekseer3D_End();
-
-
 					// サウンドを解放する
 					SoundProcess::Release();
 
 
-					feedCount = 0;
-					BASICPARAM::endFeedNow = false;
-				}
-			} /// if (!preLoadScene)
-			// 終了シーンがロードのとき
-			else
-			{
-				// サウンドを解放する
-				SoundProcess::Release();
+					// フェードを加算する
+					feedCount += 15;
 
 
-				// フェードを加算する
-				feedCount += 15;
+					// 画面に関する一連
+					SetDrawScreen(DX_SCREEN_BACK);
+					ClearDrawScreen();
 
 
-				// 画面に関する一連
-				SetDrawScreen(DX_SCREEN_BACK);
-				ClearDrawScreen();
+					// ゲームの描画に関するのだけを残してゲームに関するもの
+					p_loadThread->Draw();
 
 
-				// ゲームの描画に関するのだけを残してゲームに関するもの
-				p_loadThread->Draw();
+					// フェードアウト処理
+					SetDrawBlendMode(DX_BLENDMODE_ALPHA, feedCount);
+					DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, feedDraw, true);
+					SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
 
-				// フェードアウト処理
-				SetDrawBlendMode(DX_BLENDMODE_ALPHA, feedCount);
-				DrawBox(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, feedDraw, true);
-				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+					ScreenFlip();
 
 
-				ScreenFlip();
-
-
-				// フェードカウントが一定に達したらフラッグを下す
-				if (feedCount >= 255)
-				{
-					feedCount = 0;
-					BASICPARAM::endFeedNow = false;
-				}
-			} /// else(!if (!preLoadScene))
-		} /// else(!if (!BASICPARAM::endFeedNow))
-	} /// else(!if (BASICPARAM::e_nowScene == BASICPARAM::e_preScene))
+					// フェードカウントが一定に達したらフラッグを下す
+					if (feedCount >= 255)
+					{
+						feedCount = 0;
+						BASICPARAM::endFeedNow = false;
+					}
+				} /// else(!if (!preLoadScene))
+			} /// else(!if (!BASICPARAM::endFeedNow))
+		} /// else(!if (BASICPARAM::e_nowScene == BASICPARAM::e_preScene))
+	} /// else(!if (gameFirstStarting))
 } /// void Manager::Update()

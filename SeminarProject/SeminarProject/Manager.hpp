@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseMove.hpp"
 #include "LoadThread.hpp"
+#include "FileSaveLoad.hpp"
 
 #include "MainMove1.hpp"
 #include "MainMove2.hpp"
@@ -30,6 +31,33 @@ private:
 
 	// ロードの種類
 	std::vector<ELOADFILE> loadType;
+
+	// ゲーム起動直後かどうか
+	bool gameFirstStarting;
+
+	// セーブデータがあったときのタイトルUI画像
+	enum class ETitleDraw {
+		firstGame, load, gameEnd, bonus, bonusMove2, bonusMove3
+		, bonusMove4, bonusMove5, bonusMove6
+	};
+
+	// セーブデータがあったときのタイトルUI画像保持
+	int titleUIDraw[9];
+
+	// セーブデータがったときのタイトルUI画像の個数
+	const int titleUINum = 9;
+
+	// セーブデータがあったときのタイトルプロセス
+	void TitleProcess();
+
+	// セーブデータがあったときのタイトル描画
+	void TitleDraw();
+
+	// ゲームを終了する
+	bool gameEnd;
+
+	// おまけコマンドを打ったかどうか
+	bool playBonus;
 
 
 	/// ムーブ１に関する----------------
@@ -108,7 +136,7 @@ private:
 	void OptionDraw();
 
 	// オプション画面のID
-	enum class EOptionSelectButton { Sound, ColorSelect, Camera, BGM, SE, ColorNormal, ColorP, ColorD
+	enum class EOptionSelectButton { Sound, ColorSelect, Camera, DataSave, GameEnd, BGM, SE, ColorNormal, ColorP, ColorD
 		, BGMSelect, SESelect, CameraPerspective, CameraOrtho, CameraHReturn, CameraVReturn };
 
 	// オプション画面の選択ボタン
@@ -131,13 +159,13 @@ private:
 
 	// オプション用画像ID
 	enum class EOptionDraw { BGM, Camera, ColorD, ColorP, SE, Sound, Perspective, Color, Ortho
-		, ColorNormal, HorizonReturn, VerticalReturn, nextPage, prevPage, optionEnd };
+		, ColorNormal, HorizonReturn, VerticalReturn, nextPage, prevPage, optionEnd, gameEnd, dataSave, yes, no };
 
 	// オプション用画像
-	int optionDrawMedia[15];
+	int optionDrawMedia[19];
 
 	// オプション用画像個数
-	const int optionDrawNum = 15;
+	const int optionDrawNum = 19;
 
 	// オプションのページ目
 	int optionPageNowNumber;
@@ -153,4 +181,7 @@ public:
 
 	// メインプロセス
 	void Update();
+
+	// ゲームを終了するかどうか
+	const bool GetEnd() const { return gameEnd; }
 };

@@ -924,6 +924,7 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	{
 		p_stagePaneru[i] = nullptr;
 	}
+	p_enemyBossBefore = nullptr;
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
 		p_enemySlime[i] = nullptr;
@@ -1025,6 +1026,10 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	adjustmentSelectTexDraw[3] = v_file[EFILE::adjustStreetLight];
 	adjustmentSelectTexDraw[4] = v_file[EFILE::adjustStairsRoad];
 	adjustmentSelectTexDraw[5] = v_file[EFILE::adjustStairs];
+
+	
+	// 敵ラスボスのあれ
+	p_enemyBossBefore = new EnemyBossBefore();
 
 
 	// 敵スライムの初期化
@@ -1201,6 +1206,10 @@ MainMove3::~MainMove3()
 	}
 
 
+	// 敵ラスボスのあれ
+	POINTER_RELEASE(p_enemyBossBefore);
+
+
 	// 敵クレヨンヒューマン
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
@@ -1291,6 +1300,10 @@ void MainMove3::Draw()
 
 
 	ShadowDraw();		// シャドウマップの描画
+
+
+	// 敵ラスボスのあれ
+	p_enemyBossBefore->ModelDraw();
 
 
 	// 敵スライム
@@ -1566,6 +1579,10 @@ void MainMove3::Process()
 			if (p_dropItem[i]->GetDeath()) continue;
 			p_dropItem[i]->Process();
 		}
+
+		
+		// 敵ラスボスのあれ
+		p_enemyBossBefore->Process();
 
 
 		/// スライムのプロセスに関する-------------------------------------------------------------------------------------------------------------------------------

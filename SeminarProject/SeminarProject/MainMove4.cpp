@@ -410,6 +410,7 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 	{
 		p_ordinaryPerson[i] = nullptr;
 	}
+	p_enemyBossBefore = nullptr;
 	p_enemyMove = nullptr;
 	vp_stageStairs.clear();
 	vp_stageStairsRoad.clear();
@@ -501,6 +502,7 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 
 
 	// “G‚Ì‰Šú‰»
+	p_enemyBossBefore = new EnemyBossBefore();
 	p_enemyMove = new EnemyMove4(v_file[EFILE::enemyModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel], v_file[EFILE::stairsRoadCollModel]
 		, v_file[EFILE::enemyTex0], VGet(1000, 0, 1000), 0.0f);
 	enemyAndPlayerDistance = 0;
@@ -599,6 +601,7 @@ MainMove4::~MainMove4()
 
 
 	// “G
+	POINTER_RELEASE(p_enemyBossBefore);
 	POINTER_RELEASE(p_enemyMove);
 
 
@@ -683,6 +686,10 @@ void MainMove4::Draw()
 
 	// ƒVƒƒƒhƒEƒ}ƒbƒv‚ð•`‰æ
 	ShadowDraw();
+
+
+	// “Gƒ‰ƒXƒ{ƒX‚Ì‚ ‚ê
+	p_enemyBossBefore->ModelDraw();
 
 
 	// l
@@ -889,6 +896,10 @@ void MainMove4::Process()
 	{
 		p_ordinaryPerson[i]->Process();
 	}
+
+
+	// “Gƒ‰ƒXƒ{ƒX‚Ì‚ ‚ê
+	p_enemyBossBefore->Process();
 
 
 	// “G

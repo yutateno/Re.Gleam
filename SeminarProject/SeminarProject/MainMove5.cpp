@@ -331,6 +331,7 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 	{
 		p_stagePaneru[i] = nullptr;
 	}
+	p_enemyBossBefore = nullptr;
 	for (int i = 0; i != enemyNum; ++i)
 	{
 		p_enemyMove[i] = nullptr;
@@ -418,6 +419,7 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 
 
 	// 敵の初期化
+	p_enemyBossBefore = new EnemyBossBefore();
 	std::random_device rnd;     // 非決定的な乱数生成器を生成
 	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
 	std::uniform_int_distribution<> randInX(-4000, 4000);        // X座標用乱数
@@ -529,6 +531,7 @@ MainMove5::~MainMove5()
 
 
 	// 敵
+	POINTER_RELEASE(p_enemyBossBefore);
 	for (int i = 0; i != enemyNum; ++i)
 	{
 		POINTER_RELEASE(p_enemyMove[i]);
@@ -609,6 +612,9 @@ void MainMove5::Draw()
 	ShadowDraw();		// シャドウマップを描画
 
 
+	// 敵ラスボスのあれ
+	p_enemyBossBefore->ModelDraw();
+
 
 	// 一般人
 	if (BASICPARAM::ordinaryPeopleNum != 0)
@@ -671,6 +677,10 @@ void MainMove5::Process()
 			vp_ordinaryPerson[i]->Process();
 		}
 	}
+
+
+	// 敵ラスボスのあれ
+	p_enemyBossBefore->Process();
 
 
 	// 敵に関する

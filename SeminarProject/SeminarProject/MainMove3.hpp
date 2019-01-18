@@ -11,6 +11,7 @@
 #include "EnemyMove3Slime.hpp"
 #include "EnemyMove3CrayonHuman.hpp"
 #include "DropItemMove3.hpp"
+#include "EnemyBossBefore.hpp"
 
 #include <random>
 
@@ -93,6 +94,9 @@ private:
 
 
 	/// 敵---------------------
+
+	// ボスのあれ
+	EnemyBossBefore* p_enemyBossBefore;
 
 	// スライムのポインタ
 	EnemyMove3Slime* p_enemySlime[10];

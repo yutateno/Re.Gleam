@@ -10,6 +10,7 @@
 #include "StageStairsRoad.hpp"
 #include "OrdinaryPerson.hpp"
 #include "EnemyMove5.hpp"
+#include "EnemyBossBefore.hpp"
 
 #include <random>
 
@@ -60,6 +61,9 @@ private:
 
 
 	/// 敵---------------------
+
+	// ボスのあれ
+	EnemyBossBefore* p_enemyBossBefore;
 
 	// 敵のポインタ
 	EnemyMove5* p_enemyMove[50];

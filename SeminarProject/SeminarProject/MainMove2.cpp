@@ -828,7 +828,6 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	adjustmentSelectObjectNumber = AdjustmentObject::Stairs;
 	adjustmentArrangementArea = VGet(0, 0, 0);
 	adjustmentArrangementDire = 0.0f;
-	//adjustmentDrawScreen = MakeGraph(BASICPARAM::winWidth, BASICPARAM::winHeight);
 
 	
 	// 精密機械での2D
@@ -888,7 +887,6 @@ MainMove2::~MainMove2()
 	/// エフェクトに関する
 	StopEffekseer3DEffect(playingEfAttack);
 	DeleteEffekseerEffect(effectAttack);
-	//GRAPHIC_RELEASE(adjustmentDrawScreen);
 
 
 	/// 精密機械に関する
@@ -1058,11 +1056,13 @@ void MainMove2::Draw()
 	}
 
 
-	// プレイヤーから近い敵に対してロックオンのような描画をスクリーン座標にさせる
+	// ロックオン対象が例外指定じゃなかったら
 	if (lockONNowEnemyID != -1)
 	{
+		// 存在していたら
 		if (s_enemy[lockONNowEnemyID].alive)
 		{
+			// プレイヤーから近い敵に対してロックオンのような描画をスクリーン座標にさせる
 			if (mostNearEnemyDistance <= 1000 && !s_enemy[lockONNowEnemyID].p_enemy->GetDeathFlag())
 			{
 				// 距離が攻撃で当たるくらいの距離だったら
@@ -1205,9 +1205,10 @@ void MainMove2::Process()
 			s_enemy[i].p_enemy->Process();
 
 
-			// 敵とプレイヤーの距離がロックオン対象より近かったら
+			// ロックオン対象が例外指定じゃなかったら
 			if (lockONNowEnemyID != -1)
 			{
+				// 敵とプレイヤーの距離がロックオン対象より近かったら
 				if (BaseMove::GetDistance<int>(p_character->GetArea(), s_enemy[lockONNowEnemyID].p_enemy->GetArea())
 					>= BaseMove::GetDistance<int>(p_character->GetArea(), s_enemy[i].p_enemy->GetArea()))
 				{
@@ -1229,6 +1230,7 @@ void MainMove2::Process()
 					}
 				}
 			} /// if (lockONNowEnemyID != -1)
+			// ロックオン対象が例外指定だったら
 			else
 			{
 				// ロックオン対象を更新する

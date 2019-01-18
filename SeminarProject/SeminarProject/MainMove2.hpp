@@ -105,10 +105,22 @@ private:
 	const int enemyNum = 50;
 
 	// 敵のポインタ
-	EnemyMove2* p_enemy[50];
+	struct SEnemyMove
+	{
+		EnemyMove2* p_enemy;
+
+		bool alive;
+	};
+	SEnemyMove s_enemy[50];
 
 	// ドロップアイテム（１体に対して５個
-	DropItemMove2* p_dropItem[250];
+	struct SDropItemMove
+	{
+		DropItemMove2* p_dropItem;
+
+		bool alive;
+	};
+	SDropItemMove s_dropItem[250];
 
 	// 何個のドロップアイテムを手に持ったか
 	int catchDropItemNum;

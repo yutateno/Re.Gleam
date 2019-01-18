@@ -172,9 +172,10 @@ void MainMove2::AdjustmentDraw()
 		// 敵~~
 		for (int i = 0, n = enemyNum; i != n; ++i)
 		{
-			if (p_enemy[i]->GetDeathFlag()) continue;
-			DrawRotaGraph(static_cast<int>((4500 - p_enemy[i]->GetArea().x) / 9000 * 1920)
-				, static_cast<int>((4500 + p_enemy[i]->GetArea().z) / 9000 * 1080)
+			if (!s_enemy[i].alive) continue;
+			if (s_enemy[i].p_enemy->GetDeathFlag()) continue;
+			DrawRotaGraph(static_cast<int>((4500 - s_enemy[i].p_enemy->GetArea().x) / 9000 * 1920)
+				, static_cast<int>((4500 + s_enemy[i].p_enemy->GetArea().z) / 9000 * 1080)
 				, 0.1, 0.0, adjustment2DDraw[0], true);
 		}
 		// 街灯~~
@@ -393,7 +394,8 @@ void MainMove2::ShadowDraw()
 	// 敵
 	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
-		if (!p_enemy[i]->GetEraseExistence()) p_enemy[i]->ModelDraw();
+		if (!s_enemy[i].alive) continue;
+		if (!s_enemy[i].p_enemy->GetEraseExistence()) s_enemy[i].p_enemy->ModelDraw();
 	}
 	// 階段
 	for (int i = 0, n = static_cast<int>(vp_stageStairs.size()); i != n; ++i)
@@ -434,7 +436,8 @@ void MainMove2::ShadowDraw()
 	// 敵
 	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
-		if (!p_enemy[i]->GetEraseExistence())	p_enemy[i]->ModelDraw();
+		if (!s_enemy[i].alive) continue;
+		if (!s_enemy[i].p_enemy->GetEraseExistence()) s_enemy[i].p_enemy->ModelDraw();
 	}
 	// 階段
 	for (int i = 0, n = static_cast<int>(vp_stageStreetLight.size()); i != n; ++i)
@@ -468,7 +471,8 @@ void MainMove2::ShadowDraw()
 	// 敵
 	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
-		if (!p_enemy[i]->GetEraseExistence()) p_enemy[i]->ModelDraw();
+		if (!s_enemy[i].alive) continue;
+		if (!s_enemy[i].p_enemy->GetEraseExistence()) s_enemy[i].p_enemy->ModelDraw();
 	}
 	// 階段
 	for (int i = 0, n = static_cast<int>(vp_stageStairs.size()); i != n; ++i)
@@ -512,15 +516,16 @@ void MainMove2::AttackProcess()
 	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
 		// 死んでいたら次へ
-		if (p_enemy[i]->GetDeathFlag()) continue;
+		if (!s_enemy[i].alive) continue;
+		if (s_enemy[i].p_enemy->GetDeathFlag()) continue;
 
 		// 当たっていたらプレイヤーを押し出す
 		if (HitCheck_Capsule_Capsule(
 			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth(),
-			p_enemy[i]->GetArea(), VAdd(p_enemy[i]->GetArea(), VGet(0.0f, p_enemy[i]->GetHeight(), 0.0f)), p_enemy[i]->GetWidth()))
+			s_enemy[i].p_enemy->GetArea(), VAdd(s_enemy[i].p_enemy->GetArea(), VGet(0.0f, s_enemy[i].p_enemy->GetHeight(), 0.0f)), s_enemy[i].p_enemy->GetWidth()))
 		{
-			p_character->HitCircleReturn(p_enemy[i]->GetArea()
-				, p_enemy[i]->GetWidth() >= p_character->GetWidth() ? p_enemy[i]->GetWidth() : p_character->GetWidth());
+			p_character->HitCircleReturn(s_enemy[i].p_enemy->GetArea()
+				, s_enemy[i].p_enemy->GetWidth() >= p_character->GetWidth() ? s_enemy[i].p_enemy->GetWidth() : p_character->GetWidth());
 		}
 
 
@@ -528,12 +533,12 @@ void MainMove2::AttackProcess()
 		if (p_character->GetAttackNow())
 		{
 			// 敵に剣が触れたかどうか調べる
-			p_enemy[i]->HitLineReturn(p_character->GetAttackFirstFrameArea(), p_character->GetAttackEndFrameArea());
+			s_enemy[i].p_enemy->HitLineReturn(p_character->GetAttackFirstFrameArea(), p_character->GetAttackEndFrameArea());
 		}
 
 
 		// 攻撃でダメージを受けたら
-		if (p_enemy[i]->GetDamageFlag())
+		if (s_enemy[i].p_enemy->GetDamageFlag())
 		{
 			// バイブレーションさせる
 			DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 30, 7500, 7500);
@@ -587,25 +592,27 @@ void MainMove2::AttackProcess()
 	for (int i = 0, n = enemyNum * 5; i != n; ++i)
 	{
 		// もう拾われているかどうかで次へ
-		if (p_dropItem[i]->GetDeath() || !p_dropItem[i]->GetAlive() || !p_dropItem[i]->GetCanCatch()) continue;
+		if (!s_dropItem[i].alive) continue;
+		if (s_dropItem[i].p_dropItem->GetDeath() || !s_dropItem[i].p_dropItem->GetAlive() || !s_dropItem[i].p_dropItem->GetCanCatch()) continue;
 
 
 		// 精密機械がドロップ数を十分手に入れていたら
 		if (p_adjustmentMachine->GetFullDropItem())
 		{
 			// プレイヤーが近かったら
-			if (BaseMove::GetDistance<int>(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 500)
+			if (BaseMove::GetDistance<int>(p_character->GetArea(), s_dropItem[i].p_dropItem->GetArea()) <= 500)
 			{
 				// プレイヤーに近づく
-				p_dropItem[i]->ChaseActor(p_character->GetArea());
+				s_dropItem[i].p_dropItem->ChaseActor(p_character->GetArea());
 			}
 
 
 			// プレイヤーとの距離が取られる距離だったら
-			if (BaseMove::GetDistance<int>(p_character->GetArea(), p_dropItem[i]->GetArea()) <= 75)
+			if (BaseMove::GetDistance<int>(p_character->GetArea(), s_dropItem[i].p_dropItem->GetArea()) <= 75)
 			{
 				catchDropItemNum++;
-				p_dropItem[i]->SetDeath(true);			// 生きさせない
+				s_dropItem[i].p_dropItem->SetDeath(true);			// 生きさせない
+
 
 				/// SEの再生をランダムにする-----------------------------------------------------------------------------
 				std::random_device rnd;     // 非決定的な乱数生成器を生成
@@ -615,23 +622,31 @@ void MainMove2::AttackProcess()
 				// ドロップアイテムを取得するSEを流す
 				if (randPawnSE(mt) == 0)
 				{
-					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, p_dropItem[i]->GetArea());
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, s_dropItem[i].p_dropItem->GetArea());
 				}
 				else
 				{
-					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp2, p_dropItem[i]->GetArea());
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp2, s_dropItem[i].p_dropItem->GetArea());
 				}
 				/// -----------------------------------------------------------------------------------------------------
+
+
+				s_dropItem[i].alive = false;
+				POINTER_RELEASE(s_dropItem[i].p_dropItem);
 			}
 		} /// if (p_adjustmentMachine->GetFullDropItem())
 		// 精密機械がドロップ数を十分に手に入れていなかったら
 		else
 		{
+			// 精密機械へ向かう
+			s_dropItem[i].p_dropItem->ChaseActor(p_adjustmentMachine->GetArea());
+
+
 			// 精密機械との距離が近かったら
-			if (BaseMove::GetDistance<int>(p_adjustmentMachine->GetArea(), p_dropItem[i]->GetArea()) <= 75)
+			if (BaseMove::GetDistance<int>(p_adjustmentMachine->GetArea(), s_dropItem[i].p_dropItem->GetArea()) <= 75)
 			{
 				p_adjustmentMachine->CatchDropItem();
-				p_dropItem[i]->SetDeath(true);			// 生きさせない
+				s_dropItem[i].p_dropItem->SetDeath(true);			// 生きさせない
 
 				/// SEの再生をランダムにする-----------------------------------------------------------------------------
 				std::random_device rnd;     // 非決定的な乱数生成器を生成
@@ -641,17 +656,18 @@ void MainMove2::AttackProcess()
 				// ドロップ取得のSEを流す
 				if (randPawnSE(mt) == 0)
 				{
-					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, p_dropItem[i]->GetArea());
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, s_dropItem[i].p_dropItem->GetArea());
 				}
 				else
 				{
-					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp2, p_dropItem[i]->GetArea());
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp2, s_dropItem[i].p_dropItem->GetArea());
 				}
 				/// -----------------------------------------------------------------------------------------------------
-			}
 
-			// 精密機械へ向かう
-			p_dropItem[i]->ChaseActor(p_adjustmentMachine->GetArea());
+
+				s_dropItem[i].alive = false;
+				POINTER_RELEASE(s_dropItem[i].p_dropItem);
+			}
 		} /// else (!if (p_adjustmentMachine->GetFullDropItem()))
 	} /// for (int i = 0, n = enemyNum * 5; i != n; ++i)
 } /// void MainMove2::AttackProcess()
@@ -675,10 +691,11 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	// ポインタNULL初期化
 	p_camera					 = nullptr;
 	p_character					 = nullptr;
-	p_enemyBossBefore = nullptr;
+	p_enemyBossBefore			 = nullptr;
 	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
-		p_enemy[i]				 = nullptr;
+		s_enemy[i].alive		 = true;
+		s_enemy[i].p_enemy		 = nullptr;
 	}
 	p_stage						 = nullptr;
 	vp_stageStairs.clear();
@@ -689,9 +706,10 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	}
 	for (int i = 0, n = enemyNum * 5; i != n; ++i)
 	{
-		p_dropItem[i] = nullptr;
+		s_dropItem[i].alive		 = true;
+		s_dropItem[i].p_dropItem = nullptr;
 	}
-	p_adjustmentMachine = nullptr;
+	p_adjustmentMachine			 = nullptr;
 	vp_stageStairsRoad.clear();
 
 
@@ -784,16 +802,16 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 		{
 			tempZ -= 200.0f;
 		}
-		p_enemy[i] = new EnemyMove2(VGet(tempX, 0.0f, tempZ), v_file[EFILE::block], v_file[EFILE::blockTex0]);
+		s_enemy[i].p_enemy = new EnemyMove2(VGet(tempX, 0.0f, tempZ), v_file[EFILE::block], v_file[EFILE::blockTex0]);
 	}
 	mostNearEnemyDistance = 10000;
-	lockONNowEnemyID = 0;
+	lockONNowEnemyID = -1;
 
 
 	// ドロップアイテムの初期化
 	for (int i = 0, n = enemyNum * 5; i != n; ++i)
 	{
-		p_dropItem[i] = new DropItemMove2(v_file[EFILE::block], p_enemy[i / 5]->GetArea(), v_file[EFILE::blockTex0]);
+		s_dropItem[i].p_dropItem = new DropItemMove2(v_file[EFILE::block], s_enemy[i / 5].p_enemy->GetArea(), v_file[EFILE::blockTex0]);
 	}
 
 
@@ -930,7 +948,7 @@ MainMove2::~MainMove2()
 	/// ドロップアイテムに関する
 	for (int i = 0, n = enemyNum * 5; i != n; ++i)
 	{
-		POINTER_RELEASE(p_dropItem[i]);
+		POINTER_RELEASE(s_dropItem[i].p_dropItem);
 	}
 
 
@@ -938,7 +956,7 @@ MainMove2::~MainMove2()
 	POINTER_RELEASE(p_enemyBossBefore);
 	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
-		POINTER_RELEASE(p_enemy[i]);
+		POINTER_RELEASE(s_enemy[i].p_enemy);
 	}
 
 
@@ -988,8 +1006,9 @@ void MainMove2::Draw()
 	// ドロップアイテムの描画
 	for (int i = 0, n = enemyNum * 5; i != n; ++i)
 	{
-		if (p_dropItem[i]->GetDeath() || !p_dropItem[i]->GetAlive()) continue;
-		p_dropItem[i]->ModelDraw();
+		if (!s_dropItem[i].alive) continue;
+		if (s_dropItem[i].p_dropItem->GetDeath() || !s_dropItem[i].p_dropItem->GetAlive()) continue;
+		s_dropItem[i].p_dropItem->ModelDraw();
 	}
 
 
@@ -1040,23 +1059,29 @@ void MainMove2::Draw()
 
 
 	// プレイヤーから近い敵に対してロックオンのような描画をスクリーン座標にさせる
-	if (mostNearEnemyDistance <= 1000 && !p_enemy[lockONNowEnemyID]->GetEraseExistence())
+	if (lockONNowEnemyID != -1)
 	{
-		// 距離が攻撃で当たるくらいの距離だったら
-		if (mostNearEnemyDistance < 250)
+		if (s_enemy[lockONNowEnemyID].alive)
 		{
-			DrawBox(static_cast<int>(mostNearEnemyScreenArea.x - 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f)
-				, static_cast<int>(mostNearEnemyScreenArea.x + 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f), GetColor(255, 255, 255), false);
-			DrawBox(static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y - 20.0f - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f)
-				, static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f), GetColor(255, 255, 255), false);
-		}
-		// 攻撃は当たらないが近かったら
-		else
-		{
-			DrawBox(static_cast<int>(mostNearEnemyScreenArea.x - 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f)
-				, static_cast<int>(mostNearEnemyScreenArea.x + 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f), GetColor(125, 125, 125), false);
-			DrawBox(static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y - 20.0f - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f)
-				, static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - p_enemy[lockONNowEnemyID]->GetHeight() / 2.0f), GetColor(125, 125, 125), false);
+			if (mostNearEnemyDistance <= 1000 && !s_enemy[lockONNowEnemyID].p_enemy->GetDeathFlag())
+			{
+				// 距離が攻撃で当たるくらいの距離だったら
+				if (mostNearEnemyDistance < 250)
+				{
+					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x - 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
+						, static_cast<int>(mostNearEnemyScreenArea.x + 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f), GetColor(255, 255, 255), false);
+					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y - 20.0f - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
+						, static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f), GetColor(255, 255, 255), false);
+				}
+				// 攻撃は当たらないが近かったら
+				else
+				{
+					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x - 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
+						, static_cast<int>(mostNearEnemyScreenArea.x + 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f), GetColor(125, 125, 125), false);
+					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y - 20.0f - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
+						, static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f), GetColor(125, 125, 125), false);
+				}
+			}
 		}
 	}
 
@@ -1081,7 +1106,8 @@ void MainMove2::Draw()
 	// 敵
 	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
-		p_enemy[i]->Draw();
+		if (!s_enemy[i].alive) continue;
+		s_enemy[i].p_enemy->Draw();
 	}
 #endif // _DEBUG
 } /// void MainMove2::Draw()
@@ -1142,65 +1168,95 @@ void MainMove2::Process()
 
 		// 敵のプロセス
 		p_enemyBossBefore->Process();
-		for (int i = 0, n = enemyNum; i != n; ++i)
+		for (int i = 0; i != enemyNum; ++i)
 		{
+			// 死んでいたら
+			if (!s_enemy[i].alive) continue;
+
+
 			// 敵が消滅したら
-			if (p_enemy[i]->GetEraseExistence())
+			if (s_enemy[i].p_enemy->GetEraseExistence())
 			{
 				// ロックオン対象だったら
 				if (i == lockONNowEnemyID)
 				{
 					// 除外させる
 					mostNearEnemyDistance = 10000;
-					lockONNowEnemyID = 0;
+					lockONNowEnemyID = -1;
 					p_character->SetMostNearEnemyArea();
 				}
 
-
+				
 				// ドロップアイテムを描画させる
-				if (!p_dropItem[(i * 5)]->GetDeath() && !p_dropItem[(i * 5)]->GetAlive()) p_dropItem[(i * 5)]->SetAlive(true);
-				else continue;
-				if (!p_dropItem[(i * 5) + 1]->GetDeath() && !p_dropItem[(i * 5) + 1]->GetAlive()) p_dropItem[(i * 5) + 1]->SetAlive(true);
-				if (!p_dropItem[(i * 5) + 2]->GetDeath() && !p_dropItem[(i * 5) + 2]->GetAlive()) p_dropItem[(i * 5) + 2]->SetAlive(true);
-				if (!p_dropItem[(i * 5) + 3]->GetDeath() && !p_dropItem[(i * 5) + 3]->GetAlive()) p_dropItem[(i * 5) + 3]->SetAlive(true);
-				if (!p_dropItem[(i * 5) + 4]->GetDeath() && !p_dropItem[(i * 5) + 4]->GetAlive()) p_dropItem[(i * 5) + 4]->SetAlive(true);
+				if (!s_dropItem[(i * 5)].p_dropItem->GetDeath() && !s_dropItem[(i * 5)].p_dropItem->GetAlive()) s_dropItem[(i * 5)].p_dropItem->SetAlive(true);
+				if (!s_dropItem[(i * 5) + 1].p_dropItem->GetDeath() && !s_dropItem[(i * 5) + 1].p_dropItem->GetAlive()) s_dropItem[(i * 5) + 1].p_dropItem->SetAlive(true);
+				if (!s_dropItem[(i * 5) + 2].p_dropItem->GetDeath() && !s_dropItem[(i * 5) + 2].p_dropItem->GetAlive()) s_dropItem[(i * 5) + 2].p_dropItem->SetAlive(true);
+				if (!s_dropItem[(i * 5) + 3].p_dropItem->GetDeath() && !s_dropItem[(i * 5) + 3].p_dropItem->GetAlive()) s_dropItem[(i * 5) + 3].p_dropItem->SetAlive(true);
+				if (!s_dropItem[(i * 5) + 4].p_dropItem->GetDeath() && !s_dropItem[(i * 5) + 4].p_dropItem->GetAlive()) s_dropItem[(i * 5) + 4].p_dropItem->SetAlive(true);
+
+
+				s_enemy[i].alive = false;
+				POINTER_RELEASE(s_enemy[i].p_enemy);
 				continue;
 			}
 
 
 			// 敵のプロセスを呼ぶ
-			p_enemy[i]->Process();
+			s_enemy[i].p_enemy->Process();
 
 
 			// 敵とプレイヤーの距離がロックオン対象より近かったら
-			if (BaseMove::GetDistance<int>(p_character->GetArea(), p_enemy[lockONNowEnemyID]->GetArea())
-				>= BaseMove::GetDistance<int>(p_character->GetArea(), p_enemy[i]->GetArea()))
+			if (lockONNowEnemyID != -1)
+			{
+				if (BaseMove::GetDistance<int>(p_character->GetArea(), s_enemy[lockONNowEnemyID].p_enemy->GetArea())
+					>= BaseMove::GetDistance<int>(p_character->GetArea(), s_enemy[i].p_enemy->GetArea()))
+				{
+					// ロックオン対象を更新する
+					mostNearEnemyDistance = BaseMove::GetDistance<int>(p_character->GetArea(), s_enemy[i].p_enemy->GetArea());
+					mostNearEnemyScreenArea = ConvWorldPosToScreenPos(s_enemy[i].p_enemy->GetArea());
+					lockONNowEnemyID = i;
+
+
+					// ロックオンの距離より近かったら
+					if (mostNearEnemyDistance < 250)
+					{
+						p_character->SetMostNearEnemyArea(s_enemy[i].p_enemy->GetArea());
+					}
+					// ロックオンできない距離だったら除外する
+					else
+					{
+						p_character->SetMostNearEnemyArea();
+					}
+				}
+			} /// if (lockONNowEnemyID != -1)
+			else
 			{
 				// ロックオン対象を更新する
-				mostNearEnemyDistance = BaseMove::GetDistance<int>(p_character->GetArea(), p_enemy[i]->GetArea());
-				mostNearEnemyScreenArea = ConvWorldPosToScreenPos(p_enemy[i]->GetArea());
+				mostNearEnemyDistance = BaseMove::GetDistance<int>(p_character->GetArea(), s_enemy[i].p_enemy->GetArea());
+				mostNearEnemyScreenArea = ConvWorldPosToScreenPos(s_enemy[i].p_enemy->GetArea());
 				lockONNowEnemyID = i;
 
 
 				// ロックオンの距離より近かったら
 				if (mostNearEnemyDistance < 250)
 				{
-					p_character->SetMostNearEnemyArea(p_enemy[i]->GetArea());
+					p_character->SetMostNearEnemyArea(s_enemy[i].p_enemy->GetArea());
 				}
 				// ロックオンできない距離だったら除外する
 				else
 				{
 					p_character->SetMostNearEnemyArea();
 				}
-			}
+			} /// else(!if (lockONNowEnemyID != -1))
 		} /// for (int i = 0, n = enemyNum; i != n; ++i)
 
 
 		// ドロップアイテム
 		for (int i = 0, n = enemyNum * 5; i != n; ++i)
 		{
-			if (p_dropItem[i]->GetDeath()) continue;
-			p_dropItem[i]->Process();
+			if (!s_dropItem[i].alive) continue;
+			if (s_dropItem[i].p_dropItem->GetDeath()) continue;
+			s_dropItem[i].p_dropItem->Process();
 		}
 
 

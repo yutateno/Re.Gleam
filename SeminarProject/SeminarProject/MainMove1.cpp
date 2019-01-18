@@ -12,7 +12,9 @@ void MainMove1::ActorHit()
 			// ƒvƒŒƒCƒ„[‚Æ‹Ê‚ªÚG‚µ‚½‚ç
 			if (BaseMove::GetDistance<int>(p_character->GetArea(), s_lightBall[i].p_enemyMove->GetArea()) <= 60)
 			{
-				s_lightBall[i].aliveNow = false;			// ¶‚«‚³‚¹‚È‚¢
+				// ¶‚«‚³‚¹‚È‚¢
+				s_lightBall[i].aliveNow = false;
+				POINTER_RELEASE(s_lightBall[i].p_enemyMove);
 				
 
 				/// ó‹µ‚É‰‚¶‚ÄBGM‚Ì‰¹—Ê‚ğ’²®----------------------------------------------------------

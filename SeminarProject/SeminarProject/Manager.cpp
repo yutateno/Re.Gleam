@@ -126,6 +126,8 @@ void Manager::TitleProcess()
 	{
 		if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::firstGame))
 		{
+			BASICPARAM::e_nowScene = ESceneNumber::FIRSTLOAD;
+			BASICPARAM::e_preScene = ESceneNumber::FIRSTLOAD;
 			optionSelectMin = 0;
 			optionSelectMax = 4;
 			gameFirstStarting = false;
@@ -136,9 +138,12 @@ void Manager::TitleProcess()
 		}
 		else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::load))
 		{
+			if (BASICPARAM::e_nowScene >= ESceneNumber::THIRDLOAD)
+			{
+				BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
+			}
 			optionSelectMin = 0;
 			optionSelectMax = 4;
-			FileSaveLoad::Load();
 			gameFirstStarting = false;
 			for (int i = 0; i != titleUINum; ++i)
 			{
@@ -169,6 +174,9 @@ void Manager::TitleProcess()
 				BASICPARAM::v_streetLightAngle.clear();
 				BASICPARAM::v_stairsRoadArea.clear();
 				BASICPARAM::v_stairsRoadAngle.clear();
+
+				BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
+
 				BASICPARAM::e_nowScene = ESceneNumber::THIRDLOAD;
 				BASICPARAM::e_preScene = ESceneNumber::THIRDLOAD;
 			}
@@ -184,12 +192,15 @@ void Manager::TitleProcess()
 				BASICPARAM::v_streetLightAngle.clear();
 				BASICPARAM::v_stairsRoadArea.clear();
 				BASICPARAM::v_stairsRoadAngle.clear();
+
+				BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
 				BASICPARAM::charaTextureWhiteBlack = true;
 				BASICPARAM::anothreTextureWhiteBlack = true;
 				BASICPARAM::enemyTextureWhiteBlack = true;
 				BASICPARAM::lightStreetTextureWhiteBlack = true;
 				BASICPARAM::stairsRoadTextureWhiteBlack = true;
 				BASICPARAM::stairsTextureWhiteBlack = true;
+
 				BASICPARAM::e_nowScene = ESceneNumber::FOURTHLOAD;
 				BASICPARAM::e_preScene = ESceneNumber::FOURTHLOAD;
 			}
@@ -205,13 +216,17 @@ void Manager::TitleProcess()
 				BASICPARAM::v_streetLightAngle.clear();
 				BASICPARAM::v_stairsRoadArea.clear();
 				BASICPARAM::v_stairsRoadAngle.clear();
+
+				BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
 				BASICPARAM::charaTextureWhiteBlack = true;
 				BASICPARAM::anothreTextureWhiteBlack = true;
 				BASICPARAM::enemyTextureWhiteBlack = true;
 				BASICPARAM::lightStreetTextureWhiteBlack = true;
 				BASICPARAM::stairsRoadTextureWhiteBlack = true;
 				BASICPARAM::stairsTextureWhiteBlack = true;
+
 				BASICPARAM::ordinaryPeopleNum = 0;
+
 				BASICPARAM::e_nowScene = ESceneNumber::FIFTHLOAD;
 				BASICPARAM::e_preScene = ESceneNumber::FIFTHLOAD;
 			}
@@ -227,13 +242,17 @@ void Manager::TitleProcess()
 			//	BASICPARAM::v_streetLightAngle.clear();
 			//	BASICPARAM::v_stairsRoadArea.clear();
 			//	BASICPARAM::v_stairsRoadAngle.clear();
+
+			// BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
 			//	BASICPARAM::charaTextureWhiteBlack = true;
 			//	BASICPARAM::anothreTextureWhiteBlack = true;
 			//	BASICPARAM::enemyTextureWhiteBlack = true;
 			//	BASICPARAM::lightStreetTextureWhiteBlack = true;
 			//	BASICPARAM::stairsRoadTextureWhiteBlack = true;
 			//	BASICPARAM::stairsTextureWhiteBlack = true;
+
 			//	BASICPARAM::ordinaryPeopleNum = 0;
+
 			//	BASICPARAM::lastCharaView = false;
 			//	BASICPARAM::lastOrdinaryView = false;
 			//	BASICPARAM::lastPaneruView = false;

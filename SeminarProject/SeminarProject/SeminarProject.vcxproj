@@ -169,6 +169,8 @@
     <ClCompile Include="DropItemMove1.cpp" />
     <ClCompile Include="DropItemMove2.cpp" />
     <ClCompile Include="DropItemMove3.cpp" />
+    <ClCompile Include="EnemyBossAfter.cpp" />
+    <ClCompile Include="EnemyBossBefore.cpp" />
     <ClCompile Include="EnemyMove1.cpp" />
     <ClCompile Include="EnemyMove2.cpp" />
     <ClCompile Include="EnemyMove3CrayonHuman.cpp" />
@@ -185,6 +187,7 @@
     <ClCompile Include="MainMove3.cpp" />
     <ClCompile Include="MainMove4.cpp" />
     <ClCompile Include="MainMove5.cpp" />
+    <ClCompile Include="MainMove6.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="OrdinaryPerson.cpp" />
     <ClCompile Include="SoundProcess.cpp" />
@@ -206,6 +209,8 @@
     <ClInclude Include="DropItemMove1.hpp" />
     <ClInclude Include="DropItemMove2.hpp" />
     <ClInclude Include="DropItemMove3.hpp" />
+    <ClInclude Include="EnemyBossAfter.hpp" />
+    <ClInclude Include="EnemyBossBefore.hpp" />
     <ClInclude Include="EnemyMove1.hpp" />
     <ClInclude Include="EnemyMove2.hpp" />
     <ClInclude Include="EnemyMove3CrayonHuman.hpp" />
@@ -221,6 +226,7 @@
     <ClInclude Include="MainMove3.hpp" />
     <ClInclude Include="MainMove4.hpp" />
     <ClInclude Include="MainMove5.hpp" />
+    <ClInclude Include="MainMove6.hpp" />
     <ClInclude Include="Manager.hpp" />
     <ClInclude Include="OrdinaryPerson.hpp" />
     <ClInclude Include="SoundProcess.hpp" />

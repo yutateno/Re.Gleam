@@ -10,6 +10,7 @@
 #include "DropItemMove2.hpp"
 #include "AdjustmentMachine.hpp"
 #include "StageStairsRoad.hpp"
+#include "EnemyBossBefore.hpp"
 
 #include <random>
 
@@ -96,6 +97,9 @@ private:
 
 
 	/// ìG---------------------
+
+	// É{ÉXÇÃÇ†ÇÍ
+	EnemyBossBefore* p_enemyBossBefore;
 
 	// ìGÇÃêî
 	const int enemyNum = 50;

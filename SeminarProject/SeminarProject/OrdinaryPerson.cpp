@@ -184,7 +184,7 @@ OrdinaryPerson::OrdinaryPerson(const int modelHandle, const int collStageHandle,
 
 
 	// ‚R‚cƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý
-	this->modelHandle = 0;
+	this->modelHandle = -1;
 	this->modelHandle = MV1DuplicateModel(modelHandle);
 
 

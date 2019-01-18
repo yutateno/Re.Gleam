@@ -675,6 +675,7 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	// ポインタNULL初期化
 	p_camera					 = nullptr;
 	p_character					 = nullptr;
+	p_enemyBossBefore = nullptr;
 	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
 		p_enemy[i]				 = nullptr;
@@ -755,6 +756,7 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 
 
 	// 敵の初期化
+	p_enemyBossBefore = new EnemyBossBefore();
 	std::random_device rnd;     // 非決定的な乱数生成器を生成
 	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
 	std::uniform_int_distribution<> randInX(-4000, 4000);        // X座標用乱数
@@ -933,6 +935,7 @@ MainMove2::~MainMove2()
 
 
 	/// 敵に関する
+	POINTER_RELEASE(p_enemyBossBefore);
 	for (int i = 0, n = enemyNum; i != n; ++i)
 	{
 		POINTER_RELEASE(p_enemy[i]);
@@ -968,6 +971,10 @@ void MainMove2::Draw()
 
 	// 影の描画
 	ShadowDraw();
+
+	
+	// 敵
+	p_enemyBossBefore->ModelDraw();
 
 
 	// ドロップ数が集まる前の精密機械の描画
@@ -1134,6 +1141,7 @@ void MainMove2::Process()
 
 
 		// 敵のプロセス
+		p_enemyBossBefore->Process();
 		for (int i = 0, n = enemyNum; i != n; ++i)
 		{
 			// 敵が消滅したら

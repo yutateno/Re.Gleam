@@ -32,7 +32,9 @@ private:
 		, stairsRoadCollModel, se_jump, se_footCorridor, se_foot, se_landing
 		, se_landingSecond, se_attackOne, se_attackTwo, se_attackThrid
 		, bgm_Main, enemyModel, enemyTex0, ordinaryModel, ordinaryTex0
-		, moveDescription, se_catch_saveMiss
+		, moveDescription, se_catch_saveMiss, certainAdjustmentUI
+		, certainCharacterUI, certainOrdinaryUI, certainPaneruUI
+		, certainStairsUI, certainStairsRoadUI, certainStreetLightUI
 	};
 
 
@@ -74,8 +76,23 @@ private:
 	// “G‚ğè‚É“ü‚ê‚½”
 	int enemyCatchNum;
 
+
+	/// “G‚ğˆê’è”è‚É“ü‚ê‚½‚Ì‰‰o‚ÉŠÖ‚·‚é---------------
+
+	// ˆê’è”è‚É“ü‚ê‚½‚É•`‰æ‚·‚é‰æ‘œ‚ÌID
+	enum class ECertainDrawID { adjustment, ordinary, streetLight, character, paneru, stairs, stairsRoad };
+	
+	// ˆê’è”è‚É“ü‚ê‚½‚É•`‰æ‚·‚é‰æ‘œ‚ÌID
+	ECertainDrawID e_certainID;
+
 	// ˆê’è”è‚É“ü‚ê‚½‚Æ‚«‚ÉSE‚ğ—¬‚·
 	bool certainCatchSEDo;
+
+	// ˆê’è”è‚É“ü‚ê‚½‚É•`‰æ‚·‚é‰æ‘œ
+	int certainChatchDraw[7];
+
+	// ˆê’è”èÏ‚ê‚½‚Æ‚«‚É•`‰æ‚·‚é‰æ‘œ‚Ì•\¦ŠÔ
+	int certainDrawFeed;
 
 
 	/// ˆê”Êl------------------

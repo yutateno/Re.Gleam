@@ -451,6 +451,18 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 			, v_file[EFILE::enemyTex0], VGet(tempX, 0.0f, tempZ), 0);
 	}
 	enemyCatchNum = 0;
+	for (int i = 0; i != 7; ++i)
+	{
+		certainChatchDraw[i] = -1;
+	}
+	certainChatchDraw[0] = v_file[EFILE::certainAdjustmentUI];
+	certainChatchDraw[1] = v_file[EFILE::certainOrdinaryUI];
+	certainChatchDraw[2] = v_file[EFILE::certainStreetLightUI];
+	certainChatchDraw[3] = v_file[EFILE::certainCharacterUI];
+	certainChatchDraw[4] = v_file[EFILE::certainPaneruUI];
+	certainChatchDraw[5] = v_file[EFILE::certainStairsUI];
+	certainChatchDraw[6] = v_file[EFILE::certainStairsRoadUI];
+	certainDrawFeed = 0;
 
 
 	// àÍî êl
@@ -655,6 +667,15 @@ void MainMove5::Draw()
 		DrawGraph(960 - 291, 540 - 64 - 32, moveDescriptionDraw, true);
 		if (moveDescriptionFrame < 255) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 	}
+
+
+	// àÍíËêîéËÇ…ì¸ÇÍÇΩéûÇ…ï`âÊÇ∑ÇÈ
+	if (certainDrawFeed-- > 0)
+	{
+		if (certainDrawFeed < 50) SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - static_cast<int>(((50 - certainDrawFeed) * 5.1)));
+		DrawGraph(50, 50 + (certainDrawFeed < 50 ? 50 - certainDrawFeed : 0), certainChatchDraw[static_cast<int>(e_certainID)], false);
+		if (certainDrawFeed < 50) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	}
 } /// void MainMove5::Draw()
 
 
@@ -718,6 +739,8 @@ void MainMove5::Process()
 	{
 		if (!certainCatchSEDo)
 		{
+			certainDrawFeed = 100;
+			e_certainID = ECertainDrawID::adjustment;
 			certainCatchSEDo = true;
 			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveMiss);
 		}
@@ -726,6 +749,8 @@ void MainMove5::Process()
 	{
 		if (!certainCatchSEDo)
 		{
+			certainDrawFeed = 100;
+			e_certainID = ECertainDrawID::ordinary;
 			certainCatchSEDo = true;
 			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveMiss);
 		}
@@ -734,6 +759,8 @@ void MainMove5::Process()
 	{
 		if (!certainCatchSEDo)
 		{
+			certainDrawFeed = 100;
+			e_certainID = ECertainDrawID::streetLight;
 			certainCatchSEDo = true;
 			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveMiss);
 		}
@@ -742,6 +769,8 @@ void MainMove5::Process()
 	{
 		if (!certainCatchSEDo)
 		{
+			certainDrawFeed = 100;
+			e_certainID = ECertainDrawID::character;
 			certainCatchSEDo = true;
 			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveMiss);
 		}
@@ -750,6 +779,8 @@ void MainMove5::Process()
 	{
 		if (!certainCatchSEDo)
 		{
+			certainDrawFeed = 100;
+			e_certainID = ECertainDrawID::paneru;
 			certainCatchSEDo = true;
 			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveMiss);
 		}
@@ -758,6 +789,8 @@ void MainMove5::Process()
 	{
 		if (!certainCatchSEDo)
 		{
+			certainDrawFeed = 100;
+			e_certainID = ECertainDrawID::stairs;
 			certainCatchSEDo = true;
 			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveMiss);
 		}
@@ -766,6 +799,8 @@ void MainMove5::Process()
 	{
 		if (!certainCatchSEDo)
 		{
+			certainDrawFeed = 100;
+			e_certainID = ECertainDrawID::stairsRoad;
 			certainCatchSEDo = true;
 			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveMiss);
 		}

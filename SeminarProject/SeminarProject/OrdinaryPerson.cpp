@@ -97,7 +97,31 @@ void OrdinaryPerson::MoveProcess()
 	// ステージ外に向かっていたら乱数を再暗算
 	if (tempX >= 5000.0f || tempX <= -5000.0f || tempZ >= 5000.0f || tempZ <= -5000.0f)
 	{
-		area = VGet(0, 0, 0);
+		std::random_device rnd;     // 非決定的な乱数生成器を生成
+		std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+		std::uniform_int_distribution<> randInX(-4000, 4000);        // X座標用乱数
+		std::uniform_int_distribution<> randInZ(-4000, 4000);        // Z座標用乱数
+		// X座標設定
+		float tempX = static_cast<float>(randInX(mt));
+		if (tempX <= 200.0f && tempX >= 0.0f)
+		{
+			tempX += 200.0f;
+		}
+		if (tempX >= -200.0f && tempX <= 0.0f)
+		{
+			tempX -= 200.0f;
+		}
+		// Y座標設定
+		float tempZ = static_cast<float>(randInZ(mt));
+		if (tempZ <= 200.0f && tempZ >= 0.0f)
+		{
+			tempZ += 200.0f;
+		}
+		if (tempZ >= -200.0f && tempZ <= 0.0f)
+		{
+			tempZ -= 200.0f;
+		}
+		area = VGet(tempX, 0, tempZ);
 		moveCount = 100;
 		return;
 	}

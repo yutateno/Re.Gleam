@@ -1131,20 +1131,24 @@ void CharacterSword::Draw()
 		}
 
 
-		// 残像モデルの描画
-		MV1SetPosition(modelHandle, preDrawArea);
-		MV1SetMaterialDrawBlendMode(this->modelHandle, 0, DX_BLENDMODE_ALPHA);
-		MV1SetMaterialDrawBlendMode(this->modelHandle, 1, DX_BLENDMODE_ALPHA);
-		MV1SetMaterialDrawBlendMode(this->modelHandle, 2, DX_BLENDMODE_ALPHA);
-		MV1SetMaterialDrawBlendMode(this->modelHandle, 3, DX_BLENDMODE_ALPHA);
-		MV1SetMaterialDrawBlendMode(this->modelHandle, 4, DX_BLENDMODE_ALPHA);
-		MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
-		MV1SetMaterialDrawBlendParam(this->modelHandle, 1, blendCount);
-		MV1SetMaterialDrawBlendParam(this->modelHandle, 2, blendCount);
-		MV1SetMaterialDrawBlendParam(this->modelHandle, 3, blendCount);
-		MV1SetMaterialDrawBlendParam(this->modelHandle, 4, blendCount);
-		MV1DrawModel(modelHandle);
-		
+		// ムーブ5以降の実体に関するときで実体を取り戻していなかったら、に関係していないとき
+		if (!(BASICPARAM::e_nowScene >= ESceneNumber::FIFTHLOAD && !BASICPARAM::lastCharaView))
+		{
+			// 残像モデルの描画
+			MV1SetPosition(modelHandle, preDrawArea);
+			MV1SetMaterialDrawBlendMode(this->modelHandle, 0, DX_BLENDMODE_ALPHA);
+			MV1SetMaterialDrawBlendMode(this->modelHandle, 1, DX_BLENDMODE_ALPHA);
+			MV1SetMaterialDrawBlendMode(this->modelHandle, 2, DX_BLENDMODE_ALPHA);
+			MV1SetMaterialDrawBlendMode(this->modelHandle, 3, DX_BLENDMODE_ALPHA);
+			MV1SetMaterialDrawBlendMode(this->modelHandle, 4, DX_BLENDMODE_ALPHA);
+			MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
+			MV1SetMaterialDrawBlendParam(this->modelHandle, 1, blendCount);
+			MV1SetMaterialDrawBlendParam(this->modelHandle, 2, blendCount);
+			MV1SetMaterialDrawBlendParam(this->modelHandle, 3, blendCount);
+			MV1SetMaterialDrawBlendParam(this->modelHandle, 4, blendCount);
+			MV1DrawModel(modelHandle);
+		}
+
 
 		// 通常モデルの描画
 		MV1SetPosition(modelHandle, area);

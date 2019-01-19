@@ -143,6 +143,8 @@ EnemyBossBefore::EnemyBossBefore() : BasicCreature()
 	MV1SetPosition(this->modelHandle, area);
 } /// EnemyBossBefore::EnemyBossBefore() : BasicCreature(true)
 
+
+// コピーコンストラクタ
 EnemyBossBefore::EnemyBossBefore(const int modelHandle, const int modelTex0, const int modeltex1, const int modelTex2)
 {
 	// 3Dモデルの読み込み
@@ -180,7 +182,7 @@ EnemyBossBefore::EnemyBossBefore(const int modelHandle, const int modelTex0, con
 	// モデルの座標を更新
 	preArea = area;
 	MV1SetPosition(this->modelHandle, area);
-}
+} /// EnemyBossBefore::EnemyBossBefore(const int modelHandle, const int modelTex0, const int modeltex1, const int modelTex2)
 
 
 // デストラクタ

@@ -174,7 +174,6 @@ void Manager::TitleProcess()
 		// ロードするとき
 		else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::load))
 		{
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
 			// ムーブが3以降だったらテクスチャの色を通常色にしておく
 			if (BASICPARAM::e_nowScene >= ESceneNumber::THIRDLOAD)
 			{
@@ -1269,6 +1268,15 @@ void Manager::InitMove5Load()
 
 		// 一定数捕まえたら流すSE
 		moveStr[39] = "media\\こっち\\media\\sound\\savemisson.wyn";
+
+		// 一定数捕まえた時に描画するUI
+		moveStr[40] = "media\\こっち\\media\\move5\\adjustment.pyn";
+		moveStr[41] = "media\\こっち\\media\\move5\\character.pyn";
+		moveStr[42] = "media\\こっち\\media\\move5\\ordinary.pyn";
+		moveStr[43] = "media\\こっち\\media\\move5\\paneru.pyn";
+		moveStr[44] = "media\\こっち\\media\\move5\\stairs.pyn";
+		moveStr[45] = "media\\こっち\\media\\move5\\stairsRoad.pyn";
+		moveStr[46] = "media\\こっち\\media\\move5\\streetLight.pyn";
 	}
 
 
@@ -1331,6 +1339,14 @@ void Manager::InitMove5Load()
 		loadType[38] = ELOADFILE::graph;
 
 		loadType[39] = ELOADFILE::soundmem;
+
+		loadType[40] = ELOADFILE::graph;
+		loadType[41] = ELOADFILE::graph;
+		loadType[42] = ELOADFILE::graph;
+		loadType[43] = ELOADFILE::graph;
+		loadType[44] = ELOADFILE::graph;
+		loadType[45] = ELOADFILE::graph;
+		loadType[46] = ELOADFILE::graph;
 	}
 } /// void Manager::InitMove5Load()
 
@@ -2454,7 +2470,7 @@ Manager::Manager()
 		optionDrawMedia[i] = -1;
 	}
 	se_save = -1;
-	LoadFile::MyLoad("media\\こっち\\media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
+	//LoadFile::MyLoad("media\\こっち\\media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
 	LoadFile::MyLoad("media\\こっち\\media\\option\\BGM.pyn", optionDrawMedia[0], ELOADFILE::graph);
 	LoadFile::MyLoad("media\\こっち\\media\\option\\camera.pyn", optionDrawMedia[1], ELOADFILE::graph);
 	LoadFile::MyLoad("media\\こっち\\media\\option\\D型.pyn", optionDrawMedia[2], ELOADFILE::graph);
@@ -2474,7 +2490,6 @@ Manager::Manager()
 	LoadFile::MyLoad("media\\こっち\\media\\option\\save.pyn", optionDrawMedia[16], ELOADFILE::graph);
 	LoadFile::MyLoad("media\\こっち\\media\\option\\yes.pyn", optionDrawMedia[17], ELOADFILE::graph);
 	LoadFile::MyLoad("media\\こっち\\media\\option\\no.pyn", optionDrawMedia[18], ELOADFILE::graph);
-	SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 
 
 	// フェード処理に関する

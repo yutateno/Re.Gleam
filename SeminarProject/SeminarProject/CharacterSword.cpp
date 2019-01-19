@@ -1059,7 +1059,7 @@ void CharacterSword::Process(const float getAngle)
 // ポジションをリセットする
 void CharacterSword::PositionReset()
 {
-	area = VGet(0.0f, 0.0f, 0.0f);
+	area = VGet(0.0f, 50.0f, 0.0f);
 }
 
 

@@ -205,6 +205,175 @@ void MainMove6::ThsTextureReload()
 }
 
 
+// 最初の描画
+void MainMove6::FirstDraw()
+{
+	BaseMove::SkyBoxDraw();		// スカイボックスを描画
+
+
+	ShadowDraw();		// シャドウマップを描画
+
+
+	// 敵ラスボスのあれ
+	p_enemyBossBefore->ModelDraw();
+
+
+	// 一般人
+	if (BASICPARAM::ordinaryPeopleNum != 0)
+	{
+		for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+		{
+			vp_ordinaryPerson[i]->Draw();
+		}
+	}
+
+
+	p_character->Draw();	// キャラクターを描画
+
+
+
+	if (BaseMove::GetDistance<int>(p_character->GetArea(), p_enemyBossBefore->GetArea()) < 250)
+	{
+		DrawGraph(960 - 200, 540 - 69 - 50, approachBossUIDraw[0], false);
+		DrawGraph(960 - 500, 540 - 69 + 250, approachBossUIDraw[1], false);
+		DrawGraph(960 + 100, 540 - 69 + 250, approachBossUIDraw[2], false);
+		if (approachUISelect)
+		{
+			DrawBox(960 - 500 + 5, 540 - 69 + 250 + 5, 960 - 500 + 400 - 5, 540 - 69 + 250 + 69 - 5, GetColor(50, 50, 200), false);
+			DrawBox(960 - 500 + 4, 540 - 69 + 250 + 4, 960 - 500 + 400 - 4, 540 - 69 + 250 + 69 - 4, GetColor(50, 50, 200), false);
+			DrawBox(960 - 500 + 3, 540 - 69 + 250 + 3, 960 - 500 + 400 - 3, 540 - 69 + 250 + 69 - 3, GetColor(50, 50, 200), false);
+		}
+		else
+		{
+
+			DrawBox(960 + 100 + 5, 540 - 69 + 250 + 5, 960 + 100 + 400 - 5, 540 - 69 + 250 + 69 - 5, GetColor(50, 50, 200), false);
+			DrawBox(960 + 100 + 4, 540 - 69 + 250 + 4, 960 + 100 + 400 - 4, 540 - 69 + 250 + 69 - 4, GetColor(50, 50, 200), false);
+			DrawBox(960 + 100 + 3, 540 - 69 + 250 + 3, 960 + 100 + 400 - 3, 540 - 69 + 250 + 69 - 3, GetColor(50, 50, 200), false);
+		}
+	}
+} /// void MainMove6::FirstDraw()
+
+
+// 最初のプロセス
+void MainMove6::FirstProcess()
+{
+	if (BaseMove::GetDistance<int>(p_character->GetArea(), p_enemyBossBefore->GetArea()) >= 250)
+	{
+		// キャラクターのプロセス
+		p_character->Process(p_camera->GetAngle());
+
+
+		// カメラのプロセス
+		p_camera->Process(p_character->GetArea());
+
+
+		// 一般人のプロセス
+		if (BASICPARAM::ordinaryPeopleNum != 0)
+		{
+			for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+			{
+				vp_ordinaryPerson[i]->Process();
+			}
+		}
+
+
+		// 敵ラスボスのあれ
+		p_enemyBossBefore->Process();
+
+
+		// シャドウマップの位置を更新
+		BaseMove::ShadowArea(p_character->GetArea());
+
+
+		AttackProcess();		// 当たり判定のプロセス
+
+
+		// スカイボックスの位置を更新
+		BaseMove::SkyBoxProcess(p_character->GetArea());
+	}
+	else
+	{
+		/// スティックの一回押し倒しで更新するよう調整----------------------------------------------------------------------
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) < 0)
+		{
+			if (adjustmentControllStick[0] < 2) adjustmentControllStick[0]++;
+		}
+		else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
+		{
+			if (adjustmentControllStick[1] < 2) adjustmentControllStick[1]++;
+		}
+		else
+		{
+			adjustmentControllStick[0] = 0;
+			adjustmentControllStick[1] = 0;
+		}
+		// カーソルを左に移動
+		if (adjustmentControllStick[0] == 1)
+		{
+			approachUISelect = true;
+		}
+		// カーソルを右に移動
+		if (adjustmentControllStick[1] == 1)
+		{
+			approachUISelect = false;
+		}
+		/// ---------------------------------------------------------------------------------------------------------------
+
+
+		// 決定ボタンを押したら
+		if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
+		{
+			if (approachUISelect)
+			{
+				e_nowMove = ESceneMove6::Movie;
+				p_character->PositionReset();
+			}
+			else
+			{
+				p_character->PositionReset();
+			}
+		}
+	}
+} /// void MainMove6::FirstProcess()
+
+
+// ムービー中の描画
+void MainMove6::MovieDraw()
+{
+} /// void MainMove6::MovieDraw()
+
+
+// ムービー中のプロセス
+void MainMove6::MovieProcess()
+{
+	e_nowMove = ESceneMove6::First;
+} /// void MainMove6::MovieProcess()
+
+
+// 戦闘の描画
+void MainMove6::BattleDraw()
+{
+} /// void MainMove6::BattleDraw()
+
+
+// 戦闘のプロセス
+void MainMove6::BattleProcess()
+{
+} /// void MainMove6::BattleProcess()
+
+
+// 最後の描画
+void MainMove6::LastDraw()
+{
+} /// void MainMove6::LastDraw()
+
+
+// 最後のプロセス
+void MainMove6::LastProcess()
+{
+} /// void MainMove6::LastProcess()
+
+
 // コンストラクタ
 MainMove6::MainMove6(const std::vector<int> v_file)
 {
@@ -299,6 +468,7 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 	approachBossUIDraw[0] = v_file[EFILE::approachUINear];
 	approachBossUIDraw[1] = v_file[EFILE::approachUIYes];
 	approachBossUIDraw[2] = v_file[EFILE::approachUINo];
+	approachUISelect = true;
 
 
 	// 一般人
@@ -449,64 +619,65 @@ MainMove6::~MainMove6()
 // 描画
 void MainMove6::Draw()
 {
-	BaseMove::SkyBoxDraw();		// スカイボックスを描画
-
-
-	ShadowDraw();		// シャドウマップを描画
-
-
-	// 敵ラスボスのあれ
-	p_enemyBossBefore->ModelDraw();
-
-
-	// 一般人
-	if (BASICPARAM::ordinaryPeopleNum != 0)
+	switch (e_nowMove)
 	{
-		for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
-		{
-			vp_ordinaryPerson[i]->Draw();
-		}
+	case ESceneMove6::First:
+		FirstDraw();
+		break;
+
+
+	case ESceneMove6::Movie:
+		MovieDraw();
+		break;
+
+
+	case ESceneMove6::Battle:
+		BattleDraw();
+		break;
+
+
+	case ESceneMove6::Last:
+		LastDraw();
+		break;
+
+
+	default:
+		break;
 	}
-
-
-	p_character->Draw();	// キャラクターを描画
+	
 } /// void MainMove6::Draw()
 
 
 // プロセス
 void MainMove6::Process()
 {
-	// キャラクターのプロセス
-	p_character->Process(p_camera->GetAngle());
-
-
-	// カメラのプロセス
-	p_camera->Process(p_character->GetArea());
-
-
-	// 一般人のプロセス
-	if (BASICPARAM::ordinaryPeopleNum != 0)
+	switch (e_nowMove)
 	{
-		for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
-		{
-			vp_ordinaryPerson[i]->Process();
-		}
+	case ESceneMove6::First:
+		FirstProcess();
+		break;
+
+
+	case ESceneMove6::Movie:
+		MovieProcess();
+		break;
+
+
+	case ESceneMove6::Battle:
+		BattleProcess();
+		break;
+
+
+	case ESceneMove6::Last:
+		LastProcess();
+		break;
+
+
+	default:
+		break;
 	}
+	
 
-
-	// 敵ラスボスのあれ
-	p_enemyBossBefore->Process();
-
-
-	// シャドウマップの位置を更新
-	BaseMove::ShadowArea(p_character->GetArea());
-
-
-	AttackProcess();		// 当たり判定のプロセス
-
-
-	// スカイボックスの位置を更新
-	BaseMove::SkyBoxProcess(p_character->GetArea());
 
 #ifdef _DEBUG
 	if (CheckHitKey(KEY_INPUT_Z) == 1)

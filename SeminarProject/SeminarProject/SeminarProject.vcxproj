@@ -164,6 +164,7 @@
     <ClCompile Include="BasicCreature.cpp" />
     <ClCompile Include="BasicObject.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraMove6.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterSword.cpp" />
     <ClCompile Include="DropItemMove1.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="BasicCreature.hpp" />
     <ClInclude Include="BasicObject.hpp" />
     <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="CameraMove6.hpp" />
     <ClInclude Include="Character.hpp" />
     <ClInclude Include="CharacterSword.hpp" />
     <ClInclude Include="DropItemMove1.hpp" />

@@ -25,6 +25,7 @@ void Manager::SceneChange()
 		moveStr.shrink_to_fit();
 		loadType.clear();
 		loadType.shrink_to_fit();
+		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 		break;
 
 
@@ -46,6 +47,7 @@ void Manager::SceneChange()
 		moveStr.shrink_to_fit();
 		loadType.clear();
 		loadType.shrink_to_fit();
+		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 		break;
 
 
@@ -67,6 +69,7 @@ void Manager::SceneChange()
 		moveStr.shrink_to_fit();
 		loadType.clear();
 		loadType.shrink_to_fit();
+		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 		break;
 
 
@@ -88,6 +91,7 @@ void Manager::SceneChange()
 		moveStr.shrink_to_fit();
 		loadType.clear();
 		loadType.shrink_to_fit();
+		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 		break;
 
 
@@ -109,8 +113,8 @@ void Manager::SceneChange()
 		moveStr.shrink_to_fit();
 		loadType.clear();
 		loadType.shrink_to_fit();
+		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 		break;
-
 
 	default:
 		break;
@@ -124,6 +128,7 @@ void Manager::TitleProcess()
 	// 決定を押したら
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
 	{
+		// ゲームを開始するの時
 		if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::firstGame))
 		{
 			BASICPARAM::e_nowScene = ESceneNumber::FIRSTLOAD;
@@ -135,13 +140,17 @@ void Manager::TitleProcess()
 			{
 				GRAPHIC_RELEASE(titleUIDraw[i]);
 			}
-		}
+		} /// if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::firstGame))
+		// ロードするとき
 		else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::load))
 		{
+			// ムーブが3以降だったらテクスチャの色を通常色にしておく
 			if (BASICPARAM::e_nowScene >= ESceneNumber::THIRDLOAD)
 			{
 				BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
 			}
+
+
 			optionSelectMin = 0;
 			optionSelectMax = 4;
 			gameFirstStarting = false;
@@ -149,11 +158,13 @@ void Manager::TitleProcess()
 			{
 				GRAPHIC_RELEASE(titleUIDraw[i]);
 			}
-		}
+		} /// else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::load))
+		// ゲームを終了するとき
 		else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::gameEnd))
 		{
 			gameEnd = true;
-		}
+		} /// else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::gameEnd))
+		// おまけのとき
 		else
 		{
 			// ムーブ２を選択していたら
@@ -230,38 +241,38 @@ void Manager::TitleProcess()
 				BASICPARAM::e_nowScene = ESceneNumber::FIFTHLOAD;
 				BASICPARAM::e_preScene = ESceneNumber::FIFTHLOAD;
 			}
-			//// ムーブ６を選択していたら
-			//else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::bonusMove6))
-			//{
-			//	BASICPARAM::stairsNum = 0;
-			//	BASICPARAM::streetLightNum = 0;
-			//	BASICPARAM::stairsRoadNum = 0;
-			//	BASICPARAM::v_stairsArea.clear();
-			//	BASICPARAM::v_stairsAngle.clear();
-			//	BASICPARAM::v_streetLightArea.clear();
-			//	BASICPARAM::v_streetLightAngle.clear();
-			//	BASICPARAM::v_stairsRoadArea.clear();
-			//	BASICPARAM::v_stairsRoadAngle.clear();
+			// ムーブ６を選択していたら
+			else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::bonusMove6))
+			{
+				BASICPARAM::stairsNum = 0;
+				BASICPARAM::streetLightNum = 0;
+				BASICPARAM::stairsRoadNum = 0;
+				BASICPARAM::v_stairsArea.clear();
+				BASICPARAM::v_stairsAngle.clear();
+				BASICPARAM::v_streetLightArea.clear();
+				BASICPARAM::v_streetLightAngle.clear();
+				BASICPARAM::v_stairsRoadArea.clear();
+				BASICPARAM::v_stairsRoadAngle.clear();
 
-			// BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
-			//	BASICPARAM::charaTextureWhiteBlack = true;
-			//	BASICPARAM::anothreTextureWhiteBlack = true;
-			//	BASICPARAM::enemyTextureWhiteBlack = true;
-			//	BASICPARAM::lightStreetTextureWhiteBlack = true;
-			//	BASICPARAM::stairsRoadTextureWhiteBlack = true;
-			//	BASICPARAM::stairsTextureWhiteBlack = true;
+				BASICPARAM::e_TextureColor = ETextureColor::NORMAL;
+				BASICPARAM::charaTextureWhiteBlack = true;
+				BASICPARAM::anothreTextureWhiteBlack = true;
+				BASICPARAM::enemyTextureWhiteBlack = true;
+				BASICPARAM::lightStreetTextureWhiteBlack = true;
+				BASICPARAM::stairsRoadTextureWhiteBlack = true;
+				BASICPARAM::stairsTextureWhiteBlack = true;
 
-			//	BASICPARAM::ordinaryPeopleNum = 0;
+				BASICPARAM::ordinaryPeopleNum = 0;
 
-			//	BASICPARAM::lastCharaView = false;
-			//	BASICPARAM::lastOrdinaryView = false;
-			//	BASICPARAM::lastPaneruView = false;
-			//	BASICPARAM::lastStairsRoadView = false;
-			//	BASICPARAM::lastStairsView = false;
-			//	BASICPARAM::lastStreetLightView = false;
-			//	BASICPARAM::e_nowScene = ESceneNumber::SECONDLOAD;
-			//	BASICPARAM::e_preScene = ESceneNumber::SECONDLOAD;
-			//} /// else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::bonusMove6))
+				BASICPARAM::lastCharaView = false;
+				BASICPARAM::lastOrdinaryView = false;
+				BASICPARAM::lastPaneruView = false;
+				BASICPARAM::lastStairsRoadView = false;
+				BASICPARAM::lastStairsView = false;
+				BASICPARAM::lastStreetLightView = false;
+				BASICPARAM::e_nowScene = ESceneNumber::SECONDLOAD;
+				BASICPARAM::e_preScene = ESceneNumber::SECONDLOAD;
+			} /// else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::bonusMove6))
 
 
 			optionSelectMin = 0;
@@ -271,8 +282,8 @@ void Manager::TitleProcess()
 			{
 				GRAPHIC_RELEASE(titleUIDraw[i]);
 			}
-		}
-	}
+		} /// else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::bonus))
+	} /// if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
 
 
 	// LBとRBとBACKとXボタンを同時に押したら
@@ -1224,9 +1235,6 @@ void Manager::InitMove5Load()
 
 		// ムーブの説明画像
 		moveStr[38] = "media\\こっち\\media\\ムーブ説明\\move5.pyn";
-
-		// 取り戻したときに流すSE
-		moveStr[39] = "media\\こっち\\media\\sound\\saveon.wyn";
 	}
 
 
@@ -1287,8 +1295,6 @@ void Manager::InitMove5Load()
 		loadType[37] = ELOADFILE::graph;
 
 		loadType[38] = ELOADFILE::graph;
-
-		loadType[39] = ELOADFILE::soundmem;
 	}
 } /// void Manager::InitMove5Load()
 
@@ -1470,27 +1476,9 @@ void Manager::OptionProcess()
 			seDoWaitTimer = 0;
 			
 
-			// シーンに応じてSEを変える
-			if (BASICPARAM::e_nowScene == ESceneNumber::FIRSTMOVE)
-			{
-				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPawnHigh);
-			}
-			else if (BASICPARAM::e_nowScene == ESceneNumber::SECONDMOVE)
-			{
-				//SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack1);
-			}
-			else if (BASICPARAM::e_nowScene == ESceneNumber::THIRDMOVE)
-			{
-				//SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack2);
-			}
-			else if (BASICPARAM::e_nowScene == ESceneNumber::FOURTHMOVE)
-			{
-				//SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot);
-			}
-			else if (BASICPARAM::e_nowScene == ESceneNumber::FIFTHMOVE)
-			{
-				//SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack3);
-			}
+			// SEを流す
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
+			//PlaySoundMem(se_save, DX_PLAYTYPE_BACK);
 		}
 
 
@@ -1632,6 +1620,10 @@ void Manager::OptionProcess()
 		// セーブにカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::DataSave)
 		{
+			// SEを流す
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
+
+
 			// セーブする
 			FileSaveLoad::Save();
 		}
@@ -1991,6 +1983,10 @@ Manager::Manager()
 	p_loadThread = nullptr;
 	moveStr.clear();
 	loadType.clear();
+	for (int i = 0; i != titleUINum; ++i)
+	{
+		titleUIDraw[i] = -1;
+	}
 
 
 	// 最初のロードを生成
@@ -1998,13 +1994,12 @@ Manager::Manager()
 	preLoadScene = false;
 
 	
-	// ゲームのシステムに関する
-	gameFirstStarting = FileSaveLoad::Load();
+	/// ゲームのタイトルに関する-------------------------------------------------------------------------------------
+	gameFirstStarting = FileSaveLoad::Load();		// ロードさせる、ファイルがあるかどうかでそのあとを判断
 	gameEnd = false;
-	for (int i = 0; i != titleUINum; ++i)
-	{
-		titleUIDraw[i] = -1;
-	}
+	
+
+	// ロードファイルがあった場合
 	if (gameFirstStarting)
 	{
 		LoadFile::MyLoad("media\\こっち\\media\\First\\gameStart.pyn", titleUIDraw[0], ELOADFILE::graph);
@@ -2019,12 +2014,14 @@ Manager::Manager()
 		optionSelectMin = 0;
 		optionSelectMax = 2;
 	}
+	// ロードファイルがなかった場合
 	else
 	{
 		optionSelectMin = 0;
 		optionSelectMax = 4;
 	}
 	playBonus = false;
+	/// ゲームのタイトルに関する-------------------------------------------------------------------------------------
 
 
 	// 画面に関する
@@ -2041,6 +2038,8 @@ Manager::Manager()
 	{
 		optionDrawMedia[i] = -1;
 	}
+	se_save = -1;
+	LoadFile::MyLoad("media\\こっち\\media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
 	LoadFile::MyLoad("media\\こっち\\media\\option\\BGM.pyn", optionDrawMedia[0], ELOADFILE::graph);
 	LoadFile::MyLoad("media\\こっち\\media\\option\\camera.pyn", optionDrawMedia[1], ELOADFILE::graph);
 	LoadFile::MyLoad("media\\こっち\\media\\option\\D型.pyn", optionDrawMedia[2], ELOADFILE::graph);

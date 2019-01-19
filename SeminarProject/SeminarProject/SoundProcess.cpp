@@ -221,7 +221,6 @@ namespace SoundProcess
 		// —¬‚·SE‚ÌÅ‘å‰¹—Ê‚ğŒˆ‚ß‚é
 		se_volumeSetMaxVolume[static_cast<int>(name)] = volume;
 
-
 		// SE‚ª—¬‚ê‚Ä‚¢‚È‚©‚Á‚½‚ç
 		if (!se_playFlag[static_cast<int>(name)])
 		{

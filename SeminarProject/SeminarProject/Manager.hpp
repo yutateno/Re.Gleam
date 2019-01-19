@@ -13,12 +13,12 @@
 class Manager
 {
 private:
+	/// 各シーンに関する--------------------------
 	// シーンの基底クラス
 	BaseMove* p_baseMove;
 
 	// ロードのクラス
 	LoadThread* p_loadThread;
-
 
 	// シーンを切り替える
 	void SceneChange();
@@ -32,8 +32,26 @@ private:
 	// ロードの種類
 	std::vector<ELOADFILE> loadType;
 
+	// アンチエイリアスの画像
+	int antiAliasScreen;
+
+	// シーン切り替えのフェードカウント
+	int feedCount;
+
+	// フェードの色
+	int feedDraw;
+
+
+	/// ゲームに関する------------
+
 	// ゲーム起動直後かどうか
 	bool gameFirstStarting;
+
+	// ゲームを終了する
+	bool gameEnd;
+
+
+	/// ゲームタイトルに関する-----------------------------------------
 
 	// セーブデータがあったときのタイトルUI画像
 	enum class ETitleDraw {
@@ -52,9 +70,6 @@ private:
 
 	// セーブデータがあったときのタイトル描画
 	void TitleDraw();
-
-	// ゲームを終了する
-	bool gameEnd;
 
 	// おまけコマンドを打ったかどうか
 	bool playBonus;
@@ -102,23 +117,13 @@ private:
 	/// ムーブ5に関する--------------
 
 	// ムーブ5のロード数
-	const int max5 = 40;
+	const int max5 = 39;
 
 	// ムーブ5のロードの初期化
 	void InitMove5Load();
 
 	// ムーブ5でロードするテクスチャを初期から変更する
 	void Move5TextureReload();
-
-
-	// アンチエイリアスの画像
-	int antiAliasScreen;
-
-	// シーン切り替えのフェードカウント
-	int feedCount;
-
-	// フェード用画像
-	int feedDraw;
 
 
 	/// オプション画面に関する---------------
@@ -137,7 +142,7 @@ private:
 
 	// オプション画面のID
 	enum class EOptionSelectButton { Sound, ColorSelect, Camera, DataSave, GameEnd, BGM, SE, ColorNormal, ColorP, ColorD
-		, BGMSelect, SESelect, CameraPerspective, CameraOrtho, CameraHReturn, CameraVReturn };
+		, BGMSelect, SESelect, CameraPerspective, CameraOrtho, CameraHReturn, CameraVReturn, yes, no };
 
 	// オプション画面の選択ボタン
 	EOptionSelectButton optionSelectButtonNum;
@@ -169,6 +174,9 @@ private:
 
 	// オプションのページ目
 	int optionPageNowNumber;
+
+	// オプションでのセーブをSE
+	int se_save;
 
 
 public:

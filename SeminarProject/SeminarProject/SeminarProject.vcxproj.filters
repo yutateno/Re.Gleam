@@ -183,6 +183,9 @@
     <ClCompile Include="EnemyBossAfter.cpp">
       <Filter>ソース ファイル\Actor\Creature\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="CameraMove6.cpp">
+      <Filter>ソース ファイル\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseMove.hpp">
@@ -295,6 +298,9 @@
     </ClInclude>
     <ClInclude Include="EnemyBossAfter.hpp">
       <Filter>ヘッダー ファイル\Actor\Creature\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraMove6.hpp">
+      <Filter>ヘッダー ファイル\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

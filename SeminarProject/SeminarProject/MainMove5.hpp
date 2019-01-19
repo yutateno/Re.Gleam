@@ -32,7 +32,7 @@ private:
 		, stairsRoadCollModel, se_jump, se_footCorridor, se_foot, se_landing
 		, se_landingSecond, se_attackOne, se_attackTwo, se_attackThrid
 		, bgm_Main, enemyModel, enemyTex0, ordinaryModel, ordinaryTex0
-		, moveDescription, se_saveOn
+		, moveDescription
 	};
 
 

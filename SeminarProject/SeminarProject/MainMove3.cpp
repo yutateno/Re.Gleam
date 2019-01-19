@@ -88,89 +88,96 @@ void MainMove3::AdjustmentProcess()
 	// 決定ボタンを押したら
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
 	{
-		// キャラクターを選択していたら
-		if (adjustmentSelectTexChange == AdjustmentSelect::chara)
+		// 個数が満ちていたら
+		if (catchDropItemNum >= 15)
 		{
-			// キャラクター関係のテクスチャを白黒から戻す
-			if (BASICPARAM::charaTextureWhiteBlack)
-			{
-				// ダメージ演出
-				DamageTextureReload();
+			catchDropItemNum -= 15;		// 使用個数分減らす
 
 
-				// キャラクター
-				p_character->TextureReload();
-				BASICPARAM::charaTextureWhiteBlack = false;
-			}
-		}
-		// その他を選択していたら
-		if (adjustmentSelectTexChange == AdjustmentSelect::anotherActor)
-		{
-			// そのほかのアクターのテクスチャを白黒から戻す
-			if (BASICPARAM::anothreTextureWhiteBlack)
+			// キャラクターを選択していたら
+			if (adjustmentSelectTexChange == AdjustmentSelect::chara)
 			{
-				// 精密機械
-				p_adjustmentMachine->TextureReload();
-				BASICPARAM::anothreTextureWhiteBlack = false;
-			}
-		}
-		// 敵を選択していたら
-		if (adjustmentSelectTexChange == AdjustmentSelect::enemy)
-		{
-			// 敵のテクスチャを白黒から戻す
-			if (BASICPARAM::enemyTextureWhiteBlack)
-			{
-				BASICPARAM::enemyTextureWhiteBlack = false;
-			}
-		}
-		// 街灯を選択していたら
-		if (adjustmentSelectTexChange == AdjustmentSelect::streetLight)
-		{
-			// 街灯のテクスチャを白黒から戻す
-			if (BASICPARAM::lightStreetTextureWhiteBlack)
-			{
-				if (BASICPARAM::streetLightNum != 0)
+				// キャラクター関係のテクスチャを白黒から戻す
+				if (BASICPARAM::charaTextureWhiteBlack)
 				{
-					for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
-					{
-						vp_stageStreetLight[i]->TextureReload();
-					}
+					// ダメージ演出
+					DamageTextureReload();
+
+
+					// キャラクター
+					p_character->TextureReload();
+					BASICPARAM::charaTextureWhiteBlack = false;
 				}
-				BASICPARAM::lightStreetTextureWhiteBlack = false;
 			}
-		}
-		// 階段と床を選択していたら
-		if (adjustmentSelectTexChange == AdjustmentSelect::stairsRoad)
-		{
-			// 階段と床のテクスチャを白黒から戻す
-			if (BASICPARAM::stairsRoadTextureWhiteBlack)
+			// その他を選択していたら
+			if (adjustmentSelectTexChange == AdjustmentSelect::anotherActor)
 			{
-				if (BASICPARAM::stairsRoadNum != 0)
+				// そのほかのアクターのテクスチャを白黒から戻す
+				if (BASICPARAM::anothreTextureWhiteBlack)
 				{
-					for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
-					{
-						vp_stageStairsRoad[i]->TextureReload();
-					}
+					// 精密機械
+					p_adjustmentMachine->TextureReload();
+					BASICPARAM::anothreTextureWhiteBlack = false;
 				}
-				BASICPARAM::stairsRoadTextureWhiteBlack = false;
 			}
-		}
-		// 階段を選択していたら
-		if (adjustmentSelectTexChange == AdjustmentSelect::stairs)
-		{
-			// 階段のテクスチャを白黒から戻す
-			if (BASICPARAM::stairsTextureWhiteBlack)
+			// 敵を選択していたら
+			if (adjustmentSelectTexChange == AdjustmentSelect::enemy)
 			{
-				if (BASICPARAM::stairsNum != 0)
+				// 敵のテクスチャを白黒から戻す
+				if (BASICPARAM::enemyTextureWhiteBlack)
 				{
-					for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
-					{
-						vp_stageStairs[i]->TextureReload();
-					}
+					BASICPARAM::enemyTextureWhiteBlack = false;
 				}
-				BASICPARAM::stairsTextureWhiteBlack = false;
 			}
-		}
+			// 街灯を選択していたら
+			if (adjustmentSelectTexChange == AdjustmentSelect::streetLight)
+			{
+				// 街灯のテクスチャを白黒から戻す
+				if (BASICPARAM::lightStreetTextureWhiteBlack)
+				{
+					if (BASICPARAM::streetLightNum != 0)
+					{
+						for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
+						{
+							vp_stageStreetLight[i]->TextureReload();
+						}
+					}
+					BASICPARAM::lightStreetTextureWhiteBlack = false;
+				}
+			}
+			// 階段と床を選択していたら
+			if (adjustmentSelectTexChange == AdjustmentSelect::stairsRoad)
+			{
+				// 階段と床のテクスチャを白黒から戻す
+				if (BASICPARAM::stairsRoadTextureWhiteBlack)
+				{
+					if (BASICPARAM::stairsRoadNum != 0)
+					{
+						for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+						{
+							vp_stageStairsRoad[i]->TextureReload();
+						}
+					}
+					BASICPARAM::stairsRoadTextureWhiteBlack = false;
+				}
+			}
+			// 階段を選択していたら
+			if (adjustmentSelectTexChange == AdjustmentSelect::stairs)
+			{
+				// 階段のテクスチャを白黒から戻す
+				if (BASICPARAM::stairsTextureWhiteBlack)
+				{
+					if (BASICPARAM::stairsNum != 0)
+					{
+						for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+						{
+							vp_stageStairs[i]->TextureReload();
+						}
+					}
+					BASICPARAM::stairsTextureWhiteBlack = false;
+				}
+			}
+		} /// if (catchDropItemNum >= 15)
 	} /// if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
 
 
@@ -379,6 +386,14 @@ void MainMove3::AdjustmentDraw()
 				DrawBox(60, 560, 40 + 528, 540 + 60, GetColor(0, 0, 0), false);
 			}
 		}
+
+
+		// ドロップアイテムの個数を表示
+		DrawFormatString(1020, 20, GetColor(0, 0, 0), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
+
+
+		// パネル説明
+		DrawFormatString(1020, 50, GetColor(0, 0, 0), "RBボタンで次のステージへの道");
 	}
 
 

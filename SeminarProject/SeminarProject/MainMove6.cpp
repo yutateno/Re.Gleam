@@ -232,17 +232,22 @@ void MainMove6::FirstDraw()
 
 
 
+	// ボスと距離が近かったらUIを表示する
 	if (BaseMove::GetDistance<int>(p_character->GetArea(), p_enemyBossBefore->GetArea()) < 250)
 	{
 		DrawGraph(960 - 200, 540 - 69 - 50, approachBossUIDraw[0], false);
 		DrawGraph(960 - 500, 540 - 69 + 250, approachBossUIDraw[1], false);
 		DrawGraph(960 + 100, 540 - 69 + 250, approachBossUIDraw[2], false);
+
+
+		// 近づくにカーソルがあったとき
 		if (approachUISelect)
 		{
 			DrawBox(960 - 500 + 5, 540 - 69 + 250 + 5, 960 - 500 + 400 - 5, 540 - 69 + 250 + 69 - 5, GetColor(50, 50, 200), false);
 			DrawBox(960 - 500 + 4, 540 - 69 + 250 + 4, 960 - 500 + 400 - 4, 540 - 69 + 250 + 69 - 4, GetColor(50, 50, 200), false);
 			DrawBox(960 - 500 + 3, 540 - 69 + 250 + 3, 960 - 500 + 400 - 3, 540 - 69 + 250 + 69 - 3, GetColor(50, 50, 200), false);
 		}
+		// 離れるにカーソルがあったとき
 		else
 		{
 
@@ -257,6 +262,7 @@ void MainMove6::FirstDraw()
 // 最初のプロセス
 void MainMove6::FirstProcess()
 {
+	// ボスと距離があったとき
 	if (BaseMove::GetDistance<int>(p_character->GetArea(), p_enemyBossBefore->GetArea()) >= 250)
 	{
 		// キャラクターのプロセス
@@ -285,12 +291,10 @@ void MainMove6::FirstProcess()
 		BaseMove::ShadowArea(p_character->GetArea());
 
 
-		AttackProcess();		// 当たり判定のプロセス
-
-
 		// スカイボックスの位置を更新
 		BaseMove::SkyBoxProcess(p_character->GetArea());
-	}
+	} /// if (BaseMove::GetDistance<int>(p_character->GetArea(), p_enemyBossBefore->GetArea()) >= 250)
+	// ボスと近かった時
 	else
 	{
 		/// スティックの一回押し倒しで更新するよう調整----------------------------------------------------------------------
@@ -323,42 +327,180 @@ void MainMove6::FirstProcess()
 		// 決定ボタンを押したら
 		if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
 		{
+			// 近づくにカーソルがあったとき
 			if (approachUISelect)
 			{
 				e_nowMove = ESceneMove6::Movie;
-				p_character->PositionReset();
+				p_cameraMove->SetView(VGet(4000, 50, 0));
+				p_cameraMove->SetArea(VGet(3000, 200, 0));
+				movieFrame = 0;
 			}
+			// 近づかないにカーソルがあったとき
 			else
 			{
 				p_character->PositionReset();
 			}
 		}
-	}
+	} /// else(!if (BaseMove::GetDistance<int>(p_character->GetArea(), p_enemyBossBefore->GetArea()) >= 250))
 } /// void MainMove6::FirstProcess()
 
 
 // ムービー中の描画
 void MainMove6::MovieDraw()
 {
+	BaseMove::SkyBoxDraw();		// スカイボックスを描画
+
+
+	ShadowDraw();		// シャドウマップを描画
+
+
+	// 敵ラスボスのあれ
+	p_enemyBossBefore->ModelDraw();
+
+
+	// 一般人
+	if (BASICPARAM::ordinaryPeopleNum != 0)
+	{
+		for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+		{
+			vp_ordinaryPerson[i]->Draw();
+		}
+	}
+
+
+	p_character->Draw();	// キャラクターを描画
 } /// void MainMove6::MovieDraw()
 
 
 // ムービー中のプロセス
 void MainMove6::MovieProcess()
 {
-	e_nowMove = ESceneMove6::First;
+	// 動きを管理
+	movieFrame++;
+
+
+	// ボス前のプロセスを呼ぶ
+	p_enemyBossBefore->Process();
+
+
+	// シャドウマップの位置を更新
+	BaseMove::ShadowArea(p_cameraMove->GetArea());
+
+
+	// スカイボックスの位置を更新
+	BaseMove::SkyBoxProcess(p_cameraMove->GetArea());
+
+
+	/// アクターごとの描画に関する---------------------------------------------
+	// 300フレーム以上だったら地面に埋まらせる
+	if (movieFrame >= 300)
+	{
+		for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+		{
+			vp_ordinaryPerson[i]->Move6SetDownArea();
+		}
+		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+		{
+			vp_stageStairs[i]->Move6SetDownArea();
+		}
+		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+		{
+			vp_stageStairsRoad[i]->Move6SetDownArea();
+		}
+		for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
+		{
+			vp_stageStreetLight[i]->Move6SetDownArea();
+		}
+	}
+
+
+	// 600フレーム以上だったら地面に埋まらせる
+	if (movieFrame >= 600)
+	{
+		p_enemyBossBefore->AreaSetDown();
+	}
+
+
+	// 800フレーム以上だったら地面に埋まらせる
+	if (movieFrame >= 800)
+	{
+		p_character->AreaSetDown();
+	}
+	/// アクターごとの描画に関する---------------------------------------------
+
+
+	/// カメラに関する------------------------------------------------------------------
+	// 200フレーム以下だったら
+	if (movieFrame <= 200)
+	{
+		// 操作できないプレイヤーのプロセスを呼ぶ
+		p_character->NotOpeProcess(p_camera->GetAngle());
+		p_enemyBossBefore->MoveReturn();
+	}
+
+
+	// 200フレームより多く300フレーム以下だったら
+	if (movieFrame > 200 && movieFrame <= 400)
+	{
+		p_cameraMove->SetView(VGet(4000 - (movieFrame - 200) * 10.0f, 50, 0));
+		p_cameraMove->SetArea(VGet(3000 - (movieFrame - 200) * 10.0f, 200, 0));
+		p_cameraMove->SetView(VGet(1000, 0, 1000));
+	}
+
+
+	// 300フレームより多く400フレーム以下だったら
+	if (movieFrame > 400 && movieFrame <= 600)
+	{
+		p_cameraMove->SetView(VGet(2000 + (movieFrame - 400) * 10.0f, 50, 0));
+		p_cameraMove->SetArea(VGet(1000 + (movieFrame - 400) * 10.0f, 200, 0));
+		p_enemyBossBefore->MoveReturn();
+	}
+	/// カメラに関する------------------------------------------------------------------
+
+	
+	if (movieFrame >= 1000)
+	{
+		SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::boss);
+		e_nowMove = ESceneMove6::Battle;
+		p_character->PositionReset();
+	}
 } /// void MainMove6::MovieProcess()
 
 
 // 戦闘の描画
 void MainMove6::BattleDraw()
 {
+	BaseMove::SkyBoxDraw();		// スカイボックスを描画
+
+	
+	p_stage->Draw();
+
+
+	p_character->ModelDraw();
+	p_character->Draw();
 } /// void MainMove6::BattleDraw()
 
 
 // 戦闘のプロセス
 void MainMove6::BattleProcess()
 {
+	// キャラクターのプロセス
+	p_character->OnlyCollFloorProcess(p_camera->GetAngle());
+
+
+	// カメラのプロセス
+	p_camera->Process(p_character->GetArea());
+
+
+	// シャドウマップの位置を更新
+	BaseMove::ShadowArea(p_character->GetArea());
+
+
+	AttackProcess();		// 当たり判定のプロセス
+
+
+	// スカイボックスの位置を更新
+	BaseMove::SkyBoxProcess(p_character->GetArea());
 } /// void MainMove6::BattleProcess()
 
 
@@ -413,6 +555,7 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 
 	// カメラの初期化
 	p_camera = new Camera(p_character->GetArea());
+	p_cameraMove = new CameraMove6();
 
 
 	// パネルの初期化
@@ -604,6 +747,7 @@ MainMove6::~MainMove6()
 
 
 	// カメラ
+	POINTER_RELEASE(p_cameraMove);
 	POINTER_RELEASE(p_camera);
 
 
@@ -692,7 +836,14 @@ void MainMove6::Process()
 // カメラの再セットアップ
 void MainMove6::CameraProcess()
 {
-	p_camera->SetUp();
+	if (e_nowMove == ESceneMove6::Movie)
+	{
+		p_cameraMove->SetUp();
+	}
+	else
+	{
+		p_camera->SetUp();
+	}
 }
 
 

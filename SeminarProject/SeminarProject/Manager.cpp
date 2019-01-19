@@ -300,8 +300,8 @@ void Manager::TitleProcess()
 				BASICPARAM::lastStairsRoadView = false;
 				BASICPARAM::lastStairsView = false;
 				BASICPARAM::lastStreetLightView = false;
-				BASICPARAM::e_nowScene = ESceneNumber::SECONDLOAD;
-				BASICPARAM::e_preScene = ESceneNumber::SECONDLOAD;
+				BASICPARAM::e_nowScene = ESceneNumber::SIXLOAD;
+				BASICPARAM::e_preScene = ESceneNumber::SIXLOAD;
 			} /// else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::bonusMove6))
 
 

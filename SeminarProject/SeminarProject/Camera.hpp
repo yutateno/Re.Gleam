@@ -1,6 +1,5 @@
 #pragma once
 #include "Basic.hpp"
-#include "SoundProcess.hpp"
 
 
 class Camera

@@ -160,7 +160,8 @@ EnemyBossBefore::EnemyBossBefore(const int modelHandle, const int modelTex0, con
 	walkSpeed = 0.0f;
 	animSpeed = 0.5f;
 	jumpUpNow = false;
-	area = VGet(4000.0f, 200.0f, 600.0f);
+	area = VGet(4000.0f, 200.0f, 0.0f);
+	angle = -DX_PI_F / 2.0f;
 
 
 	// テクスチャの適応
@@ -178,7 +179,7 @@ EnemyBossBefore::EnemyBossBefore(const int modelHandle, const int modelTex0, con
 
 
 	// 第二引数の回転角度をセット
-	MV1SetRotationXYZ(this->modelHandle, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
+	MV1SetRotationXYZ(this->modelHandle, VGet(0.0f, angle, 0.0f));
 	// モデルの座標を更新
 	preArea = area;
 	MV1SetPosition(this->modelHandle, area);
@@ -198,4 +199,21 @@ void EnemyBossBefore::Process()
 {
 	// モーションの実態
 	Player_AnimProcess();
+}
+
+
+// ムーブ6にてのみ体の向きを変える
+void EnemyBossBefore::MoveReturn()
+{
+	if (angle <= DX_PI_F / 2.0f) angle += DX_PI_F / 90.0f;
+	else Player_PlayAnim(0);
+	MV1SetRotationXYZ(this->modelHandle, VGet(0.0f, angle, 0.0f));
+}
+
+
+// 体を地面に埋まらせる(ムーブ6のみ
+void EnemyBossBefore::AreaSetDown()
+{
+	area.y -= 2.0f;
+	MV1SetPosition(modelHandle, this->area);
 }

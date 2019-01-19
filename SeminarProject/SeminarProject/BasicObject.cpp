@@ -106,6 +106,9 @@ BasicObject::BasicObject()
 	ShadowHitResDim;
 	ShadowHitRes = nullptr;
 	ZeroMemory(ShadowVertex, sizeof(ShadowVertex));
+
+	move6_circle = 0;
+	move6_line = 0.0f;
 }
 
 
@@ -129,6 +132,9 @@ BasicObject::BasicObject(bool shadowDo)
 	ShadowHitResDim;
 	ShadowHitRes = nullptr;
 	ZeroMemory(ShadowVertex, sizeof(ShadowVertex));
+
+	move6_circle = 0;
+	move6_line = 0.0f;
 }
 
 
@@ -183,4 +189,25 @@ void BasicObject::OptionActorDrawBefore()
 	SetCameraNearFar(100.0f, 10000.0f);	// ÉJÉÅÉâÇÃï`âÊîÕàÕÇéwíË
 	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 0.0f, -650.0f), VGet(0.0f, 0.0f, 0.0f));
 	optionModelDrawCount = 0;
+}
+
+
+void BasicObject::Move6SetDownArea()
+{
+	if (move6_line <= 200.0f)
+	{
+		if (move6_circle <= 100.0f) move6_circle++;
+		move6_line++;
+		DrawCone3D(VGet(area.x, 50.0, area.z), VGet(area.x, 0, area.z), move6_circle, 16, GetColor(0, 0, 0), GetColor(0, 0, 0), true);
+		DrawLine3D(VGet(area.x, 50.0, area.z), VGet(area.x + ((4000.0f - area.x) * (move6_line / 200.0f)), 50.0f, 0.0f), GetColor(0, 0, 0));
+	}
+	else if (move6_line <= 400.0f)
+	{
+		if (move6_circle >= 0.0f) move6_circle--;
+		move6_line++; 
+		DrawCone3D(VGet(area.x, 50.0, area.z), VGet(area.x, 0, area.z), move6_circle, 16, GetColor(0, 0, 0), GetColor(0, 0, 0), true);
+		DrawLine3D(VGet(area.x, 50.0, area.z), VGet(4000.0f, 50.0f, 0.0f), GetColor(0, 0, 0));
+	}
+	area.y -= 2.0f;
+	MV1SetPosition(modelHandle, this->area);
 }

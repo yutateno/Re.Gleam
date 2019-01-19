@@ -10,6 +10,7 @@
 #include "OrdinaryPerson.hpp"
 #include "EnemyBossAfter.hpp"
 #include "EnemyBossBefore.hpp"
+#include "CameraMove6.hpp"
 
 
 /*
@@ -85,10 +86,17 @@ private:
 	// カメラのポインタ
 	Camera* p_camera;
 
+	// ムービー中のカメラ
+	CameraMove6* p_cameraMove;
 
+
+	/// 影---------------------
+	
 	// 影の描画
 	void ShadowDraw();
 
+
+	/// 攻撃及びあたり判定---------
 
 	// 攻撃のプロセス
 	void AttackProcess();
@@ -123,6 +131,12 @@ private:
 
 	// 最後のプロセス
 	void LastProcess();
+
+	// ムービー中の動きをまとめる時間フレーム
+	int movieFrame;
+
+	// ムービー前が正射影カメラだったかどうか
+	bool movieBeforeCameraOrtho;
 
 
 public:

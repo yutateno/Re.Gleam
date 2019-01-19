@@ -927,6 +927,14 @@ void CharacterSword::SetDamage()
 }
 
 
+// 体を地面に埋まらせる(ムーブ6のみ
+void CharacterSword::AreaSetDown()
+{
+	area.y -= 2.0f;
+	MV1SetPosition(modelHandle, this->area);
+}
+
+
 // メインプロセス
 void CharacterSword::Process(const float getAngle)
 {
@@ -1054,6 +1062,248 @@ void CharacterSword::Process(const float getAngle)
 		MV1SetPosition(modelHandle, area);
 	}
 } /// void CharacterSword::Process(const float getAngle)
+
+
+// 操作できないプロセス
+void CharacterSword::NotOpeProcess(const float getAngle)
+{
+	moveFlag = false;
+	attackNow = false;
+	jumpUpNow = false;
+
+
+	preArea = area;		// 直前の座標
+
+
+	SoundProcess::SetCharaArea(area);		// 3Dサウンドのプレイヤーの位置を更新
+
+
+	// 動いているもしくは攻撃しているとき
+	if (moveFlag || attackNow)
+	{
+		angle = getAngle;	// カメラ向きのアングル
+	}
+
+
+	// モーションのシステム
+	Player_AnimProcess();
+
+
+	// モーションのプロセス
+	AnimProcess();
+
+
+	// どこにもあたっていないとする
+	hitDimNum = 0;
+
+
+	int setCollHitNum = 0;	// どこかのオブジェクトとあたったか確認する数値
+
+
+	// パネルのあたり判定
+	if (BASICPARAM::paneruDrawFlag)
+	{
+		for (int i = 0; i != 10; ++i)
+		{
+			setCollHitNum += ActorHit(paneruHandle[i]);
+		}
+	}
+
+
+	// あたり判定が生じていなかったら
+	if (setCollHitNum == 0)
+	{
+		// 階段と床のあたり判定
+		for (int i = 0; i != BASICPARAM::stairsRoadNum; ++i)
+		{
+			setCollHitNum += ActorHit(v_stairsRoadHandle[i]);
+		}
+	}
+
+
+	// あたり判定が生じていなかったら
+	if (setCollHitNum == 0)
+	{
+		// 階段のあたり判定
+		for (int i = 0; i != BASICPARAM::stairsNum; ++i)
+		{
+			setCollHitNum += ActorHit(v_stairsHandle[i]);
+		}
+	}
+
+
+	// ステージのあたり判定
+	ActorHit(stageHandle);
+
+	
+	// ジャンプのプロセス関数の一部
+	{
+		// 足元に何もなかったら
+		if (fallCount > 1)
+		{
+			// 飛ぶコマンドで飛んでいなかったら落下させる
+			if (!jumpNow)
+			{
+				jumpNow = true;				// 飛んでいる
+
+				jumpPower = fallJumpPower;	// 落下速度を加える
+			}
+		}
+
+
+		// 飛んでいる
+		if (jumpNow)
+		{
+			flyCount++;
+			underWalkCount = 0;
+			preJumpNow = true;
+			jumpPower -= gravity;			// 落下重力を加え続ける
+			area.y += jumpPower;			// Y座標に加え続ける
+
+
+			// ジャンプにて最頂点に到達したら
+			if (jumpPower <= flyJumpPower / 2.0f) jumpUpNow = false;			// 落下に切り替える
+
+
+			// 落下させる
+			area.y -= 10.5f;
+		} /// if (jumpNow)
+
+
+		// 着地したら
+		if (!jumpNow && preJumpNow && flyCount > 10)
+		{
+			flyCount = 0;
+			preJumpNow = false;
+		}
+
+
+		// 微妙な誤差からオブジェクトに乗っていると判断するが実際は空中を歩いていたとき
+		if (hitDimNum == 0 && area.y >= 10.0f)
+		{
+			// 飛んでいなかったら
+			if (!jumpNow)
+			{
+				jumpNow = true;				// 飛んでいる
+
+				jumpPower = fallJumpPower;	// 落下速度を加える
+			}
+		}
+	}
+
+
+	MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));		// 体の向きを決める
+	
+	// 指定位置にモデルを配置
+	MV1SetPosition(modelHandle, area);
+} /// void CharacterSword::NotOpeProcess(const float getAngle)
+
+
+// 床以外あたり判定をさせないプロセス
+void CharacterSword::OnlyCollFloorProcess(const float getAngle)
+{
+	preArea = area;		// 直前の座標
+
+
+	SoundProcess::SetCharaArea(area);		// 3Dサウンドのプレイヤーの位置を更新
+
+
+	// 動いているもしくは攻撃しているとき
+	if (moveFlag || attackNow)
+	{
+		angle = getAngle;	// カメラ向きのアングル
+	}
+
+
+	// 敵が近くにいて動いていない状態で攻撃をしたら
+	if (!moveFlag && attackNow && !(mostNearEnemyArea.y >= -1001.0f && mostNearEnemyArea.y <= -999.0f))
+	{
+		// 敵の方に向くようにする
+		mostNearEnemyDire = atan2(VSub(area, mostNearEnemyArea).x, VSub(area, mostNearEnemyArea).z);
+		direXAngle = mostNearEnemyDire;
+		direZAngle = 0.0f;
+		angle = 0.0f;
+	}
+
+
+	// 攻撃をしていなかったら
+	if (!attackNow)
+	{
+		MoveProcess();		// 動きのプロセスを呼ぶ
+	}
+
+
+	// 攻撃のプロセス
+	AttackProcess();
+
+
+	// モーションのシステム
+	Player_AnimProcess();
+
+
+	// モーションのプロセス
+	AnimProcess();
+
+
+	// どこにもあたっていないとする
+	hitDimNum = 0;
+
+
+	int setCollHitNum = 0;	// どこかのオブジェクトとあたったか確認する数値
+
+
+	// パネルのあたり判定
+	if (BASICPARAM::paneruDrawFlag)
+	{
+		for (int i = 0; i != 10; ++i)
+		{
+			setCollHitNum += ActorHit(paneruHandle[i]);
+		}
+	}
+
+
+	// ステージのあたり判定
+	ActorHit(stageHandle);
+
+
+	// 瞬間移動をしていないもしくは瞬間移動をしてからある一定時間経過したら(空中で平行移動をさせるため
+	if (moveFastWaitCount < (maxFastMoveWaitCount * 3) - 9)
+	{
+		JumpProcess();		// ジャンププロセスを呼び
+	}
+
+
+	// 要らないけど不安なので一応
+	if (area.y < 0.0f)
+	{
+		area.y = 0.5f;
+	}
+	if (area.x >= 4900.0f || area.x <= -4900.0f
+		|| area.z >= 4900.0f || area.z <= -4900.0f)
+	{
+		area = VGet(0, 0, 0);
+	}
+
+
+	// 動いていない状態でロックオンした敵が近くにいて攻撃したとき
+	if (!moveFlag && attackNow && !(mostNearEnemyArea.y >= -1001.0f && mostNearEnemyArea.y <= -999.0f))
+	{
+		MV1SetRotationXYZ(modelHandle, VGet(0.0f, mostNearEnemyDire, 0.0f));		// 体の向きを決める
+	}
+	// 通常の時
+	else
+	{
+		MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));		// 体の向きを決める
+	}
+
+
+	// 通常の移動速度の時
+	if (walkSpeed != maxWalkSpeedFast)
+	{
+		// 指定位置にモデルを配置
+		MV1SetPosition(modelHandle, area);
+	}
+} /// void CharacterSword::OnlyCollFloorProcess(const float getAngle)
 
 
 // ポジションをリセットする

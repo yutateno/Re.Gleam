@@ -19,6 +19,12 @@ public:
 	// プロセス
 	void Process();
 
+	// ムーブ6にてのみ体の向きを変える
+	void MoveReturn();
+
+	// 体を地面に埋まらせる(ムーブ6のみ
+	void AreaSetDown();
+
 	// オプション用モデル描画の後始末
 	void OptionActorDrawAfter() override {}
 };

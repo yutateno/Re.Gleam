@@ -58,6 +58,18 @@ private:
 	int optionModelDrawCount;
 
 
+	/// ムーブ6のみに関する変数
+
+	// 円の半径
+	float move6_circle;
+
+	//// 目的座標
+	//const VECTOR move6_enemyArea = VGet(4000.0f, 200.0f, 0.0f);
+
+	// 線の動き
+	float move6_line;
+
+
 public:
 	// コンストラクタ
 	BasicObject();
@@ -80,6 +92,9 @@ public:
 
 	// オプション用モデル描画の後始末
 	virtual void OptionActorDrawAfter() = 0;
+
+	// ムーブ6にて地面に沈める
+	void Move6SetDownArea();
 
 
 	/// ゲッターセッター

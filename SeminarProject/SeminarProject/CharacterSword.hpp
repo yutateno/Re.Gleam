@@ -174,6 +174,12 @@ public:
 	// プロセス
 	void Process(const float getAngle);
 
+	// 操作できないプロセス
+	void NotOpeProcess(const float getAngle);
+
+	// 床以外あたり判定をさせないプロセス
+	void OnlyCollFloorProcess(const float getAngle);
+
 
 	// ポジションを初期化する
 	void PositionReset();
@@ -183,6 +189,9 @@ public:
 
 	// 攻撃を受けている
 	void SetDamage();
+
+	// 体を地面に埋まらせる(ムーブ6のみ
+	void AreaSetDown();
 
 	// オプション用モデル描画の後始末
 	void OptionActorDrawAfter() override;

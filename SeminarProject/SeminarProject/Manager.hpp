@@ -142,7 +142,7 @@ private:
 
 	// オプション画面のID
 	enum class EOptionSelectButton { Sound, ColorSelect, Camera, DataSave, GameEnd, BGM, SE, ColorNormal, ColorP, ColorD
-		, BGMSelect, SESelect, CameraPerspective, CameraOrtho, CameraHReturn, CameraVReturn, yes, no };
+		, BGMSelect, SESelect, CameraPerspective, CameraOrtho, CameraHReturn, CameraVReturn, SaveYes, SaveNo, GameEndYes, GameEndNo };
 
 	// オプション画面の選択ボタン
 	EOptionSelectButton optionSelectButtonNum;

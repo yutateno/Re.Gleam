@@ -1620,18 +1620,56 @@ void Manager::OptionProcess()
 		// セーブにカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::DataSave)
 		{
+			// セーブにカーソルを移す
+			optionSelectButtonNum = EOptionSelectButton::SaveYes;
+			optionSelectMin = 16;
+			optionSelectMax = 17;
+		}
+		// ゲーム終了にカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::GameEnd)
+		{
+			// セーブにカーソルを移す
+			optionSelectButtonNum = EOptionSelectButton::GameEndYes;
+			optionSelectMin = 18;
+			optionSelectMax = 19;
+		}
+		// セーブするにカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::SaveYes)
+		{
 			// SEを流す
 			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
 
 
 			// セーブする
 			FileSaveLoad::Save();
+
+
+			// セーブにカーソルを移す
+			optionSelectButtonNum = EOptionSelectButton::DataSave;
+			optionSelectMin = 0;
+			optionSelectMax = 4;
+		}
+		// セーブしないにカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::SaveNo)
+		{
+			// セーブにカーソルを移す
+			optionSelectButtonNum = EOptionSelectButton::DataSave;
+			optionSelectMin = 0;
+			optionSelectMax = 4;
 		}
 		// ゲーム終了にカーソルがあったとき
-		else if (optionSelectButtonNum == EOptionSelectButton::GameEnd)
+		else if (optionSelectButtonNum == EOptionSelectButton::GameEndYes)
 		{
 			// ゲームを終了する
 			gameEnd = true;
+		}
+		// ゲーム終了しないにカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::GameEndNo)
+		{
+			// ゲームを終了にカーソルを移す
+			optionSelectButtonNum = EOptionSelectButton::GameEnd;
+			optionSelectMin = 0;
+			optionSelectMax = 4;
 		}
 	} /// if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
 	///決定------------------------------------------------------------------------------------------------------
@@ -1677,7 +1715,7 @@ void Manager::OptionProcess()
 			optionSelectMin = 5;
 			optionSelectMax = 6;
 		}
-		// 遠近法カメラにカーソルがあったとき
+		// カメラ関連にカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective
 			|| optionSelectButtonNum == EOptionSelectButton::CameraOrtho
 			|| optionSelectButtonNum == EOptionSelectButton::CameraHReturn
@@ -1685,6 +1723,24 @@ void Manager::OptionProcess()
 		{
 			// カメラにカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::Camera;
+			optionSelectMin = 0;
+			optionSelectMax = 4;
+		}
+		// セーブ関連にカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::SaveYes
+			|| optionSelectButtonNum == EOptionSelectButton::SaveNo)
+		{
+			// セーブにカーソルを移す
+			optionSelectButtonNum = EOptionSelectButton::DataSave;
+			optionSelectMin = 0;
+			optionSelectMax = 4;
+		}
+		// ゲーム終了関連にカーソルがあったとき
+		else if (optionSelectButtonNum == EOptionSelectButton::GameEndYes
+			|| optionSelectButtonNum == EOptionSelectButton::GameEndNo)
+		{
+			// ゲームを終了にカーソルを移す
+			optionSelectButtonNum = EOptionSelectButton::GameEnd;
 			optionSelectMin = 0;
 			optionSelectMax = 4;
 		}
@@ -1937,7 +1993,7 @@ void Manager::OptionDraw()
 		if (!BASICPARAM::cameraVerticalReturn) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
 
-		// セーブする
+		// セーブ
 		DrawGraph(95, 760, optionDrawMedia[static_cast<int>(EOptionDraw::dataSave)], false);
 		if (optionSelectButtonNum == EOptionSelectButton::DataSave)
 		{
@@ -1947,13 +2003,69 @@ void Manager::OptionDraw()
 		}
 
 
-		// ゲームを終了する
+		// ゲーム終了
 		DrawGraph(95, 880, optionDrawMedia[static_cast<int>(EOptionDraw::gameEnd)], false);
 		if (optionSelectButtonNum == EOptionSelectButton::GameEnd)
 		{
 			DrawBox(95 + 5, 880 + 5, 95 + 450 - 5, 880 + 69 - 5, GetColor(50, 50, 200), false);
 			DrawBox(95 + 4, 880 + 4, 95 + 450 - 4, 880 + 69 - 4, GetColor(50, 50, 200), false);
 			DrawBox(95 + 3, 880 + 3, 95 + 450 - 3, 880 + 69 - 3, GetColor(50, 50, 200), false);
+		}
+
+
+		// セーブする
+		if (optionSelectButtonNum == EOptionSelectButton::SaveYes
+			|| optionSelectButtonNum == EOptionSelectButton::SaveNo)
+		{
+			DrawGraph(600, 660, optionDrawMedia[static_cast<int>(EOptionDraw::yes)], false);
+			if (optionSelectButtonNum == EOptionSelectButton::SaveYes)
+			{
+				DrawBox(600 + 5, 660 + 5, 600 + 275 - 5, 660 + 69 - 5, GetColor(50, 50, 200), false);
+				DrawBox(600 + 4, 660 + 4, 600 + 275 - 4, 660 + 69 - 4, GetColor(50, 50, 200), false);
+				DrawBox(600 + 3, 660 + 3, 600 + 275 - 3, 660 + 69 - 3, GetColor(50, 50, 200), false);
+			}
+		}
+
+		
+		// セーブしない
+		if (optionSelectButtonNum == EOptionSelectButton::SaveYes
+			|| optionSelectButtonNum == EOptionSelectButton::SaveNo)
+		{
+			DrawGraph(600, 840, optionDrawMedia[static_cast<int>(EOptionDraw::no)], false);
+			if (optionSelectButtonNum == EOptionSelectButton::SaveNo)
+			{
+				DrawBox(600 + 5, 840 + 5, 600 + 275 - 5, 840 + 69 - 5, GetColor(50, 50, 200), false);
+				DrawBox(600 + 4, 840 + 4, 600 + 275 - 4, 840 + 69 - 4, GetColor(50, 50, 200), false);
+				DrawBox(600 + 3, 840 + 3, 600 + 275 - 3, 840 + 69 - 3, GetColor(50, 50, 200), false);
+			}
+		}
+
+
+		// ゲーム終了する
+		if (optionSelectButtonNum == EOptionSelectButton::GameEndNo
+			|| optionSelectButtonNum == EOptionSelectButton::GameEndYes)
+		{
+			DrawGraph(600, 760, optionDrawMedia[static_cast<int>(EOptionDraw::yes)], false);
+			if (optionSelectButtonNum == EOptionSelectButton::GameEndYes)
+			{
+				DrawBox(600 + 5, 760 + 5, 600 + 275 - 5, 760 + 69 - 5, GetColor(50, 50, 200), false);
+				DrawBox(600 + 4, 760 + 4, 600 + 275 - 4, 760 + 69 - 4, GetColor(50, 50, 200), false);
+				DrawBox(600 + 3, 760 + 3, 600 + 275 - 3, 760 + 69 - 3, GetColor(50, 50, 200), false);
+			}
+		}
+
+
+		// ゲーム終了しない
+		if (optionSelectButtonNum == EOptionSelectButton::GameEndNo
+			|| optionSelectButtonNum == EOptionSelectButton::GameEndYes)
+		{
+			DrawGraph(600, 940, optionDrawMedia[static_cast<int>(EOptionDraw::no)], false);
+			if (optionSelectButtonNum == EOptionSelectButton::GameEndNo)
+			{
+				DrawBox(600 + 5, 940 + 5, 600 + 275 - 5, 940 + 69 - 5, GetColor(50, 50, 200), false);
+				DrawBox(600 + 4, 940 + 4, 600 + 275 - 4, 940 + 69 - 4, GetColor(50, 50, 200), false);
+				DrawBox(600 + 3, 940 + 3, 600 + 275 - 3, 940 + 69 - 3, GetColor(50, 50, 200), false);
+			}
 		}
 	} /// else if (optionPageNowNumber == 1)
 } /// void Manager::OptionDraw()

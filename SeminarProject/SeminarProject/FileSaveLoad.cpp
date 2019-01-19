@@ -57,12 +57,12 @@ namespace FileSaveLoad
 			{
 				saveFile << BASICPARAM::ordinaryPeopleNum << std::endl;
 			}
-			/*if (BASICPARAM::e_nowScene >= ESceneNumber::SIXMOVE)
+			if (BASICPARAM::e_nowScene >= ESceneNumber::SIXMOVE)
 			{
 				saveFile << BASICPARAM::lastCharaView << "," << BASICPARAM::lastOrdinaryView
 					<< "," << BASICPARAM::lastPaneruView << "," << BASICPARAM::lastStairsRoadView
 					<< "," << BASICPARAM::lastStairsView << "," << BASICPARAM::lastStreetLightView << std::endl;
-			}*/
+			}
 		} /// else(!if (saveFile.fail()))
 
 		// ƒtƒ@ƒCƒ‹‚ð•Â‚¶‚é
@@ -159,7 +159,7 @@ namespace FileSaveLoad
 		{
 			BASICPARAM::ordinaryPeopleNum = std::stoi(mapdata[5 + +BASICPARAM::stairsNum + BASICPARAM::streetLightNum + BASICPARAM::stairsRoadNum][0]);
 		}
-		/*if (BASICPARAM::e_nowScene >= ESceneNumber::SIXLOAD)
+		if (BASICPARAM::e_nowScene >= ESceneNumber::SIXLOAD)
 		{
 			BASICPARAM::lastCharaView		 = std::stoi(mapdata[6 + +BASICPARAM::stairsNum + BASICPARAM::streetLightNum + BASICPARAM::stairsRoadNum][0]); 
 			BASICPARAM::lastOrdinaryView	 = std::stoi(mapdata[6 + +BASICPARAM::stairsNum + BASICPARAM::streetLightNum + BASICPARAM::stairsRoadNum][1]);
@@ -167,7 +167,7 @@ namespace FileSaveLoad
 			BASICPARAM::lastStairsRoadView	 = std::stoi(mapdata[6 + +BASICPARAM::stairsNum + BASICPARAM::streetLightNum + BASICPARAM::stairsRoadNum][3]);
 			BASICPARAM::lastStairsView		 = std::stoi(mapdata[6 + +BASICPARAM::stairsNum + BASICPARAM::streetLightNum + BASICPARAM::stairsRoadNum][4]); 
 			BASICPARAM::lastStreetLightView	 = std::stoi(mapdata[6 + +BASICPARAM::stairsNum + BASICPARAM::streetLightNum + BASICPARAM::stairsRoadNum][5]);
-		}*/
+		}
 
 		return true;
 	} /// void Load()

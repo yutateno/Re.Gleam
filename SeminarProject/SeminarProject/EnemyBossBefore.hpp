@@ -9,6 +9,9 @@ public:
 	// コンストラクタ
 	EnemyBossBefore();
 
+	// コピーコンストラクタ
+	EnemyBossBefore(const int modelHandle, const int modelTex0, const int modeltex1, const int modelTex2);
+
 	// デストラクタ
 	~EnemyBossBefore();
 

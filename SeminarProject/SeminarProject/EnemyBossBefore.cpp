@@ -143,6 +143,45 @@ EnemyBossBefore::EnemyBossBefore() : BasicCreature()
 	MV1SetPosition(this->modelHandle, area);
 } /// EnemyBossBefore::EnemyBossBefore() : BasicCreature(true)
 
+EnemyBossBefore::EnemyBossBefore(const int modelHandle, const int modelTex0, const int modeltex1, const int modelTex2)
+{
+	// 3Dモデルの読み込み
+	this->modelHandle = -1;
+	this->modelHandle = MV1DuplicateModel(modelHandle);
+
+
+	// 初期化
+	modelHeight = 100.0f;
+	modelWidth = 100.0f;
+	shadowHeight = 100.0f;
+	shadowSize = 100.0f;
+	walkSpeed = 0.0f;
+	animSpeed = 0.5f;
+	jumpUpNow = false;
+	area = VGet(4000.0f, 200.0f, 600.0f);
+
+
+	// テクスチャの適応
+	MV1SetTextureGraphHandle(this->modelHandle, 0, modelTex0, true);
+	MV1SetTextureGraphHandle(this->modelHandle, 1, modeltex1, false);
+	MV1SetTextureGraphHandle(this->modelHandle, 2, modelTex2, false);
+
+
+	// ３Ｄモデルの0番目のアニメーションをアタッチする
+	attachMotion = MV1AttachAnim(this->modelHandle, 1, -1, FALSE);
+
+
+	// アタッチしたアニメーションの総再生時間を取得する
+	totalTime = MV1GetAttachAnimTotalTime(this->modelHandle, attachMotion);
+
+
+	// 第二引数の回転角度をセット
+	MV1SetRotationXYZ(this->modelHandle, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
+	// モデルの座標を更新
+	preArea = area;
+	MV1SetPosition(this->modelHandle, area);
+}
+
 
 // デストラクタ
 EnemyBossBefore::~EnemyBossBefore()

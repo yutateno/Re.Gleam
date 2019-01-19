@@ -295,7 +295,7 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 
 
 	// ìGÇÃèâä˙âª
-	p_enemyBossBefore = new EnemyBossBefore();
+	p_enemyBossBefore = new EnemyBossBefore(v_file[EFILE::bossBeforeModel], v_file[EFILE::bossBeforeTex0], v_file[EFILE::bossBeforeTex1], v_file[EFILE::bossBeforeTex2]);
 	approachBossUIDraw[0] = v_file[EFILE::approachUINear];
 	approachBossUIDraw[1] = v_file[EFILE::approachUIYes];
 	approachBossUIDraw[2] = v_file[EFILE::approachUINo];
@@ -361,9 +361,9 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 	SoundProcess::Load(v_file[EFILE::se_jump], SoundProcess::ESOUNDNAME_SE::jump);
 	SoundProcess::Load(v_file[EFILE::se_landing], SoundProcess::ESOUNDNAME_SE::landing);
 	SoundProcess::Load(v_file[EFILE::se_landingSecond], SoundProcess::ESOUNDNAME_SE::landing2);
-	SoundProcess::Load(v_file[EFILE::bgm_Main], SoundProcess::ESOUNDNAME_BGM::normalBGM);
+	SoundProcess::Load(v_file[EFILE::bgm_Main], SoundProcess::ESOUNDNAME_BGM::boss);
 	
-	SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 255, 255);
+	SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::boss, 0, 0);
 } /// MainMove6::MainMove6(const std::vector<int> v_file)
 
 

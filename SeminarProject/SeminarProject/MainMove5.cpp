@@ -508,6 +508,7 @@ MainMove5::MainMove5(const std::vector<int> v_file)
 	SoundProcess::Load(v_file[EFILE::se_landing], SoundProcess::ESOUNDNAME_SE::landing);
 	SoundProcess::Load(v_file[EFILE::se_landingSecond], SoundProcess::ESOUNDNAME_SE::landing2);
 	SoundProcess::Load(v_file[EFILE::bgm_Main], SoundProcess::ESOUNDNAME_BGM::normalBGM);
+	SoundProcess::Load(v_file[EFILE::se_catch_saveMiss], SoundProcess::ESOUNDNAME_SE::saveMiss);
 
 	SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 255, 255);
 	certainCatchSEDo = false;
@@ -718,7 +719,7 @@ void MainMove5::Process()
 		if (!certainCatchSEDo)
 		{
 			certainCatchSEDo = true;
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveMiss);
 		}
 	}
 	else if (enemyCatchNum == 15)
@@ -726,7 +727,7 @@ void MainMove5::Process()
 		if (!certainCatchSEDo)
 		{
 			certainCatchSEDo = true;
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveMiss);
 		}
 	}
 	else if (enemyCatchNum == 20)
@@ -734,7 +735,7 @@ void MainMove5::Process()
 		if (!certainCatchSEDo)
 		{
 			certainCatchSEDo = true;
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveMiss);
 		}
 	}
 	else if (enemyCatchNum == 30)
@@ -742,7 +743,7 @@ void MainMove5::Process()
 		if (!certainCatchSEDo)
 		{
 			certainCatchSEDo = true;
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveMiss);
 		}
 	}
 	else if (enemyCatchNum == 35)
@@ -750,7 +751,7 @@ void MainMove5::Process()
 		if (!certainCatchSEDo)
 		{
 			certainCatchSEDo = true;
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveMiss);
 		}
 	}
 	else if (enemyCatchNum == 40)
@@ -758,7 +759,7 @@ void MainMove5::Process()
 		if (!certainCatchSEDo)
 		{
 			certainCatchSEDo = true;
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveMiss);
 		}
 	}
 	else if (enemyCatchNum == 45)
@@ -766,7 +767,7 @@ void MainMove5::Process()
 		if (!certainCatchSEDo)
 		{
 			certainCatchSEDo = true;
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveMiss);
 		}
 	}
 	else

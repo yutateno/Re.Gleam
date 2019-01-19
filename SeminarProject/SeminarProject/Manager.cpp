@@ -25,6 +25,7 @@ void Manager::SceneChange()
 		moveStr.shrink_to_fit();
 		loadType.clear();
 		loadType.shrink_to_fit();
+		LoadFile::MyLoad("media\\こっち\\media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
 		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 		break;
 
@@ -47,6 +48,7 @@ void Manager::SceneChange()
 		moveStr.shrink_to_fit();
 		loadType.clear();
 		loadType.shrink_to_fit();
+		LoadFile::MyLoad("media\\こっち\\media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
 		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 		break;
 
@@ -69,6 +71,7 @@ void Manager::SceneChange()
 		moveStr.shrink_to_fit();
 		loadType.clear();
 		loadType.shrink_to_fit();
+		LoadFile::MyLoad("media\\こっち\\media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
 		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 		break;
 
@@ -91,6 +94,7 @@ void Manager::SceneChange()
 		moveStr.shrink_to_fit();
 		loadType.clear();
 		loadType.shrink_to_fit();
+		LoadFile::MyLoad("media\\こっち\\media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
 		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 		break;
 
@@ -113,6 +117,7 @@ void Manager::SceneChange()
 		moveStr.shrink_to_fit();
 		loadType.clear();
 		loadType.shrink_to_fit();
+		LoadFile::MyLoad("media\\こっち\\media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
 		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 		break;
 
@@ -136,6 +141,7 @@ void Manager::SceneChange()
 		moveStr.shrink_to_fit();
 		loadType.clear();
 		loadType.shrink_to_fit();
+		LoadFile::MyLoad("media\\こっち\\media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
 		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 		break;
 
@@ -168,6 +174,7 @@ void Manager::TitleProcess()
 		// ロードするとき
 		else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::load))
 		{
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::saveOn);
 			// ムーブが3以降だったらテクスチャの色を通常色にしておく
 			if (BASICPARAM::e_nowScene >= ESceneNumber::THIRDLOAD)
 			{
@@ -1259,6 +1266,9 @@ void Manager::InitMove5Load()
 
 		// ムーブの説明画像
 		moveStr[38] = "media\\こっち\\media\\ムーブ説明\\move5.pyn";
+
+		// 一定数捕まえたら流すSE
+		moveStr[39] = "media\\こっち\\media\\sound\\savemisson.wyn";
 	}
 
 
@@ -1319,6 +1329,8 @@ void Manager::InitMove5Load()
 		loadType[37] = ELOADFILE::graph;
 
 		loadType[38] = ELOADFILE::graph;
+
+		loadType[39] = ELOADFILE::soundmem;
 	}
 } /// void Manager::InitMove5Load()
 
@@ -1537,6 +1549,12 @@ void Manager::InitMove6Load()
 		moveStr[32] = "media\\こっち\\media\\move6\\near.pyn";
 		moveStr[33] = "media\\こっち\\media\\move6\\yes.pyn";
 		moveStr[34] = "media\\こっち\\media\\move6\\no.pyn";
+
+		// 前敵のデータ
+		moveStr[35] = "media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.myn";
+		moveStr[36] = "media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\whiteblack.pyn";
+		moveStr[37] = "media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\whiteblack.pyn";
+		moveStr[38] = "media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\whiteblack.pyn";
 	}
 
 
@@ -1589,6 +1607,11 @@ void Manager::InitMove6Load()
 		loadType[32] = ELOADFILE::graph;
 		loadType[33] = ELOADFILE::graph;
 		loadType[34] = ELOADFILE::graph;
+
+		loadType[35] = ELOADFILE::mv1model;
+		loadType[36] = ELOADFILE::graph;
+		loadType[37] = ELOADFILE::graph;
+		loadType[38] = ELOADFILE::graph;
 	}
 } /// void Manager::InitMove6Load()
 
@@ -2451,6 +2474,7 @@ Manager::Manager()
 	LoadFile::MyLoad("media\\こっち\\media\\option\\save.pyn", optionDrawMedia[16], ELOADFILE::graph);
 	LoadFile::MyLoad("media\\こっち\\media\\option\\yes.pyn", optionDrawMedia[17], ELOADFILE::graph);
 	LoadFile::MyLoad("media\\こっち\\media\\option\\no.pyn", optionDrawMedia[18], ELOADFILE::graph);
+	SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 
 
 	// フェード処理に関する

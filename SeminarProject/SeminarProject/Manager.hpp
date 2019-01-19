@@ -8,6 +8,7 @@
 #include "MainMove3.hpp"
 #include "MainMove4.hpp"
 #include "MainMove5.hpp"
+#include "MainMove6.hpp"
 
 
 class Manager
@@ -124,6 +125,18 @@ private:
 
 	// ムーブ5でロードするテクスチャを初期から変更する
 	void Move5TextureReload();
+
+
+	/// ムーブ6に関する
+
+	// ムーブ6のロード数
+	const int max6 = 35;
+
+	// ムーブ6のロードの初期化
+	void InitMove6Load();
+
+	// ムーブ6のロードするテクスチャを初期から変更する
+	void Move6TextureReload();
 
 
 	/// オプション画面に関する---------------

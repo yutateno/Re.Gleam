@@ -785,14 +785,20 @@ void MainMove5::Process()
 		if (enemyCatchNum >= 40) BASICPARAM::lastStairsView = true;
 		if (enemyCatchNum >= 20) BASICPARAM::lastStreetLightView = true;
 		BASICPARAM::endFeedNow = true;
-		BaseMove::SetScene(ESceneNumber::FOURTHLOAD);
+		BaseMove::SetScene(ESceneNumber::SIXLOAD);
 	}
 
 #ifdef _DEBUG
 	if (CheckHitKey(KEY_INPUT_Z) == 1)
 	{
+		if (enemyCatchNum >= 30) BASICPARAM::lastCharaView = true;
+		if (enemyCatchNum >= 15) BASICPARAM::lastOrdinaryView = true;
+		if (enemyCatchNum >= 35) BASICPARAM::lastPaneruView = true;
+		if (enemyCatchNum >= 45) BASICPARAM::lastStairsRoadView = true;
+		if (enemyCatchNum >= 40) BASICPARAM::lastStairsView = true;
+		if (enemyCatchNum >= 20) BASICPARAM::lastStreetLightView = true;
 		BASICPARAM::endFeedNow = true;
-		BaseMove::SetScene(ESceneNumber::FIRSTLOAD);
+		BaseMove::SetScene(ESceneNumber::SIXLOAD);
 	}
 #endif
 } /// void MainMove5::Process()

@@ -222,6 +222,10 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 		p_stagePaneru[i] = nullptr;
 	}
 	p_enemyBossBefore = nullptr;
+	for (int i = 0; i != 3; ++i)
+	{
+		approachBossUIDraw[i] = -1;
+	}
 	vp_stageStairs.clear();
 	vp_stageStairsRoad.clear();
 	vp_stageStreetLight.clear();
@@ -292,6 +296,9 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 
 	// 敵の初期化
 	p_enemyBossBefore = new EnemyBossBefore();
+	approachBossUIDraw[0] = v_file[EFILE::approachUINear];
+	approachBossUIDraw[1] = v_file[EFILE::approachUIYes];
+	approachBossUIDraw[2] = v_file[EFILE::approachUINo];
 
 
 	// 一般人
@@ -376,6 +383,10 @@ MainMove6::~MainMove6()
 
 
 	// 敵
+	for (int i = 0; i != 3; ++i)
+	{
+		GRAPHIC_RELEASE(approachBossUIDraw[i]);
+	}
 	POINTER_RELEASE(p_enemyBossBefore);
 
 
@@ -432,10 +443,6 @@ MainMove6::~MainMove6()
 
 	// ステージ
 	POINTER_RELEASE(p_stage);
-
-
-	/// 説明画像解放
-	GRAPHIC_RELEASE(moveDescriptionDraw);
 } /// MainMove5::~MainMove5()
 
 
@@ -463,15 +470,6 @@ void MainMove6::Draw()
 
 
 	p_character->Draw();	// キャラクターを描画
-
-
-	// ムーブ説明をする
-	if (moveDescriptionFrame-- > 0)
-	{
-		if (moveDescriptionFrame < 255) SetDrawBlendMode(DX_BLENDMODE_ALPHA, moveDescriptionFrame);
-		DrawGraph(960 - 291, 540 - 64 - 32, moveDescriptionDraw, true);
-		if (moveDescriptionFrame < 255) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-	}
 } /// void MainMove6::Draw()
 
 
@@ -498,25 +496,6 @@ void MainMove6::Process()
 
 	// 敵ラスボスのあれ
 	p_enemyBossBefore->Process();
-
-
-	//// 敵に関する
-	//for (int i = 0; i != enemyNum; ++i)
-	//{
-	//	// 消滅したら
-	//	if (p_enemyMove[i]->GetEraseExistence()) continue;
-
-
-	//	p_enemyMove[i]->Process();			// プロセスを呼ぶ
-
-
-	//	// 死んでいなかったら
-	//	if (p_enemyMove[i]->GetDeathFlag()) continue;
-
-
-	//	// プレイヤーの位置と距離を取得する
-	//	p_enemyMove[i]->SetCharacterArea(p_character->GetArea(), BaseMove::GetDistance<int>(p_character->GetArea(), p_enemyMove[i]->GetArea()));
-	//}
 
 
 	// シャドウマップの位置を更新

@@ -27,7 +27,8 @@ private:
 		, skyBoxTex0, stairsRoadDrawModel, stairsRoadTex0, stairsRoadTex1
 		, stairsRoadCollModel, se_jump, se_footCorridor, se_foot, se_landing
 		, se_landingSecond, se_attackOne, se_attackTwo, se_attackThrid
-		, bgm_Main, ordinaryModel, ordinaryTex0
+		, bgm_Main, ordinaryModel, ordinaryTex0, approachUINear, approachUIYes
+		, approachUINo
 	};
 
 	
@@ -62,6 +63,9 @@ private:
 
 	// ボスの本体
 	EnemyBossAfter* p_enemyBossAfter;
+
+	// ボスに近づいたときにあらわれるUI
+	int approachBossUIDraw[3];
 
 
 	/// 一般人------------------------------------

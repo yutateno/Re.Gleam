@@ -116,6 +116,30 @@ void Manager::SceneChange()
 		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 		break;
 
+
+
+		// ムーブ6のロード
+	case ESceneNumber::SIXLOAD:
+		p_loadThread = new LoadThread();
+		POINTER_RELEASE(p_baseMove);
+		break;
+
+
+		// ムーブ6
+	case ESceneNumber::SIXMOVE:
+		BASICPARAM::startFeedNow = true;
+		feedCount = 255;
+		p_baseMove = new MainMove6(p_loadThread->GetFile());
+		p_baseMove->SetScene(BASICPARAM::e_nowScene);
+		POINTER_RELEASE(p_loadThread);
+		moveStr.clear();
+		moveStr.shrink_to_fit();
+		loadType.clear();
+		loadType.shrink_to_fit();
+		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
+		break;
+
+
 	default:
 		break;
 	} /// switch (BASICPARAM::e_nowScene)
@@ -1448,6 +1472,262 @@ void Manager::Move5TextureReload()
 } /// void Manager::Move5TextureReload()
 
 
+// ムーブ6のロードの初期化
+void Manager::InitMove6Load()
+{
+	moveStr.resize(max6 + 1);
+	{
+		// モデルデータ
+		moveStr[0] = "media\\こっち\\media\\ステージモデル\\move1_hantei.myn";
+		moveStr[1] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.myn";			// 5
+		moveStr[2] = "media\\こっち\\media\\paneru\\paneru.myn";
+		moveStr[3] = "media\\こっち\\media\\kaidan\\kaidan.myn";						// 1
+		moveStr[4] = "media\\こっち\\media\\kaidan\\kaidan_hantei.myn";
+		moveStr[5] = "media\\こっち\\media\\街灯\\Gaitou.myn";							// 2
+		moveStr[6] = "media\\こっち\\media\\スカイボックス\\SkyDome.myn";				// 1
+		moveStr[7] = "media\\こっち\\media\\ステージモデル\\move1_graphic.myn";
+
+		// キャラのテクスチャデータ
+		moveStr[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn";
+		moveStr[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_hair.pyn";
+		moveStr[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_wear.pyn";
+		moveStr[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_face.pyn";
+		moveStr[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_ex.pyn";
+
+		// 階段のテクスチャデータ
+		moveStr[13] = "media\\こっち\\media\\kaidan\\whiteblack\\kaidan.pyn";
+
+		// 街灯のテクスチャデータ
+		moveStr[14] = "media\\こっち\\media\\街灯\\whiteblack\\body_col.pyn";
+		moveStr[15] = "media\\こっち\\media\\街灯\\whiteblack\\lamp_COLandems.pyn";
+
+		// スカイボックスのテクスチャデータ
+		moveStr[16] = "media\\こっち\\media\\スカイボックス\\whiteblack\\BlueSky.byn";
+
+		// 階段とそのあとの床データ
+		moveStr[17] = "media\\こっち\\media\\階段と床合体\\kaidan_yuka1.myn";			// 2
+
+		// 階段とそのあとの床のテクスチャデータ
+		moveStr[18] = "media\\こっち\\media\\階段と床合体\\whiteblack\\kaidan.pyn";
+		moveStr[19] = "media\\こっち\\media\\階段と床合体\\whiteblack\\yuka.pyn";
+
+		// 階段と床のあたり判定データ
+		moveStr[20] = "media\\こっち\\media\\階段と床合体\\kaidan_yuka1_hantei.myn";
+
+		// キャラクター周りの3DSE
+		moveStr[21] = "media\\こっち\\media\\sound\\ジャンプ.wyn";
+		moveStr[22] = "media\\こっち\\media\\sound\\足音（廊下っぽいの）.wyn";
+		moveStr[23] = "media\\こっち\\media\\sound\\足音.wyn";
+		moveStr[24] = "media\\こっち\\media\\sound\\着地.wyn";
+		moveStr[25] = "media\\こっち\\media\\sound\\着地２.wyn";
+
+		// キャラクターの攻撃の音
+		moveStr[26] = "media\\こっち\\media\\sound\\ピアノコンボ一発目.wyn";
+		moveStr[27] = "media\\こっち\\media\\sound\\ピアノコンボ二発目.wyn";
+		moveStr[28] = "media\\こっち\\media\\sound\\ピアノコンボ三発目.wyn";
+
+		// BGM
+		moveStr[29] = "media\\こっち\\media\\sound\\boss.wyn";
+
+		// 一般人のデータ
+		moveStr[30] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.myn";
+		moveStr[31] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\whiteblack\\human_col.pyn";
+
+		// 敵に近づいたときに出るUI
+		moveStr[32] = "media\\こっち\\media\\move6\\near.pyn";
+		moveStr[33] = "media\\こっち\\media\\move6\\yes.pyn";
+		moveStr[34] = "media\\こっち\\media\\move6\\no.pyn";
+	}
+
+
+	loadType.resize(max6 + 1);
+	{
+		loadType[0] = ELOADFILE::mv1model;
+		loadType[1] = ELOADFILE::mv1model;
+		loadType[2] = ELOADFILE::mv1model;
+		loadType[3] = ELOADFILE::mv1model;
+		loadType[4] = ELOADFILE::mv1model;
+		loadType[5] = ELOADFILE::mv1model;
+		loadType[6] = ELOADFILE::mv1model;
+		loadType[7] = ELOADFILE::mv1model;
+
+		loadType[8] = ELOADFILE::graph;
+		loadType[9] = ELOADFILE::graph;
+		loadType[10] = ELOADFILE::graph;
+		loadType[11] = ELOADFILE::graph;
+		loadType[12] = ELOADFILE::graph;
+
+		loadType[13] = ELOADFILE::graph;
+
+		loadType[14] = ELOADFILE::graph;
+		loadType[15] = ELOADFILE::graph;
+
+		loadType[16] = ELOADFILE::graph;
+
+		loadType[17] = ELOADFILE::mv1model;
+
+		loadType[18] = ELOADFILE::graph;
+		loadType[19] = ELOADFILE::graph;
+
+		loadType[20] = ELOADFILE::mv1model;
+
+		loadType[21] = ELOADFILE::sound3DSource;
+		loadType[22] = ELOADFILE::sound3DSource;
+		loadType[23] = ELOADFILE::sound3DSource;
+		loadType[24] = ELOADFILE::sound3DSource;
+		loadType[25] = ELOADFILE::sound3DSource;
+
+		loadType[26] = ELOADFILE::sound3DSource;
+		loadType[27] = ELOADFILE::sound3DSource;
+		loadType[28] = ELOADFILE::sound3DSource;
+
+		loadType[29] = ELOADFILE::soundStream;
+
+		loadType[30] = ELOADFILE::mv1model;
+		loadType[31] = ELOADFILE::graph;
+
+		loadType[32] = ELOADFILE::graph;
+		loadType[33] = ELOADFILE::graph;
+		loadType[34] = ELOADFILE::graph;
+	}
+} /// void Manager::InitMove6Load()
+
+
+// ムーブ6のロードするテクスチャを初期から変更する
+void Manager::Move6TextureReload()
+{
+	switch (BASICPARAM::e_TextureColor)
+	{
+	case ETextureColor::NORMAL:
+		if (!BASICPARAM::charaTextureWhiteBlack)
+		{
+			// キャラのテクスチャデータ
+			moveStr[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\sword_Tex.pyn";
+			moveStr[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_hair.pyn";
+			moveStr[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_wear.pyn";
+			moveStr[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn";
+			moveStr[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn";
+		}
+		if (!BASICPARAM::enemyTextureWhiteBlack)
+		{
+		}
+		if (!BASICPARAM::lightStreetTextureWhiteBlack)
+		{
+			// 街灯のテクスチャデータ
+			moveStr[14] = "media\\こっち\\media\\街灯\\normal\\body_col.pyn";
+			moveStr[15] = "media\\こっち\\media\\街灯\\normal\\lamp_COLandems.pyn";
+		}
+		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
+		{
+			// 階段とそのあとの床のテクスチャデータ
+			moveStr[18] = "media\\こっち\\media\\階段と床合体\\normal\\kaidan.pyn";
+			moveStr[19] = "media\\こっち\\media\\階段と床合体\\normal\\yuka.pyn";
+		}
+		if (!BASICPARAM::stairsTextureWhiteBlack)
+		{
+			// 階段のテクスチャデータ
+			moveStr[13] = "media\\こっち\\media\\kaidan\\normal\\kaidan.pyn";
+		}
+		if (!BASICPARAM::anothreTextureWhiteBlack)
+		{
+			// 人のデータ
+			moveStr[31] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\normal\\human_col.pyn";
+
+			// スカイボックスのテクスチャデータ
+			moveStr[16] = "media\\こっち\\media\\スカイボックス\\normal\\BlueSky.byn";
+		}
+		break;
+
+
+	case ETextureColor::P_CORRECTION:
+		if (!BASICPARAM::charaTextureWhiteBlack)
+		{
+			// キャラのテクスチャデータ
+			moveStr[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\sword_Tex.pyn";
+			moveStr[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_hair.pyn";
+			moveStr[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_wear.pyn";
+			moveStr[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_face.pyn";
+			moveStr[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_ex.pyn";
+		}
+		if (!BASICPARAM::enemyTextureWhiteBlack)
+		{
+		}
+		if (!BASICPARAM::lightStreetTextureWhiteBlack)
+		{
+			// 街灯のテクスチャデータ
+			moveStr[14] = "media\\こっち\\media\\街灯\\P\\body_col.pyn";
+			moveStr[15] = "media\\こっち\\media\\街灯\\P\\lamp_COLandems.pyn";
+		}
+		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
+		{
+			// 階段とそのあとの床のテクスチャデータ
+			moveStr[18] = "media\\こっち\\media\\階段と床合体\\P\\kaidan.pyn";
+			moveStr[19] = "media\\こっち\\media\\階段と床合体\\P\\yuka.pyn";
+		}
+		if (!BASICPARAM::stairsTextureWhiteBlack)
+		{
+			// 階段のテクスチャデータ
+			moveStr[13] = "media\\こっち\\media\\kaidan\\P\\kaidan.pyn";
+		}
+		if (!BASICPARAM::anothreTextureWhiteBlack)
+		{
+			// 人のデータ
+			moveStr[31] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\P\\human_col.pyn";
+
+			// スカイボックスのテクスチャデータ
+			moveStr[16] = "media\\こっち\\media\\スカイボックス\\P\\BlueSky.byn";
+		}
+		break;
+
+
+	case ETextureColor::D_CORRECTION:
+		if (!BASICPARAM::charaTextureWhiteBlack)
+		{
+			// キャラのテクスチャデータ
+			moveStr[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\sword_Tex.pyn";
+			moveStr[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_hair.pyn";
+			moveStr[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_wear.pyn";
+			moveStr[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_face.pyn";
+			moveStr[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_ex.pyn";
+		}
+		if (!BASICPARAM::enemyTextureWhiteBlack)
+		{
+		}
+		if (!BASICPARAM::lightStreetTextureWhiteBlack)
+		{
+			// 街灯のテクスチャデータ
+			moveStr[14] = "media\\こっち\\media\\街灯\\D\\body_col.pyn";
+			moveStr[15] = "media\\こっち\\media\\街灯\\D\\lamp_COLandems.pyn";
+		}
+		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
+		{
+			// 階段とそのあとの床のテクスチャデータ
+			moveStr[18] = "media\\こっち\\media\\階段と床合体\\D\\kaidan.pyn";
+			moveStr[19] = "media\\こっち\\media\\階段と床合体\\D\\yuka.pyn";
+		}
+		if (!BASICPARAM::stairsTextureWhiteBlack)
+		{
+			// 階段のテクスチャデータ
+			moveStr[13] = "media\\こっち\\media\\kaidan\\D\\kaidan.pyn";
+		}
+		if (!BASICPARAM::anothreTextureWhiteBlack)
+		{
+			// 人のデータ
+			moveStr[31] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\D\\human_col.pyn";
+
+			// スカイボックスのテクスチャデータ
+			moveStr[16] = "media\\こっち\\media\\スカイボックス\\D\\BlueSky.byn";
+		}
+		break;
+
+
+	default:
+		break;
+	}
+} /// void Manager::Move6TextureReload()
+
+
+// オプションのプロセス
 void Manager::OptionProcess()
 {
 	///常時-------------------------------------------------------------------------------------------------------
@@ -2321,6 +2601,27 @@ void Manager::Update()
 					BASICPARAM::endFeedNow = true;						// 終了フェードのフラッグを立てる
 					preLoadScene = true;								// 直前がロードだったら
 					BASICPARAM::e_nowScene = ESceneNumber::FIFTHMOVE;	// 次のシーンを指定する
+				}
+			}
+			// 六番目のムーブのロードだったら
+			else if (BASICPARAM::e_preScene == ESceneNumber::SIXLOAD)
+			{
+				// ムーブ6のロード素材
+				InitMove6Load();
+
+
+				Move6TextureReload();
+
+
+				p_loadThread->Process(max6, moveStr, loadType);		// ロードをする
+
+
+				// ロードが終了したら
+				if (p_loadThread->GetNum() >= max6)
+				{
+					BASICPARAM::endFeedNow = true;						// 終了フェードのフラッグを立てる
+					preLoadScene = true;								// 直前がロードだったら
+					BASICPARAM::e_nowScene = ESceneNumber::SIXMOVE;	// 次のシーンを指定する				
 				}
 			}
 			// ロードではなくゲームだったら

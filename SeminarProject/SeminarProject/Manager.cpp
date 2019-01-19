@@ -1571,6 +1571,21 @@ void Manager::InitMove6Load()
 		moveStr[36] = "media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\whiteblack.pyn";
 		moveStr[37] = "media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\whiteblack.pyn";
 		moveStr[38] = "media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\whiteblack.pyn";
+
+		// エンドロール用画像
+		moveStr[39] = "media\\こっち\\media\\end\\title.pyn";
+		moveStr[40] = "media\\こっち\\media\\end\\dxlib.pyn";
+		moveStr[41] = "media\\こっち\\media\\end\\effekseer.pyn";
+		moveStr[42] = "media\\こっち\\media\\end\\graphic.pyn";
+		moveStr[43] = "media\\こっち\\media\\end\\program.pyn";
+		moveStr[44] = "media\\こっち\\media\\end\\sound.pyn";
+		moveStr[45] = "media\\こっち\\media\\end\\special.pyn";
+		moveStr[46] = "media\\こっち\\media\\end\\test.pyn";
+		moveStr[47] = "media\\こっち\\media\\end\\thanksLib.pyn";
+		moveStr[48] = "media\\こっち\\media\\end\\youser.pyn";
+
+		// エンドロール用BGM
+		moveStr[49] = "media\\こっち\\media\\sound\\ED.wyn";
 	}
 
 
@@ -1628,6 +1643,19 @@ void Manager::InitMove6Load()
 		loadType[36] = ELOADFILE::graph;
 		loadType[37] = ELOADFILE::graph;
 		loadType[38] = ELOADFILE::graph;
+
+		loadType[39] = ELOADFILE::graph;
+		loadType[40] = ELOADFILE::graph;
+		loadType[41] = ELOADFILE::graph;
+		loadType[42] = ELOADFILE::graph;
+		loadType[43] = ELOADFILE::graph;
+		loadType[44] = ELOADFILE::graph;
+		loadType[45] = ELOADFILE::graph;
+		loadType[46] = ELOADFILE::graph;
+		loadType[47] = ELOADFILE::graph;
+		loadType[48] = ELOADFILE::graph;
+
+		loadType[49] = ELOADFILE::soundStream;
 	}
 } /// void Manager::InitMove6Load()
 
@@ -2807,6 +2835,13 @@ void Manager::Update()
 			// 現在のシーンの終了フェードが終わったら
 			if (!BASICPARAM::endFeedNow)
 			{
+				// ムーブ6だったら終了させる
+				if (BASICPARAM::e_preScene == ESceneNumber::SIXMOVE)
+				{
+					gameEnd = true;
+				}
+
+
 				// シーンを変える
 				SceneChange();
 

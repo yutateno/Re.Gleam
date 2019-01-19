@@ -130,7 +130,7 @@ private:
 	/// ムーブ6に関する
 
 	// ムーブ6のロード数
-	const int max6 = 39;
+	const int max6 = 50;
 
 	// ムーブ6のロードの初期化
 	void InitMove6Load();

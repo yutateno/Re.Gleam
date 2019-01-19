@@ -501,18 +501,72 @@ void MainMove6::BattleProcess()
 
 	// スカイボックスの位置を更新
 	BaseMove::SkyBoxProcess(p_character->GetArea());
+
+
+	// test
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
+	{
+		SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::ending);
+		e_nowMove = ESceneMove6::Last;
+		p_character->PositionReset();
+		movieFrame = 0;
+	}
 } /// void MainMove6::BattleProcess()
 
 
 // 最後の描画
 void MainMove6::LastDraw()
 {
+	BaseMove::SkyBoxDraw();		// スカイボックスを描画
+
+
+	p_stage->Draw();
+
+
+	p_character->ModelDraw();
+	p_character->Draw();
+
+
+	DrawGraph(960 - 600	, (1080 + 0) - movieFrame, endrolDraw[static_cast<int>(EEndRolUI::title)], false);
+	DrawGraph(50		, (1080 + 400) - movieFrame, endrolDraw[static_cast<int>(EEndRolUI::program)], false);
+	DrawGraph(50		, (1080 + 600) - movieFrame, endrolDraw[static_cast<int>(EEndRolUI::graphic)], false);
+	DrawGraph(50		, (1080 + 800) - movieFrame, endrolDraw[static_cast<int>(EEndRolUI::sound)], false);
+	DrawGraph(960 - 400	, (2160 + 300) - movieFrame, endrolDraw[static_cast<int>(EEndRolUI::libThanks)], false);
+	DrawGraph(50		, (2160 + 450) - movieFrame, endrolDraw[static_cast<int>(EEndRolUI::dxlib)], false);
+	DrawGraph(50		, (2160 + 650) - movieFrame, endrolDraw[static_cast<int>(EEndRolUI::effekseer)], false);
+	DrawGraph(960 - 300	, (3240 + 0) - movieFrame, endrolDraw[static_cast<int>(EEndRolUI::specialThanks)], false);
+	DrawGraph(50		, (3240 + 150) - movieFrame, endrolDraw[static_cast<int>(EEndRolUI::test)], false);
+	DrawGraph(50		, (3240 + 350) - movieFrame, endrolDraw[static_cast<int>(EEndRolUI::youser)], false);
 } /// void MainMove6::LastDraw()
 
 
 // 最後のプロセス
 void MainMove6::LastProcess()
 {
+	movieFrame++;
+
+
+	// キャラクターのプロセス
+	p_character->OnlyCollFloorProcess(p_camera->GetAngle());
+
+
+	// カメラのプロセス
+	p_camera->Process(p_character->GetArea());
+
+
+	// シャドウマップの位置を更新
+	BaseMove::ShadowArea(p_character->GetArea());
+
+
+	// スカイボックスの位置を更新
+	BaseMove::SkyBoxProcess(p_character->GetArea());
+
+
+	if (movieFrame >= 3700)
+	{
+		BASICPARAM::endFeedNow = true;
+		BaseMove::SetScene(ESceneNumber::SIXLOAD);
+	}
 } /// void MainMove6::LastProcess()
 
 
@@ -665,6 +719,23 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 	BaseMove::ShadowSetUpAfter();
 
 
+	// エンドロール関連
+	for (int i = 0; i != 10; ++i)
+	{
+		endrolDraw[i] = -1;
+	}
+	endrolDraw[static_cast<int>(EEndRolUI::title)]			 = v_file[EFILE::end_Title];
+	endrolDraw[static_cast<int>(EEndRolUI::program)]		 = v_file[EFILE::end_Program];
+	endrolDraw[static_cast<int>(EEndRolUI::graphic)]		 = v_file[EFILE::end_Graphic];
+	endrolDraw[static_cast<int>(EEndRolUI::sound)]			 = v_file[EFILE::end_Sound];
+	endrolDraw[static_cast<int>(EEndRolUI::libThanks)]		 = v_file[EFILE::end_ThanksLib];
+	endrolDraw[static_cast<int>(EEndRolUI::dxlib)]			 = v_file[EFILE::end_DxLib];
+	endrolDraw[static_cast<int>(EEndRolUI::effekseer)]		 = v_file[EFILE::end_Effekseer];
+	endrolDraw[static_cast<int>(EEndRolUI::specialThanks)]	 = v_file[EFILE::end_Special];
+	endrolDraw[static_cast<int>(EEndRolUI::test)]			 = v_file[EFILE::end_Test];
+	endrolDraw[static_cast<int>(EEndRolUI::youser)]			 = v_file[EFILE::end_Youser];
+
+
 	// サウンドのロード
 	SoundProcess::Load(v_file[EFILE::se_attackOne], SoundProcess::ESOUNDNAME_SE::pianoAttack1);
 	SoundProcess::Load(v_file[EFILE::se_attackThrid], SoundProcess::ESOUNDNAME_SE::pianoAttack3);
@@ -675,6 +746,7 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 	SoundProcess::Load(v_file[EFILE::se_landing], SoundProcess::ESOUNDNAME_SE::landing);
 	SoundProcess::Load(v_file[EFILE::se_landingSecond], SoundProcess::ESOUNDNAME_SE::landing2);
 	SoundProcess::Load(v_file[EFILE::bgm_Main], SoundProcess::ESOUNDNAME_BGM::boss);
+	SoundProcess::Load(v_file[EFILE::bgm_end], SoundProcess::ESOUNDNAME_BGM::ending);
 	
 	SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::boss, 0, 0);
 } /// MainMove6::MainMove6(const std::vector<int> v_file)
@@ -683,6 +755,13 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 // デストラクタ
 MainMove6::~MainMove6()
 {
+	// エンドロール
+	for (int i = 0; i != 10; ++i)
+	{
+		GRAPHIC_RELEASE(endrolDraw[i]);
+	}
+
+
 	// 一般人
 	if (BASICPARAM::ordinaryPeopleNum != 0)
 	{

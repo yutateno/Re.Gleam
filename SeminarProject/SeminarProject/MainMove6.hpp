@@ -30,6 +30,8 @@ private:
 		, se_landingSecond, se_attackOne, se_attackTwo, se_attackThrid
 		, bgm_Main, ordinaryModel, ordinaryTex0, approachUINear, approachUIYes
 		, approachUINo, bossBeforeModel, bossBeforeTex0, bossBeforeTex1, bossBeforeTex2
+		, end_Title, end_DxLib, end_Effekseer, end_Graphic, end_Program, end_Sound
+		, end_Special, end_Test, end_ThanksLib, end_Youser, bgm_end
 	};
 
 	
@@ -137,6 +139,10 @@ private:
 
 	// ムービー前が正射影カメラだったかどうか
 	bool movieBeforeCameraOrtho;
+
+	// エンドロール用画像
+	enum class EEndRolUI { title, program, graphic, sound, libThanks, dxlib, effekseer, specialThanks, test, youser };
+	int endrolDraw[10];
 
 
 public:

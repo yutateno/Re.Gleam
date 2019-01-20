@@ -93,7 +93,7 @@ LoadScreen::~LoadScreen()
 // ƒvƒƒZƒX
 void LoadScreen::Process(const int num, const int max)
 {
-	if (++walkCount > 6) walkCount = 0;
+	if (++walkCount > 5) walkCount = 0;
 
 
 	// ‰½‚ð‚â‚Á‚Ä‚¢‚éÅ’†‚©•ª‚©‚ç‚¹‚é

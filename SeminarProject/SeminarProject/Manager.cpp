@@ -2461,15 +2461,6 @@ Manager::Manager()
 	// ロードファイルがあった場合
 	if (gameFirstStarting)
 	{
-		LoadFile::MyLoad("media\\こっち\\media\\First\\gameStart.pyn", titleUIDraw[0], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\First\\dataLoad.pyn", titleUIDraw[1], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\First\\gameEnd.pyn", titleUIDraw[2], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\First\\omake.pyn", titleUIDraw[3], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\First\\omake2.pyn", titleUIDraw[4], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\First\\omake3.pyn", titleUIDraw[5], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\First\\omake4.pyn", titleUIDraw[6], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\First\\omake5.pyn", titleUIDraw[7], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\First\\omake6.pyn", titleUIDraw[8], ELOADFILE::graph);
 		optionSelectMin = 0;
 		optionSelectMax = 2;
 	}
@@ -2480,6 +2471,17 @@ Manager::Manager()
 		optionSelectMax = 4;
 	}
 	playBonus = false;
+
+
+	LoadFile::MyLoad("media\\こっち\\media\\First\\gameStart.pyn", titleUIDraw[0], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\First\\dataLoad.pyn", titleUIDraw[1], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\First\\gameEnd.pyn", titleUIDraw[2], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\First\\omake.pyn", titleUIDraw[3], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\First\\omake2.pyn", titleUIDraw[4], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\First\\omake3.pyn", titleUIDraw[5], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\First\\omake4.pyn", titleUIDraw[6], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\First\\omake5.pyn", titleUIDraw[7], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\こっち\\media\\First\\omake6.pyn", titleUIDraw[8], ELOADFILE::graph);
 	/// ゲームのタイトルに関する-------------------------------------------------------------------------------------
 
 
@@ -2838,7 +2840,20 @@ void Manager::Update()
 				// ムーブ6だったら終了させる
 				if (BASICPARAM::e_preScene == ESceneNumber::SIXMOVE)
 				{
-					gameEnd = true;
+					// セーブデータがあるか調べる
+					int temp = FileSaveLoad::Load();
+
+					
+					// セーブデータがなかった場合セーブする
+					if (!temp)
+					{
+						BASICPARAM::e_nowScene = ESceneNumber::FIRSTMOVE;
+						FileSaveLoad::Save();
+					}
+
+
+					// タイトルに遷移させる
+					gameFirstStarting = true;
 				}
 
 

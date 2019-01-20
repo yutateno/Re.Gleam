@@ -565,7 +565,7 @@ void MainMove6::LastProcess()
 	if (movieFrame >= 3700)
 	{
 		BASICPARAM::endFeedNow = true;
-		BaseMove::SetScene(ESceneNumber::SIXLOAD);
+		BaseMove::SetScene(ESceneNumber::FIRSTLOAD);
 	}
 } /// void MainMove6::LastProcess()
 

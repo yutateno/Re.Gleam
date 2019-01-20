@@ -5,7 +5,7 @@
 LoadScreen::LoadScreen()
 {
 	// 情報初期化
-	for (int i = 0; i != 6; ++i)
+	for (int i = 0; i != 7; ++i)
 	{
 		draw[i] = -1;
 	}
@@ -23,6 +23,7 @@ LoadScreen::LoadScreen()
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\normal\\4.pyn", draw[3], ELOADFILE::graph);
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\normal\\5.pyn", draw[4], ELOADFILE::graph);
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\normal\\6.pyn", draw[5], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\option\\correction\\normal.pyn", draw[6], ELOADFILE::graph);
 
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\ex\\normal\\jamp2.pyn", endDraw, ELOADFILE::graph);
 		break;
@@ -34,6 +35,7 @@ LoadScreen::LoadScreen()
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\D\\4.pyn", draw[3], ELOADFILE::graph);
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\D\\5.pyn", draw[4], ELOADFILE::graph);
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\D\\6.pyn", draw[5], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\option\\correction\\D.pyn", draw[6], ELOADFILE::graph);
 
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\ex\\D\\jamp2.pyn", endDraw, ELOADFILE::graph);
 		break;
@@ -45,6 +47,7 @@ LoadScreen::LoadScreen()
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\P\\4.pyn", draw[3], ELOADFILE::graph);
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\P\\5.pyn", draw[4], ELOADFILE::graph);
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\P\\6.pyn", draw[5], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\option\\correction\\P.pyn", draw[6], ELOADFILE::graph);
 
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\ex\\P\\jamp2.pyn", endDraw, ELOADFILE::graph);
 		break;
@@ -56,6 +59,7 @@ LoadScreen::LoadScreen()
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\whiteblack\\4.pyn", draw[3], ELOADFILE::graph);
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\whiteblack\\5.pyn", draw[4], ELOADFILE::graph);
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\whiteblack\\6.pyn", draw[5], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\option\\correction\\whiteblack.pyn", draw[6], ELOADFILE::graph);
 
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\ex\\whiteblack\\jamp2.pyn", endDraw, ELOADFILE::graph);
 		break;
@@ -67,6 +71,7 @@ LoadScreen::LoadScreen()
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\normal\\4.pyn", draw[3], ELOADFILE::graph);
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\normal\\5.pyn", draw[4], ELOADFILE::graph);
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\normal\\6.pyn", draw[5], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\こっち\\media\\option\\correction\\normal.pyn", draw[6], ELOADFILE::graph);
 
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\ex\\normal\\jamp2.pyn", endDraw, ELOADFILE::graph);
 		break;
@@ -77,7 +82,7 @@ LoadScreen::LoadScreen()
 // デストラクタ
 LoadScreen::~LoadScreen()
 {
-	for (int i = 0; i != 6; ++i)
+	for (int i = 0; i != 7; ++i)
 	{
 		GRAPHIC_RELEASE(draw[i]);
 	}
@@ -88,7 +93,11 @@ LoadScreen::~LoadScreen()
 // プロセス
 void LoadScreen::Process(const int num, const int max)
 {
-	if (++walkCount > 5) walkCount = 0;
+	if (++walkCount > 6) walkCount = 0;
+
+
+	// 何をやっている最中か分からせる
+	DrawGraph(50, 50, draw[6], true);
 
 
 	// 読み込み個数に応じて右から左に走らせる

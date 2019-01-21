@@ -1,7 +1,7 @@
 #include "EnemyMove3Slime.hpp"
 
 
-// モーションプロセス
+/// --------------------------------------------------------------------------------------
 void EnemyMove3Slime::MotionProcess()
 {
 	// プレイヤーとの距離が攻撃範囲だったら
@@ -32,7 +32,7 @@ void EnemyMove3Slime::MotionProcess()
 }
 
 
-// 自動移動のプロセス
+/// --------------------------------------------------------------------------------------
 void EnemyMove3Slime::AutoMoveProcess()
 {
 	// 直線方向だったら
@@ -72,10 +72,10 @@ void EnemyMove3Slime::AutoMoveProcess()
 	else if (moveCount == 100)
 	{
 		// ランダム数値取得
-		std::random_device rnd;     // 非決定的な乱数生成器を生成
-		std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+		std::random_device rnd;
+		std::mt19937 mt(rnd());
 		std::uniform_int_distribution<> randInX(-200, 200);			// X座標用乱数
-		std::uniform_int_distribution<> moveTurn(-200, 200);				// Z座標用乱数
+		std::uniform_int_distribution<> moveTurn(-200, 200);		// Z座標用乱数
 
 
 		// 移動先を更新する
@@ -114,6 +114,8 @@ void EnemyMove3Slime::AutoMoveProcess()
 	moveCount++;		// 移動カウントを加算
 	float tempX = area.x + sinf(direXAngle + direZAngle) * -walkSpeed;
 	float tempZ = area.z + cosf(direXAngle + direZAngle) * -walkSpeed;
+
+
 	// どうしようもなくなったら初期値に戻す
 	if (area.y < -10)
 	{
@@ -121,10 +123,13 @@ void EnemyMove3Slime::AutoMoveProcess()
 		moveCount = 100;
 		return;
 	}
+
+
+	// ステージ外に行ったら
 	if (tempX >= 5000.0f || tempX <= -5000.0f || tempZ >= 5000.0f || tempZ <= -5000.0f)
 	{
-		std::random_device rnd;     // 非決定的な乱数生成器を生成
-		std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+		std::random_device rnd;
+		std::mt19937 mt(rnd());
 		std::uniform_int_distribution<> randInX(-4000, 4000);        // X座標用乱数
 		std::uniform_int_distribution<> randInZ(-4000, 4000);        // Z座標用乱数
 		// X座標設定
@@ -156,7 +161,7 @@ void EnemyMove3Slime::AutoMoveProcess()
 } /// void EnemyMove3Slime::AutoMoveProcess()
 
 
-// プレイヤーに向かう
+/// --------------------------------------------------------------------------------------
 void EnemyMove3Slime::ChaseMoveProcess()
 {
 	walkSpeed = 7.0f;
@@ -180,7 +185,26 @@ void EnemyMove3Slime::ChaseMoveProcess()
 }
 
 
-// 落下処理
+/// --------------------------------------------------------------------------------------
+void EnemyMove3Slime::DamageProcess()
+{
+	// 死んでいないがダメージを受けたら
+	if (damageHit && !deathFlag)
+	{
+		damageHit = false;
+		walkSpeed = -3.0f;
+
+
+		// 死ぬくらいダメージを受けたら
+		if (++damageCount >= 3)
+		{
+			deathFlag = true;
+		}
+	}
+}
+
+
+/// --------------------------------------------------------------------------------------
 void EnemyMove3Slime::FallProcess()
 {
 	// 足元に何もなかったら
@@ -233,28 +257,29 @@ void EnemyMove3Slime::FallProcess()
 } /// void EnemyMove3Slime::FallProcess()
 
 
-// コンストラクタ
-EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
-	, const int tex0, const VECTOR area, const float rotationY) : BasicCreature(true)
+/// --------------------------------------------------------------------------------------
+EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandle
+	, const int stairsHandle, const int stairsRoadHandle, const int tex0
+	, const VECTOR area, const float rotationY) : BasicCreature(true)
 {
-	// 当たり判定用ステージのコリジョン情報の更新
+	// 当たり判定用ステージのコリジョン情報の設定
 	stageHandle = -1;
 	stageHandle = MV1DuplicateModel(collStageHandle);
 	MV1SetScale(stageHandle, VGet(0.75f, 0.75f, 0.75f));
-	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
-	MV1SetupCollInfo(stageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetFrameVisible(stageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(stageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));
+	MV1SetupCollInfo(stageHandle, -1);
+	MV1SetFrameVisible(stageHandle, -1, false);
+	MV1RefreshCollInfo(stageHandle, -1);
 
 
-	// 足影用ステージのコリジョン情報の更新
+	// 足影用ステージのコリジョン情報の設定
 	shadowStageHandle = -1;
 	shadowStageHandle = MV1DuplicateModel(collStageHandle);
 	MV1SetScale(shadowStageHandle, VGet(0.8f, 0.8f, 0.8f));
-	MV1SetPosition(shadowStageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
-	MV1SetupCollInfo(shadowStageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetFrameVisible(shadowStageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(shadowStageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetPosition(shadowStageHandle, VGet(0.0f, 0.0f, 0.0f));
+	MV1SetupCollInfo(shadowStageHandle, -1);
+	MV1SetFrameVisible(shadowStageHandle, -1, false);
+	MV1RefreshCollInfo(shadowStageHandle, -1);
 
 
 	// 3Dモデルの読み込み
@@ -273,9 +298,6 @@ EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandl
 	// 3Dモデルのアニメーションをアタッチする
 	attachNum = MOTION::idle;
 	attachMotion = MV1AttachAnim(this->modelHandle, attachNum, -1, FALSE);
-
-
-	// アタッチしたアニメーションの総再生時間を取得する
 	totalTime = MV1GetAttachAnimTotalTime(this->modelHandle, attachMotion);
 
 
@@ -318,13 +340,16 @@ EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandl
 	if (BASICPARAM::stairsNum != 0)
 	{
 		v_stairsHandle.resize(BASICPARAM::stairsNum);
+
+
+		// 階段のコリジョン情報を設定
 		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
 		{
 			v_stairsHandle[i] = MV1DuplicateModel(stairsHandle);
 			MV1SetRotationXYZ(v_stairsHandle[i], VGet(0.0f, BASICPARAM::v_stairsAngle[i], 0.0f));
-			MV1SetPosition(v_stairsHandle[i], BASICPARAM::v_stairsArea[i]);				// ステージの座標を更新
-			MV1SetupCollInfo(v_stairsHandle[i], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-			MV1SetFrameVisible(v_stairsHandle[i], -1, false);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+			MV1SetPosition(v_stairsHandle[i], BASICPARAM::v_stairsArea[i]);
+			MV1SetupCollInfo(v_stairsHandle[i], -1);
+			MV1SetFrameVisible(v_stairsHandle[i], -1, false);
 			MV1RefreshCollInfo(v_stairsHandle[i], -1);
 		}
 	}
@@ -335,31 +360,32 @@ EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandl
 	if (BASICPARAM::stairsRoadNum != 0)
 	{
 		v_stairsRoadHandle.resize(BASICPARAM::stairsRoadNum);
+
+
+		// 階段と床のコリジョン情報を設定
 		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
 		{
 			v_stairsRoadHandle[i] = MV1DuplicateModel(stairsRoadHandle);
 			MV1SetRotationXYZ(v_stairsRoadHandle[i], VGet(0.0f, BASICPARAM::v_stairsRoadAngle[i], 0.0f));
-			MV1SetPosition(v_stairsRoadHandle[i], BASICPARAM::v_stairsRoadArea[i]);				// ステージの座標を更新
-			MV1SetupCollInfo(v_stairsRoadHandle[i], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-			MV1SetFrameVisible(v_stairsRoadHandle[i], -1, false);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+			MV1SetPosition(v_stairsRoadHandle[i], BASICPARAM::v_stairsRoadArea[i]);
+			MV1SetupCollInfo(v_stairsRoadHandle[i], -1);
+			MV1SetFrameVisible(v_stairsRoadHandle[i], -1, false);
 			MV1RefreshCollInfo(v_stairsRoadHandle[i], -1);
 		}
 	}
 
 
-	// 第二引数の回転角度をセット
-	MV1SetRotationXYZ(this->modelHandle, VGet(0.0f, rotationY, 0.0f));
 	// モデルの座標を更新
+	MV1SetRotationXYZ(this->modelHandle, VGet(0.0f, rotationY, 0.0f));
 	MV1SetPosition(this->modelHandle, this->area);
 
 
-	// アクター同士のあたり判定用のセットアップ
+	// コリジョン情報のセットアップ
 	MV1SetupCollInfo(this->modelHandle, -1);
-} /// EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
-/// , const int tex0, const VECTOR area, const float rotationY) : BasicCreature(true)
+} /// EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandle
 
 
-// デストラクタ
+/// --------------------------------------------------------------------------------------
 EnemyMove3Slime::~EnemyMove3Slime()
 {
 	// テクスチャ開放
@@ -403,12 +429,15 @@ EnemyMove3Slime::~EnemyMove3Slime()
 } /// EnemyMove3Slime::~EnemyMove3Slime()
 
 
-// 描画
+/// --------------------------------------------------------------------------------------
 void EnemyMove3Slime::Draw()
 {
+	// 死んでいるか存在を許されていなかったら
 	if (deathFlag || eraseExistence) return;
 
+
 	BasicObject::ShadowFoot(shadowStageHandle);
+
 
 #ifdef _DEBUG
 	if (MyDebug::enemyThreeSlimeDrawFlag)
@@ -430,10 +459,11 @@ void EnemyMove3Slime::Draw()
 }
 
 
-// プロセス
+/// --------------------------------------------------------------------------------------
 void EnemyMove3Slime::Process()
 {
 	if (eraseExistence) return;
+
 
 	// 死んだとき
 	if (deathFlag)
@@ -451,8 +481,6 @@ void EnemyMove3Slime::Process()
 
 
 		MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
-
-
 		return;
 	}
 
@@ -482,19 +510,7 @@ void EnemyMove3Slime::Process()
 	Player_AnimProcess();		// モーションの実態
 
 	
-	// 死んでいないがダメージを受けたら
-	if (damageHit && !deathFlag)
-	{
-		damageHit = false;
-		walkSpeed = -3.0f;
-
-
-		// 死ぬくらいダメージを受けたら
-		if (++damageCount >= 3)
-		{
-			deathFlag = true;
-		}
-	}
+	DamageProcess();		// ダメージのプロセス
 
 
 	int setCollHitNum = 0;		// 当たり判定個数を取得
@@ -531,7 +547,7 @@ void EnemyMove3Slime::Process()
 } /// void EnemyMove3Slime::Process()
 
 
-// テクスチャの差し替え
+/// --------------------------------------------------------------------------------------
 void EnemyMove3Slime::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle0);
@@ -559,7 +575,7 @@ void EnemyMove3Slime::TextureReload()
 }
 
 
-// プレイヤーの位置と距離を取得
+/// --------------------------------------------------------------------------------------
 void EnemyMove3Slime::SetCharacterArea(const VECTOR characterArea, const int distance)
 {
 	playerCharaArea = characterArea;

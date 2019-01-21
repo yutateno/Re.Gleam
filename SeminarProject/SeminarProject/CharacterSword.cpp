@@ -318,7 +318,7 @@ void CharacterSword::AttackProcess()
 			{
 				attackNumber = MOTION::action1;
 			}
-			animSpeed = 0.4f;									// アニメーション速度を変更
+			animSpeed = 0.4f;				// アニメーション速度を変更
 
 
 			// 移動プロセスから流用して前方に移動させる
@@ -326,12 +326,12 @@ void CharacterSword::AttackProcess()
 			area.z += cosf(angle + direXAngle) * -walkSpeed;
 
 
-			attackNow = true;					// 攻撃しているフラッグを立てる
+			attackNow = true;				// 攻撃しているフラッグを立てる
 		} /// if (attackFrame == 0)
 		// 二回目以降の攻撃時
 		else if (attackFrame < 10.0f)
 		{
-			attackNext = true;			// 次の攻撃モーションに移行するというフラッグを立てる
+			attackNext = true;				// 次の攻撃モーションに移行するというフラッグを立てる
 		}
 	} /// if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_X) == 1)
 
@@ -391,7 +391,7 @@ void CharacterSword::AttackProcess()
 			{
 			// 最初の攻撃時
 			case MOTION::action1:
-				animSpeed = 0.4f;									// アニメーション速度を変更
+				animSpeed = 0.4f;						// アニメーション速度を変更
 				attackNumber = MOTION::action2;
 				preAttackNumber = attackNumber;
 				break;
@@ -399,7 +399,7 @@ void CharacterSword::AttackProcess()
 
 			// 二コンボ目の攻撃時
 			case MOTION::action2:
-				animSpeed = 0.4f;									// アニメーション速度を変更
+				animSpeed = 0.4f;						// アニメーション速度を変更
 				attackNumber = MOTION::action3;
 				preAttackNumber = attackNumber;
 				break;
@@ -407,7 +407,7 @@ void CharacterSword::AttackProcess()
 
 			// 最後の攻撃時
 			case MOTION::action3:
-				attackNow = false;					// 次のコンボがないので攻撃フラッグを倒す
+				attackNow = false;						// 次のコンボがないので攻撃フラッグを倒す
 				attackNumber = MOTION::action1;
 				preAttackNumber = attackNumber;
 				walkSpeed = 0.0f;
@@ -432,7 +432,7 @@ void CharacterSword::AttackProcess()
 
 			// ジャンプ中の最後の攻撃時
 			case MOTION::skyAction3:
-				attackNow = false;					// 次のコンボがないので攻撃を終了させる
+				attackNow = false;						// 次のコンボがないので攻撃を終了させる
 				attackNumber = MOTION::action1;
 				preAttackNumber = attackNumber;
 				walkSpeed = 0.0f;
@@ -611,7 +611,8 @@ void CharacterSword::SEProcess()
 		if (leftFootArea <= MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y + 1.0f
 			&& leftFootArea >= MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y - 1.0f)
 		{
-			underWalkCount = 2;		// 歩いているカウントを2にする
+			// 歩いているカウントを2にする
+			underWalkCount = 2;
 
 
 			// y座標が10以上、つまりオブジェクトの上にいたら
@@ -1291,12 +1292,12 @@ void CharacterSword::OnlyCollFloorProcess(const float getAngle)
 	// 動いていない状態でロックオンした敵が近くにいて攻撃したとき
 	if (!moveFlag && attackNow && !(mostNearEnemyArea.y >= -1001.0f && mostNearEnemyArea.y <= -999.0f))
 	{
-		MV1SetRotationXYZ(modelHandle, VGet(0.0f, mostNearEnemyDire, 0.0f));		// 体の向きを決める
+		MV1SetRotationXYZ(modelHandle, VGet(0.0f, mostNearEnemyDire, 0.0f));
 	}
 	// 通常の時
 	else
 	{
-		MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));		// 体の向きを決める
+		MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));
 	}
 
 

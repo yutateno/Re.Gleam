@@ -51,7 +51,7 @@ void EnemyMove2::Draw()
 	if (MyDebug::enemyTwoDrawFlag)
 	{
 		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f))
-			, modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+			, modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
 	}
 #endif // _DEBUG
 }

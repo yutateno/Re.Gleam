@@ -20,7 +20,8 @@ private:
 
 public:
 	// コンストラクタ
-	EnemyMove1(const int collStageHandle, const float areaX, const float areaZ, const float color);
+	EnemyMove1(const int collStageHandle, const float areaX, const float areaZ
+		, const float color);
 
 	// デストラクタ
 	~EnemyMove1();

@@ -23,7 +23,7 @@ public:
 	void OptionActorDrawAfter() override {}
 
 	
-	/// ゲッターセッター
+	/// ゲッターセッター---------------------------------------
 
 	// 座標を設定する
 	void SetArea(const VECTOR area) { this->area = area; }

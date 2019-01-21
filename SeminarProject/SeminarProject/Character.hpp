@@ -5,7 +5,7 @@
 class Character : public BasicCreature
 {
 private:
-	/// それぞれの位置に関して-----------
+	/// それぞれの位置に関して----------------------------
 
 	// 前後のキャラ向きを扱う変数
 	float direZAngle;
@@ -14,11 +14,11 @@ private:
 	float direXAngle;
 
 
-	/// モーションに関して--------------------
+	/// モーションに関して--------------------------------
 	enum MOTION { run, idle, walk };
 
 
-	/// 動きに関して----------------------------------
+	/// 動きに関して--------------------------------------
 
 	// 動きの向き
 	enum DIRECTION { left, down, right, up };
@@ -33,7 +33,7 @@ private:
 	void OpeProcess();
 
 
-	/// テクスチャに関して------------------
+	/// テクスチャに関して--------------------------------
 
 	// テクスチャの相対IDを後ろにつけて
 	int textureHandle0;
@@ -44,7 +44,8 @@ private:
 
 public:
 	// コンストラクタ
-	Character(const int modelHandle, const int collStageHandle, const int tex0, const int tex1, const int tex2, const int tex3);
+	Character(const int modelHandle, const int collStageHandle
+		, const int tex0, const int tex1, const int tex2, const int tex3);
 
 	// デストラクタ
 	~Character();

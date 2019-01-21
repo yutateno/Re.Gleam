@@ -6,7 +6,7 @@
 class EnemyMove3Slime : public BasicCreature
 {
 private:
-	/// それぞれの位置に関して-------------
+	/// それぞれの位置に関して------------------------
 
 	// 前後のキャラ向きを扱う変数
 	float direZAngle;
@@ -27,7 +27,7 @@ private:
 	int playerCharaDistance;
 
 
-	/// モーションに関して----------
+	/// モーションに関して---------------------------
 
 	// モーションのID
 	enum MOTION { idle, attack };
@@ -36,19 +36,19 @@ private:
 	void MotionProcess();
 
 
-	/// 階段に関して--------------
+	/// 階段に関して---------------------------------
 
 	// 階段のモデル
 	std::vector<int> v_stairsHandle;
 
 
-	/// 階段と床に関して----------
+	/// 階段と床に関して------------------------------
 
 	// 階段と床のモデル
 	std::vector<int> v_stairsRoadHandle;
 
 
-	/// 動きに関して------------
+	/// 動きに関して---------------------------------
 
 	// 動きのプロセス
 	void AutoMoveProcess();
@@ -60,7 +60,7 @@ private:
 	int moveCount;
 
 
-	/// 攻撃に関して
+	/// 攻撃に関して---------------------------------
 
 	// 攻撃のフレーム
 	float attackFrame;
@@ -71,8 +71,11 @@ private:
 	// 攻撃を受けた数値
 	int damageCount;
 
+	// ダメージのプロセス
+	void DamageProcess();
+
 	
-	/// 落下に関して
+	/// 落下に関して---------------------------------
 
 	// 重力
 	float gravity;
@@ -93,7 +96,7 @@ private:
 	int flyCount;
 
 
-	/// テクスチャに関して---------------
+	/// テクスチャに関して---------------------------
 
 	// テクスチャの相対IDを後ろにつけて
 	int textureHandle0;

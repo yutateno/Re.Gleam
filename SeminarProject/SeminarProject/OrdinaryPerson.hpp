@@ -6,7 +6,7 @@
 class OrdinaryPerson : public BasicCreature
 {
 private:
-	/// モデルに関して
+	/// モデルに関して---------------------------------
 
 	// 生存を許されたら
 	bool alive;
@@ -15,7 +15,7 @@ private:
 	int aliveBlendCount;
 
 
-	/// それぞれの位置に関して---------------
+	/// それぞれの位置に関して-------------------------
 
 	// 前後のキャラ向きを扱う変数
 	float direZAngle;		
@@ -30,25 +30,25 @@ private:
 	float nextDireXAngle;
 
 
-	/// モーションに関して--------------------
+	/// モーションに関して------------------------------
 
 	// モーションのID
 	enum MOTION { walk };
 
 
-	/// 階段に関して--------------
+	/// 階段に関して-----------------------------------
 
 	// 階段のモデル
 	std::vector<int> v_stairsHandle;
 
 
-	/// 階段と床に関して----------
+	/// 階段と床に関して-------------------------------
 
 	// 階段と床のモデル
 	std::vector<int> v_stairsRoadHandle;
 
 
-	/// 動きに関して-----------
+	/// 動きに関して-----------------------------------
 
 	// 動きのプロセス
 	void MoveProcess();
@@ -57,7 +57,7 @@ private:
 	int moveCount;
 
 
-	/// 落下に関して
+	/// 落下に関して----------------------------------
 
 	// 重力
 	float gravity;
@@ -78,7 +78,7 @@ private:
 	int flyCount;
 
 
-	/// テクスチャに関して---------------
+	/// テクスチャに関して----------------------------
 
 	// テクスチャの相対IDを後ろにつけて
 	int textureHandle0;
@@ -86,8 +86,8 @@ private:
 
 public:
 	// コンストラクタ
-	OrdinaryPerson(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
-		, const int tex0, const VECTOR area, const float rotationY);
+	OrdinaryPerson(const int modelHandle, const int collStageHandle, const int stairsHandle
+		, const int stairsRoadHandle, const int tex0, const VECTOR area, const float rotationY);
 
 	// デストラクタ
 	~OrdinaryPerson();

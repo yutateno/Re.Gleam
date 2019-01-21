@@ -91,7 +91,7 @@ EnemyMove1::EnemyMove1(const int collStageHandle, const float areaX, const float
 	// ìÆÇ´Ç…ä÷Ç∑ÇÈ
 	upNow = true;
 	flyMove = 0.0f;
-} /// EnemyMove1::EnemyMove1(const int collStageHandle, const float areaX, const float areaZ, const float color) : BasicCreature(true)
+} /// EnemyMove1::EnemyMove1(const int collStageHandle, const float areaX, const float areaZ
 
 
 /// ---------------------------------------------------------------------------------------------------------
@@ -110,7 +110,8 @@ void EnemyMove1::Draw()
 	SetUseZBuffer3D(TRUE);
 	SetWriteZBuffer3D(TRUE);
 	SetMaterialParam(material);
-	DrawSphere3D(VAdd(area, VGet(0.0f, 60.0f, 0.0f)), modelWidth, 16, GetColor(68, 178, 227), GetColor(255, 255, 255), TRUE);
+	DrawSphere3D(VAdd(area, VGet(0.0f, 60.0f, 0.0f)), modelWidth, 16
+		, GetColor(68, 178, 227), GetColor(255, 255, 255), TRUE);
 	SetWriteZBuffer3D(FALSE);
 	SetUseZBuffer3D(FALSE);
 
@@ -118,9 +119,8 @@ void EnemyMove1::Draw()
 #ifdef _DEBUG
 	if (MyDebug::enemyOneDrawFlag)
 	{
-		VECTOR viewArea = VAdd(area, VGet(0.0f, 60.0f, 0.0f));		// ÉÇÉfÉãÇÃèâä˙Yç¿ïWÇ™ïÇÇ¢ÇƒÇ¢ÇÈÇÃÇ≈í≤êÆ
-
-		DrawSphere3D(VAdd(area, VGet(0.0f, 60.0f, 0.0f)), modelWidth + 3, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
+		DrawSphere3D(VAdd(area, VGet(0.0f, 60.0f, 0.0f))
+			, modelWidth + 3, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
 	}
 #endif // _DEBUG
 }

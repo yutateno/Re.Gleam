@@ -1,7 +1,7 @@
 #include "EnemyMove3CrayonHuman.hpp"
 
 
-// モーションのプロセス
+/// --------------------------------------------------------------------------------------------------
 void EnemyMove3CrayonHuman::MotionProcess()
 {
 	// 死んでいなかったら
@@ -41,7 +41,7 @@ void EnemyMove3CrayonHuman::MotionProcess()
 } /// void EnemyMove3CrayonHuman::MotionProcess()
 
 
-// 自動的な動きプロセス
+/// --------------------------------------------------------------------------------------------------
 void EnemyMove3CrayonHuman::AutoMoveProcess()
 {
 	// 直前方向だったら
@@ -81,10 +81,10 @@ void EnemyMove3CrayonHuman::AutoMoveProcess()
 	else if (moveCount == 100)
 	{
 		// 欄数値取得
-		std::random_device rnd;     // 非決定的な乱数生成器を生成
-		std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+		std::random_device rnd;
+		std::mt19937 mt(rnd());
 		std::uniform_int_distribution<> randInX(-200, 200);			// X座標用乱数
-		std::uniform_int_distribution<> moveTurn(-200, 200);				// Z座標用乱数
+		std::uniform_int_distribution<> moveTurn(-200, 200);		// Z座標用乱数
 
 
 		// 次の移動先を決定
@@ -122,6 +122,8 @@ void EnemyMove3CrayonHuman::AutoMoveProcess()
 	moveCount++;		// 移動カウントを加算
 	float tempX = area.x + sinf(direXAngle + direZAngle) * -walkSpeed;
 	float tempZ = area.z + cosf(direXAngle + direZAngle) * -walkSpeed;
+
+
 	// どうしようもなくなったら初期値に戻す
 	if (area.y < -10)
 	{
@@ -129,11 +131,13 @@ void EnemyMove3CrayonHuman::AutoMoveProcess()
 		moveCount = 100;
 		return;
 	}
+
+
 	// ステージ外に向かっていたら乱数を再暗算
 	if (tempX >= 5000.0f || tempX <= -5000.0f || tempZ >= 5000.0f || tempZ <= -5000.0f)
 	{
-		std::random_device rnd;     // 非決定的な乱数生成器を生成
-		std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+		std::random_device rnd;
+		std::mt19937 mt(rnd());
 		std::uniform_int_distribution<> randInX(-4000, 4000);        // X座標用乱数
 		std::uniform_int_distribution<> randInZ(-4000, 4000);        // Z座標用乱数
 		// X座標設定
@@ -162,10 +166,30 @@ void EnemyMove3CrayonHuman::AutoMoveProcess()
 	}
 	area.x += sinf(direXAngle + direZAngle) * -walkSpeed;
 	area.z += cosf(direXAngle + direZAngle) * -walkSpeed;
+
+
+	// プレイヤーを視認できる角度
+	charaLookAtAngle = atan2(VSub(area, playerCharaArea).x, VSub(area, playerCharaArea).z);
+
+
+	// プレイヤーを視認出来たら
+	if (fabsf(charaLookAtAngle) + (DX_PI_F / 6) > fabsf(direXAngle + direZAngle)
+		&& fabsf(charaLookAtAngle) - (DX_PI_F / 6) < fabsf(direXAngle + direZAngle)
+		&& playerCharaDistance <= 1500)
+	{
+		direXAngle = 0.0f;
+		direZAngle = charaLookAtAngle;
+		charaLookAt = true;
+	}
+	// プレイヤーを視認できなかったら
+	else
+	{
+		charaLookAt = false;
+	}
 } /// void EnemyMove3CrayonHuman::AutoMoveProcess()
 
 
-// プレイヤーを追いかけるプロセス
+/// --------------------------------------------------------------------------------------------------
 void EnemyMove3CrayonHuman::ChaseMoveProcess()
 {
 	walkSpeed = 7.0f;		// 移動速度を早めに設定
@@ -191,7 +215,26 @@ void EnemyMove3CrayonHuman::ChaseMoveProcess()
 } /// void EnemyMove3CrayonHuman::ChaseMoveProcess()
 
 
-// 落下処理
+/// --------------------------------------------------------------------------------------------------
+void EnemyMove3CrayonHuman::DamageProcess()
+{
+	// ダメージを受けて死んでいないとき
+	if (damageHit && !deathFlag)
+	{
+		damageHit = false;
+		walkSpeed = -14.0f;
+
+
+		// ダメージの数値が死ぬ値になったら
+		if (++damageCount >= 3.0f)
+		{
+			deathFlag = true;
+		}
+	}
+}
+
+
+/// --------------------------------------------------------------------------------------------------
 void EnemyMove3CrayonHuman::FallProcess()
 {
 	// 足元に何もなかったら
@@ -218,6 +261,7 @@ void EnemyMove3CrayonHuman::FallProcess()
 		area.y += jumpPower;			// Y座標に加え続ける
 
 
+		// 落下させる
 		area.y -= 10.5f;
 	}
 
@@ -228,6 +272,7 @@ void EnemyMove3CrayonHuman::FallProcess()
 		flyCount = 0;
 		preJumpNow = false;
 	}
+
 
 	// 誤差で空中浮遊していたら
 	if (hitDimNum == 0 && area.y >= 10.0f)
@@ -243,28 +288,40 @@ void EnemyMove3CrayonHuman::FallProcess()
 } /// void EnemyMove3CrayonHuman::FallProcess()
 
 
-// コンストラクタ
-EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
-	, const int tex0, const VECTOR area, const float rotationY) : BasicCreature(true)
+/// --------------------------------------------------------------------------------------------------
+void EnemyMove3CrayonHuman::SEProcess()
 {
-	// 当たり判定用ステージのコリジョン情報の更新
+	// 死んだとき
+	if (damageHit && !deathFlag && damageCount >= 3.0f)
+	{
+		SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::crayonDie, area);
+	}
+}
+
+
+/// --------------------------------------------------------------------------------------------------
+EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int collStageHandle
+	, const int stairsHandle, const int stairsRoadHandle, const int tex0, const VECTOR area
+	, const float rotationY) : BasicCreature(true)
+{
+	// 当たり判定用ステージのコリジョン情報の設定
 	stageHandle = -1;
 	stageHandle = MV1DuplicateModel(collStageHandle);
 	MV1SetScale(stageHandle, VGet(0.75f, 0.75f, 0.75f));
-	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
-	MV1SetupCollInfo(stageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetFrameVisible(stageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(stageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));
+	MV1SetupCollInfo(stageHandle, -1);
+	MV1SetFrameVisible(stageHandle, -1, false);
+	MV1RefreshCollInfo(stageHandle, -1);
 
 
-	// 足影用ステージのコリジョン情報の更新
+	// 足影用ステージのコリジョン情報の設定
 	shadowStageHandle = -1;
 	shadowStageHandle = MV1DuplicateModel(collStageHandle);
 	MV1SetScale(shadowStageHandle, VGet(0.8f, 0.8f, 0.8f));
-	MV1SetPosition(shadowStageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
-	MV1SetupCollInfo(shadowStageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetFrameVisible(shadowStageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(shadowStageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetPosition(shadowStageHandle, VGet(0.0f, 0.0f, 0.0f));
+	MV1SetupCollInfo(shadowStageHandle, -1);
+	MV1SetFrameVisible(shadowStageHandle, -1, false);
+	MV1RefreshCollInfo(shadowStageHandle, -1);
 
 
 	// 3Dモデルの読み込み
@@ -328,13 +385,16 @@ EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int co
 	if (BASICPARAM::stairsNum != 0)
 	{
 		v_stairsHandle.resize(BASICPARAM::stairsNum);
+
+
+		// コリジョン情報を設定
 		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
 		{
 			v_stairsHandle[i] = MV1DuplicateModel(stairsHandle);
 			MV1SetRotationXYZ(v_stairsHandle[i], VGet(0.0f, BASICPARAM::v_stairsAngle[i], 0.0f));
-			MV1SetPosition(v_stairsHandle[i], BASICPARAM::v_stairsArea[i]);				// ステージの座標を更新
-			MV1SetupCollInfo(v_stairsHandle[i], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-			MV1SetFrameVisible(v_stairsHandle[i], -1, false);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+			MV1SetPosition(v_stairsHandle[i], BASICPARAM::v_stairsArea[i]);
+			MV1SetupCollInfo(v_stairsHandle[i], -1);
+			MV1SetFrameVisible(v_stairsHandle[i], -1, false);
 			MV1RefreshCollInfo(v_stairsHandle[i], -1);
 		}
 	}
@@ -345,13 +405,16 @@ EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int co
 	if (BASICPARAM::stairsRoadNum != 0)
 	{
 		v_stairsRoadHandle.resize(BASICPARAM::stairsRoadNum);
+
+
+		// コリジョン情報を設定
 		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
 		{
 			v_stairsRoadHandle[i] = MV1DuplicateModel(stairsRoadHandle);
 			MV1SetRotationXYZ(v_stairsRoadHandle[i], VGet(0.0f, BASICPARAM::v_stairsRoadAngle[i], 0.0f));
-			MV1SetPosition(v_stairsRoadHandle[i], BASICPARAM::v_stairsRoadArea[i]);				// ステージの座標を更新
-			MV1SetupCollInfo(v_stairsRoadHandle[i], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-			MV1SetFrameVisible(v_stairsRoadHandle[i], -1, false);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+			MV1SetPosition(v_stairsRoadHandle[i], BASICPARAM::v_stairsRoadArea[i]);
+			MV1SetupCollInfo(v_stairsRoadHandle[i], -1);
+			MV1SetFrameVisible(v_stairsRoadHandle[i], -1, false);
 			MV1RefreshCollInfo(v_stairsRoadHandle[i], -1);
 		}
 	}
@@ -361,13 +424,12 @@ EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int co
 	MV1SetPosition(this->modelHandle, this->area);
 
 
-	// アクター同士のあたり判定のセットアップ
+	// コリジョン情報のセットアップ
 	MV1SetupCollInfo(this->modelHandle, -1);
-} /// EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
-/// , const int tex0, const VECTOR area, const float rotationY) : BasicCreature(true)
+} /// EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int collStageHandle
 
 
-// デストラクタ
+/// --------------------------------------------------------------------------------------------------
 EnemyMove3CrayonHuman::~EnemyMove3CrayonHuman()
 {
 	// テクスチャ開放
@@ -411,7 +473,7 @@ EnemyMove3CrayonHuman::~EnemyMove3CrayonHuman()
 } /// EnemyMove3CrayonHuman::~EnemyMove3CrayonHuman()
 
 
-// 描画
+/// --------------------------------------------------------------------------------------------------
 void EnemyMove3CrayonHuman::Draw()
 {
 	if (deathFlag || eraseExistence) return;
@@ -419,10 +481,12 @@ void EnemyMove3CrayonHuman::Draw()
 
 	BasicObject::ShadowFoot(shadowStageHandle);
 
+
 #ifdef _DEBUG
 	if (MyDebug::enemyThreeCrayonHumanDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f))
+			, modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
 	}
 
 	if (MyDebug::enemyThreeCrayonHumanSearchLineDrawFlag)
@@ -444,7 +508,7 @@ void EnemyMove3CrayonHuman::Draw()
 }
 
 
-// プロセス
+/// --------------------------------------------------------------------------------------------------
 void EnemyMove3CrayonHuman::Process()
 {
 	// 消滅していたら
@@ -454,7 +518,7 @@ void EnemyMove3CrayonHuman::Process()
 	// 死んだとき
 	if (deathFlag)
 	{
-		MotionProcess();	// モーションプロセス
+		MotionProcess();			// モーションプロセス
 
 
 		Player_AnimProcess();		// モーションの実態
@@ -486,10 +550,14 @@ void EnemyMove3CrayonHuman::Process()
 	preArea = area;
 
 
+	// SEのプロセス
+	SEProcess();
+
+
 	// プレイヤーとの距離が索敵外だったら
 	if (playerCharaDistance > 1500)
 	{
-		AutoMoveProcess();		// 自動的に動かす
+		AutoMoveProcess();			// 自動的に動かす
 	}
 	// プレイヤーとの距離が索敵内だったら
 	else
@@ -507,26 +575,13 @@ void EnemyMove3CrayonHuman::Process()
 	}
 
 
-	MotionProcess();		// モーションのプロセス
+	MotionProcess();			// モーションのプロセス
 
 
 	Player_AnimProcess();		// モーションの実態
 
 
-	// ダメージを受けて死んでいないとき
-	if (damageHit && !deathFlag)
-	{
-		damageHit = false;
-		walkSpeed = -14.0f;
-
-		
-		// ダメージの数値が死ぬ値になったら
-		if (++damageCount >= 3.0f)
-		{
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::crayonDie, area);
-			deathFlag = true;
-		}
-	}
+	DamageProcess();			// ダメージのプロセス
 
 
 	int setCollHitNum = 0;		// 当たり判定の個数を得る
@@ -553,33 +608,13 @@ void EnemyMove3CrayonHuman::Process()
 	ActorHit(stageHandle);	// ステージのあたり判定
 
 
-	FallProcess();	// 落下のプロセス
-
-
-	// プレイヤーを視認できる角度
-	charaLookAtAngle = atan2(VSub(area, playerCharaArea).x, VSub(area, playerCharaArea).z);
-
-
-	// プレイヤーを視認出来たら
-	if (fabsf(charaLookAtAngle) + (DX_PI_F / 6) > fabsf(direXAngle + direZAngle)
-		&& fabsf(charaLookAtAngle) - (DX_PI_F / 6) < fabsf(direXAngle + direZAngle)
-		&& playerCharaDistance <= 1500)
-	{
-		direXAngle = 0.0f;
-		direZAngle = charaLookAtAngle;
-		charaLookAt = true;
-	}
-	// プレイヤーを視認できなかったら
-	else
-	{
-		charaLookAt = false;
-	}
+	FallProcess();			// 落下のプロセス
 
 
 	// プレイヤーを視認していたら
 	if (charaLookAt)
 	{
-		MV1SetRotationXYZ(modelHandle, VGet(0.0f, charaLookAtAngle, 0.0f));			// プレイヤーを向く方に回転させる
+		MV1SetRotationXYZ(modelHandle, VGet(0.0f, charaLookAtAngle, 0.0f));
 	}
 	// プレイヤーを視認できなかったら
 	else
@@ -593,10 +628,11 @@ void EnemyMove3CrayonHuman::Process()
 } /// void EnemyMove3CrayonHuman::Process()
 
 
-// テクスチャを差し替える
+/// --------------------------------------------------------------------------------------------------
 void EnemyMove3CrayonHuman::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle0);
+
 
 	switch (BASICPARAM::e_TextureColor)
 	{
@@ -617,11 +653,12 @@ void EnemyMove3CrayonHuman::TextureReload()
 		break;
 	}
 
+
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 }/// void EnemyMove3CrayonHuman::TextureReload()
 
 
-// プレイヤーの位置と距離を取得する
+/// --------------------------------------------------------------------------------------------------
 void EnemyMove3CrayonHuman::SetCharacterArea(const VECTOR characterArea, const int distance)
 {
 	playerCharaArea = characterArea;

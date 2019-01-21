@@ -6,7 +6,7 @@
 class CharacterSword : public BasicCreature
 {
 private:
-	/// それぞれの位置に関して-----------
+	/// それぞれの位置に関して----------------------------------------------------------------
 
 	// 前後のキャラ向きを扱う変数
 	float direZAngle;
@@ -18,36 +18,38 @@ private:
 	VECTOR preDrawArea;
 
 
-	/// モーションに関して--------------------------------------------------------------------------------------
+	/// モーションに関して---------------------------------------------------------------------
 
 	// 動きのID
-	enum MOTION { idle, action1, action2, action3, skyAction1, skyAction2, skyAction3, dash, walk, jump, fall
-				, damage, death, gunAction, gunActionWalk, nagiharai, handUp};
+	enum MOTION { idle, action1, action2, action3, skyAction1, skyAction2, skyAction3
+		, dash, walk, jump, fall, damage, death, gunAction, gunActionWalk, nagiharai
+		, handUp
+	};
 
 	// 瞬間的に早くできるとき
 	int moveFastWaitCount;
 
 
 
-	/// 階段に関して----------------------
+	/// 階段に関して--------------------------------------------------------------------------
 
 	// 階段のモデル
 	std::vector<int> v_stairsHandle;
 
 
-	/// 階段と床に関して
+	/// 階段と床に関して----------------------------------------------------------------------
 
 	// 階段と床のモデル
 	std::vector<int> v_stairsRoadHandle;
 
 
-	/// パネルに関して------------------------
+	/// パネルに関して------------------------------------------------------------------------
 	
 	// パネルのモデル
 	int paneruHandle[10];
 
 
-	/// 動きに関して------------------------------
+	/// 動きに関して--------------------------------------------------------------------------
 
 	// それぞれの向きID
 	enum DIRECTION { left, down, right, up };
@@ -71,7 +73,7 @@ private:
 	void OpeProcess();
 
 
-	/// walkSpeedの各々の状況の最大値---------------------------------------
+	/// walkSpeedの各々の状況の最大値---------------------------------------------------------
 
 	// 攻撃中の最大移動値
 	const float maxWalkSpeedAttack = 60.0f;
@@ -92,7 +94,7 @@ private:
 	const int maxFastMoveWaitCount = 34;
 
 
-	/// 攻撃に関して-----------------------
+	/// 攻撃に関して-------------------------------------------------------------------------
 
 	// 今攻撃しているかどうか
 	bool attackNow;
@@ -128,7 +130,7 @@ private:
 	float mostNearEnemyDire;
 
 
-	/// ジャンプに関して------------------
+	/// ジャンプに関して----------------------------------------------------------------------
 
 	// 重力
 	float gravity;
@@ -152,7 +154,7 @@ private:
 	void AnimProcess();
 	
 
-	/// テクスチャに関して------------------
+	/// テクスチャに関して---------------------------------------------------------------------
 
 	// テクスチャの相対IDを後ろにつけて
 	int textureHandle0;
@@ -162,15 +164,16 @@ private:
 	int textureHandle4;
 
 
-	/// 音に関して----------------------
+	/// 音に関して-----------------------------------------------------------------------------
 
 	void SEProcess();
 
 
 public:
 	// コンストラクタ
-	CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle, const int paneruHandle, const int stairsRoadHandle
-	, const int tex0, const int tex1, const int tex2, const int tex3, const int tex4);
+	CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle
+		, const int paneruHandle, const int stairsRoadHandle, const int tex0, const int tex1
+		, const int tex2, const int tex3, const int tex4);
 
 	// デストラクタ
 	~CharacterSword();
@@ -205,7 +208,7 @@ public:
 	void OptionActorDrawAfter() override;
 
 
-	/// ゲッターセッター--------------------
+	/// ゲッターセッター-------------------------------------------------------------------------
 
 	// 階段の座標を設定する
 	void SetStairsArea(const VECTOR stairsArea, const int num, const float angle);

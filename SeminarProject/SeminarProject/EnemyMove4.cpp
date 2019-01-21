@@ -476,19 +476,19 @@ void EnemyMove4::TextureReload()
 	switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::NORMAL:
-		LoadFile::MyLoad("media\\こっち\\media\\move4\\人（敵）\\ene_human_motionALL.fbm\\normal\\normal.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\move4\\人（敵）\\ene_human_motionALL.fbm\\normal\\normal.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::D_CORRECTION:
-		LoadFile::MyLoad("media\\こっち\\media\\move4\\人（敵）\\ene_human_motionALL.fbm\\D\\D.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\move4\\人（敵）\\ene_human_motionALL.fbm\\D\\D.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::P_CORRECTION:
-		LoadFile::MyLoad("media\\こっち\\media\\move4\\人（敵）\\ene_human_motionALL.fbm\\P\\P.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\move4\\人（敵）\\ene_human_motionALL.fbm\\P\\P.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 
 	default:
-		LoadFile::MyLoad("media\\こっち\\media\\move4\\人（敵）\\ene_human_motionALL.fbm\\normal\\normal.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\move4\\人（敵）\\ene_human_motionALL.fbm\\normal\\normal.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 	}
 

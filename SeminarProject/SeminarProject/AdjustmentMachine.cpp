@@ -40,7 +40,7 @@ AdjustmentMachine::AdjustmentMachine(const int draw, const VECTOR area
 	textureHandleDisplayBlack = -1;
 	textureHandle0 = tex0;
 	textureHandle1 = tex1;
-	LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\Terminal\\T_displayblack.pyn", textureHandleDisplayBlack, ELOADFILE::graph);
+	LoadFile::MyLoad("media\\Terminal\\T_displayblack.pyn", textureHandleDisplayBlack, ELOADFILE::graph);
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandleDisplayBlack, false);
 	MV1SetMaterialDrawBlendMode(this->modelHandle, 0, DX_BLENDMODE_ALPHA);
@@ -107,23 +107,23 @@ void AdjustmentMachine::TextureReload()
 	switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::NORMAL:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\Terminal\\normal\\Terminal.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\Terminal\\normal\\T_display.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\Terminal\\normal\\Terminal.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\Terminal\\normal\\T_display.pyn", textureHandle1, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::D_CORRECTION:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\Terminal\\D\\Terminal.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\Terminal\\D\\T_display.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\Terminal\\D\\Terminal.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\Terminal\\D\\T_display.pyn", textureHandle1, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::P_CORRECTION:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\Terminal\\P\\Terminal.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\Terminal\\P\\T_display.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\Terminal\\P\\Terminal.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\Terminal\\P\\T_display.pyn", textureHandle1, ELOADFILE::graph);
 		break;
 
 	default:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\Terminal\\normal\\Terminal.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\Terminal\\normal\\T_display.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\Terminal\\normal\\Terminal.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\Terminal\\normal\\T_display.pyn", textureHandle1, ELOADFILE::graph);
 		break;
 	}
 

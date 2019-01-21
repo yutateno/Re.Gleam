@@ -7,7 +7,7 @@ EnemyBossBefore::EnemyBossBefore() : BasicCreature()
 {
 	// 3Dモデルの読み込み
 	this->modelHandle = -1;
-	LoadFile::MyLoad("media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.myn", modelHandle, ELOADFILE::mv1model);
+	LoadFile::MyLoad("media\\ラスボス＿光\\モーション\\motion_Boss1.myn", modelHandle, ELOADFILE::mv1model);
 
 
 	// 初期化
@@ -41,9 +41,9 @@ EnemyBossBefore::EnemyBossBefore() : BasicCreature()
 		int tempTex0 = -1;
 		int tempTex1 = -1;
 		int tempTex2 = -1;
-		LoadFile::MyLoad("media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\whiteblack.pyn", tempTex0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\whiteblack.pyn", tempTex1, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\whiteblack.pyn", tempTex2, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\whiteblack.pyn", tempTex0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\whiteblack.pyn", tempTex1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\whiteblack.pyn", tempTex2, ELOADFILE::graph);
 		MV1SetTextureGraphHandle(this->modelHandle, 0, tempTex0, false);
 		MV1SetTextureGraphHandle(this->modelHandle, 1, tempTex1, false);
 		MV1SetTextureGraphHandle(this->modelHandle, 2, tempTex2, true);
@@ -66,27 +66,27 @@ EnemyBossBefore::EnemyBossBefore() : BasicCreature()
 		{
 			// 白黒にする
 		case 0:
-			LoadFile::MyLoad("media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\whiteblack.pyn", tempTex0, ELOADFILE::graph);
-			LoadFile::MyLoad("media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\whiteblack.pyn", tempTex1, ELOADFILE::graph);
-			LoadFile::MyLoad("media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\whiteblack.pyn", tempTex2, ELOADFILE::graph);
+			LoadFile::MyLoad("media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\whiteblack.pyn", tempTex0, ELOADFILE::graph);
+			LoadFile::MyLoad("media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\whiteblack.pyn", tempTex1, ELOADFILE::graph);
+			LoadFile::MyLoad("media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\whiteblack.pyn", tempTex2, ELOADFILE::graph);
 			break;
 			// 通常色にする
 		case 1:
-			LoadFile::MyLoad("media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\normal.pyn", tempTex0, ELOADFILE::graph);
-			LoadFile::MyLoad("media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\normal.pyn", tempTex1, ELOADFILE::graph);
-			LoadFile::MyLoad("media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\normal.pyn", tempTex2, ELOADFILE::graph);
+			LoadFile::MyLoad("media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\normal.pyn", tempTex0, ELOADFILE::graph);
+			LoadFile::MyLoad("media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\normal.pyn", tempTex1, ELOADFILE::graph);
+			LoadFile::MyLoad("media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\normal.pyn", tempTex2, ELOADFILE::graph);
 			break;
 			// D型補正にする
 		case 2:
-			LoadFile::MyLoad("media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\D.pyn", tempTex0, ELOADFILE::graph);
-			LoadFile::MyLoad("media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\D.pyn", tempTex1, ELOADFILE::graph);
-			LoadFile::MyLoad("media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\D.pyn", tempTex2, ELOADFILE::graph);
+			LoadFile::MyLoad("media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\D.pyn", tempTex0, ELOADFILE::graph);
+			LoadFile::MyLoad("media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\D.pyn", tempTex1, ELOADFILE::graph);
+			LoadFile::MyLoad("media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\D.pyn", tempTex2, ELOADFILE::graph);
 			break;
 			// P型補正にする
 		case 3:
-			LoadFile::MyLoad("media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\P.pyn", tempTex0, ELOADFILE::graph);
-			LoadFile::MyLoad("media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\P.pyn", tempTex1, ELOADFILE::graph);
-			LoadFile::MyLoad("media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\P.pyn", tempTex2, ELOADFILE::graph);
+			LoadFile::MyLoad("media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\P.pyn", tempTex0, ELOADFILE::graph);
+			LoadFile::MyLoad("media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\P.pyn", tempTex1, ELOADFILE::graph);
+			LoadFile::MyLoad("media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\P.pyn", tempTex2, ELOADFILE::graph);
 			break;
 		default:
 			break;

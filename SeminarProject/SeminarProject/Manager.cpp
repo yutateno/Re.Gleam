@@ -26,7 +26,7 @@ void Manager::SceneChange()
 		moveStr.shrink_to_fit();
 		loadType.clear();
 		loadType.shrink_to_fit();
-		LoadFile::MyLoad("media\\こっち\\media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
+		LoadFile::MyLoad("media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
 		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 		break;
 
@@ -49,7 +49,7 @@ void Manager::SceneChange()
 		moveStr.shrink_to_fit();
 		loadType.clear();
 		loadType.shrink_to_fit();
-		LoadFile::MyLoad("media\\こっち\\media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
+		LoadFile::MyLoad("media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
 		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 		break;
 
@@ -72,7 +72,7 @@ void Manager::SceneChange()
 		moveStr.shrink_to_fit();
 		loadType.clear();
 		loadType.shrink_to_fit();
-		LoadFile::MyLoad("media\\こっち\\media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
+		LoadFile::MyLoad("media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
 		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 		break;
 
@@ -95,7 +95,7 @@ void Manager::SceneChange()
 		moveStr.shrink_to_fit();
 		loadType.clear();
 		loadType.shrink_to_fit();
-		LoadFile::MyLoad("media\\こっち\\media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
+		LoadFile::MyLoad("media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
 		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 		break;
 
@@ -118,7 +118,7 @@ void Manager::SceneChange()
 		moveStr.shrink_to_fit();
 		loadType.clear();
 		loadType.shrink_to_fit();
-		LoadFile::MyLoad("media\\こっち\\media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
+		LoadFile::MyLoad("media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
 		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 		break;
 
@@ -142,7 +142,7 @@ void Manager::SceneChange()
 		moveStr.shrink_to_fit();
 		loadType.clear();
 		loadType.shrink_to_fit();
-		LoadFile::MyLoad("media\\こっち\\media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
+		LoadFile::MyLoad("media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
 		SoundProcess::Load(se_save, SoundProcess::ESOUNDNAME_SE::saveOn);
 		break;
 
@@ -422,31 +422,31 @@ void Manager::InitMove1Load()
 	moveStr.resize(max1 + 1);
 	{
 		// モデルデータ
-		moveStr[0] = "media\\こっち\\media\\ステージモデル\\move1_graphic.myn";
-		moveStr[1] = "media\\こっち\\media\\ステージモデル\\move1_hantei.myn";
-		moveStr[2] = "media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.myn";				// 4
-		moveStr[3] = "media\\こっち\\media\\剣\\sword.myn";								// 1
+		moveStr[0] = "media\\ステージモデル\\move1_graphic.myn";
+		moveStr[1] = "media\\ステージモデル\\move1_hantei.myn";
+		moveStr[2] = "media\\CLPH\\motion\\CLPH_motionALL.myn";				// 4
+		moveStr[3] = "media\\剣\\sword.myn";								// 1
 
 		// サウンドデータ
-		moveStr[4] = "media\\こっち\\media\\sound\\タイトル（オルゴール）.wyn";
-		moveStr[5] = "media\\こっち\\media\\sound\\玉がポーン（音が高いほう）.wyn";
-		moveStr[6] = "media\\こっち\\media\\sound\\玉がポーン.wyn";
+		moveStr[4] = "media\\sound\\タイトル（オルゴール）.wyn";
+		moveStr[5] = "media\\sound\\玉がポーン（音が高いほう）.wyn";
+		moveStr[6] = "media\\sound\\玉がポーン.wyn";
 
 		// キャラクターのテクスチャデータ
-		moveStr[7] = "media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_hair.pyn";
-		moveStr[8] = "media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_ex.pyn";
-		moveStr[9] = "media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_wear.pyn";
-		moveStr[10] = "media\\こっち\\media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_face.pyn";
+		moveStr[7] = "media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_hair.pyn";
+		moveStr[8] = "media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_ex.pyn";
+		moveStr[9] = "media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_wear.pyn";
+		moveStr[10] = "media\\CLPH\\motion\\CLPH_motionALL.fbm\\whiteblack\\CLPH_face.pyn";
 
 		// 剣のテクスチャデータ
-		moveStr[11] = "media\\こっち\\media\\剣\\whiteblack\\sword_Tex.pyn";
+		moveStr[11] = "media\\剣\\whiteblack\\sword_Tex.pyn";
 
 		// コントローラー説明
-		moveStr[12] = "media\\こっち\\media\\move1\\hida.pyn";
-		moveStr[13] = "media\\こっち\\media\\move1\\mighi.pyn";
+		moveStr[12] = "media\\move1\\hida.pyn";
+		moveStr[13] = "media\\move1\\mighi.pyn";
 
 		// ムーブ説明画像
-		moveStr[14] = "media\\こっち\\media\\ムーブ説明\\move1.pyn";
+		moveStr[14] = "media\\ムーブ説明\\move1.pyn";
 	}
 
 
@@ -488,93 +488,93 @@ void Manager::InitMove2Load()
 	moveStr.resize(max2 + 1);
 	{
 		// モデルデータ
-		moveStr[0] = "media\\こっち\\media\\ステージモデル\\move1_hantei.myn";
-		moveStr[1] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.myn";			// 5
-		moveStr[2] = "media\\こっち\\media\\paneru\\paneru.myn";
-		moveStr[3] = "media\\こっち\\media\\kaidan\\kaidan.myn";						// 1
-		moveStr[4] = "media\\こっち\\media\\kaidan\\kaidan_hantei.myn";
-		moveStr[5] = "media\\こっち\\media\\街灯\\Gaitou.myn";							// 2
-		moveStr[6] = "media\\こっち\\media\\スカイボックス\\SkyDome.myn";				// 1
-		moveStr[7] = "media\\こっち\\media\\ブロック\\cubeblock.myn";					// 1
-		moveStr[8] = "media\\こっち\\media\\ステージモデル\\move1_graphic.myn";
+		moveStr[0] = "media\\ステージモデル\\move1_hantei.myn";
+		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";			// 5
+		moveStr[2] = "media\\paneru\\paneru.myn";
+		moveStr[3] = "media\\kaidan\\kaidan.myn";						// 1
+		moveStr[4] = "media\\kaidan\\kaidan_hantei.myn";
+		moveStr[5] = "media\\街灯\\Gaitou.myn";							// 2
+		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";				// 1
+		moveStr[7] = "media\\ブロック\\cubeblock.myn";					// 1
+		moveStr[8] = "media\\ステージモデル\\move1_graphic.myn";
 
 		// キャラのテクスチャデータ
-		moveStr[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn";
-		moveStr[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_hair.pyn";
-		moveStr[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_wear.pyn";
-		moveStr[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_face.pyn";
-		moveStr[13] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_ex.pyn";
+		moveStr[9] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn";
+		moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_hair.pyn";
+		moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_wear.pyn";
+		moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_face.pyn";
+		moveStr[13] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_ex.pyn";
 
 		// 階段のテクスチャデータ
-		moveStr[14] = "media\\こっち\\media\\kaidan\\whiteblack\\kaidan.pyn";
+		moveStr[14] = "media\\kaidan\\whiteblack\\kaidan.pyn";
 
 		// 街灯のテクスチャデータ
-		moveStr[15] = "media\\こっち\\media\\街灯\\whiteblack\\body_col.pyn";
-		moveStr[16] = "media\\こっち\\media\\街灯\\whiteblack\\lamp_COLandems.pyn";
+		moveStr[15] = "media\\街灯\\whiteblack\\body_col.pyn";
+		moveStr[16] = "media\\街灯\\whiteblack\\lamp_COLandems.pyn";
 
 		// スカイボックスのテクスチャデータ
-		moveStr[17] = "media\\こっち\\media\\スカイボックス\\whiteblack\\BlueSky.byn";
+		moveStr[17] = "media\\スカイボックス\\whiteblack\\BlueSky.byn";
 
 		// ブロックのテクスチャ
-		moveStr[18] = "media\\こっち\\media\\ブロック\\whiteblack\\tex.pyn";
+		moveStr[18] = "media\\ブロック\\whiteblack\\tex.pyn";
 
 		// サウンドデータ
-		moveStr[19] = "media\\こっち\\media\\sound\\たま拾う音.wyn";
+		moveStr[19] = "media\\sound\\たま拾う音.wyn";
 
 		// 精算機械データ
-		moveStr[20] = "media\\こっち\\media\\Terminal\\terminal.myn";					// 2
+		moveStr[20] = "media\\Terminal\\terminal.myn";					// 2
 
 		// 精算機械テクスチャ
-		moveStr[21] = "media\\こっち\\media\\Terminal\\whiteblack\\Terminal.pyn";
-		moveStr[22] = "media\\こっち\\media\\Terminal\\whiteblack\\T_display.pyn";
+		moveStr[21] = "media\\Terminal\\whiteblack\\Terminal.pyn";
+		moveStr[22] = "media\\Terminal\\whiteblack\\T_display.pyn";
 
 		// 精密機械の補助説明
-		moveStr[23] = "media\\こっち\\media\\Terminal\\push.pyn";
+		moveStr[23] = "media\\Terminal\\push.pyn";
 
 		// 階段とそのあとの床データ
-		moveStr[24] = "media\\こっち\\media\\階段と床合体\\kaidan_yuka1.myn";			// 2
+		moveStr[24] = "media\\階段と床合体\\kaidan_yuka1.myn";			// 2
 
 		// 階段とそのあとの床のテクスチャデータ
-		moveStr[25] = "media\\こっち\\media\\階段と床合体\\whiteblack\\kaidan.pyn";
-		moveStr[26] = "media\\こっち\\media\\階段と床合体\\whiteblack\\yuka.pyn";
+		moveStr[25] = "media\\階段と床合体\\whiteblack\\kaidan.pyn";
+		moveStr[26] = "media\\階段と床合体\\whiteblack\\yuka.pyn";
 
 		// 階段と床のあたり判定データ
-		moveStr[27] = "media\\こっち\\media\\階段と床合体\\kaidan_yuka1_hantei.myn";
+		moveStr[27] = "media\\階段と床合体\\kaidan_yuka1_hantei.myn";
 
 		// 2D関連
-		moveStr[28] = "media\\こっち\\media\\2D素材\\change\\whiteblack\\block_2D.pyn";
-		moveStr[29] = "media\\こっち\\media\\2D素材\\change\\whiteblack\\CLPH_up.pyn";
-		moveStr[30] = "media\\こっち\\media\\2D素材\\change\\whiteblack\\gaiyou_2D.pyn";
-		moveStr[31] = "media\\こっち\\media\\2D素材\\change\\whiteblack\\kaidan_2d.pyn";
-		moveStr[32] = "media\\こっち\\media\\2D素材\\change\\whiteblack\\Terminal_2D.pyn";
-		moveStr[33] = "media\\こっち\\media\\2D素材\\change\\whiteblack\\kaidan_yuka2D.pyn";
+		moveStr[28] = "media\\2D素材\\change\\whiteblack\\block_2D.pyn";
+		moveStr[29] = "media\\2D素材\\change\\whiteblack\\CLPH_up.pyn";
+		moveStr[30] = "media\\2D素材\\change\\whiteblack\\gaiyou_2D.pyn";
+		moveStr[31] = "media\\2D素材\\change\\whiteblack\\kaidan_2d.pyn";
+		moveStr[32] = "media\\2D素材\\change\\whiteblack\\Terminal_2D.pyn";
+		moveStr[33] = "media\\2D素材\\change\\whiteblack\\kaidan_yuka2D.pyn";
 
 		// キャラクター周りの3DSE
-		moveStr[34] = "media\\こっち\\media\\sound\\ジャンプ.wyn";
-		moveStr[35] = "media\\こっち\\media\\sound\\足音（廊下っぽいの）.wyn";
-		moveStr[36] = "media\\こっち\\media\\sound\\足音.wyn";
-		moveStr[37] = "media\\こっち\\media\\sound\\着地.wyn";
-		moveStr[38] = "media\\こっち\\media\\sound\\着地２.wyn";
+		moveStr[34] = "media\\sound\\ジャンプ.wyn";
+		moveStr[35] = "media\\sound\\足音（廊下っぽいの）.wyn";
+		moveStr[36] = "media\\sound\\足音.wyn";
+		moveStr[37] = "media\\sound\\着地.wyn";
+		moveStr[38] = "media\\sound\\着地２.wyn";
 
 		// キャラクターの攻撃の音
-		moveStr[39] = "media\\こっち\\media\\sound\\ピアノコンボ一発目.wyn";
-		moveStr[40] = "media\\こっち\\media\\sound\\ピアノコンボ二発目.wyn";
-		moveStr[41] = "media\\こっち\\media\\sound\\ピアノコンボ三発目.wyn";
+		moveStr[39] = "media\\sound\\ピアノコンボ一発目.wyn";
+		moveStr[40] = "media\\sound\\ピアノコンボ二発目.wyn";
+		moveStr[41] = "media\\sound\\ピアノコンボ三発目.wyn";
 
 		// ドロップアイテムのSEの二種類目
-		moveStr[42] = "media\\こっち\\media\\sound\\たま拾う音2.wyn";
+		moveStr[42] = "media\\sound\\たま拾う音2.wyn";
 
 		// 次のステージでのBGMを流す
-		moveStr[43] = "media\\こっち\\media\\sound\\通常bgm.wyn";
+		moveStr[43] = "media\\sound\\通常bgm.wyn";
 
 		// 操作の説明
-		moveStr[44] = "media\\こっち\\media\\move2\\attackTrans.pyn";
-		moveStr[45] = "media\\こっち\\media\\move2\\jumpTrans.pyn";
-		moveStr[46] = "media\\こっち\\media\\move2\\fastSpeedTrans.pyn";
-		moveStr[47] = "media\\こっち\\media\\move2\\optionTrans.pyn";
+		moveStr[44] = "media\\move2\\attackTrans.pyn";
+		moveStr[45] = "media\\move2\\jumpTrans.pyn";
+		moveStr[46] = "media\\move2\\fastSpeedTrans.pyn";
+		moveStr[47] = "media\\move2\\optionTrans.pyn";
 
 		// ムーブの説明
-		moveStr[48] = "media\\こっち\\media\\ムーブ説明\\move2.pyn";
+		moveStr[48] = "media\\ムーブ説明\\move2.pyn";
 	}
 
 
@@ -654,119 +654,119 @@ void Manager::InitMove3Load()
 	moveStr.resize(max3 + 1);
 	{
 		// モデルデータ
-		moveStr[0] = "media\\こっち\\media\\ステージモデル\\move1_hantei.myn";
-		moveStr[1] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.myn";			// 5
-		moveStr[2] = "media\\こっち\\media\\paneru\\paneru.myn";
-		moveStr[3] = "media\\こっち\\media\\kaidan\\kaidan.myn";						// 1
-		moveStr[4] = "media\\こっち\\media\\kaidan\\kaidan_hantei.myn";
-		moveStr[5] = "media\\こっち\\media\\街灯\\Gaitou.myn";							// 2
-		moveStr[6] = "media\\こっち\\media\\スカイボックス\\SkyDome.myn";				// 1
-		moveStr[7] = "media\\こっち\\media\\ステージモデル\\move1_graphic.myn";
+		moveStr[0] = "media\\ステージモデル\\move1_hantei.myn";
+		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";			// 5
+		moveStr[2] = "media\\paneru\\paneru.myn";
+		moveStr[3] = "media\\kaidan\\kaidan.myn";						// 1
+		moveStr[4] = "media\\kaidan\\kaidan_hantei.myn";
+		moveStr[5] = "media\\街灯\\Gaitou.myn";							// 2
+		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";				// 1
+		moveStr[7] = "media\\ステージモデル\\move1_graphic.myn";
 
 		// キャラのテクスチャデータ
-		moveStr[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn";
-		moveStr[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_hair.pyn";
-		moveStr[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_wear.pyn";
-		moveStr[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_face.pyn";
-		moveStr[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_ex.pyn";
+		moveStr[8] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn";
+		moveStr[9] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_hair.pyn";
+		moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_wear.pyn";
+		moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_face.pyn";
+		moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_ex.pyn";
 
 		// 階段のテクスチャデータ
-		moveStr[13] = "media\\こっち\\media\\kaidan\\whiteblack\\kaidan.pyn";
+		moveStr[13] = "media\\kaidan\\whiteblack\\kaidan.pyn";
 
 		// 街灯のテクスチャデータ
-		moveStr[14] = "media\\こっち\\media\\街灯\\whiteblack\\body_col.pyn";
-		moveStr[15] = "media\\こっち\\media\\街灯\\whiteblack\\lamp_COLandems.pyn";
+		moveStr[14] = "media\\街灯\\whiteblack\\body_col.pyn";
+		moveStr[15] = "media\\街灯\\whiteblack\\lamp_COLandems.pyn";
 
 		// スカイボックスのテクスチャデータ
-		moveStr[16] = "media\\こっち\\media\\スカイボックス\\whiteblack\\BlueSky.byn";
+		moveStr[16] = "media\\スカイボックス\\whiteblack\\BlueSky.byn";
 
 		// サウンドデータ
-		moveStr[17] = "media\\こっち\\media\\sound\\たま拾う音.wyn";
+		moveStr[17] = "media\\sound\\たま拾う音.wyn";
 
 		// 精算機械データ
-		moveStr[18] = "media\\こっち\\media\\Terminal\\terminal.myn";					// 2
+		moveStr[18] = "media\\Terminal\\terminal.myn";					// 2
 
 		// 精算機械テクスチャ
-		moveStr[19] = "media\\こっち\\media\\Terminal\\whiteblack\\Terminal.pyn";
-		moveStr[20] = "media\\こっち\\media\\Terminal\\whiteblack\\T_display.pyn";
+		moveStr[19] = "media\\Terminal\\whiteblack\\Terminal.pyn";
+		moveStr[20] = "media\\Terminal\\whiteblack\\T_display.pyn";
 
 		// 精密機械の補助説明
-		moveStr[21] = "media\\こっち\\media\\Terminal\\push.pyn";
+		moveStr[21] = "media\\Terminal\\push.pyn";
 
 		// 階段とそのあとの床データ
-		moveStr[22] = "media\\こっち\\media\\階段と床合体\\kaidan_yuka1.myn";			// 2
+		moveStr[22] = "media\\階段と床合体\\kaidan_yuka1.myn";			// 2
 
 		// 階段とそのあとの床のテクスチャデータ
-		moveStr[23] = "media\\こっち\\media\\階段と床合体\\whiteblack\\kaidan.pyn";
-		moveStr[24] = "media\\こっち\\media\\階段と床合体\\whiteblack\\yuka.pyn";
+		moveStr[23] = "media\\階段と床合体\\whiteblack\\kaidan.pyn";
+		moveStr[24] = "media\\階段と床合体\\whiteblack\\yuka.pyn";
 
 		// 階段と床のあたり判定データ
-		moveStr[25] = "media\\こっち\\media\\階段と床合体\\kaidan_yuka1_hantei.myn";
+		moveStr[25] = "media\\階段と床合体\\kaidan_yuka1_hantei.myn";
 
 		// キャラクター周りの3DSE
-		moveStr[26] = "media\\こっち\\media\\sound\\ジャンプ.wyn";
-		moveStr[27] = "media\\こっち\\media\\sound\\足音（廊下っぽいの）.wyn";
-		moveStr[28] = "media\\こっち\\media\\sound\\足音.wyn";
-		moveStr[29] = "media\\こっち\\media\\sound\\着地.wyn";
-		moveStr[30] = "media\\こっち\\media\\sound\\着地２.wyn";
+		moveStr[26] = "media\\sound\\ジャンプ.wyn";
+		moveStr[27] = "media\\sound\\足音（廊下っぽいの）.wyn";
+		moveStr[28] = "media\\sound\\足音.wyn";
+		moveStr[29] = "media\\sound\\着地.wyn";
+		moveStr[30] = "media\\sound\\着地２.wyn";
 
 		// キャラクターの攻撃の音
-		moveStr[31] = "media\\こっち\\media\\sound\\ピアノコンボ一発目.wyn";
-		moveStr[32] = "media\\こっち\\media\\sound\\ピアノコンボ二発目.wyn";
-		moveStr[33] = "media\\こっち\\media\\sound\\ピアノコンボ三発目.wyn";
+		moveStr[31] = "media\\sound\\ピアノコンボ一発目.wyn";
+		moveStr[32] = "media\\sound\\ピアノコンボ二発目.wyn";
+		moveStr[33] = "media\\sound\\ピアノコンボ三発目.wyn";
 
 		// ドロップアイテムのSEの二種類目
-		moveStr[34] = "media\\こっち\\media\\sound\\たま拾う音2.wyn";
+		moveStr[34] = "media\\sound\\たま拾う音2.wyn";
 
 		// BGM
-		moveStr[35] = "media\\こっち\\media\\sound\\通常bgm.wyn";
+		moveStr[35] = "media\\sound\\通常bgm.wyn";
 
 		// 敵のスライムのデータ
-		moveStr[36] = "media\\こっち\\media\\move3\\インクスライム\\ink_slime_motionALL.myn";
-		moveStr[37] = "media\\こっち\\media\\move3\\インクスライム\\ink_slime_motionALL.fbm\\normal\\Slime_tex.pyn";
+		moveStr[36] = "media\\move3\\インクスライム\\ink_slime_motionALL.myn";
+		moveStr[37] = "media\\move3\\インクスライム\\ink_slime_motionALL.fbm\\normal\\Slime_tex.pyn";
 
 		// 敵のクレヨンヒューマンのデータ
-		moveStr[38] = "media\\こっち\\media\\move3\\人型クレヨン\\kureyon_,motionALL.myn";
-		moveStr[39] = "media\\こっち\\media\\move3\\人型クレヨン\\kureyon_,motionALL.fbm\\normal\\kre.pyn";
+		moveStr[38] = "media\\move3\\人型クレヨン\\kureyon_,motionALL.myn";
+		moveStr[39] = "media\\move3\\人型クレヨン\\kureyon_,motionALL.fbm\\normal\\kre.pyn";
 
 		// ドロップアイテムのデータ
-		moveStr[40] = "media\\こっち\\media\\move3\\インク的な\\ink.myn";
-		moveStr[41] = "media\\こっち\\media\\move3\\インク的な\\correction\\normal\\ink.pyn";
+		moveStr[40] = "media\\move3\\インク的な\\ink.myn";
+		moveStr[41] = "media\\move3\\インク的な\\correction\\normal\\ink.pyn";
 
 		// ダメージ演出画像
-		moveStr[42] = "media\\こっち\\media\\damage\\damage1\\whiteblack.pyn";
-		moveStr[43] = "media\\こっち\\media\\damage\\damage2\\whiteblack.pyn";
-		moveStr[44] = "media\\こっち\\media\\damage\\damage3\\whiteblack.pyn";
-		moveStr[45] = "media\\こっち\\media\\damage\\Blood\\bl1\\whiteblack.pyn";
-		moveStr[46] = "media\\こっち\\media\\damage\\Blood\\bl2\\whiteblack.pyn";
-		moveStr[47] = "media\\こっち\\media\\damage\\Blood\\bl3\\whiteblack.pyn";
-		moveStr[48] = "media\\こっち\\media\\damage\\Blood\\bl4\\whiteblack.pyn";
-		moveStr[49] = "media\\こっち\\media\\damage\\Blood\\bl5\\whiteblack.pyn";
-		moveStr[50] = "media\\こっち\\media\\damage\\Blood\\bl6\\whiteblack.pyn";
-		moveStr[51] = "media\\こっち\\media\\damage\\Blood\\bl7\\whiteblack.pyn";
-		moveStr[52] = "media\\こっち\\media\\damage\\Blood\\bl8\\whiteblack.pyn";
-		moveStr[53] = "media\\こっち\\media\\damage\\Blood\\bl9\\whiteblack.pyn";
-		moveStr[54] = "media\\こっち\\media\\damage\\Blood\\bl10\\whiteblack.pyn";
+		moveStr[42] = "media\\damage\\damage1\\whiteblack.pyn";
+		moveStr[43] = "media\\damage\\damage2\\whiteblack.pyn";
+		moveStr[44] = "media\\damage\\damage3\\whiteblack.pyn";
+		moveStr[45] = "media\\damage\\Blood\\bl1\\whiteblack.pyn";
+		moveStr[46] = "media\\damage\\Blood\\bl2\\whiteblack.pyn";
+		moveStr[47] = "media\\damage\\Blood\\bl3\\whiteblack.pyn";
+		moveStr[48] = "media\\damage\\Blood\\bl4\\whiteblack.pyn";
+		moveStr[49] = "media\\damage\\Blood\\bl5\\whiteblack.pyn";
+		moveStr[50] = "media\\damage\\Blood\\bl6\\whiteblack.pyn";
+		moveStr[51] = "media\\damage\\Blood\\bl7\\whiteblack.pyn";
+		moveStr[52] = "media\\damage\\Blood\\bl8\\whiteblack.pyn";
+		moveStr[53] = "media\\damage\\Blood\\bl9\\whiteblack.pyn";
+		moveStr[54] = "media\\damage\\Blood\\bl10\\whiteblack.pyn";
 
 		// 敵の攻撃音
-		moveStr[55] = "media\\こっち\\media\\sound\\殴る音（爆発）.wyn";
+		moveStr[55] = "media\\sound\\殴る音（爆発）.wyn";
 
 		// クレヨンの死ぬ音
-		moveStr[56] = "media\\こっち\\media\\sound\\クレヨンの死(2).wyn";
+		moveStr[56] = "media\\sound\\クレヨンの死(2).wyn";
 
 		// 攻撃BGM
-		moveStr[57] = "media\\こっち\\media\\sound\\戦闘BGM.wyn";
+		moveStr[57] = "media\\sound\\戦闘BGM.wyn";
 
 		// ムーブ説明画像
-		moveStr[58] = "media\\こっち\\media\\ムーブ説明\\move3.pyn";
+		moveStr[58] = "media\\ムーブ説明\\move3.pyn";
 
 		// 精密機械での説明画像
-		moveStr[59] = "media\\こっち\\media\\move3\\UI\\another.pyn";
-		moveStr[60] = "media\\こっち\\media\\move3\\UI\\charaSelect.pyn";
-		moveStr[61] = "media\\こっち\\media\\move3\\UI\\enemy.pyn";
-		moveStr[62] = "media\\こっち\\media\\move3\\UI\\stairs.pyn";
-		moveStr[63] = "media\\こっち\\media\\move3\\UI\\stairsRoad.pyn";
-		moveStr[64] = "media\\こっち\\media\\move3\\UI\\streetLight.pyn";
+		moveStr[59] = "media\\move3\\UI\\another.pyn";
+		moveStr[60] = "media\\move3\\UI\\charaSelect.pyn";
+		moveStr[61] = "media\\move3\\UI\\enemy.pyn";
+		moveStr[62] = "media\\move3\\UI\\stairs.pyn";
+		moveStr[63] = "media\\move3\\UI\\stairsRoad.pyn";
+		moveStr[64] = "media\\move3\\UI\\streetLight.pyn";
 	}
 
 
@@ -871,98 +871,98 @@ void Manager::InitMove4Load()
 	moveStr.resize(max4 + 1);
 	{
 		// モデルデータ
-		moveStr[0] = "media\\こっち\\media\\ステージモデル\\move1_hantei.myn";
-		moveStr[1] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.myn";			// 5
-		moveStr[2] = "media\\こっち\\media\\paneru\\paneru.myn";
-		moveStr[3] = "media\\こっち\\media\\kaidan\\kaidan.myn";						// 1
-		moveStr[4] = "media\\こっち\\media\\kaidan\\kaidan_hantei.myn";
-		moveStr[5] = "media\\こっち\\media\\街灯\\Gaitou.myn";							// 2
-		moveStr[6] = "media\\こっち\\media\\スカイボックス\\SkyDome.myn";				// 1
-		moveStr[7] = "media\\こっち\\media\\ステージモデル\\move1_graphic.myn";
+		moveStr[0] = "media\\ステージモデル\\move1_hantei.myn";
+		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";			// 5
+		moveStr[2] = "media\\paneru\\paneru.myn";
+		moveStr[3] = "media\\kaidan\\kaidan.myn";						// 1
+		moveStr[4] = "media\\kaidan\\kaidan_hantei.myn";
+		moveStr[5] = "media\\街灯\\Gaitou.myn";							// 2
+		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";				// 1
+		moveStr[7] = "media\\ステージモデル\\move1_graphic.myn";
 
 		// キャラのテクスチャデータ
-		moveStr[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn";
-		moveStr[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_hair.pyn";
-		moveStr[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_wear.pyn";
-		moveStr[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_face.pyn";
-		moveStr[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_ex.pyn";
+		moveStr[8] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn";
+		moveStr[9] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_hair.pyn";
+		moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_wear.pyn";
+		moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_face.pyn";
+		moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_ex.pyn";
 
 		// 階段のテクスチャデータ
-		moveStr[13] = "media\\こっち\\media\\kaidan\\whiteblack\\kaidan.pyn";
+		moveStr[13] = "media\\kaidan\\whiteblack\\kaidan.pyn";
 
 		// 街灯のテクスチャデータ
-		moveStr[14] = "media\\こっち\\media\\街灯\\whiteblack\\body_col.pyn";
-		moveStr[15] = "media\\こっち\\media\\街灯\\whiteblack\\lamp_COLandems.pyn";
+		moveStr[14] = "media\\街灯\\whiteblack\\body_col.pyn";
+		moveStr[15] = "media\\街灯\\whiteblack\\lamp_COLandems.pyn";
 
 		// スカイボックスのテクスチャデータ
-		moveStr[16] = "media\\こっち\\media\\スカイボックス\\whiteblack\\BlueSky.byn";
+		moveStr[16] = "media\\スカイボックス\\whiteblack\\BlueSky.byn";
 
 		// 精算機械データ
-		moveStr[17] = "media\\こっち\\media\\Terminal\\terminal.myn";					// 2
+		moveStr[17] = "media\\Terminal\\terminal.myn";					// 2
 
 		// 精算機械テクスチャ
-		moveStr[18] = "media\\こっち\\media\\Terminal\\whiteblack\\Terminal.pyn";
-		moveStr[19] = "media\\こっち\\media\\Terminal\\whiteblack\\T_display.pyn";
+		moveStr[18] = "media\\Terminal\\whiteblack\\Terminal.pyn";
+		moveStr[19] = "media\\Terminal\\whiteblack\\T_display.pyn";
 
 		// 精密機械の補助説明
-		moveStr[20] = "media\\こっち\\media\\Terminal\\push.pyn";
+		moveStr[20] = "media\\Terminal\\push.pyn";
 
 		// 階段とそのあとの床データ
-		moveStr[21] = "media\\こっち\\media\\階段と床合体\\kaidan_yuka1.myn";			// 2
+		moveStr[21] = "media\\階段と床合体\\kaidan_yuka1.myn";			// 2
 
 		// 階段とそのあとの床のテクスチャデータ
-		moveStr[22] = "media\\こっち\\media\\階段と床合体\\whiteblack\\kaidan.pyn";
-		moveStr[23] = "media\\こっち\\media\\階段と床合体\\whiteblack\\yuka.pyn";
+		moveStr[22] = "media\\階段と床合体\\whiteblack\\kaidan.pyn";
+		moveStr[23] = "media\\階段と床合体\\whiteblack\\yuka.pyn";
 
 		// 階段と床のあたり判定データ
-		moveStr[24] = "media\\こっち\\media\\階段と床合体\\kaidan_yuka1_hantei.myn";
+		moveStr[24] = "media\\階段と床合体\\kaidan_yuka1_hantei.myn";
 
 		// キャラクター周りの3DSE
-		moveStr[25] = "media\\こっち\\media\\sound\\ジャンプ.wyn";
-		moveStr[26] = "media\\こっち\\media\\sound\\足音（廊下っぽいの）.wyn";
-		moveStr[27] = "media\\こっち\\media\\sound\\足音.wyn";
-		moveStr[28] = "media\\こっち\\media\\sound\\着地.wyn";
-		moveStr[29] = "media\\こっち\\media\\sound\\着地２.wyn";
+		moveStr[25] = "media\\sound\\ジャンプ.wyn";
+		moveStr[26] = "media\\sound\\足音（廊下っぽいの）.wyn";
+		moveStr[27] = "media\\sound\\足音.wyn";
+		moveStr[28] = "media\\sound\\着地.wyn";
+		moveStr[29] = "media\\sound\\着地２.wyn";
 
 		// キャラクターの攻撃の音
-		moveStr[30] = "media\\こっち\\media\\sound\\ピアノコンボ一発目.wyn";
-		moveStr[31] = "media\\こっち\\media\\sound\\ピアノコンボ二発目.wyn";
-		moveStr[32] = "media\\こっち\\media\\sound\\ピアノコンボ三発目.wyn";
+		moveStr[30] = "media\\sound\\ピアノコンボ一発目.wyn";
+		moveStr[31] = "media\\sound\\ピアノコンボ二発目.wyn";
+		moveStr[32] = "media\\sound\\ピアノコンボ三発目.wyn";
 
 		// BGM
-		moveStr[33] = "media\\こっち\\media\\sound\\通常bgm.wyn";
+		moveStr[33] = "media\\sound\\通常bgm.wyn";
 
 		// 人のデータ
-		moveStr[34] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.myn";
-		moveStr[35] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\whiteblack\\human_col.pyn";
+		moveStr[34] = "media\\move4\\一般人＿その１\\human1_motionALL.myn";
+		moveStr[35] = "media\\move4\\一般人＿その１\\human1_motionALL.fbm\\whiteblack\\human_col.pyn";
 
 		// 敵のデータ
-		moveStr[36] = "media\\こっち\\media\\move4\\人（敵）\\ene_human_motionALL.myn";
-		moveStr[37] = "media\\こっち\\media\\move4\\人（敵）\\ene_human_motionALL.fbm\\whiteblack\\whiteblack.pyn";
+		moveStr[36] = "media\\move4\\人（敵）\\ene_human_motionALL.myn";
+		moveStr[37] = "media\\move4\\人（敵）\\ene_human_motionALL.fbm\\whiteblack\\whiteblack.pyn";
 
 		// 攻撃BGM
-		moveStr[38] = "media\\こっち\\media\\sound\\戦闘BGM.wyn";
+		moveStr[38] = "media\\sound\\戦闘BGM.wyn";
 
 		// ムーブの説明画像
-		moveStr[39] = "media\\こっち\\media\\ムーブ説明\\move4.pyn";
+		moveStr[39] = "media\\ムーブ説明\\move4.pyn";
 
 		// ダメージ演出画像
-		moveStr[40] = "media\\こっち\\media\\damage\\damage1\\whiteblack.pyn";
-		moveStr[41] = "media\\こっち\\media\\damage\\damage2\\whiteblack.pyn";
-		moveStr[42] = "media\\こっち\\media\\damage\\damage3\\whiteblack.pyn";
-		moveStr[43] = "media\\こっち\\media\\damage\\Blood\\bl1\\whiteblack.pyn";
-		moveStr[44] = "media\\こっち\\media\\damage\\Blood\\bl2\\whiteblack.pyn";
-		moveStr[45] = "media\\こっち\\media\\damage\\Blood\\bl3\\whiteblack.pyn";
-		moveStr[46] = "media\\こっち\\media\\damage\\Blood\\bl4\\whiteblack.pyn";
-		moveStr[47] = "media\\こっち\\media\\damage\\Blood\\bl5\\whiteblack.pyn";
-		moveStr[48] = "media\\こっち\\media\\damage\\Blood\\bl6\\whiteblack.pyn";
-		moveStr[49] = "media\\こっち\\media\\damage\\Blood\\bl7\\whiteblack.pyn";
-		moveStr[50] = "media\\こっち\\media\\damage\\Blood\\bl8\\whiteblack.pyn";
-		moveStr[51] = "media\\こっち\\media\\damage\\Blood\\bl9\\whiteblack.pyn";
-		moveStr[52] = "media\\こっち\\media\\damage\\Blood\\bl10\\whiteblack.pyn";
+		moveStr[40] = "media\\damage\\damage1\\whiteblack.pyn";
+		moveStr[41] = "media\\damage\\damage2\\whiteblack.pyn";
+		moveStr[42] = "media\\damage\\damage3\\whiteblack.pyn";
+		moveStr[43] = "media\\damage\\Blood\\bl1\\whiteblack.pyn";
+		moveStr[44] = "media\\damage\\Blood\\bl2\\whiteblack.pyn";
+		moveStr[45] = "media\\damage\\Blood\\bl3\\whiteblack.pyn";
+		moveStr[46] = "media\\damage\\Blood\\bl4\\whiteblack.pyn";
+		moveStr[47] = "media\\damage\\Blood\\bl5\\whiteblack.pyn";
+		moveStr[48] = "media\\damage\\Blood\\bl6\\whiteblack.pyn";
+		moveStr[49] = "media\\damage\\Blood\\bl7\\whiteblack.pyn";
+		moveStr[50] = "media\\damage\\Blood\\bl8\\whiteblack.pyn";
+		moveStr[51] = "media\\damage\\Blood\\bl9\\whiteblack.pyn";
+		moveStr[52] = "media\\damage\\Blood\\bl10\\whiteblack.pyn";
 
 		// 敵の攻撃音
-		moveStr[53] = "media\\こっち\\media\\sound\\殴る音（爆発）.wyn";
+		moveStr[53] = "media\\sound\\殴る音（爆発）.wyn";
 	}
 
 
@@ -1056,44 +1056,44 @@ void Manager::Move4TextureReload()
 		if (!BASICPARAM::charaTextureWhiteBlack)
 		{
 			// キャラのテクスチャデータ
-			moveStr[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\sword_Tex.pyn";
-			moveStr[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_hair.pyn";
-			moveStr[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_wear.pyn";
-			moveStr[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn";
-			moveStr[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn";
+			moveStr[8] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\sword_Tex.pyn";
+			moveStr[9] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_hair.pyn";
+			moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_wear.pyn";
+			moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn";
+			moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn";
 		}
 		if (!BASICPARAM::enemyTextureWhiteBlack)
 		{
-			moveStr[37] = "media\\こっち\\media\\move4\\人（敵）\\ene_human_motionALL.fbm\\normal\\normal.pyn";
+			moveStr[37] = "media\\move4\\人（敵）\\ene_human_motionALL.fbm\\normal\\normal.pyn";
 		}
 		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{
 			// 街灯のテクスチャデータ
-			moveStr[14] = "media\\こっち\\media\\街灯\\normal\\body_col.pyn";
-			moveStr[15] = "media\\こっち\\media\\街灯\\normal\\lamp_COLandems.pyn";
+			moveStr[14] = "media\\街灯\\normal\\body_col.pyn";
+			moveStr[15] = "media\\街灯\\normal\\lamp_COLandems.pyn";
 		}
 		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
 		{
 			// 階段とそのあとの床のテクスチャデータ
-			moveStr[22] = "media\\こっち\\media\\階段と床合体\\normal\\kaidan.pyn";
-			moveStr[23] = "media\\こっち\\media\\階段と床合体\\normal\\yuka.pyn";
+			moveStr[22] = "media\\階段と床合体\\normal\\kaidan.pyn";
+			moveStr[23] = "media\\階段と床合体\\normal\\yuka.pyn";
 		}
 		if (!BASICPARAM::stairsTextureWhiteBlack)
 		{
 			// 階段のテクスチャデータ
-			moveStr[13] = "media\\こっち\\media\\kaidan\\normal\\kaidan.pyn";
+			moveStr[13] = "media\\kaidan\\normal\\kaidan.pyn";
 		}
 		if (!BASICPARAM::anothreTextureWhiteBlack)
 		{
 			// 人のデータ
-			moveStr[35] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\normal\\human_col.pyn";
+			moveStr[35] = "media\\move4\\一般人＿その１\\human1_motionALL.fbm\\normal\\human_col.pyn";
 
 			// スカイボックスのテクスチャデータ
-			moveStr[16] = "media\\こっち\\media\\スカイボックス\\normal\\BlueSky.byn";
+			moveStr[16] = "media\\スカイボックス\\normal\\BlueSky.byn";
 
 			// 精算機械テクスチャ
-			moveStr[18] = "media\\こっち\\media\\Terminal\\normal\\Terminal.pyn";
-			moveStr[19] = "media\\こっち\\media\\Terminal\\normal\\T_display.pyn";
+			moveStr[18] = "media\\Terminal\\normal\\Terminal.pyn";
+			moveStr[19] = "media\\Terminal\\normal\\T_display.pyn";
 		}
 		break;
 
@@ -1102,44 +1102,44 @@ void Manager::Move4TextureReload()
 		if (!BASICPARAM::charaTextureWhiteBlack)
 		{
 			// キャラのテクスチャデータ
-			moveStr[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\sword_Tex.pyn";
-			moveStr[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_hair.pyn";
-			moveStr[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_wear.pyn";
-			moveStr[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_face.pyn";
-			moveStr[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_ex.pyn";
+			moveStr[8] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\sword_Tex.pyn";
+			moveStr[9] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_hair.pyn";
+			moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_wear.pyn";
+			moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_face.pyn";
+			moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_ex.pyn";
 		}
 		if (!BASICPARAM::enemyTextureWhiteBlack)
 		{
-			moveStr[37] = "media\\こっち\\media\\move4\\人（敵）\\ene_human_motionALL.fbm\\P\\P.pyn";
+			moveStr[37] = "media\\move4\\人（敵）\\ene_human_motionALL.fbm\\P\\P.pyn";
 		}
 		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{
 			// 街灯のテクスチャデータ
-			moveStr[14] = "media\\こっち\\media\\街灯\\P\\body_col.pyn";
-			moveStr[15] = "media\\こっち\\media\\街灯\\P\\lamp_COLandems.pyn";
+			moveStr[14] = "media\\街灯\\P\\body_col.pyn";
+			moveStr[15] = "media\\街灯\\P\\lamp_COLandems.pyn";
 		}
 		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
 		{
 			// 階段とそのあとの床のテクスチャデータ
-			moveStr[22] = "media\\こっち\\media\\階段と床合体\\P\\kaidan.pyn";
-			moveStr[23] = "media\\こっち\\media\\階段と床合体\\P\\yuka.pyn";
+			moveStr[22] = "media\\階段と床合体\\P\\kaidan.pyn";
+			moveStr[23] = "media\\階段と床合体\\P\\yuka.pyn";
 		}
 		if (!BASICPARAM::stairsTextureWhiteBlack)
 		{
 			// 階段のテクスチャデータ
-			moveStr[13] = "media\\こっち\\media\\kaidan\\P\\kaidan.pyn";
+			moveStr[13] = "media\\kaidan\\P\\kaidan.pyn";
 		}
 		if (!BASICPARAM::anothreTextureWhiteBlack)
 		{
 			// 人のデータ
-			moveStr[35] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\P\\human_col.pyn";
+			moveStr[35] = "media\\move4\\一般人＿その１\\human1_motionALL.fbm\\P\\human_col.pyn";
 
 			// スカイボックスのテクスチャデータ
-			moveStr[16] = "media\\こっち\\media\\スカイボックス\\P\\BlueSky.byn";
+			moveStr[16] = "media\\スカイボックス\\P\\BlueSky.byn";
 
 			// 精算機械テクスチャ
-			moveStr[18] = "media\\こっち\\media\\Terminal\\P\\Terminal.pyn";
-			moveStr[19] = "media\\こっち\\media\\Terminal\\P\\T_display.pyn";
+			moveStr[18] = "media\\Terminal\\P\\Terminal.pyn";
+			moveStr[19] = "media\\Terminal\\P\\T_display.pyn";
 		}
 		break;
 
@@ -1148,44 +1148,44 @@ void Manager::Move4TextureReload()
 		if (!BASICPARAM::charaTextureWhiteBlack)
 		{
 			// キャラのテクスチャデータ
-			moveStr[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\sword_Tex.pyn";
-			moveStr[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_hair.pyn";
-			moveStr[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_wear.pyn";
-			moveStr[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_face.pyn";
-			moveStr[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_ex.pyn";
+			moveStr[8] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\sword_Tex.pyn";
+			moveStr[9] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_hair.pyn";
+			moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_wear.pyn";
+			moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_face.pyn";
+			moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_ex.pyn";
 		}
 		if (!BASICPARAM::enemyTextureWhiteBlack)
 		{
-			moveStr[37] = "media\\こっち\\media\\move4\\人（敵）\\ene_human_motionALL.fbm\\D\\D.pyn";
+			moveStr[37] = "media\\move4\\人（敵）\\ene_human_motionALL.fbm\\D\\D.pyn";
 		}
 		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{
 			// 街灯のテクスチャデータ
-			moveStr[14] = "media\\こっち\\media\\街灯\\D\\body_col.pyn";
-			moveStr[15] = "media\\こっち\\media\\街灯\\D\\lamp_COLandems.pyn";
+			moveStr[14] = "media\\街灯\\D\\body_col.pyn";
+			moveStr[15] = "media\\街灯\\D\\lamp_COLandems.pyn";
 		}
 		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
 		{
 			// 階段とそのあとの床のテクスチャデータ
-			moveStr[22] = "media\\こっち\\media\\階段と床合体\\D\\kaidan.pyn";
-			moveStr[23] = "media\\こっち\\media\\階段と床合体\\D\\yuka.pyn";
+			moveStr[22] = "media\\階段と床合体\\D\\kaidan.pyn";
+			moveStr[23] = "media\\階段と床合体\\D\\yuka.pyn";
 		}
 		if (!BASICPARAM::stairsTextureWhiteBlack)
 		{
 			// 階段のテクスチャデータ
-			moveStr[13] = "media\\こっち\\media\\kaidan\\D\\kaidan.pyn";
+			moveStr[13] = "media\\kaidan\\D\\kaidan.pyn";
 		}
 		if (!BASICPARAM::anothreTextureWhiteBlack)
 		{
 			// 人のデータ
-			moveStr[35] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\D\\human_col.pyn";
+			moveStr[35] = "media\\move4\\一般人＿その１\\human1_motionALL.fbm\\D\\human_col.pyn";
 
 			// スカイボックスのテクスチャデータ
-			moveStr[16] = "media\\こっち\\media\\スカイボックス\\D\\BlueSky.byn";
+			moveStr[16] = "media\\スカイボックス\\D\\BlueSky.byn";
 
 			// 精算機械テクスチャ
-			moveStr[18] = "media\\こっち\\media\\Terminal\\D\\Terminal.pyn";
-			moveStr[19] = "media\\こっち\\media\\Terminal\\D\\T_display.pyn";
+			moveStr[18] = "media\\Terminal\\D\\Terminal.pyn";
+			moveStr[19] = "media\\Terminal\\D\\T_display.pyn";
 		}
 		break;
 
@@ -1203,89 +1203,89 @@ void Manager::InitMove5Load()
 	moveStr.resize(max5 + 1);
 	{
 		// モデルデータ
-		moveStr[0] = "media\\こっち\\media\\ステージモデル\\move1_hantei.myn";
-		moveStr[1] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.myn";			// 5
-		moveStr[2] = "media\\こっち\\media\\paneru\\paneru.myn";
-		moveStr[3] = "media\\こっち\\media\\kaidan\\kaidan.myn";						// 1
-		moveStr[4] = "media\\こっち\\media\\kaidan\\kaidan_hantei.myn";
-		moveStr[5] = "media\\こっち\\media\\街灯\\Gaitou.myn";							// 2
-		moveStr[6] = "media\\こっち\\media\\スカイボックス\\SkyDome.myn";				// 1
-		moveStr[7] = "media\\こっち\\media\\ステージモデル\\move1_graphic.myn";
+		moveStr[0] = "media\\ステージモデル\\move1_hantei.myn";
+		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";			// 5
+		moveStr[2] = "media\\paneru\\paneru.myn";
+		moveStr[3] = "media\\kaidan\\kaidan.myn";						// 1
+		moveStr[4] = "media\\kaidan\\kaidan_hantei.myn";
+		moveStr[5] = "media\\街灯\\Gaitou.myn";							// 2
+		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";				// 1
+		moveStr[7] = "media\\ステージモデル\\move1_graphic.myn";
 
 		// キャラのテクスチャデータ
-		moveStr[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn";
-		moveStr[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_hair.pyn";
-		moveStr[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_wear.pyn";
-		moveStr[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_face.pyn";
-		moveStr[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_ex.pyn";
+		moveStr[8] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn";
+		moveStr[9] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_hair.pyn";
+		moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_wear.pyn";
+		moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_face.pyn";
+		moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_ex.pyn";
 
 		// 階段のテクスチャデータ
-		moveStr[13] = "media\\こっち\\media\\kaidan\\whiteblack\\kaidan.pyn";
+		moveStr[13] = "media\\kaidan\\whiteblack\\kaidan.pyn";
 
 		// 街灯のテクスチャデータ
-		moveStr[14] = "media\\こっち\\media\\街灯\\whiteblack\\body_col.pyn";
-		moveStr[15] = "media\\こっち\\media\\街灯\\whiteblack\\lamp_COLandems.pyn";
+		moveStr[14] = "media\\街灯\\whiteblack\\body_col.pyn";
+		moveStr[15] = "media\\街灯\\whiteblack\\lamp_COLandems.pyn";
 
 		// スカイボックスのテクスチャデータ
-		moveStr[16] = "media\\こっち\\media\\スカイボックス\\whiteblack\\BlueSky.byn";
+		moveStr[16] = "media\\スカイボックス\\whiteblack\\BlueSky.byn";
 
 		// 精算機械データ
-		moveStr[17] = "media\\こっち\\media\\Terminal\\terminal.myn";					// 2
+		moveStr[17] = "media\\Terminal\\terminal.myn";					// 2
 
 		// 精算機械テクスチャ
-		moveStr[18] = "media\\こっち\\media\\Terminal\\whiteblack\\Terminal.pyn";
-		moveStr[19] = "media\\こっち\\media\\Terminal\\whiteblack\\T_display.pyn";
+		moveStr[18] = "media\\Terminal\\whiteblack\\Terminal.pyn";
+		moveStr[19] = "media\\Terminal\\whiteblack\\T_display.pyn";
 
 		// 精密機械の補助説明
-		moveStr[20] = "media\\こっち\\media\\Terminal\\push.pyn";
+		moveStr[20] = "media\\Terminal\\push.pyn";
 
 		// 階段とそのあとの床データ
-		moveStr[21] = "media\\こっち\\media\\階段と床合体\\kaidan_yuka1.myn";			// 2
+		moveStr[21] = "media\\階段と床合体\\kaidan_yuka1.myn";			// 2
 
 		// 階段とそのあとの床のテクスチャデータ
-		moveStr[22] = "media\\こっち\\media\\階段と床合体\\whiteblack\\kaidan.pyn";
-		moveStr[23] = "media\\こっち\\media\\階段と床合体\\whiteblack\\yuka.pyn";
+		moveStr[22] = "media\\階段と床合体\\whiteblack\\kaidan.pyn";
+		moveStr[23] = "media\\階段と床合体\\whiteblack\\yuka.pyn";
 
 		// 階段と床のあたり判定データ
-		moveStr[24] = "media\\こっち\\media\\階段と床合体\\kaidan_yuka1_hantei.myn";
+		moveStr[24] = "media\\階段と床合体\\kaidan_yuka1_hantei.myn";
 
 		// キャラクター周りの3DSE
-		moveStr[25] = "media\\こっち\\media\\sound\\ジャンプ.wyn";
-		moveStr[26] = "media\\こっち\\media\\sound\\足音（廊下っぽいの）.wyn";
-		moveStr[27] = "media\\こっち\\media\\sound\\足音.wyn";
-		moveStr[28] = "media\\こっち\\media\\sound\\着地.wyn";
-		moveStr[29] = "media\\こっち\\media\\sound\\着地２.wyn";
+		moveStr[25] = "media\\sound\\ジャンプ.wyn";
+		moveStr[26] = "media\\sound\\足音（廊下っぽいの）.wyn";
+		moveStr[27] = "media\\sound\\足音.wyn";
+		moveStr[28] = "media\\sound\\着地.wyn";
+		moveStr[29] = "media\\sound\\着地２.wyn";
 
 		// キャラクターの攻撃の音
-		moveStr[30] = "media\\こっち\\media\\sound\\ピアノコンボ一発目.wyn";
-		moveStr[31] = "media\\こっち\\media\\sound\\ピアノコンボ二発目.wyn";
-		moveStr[32] = "media\\こっち\\media\\sound\\ピアノコンボ三発目.wyn";
+		moveStr[30] = "media\\sound\\ピアノコンボ一発目.wyn";
+		moveStr[31] = "media\\sound\\ピアノコンボ二発目.wyn";
+		moveStr[32] = "media\\sound\\ピアノコンボ三発目.wyn";
 
 		// BGM
-		moveStr[33] = "media\\こっち\\media\\sound\\通常bgm.wyn";
+		moveStr[33] = "media\\sound\\通常bgm.wyn";
 
 		// 敵のデータ
-		moveStr[34] = "media\\こっち\\media\\childCLPH\\sd_,motionALL.myn";
-		moveStr[35] = "media\\こっち\\media\\childCLPH\\sd_,motionALL.fbm\\whiteblack\\SDchar.pyn";
+		moveStr[34] = "media\\childCLPH\\sd_,motionALL.myn";
+		moveStr[35] = "media\\childCLPH\\sd_,motionALL.fbm\\whiteblack\\SDchar.pyn";
 
 		// 一般人のデータ
-		moveStr[36] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.myn";
-		moveStr[37] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\whiteblack\\human_col.pyn";
+		moveStr[36] = "media\\move4\\一般人＿その１\\human1_motionALL.myn";
+		moveStr[37] = "media\\move4\\一般人＿その１\\human1_motionALL.fbm\\whiteblack\\human_col.pyn";
 
 		// ムーブの説明画像
-		moveStr[38] = "media\\こっち\\media\\ムーブ説明\\move5.pyn";
+		moveStr[38] = "media\\ムーブ説明\\move5.pyn";
 
 		// 一定数捕まえたら流すSE
-		moveStr[39] = "media\\こっち\\media\\sound\\savemisson.wyn";
+		moveStr[39] = "media\\sound\\savemisson.wyn";
 
 		// 一定数捕まえた時に描画するUI
-		moveStr[40] = "media\\こっち\\media\\move5\\adjustment.pyn";
-		moveStr[41] = "media\\こっち\\media\\move5\\character.pyn";
-		moveStr[42] = "media\\こっち\\media\\move5\\ordinary.pyn";
-		moveStr[43] = "media\\こっち\\media\\move5\\paneru.pyn";
-		moveStr[44] = "media\\こっち\\media\\move5\\stairs.pyn";
-		moveStr[45] = "media\\こっち\\media\\move5\\stairsRoad.pyn";
-		moveStr[46] = "media\\こっち\\media\\move5\\streetLight.pyn";
+		moveStr[40] = "media\\move5\\adjustment.pyn";
+		moveStr[41] = "media\\move5\\character.pyn";
+		moveStr[42] = "media\\move5\\ordinary.pyn";
+		moveStr[43] = "media\\move5\\paneru.pyn";
+		moveStr[44] = "media\\move5\\stairs.pyn";
+		moveStr[45] = "media\\move5\\stairsRoad.pyn";
+		moveStr[46] = "media\\move5\\streetLight.pyn";
 	}
 
 
@@ -1370,44 +1370,44 @@ void Manager::Move5TextureReload()
 		if (!BASICPARAM::charaTextureWhiteBlack)
 		{
 			// キャラのテクスチャデータ
-			moveStr[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\sword_Tex.pyn";
-			moveStr[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_hair.pyn";
-			moveStr[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_wear.pyn";
-			moveStr[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn";
-			moveStr[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn";
+			moveStr[8] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\sword_Tex.pyn";
+			moveStr[9] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_hair.pyn";
+			moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_wear.pyn";
+			moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn";
+			moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn";
 		}
 		if (!BASICPARAM::enemyTextureWhiteBlack)
 		{
-			moveStr[35] = "media\\こっち\\media\\childCLPH\\sd_,motionALL.fbm\\normal\\SDchar.pyn";
+			moveStr[35] = "media\\childCLPH\\sd_,motionALL.fbm\\normal\\SDchar.pyn";
 		}
 		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{
 			// 街灯のテクスチャデータ
-			moveStr[14] = "media\\こっち\\media\\街灯\\normal\\body_col.pyn";
-			moveStr[15] = "media\\こっち\\media\\街灯\\normal\\lamp_COLandems.pyn";
+			moveStr[14] = "media\\街灯\\normal\\body_col.pyn";
+			moveStr[15] = "media\\街灯\\normal\\lamp_COLandems.pyn";
 		}
 		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
 		{
 			// 階段とそのあとの床のテクスチャデータ
-			moveStr[22] = "media\\こっち\\media\\階段と床合体\\normal\\kaidan.pyn";
-			moveStr[23] = "media\\こっち\\media\\階段と床合体\\normal\\yuka.pyn";
+			moveStr[22] = "media\\階段と床合体\\normal\\kaidan.pyn";
+			moveStr[23] = "media\\階段と床合体\\normal\\yuka.pyn";
 		}
 		if (!BASICPARAM::stairsTextureWhiteBlack)
 		{
 			// 階段のテクスチャデータ
-			moveStr[13] = "media\\こっち\\media\\kaidan\\normal\\kaidan.pyn";
+			moveStr[13] = "media\\kaidan\\normal\\kaidan.pyn";
 		}
 		if (!BASICPARAM::anothreTextureWhiteBlack)
 		{
 			// 人のデータ
-			moveStr[37] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\normal\\human_col.pyn";
+			moveStr[37] = "media\\move4\\一般人＿その１\\human1_motionALL.fbm\\normal\\human_col.pyn";
 
 			// スカイボックスのテクスチャデータ
-			moveStr[16] = "media\\こっち\\media\\スカイボックス\\normal\\BlueSky.byn";
+			moveStr[16] = "media\\スカイボックス\\normal\\BlueSky.byn";
 
 			// 精算機械テクスチャ
-			moveStr[18] = "media\\こっち\\media\\Terminal\\normal\\Terminal.pyn";
-			moveStr[19] = "media\\こっち\\media\\Terminal\\normal\\T_display.pyn";
+			moveStr[18] = "media\\Terminal\\normal\\Terminal.pyn";
+			moveStr[19] = "media\\Terminal\\normal\\T_display.pyn";
 		}
 		break;
 
@@ -1416,44 +1416,44 @@ void Manager::Move5TextureReload()
 		if (!BASICPARAM::charaTextureWhiteBlack)
 		{
 			// キャラのテクスチャデータ
-			moveStr[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\sword_Tex.pyn";
-			moveStr[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_hair.pyn";
-			moveStr[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_wear.pyn";
-			moveStr[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_face.pyn";
-			moveStr[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_ex.pyn";
+			moveStr[8] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\sword_Tex.pyn";
+			moveStr[9] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_hair.pyn";
+			moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_wear.pyn";
+			moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_face.pyn";
+			moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_ex.pyn";
 		}
 		if (!BASICPARAM::enemyTextureWhiteBlack)
 		{
-			moveStr[35] = "media\\こっち\\media\\childCLPH\\sd_,motionALL.fbm\\P\\SDchar.pyn";
+			moveStr[35] = "media\\childCLPH\\sd_,motionALL.fbm\\P\\SDchar.pyn";
 		}
 		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{
 			// 街灯のテクスチャデータ
-			moveStr[14] = "media\\こっち\\media\\街灯\\P\\body_col.pyn";
-			moveStr[15] = "media\\こっち\\media\\街灯\\P\\lamp_COLandems.pyn";
+			moveStr[14] = "media\\街灯\\P\\body_col.pyn";
+			moveStr[15] = "media\\街灯\\P\\lamp_COLandems.pyn";
 		}
 		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
 		{
 			// 階段とそのあとの床のテクスチャデータ
-			moveStr[22] = "media\\こっち\\media\\階段と床合体\\P\\kaidan.pyn";
-			moveStr[23] = "media\\こっち\\media\\階段と床合体\\P\\yuka.pyn";
+			moveStr[22] = "media\\階段と床合体\\P\\kaidan.pyn";
+			moveStr[23] = "media\\階段と床合体\\P\\yuka.pyn";
 		}
 		if (!BASICPARAM::stairsTextureWhiteBlack)
 		{
 			// 階段のテクスチャデータ
-			moveStr[13] = "media\\こっち\\media\\kaidan\\P\\kaidan.pyn";
+			moveStr[13] = "media\\kaidan\\P\\kaidan.pyn";
 		}
 		if (!BASICPARAM::anothreTextureWhiteBlack)
 		{
 			// 人のデータ
-			moveStr[37] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\P\\human_col.pyn";
+			moveStr[37] = "media\\move4\\一般人＿その１\\human1_motionALL.fbm\\P\\human_col.pyn";
 
 			// スカイボックスのテクスチャデータ
-			moveStr[16] = "media\\こっち\\media\\スカイボックス\\P\\BlueSky.byn";
+			moveStr[16] = "media\\スカイボックス\\P\\BlueSky.byn";
 
 			// 精算機械テクスチャ
-			moveStr[18] = "media\\こっち\\media\\Terminal\\P\\Terminal.pyn";
-			moveStr[19] = "media\\こっち\\media\\Terminal\\P\\T_display.pyn";
+			moveStr[18] = "media\\Terminal\\P\\Terminal.pyn";
+			moveStr[19] = "media\\Terminal\\P\\T_display.pyn";
 		}
 		break;
 
@@ -1462,44 +1462,44 @@ void Manager::Move5TextureReload()
 		if (!BASICPARAM::charaTextureWhiteBlack)
 		{
 			// キャラのテクスチャデータ
-			moveStr[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\sword_Tex.pyn";
-			moveStr[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_hair.pyn";
-			moveStr[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_wear.pyn";
-			moveStr[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_face.pyn";
-			moveStr[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_ex.pyn";
+			moveStr[8] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\sword_Tex.pyn";
+			moveStr[9] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_hair.pyn";
+			moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_wear.pyn";
+			moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_face.pyn";
+			moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_ex.pyn";
 		}
 		if (!BASICPARAM::enemyTextureWhiteBlack)
 		{
-			moveStr[35] = "media\\こっち\\media\\childCLPH\\sd_,motionALL.fbm\\D\\SDchar.pyn";
+			moveStr[35] = "media\\childCLPH\\sd_,motionALL.fbm\\D\\SDchar.pyn";
 		}
 		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{
 			// 街灯のテクスチャデータ
-			moveStr[14] = "media\\こっち\\media\\街灯\\D\\body_col.pyn";
-			moveStr[15] = "media\\こっち\\media\\街灯\\D\\lamp_COLandems.pyn";
+			moveStr[14] = "media\\街灯\\D\\body_col.pyn";
+			moveStr[15] = "media\\街灯\\D\\lamp_COLandems.pyn";
 		}
 		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
 		{
 			// 階段とそのあとの床のテクスチャデータ
-			moveStr[22] = "media\\こっち\\media\\階段と床合体\\D\\kaidan.pyn";
-			moveStr[23] = "media\\こっち\\media\\階段と床合体\\D\\yuka.pyn";
+			moveStr[22] = "media\\階段と床合体\\D\\kaidan.pyn";
+			moveStr[23] = "media\\階段と床合体\\D\\yuka.pyn";
 		}
 		if (!BASICPARAM::stairsTextureWhiteBlack)
 		{
 			// 階段のテクスチャデータ
-			moveStr[13] = "media\\こっち\\media\\kaidan\\D\\kaidan.pyn";
+			moveStr[13] = "media\\kaidan\\D\\kaidan.pyn";
 		}
 		if (!BASICPARAM::anothreTextureWhiteBlack)
 		{
 			// 人のデータ
-			moveStr[37] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\D\\human_col.pyn";
+			moveStr[37] = "media\\move4\\一般人＿その１\\human1_motionALL.fbm\\D\\human_col.pyn";
 
 			// スカイボックスのテクスチャデータ
-			moveStr[16] = "media\\こっち\\media\\スカイボックス\\D\\BlueSky.byn";
+			moveStr[16] = "media\\スカイボックス\\D\\BlueSky.byn";
 
 			// 精算機械テクスチャ
-			moveStr[18] = "media\\こっち\\media\\Terminal\\D\\Terminal.pyn";
-			moveStr[19] = "media\\こっち\\media\\Terminal\\D\\T_display.pyn";
+			moveStr[18] = "media\\Terminal\\D\\Terminal.pyn";
+			moveStr[19] = "media\\Terminal\\D\\T_display.pyn";
 		}
 		break;
 
@@ -1517,86 +1517,86 @@ void Manager::InitMove6Load()
 	moveStr.resize(max6 + 1);
 	{
 		// モデルデータ
-		moveStr[0] = "media\\こっち\\media\\ステージモデル\\move1_hantei.myn";
-		moveStr[1] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.myn";			// 5
-		moveStr[2] = "media\\こっち\\media\\paneru\\paneru.myn";
-		moveStr[3] = "media\\こっち\\media\\kaidan\\kaidan.myn";						// 1
-		moveStr[4] = "media\\こっち\\media\\kaidan\\kaidan_hantei.myn";
-		moveStr[5] = "media\\こっち\\media\\街灯\\Gaitou.myn";							// 2
-		moveStr[6] = "media\\こっち\\media\\スカイボックス\\SkyDome.myn";				// 1
-		moveStr[7] = "media\\こっち\\media\\ステージモデル\\move1_graphic.myn";
+		moveStr[0] = "media\\ステージモデル\\move1_hantei.myn";
+		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";			// 5
+		moveStr[2] = "media\\paneru\\paneru.myn";
+		moveStr[3] = "media\\kaidan\\kaidan.myn";						// 1
+		moveStr[4] = "media\\kaidan\\kaidan_hantei.myn";
+		moveStr[5] = "media\\街灯\\Gaitou.myn";							// 2
+		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";				// 1
+		moveStr[7] = "media\\ステージモデル\\move1_graphic.myn";
 
 		// キャラのテクスチャデータ
-		moveStr[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn";
-		moveStr[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_hair.pyn";
-		moveStr[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_wear.pyn";
-		moveStr[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_face.pyn";
-		moveStr[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_ex.pyn";
+		moveStr[8] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn";
+		moveStr[9] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_hair.pyn";
+		moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_wear.pyn";
+		moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_face.pyn";
+		moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\CLPH_ex.pyn";
 
 		// 階段のテクスチャデータ
-		moveStr[13] = "media\\こっち\\media\\kaidan\\whiteblack\\kaidan.pyn";
+		moveStr[13] = "media\\kaidan\\whiteblack\\kaidan.pyn";
 
 		// 街灯のテクスチャデータ
-		moveStr[14] = "media\\こっち\\media\\街灯\\whiteblack\\body_col.pyn";
-		moveStr[15] = "media\\こっち\\media\\街灯\\whiteblack\\lamp_COLandems.pyn";
+		moveStr[14] = "media\\街灯\\whiteblack\\body_col.pyn";
+		moveStr[15] = "media\\街灯\\whiteblack\\lamp_COLandems.pyn";
 
 		// スカイボックスのテクスチャデータ
-		moveStr[16] = "media\\こっち\\media\\スカイボックス\\whiteblack\\BlueSky.byn";
+		moveStr[16] = "media\\スカイボックス\\whiteblack\\BlueSky.byn";
 
 		// 階段とそのあとの床データ
-		moveStr[17] = "media\\こっち\\media\\階段と床合体\\kaidan_yuka1.myn";			// 2
+		moveStr[17] = "media\\階段と床合体\\kaidan_yuka1.myn";			// 2
 
 		// 階段とそのあとの床のテクスチャデータ
-		moveStr[18] = "media\\こっち\\media\\階段と床合体\\whiteblack\\kaidan.pyn";
-		moveStr[19] = "media\\こっち\\media\\階段と床合体\\whiteblack\\yuka.pyn";
+		moveStr[18] = "media\\階段と床合体\\whiteblack\\kaidan.pyn";
+		moveStr[19] = "media\\階段と床合体\\whiteblack\\yuka.pyn";
 
 		// 階段と床のあたり判定データ
-		moveStr[20] = "media\\こっち\\media\\階段と床合体\\kaidan_yuka1_hantei.myn";
+		moveStr[20] = "media\\階段と床合体\\kaidan_yuka1_hantei.myn";
 
 		// キャラクター周りの3DSE
-		moveStr[21] = "media\\こっち\\media\\sound\\ジャンプ.wyn";
-		moveStr[22] = "media\\こっち\\media\\sound\\足音（廊下っぽいの）.wyn";
-		moveStr[23] = "media\\こっち\\media\\sound\\足音.wyn";
-		moveStr[24] = "media\\こっち\\media\\sound\\着地.wyn";
-		moveStr[25] = "media\\こっち\\media\\sound\\着地２.wyn";
+		moveStr[21] = "media\\sound\\ジャンプ.wyn";
+		moveStr[22] = "media\\sound\\足音（廊下っぽいの）.wyn";
+		moveStr[23] = "media\\sound\\足音.wyn";
+		moveStr[24] = "media\\sound\\着地.wyn";
+		moveStr[25] = "media\\sound\\着地２.wyn";
 
 		// キャラクターの攻撃の音
-		moveStr[26] = "media\\こっち\\media\\sound\\ピアノコンボ一発目.wyn";
-		moveStr[27] = "media\\こっち\\media\\sound\\ピアノコンボ二発目.wyn";
-		moveStr[28] = "media\\こっち\\media\\sound\\ピアノコンボ三発目.wyn";
+		moveStr[26] = "media\\sound\\ピアノコンボ一発目.wyn";
+		moveStr[27] = "media\\sound\\ピアノコンボ二発目.wyn";
+		moveStr[28] = "media\\sound\\ピアノコンボ三発目.wyn";
 
 		// BGM
-		moveStr[29] = "media\\こっち\\media\\sound\\boss.wyn";
+		moveStr[29] = "media\\sound\\boss.wyn";
 
 		// 一般人のデータ
-		moveStr[30] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.myn";
-		moveStr[31] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\whiteblack\\human_col.pyn";
+		moveStr[30] = "media\\move4\\一般人＿その１\\human1_motionALL.myn";
+		moveStr[31] = "media\\move4\\一般人＿その１\\human1_motionALL.fbm\\whiteblack\\human_col.pyn";
 
 		// 敵に近づいたときに出るUI
-		moveStr[32] = "media\\こっち\\media\\move6\\near.pyn";
-		moveStr[33] = "media\\こっち\\media\\move6\\yes.pyn";
-		moveStr[34] = "media\\こっち\\media\\move6\\no.pyn";
+		moveStr[32] = "media\\move6\\near.pyn";
+		moveStr[33] = "media\\move6\\yes.pyn";
+		moveStr[34] = "media\\move6\\no.pyn";
 
 		// 前敵のデータ
-		moveStr[35] = "media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.myn";
-		moveStr[36] = "media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\whiteblack.pyn";
-		moveStr[37] = "media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\whiteblack.pyn";
-		moveStr[38] = "media\\こっち\\media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\whiteblack.pyn";
+		moveStr[35] = "media\\ラスボス＿光\\モーション\\motion_Boss1.myn";
+		moveStr[36] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\whiteblack.pyn";
+		moveStr[37] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\whiteblack.pyn";
+		moveStr[38] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\whiteblack.pyn";
 
 		// エンドロール用画像
-		moveStr[39] = "media\\こっち\\media\\end\\title.pyn";
-		moveStr[40] = "media\\こっち\\media\\end\\dxlib.pyn";
-		moveStr[41] = "media\\こっち\\media\\end\\effekseer.pyn";
-		moveStr[42] = "media\\こっち\\media\\end\\graphic.pyn";
-		moveStr[43] = "media\\こっち\\media\\end\\program.pyn";
-		moveStr[44] = "media\\こっち\\media\\end\\sound.pyn";
-		moveStr[45] = "media\\こっち\\media\\end\\special.pyn";
-		moveStr[46] = "media\\こっち\\media\\end\\test.pyn";
-		moveStr[47] = "media\\こっち\\media\\end\\thanksLib.pyn";
-		moveStr[48] = "media\\こっち\\media\\end\\youser.pyn";
+		moveStr[39] = "media\\end\\title.pyn";
+		moveStr[40] = "media\\end\\dxlib.pyn";
+		moveStr[41] = "media\\end\\effekseer.pyn";
+		moveStr[42] = "media\\end\\graphic.pyn";
+		moveStr[43] = "media\\end\\program.pyn";
+		moveStr[44] = "media\\end\\sound.pyn";
+		moveStr[45] = "media\\end\\special.pyn";
+		moveStr[46] = "media\\end\\test.pyn";
+		moveStr[47] = "media\\end\\thanksLib.pyn";
+		moveStr[48] = "media\\end\\youser.pyn";
 
 		// エンドロール用BGM
-		moveStr[49] = "media\\こっち\\media\\sound\\ED.wyn";
+		moveStr[49] = "media\\sound\\ED.wyn";
 	}
 
 
@@ -1681,11 +1681,11 @@ void Manager::Move6TextureReload()
 		if (!BASICPARAM::charaTextureWhiteBlack)
 		{
 			// キャラのテクスチャデータ
-			moveStr[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\sword_Tex.pyn";
-			moveStr[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_hair.pyn";
-			moveStr[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_wear.pyn";
-			moveStr[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn";
-			moveStr[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn";
+			moveStr[8] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\sword_Tex.pyn";
+			moveStr[9] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_hair.pyn";
+			moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_wear.pyn";
+			moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn";
+			moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn";
 		}
 		if (!BASICPARAM::enemyTextureWhiteBlack)
 		{
@@ -1693,27 +1693,27 @@ void Manager::Move6TextureReload()
 		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{
 			// 街灯のテクスチャデータ
-			moveStr[14] = "media\\こっち\\media\\街灯\\normal\\body_col.pyn";
-			moveStr[15] = "media\\こっち\\media\\街灯\\normal\\lamp_COLandems.pyn";
+			moveStr[14] = "media\\街灯\\normal\\body_col.pyn";
+			moveStr[15] = "media\\街灯\\normal\\lamp_COLandems.pyn";
 		}
 		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
 		{
 			// 階段とそのあとの床のテクスチャデータ
-			moveStr[18] = "media\\こっち\\media\\階段と床合体\\normal\\kaidan.pyn";
-			moveStr[19] = "media\\こっち\\media\\階段と床合体\\normal\\yuka.pyn";
+			moveStr[18] = "media\\階段と床合体\\normal\\kaidan.pyn";
+			moveStr[19] = "media\\階段と床合体\\normal\\yuka.pyn";
 		}
 		if (!BASICPARAM::stairsTextureWhiteBlack)
 		{
 			// 階段のテクスチャデータ
-			moveStr[13] = "media\\こっち\\media\\kaidan\\normal\\kaidan.pyn";
+			moveStr[13] = "media\\kaidan\\normal\\kaidan.pyn";
 		}
 		if (!BASICPARAM::anothreTextureWhiteBlack)
 		{
 			// 人のデータ
-			moveStr[31] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\normal\\human_col.pyn";
+			moveStr[31] = "media\\move4\\一般人＿その１\\human1_motionALL.fbm\\normal\\human_col.pyn";
 
 			// スカイボックスのテクスチャデータ
-			moveStr[16] = "media\\こっち\\media\\スカイボックス\\normal\\BlueSky.byn";
+			moveStr[16] = "media\\スカイボックス\\normal\\BlueSky.byn";
 		}
 		break;
 
@@ -1722,11 +1722,11 @@ void Manager::Move6TextureReload()
 		if (!BASICPARAM::charaTextureWhiteBlack)
 		{
 			// キャラのテクスチャデータ
-			moveStr[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\sword_Tex.pyn";
-			moveStr[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_hair.pyn";
-			moveStr[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_wear.pyn";
-			moveStr[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_face.pyn";
-			moveStr[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_ex.pyn";
+			moveStr[8] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\sword_Tex.pyn";
+			moveStr[9] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_hair.pyn";
+			moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_wear.pyn";
+			moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_face.pyn";
+			moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_ex.pyn";
 		}
 		if (!BASICPARAM::enemyTextureWhiteBlack)
 		{
@@ -1734,27 +1734,27 @@ void Manager::Move6TextureReload()
 		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{
 			// 街灯のテクスチャデータ
-			moveStr[14] = "media\\こっち\\media\\街灯\\P\\body_col.pyn";
-			moveStr[15] = "media\\こっち\\media\\街灯\\P\\lamp_COLandems.pyn";
+			moveStr[14] = "media\\街灯\\P\\body_col.pyn";
+			moveStr[15] = "media\\街灯\\P\\lamp_COLandems.pyn";
 		}
 		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
 		{
 			// 階段とそのあとの床のテクスチャデータ
-			moveStr[18] = "media\\こっち\\media\\階段と床合体\\P\\kaidan.pyn";
-			moveStr[19] = "media\\こっち\\media\\階段と床合体\\P\\yuka.pyn";
+			moveStr[18] = "media\\階段と床合体\\P\\kaidan.pyn";
+			moveStr[19] = "media\\階段と床合体\\P\\yuka.pyn";
 		}
 		if (!BASICPARAM::stairsTextureWhiteBlack)
 		{
 			// 階段のテクスチャデータ
-			moveStr[13] = "media\\こっち\\media\\kaidan\\P\\kaidan.pyn";
+			moveStr[13] = "media\\kaidan\\P\\kaidan.pyn";
 		}
 		if (!BASICPARAM::anothreTextureWhiteBlack)
 		{
 			// 人のデータ
-			moveStr[31] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\P\\human_col.pyn";
+			moveStr[31] = "media\\move4\\一般人＿その１\\human1_motionALL.fbm\\P\\human_col.pyn";
 
 			// スカイボックスのテクスチャデータ
-			moveStr[16] = "media\\こっち\\media\\スカイボックス\\P\\BlueSky.byn";
+			moveStr[16] = "media\\スカイボックス\\P\\BlueSky.byn";
 		}
 		break;
 
@@ -1763,11 +1763,11 @@ void Manager::Move6TextureReload()
 		if (!BASICPARAM::charaTextureWhiteBlack)
 		{
 			// キャラのテクスチャデータ
-			moveStr[8] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\sword_Tex.pyn";
-			moveStr[9] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_hair.pyn";
-			moveStr[10] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_wear.pyn";
-			moveStr[11] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_face.pyn";
-			moveStr[12] = "media\\こっち\\media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_ex.pyn";
+			moveStr[8] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\sword_Tex.pyn";
+			moveStr[9] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_hair.pyn";
+			moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_wear.pyn";
+			moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_face.pyn";
+			moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_ex.pyn";
 		}
 		if (!BASICPARAM::enemyTextureWhiteBlack)
 		{
@@ -1775,27 +1775,27 @@ void Manager::Move6TextureReload()
 		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{
 			// 街灯のテクスチャデータ
-			moveStr[14] = "media\\こっち\\media\\街灯\\D\\body_col.pyn";
-			moveStr[15] = "media\\こっち\\media\\街灯\\D\\lamp_COLandems.pyn";
+			moveStr[14] = "media\\街灯\\D\\body_col.pyn";
+			moveStr[15] = "media\\街灯\\D\\lamp_COLandems.pyn";
 		}
 		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
 		{
 			// 階段とそのあとの床のテクスチャデータ
-			moveStr[18] = "media\\こっち\\media\\階段と床合体\\D\\kaidan.pyn";
-			moveStr[19] = "media\\こっち\\media\\階段と床合体\\D\\yuka.pyn";
+			moveStr[18] = "media\\階段と床合体\\D\\kaidan.pyn";
+			moveStr[19] = "media\\階段と床合体\\D\\yuka.pyn";
 		}
 		if (!BASICPARAM::stairsTextureWhiteBlack)
 		{
 			// 階段のテクスチャデータ
-			moveStr[13] = "media\\こっち\\media\\kaidan\\D\\kaidan.pyn";
+			moveStr[13] = "media\\kaidan\\D\\kaidan.pyn";
 		}
 		if (!BASICPARAM::anothreTextureWhiteBlack)
 		{
 			// 人のデータ
-			moveStr[31] = "media\\こっち\\media\\move4\\一般人＿その１\\human1_motionALL.fbm\\D\\human_col.pyn";
+			moveStr[31] = "media\\move4\\一般人＿その１\\human1_motionALL.fbm\\D\\human_col.pyn";
 
 			// スカイボックスのテクスチャデータ
-			moveStr[16] = "media\\こっち\\media\\スカイボックス\\D\\BlueSky.byn";
+			moveStr[16] = "media\\スカイボックス\\D\\BlueSky.byn";
 		}
 		break;
 
@@ -2488,15 +2488,15 @@ Manager::Manager()
 	playBonus = false;
 
 
-	LoadFile::MyLoad("media\\こっち\\media\\First\\gameStart.pyn", titleUIDraw[0], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\First\\dataLoad.pyn", titleUIDraw[1], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\First\\gameEnd.pyn", titleUIDraw[2], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\First\\omake.pyn", titleUIDraw[3], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\First\\omake2.pyn", titleUIDraw[4], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\First\\omake3.pyn", titleUIDraw[5], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\First\\omake4.pyn", titleUIDraw[6], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\First\\omake5.pyn", titleUIDraw[7], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\First\\omake6.pyn", titleUIDraw[8], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\First\\gameStart.pyn", titleUIDraw[0], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\First\\dataLoad.pyn", titleUIDraw[1], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\First\\gameEnd.pyn", titleUIDraw[2], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\First\\omake.pyn", titleUIDraw[3], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\First\\omake2.pyn", titleUIDraw[4], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\First\\omake3.pyn", titleUIDraw[5], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\First\\omake4.pyn", titleUIDraw[6], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\First\\omake5.pyn", titleUIDraw[7], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\First\\omake6.pyn", titleUIDraw[8], ELOADFILE::graph);
 	/// ゲームのタイトルに関する-------------------------------------------------------------------------------------
 
 
@@ -2515,26 +2515,25 @@ Manager::Manager()
 		optionDrawMedia[i] = -1;
 	}
 	se_save = -1;
-	//LoadFile::MyLoad("media\\こっち\\media\\sound\\saveon.wyn", se_save, ELOADFILE::soundmem);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\BGM.pyn", optionDrawMedia[0], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\camera.pyn", optionDrawMedia[1], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\D型.pyn", optionDrawMedia[2], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\P型.pyn", optionDrawMedia[3], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\SE.pyn", optionDrawMedia[4], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\Sound.pyn", optionDrawMedia[5], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\遠近法.pyn", optionDrawMedia[6], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\色覚調整.pyn", optionDrawMedia[7], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\正射影.pyn", optionDrawMedia[8], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\通常色.pyn", optionDrawMedia[9], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\横反転.pyn", optionDrawMedia[10], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\縦反転.pyn", optionDrawMedia[11], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\nextPage.pyn", optionDrawMedia[12], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\prevPage.pyn", optionDrawMedia[13], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\optionEnd.pyn", optionDrawMedia[14], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\gameEnd.pyn", optionDrawMedia[15], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\save.pyn", optionDrawMedia[16], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\yes.pyn", optionDrawMedia[17], ELOADFILE::graph);
-	LoadFile::MyLoad("media\\こっち\\media\\option\\no.pyn", optionDrawMedia[18], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\BGM.pyn", optionDrawMedia[0], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\camera.pyn", optionDrawMedia[1], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\D型.pyn", optionDrawMedia[2], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\P型.pyn", optionDrawMedia[3], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\SE.pyn", optionDrawMedia[4], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\Sound.pyn", optionDrawMedia[5], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\遠近法.pyn", optionDrawMedia[6], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\色覚調整.pyn", optionDrawMedia[7], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\正射影.pyn", optionDrawMedia[8], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\通常色.pyn", optionDrawMedia[9], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\横反転.pyn", optionDrawMedia[10], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\縦反転.pyn", optionDrawMedia[11], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\nextPage.pyn", optionDrawMedia[12], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\prevPage.pyn", optionDrawMedia[13], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\optionEnd.pyn", optionDrawMedia[14], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\gameEnd.pyn", optionDrawMedia[15], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\save.pyn", optionDrawMedia[16], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\yes.pyn", optionDrawMedia[17], ELOADFILE::graph);
+	LoadFile::MyLoad("media\\option\\no.pyn", optionDrawMedia[18], ELOADFILE::graph);
 
 
 	// フェード処理に関する

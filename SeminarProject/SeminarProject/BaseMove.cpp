@@ -79,10 +79,8 @@ void BaseMove::ShadowNoMoveDrawAfter()
 /// ---------------------------------------------------------------------------------------------
 void BaseMove::ShadowArea(const VECTOR charaArea)
 {
-	SetShadowMapDrawArea(shadowMapCharaHandle, VAdd(charaArea, shadowCharaLowArea)
-		, VAdd(charaArea, shadowCharaHighArea));
-	SetShadowMapDrawArea(shadowMapAnotherCharaHandle, VAdd(charaArea, shadowAnotherCharaLowArea)
-		, VAdd(charaArea, shadowAnotherCharaHighArea));
+	SetShadowMapDrawArea(shadowMapCharaHandle, VAdd(charaArea, shadowCharaLowArea), VAdd(charaArea, shadowCharaHighArea));
+	SetShadowMapDrawArea(shadowMapAnotherCharaHandle, VAdd(charaArea, shadowAnotherCharaLowArea), VAdd(charaArea, shadowAnotherCharaHighArea));
 }
 
 
@@ -151,23 +149,23 @@ void BaseMove::SkyTextureReload()
 	switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::WHITEBLACK:
-		LoadFile::MyLoad("media\\こっち\\media\\スカイボックス\\whiteblack\\BlueSky.byn", textureHandle, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\スカイボックス\\whiteblack\\BlueSky.byn", textureHandle, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::NORMAL:
-		LoadFile::MyLoad("media\\こっち\\media\\スカイボックス\\normal\\BlueSky.byn", textureHandle, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\スカイボックス\\normal\\BlueSky.byn", textureHandle, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::D_CORRECTION:
-		LoadFile::MyLoad("media\\こっち\\media\\スカイボックス\\D\\BlueSky.byn", textureHandle, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\スカイボックス\\D\\BlueSky.byn", textureHandle, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::P_CORRECTION:
-		LoadFile::MyLoad("media\\こっち\\media\\スカイボックス\\P\\BlueSky.byn", textureHandle, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\スカイボックス\\P\\BlueSky.byn", textureHandle, ELOADFILE::graph);
 		break;
 
 	default:
-		LoadFile::MyLoad("media\\こっち\\media\\スカイボックス\\normal\\BlueSky.byn", textureHandle, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\スカイボックス\\normal\\BlueSky.byn", textureHandle, ELOADFILE::graph);
 		break;
 	}
 

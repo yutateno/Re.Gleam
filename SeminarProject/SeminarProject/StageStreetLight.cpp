@@ -56,23 +56,23 @@ void StageStreetLight::TextureReload()
 	switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::NORMAL:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠX“”\\normal\\body_col.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠX“”\\normal\\lamp_COLandems.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ŠX“”\\normal\\body_col.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ŠX“”\\normal\\lamp_COLandems.pyn", textureHandle1, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::D_CORRECTION:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠX“”\\D\\body_col.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠX“”\\D\\lamp_COLandems.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ŠX“”\\D\\body_col.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ŠX“”\\D\\lamp_COLandems.pyn", textureHandle1, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::P_CORRECTION:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠX“”\\P\\body_col.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠX“”\\P\\lamp_COLandems.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ŠX“”\\P\\body_col.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ŠX“”\\P\\lamp_COLandems.pyn", textureHandle1, ELOADFILE::graph);
 		break;
 
 	default:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠX“”\\normal\\body_col.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠX“”\\normal\\lamp_COLandems.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ŠX“”\\normal\\body_col.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ŠX“”\\normal\\lamp_COLandems.pyn", textureHandle1, ELOADFILE::graph);
 		break;
 	}
 

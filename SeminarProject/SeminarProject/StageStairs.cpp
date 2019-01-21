@@ -51,19 +51,19 @@ void StageStairs::TextureReload()
 	switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::NORMAL:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\kaidan\\normal\\kaidan.pyn", textureHandle, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\kaidan\\normal\\kaidan.pyn", textureHandle, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::D_CORRECTION:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\kaidan\\D\\kaidan.pyn", textureHandle, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\kaidan\\D\\kaidan.pyn", textureHandle, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::P_CORRECTION:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\kaidan\\P\\kaidan.pyn", textureHandle, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\kaidan\\P\\kaidan.pyn", textureHandle, ELOADFILE::graph);
 		break;
 
 	default:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\kaidan\\normal\\kaidan.pyn", textureHandle, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\kaidan\\normal\\kaidan.pyn", textureHandle, ELOADFILE::graph);
 		break;
 	}
 

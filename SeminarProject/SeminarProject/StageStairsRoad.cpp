@@ -56,23 +56,23 @@ void StageStairsRoad::TextureReload()
 	switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::NORMAL:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠK’i‚Æ°‡‘Ì\\normal\\kaidan.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠK’i‚Æ°‡‘Ì\\normal\\yuka.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ŠK’i‚Æ°‡‘Ì\\normal\\kaidan.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ŠK’i‚Æ°‡‘Ì\\normal\\yuka.pyn", textureHandle1, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::D_CORRECTION:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠK’i‚Æ°‡‘Ì\\D\\kaidan.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠK’i‚Æ°‡‘Ì\\D\\yuka.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ŠK’i‚Æ°‡‘Ì\\D\\kaidan.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ŠK’i‚Æ°‡‘Ì\\D\\yuka.pyn", textureHandle1, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::P_CORRECTION:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠK’i‚Æ°‡‘Ì\\P\\kaidan.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠK’i‚Æ°‡‘Ì\\P\\yuka.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ŠK’i‚Æ°‡‘Ì\\P\\kaidan.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ŠK’i‚Æ°‡‘Ì\\P\\yuka.pyn", textureHandle1, ELOADFILE::graph);
 		break;
 
 	default:
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠK’i‚Æ°‡‘Ì\\normal\\kaidan.pyn", textureHandle0, ELOADFILE::graph);
-		LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\ŠK’i‚Æ°‡‘Ì\\normal\\yuka.pyn", textureHandle1, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ŠK’i‚Æ°‡‘Ì\\normal\\kaidan.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\ŠK’i‚Æ°‡‘Ì\\normal\\yuka.pyn", textureHandle1, ELOADFILE::graph);
 		break;
 	}
 

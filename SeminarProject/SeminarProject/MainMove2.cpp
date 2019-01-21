@@ -882,7 +882,7 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 
 
 	// エフェクト読み込み
-	effectAttack = LoadEffekseerEffect("media\\こっち\\media\\Effect\\characterAttack.efk");
+	effectAttack = LoadEffekseerEffect("Effect\\characterAttack.efk");
 	playingEfAttack = -1;
 } /// MainMove2::MainMove2(const std::vector<int> v_file)
 

@@ -8,7 +8,7 @@ namespace FileSaveLoad
 	{
 		std::ofstream saveFile;
 
-		saveFile.open("media\\こっち\\media\\Save.cyn");
+		saveFile.open("media\\Save.cyn");
 
 		// ファイル読み込み失敗
 		if (saveFile.fail())
@@ -78,7 +78,7 @@ namespace FileSaveLoad
 	{
 		std::ifstream ifs;
 		std::vector<std::vector<std::string>> mapdata;
-		ifs.open("media\\こっち\\media\\Save.cyn");
+		ifs.open("media\\Save.cyn");
 		// マップデータ読み込み失敗
 		if (ifs.fail())
 		{

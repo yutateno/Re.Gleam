@@ -117,7 +117,7 @@ BasicObject::BasicObject(bool shadowDo)
 {
 	// ‰e‚Ì“Ç‚İ‚İ
 	shadowHandle = -1;
-	LoadFile::MyLoad("media\\‚±‚Á‚¿\\media\\Shadow.tyn", shadowHandle, ELOADFILE::graph);
+	LoadFile::MyLoad("media\\Shadow.tyn", shadowHandle, ELOADFILE::graph);
 
 
 	// î•ñ‰Šú‰»

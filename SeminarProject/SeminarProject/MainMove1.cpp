@@ -494,7 +494,7 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 
 
 	// エフェクト読み込み
-	effeckBack = LoadEffekseerEffect("media\\こっち\\media\\Effect\\moveOneBack.efk");
+	effeckBack = LoadEffekseerEffect("media\\Effect\\moveOneBack.efk");
 	playingEfBack = -1;
 } /// MainMove1::MainMove1(const std::vector<int> v_file)
 

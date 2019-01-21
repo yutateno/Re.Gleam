@@ -1,7 +1,7 @@
 #include "EnemyMove1.hpp"
 
 
-// 動きのプロセス
+/// ---------------------------------------------------------------------------------------------------------
 void EnemyMove1::MoveProcess()
 {
 	// 上昇中のとき
@@ -48,21 +48,22 @@ void EnemyMove1::MoveProcess()
 } /// void EnemyMove1::MoveProcess()
 
 
-// コンストラクタ
-EnemyMove1::EnemyMove1(const int collStageHandle, const float areaX, const float areaZ, const float color) : BasicCreature(true)
+/// ---------------------------------------------------------------------------------------------------------
+EnemyMove1::EnemyMove1(const int collStageHandle, const float areaX, const float areaZ
+	, const float color) : BasicCreature(true)
 {
-	// あたり判定のステージのコリジョン情報の更新
+	// あたり判定のステージのコリジョン情報
 	stageHandle = -1;
 
 
-	// 足影判定用のステージのコリジョン情報の更新
+	// 足影判定用のステージのコリジョン情報の設定
 	shadowStageHandle = -1;
 	shadowStageHandle = MV1DuplicateModel(collStageHandle);
 	MV1SetScale(shadowStageHandle, VGet(0.8f, 0.8f, 0.8f));
-	MV1SetPosition(shadowStageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
-	MV1SetupCollInfo(shadowStageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetFrameVisible(shadowStageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(shadowStageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetPosition(shadowStageHandle, VGet(0.0f, 0.0f, 0.0f));
+	MV1SetupCollInfo(shadowStageHandle, -1);
+	MV1SetFrameVisible(shadowStageHandle, -1, false);
+	MV1RefreshCollInfo(shadowStageHandle, -1);
 
 
 	// モデルの向きと位置
@@ -93,28 +94,24 @@ EnemyMove1::EnemyMove1(const int collStageHandle, const float areaX, const float
 } /// EnemyMove1::EnemyMove1(const int collStageHandle, const float areaX, const float areaZ, const float color) : BasicCreature(true)
 
 
-// デストラクタ
+/// ---------------------------------------------------------------------------------------------------------
 EnemyMove1::~EnemyMove1()
 {
 	MODEL_RELEASE(shadowStageHandle);
 }
 
 
-// 描画
+/// ---------------------------------------------------------------------------------------------------------
 void EnemyMove1::Draw()
 {
 	BasicObject::ShadowFoot(shadowStageHandle);
 
 
-	// Ｚバッファを有効にする
 	SetUseZBuffer3D(TRUE);
-	// Ｚバッファへの書き込みを有効にする
 	SetWriteZBuffer3D(TRUE);
 	SetMaterialParam(material);
 	DrawSphere3D(VAdd(area, VGet(0.0f, 60.0f, 0.0f)), modelWidth, 16, GetColor(68, 178, 227), GetColor(255, 255, 255), TRUE);
-	// Ｚバッファへの書き込みを有効にする
 	SetWriteZBuffer3D(FALSE);
-	// Ｚバッファを有効にする
 	SetUseZBuffer3D(FALSE);
 
 
@@ -129,7 +126,7 @@ void EnemyMove1::Draw()
 }
 
 
-// メインプロセス
+/// ---------------------------------------------------------------------------------------------------------
 void EnemyMove1::Process()
 {
 	// 動きのプロセス
@@ -137,10 +134,10 @@ void EnemyMove1::Process()
 }
 
 
-// プレイヤーが近づいたら
+/// ---------------------------------------------------------------------------------------------------------
 void EnemyMove1::NearChara(const VECTOR characterArea)
 {
-	// プレイヤーにちこうよれ
+	// プレイヤーに近づく
 	if (characterArea.x < area.x - 4.0f)
 	{
 		area.x -= 2.0f;

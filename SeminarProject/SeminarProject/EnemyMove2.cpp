@@ -1,7 +1,7 @@
 #include "EnemyMove2.hpp"
 
 
-// コンストラクタ
+/// -------------------------------------------------------------------------------------------------
 EnemyMove2::EnemyMove2(const VECTOR area, const int modelHandle, const int tex0) : BasicCreature()
 {
 	// 変数の初期化
@@ -32,24 +32,26 @@ EnemyMove2::EnemyMove2(const VECTOR area, const int modelHandle, const int tex0)
 	MV1SetPosition(this->modelHandle, area);
 
 
+	// コリジョン情報を設定
 	MV1SetupCollInfo(this->modelHandle, -1);
 } /// EnemyMove2::EnemyMove2(const VECTOR area, const int modelHandle, const int tex0) : BasicCreature()
 
 
-// デストラクタ
+/// -------------------------------------------------------------------------------------------------
 EnemyMove2::~EnemyMove2()
 {
 	MODEL_RELEASE(modelHandle);
 }
 
 
-// 描画
+/// -------------------------------------------------------------------------------------------------
 void EnemyMove2::Draw()
 {
 #ifdef _DEBUG
 	if (MyDebug::enemyTwoDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f))
+			, modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
 	}
 #endif // _DEBUG
 }

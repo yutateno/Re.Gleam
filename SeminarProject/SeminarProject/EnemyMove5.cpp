@@ -219,9 +219,10 @@ void EnemyMove5::FallProcess()
 } /// void EnemyMove3CrayonHuman::FallProcess()
 
 
-// コンストラクタ
-EnemyMove5::EnemyMove5(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
-	, const int tex0, const VECTOR area, const float rotationY) : BasicCreature(true)
+/// -----------------------------------------------------------------------------------------
+EnemyMove5::EnemyMove5(const int modelHandle, const int collStageHandle
+	, const int stairsHandle, const int stairsRoadHandle, const int tex0
+	, const VECTOR area, const float rotationY) : BasicCreature(true)
 {
 	// 当たり判定用ステージのコリジョン情報の更新
 	stageHandle = -1;

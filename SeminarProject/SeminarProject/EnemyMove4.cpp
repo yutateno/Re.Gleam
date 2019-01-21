@@ -1,7 +1,7 @@
 #include "EnemyMove4.hpp"
 
 
-// モーションプロセス
+/// ------------------------------------------------------------------------------------------------
 void EnemyMove4::MotionProcess()
 {
 	// 死んでいなかったら
@@ -30,6 +30,8 @@ void EnemyMove4::MotionProcess()
 
 
 					attackFrame += animSpeed;
+					
+					
 					// 攻撃が終わったら
 					if (attackFrame >= MV1GetAnimTotalTime(modelHandle, MOTION::attack))
 					{
@@ -60,7 +62,7 @@ void EnemyMove4::MotionProcess()
 }
 
 
-// プレイヤーを追いかける
+/// ------------------------------------------------------------------------------------------------
 void EnemyMove4::ChaseMoveProcess()
 {
 	// キャラクターに近づく
@@ -84,7 +86,7 @@ void EnemyMove4::ChaseMoveProcess()
 }
 
 
-// 落下処理
+/// ------------------------------------------------------------------------------------------------
 void EnemyMove4::FallProcess()
 {
 	// 足元に何もなかったら
@@ -110,6 +112,7 @@ void EnemyMove4::FallProcess()
 		area.y += jumpPower;			// Y座標に加え続ける
 
 
+		// 落下させる
 		area.y -= 10.5f;
 	}
 
@@ -136,34 +139,36 @@ void EnemyMove4::FallProcess()
 } /// void EnemyMove4::FallProcess()
 
 
-// コンストラクタ
-EnemyMove4::EnemyMove4(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
-	, const int tex0, const VECTOR area, const float rotationY) : BasicCreature(true)
+/// ------------------------------------------------------------------------------------------------
+EnemyMove4::EnemyMove4(const int modelHandle, const int collStageHandle
+	, const int stairsHandle, const int stairsRoadHandle, const int tex0
+	, const VECTOR area, const float rotationY) : BasicCreature(true)
 {
-	// 当たり判定用ステージのコリジョン情報の更新
+	// 当たり判定用ステージのコリジョン情報の設定
 	stageHandle = -1;
 	stageHandle = MV1DuplicateModel(collStageHandle);
 	MV1SetScale(stageHandle, VGet(0.75f, 0.75f, 0.75f));
-	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
-	MV1SetupCollInfo(stageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetFrameVisible(stageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(stageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));
+	MV1SetupCollInfo(stageHandle, -1);
+	MV1SetFrameVisible(stageHandle, -1, false);
+	MV1RefreshCollInfo(stageHandle, -1);
 
 
-	// 足影用ステージのコリジョン情報の更新
+	// 足影用ステージのコリジョン情報の設定
 	shadowStageHandle = -1;
 	shadowStageHandle = MV1DuplicateModel(collStageHandle);
 	MV1SetScale(shadowStageHandle, VGet(0.8f, 0.8f, 0.8f));
-	MV1SetPosition(shadowStageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
-	MV1SetupCollInfo(shadowStageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetFrameVisible(shadowStageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(shadowStageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetPosition(shadowStageHandle, VGet(0.0f, 0.0f, 0.0f));
+	MV1SetupCollInfo(shadowStageHandle, -1);
+	MV1SetFrameVisible(shadowStageHandle, -1, false);
+	MV1RefreshCollInfo(shadowStageHandle, -1);
 
 
 	// 3Dモデルの読み込み
 	this->modelHandle = -1;
 	this->modelHandle = MV1DuplicateModel(modelHandle);
-	MV1SetScale(this->modelHandle, VGet(static_cast<float>(bigBodyChangeDamage), static_cast<float>(bigBodyChangeDamage)
+	MV1SetScale(this->modelHandle, VGet(static_cast<float>(bigBodyChangeDamage)
+		, static_cast<float>(bigBodyChangeDamage)
 		, static_cast<float>(bigBodyChangeDamage)));
 
 	// テクスチャの適応
@@ -221,13 +226,16 @@ EnemyMove4::EnemyMove4(const int modelHandle, const int collStageHandle, const i
 	if (BASICPARAM::stairsNum != 0)
 	{
 		v_stairsHandle.resize(BASICPARAM::stairsNum);
+
+
+		// コリジョン情報の設定
 		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
 		{
 			v_stairsHandle[i] = MV1DuplicateModel(stairsHandle);
 			MV1SetRotationXYZ(v_stairsHandle[i], VGet(0.0f, BASICPARAM::v_stairsAngle[i], 0.0f));
-			MV1SetPosition(v_stairsHandle[i], BASICPARAM::v_stairsArea[i]);				// ステージの座標を更新
-			MV1SetupCollInfo(v_stairsHandle[i], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-			MV1SetFrameVisible(v_stairsHandle[i], -1, false);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+			MV1SetPosition(v_stairsHandle[i], BASICPARAM::v_stairsArea[i]);
+			MV1SetupCollInfo(v_stairsHandle[i], -1);
+			MV1SetFrameVisible(v_stairsHandle[i], -1, false);
 			MV1RefreshCollInfo(v_stairsHandle[i], -1);
 		}
 	}
@@ -238,13 +246,16 @@ EnemyMove4::EnemyMove4(const int modelHandle, const int collStageHandle, const i
 	if (BASICPARAM::stairsRoadNum != 0)
 	{
 		v_stairsRoadHandle.resize(BASICPARAM::stairsRoadNum);
+
+
+		// コリジョン情報の設定
 		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
 		{
 			v_stairsRoadHandle[i] = MV1DuplicateModel(stairsRoadHandle);
 			MV1SetRotationXYZ(v_stairsRoadHandle[i], VGet(0.0f, BASICPARAM::v_stairsRoadAngle[i], 0.0f));
-			MV1SetPosition(v_stairsRoadHandle[i], BASICPARAM::v_stairsRoadArea[i]);				// ステージの座標を更新
-			MV1SetupCollInfo(v_stairsRoadHandle[i], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-			MV1SetFrameVisible(v_stairsRoadHandle[i], -1, false);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+			MV1SetPosition(v_stairsRoadHandle[i], BASICPARAM::v_stairsRoadArea[i]);
+			MV1SetupCollInfo(v_stairsRoadHandle[i], -1);
+			MV1SetFrameVisible(v_stairsRoadHandle[i], -1, false);
 			MV1RefreshCollInfo(v_stairsRoadHandle[i], -1);
 		}
 	}
@@ -256,11 +267,10 @@ EnemyMove4::EnemyMove4(const int modelHandle, const int collStageHandle, const i
 
 	// 当たり判定のセットアップ
 	MV1SetupCollInfo(this->modelHandle, -1);
-} /// EnemyMove4::EnemyMove4(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
-/// , const int tex0, const VECTOR area, const float rotationY) : BasicCreature(true)
+} /// EnemyMove4::EnemyMove4(const int modelHandle, const int collStageHandle
 
 
-// デストラクタ
+/// ------------------------------------------------------------------------------------------------
 EnemyMove4::~EnemyMove4()
 {
 	// テクスチャ解放
@@ -304,7 +314,7 @@ EnemyMove4::~EnemyMove4()
 } /// EnemyMove4::~EnemyMove4()
 
 
-// 描画
+/// ------------------------------------------------------------------------------------------------
 void EnemyMove4::Draw()
 {
 	BasicObject::ShadowFoot(shadowStageHandle);
@@ -327,14 +337,14 @@ void EnemyMove4::Draw()
 } /// void EnemyMove4::Draw()
 
 
-// 特別なモデル描画
+/// ------------------------------------------------------------------------------------------------
 void EnemyMove4::UniqueModelDraw()
 {
 	MV1DrawModel(modelHandle);
 }
 
 
-// プロセス
+/// ------------------------------------------------------------------------------------------------
 void EnemyMove4::Process()
 {
 	// 消滅していたら
@@ -344,7 +354,7 @@ void EnemyMove4::Process()
 	// 死んだとき
 	if (deathFlag)
 	{
-		MotionProcess();	// モーションプロセス
+		MotionProcess();			// モーションプロセス
 
 
 		Player_AnimProcess();		// モーションの実態
@@ -380,10 +390,10 @@ void EnemyMove4::Process()
 	}
 
 
-	MotionProcess();		// モーションプロセス
+	MotionProcess();			// モーションプロセス
 
 
-	Player_AnimProcess();	// モーション実態
+	Player_AnimProcess();		// モーション実態
 
 
 	// 死んでいないがダメージを受けたら
@@ -441,23 +451,18 @@ void EnemyMove4::Process()
 	FallProcess();	// 落下のプロセス
 
 
-	// プレイヤーを視認できる方向
+	// プレイヤーを常に視認してモデルを配置
 	charaLookAtAngle = atan2(VSub(area, playerCharaArea).x, VSub(area, playerCharaArea).z);
-
-
-	// 向かせる
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, charaLookAtAngle, 0.0f));
-
-
-	// 指定位置にモデルを配置
 	MV1SetPosition(modelHandle, area);
 } /// void EnemyMove4::Process()
 
 
-// テクスチャ差し替え
+/// ------------------------------------------------------------------------------------------------
 void EnemyMove4::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle0);
+
 
 	switch (BASICPARAM::e_TextureColor)
 	{
@@ -478,12 +483,13 @@ void EnemyMove4::TextureReload()
 		break;
 	}
 
+
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle0, true);
 }
 
 
-// プレイヤーの位置と距離を取得する
+/// ------------------------------------------------------------------------------------------------
 void EnemyMove4::SetCharacterArea(const VECTOR characterArea, const int distance)
 {
 	playerCharaArea = characterArea;

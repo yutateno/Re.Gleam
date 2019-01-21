@@ -1,7 +1,7 @@
 #include "EnemyBossBefore.hpp"
 
 
-// コンストラクタ
+/// ------------------------------------------------------------------------------------------------
 EnemyBossBefore::EnemyBossBefore() : BasicCreature()
 {
 	// 3Dモデルの読み込み
@@ -19,8 +19,9 @@ EnemyBossBefore::EnemyBossBefore() : BasicCreature()
 	jumpUpNow = false;
 
 
-	std::random_device rnd;     // 非決定的な乱数生成器を生成
-	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+	// 乱数生成
+	std::random_device rnd;
+	std::mt19937 mt(rnd());
 	std::uniform_int_distribution<> modelView(0, 1);	// モデルの実態を描画するかどうか
 	// モデルを描画しない場合
 	if (modelView(mt) == 0)
@@ -128,24 +129,21 @@ EnemyBossBefore::EnemyBossBefore() : BasicCreature()
 	} /// else(!if (modelView(mt) == 0))
 	
 
-	// ３Ｄモデルの0番目のアニメーションをアタッチする
+	// ３Ｄモデルのアニメーションをアタッチする
 	attachMotion = MV1AttachAnim(this->modelHandle, 1, -1, FALSE);
-
-
-	// アタッチしたアニメーションの総再生時間を取得する
 	totalTime = MV1GetAttachAnimTotalTime(this->modelHandle, attachMotion);
 
 
-	// 第二引数の回転角度をセット
+	// モデルの座標を設定
 	MV1SetRotationXYZ(this->modelHandle, VGet(0.0f, 0.0f, 0.0f));
-	// モデルの座標を更新
 	preArea = area;
 	MV1SetPosition(this->modelHandle, area);
 } /// EnemyBossBefore::EnemyBossBefore() : BasicCreature(true)
 
 
-// コピーコンストラクタ
-EnemyBossBefore::EnemyBossBefore(const int modelHandle, const int modelTex0, const int modeltex1, const int modelTex2)
+/// ------------------------------------------------------------------------------------------------
+EnemyBossBefore::EnemyBossBefore(const int modelHandle, const int modelTex0
+	, const int modeltex1, const int modelTex2)
 {
 	// 3Dモデルの読み込み
 	this->modelHandle = -1;
@@ -183,10 +181,10 @@ EnemyBossBefore::EnemyBossBefore(const int modelHandle, const int modelTex0, con
 	// モデルの座標を更新
 	preArea = area;
 	MV1SetPosition(this->modelHandle, area);
-} /// EnemyBossBefore::EnemyBossBefore(const int modelHandle, const int modelTex0, const int modeltex1, const int modelTex2)
+} /// EnemyBossBefore::EnemyBossBefore(const int modelHandle, const int modelTex0
 
 
-// デストラクタ
+/// ------------------------------------------------------------------------------------------------
 EnemyBossBefore::~EnemyBossBefore()
 {
 	// モデル開放
@@ -194,7 +192,7 @@ EnemyBossBefore::~EnemyBossBefore()
 }
 
 
-// プロセス
+/// ------------------------------------------------------------------------------------------------
 void EnemyBossBefore::Process()
 {
 	// モーションの実態
@@ -202,18 +200,20 @@ void EnemyBossBefore::Process()
 }
 
 
-// ムーブ6にてのみ体の向きを変える
+/// ------------------------------------------------------------------------------------------------
 void EnemyBossBefore::MoveReturn()
 {
+	// 向きを回転させる
 	if (angle <= DX_PI_F / 2.0f) angle += DX_PI_F / 90.0f;
 	else Player_PlayAnim(0);
 	MV1SetRotationXYZ(this->modelHandle, VGet(0.0f, angle, 0.0f));
 }
 
 
-// 体を地面に埋まらせる(ムーブ6のみ
+/// ------------------------------------------------------------------------------------------------
 void EnemyBossBefore::AreaSetDown()
 {
+	// 地面に埋まらせる
 	area.y -= 2.0f;
 	MV1SetPosition(modelHandle, this->area);
 }

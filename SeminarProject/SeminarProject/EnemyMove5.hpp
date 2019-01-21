@@ -6,7 +6,7 @@
 class EnemyMove5 : public BasicCreature
 {
 private:
-	/// それぞれの位置に関して-------------
+	/// それぞれの位置に関して---------------------
 
 	// 前後の向きを扱う変数
 	float direZAngle;
@@ -36,7 +36,7 @@ private:
 	int escapeFrame;
 
 
-	/// モーションに関して----------
+	/// モーションに関して-------------------------
 
 	// モーションのID
 	enum MOTION { dash, idle, death };
@@ -45,19 +45,19 @@ private:
 	void MotionProcess();
 
 
-	/// 階段に関して--------------
+	/// 階段に関して-------------------------------
 
 	// 階段のモデル
 	std::vector<int> v_stairsHandle;
 
 
-	/// 階段と床に関して----------
+	/// 階段と床に関して---------------------------
 
 	// 階段と床のモデル
 	std::vector<int> v_stairsRoadHandle;
 
 
-	/// 動きに関して------------
+	/// 動きに関して--------------------------------
 
 	// 動きのプロセス
 	void AutoMoveProcess();
@@ -69,7 +69,7 @@ private:
 	int moveCount;
 
 
-	/// 攻撃に関して
+	/// 攻撃に関して-------------------------------
 
 	// 攻撃のフレーム
 	float attackFrame;
@@ -78,7 +78,7 @@ private:
 	int damageCount;
 
 
-	/// 落下に関して
+	/// 落下に関して-------------------------------
 
 	// 重力
 	float gravity;
@@ -99,7 +99,7 @@ private:
 	int flyCount;
 
 
-	/// テクスチャに関して---------------
+	/// テクスチャに関して-------------------------
 
 	// テクスチャの相対IDを後ろにつけて
 	int textureHandle0;
@@ -107,8 +107,8 @@ private:
 
 public:
 	// コンストラクタ
-	EnemyMove5(const int modelHandle, const int collStageHandle, const int stairsHandle, const int stairsRoadHandle
-		, const int tex0, const VECTOR area, const float rotationY);
+	EnemyMove5(const int modelHandle, const int collStageHandle, const int stairsHandle
+		, const int stairsRoadHandle, const int tex0, const VECTOR area, const float rotationY);
 
 	// デストラクタ
 	~EnemyMove5();

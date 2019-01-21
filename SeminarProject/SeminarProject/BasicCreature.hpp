@@ -6,7 +6,7 @@
 class BasicCreature : public BasicObject
 {
 protected:
-	/// 位置について------------------------
+	/// 位置について--------------------------------------------------
 
 	// 移動前の直前のキャラ位置
 	VECTOR preArea;	
@@ -18,7 +18,7 @@ protected:
 	VECTOR nextArea;
 
 
-	/// 動きに関して------------------------------------
+	/// 動きに関して-------------------------------------------------
 
 	// 移動スピード
 	float walkSpeed;	
@@ -42,7 +42,7 @@ protected:
 	int floorNum;
 
 
-	/// モーションに関して-------------------
+	/// モーションに関して-----------------------------------------
 
 	// モーションのアタッチ
 	int attachMotion;			
@@ -60,7 +60,7 @@ protected:
 	void Player_AnimProcess();				
 
 
-	/// 当たり判定-----------------------------
+	/// 当たり判定------------------------------------------------
 
 	// ステージハンドル
 	int stageHandle;
@@ -78,7 +78,7 @@ protected:
 	int hitDimNum;
 
 
-	/// 攻撃を受けた時に関する-----------
+	/// 攻撃を受けた時に関する------------------------------------
 
 	// ダメージを受けたかどうか
 	bool damageHit;
@@ -94,7 +94,7 @@ protected:
 
 
 private:
-	/// モーションに関して-------------
+	/// モーションに関して----------------------------------------
 
 	// モーションの現在の時間
 	float nowPlayTime;			
@@ -109,7 +109,7 @@ private:
 	float preMotionPlayTime;	
 
 
-	/// 当たり判定-------------------------------------------				
+	/// 当たり判定------------------------------------------------		
 
 	// 判定する壁の数
 	int wallNum;					
@@ -137,7 +137,6 @@ private:
 
 	// 線分との判定を代入する構造体
 	HITRESULT_LINE lineResult;
-	/// ----------------------------------------------------
 
 
 public:
@@ -152,7 +151,7 @@ public:
 
 
 	// 直前の座標に戻す
-	void SetAreaReturn();
+	void SetAreaReturn() { area = preArea; }
 
 	// 当たったら押し出すようにする
 	void HitCircleReturn(VECTOR hitUnderArea, float width);
@@ -164,7 +163,7 @@ public:
 	void OptionActorDrawAfter() override {}
 
 
-	/// ゲッターセッター
+	/// ゲッターセッター-------------------------------------------
 
 	// 死んだかどうか
 	const bool GetDeathFlag() const { return deathFlag; }

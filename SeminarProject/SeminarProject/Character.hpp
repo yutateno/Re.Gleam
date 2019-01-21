@@ -58,7 +58,7 @@ public:
 
 
 	// 位置を初期化
-	void PositionReset();
+	void PositionReset() { area = VGet(0.0f, 0.0f, 0.0f); }
 
 	// オプション用モデル描画の後始末
 	void OptionActorDrawAfter() override;

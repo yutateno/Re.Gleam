@@ -190,7 +190,7 @@ public:
 
 
 	// ポジションを初期化する
-	void PositionReset();
+	void PositionReset() { area = VGet(0.0f, 50.0f, 0.0f); }
 
 	// テクスチャの切り替え
 	void TextureReload();

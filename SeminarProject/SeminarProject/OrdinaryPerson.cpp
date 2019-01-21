@@ -1,7 +1,7 @@
 #include "OrdinaryPerson.hpp"
 
 
-// 動きのプロセス
+/// ----------------------------------------------------------------------------------------------------------------------
 void OrdinaryPerson::MoveProcess()
 {
 	animSpeed = 0.75f;			// モーションの速度を決める
@@ -123,7 +123,7 @@ void OrdinaryPerson::MoveProcess()
 } /// void OrdinaryPerson::MoveProcess()
 
 
-// 落下処理
+/// ----------------------------------------------------------------------------------------------------------------------
 void OrdinaryPerson::FallProcess()
 {
 	// 足元に何もなかったら
@@ -176,28 +176,28 @@ void OrdinaryPerson::FallProcess()
 } /// void OrdinaryPerson::FallProcess()
 
 
-// コンストラクタ
+/// ----------------------------------------------------------------------------------------------------------------------
 OrdinaryPerson::OrdinaryPerson(const int modelHandle, const int collStageHandle, const int stairsHandle
 	, const int stairsRoadHandle, const int tex0, const VECTOR area, const float rotationY) : BasicCreature(true)
 {
-	// あたり判定用のステージのコリジョン情報の更新
+	// あたり判定用のステージのコリジョン情報の設定
 	stageHandle = -1;
 	stageHandle = MV1DuplicateModel(collStageHandle);
 	MV1SetScale(stageHandle, VGet(0.75f, 0.75f, 0.75f));
-	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
-	MV1SetupCollInfo(stageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetFrameVisible(stageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(stageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));
+	MV1SetupCollInfo(stageHandle, -1);
+	MV1SetFrameVisible(stageHandle, -1, false);
+	MV1RefreshCollInfo(stageHandle, -1);
 
 
-	// 足影判定用のステージのコリジョン情報の更新
+	// 足影判定用のステージのコリジョン情報の設定
 	shadowStageHandle = -1;
 	shadowStageHandle = MV1DuplicateModel(collStageHandle);
 	MV1SetScale(shadowStageHandle, VGet(0.8f, 0.8f, 0.8f));
-	MV1SetPosition(shadowStageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
-	MV1SetupCollInfo(shadowStageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetFrameVisible(shadowStageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(shadowStageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetPosition(shadowStageHandle, VGet(0.0f, 0.0f, 0.0f));
+	MV1SetupCollInfo(shadowStageHandle, -1);
+	MV1SetFrameVisible(shadowStageHandle, -1, false);
+	MV1RefreshCollInfo(shadowStageHandle, -1);
 
 
 	// ３Ｄモデルの読み込み
@@ -253,13 +253,16 @@ OrdinaryPerson::OrdinaryPerson(const int modelHandle, const int collStageHandle,
 	if (BASICPARAM::stairsNum != 0)
 	{
 		v_stairsHandle.resize(BASICPARAM::stairsNum);
+
+
+		// コリジョン情報を設定
 		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
 		{
 			v_stairsHandle[i] = MV1DuplicateModel(stairsHandle);
 			MV1SetRotationXYZ(v_stairsHandle[i], VGet(0.0f, BASICPARAM::v_stairsAngle[i], 0.0f));
-			MV1SetPosition(v_stairsHandle[i], BASICPARAM::v_stairsArea[i]);				// ステージの座標を更新
-			MV1SetupCollInfo(v_stairsHandle[i], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-			MV1SetFrameVisible(v_stairsHandle[i], -1, false);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+			MV1SetPosition(v_stairsHandle[i], BASICPARAM::v_stairsArea[i]);
+			MV1SetupCollInfo(v_stairsHandle[i], -1);
+			MV1SetFrameVisible(v_stairsHandle[i], -1, false);
 			MV1RefreshCollInfo(v_stairsHandle[i], -1);
 		}
 	}
@@ -269,28 +272,28 @@ OrdinaryPerson::OrdinaryPerson(const int modelHandle, const int collStageHandle,
 	if (BASICPARAM::stairsRoadNum != 0)
 	{
 		v_stairsRoadHandle.resize(BASICPARAM::stairsRoadNum);
+
+
+		// コリジョン情報を設定
 		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
 		{
 			v_stairsRoadHandle[i] = MV1DuplicateModel(stairsRoadHandle);
 			MV1SetRotationXYZ(v_stairsRoadHandle[i], VGet(0.0f, BASICPARAM::v_stairsRoadAngle[i], 0.0f));
-			MV1SetPosition(v_stairsRoadHandle[i], BASICPARAM::v_stairsRoadArea[i]);				// ステージの座標を更新
-			MV1SetupCollInfo(v_stairsRoadHandle[i], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-			MV1SetFrameVisible(v_stairsRoadHandle[i], -1, false);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+			MV1SetPosition(v_stairsRoadHandle[i], BASICPARAM::v_stairsRoadArea[i]);	
+			MV1SetupCollInfo(v_stairsRoadHandle[i], -1);
+			MV1SetFrameVisible(v_stairsRoadHandle[i], -1, false);
 			MV1RefreshCollInfo(v_stairsRoadHandle[i], -1);
 		}
 	}
 
 
-	// 第二引数の回転角度をセット
+	// 指定位置にモデルを配置
 	MV1SetRotationXYZ(this->modelHandle, VGet(0.0f, rotationY, 0.0f));
-	// モデルの座標を更新
 	MV1SetPosition(this->modelHandle, this->area);
 } /// OrdinaryPerson::OrdinaryPerson(const int modelHandle, const int collStageHandle, const int stairsHandle
-/// , const int stairsRoadHandle, const int tex0, const VECTOR area, const float rotationY) : BasicCreature(true)
 
 
-
-// デストラクタ
+/// ----------------------------------------------------------------------------------------------------------------------
 OrdinaryPerson::~OrdinaryPerson()
 {
 	// テクスチャ開放
@@ -334,7 +337,7 @@ OrdinaryPerson::~OrdinaryPerson()
 } /// OrdinaryPerson::~OrdinaryPerson()
 
 
-// メインプロセス
+/// ----------------------------------------------------------------------------------------------------------------------
 void OrdinaryPerson::Process()
 {
 	// 生存を許してないとき
@@ -381,18 +384,18 @@ void OrdinaryPerson::Process()
 	FallProcess();
 
 
-	// 第二引数の回転角度をセット
-	MV1SetRotationXYZ(modelHandle, VGet(0.0f, direXAngle + direZAngle, 0.0f));
 	// 指定位置にモデルを配置
+	MV1SetRotationXYZ(modelHandle, VGet(0.0f, direXAngle + direZAngle, 0.0f));
 	MV1SetPosition(modelHandle, area);
 } /// void OrdinaryPerson::Process()
 
 
-// 一般人のテクスチャ差し替え
+/// ----------------------------------------------------------------------------------------------------------------------
 void OrdinaryPerson::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle0);
 
+	
 	switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::NORMAL:
@@ -412,11 +415,12 @@ void OrdinaryPerson::TextureReload()
 		break;
 	}
 
+
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 }
 
 
-// 生存を許されたら座標を決める
+/// ----------------------------------------------------------------------------------------------------------------------
 void OrdinaryPerson::SetAlive(VECTOR area, bool alive)
 {
 	this->area = area;
@@ -424,7 +428,7 @@ void OrdinaryPerson::SetAlive(VECTOR area, bool alive)
 }
 
 
-// 描画
+/// ----------------------------------------------------------------------------------------------------------------------
 void OrdinaryPerson::Draw()
 {
 	// 生存を許してないとき
@@ -433,10 +437,12 @@ void OrdinaryPerson::Draw()
 
 	BasicObject::ShadowFoot(shadowStageHandle);
 
+
 #ifdef _DEBUG
 	if(MyDebug::ordinaryDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f))
+			, modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
 	}
 #endif // _DEBUG
 }

@@ -1310,13 +1310,6 @@ void CharacterSword::OnlyCollFloorProcess(const float getAngle)
 
 
 /// ---------------------------------------------------------------------------------------------------------------
-void CharacterSword::PositionReset()
-{
-	area = VGet(0.0f, 50.0f, 0.0f);
-}
-
-
-/// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle0);

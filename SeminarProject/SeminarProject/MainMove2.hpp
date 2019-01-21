@@ -221,9 +221,6 @@ private:
 	// BGMの音量変更を一度だけ呼ぶように
 	int bgmOnceVolumeChange;
 
-	// 音周りのプロセス
-	void MoveSoundProcess(bool se, int areaID = 0);
-
 
 public:
 	// コンストラクタ

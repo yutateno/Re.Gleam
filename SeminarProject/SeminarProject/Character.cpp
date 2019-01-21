@@ -1,6 +1,7 @@
 #include "Character.hpp"
 
 
+
 /// ----------------------------------------------------------------------------------------------------------------
 void Character::MoveProcess()
 {
@@ -107,6 +108,7 @@ void Character::MoveProcess()
 } /// void Character::MoveProcess()
 
 
+
 /// ----------------------------------------------------------------------------------------------------------------
 void Character::OpeProcess()
 {
@@ -190,6 +192,7 @@ void Character::OpeProcess()
 } /// void Character::OpeProcess()
 
 
+
 /// ----------------------------------------------------------------------------------------------------------------
 Character::Character(const int modelHandle, const int collStageHandle, const int tex0, const int tex1
 	, const int tex2, const int tex3) : BasicCreature(true)
@@ -268,6 +271,7 @@ Character::Character(const int modelHandle, const int collStageHandle, const int
 } /// Character::Character(const int modelHandle, const int collStageHandle, const int tex0, const int tex1
 
 
+
 /// ----------------------------------------------------------------------------------------------------------------
 Character::~Character()
 {
@@ -280,6 +284,7 @@ Character::~Character()
 	MODEL_RELEASE(shadowStageHandle);
 	MODEL_RELEASE(stageHandle);
 }
+
 
 
 /// ----------------------------------------------------------------------------------------------------------------
@@ -321,12 +326,14 @@ void Character::Process(const float getAngle)
 } /// void Character::Process(const float getAngle)
 
 
+
 /// ----------------------------------------------------------------------------------------------------------------
 void Character::OptionActorDrawAfter()
 {
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));
 	MV1SetPosition(modelHandle, area);
 }
+
 
 
 /// ----------------------------------------------------------------------------------------------------------------

@@ -1,7 +1,8 @@
 #include "Manager.hpp"
 
 
-// シーン変更
+
+/// --------------------------------------------------------------------------------------------------
 void Manager::SceneChange()
 {
 	// 今のシーン
@@ -152,7 +153,8 @@ void Manager::SceneChange()
 } /// void Manager::SceneChange()
 
 
-// タイトルプロセス
+
+/// --------------------------------------------------------------------------------------------------
 void Manager::TitleProcess()
 {
 	// 決定を押したら
@@ -364,7 +366,8 @@ void Manager::TitleProcess()
 } /// void Manager::TitleProcess()
 
 
-// タイトル描画
+
+/// --------------------------------------------------------------------------------------------------
 void Manager::TitleDraw()
 {
 	// ゲーム開始
@@ -412,7 +415,8 @@ void Manager::TitleDraw()
 } /// void Manager::TitleDraw()
 
 
-// ムーブ1の読み込み素材の初期化
+
+/// --------------------------------------------------------------------------------------------------
 void Manager::InitMove1Load()
 {
 	moveStr.resize(max1 + 1);
@@ -477,7 +481,8 @@ void Manager::InitMove1Load()
 } /// void Manager::InitMove1Load()
 
 
-// ムーブ2の読み込み素材の初期化
+
+/// --------------------------------------------------------------------------------------------------
 void Manager::InitMove2Load()
 {
 	moveStr.resize(max2 + 1);
@@ -642,7 +647,8 @@ void Manager::InitMove2Load()
 } /// void Manager::InitMove2Load()
 
 
-// ムーブ3の読み込み素材の初期化
+
+/// --------------------------------------------------------------------------------------------------
 void Manager::InitMove3Load()
 {
 	moveStr.resize(max3 + 1);
@@ -858,7 +864,8 @@ void Manager::InitMove3Load()
 } /// void Manager::InitMove3Load()
 
 
-// ムーブ4の読み込み素材の初期化
+
+/// --------------------------------------------------------------------------------------------------
 void Manager::InitMove4Load()
 {
 	moveStr.resize(max4 + 1);
@@ -1039,7 +1046,8 @@ void Manager::InitMove4Load()
 } /// void Manager::InitMove4Load()
 
 
-// ムーブ3の行動次第でムーブ4の読み込む素材を更新
+
+/// --------------------------------------------------------------------------------------------------
 void Manager::Move4TextureReload()
 {
 	switch (BASICPARAM::e_TextureColor)
@@ -1188,7 +1196,8 @@ void Manager::Move4TextureReload()
 } /// void Manager::Move4TextureReload()
 
 
-// ムーブ5の読み込み素材の初期化
+
+/// --------------------------------------------------------------------------------------------------
 void Manager::InitMove5Load()
 {
 	moveStr.resize(max5 + 1);
@@ -1351,7 +1360,8 @@ void Manager::InitMove5Load()
 } /// void Manager::InitMove5Load()
 
 
-// ムーブ4の行動次第でムーブ5の読み込む素材を更新
+
+/// --------------------------------------------------------------------------------------------------
 void Manager::Move5TextureReload()
 {
 	switch (BASICPARAM::e_TextureColor)
@@ -1500,7 +1510,8 @@ void Manager::Move5TextureReload()
 } /// void Manager::Move5TextureReload()
 
 
-// ムーブ6のロードの初期化
+
+/// --------------------------------------------------------------------------------------------------
 void Manager::InitMove6Load()
 {
 	moveStr.resize(max6 + 1);
@@ -1660,7 +1671,8 @@ void Manager::InitMove6Load()
 } /// void Manager::InitMove6Load()
 
 
-// ムーブ6のロードするテクスチャを初期から変更する
+
+/// --------------------------------------------------------------------------------------------------
 void Manager::Move6TextureReload()
 {
 	switch (BASICPARAM::e_TextureColor)
@@ -1794,7 +1806,8 @@ void Manager::Move6TextureReload()
 } /// void Manager::Move6TextureReload()
 
 
-// オプションのプロセス
+
+/// --------------------------------------------------------------------------------------------------
 void Manager::OptionProcess()
 {
 	///常時-------------------------------------------------------------------------------------------------------
@@ -2134,7 +2147,8 @@ void Manager::OptionProcess()
 } /// void Manager::OptionProcess()
 
 
-// オプション画面の描画
+
+/// --------------------------------------------------------------------------------------------------
 void Manager::OptionDraw()
 {
 	// 背景
@@ -2418,7 +2432,8 @@ void Manager::OptionDraw()
 } /// void Manager::OptionDraw()
 
 
-// コンストラクタ
+
+/// --------------------------------------------------------------------------------------------------
 Manager::Manager()
 {
 	// 初期化
@@ -2536,7 +2551,8 @@ Manager::Manager()
 } /// Manager::Manager()
 
 
-// デストラクタ
+
+/// --------------------------------------------------------------------------------------------------
 Manager::~Manager()
 {
 	for (int i = 0; i != titleUINum; ++i)
@@ -2556,7 +2572,8 @@ Manager::~Manager()
 }
 
 
-// 更新
+
+/// --------------------------------------------------------------------------------------------------
 void Manager::Update()
 {
 	// 最初の起動のとき

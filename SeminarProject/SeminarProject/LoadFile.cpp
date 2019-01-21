@@ -3,6 +3,7 @@
 using namespace std;
 
 
+
 /// ------------------------------------------------------------------------------------
 unsigned int LoadFile::file_size(ifstream &fin)
 {
@@ -19,6 +20,7 @@ unsigned int LoadFile::file_size(ifstream &fin)
 
 	return size;		// ÉTÉCÉYÇï‘Ç∑
 }
+
 
 
 /// ------------------------------------------------------------------------------------

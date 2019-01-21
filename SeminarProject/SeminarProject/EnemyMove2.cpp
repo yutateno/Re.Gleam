@@ -1,6 +1,7 @@
 #include "EnemyMove2.hpp"
 
 
+
 /// -------------------------------------------------------------------------------------------------
 EnemyMove2::EnemyMove2(const VECTOR area, const int modelHandle, const int tex0) : BasicCreature()
 {
@@ -37,11 +38,13 @@ EnemyMove2::EnemyMove2(const VECTOR area, const int modelHandle, const int tex0)
 } /// EnemyMove2::EnemyMove2(const VECTOR area, const int modelHandle, const int tex0) : BasicCreature()
 
 
+
 /// -------------------------------------------------------------------------------------------------
 EnemyMove2::~EnemyMove2()
 {
 	MODEL_RELEASE(modelHandle);
 }
+
 
 
 /// -------------------------------------------------------------------------------------------------
@@ -55,6 +58,7 @@ void EnemyMove2::Draw()
 	}
 #endif // _DEBUG
 }
+
 
 
 // ÉvÉçÉZÉX

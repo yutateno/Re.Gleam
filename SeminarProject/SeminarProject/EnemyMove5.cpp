@@ -1,6 +1,7 @@
 #include "EnemyMove5.hpp"
 
 
+
 /// -----------------------------------------------------------------------------------------
 void EnemyMove5::MotionProcess()
 {
@@ -15,6 +16,7 @@ void EnemyMove5::MotionProcess()
 		Player_PlayAnim(MOTION::death);
 	}
 } /// void EnemyMove3CrayonHuman::MotionProcess()
+
 
 
 /// -----------------------------------------------------------------------------------------
@@ -166,6 +168,7 @@ void EnemyMove5::AutoMoveProcess()
 } /// void EnemyMove3CrayonHuman::AutoMoveProcess()
 
 
+
 /// -----------------------------------------------------------------------------------------
 void EnemyMove5::EscapeMoveProcess()
 {
@@ -190,6 +193,7 @@ void EnemyMove5::EscapeMoveProcess()
 		area.z += walkSpeed;
 	}
 } /// void EnemyMove3CrayonHuman::ChaseMoveProcess()
+
 
 
 /// -----------------------------------------------------------------------------------------
@@ -243,6 +247,7 @@ void EnemyMove5::FallProcess()
 		}
 	}
 } /// void EnemyMove3CrayonHuman::FallProcess()
+
 
 
 /// -----------------------------------------------------------------------------------------
@@ -375,6 +380,7 @@ EnemyMove5::EnemyMove5(const int modelHandle, const int collStageHandle
 } /// EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int collStageHandle
 
 
+
 /// -----------------------------------------------------------------------------------------
 EnemyMove5::~EnemyMove5()
 {
@@ -419,6 +425,7 @@ EnemyMove5::~EnemyMove5()
 } /// EnemyMove3CrayonHuman::~EnemyMove3CrayonHuman()
 
 
+
 /// -----------------------------------------------------------------------------------------
 void EnemyMove5::Draw()
 {
@@ -453,6 +460,7 @@ void EnemyMove5::Draw()
 	}
 #endif // _DEBUG
 }
+
 
 
 /// -----------------------------------------------------------------------------------------
@@ -574,6 +582,7 @@ void EnemyMove5::Process()
 } /// void EnemyMove3CrayonHuman::Process()
 
 
+
 /// -----------------------------------------------------------------------------------------
 void EnemyMove5::TextureReload()
 {
@@ -602,6 +611,7 @@ void EnemyMove5::TextureReload()
 
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 }/// void EnemyMove3CrayonHuman::TextureReload()
+
 
 
 /// -----------------------------------------------------------------------------------------

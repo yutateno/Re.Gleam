@@ -135,12 +135,6 @@ private:
 	int playingEfBack;
 
 
-	/// 音に関する-------------------------------------------------------
-
-	// 音周りのプロセス
-	void MoveSoundProcess();
-
-
 public:
 	// コンストラクタ
 	MainMove1(const std::vector<int> v_file);

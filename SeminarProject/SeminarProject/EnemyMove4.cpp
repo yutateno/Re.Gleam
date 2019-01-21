@@ -1,6 +1,7 @@
 #include "EnemyMove4.hpp"
 
 
+
 /// ------------------------------------------------------------------------------------------------
 void EnemyMove4::MotionProcess()
 {
@@ -62,6 +63,7 @@ void EnemyMove4::MotionProcess()
 }
 
 
+
 /// ------------------------------------------------------------------------------------------------
 void EnemyMove4::ChaseMoveProcess()
 {
@@ -84,6 +86,7 @@ void EnemyMove4::ChaseMoveProcess()
 		area.z += walkSpeed;
 	}
 }
+
 
 
 /// ------------------------------------------------------------------------------------------------
@@ -137,6 +140,7 @@ void EnemyMove4::FallProcess()
 		}
 	}
 } /// void EnemyMove4::FallProcess()
+
 
 
 /// ------------------------------------------------------------------------------------------------
@@ -270,6 +274,7 @@ EnemyMove4::EnemyMove4(const int modelHandle, const int collStageHandle
 } /// EnemyMove4::EnemyMove4(const int modelHandle, const int collStageHandle
 
 
+
 /// ------------------------------------------------------------------------------------------------
 EnemyMove4::~EnemyMove4()
 {
@@ -314,6 +319,7 @@ EnemyMove4::~EnemyMove4()
 } /// EnemyMove4::~EnemyMove4()
 
 
+
 /// ------------------------------------------------------------------------------------------------
 void EnemyMove4::Draw()
 {
@@ -337,11 +343,13 @@ void EnemyMove4::Draw()
 } /// void EnemyMove4::Draw()
 
 
+
 /// ------------------------------------------------------------------------------------------------
 void EnemyMove4::UniqueModelDraw()
 {
 	MV1DrawModel(modelHandle);
 }
+
 
 
 /// ------------------------------------------------------------------------------------------------
@@ -458,6 +466,7 @@ void EnemyMove4::Process()
 } /// void EnemyMove4::Process()
 
 
+
 /// ------------------------------------------------------------------------------------------------
 void EnemyMove4::TextureReload()
 {
@@ -487,6 +496,7 @@ void EnemyMove4::TextureReload()
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle0, true);
 }
+
 
 
 /// ------------------------------------------------------------------------------------------------

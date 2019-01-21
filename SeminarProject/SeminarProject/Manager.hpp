@@ -11,10 +11,13 @@
 #include "MainMove6.hpp"
 
 
+/*
+ゲームの大本
+*/
 class Manager
 {
 private:
-	/// 各シーンに関する--------------------------
+	/// 各シーンに関する-----------------------------------------------------
 	// シーンの基底クラス
 	BaseMove* p_baseMove;
 
@@ -43,7 +46,7 @@ private:
 	int feedDraw;
 
 
-	/// ゲームに関する------------
+	/// ゲームに関する-----------------------------------------------------------
 
 	// ゲーム起動直後かどうか
 	bool gameFirstStarting;
@@ -52,7 +55,7 @@ private:
 	bool gameEnd;
 
 
-	/// ゲームタイトルに関する-----------------------------------------
+	/// ゲームタイトルに関する---------------------------------------------------
 
 	// セーブデータがあったときのタイトルUI画像
 	enum class ETitleDraw {
@@ -76,7 +79,7 @@ private:
 	bool playBonus;
 
 
-	/// ムーブ１に関する----------------
+	/// ムーブ１に関する--------------------------------------------------------
 
 	// ムーブ1のロード数
 	const int max1 = 15;
@@ -85,7 +88,7 @@ private:
 	void InitMove1Load();
 
 
-	/// ムーブ２に関する--------------
+	/// ムーブ２に関する--------------------------------------------------------
 
 	// ムーブ2のロード数
 	const int max2 = 49;
@@ -94,7 +97,7 @@ private:
 	void InitMove2Load();
 
 
-	/// ムーブ3に関する--------------
+	/// ムーブ3に関する---------------------------------------------------------
 
 	// ムーブ3のロード数
 	const int max3 = 65;
@@ -103,7 +106,7 @@ private:
 	void InitMove3Load();
 
 
-	/// ムーブ4に関する--------------
+	/// ムーブ4に関する--------------------------------------------------------
 
 	// ムーブ4のロード数
 	const int max4 = 54;
@@ -115,7 +118,7 @@ private:
 	void Move4TextureReload();
 
 
-	/// ムーブ5に関する--------------
+	/// ムーブ5に関する---------------------------------------------------------
 
 	// ムーブ5のロード数
 	const int max5 = 47;
@@ -127,7 +130,7 @@ private:
 	void Move5TextureReload();
 
 
-	/// ムーブ6に関する
+	/// ムーブ6に関する---------------------------------------------------------
 
 	// ムーブ6のロード数
 	const int max6 = 50;
@@ -139,7 +142,7 @@ private:
 	void Move6TextureReload();
 
 
-	/// オプション画面に関する---------------
+	/// オプション画面に関する---------------------------------------------------
 
 	// ガウスフィルタの画像
 	int gaussianScreen;
@@ -154,13 +157,16 @@ private:
 	void OptionDraw();
 
 	// オプション画面のID
-	enum class EOptionSelectButton { Sound, ColorSelect, Camera, DataSave, GameEnd, BGM, SE, ColorNormal, ColorP, ColorD
-		, BGMSelect, SESelect, CameraPerspective, CameraOrtho, CameraHReturn, CameraVReturn, SaveYes, SaveNo, GameEndYes, GameEndNo };
+	enum class EOptionSelectButton { 
+		Sound, ColorSelect, Camera, DataSave, GameEnd, BGM, SE, ColorNormal, ColorP, ColorD
+		, BGMSelect, SESelect, CameraPerspective, CameraOrtho, CameraHReturn, CameraVReturn
+		, SaveYes, SaveNo, GameEndYes, GameEndNo
+	};
 
 	// オプション画面の選択ボタン
 	EOptionSelectButton optionSelectButtonNum;
 
-	// 左スティックのY軸押し倒しかどうかを調べる(DLLXinputでやるべきなんだろうかとりあえず
+	// 左スティックのY軸押し倒しかどうかを調べる
 	int optionControllLeftStickY[2];
 
 	// 現選択の最小
@@ -176,8 +182,11 @@ private:
 	std::thread thsTexture;
 
 	// オプション用画像ID
-	enum class EOptionDraw { BGM, Camera, ColorD, ColorP, SE, Sound, Perspective, Color, Ortho
-		, ColorNormal, HorizonReturn, VerticalReturn, nextPage, prevPage, optionEnd, gameEnd, dataSave, yes, no };
+	enum class EOptionDraw { 
+		BGM, Camera, ColorD, ColorP, SE, Sound, Perspective, Color, Ortho
+		, ColorNormal, HorizonReturn, VerticalReturn, nextPage, prevPage
+		, optionEnd, gameEnd, dataSave, yes, no
+	};
 
 	// オプション用画像
 	int optionDrawMedia[19];

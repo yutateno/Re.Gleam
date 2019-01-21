@@ -1,6 +1,7 @@
 #include "StageStairsRoad.hpp"
 
 
+
 /// --------------------------------------------------------------------------------
 StageStairsRoad::StageStairsRoad(const int draw, const VECTOR area
 	, const int tex0, const int tex1, const float angle) : BasicObject()
@@ -30,6 +31,7 @@ StageStairsRoad::StageStairsRoad(const int draw, const VECTOR area
 }
 
 
+
 /// --------------------------------------------------------------------------------
 StageStairsRoad::~StageStairsRoad()
 {
@@ -41,6 +43,7 @@ StageStairsRoad::~StageStairsRoad()
 	// ƒ‚ƒfƒ‹ŠJ•ú
 	MODEL_RELEASE(modelHandle);
 }
+
 
 
 /// --------------------------------------------------------------------------------

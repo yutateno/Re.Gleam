@@ -1,13 +1,17 @@
 #pragma once
 
-/// インクルードファイル-------------
+/*
+大本
+*/
+
+/// インクルードファイル--------------------------------------------------------
 #include "DLLXinput.h"
 #include "EffekseerForDXLib.h"
 #include "SoundProcess.hpp"
 #include <vector>
 
 
-/// 色んな所で使いそうなもの------------------------------
+/// 色んな所で使いそうなもの----------------------------------------------------
 
 // シーンの動き
 enum class ESceneNumber
@@ -32,19 +36,23 @@ namespace BASICPARAM
 	// 今のシーン
 	extern ESceneNumber e_nowScene;
 
+	
 	// 直前のテクスチャの色
 	extern ETextureColor e_preTextureColor;
 
 	// 今のテクスチャの色
 	extern ETextureColor e_TextureColor;
 
+	
 	// 今のカメラの形式が正射影かどうか
 	extern bool nowCameraOrtho;
+
 
 	// ウィンドウサイズ
 	extern int winWidth;
 	extern int winHeight;
 	extern int bitColor;
+
 
 	// 前シーンの終了フェードを終えたかどうか
 	extern bool endFeedNow;
@@ -52,8 +60,10 @@ namespace BASICPARAM
 	// 次シーンの開始フェードを終えたかどうか
 	extern bool startFeedNow;
 
+
 	// パネルを表示するかどうか
 	extern bool paneruDrawFlag;
+
 
 	// 階段の数
 	extern int stairsNum;
@@ -64,6 +74,7 @@ namespace BASICPARAM
 	// 階段の角度
 	extern std::vector<float> v_stairsAngle;
 
+
 	// 街灯の数
 	extern int streetLightNum;
 
@@ -72,6 +83,7 @@ namespace BASICPARAM
 
 	// 街灯の角度
 	extern std::vector<float> v_streetLightAngle;
+
 
 	// 階段と床の数
 	extern int stairsRoadNum;
@@ -82,13 +94,13 @@ namespace BASICPARAM
 	// 階段と床の座標
 	extern std::vector<float> v_stairsRoadAngle;
 
+
 	// カメラの横反転するかどうか
 	extern bool cameraHorizonReturn;
 
 	// カメラの縦反転するかどうか
 	extern bool cameraVerticalReturn;
 
-	/// 白黒から変えたかどうか
 
 	// キャラクターのテクスチャが白黒かどうか
 	extern bool charaTextureWhiteBlack;
@@ -108,8 +120,10 @@ namespace BASICPARAM
 	// その他のテクスチャが白黒かどうか
 	extern bool anothreTextureWhiteBlack;
 
+
 	// 一般人の人数
 	extern int ordinaryPeopleNum;
+
 
 	// ムーブ5にてキャラを描画するようにしたかどうか
 	extern bool lastCharaView;

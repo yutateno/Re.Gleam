@@ -1,6 +1,7 @@
 #include "Manager.hpp"
 
 
+/// --------------------------------------------------------------------------------------------------
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	// ウィンドウサイズを決める

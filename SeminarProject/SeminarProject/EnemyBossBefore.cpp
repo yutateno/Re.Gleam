@@ -1,6 +1,7 @@
 #include "EnemyBossBefore.hpp"
 
 
+
 /// ------------------------------------------------------------------------------------------------
 EnemyBossBefore::EnemyBossBefore() : BasicCreature()
 {
@@ -141,6 +142,7 @@ EnemyBossBefore::EnemyBossBefore() : BasicCreature()
 } /// EnemyBossBefore::EnemyBossBefore() : BasicCreature(true)
 
 
+
 /// ------------------------------------------------------------------------------------------------
 EnemyBossBefore::EnemyBossBefore(const int modelHandle, const int modelTex0
 	, const int modeltex1, const int modelTex2)
@@ -184,12 +186,14 @@ EnemyBossBefore::EnemyBossBefore(const int modelHandle, const int modelTex0
 } /// EnemyBossBefore::EnemyBossBefore(const int modelHandle, const int modelTex0
 
 
+
 /// ------------------------------------------------------------------------------------------------
 EnemyBossBefore::~EnemyBossBefore()
 {
 	// ƒ‚ƒfƒ‹ŠJ•ú
 	MODEL_RELEASE(modelHandle);
 }
+
 
 
 /// ------------------------------------------------------------------------------------------------
@@ -200,6 +204,7 @@ void EnemyBossBefore::Process()
 }
 
 
+
 /// ------------------------------------------------------------------------------------------------
 void EnemyBossBefore::MoveReturn()
 {
@@ -208,6 +213,7 @@ void EnemyBossBefore::MoveReturn()
 	else Player_PlayAnim(0);
 	MV1SetRotationXYZ(this->modelHandle, VGet(0.0f, angle, 0.0f));
 }
+
 
 
 /// ------------------------------------------------------------------------------------------------

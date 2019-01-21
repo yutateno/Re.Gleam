@@ -6,6 +6,10 @@
 #include <string>
 #include "Basic.hpp"
 
+
+/*
+セーブデータをセーブするのとロードする役割
+*/
 namespace FileSaveLoad
 {
 	// CSVに出力する

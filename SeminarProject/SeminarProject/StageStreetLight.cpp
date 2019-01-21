@@ -1,6 +1,7 @@
 #include "StageStreetLight.hpp"
 
 
+
 /// --------------------------------------------------------------------------------
 StageStreetLight::StageStreetLight(const int draw, const VECTOR area
 	, const int tex0, const int tex1, const float angle) : BasicObject()
@@ -30,6 +31,7 @@ StageStreetLight::StageStreetLight(const int draw, const VECTOR area
 }
 
 
+
 /// --------------------------------------------------------------------------------
 StageStreetLight::~StageStreetLight()
 {
@@ -41,6 +43,7 @@ StageStreetLight::~StageStreetLight()
 	// ƒ‚ƒfƒ‹ŠJ•ú
 	MODEL_RELEASE(modelHandle);
 }
+
 
 
 /// --------------------------------------------------------------------------------

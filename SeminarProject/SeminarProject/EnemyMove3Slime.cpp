@@ -1,6 +1,7 @@
 #include "EnemyMove3Slime.hpp"
 
 
+
 /// --------------------------------------------------------------------------------------
 void EnemyMove3Slime::MotionProcess()
 {
@@ -30,6 +31,7 @@ void EnemyMove3Slime::MotionProcess()
 		Player_PlayAnim(MOTION::idle);
 	}
 }
+
 
 
 /// --------------------------------------------------------------------------------------
@@ -161,6 +163,7 @@ void EnemyMove3Slime::AutoMoveProcess()
 } /// void EnemyMove3Slime::AutoMoveProcess()
 
 
+
 /// --------------------------------------------------------------------------------------
 void EnemyMove3Slime::ChaseMoveProcess()
 {
@@ -185,6 +188,7 @@ void EnemyMove3Slime::ChaseMoveProcess()
 }
 
 
+
 /// --------------------------------------------------------------------------------------
 void EnemyMove3Slime::DamageProcess()
 {
@@ -202,6 +206,7 @@ void EnemyMove3Slime::DamageProcess()
 		}
 	}
 }
+
 
 
 /// --------------------------------------------------------------------------------------
@@ -255,6 +260,7 @@ void EnemyMove3Slime::FallProcess()
 		}
 	}
 } /// void EnemyMove3Slime::FallProcess()
+
 
 
 /// --------------------------------------------------------------------------------------
@@ -385,6 +391,7 @@ EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandl
 } /// EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandle
 
 
+
 /// --------------------------------------------------------------------------------------
 EnemyMove3Slime::~EnemyMove3Slime()
 {
@@ -429,6 +436,7 @@ EnemyMove3Slime::~EnemyMove3Slime()
 } /// EnemyMove3Slime::~EnemyMove3Slime()
 
 
+
 /// --------------------------------------------------------------------------------------
 void EnemyMove3Slime::Draw()
 {
@@ -457,6 +465,7 @@ void EnemyMove3Slime::Draw()
 	}
 #endif // _DEBUG
 }
+
 
 
 /// --------------------------------------------------------------------------------------
@@ -547,6 +556,7 @@ void EnemyMove3Slime::Process()
 } /// void EnemyMove3Slime::Process()
 
 
+
 /// --------------------------------------------------------------------------------------
 void EnemyMove3Slime::TextureReload()
 {
@@ -573,6 +583,7 @@ void EnemyMove3Slime::TextureReload()
 
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 }
+
 
 
 /// --------------------------------------------------------------------------------------

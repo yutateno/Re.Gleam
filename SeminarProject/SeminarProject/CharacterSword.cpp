@@ -1,6 +1,7 @@
 #include "CharacterSword.hpp"
 
 
+
 /// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::MoveProcess()
 {
@@ -213,6 +214,7 @@ void CharacterSword::MoveProcess()
 } /// void CharacterSword::MoveProcess()
 
 
+
 /// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::OpeProcess()
 {
@@ -284,6 +286,7 @@ void CharacterSword::OpeProcess()
 		}
 	}
 } /// void CharacterSword::OpeProcess()
+
 
 
 /// ---------------------------------------------------------------------------------------------------------------
@@ -465,6 +468,7 @@ void CharacterSword::AttackProcess()
 } /// void CharacterSword::AttackProcess()
 
 
+
 /// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::JumpProcess()
 {
@@ -536,6 +540,7 @@ void CharacterSword::JumpProcess()
 } /// void CharacterSword::JumpProcess()
 
 
+
 /// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::AnimProcess()
 {
@@ -596,6 +601,7 @@ void CharacterSword::AnimProcess()
 		}
 	} /// else(1if (jumpNow))
 } /// void CharacterSword::AnimProcess()
+
 
 
 /// ---------------------------------------------------------------------------------------------------------------
@@ -713,6 +719,7 @@ void CharacterSword::SEProcess()
 		}
 	}
 } /// void CharacterSword::SEProcess()
+
 
 
 /// ---------------------------------------------------------------------------------------------------------------
@@ -848,6 +855,7 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 } /// CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle
 
 
+
 /// ---------------------------------------------------------------------------------------------------------------
 CharacterSword::~CharacterSword()
 {
@@ -903,6 +911,7 @@ CharacterSword::~CharacterSword()
 } /// CharacterSword::~CharacterSword()
 
 
+
 /// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::SetStairsArea(const VECTOR stairsArea, const int num, const float angle)
 {
@@ -917,6 +926,7 @@ void CharacterSword::SetStairsArea(const VECTOR stairsArea, const int num, const
 	MV1SetFrameVisible(v_stairsHandle[num], -1, false);
 	MV1RefreshCollInfo(v_stairsHandle[num], -1);
 }
+
 
 
 /// ---------------------------------------------------------------------------------------------------------------
@@ -935,6 +945,7 @@ void CharacterSword::SetPaneruArea(const VECTOR paneruArea, const int num)
 }
 
 
+
 /// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::SetStairsRoadArea(const VECTOR stairsRoadArea, const int num, const float angle)
 {
@@ -951,12 +962,14 @@ void CharacterSword::SetStairsRoadArea(const VECTOR stairsRoadArea, const int nu
 }
 
 
+
 /// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::AreaSetDown()
 {
 	area.y -= 2.0f;
 	MV1SetPosition(modelHandle, this->area);
 }
+
 
 
 /// ---------------------------------------------------------------------------------------------------------------
@@ -1076,6 +1089,7 @@ void CharacterSword::Process(const float getAngle)
 		MV1SetPosition(modelHandle, area);
 	}
 } /// void CharacterSword::Process(const float getAngle)
+
 
 
 /// ---------------------------------------------------------------------------------------------------------------
@@ -1213,6 +1227,7 @@ void CharacterSword::NotOpeProcess(const float getAngle)
 } /// void CharacterSword::NotOpeProcess(const float getAngle)
 
 
+
 /// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::OnlyCollFloorProcess(const float getAngle)
 {
@@ -1310,6 +1325,7 @@ void CharacterSword::OnlyCollFloorProcess(const float getAngle)
 } /// void CharacterSword::OnlyCollFloorProcess(const float getAngle)
 
 
+
 /// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::TextureReload()
 {
@@ -1362,6 +1378,7 @@ void CharacterSword::TextureReload()
 	MV1SetTextureGraphHandle(this->modelHandle, 3, textureHandle3, false);
 	MV1SetTextureGraphHandle(this->modelHandle, 4, textureHandle4, true);
 } /// void CharacterSword::TextureReload()
+
 
 
 /// ---------------------------------------------------------------------------------------------------------------
@@ -1457,6 +1474,7 @@ void CharacterSword::Draw()
 	}
 #endif // _DEBUG
 } /// void CharacterSword::Draw()
+
 
 
 /// ---------------------------------------------------------------------------------------------------------------

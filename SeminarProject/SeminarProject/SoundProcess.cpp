@@ -92,7 +92,8 @@ namespace SoundProcess
 	float optionNowVolume;
 
 
-	// 初期化
+
+	/// --------------------------------------------------------------------------------------------------
 	void Init()
 	{
 		for (int i = 0; i != seNum; ++i)
@@ -125,7 +126,8 @@ namespace SoundProcess
 	} /// void Init()
 
 
-	// SEのロード
+
+	/// --------------------------------------------------------------------------------------------------
 	void Load(int loadFile, ESOUNDNAME_SE name)
 	{
 		se_sound[static_cast<int>(name)] = loadFile;
@@ -133,7 +135,8 @@ namespace SoundProcess
 	}
 
 
-	// BGMのロード
+
+	/// --------------------------------------------------------------------------------------------------
 	void Load(int loadFile, ESOUNDNAME_BGM name)
 	{
 		bgm_sound[static_cast<int>(name)] = loadFile;
@@ -141,7 +144,8 @@ namespace SoundProcess
 	}
 
 
-	// プロセス
+
+	/// --------------------------------------------------------------------------------------------------
 	void Process()
 	{
 		// 3D音源の位置を設定
@@ -215,7 +219,8 @@ namespace SoundProcess
 	} /// void Process()
 
 
-	// SEを流す
+
+	/// --------------------------------------------------------------------------------------------------
 	void DoSound(ESOUNDNAME_SE name, int volume)
 	{
 		// 流すSEの最大音量を決める
@@ -242,7 +247,8 @@ namespace SoundProcess
 	} /// void DoSound(ESOUNDNAME_SE name, int volume)
 
 
-	// 3D音源のSEを流す
+
+	/// --------------------------------------------------------------------------------------------------
 	void DoSound(ESOUNDNAME_SE name, VECTOR area, int volume)
 	{
 		// SEの座標と大きさを設定する
@@ -275,7 +281,8 @@ namespace SoundProcess
 	} /// void DoSound(ESOUNDNAME_SE name, VECTOR area, int volume)
 
 
-	// BGMを終了させる
+
+	/// --------------------------------------------------------------------------------------------------
 	void BGMEnd()
 	{
 		for (int i = 0; i != bgmArray; ++i)
@@ -286,7 +293,8 @@ namespace SoundProcess
 	}
 
 
-	// BGMのフェードで切り替える
+
+	/// --------------------------------------------------------------------------------------------------
 	void BGMTrans(ESOUNDNAME_BGM nextName, int volume)
 	{
 		// BGMが流れていなかったら
@@ -360,7 +368,8 @@ namespace SoundProcess
 
 
 
-	// BGMのプロセス
+
+	/// --------------------------------------------------------------------------------------------------
 	void BGMProcess()
 	{
 		BGMFeed();		// フェードを呼ぶ
@@ -368,6 +377,7 @@ namespace SoundProcess
 	}
 
 
+	/// --------------------------------------------------------------------------------------------------
 	void BGMFeed()
 	{
 		// BGMが流れていなかったら流れているとする
@@ -406,7 +416,8 @@ namespace SoundProcess
 	} /// void BGMFeed()
 
 
-	// BGMの音量を設定する
+	
+	/// --------------------------------------------------------------------------------------------------
 	void SetBGMVolume(ESOUNDNAME_BGM name, int volume, int maxVolume)
 	{
 		// BGMが流れていなかったら
@@ -452,7 +463,8 @@ namespace SoundProcess
 	} /// void SetBGMVolume(ESOUNDNAME_BGM name, int volume, int maxVolume)
 
 
-	// 解放
+
+	/// --------------------------------------------------------------------------------------------------
 	void Release()
 	{
 		// SEを消す
@@ -475,63 +487,72 @@ namespace SoundProcess
 	} /// void Release()
 
 
-	// プレイヤーの位置を更新する
+
+	/// --------------------------------------------------------------------------------------------------
 	void SetCharaArea(VECTOR area)
 	{
 		charaArea = area;
 	}
 
 
-	// リスナーの位置を更新する
+
+	/// --------------------------------------------------------------------------------------------------
 	void SetLisnerArea(VECTOR area)
 	{
 		listenerArea = area;
 	}
 
 
-	// リスナーの注視位置を更新する
+
+	/// --------------------------------------------------------------------------------------------------
 	void SetLisnerViewArea(VECTOR area)
 	{
 		listenerViewArea = area;
 	}
 
 
-	// 3D音源の広域を更新する
+
+	/// --------------------------------------------------------------------------------------------------
 	void Set3DRadius(float radius)
 	{
 		volume3DRadius = radius;
 	}
 
 
-	// SEのユーザー指定の最大音量を更新する
+
+	/// --------------------------------------------------------------------------------------------------
 	void SetSEVolumeEntire(float volumeEntire)
 	{
 		se_volumeAdjustment = volumeEntire;
 	}
 
 
-	// SEのユーザー指定の最大音量を渡す
+
+	/// --------------------------------------------------------------------------------------------------
 	float GetSEVolumeEntire()
 	{
 		return se_volumeAdjustment;
 	}
 
 
-	// BGMのユーザー指定の最大音量を更新する
+
+	/// --------------------------------------------------------------------------------------------------
 	void SetBGMVolumeEntire(float volumeEntire)
 	{
 		bgm_volumeAdjustment = volumeEntire;
 	}
 
 
-	// BGMのユーザー指定の最大音量を渡す
+
+	/// --------------------------------------------------------------------------------------------------
 	float GetBGMVolumeEntire()
 	{
 		return bgm_volumeAdjustment;
 	}
 
 
-	// オプション画面にいるかどうか取得する
+
+	/// --------------------------------------------------------------------------------------------------
 	void SetOptionMenuNow(bool nowTrue)
 	{
 		nowTrue ? optionNowVolume = 0.5f : optionNowVolume = 1.0f;

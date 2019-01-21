@@ -1,6 +1,7 @@
 #include "DropItemMove2.hpp"
 
 
+
 /// --------------------------------------------------------------------------------------------------
 DropItemMove2::DropItemMove2(const int draw, VECTOR area, const int tex0) : BasicObject()
 {
@@ -41,12 +42,14 @@ DropItemMove2::DropItemMove2(const int draw, VECTOR area, const int tex0) : Basi
 } /// DropItemMove2::DropItemMove2(const int draw, VECTOR area, const int tex0) : BasicObject()
 
 
+
 /// --------------------------------------------------------------------------------------------------
 DropItemMove2::~DropItemMove2()
 {
 	// ƒ‚ƒfƒ‹ŠJ•ú
 	MODEL_RELEASE(modelHandle);
 }
+
 
 
 /// --------------------------------------------------------------------------------------------------
@@ -74,6 +77,7 @@ void DropItemMove2::Process()
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, rotationY * DX_PI_F / 180.0f, 0.0f));
 	MV1SetPosition(this->modelHandle, VGet(area.x, area.y + moveAreaY, area.z));
 }
+
 
 
 /// --------------------------------------------------------------------------------------------------

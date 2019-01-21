@@ -1,6 +1,7 @@
 #include "StagePaneru.hpp"
 
 
+
 /// --------------------------------------------------------------------------------
 StagePaneru::StagePaneru(const int draw, const VECTOR area) : BasicObject()
 {
@@ -20,6 +21,7 @@ StagePaneru::StagePaneru(const int draw, const VECTOR area) : BasicObject()
 	// À•W‚ðXV
 	MV1SetPosition(this->modelHandle, area);
 }
+
 
 
 /// --------------------------------------------------------------------------------

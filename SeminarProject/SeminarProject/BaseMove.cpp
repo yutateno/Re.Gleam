@@ -75,6 +75,7 @@ void BaseMove::ShadowNoMoveDrawAfter()
 }
 
 
+
 /// ---------------------------------------------------------------------------------------------
 void BaseMove::ShadowArea(const VECTOR charaArea)
 {
@@ -83,6 +84,7 @@ void BaseMove::ShadowArea(const VECTOR charaArea)
 	SetShadowMapDrawArea(shadowMapAnotherCharaHandle, VAdd(charaArea, shadowAnotherCharaLowArea)
 		, VAdd(charaArea, shadowAnotherCharaHighArea));
 }
+
 
 
 /// ---------------------------------------------------------------------------------------------
@@ -97,6 +99,7 @@ void BaseMove::SkyBoxDraw()
 }
 
 
+
 /// ---------------------------------------------------------------------------------------------
 void BaseMove::SkyBoxProcess(const VECTOR characterArea)
 {
@@ -104,6 +107,7 @@ void BaseMove::SkyBoxProcess(const VECTOR characterArea)
 	MV1SetPosition(skyBoxUp, characterArea);
 	MV1SetPosition(skyBoxUnder, characterArea);
 }
+
 
 
 /// ---------------------------------------------------------------------------------------------
@@ -135,6 +139,7 @@ void BaseMove::SetInitSkyBox(const int skyBoxUp, const int tex0)
 	MV1SetScale(this->skyBoxUnder, VGet(170.0f, 170.0f, 170.0f));
 	MV1SetRotationXYZ(this->skyBoxUnder, VGet(DX_PI_F, 0.0f, 0.0f));
 } /// void BaseMove::SetInitSkyBox(const int skyBoxUp, const int tex0)
+
 
 
 /// ---------------------------------------------------------------------------------------------
@@ -169,6 +174,7 @@ void BaseMove::SkyTextureReload()
 
 	MV1SetTextureGraphHandle(this->skyBoxUp, 0, textureHandle, false);
 }
+
 
 
 /// ---------------------------------------------------------------------------------------------
@@ -227,6 +233,7 @@ BaseMove::BaseMove()
 	// ê‡ñæâÊëú
 	moveDescriptionDraw = -1;
 }
+
 
 
 /// ---------------------------------------------------------------------------------------------

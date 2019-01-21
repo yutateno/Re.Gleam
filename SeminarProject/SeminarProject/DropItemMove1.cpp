@@ -1,6 +1,7 @@
 #include "DropItemMove1.hpp"
 
 
+
 /// -------------------------------------------------------------------------------------------
 DropItemMove1::DropItemMove1(const int draw, const int tex0) : BasicObject()
 {
@@ -31,12 +32,14 @@ DropItemMove1::DropItemMove1(const int draw, const int tex0) : BasicObject()
 }
 
 
+
 /// -------------------------------------------------------------------------------------------
 DropItemMove1::~DropItemMove1()
 {
 	GRAPHIC_RELEASE(textureHandle);
 	MODEL_RELEASE(modelHandle);
 }
+
 
 
 /// -------------------------------------------------------------------------------------------

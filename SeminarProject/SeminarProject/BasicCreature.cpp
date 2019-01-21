@@ -1,6 +1,7 @@
 #include "BasicCreature.hpp"
 
 
+
 /// -------------------------------------------------------------------------
 void BasicCreature::Player_PlayAnim(int attach)
 {
@@ -37,6 +38,7 @@ void BasicCreature::Player_PlayAnim(int attach)
 		}
 	} /// if (attachNum != attach)
 } /// void BasicCreature::Player_PlayAnim(int attach)
+
 
 
 /// -------------------------------------------------------------------------
@@ -106,6 +108,7 @@ void BasicCreature::Player_AnimProcess()
 		MV1SetAttachAnimBlendRate(modelHandle, preAttach, (1.0f - motionBlendTime));
 	}
 } /// void BasicCreature::Player_AnimProcess()
+
 
 
 /// -------------------------------------------------------------------------
@@ -395,6 +398,7 @@ bool BasicCreature::ActorHit(int stageHandle)
 } /// bool BasicCreature::ActorHit(int stageHandle)
 
 
+
 /// -------------------------------------------------------------------------
 BasicCreature::BasicCreature() :BasicObject()
 {
@@ -429,6 +433,7 @@ BasicCreature::BasicCreature() :BasicObject()
 	modelWidth = 0;
 	ZeroMemory(floorPoly, sizeof(floorPoly));
 } /// BasicCreature::BasicCreature() :BasicObject()
+
 
 
 /// -------------------------------------------------------------------------
@@ -467,10 +472,12 @@ BasicCreature::BasicCreature(bool shadowDo) :BasicObject(shadowDo)
 } /// BasicCreature::BasicCreature(bool shadowDo) :BasicObject(shadowDo)
 
 
+
 /// -------------------------------------------------------------------------
 BasicCreature::~BasicCreature()
 {
 }
+
 
 
 /// -------------------------------------------------------------------------
@@ -501,6 +508,7 @@ void BasicCreature::HitCircleReturn(VECTOR hitOneArea, float width)
 		area.y = tempY;
 	}
 } /// void BasicCreature::HitCircleReturn(VECTOR hitOneArea, float width)
+
 
 
 /// -------------------------------------------------------------------------

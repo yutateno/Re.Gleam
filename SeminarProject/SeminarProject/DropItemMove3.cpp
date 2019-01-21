@@ -1,6 +1,7 @@
 #include "DropItemMove3.hpp"
 
 
+
 /// --------------------------------------------------------------------------------------------------
 DropItemMove3::DropItemMove3(const int draw, VECTOR area, const int tex0) : BasicObject()
 {
@@ -43,6 +44,7 @@ DropItemMove3::DropItemMove3(const int draw, VECTOR area, const int tex0) : Basi
 } /// DropItemMove3::DropItemMove3(const int draw, VECTOR area, const int tex0) : BasicObject()
 
 
+
 /// --------------------------------------------------------------------------------------------------
 DropItemMove3::~DropItemMove3()
 {
@@ -53,6 +55,7 @@ DropItemMove3::~DropItemMove3()
 	// ƒ‚ƒfƒ‹ŠJ•ú
 	MODEL_RELEASE(modelHandle);
 }
+
 
 
 /// --------------------------------------------------------------------------------------------------
@@ -80,6 +83,7 @@ void DropItemMove3::Process()
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, rotationY * DX_PI_F / 180.0f, 0.0f));
 	MV1SetPosition(this->modelHandle, VGet(area.x, area.y + moveAreaY, area.z));
 }
+
 
 
 /// --------------------------------------------------------------------------------------------------
@@ -115,6 +119,7 @@ void DropItemMove3::ChaseActor(const VECTOR chaseArea)
 }
 
 
+
 /// --------------------------------------------------------------------------------------------------
 void DropItemMove3::TextureReload()
 {
@@ -146,6 +151,7 @@ void DropItemMove3::TextureReload()
 
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle, false);
 }
+
 
 
 /// --------------------------------------------------------------------------------------------------

@@ -1,6 +1,7 @@
 #include "EnemyMove3CrayonHuman.hpp"
 
 
+
 /// --------------------------------------------------------------------------------------------------
 void EnemyMove3CrayonHuman::MotionProcess()
 {
@@ -39,6 +40,7 @@ void EnemyMove3CrayonHuman::MotionProcess()
 		Player_PlayAnim(MOTION::death);
 	}
 } /// void EnemyMove3CrayonHuman::MotionProcess()
+
 
 
 /// --------------------------------------------------------------------------------------------------
@@ -189,6 +191,7 @@ void EnemyMove3CrayonHuman::AutoMoveProcess()
 } /// void EnemyMove3CrayonHuman::AutoMoveProcess()
 
 
+
 /// --------------------------------------------------------------------------------------------------
 void EnemyMove3CrayonHuman::ChaseMoveProcess()
 {
@@ -215,6 +218,7 @@ void EnemyMove3CrayonHuman::ChaseMoveProcess()
 } /// void EnemyMove3CrayonHuman::ChaseMoveProcess()
 
 
+
 /// --------------------------------------------------------------------------------------------------
 void EnemyMove3CrayonHuman::DamageProcess()
 {
@@ -232,6 +236,7 @@ void EnemyMove3CrayonHuman::DamageProcess()
 		}
 	}
 }
+
 
 
 /// --------------------------------------------------------------------------------------------------
@@ -288,6 +293,7 @@ void EnemyMove3CrayonHuman::FallProcess()
 } /// void EnemyMove3CrayonHuman::FallProcess()
 
 
+
 /// --------------------------------------------------------------------------------------------------
 void EnemyMove3CrayonHuman::SEProcess()
 {
@@ -297,6 +303,7 @@ void EnemyMove3CrayonHuman::SEProcess()
 		SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::crayonDie, area);
 	}
 }
+
 
 
 /// --------------------------------------------------------------------------------------------------
@@ -429,6 +436,7 @@ EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int co
 } /// EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int collStageHandle
 
 
+
 /// --------------------------------------------------------------------------------------------------
 EnemyMove3CrayonHuman::~EnemyMove3CrayonHuman()
 {
@@ -473,6 +481,7 @@ EnemyMove3CrayonHuman::~EnemyMove3CrayonHuman()
 } /// EnemyMove3CrayonHuman::~EnemyMove3CrayonHuman()
 
 
+
 /// --------------------------------------------------------------------------------------------------
 void EnemyMove3CrayonHuman::Draw()
 {
@@ -506,6 +515,7 @@ void EnemyMove3CrayonHuman::Draw()
 	}
 #endif // _DEBUG
 }
+
 
 
 /// --------------------------------------------------------------------------------------------------
@@ -628,6 +638,7 @@ void EnemyMove3CrayonHuman::Process()
 } /// void EnemyMove3CrayonHuman::Process()
 
 
+
 /// --------------------------------------------------------------------------------------------------
 void EnemyMove3CrayonHuman::TextureReload()
 {
@@ -656,6 +667,7 @@ void EnemyMove3CrayonHuman::TextureReload()
 
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 }/// void EnemyMove3CrayonHuman::TextureReload()
+
 
 
 /// --------------------------------------------------------------------------------------------------

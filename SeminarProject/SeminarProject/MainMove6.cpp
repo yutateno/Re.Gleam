@@ -1,7 +1,8 @@
 #include "MainMove6.hpp"
 
 
-// シャドウマップの描画
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::ShadowDraw()
 {
 	/// セットアップ
@@ -172,7 +173,8 @@ void MainMove6::ShadowDraw()
 } /// void MainMove6::ShadowDraw()
 
 
-// 当たり判定のプロセス
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::AttackProcess()
 {
 	/// プレイヤーに触れられたら-----------------------------------------------------
@@ -197,7 +199,8 @@ void MainMove6::AttackProcess()
 } /// void MainMove6::AttackProcess()
 
 
-// テクスチャの非同期読み込み
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::ThsTextureReload()
 {
 	ths = std::thread(&MainMove6::TextureReload, this);
@@ -205,7 +208,8 @@ void MainMove6::ThsTextureReload()
 }
 
 
-// 最初の描画
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::FirstDraw()
 {
 	BaseMove::SkyBoxDraw();		// スカイボックスを描画
@@ -259,7 +263,8 @@ void MainMove6::FirstDraw()
 } /// void MainMove6::FirstDraw()
 
 
-// 最初のプロセス
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::FirstProcess()
 {
 	// ボスと距離があったとき
@@ -345,7 +350,8 @@ void MainMove6::FirstProcess()
 } /// void MainMove6::FirstProcess()
 
 
-// ムービー中の描画
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::MovieDraw()
 {
 	BaseMove::SkyBoxDraw();		// スカイボックスを描画
@@ -372,7 +378,8 @@ void MainMove6::MovieDraw()
 } /// void MainMove6::MovieDraw()
 
 
-// ムービー中のプロセス
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::MovieProcess()
 {
 	// 動きを管理
@@ -467,7 +474,8 @@ void MainMove6::MovieProcess()
 } /// void MainMove6::MovieProcess()
 
 
-// 戦闘の描画
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::BattleDraw()
 {
 	BaseMove::SkyBoxDraw();		// スカイボックスを描画
@@ -481,7 +489,8 @@ void MainMove6::BattleDraw()
 } /// void MainMove6::BattleDraw()
 
 
-// 戦闘のプロセス
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::BattleProcess()
 {
 	// キャラクターのプロセス
@@ -514,7 +523,8 @@ void MainMove6::BattleProcess()
 } /// void MainMove6::BattleProcess()
 
 
-// 最後の描画
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::LastDraw()
 {
 	BaseMove::SkyBoxDraw();		// スカイボックスを描画
@@ -540,7 +550,8 @@ void MainMove6::LastDraw()
 } /// void MainMove6::LastDraw()
 
 
-// 最後のプロセス
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::LastProcess()
 {
 	movieFrame++;
@@ -570,7 +581,8 @@ void MainMove6::LastProcess()
 } /// void MainMove6::LastProcess()
 
 
-// コンストラクタ
+
+/// --------------------------------------------------------------------------------------------------
 MainMove6::MainMove6(const std::vector<int> v_file)
 {
 	// 初期化
@@ -752,7 +764,8 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 } /// MainMove6::MainMove6(const std::vector<int> v_file)
 
 
-// デストラクタ
+
+/// --------------------------------------------------------------------------------------------------
 MainMove6::~MainMove6()
 {
 	// エンドロール
@@ -839,7 +852,8 @@ MainMove6::~MainMove6()
 } /// MainMove5::~MainMove5()
 
 
-// 描画
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::Draw()
 {
 	switch (e_nowMove)
@@ -871,7 +885,8 @@ void MainMove6::Draw()
 } /// void MainMove6::Draw()
 
 
-// プロセス
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::Process()
 {
 	switch (e_nowMove)
@@ -912,7 +927,8 @@ void MainMove6::Process()
 } /// void MainMove6::Process()
 
 
-// カメラの再セットアップ
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::CameraProcess()
 {
 	if (e_nowMove == ESceneMove6::Movie)
@@ -926,7 +942,8 @@ void MainMove6::CameraProcess()
 }
 
 
-// テクスチャの読み込み
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::TextureReload()
 {
 	// キャラクターのテクスチャが白黒指定じゃなかったら
@@ -991,21 +1008,24 @@ void MainMove6::TextureReload()
 } /// void MainMove5::TextureReload()
 
 
-// オプション画面モデルの描画
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::OptionActorModel()
 {
 	p_character->OptionActorDraw();
 }
 
 
-// オプション画面モデルの描画の準備
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::OptionActorModelBefore()
 {
 	p_character->OptionActorDrawBefore();
 }
 
 
-// オプション画面モデルの描画の後始末
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::OptionActorModelAfter()
 {
 	p_character->OptionActorDrawAfter();

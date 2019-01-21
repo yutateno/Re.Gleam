@@ -1,6 +1,7 @@
 #include "Camera.hpp"
 
 
+
 /// ------------------------------------------------------------------------------------
 void Camera::RLrotate(const float speed, float& axisOne, float& axisTwo)
 {
@@ -9,6 +10,7 @@ void Camera::RLrotate(const float speed, float& axisOne, float& axisTwo)
 	axisOne = tempX * cosf(speed) + tempY * sinf(speed);
 	axisTwo = -tempX * sinf(speed) + tempY * cosf(speed);
 }
+
 
 
 /// ------------------------------------------------------------------------------------
@@ -58,10 +60,12 @@ Camera::Camera(const VECTOR charaarea)
 } /// Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 
 
+
 /// ------------------------------------------------------------------------------------
 Camera::~Camera()
 {
 }
+
 
 
 /// ------------------------------------------------------------------------------------
@@ -157,6 +161,7 @@ void Camera::Process(const VECTOR charaarea)
 } /// void Camera::Process(const VECTOR charaarea)
 
 
+
 /// ------------------------------------------------------------------------------------
 void Camera::SetUp()
 {
@@ -184,6 +189,7 @@ void Camera::SetUp()
 	// DXライブラリのカメラとEffekseerのカメラを同期
 	Effekseer_Sync3DSetting();
 }
+
 
 
 /// ------------------------------------------------------------------------------------

@@ -1,6 +1,7 @@
 #include "OrdinaryPerson.hpp"
 
 
+
 /// ----------------------------------------------------------------------------------------------------------------------
 void OrdinaryPerson::MoveProcess()
 {
@@ -125,6 +126,7 @@ void OrdinaryPerson::MoveProcess()
 } /// void OrdinaryPerson::MoveProcess()
 
 
+
 /// ----------------------------------------------------------------------------------------------------------------------
 void OrdinaryPerson::FallProcess()
 {
@@ -176,6 +178,7 @@ void OrdinaryPerson::FallProcess()
 		}
 	}
 } /// void OrdinaryPerson::FallProcess()
+
 
 
 /// ----------------------------------------------------------------------------------------------------------------------
@@ -295,6 +298,7 @@ OrdinaryPerson::OrdinaryPerson(const int modelHandle, const int collStageHandle,
 } /// OrdinaryPerson::OrdinaryPerson(const int modelHandle, const int collStageHandle, const int stairsHandle
 
 
+
 /// ----------------------------------------------------------------------------------------------------------------------
 OrdinaryPerson::~OrdinaryPerson()
 {
@@ -337,6 +341,7 @@ OrdinaryPerson::~OrdinaryPerson()
 	// あたり判定用ステージハンドル開放
 	MODEL_RELEASE(stageHandle);
 } /// OrdinaryPerson::~OrdinaryPerson()
+
 
 
 /// ----------------------------------------------------------------------------------------------------------------------
@@ -392,6 +397,7 @@ void OrdinaryPerson::Process()
 } /// void OrdinaryPerson::Process()
 
 
+
 /// ----------------------------------------------------------------------------------------------------------------------
 void OrdinaryPerson::TextureReload()
 {
@@ -422,12 +428,14 @@ void OrdinaryPerson::TextureReload()
 }
 
 
+
 /// ----------------------------------------------------------------------------------------------------------------------
 void OrdinaryPerson::SetAlive(VECTOR area, bool alive)
 {
 	this->area = area;
 	this->alive = alive;
 }
+
 
 
 /// ----------------------------------------------------------------------------------------------------------------------

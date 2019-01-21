@@ -2,6 +2,7 @@
 #include <typeinfo.h>
 
 
+
 /// --------------------------------------------------------------------------------
 bool BasicObject::ShadowFoot(int shadowModel)
 {
@@ -89,6 +90,7 @@ bool BasicObject::ShadowFoot(int shadowModel)
 } /// bool BasicObject::ShadowFoot(int shadowModel)
 
 
+
 /// --------------------------------------------------------------------------------
 BasicObject::BasicObject()
 {
@@ -107,6 +109,7 @@ BasicObject::BasicObject()
 	move6_circle = 0;
 	move6_line = 0.0f;
 }
+
 
 
 /// --------------------------------------------------------------------------------
@@ -133,12 +136,14 @@ BasicObject::BasicObject(bool shadowDo)
 }
 
 
+
 /// --------------------------------------------------------------------------------
 BasicObject::~BasicObject()
 {
 	// ‰eƒnƒ“ƒhƒ‹ŠJ•ú
 	GRAPHIC_RELEASE(shadowHandle);
 }
+
 
 
 /// --------------------------------------------------------------------------------
@@ -168,6 +173,7 @@ void BasicObject::ModelDraw()
 }
 
 
+
 /// --------------------------------------------------------------------------------
 void BasicObject::OptionActorDraw()
 {
@@ -179,6 +185,7 @@ void BasicObject::OptionActorDraw()
 }
 
 
+
 /// --------------------------------------------------------------------------------
 void BasicObject::OptionActorDrawBefore()
 {
@@ -187,6 +194,7 @@ void BasicObject::OptionActorDrawBefore()
 	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 0.0f, -650.0f), VGet(0.0f, 0.0f, 0.0f));
 	optionModelDrawCount = 0;
 }
+
 
 
 /// --------------------------------------------------------------------------------

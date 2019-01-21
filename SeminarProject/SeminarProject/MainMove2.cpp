@@ -1,7 +1,8 @@
 #include "MainMove2.hpp"
 
 
-/// -------------------------------------------------------------------------------------------------------
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove2::AdjustmentProcess()
 {
 	// Aボタンを押したら
@@ -158,7 +159,8 @@ void MainMove2::AdjustmentProcess()
 } /// void MainMove2::AdjustmentProcess()
 
 
-/// -------------------------------------------------------------------------------------------------------
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove2::AdjustmentDraw()
 {
 	// フェードシーンの描画が切り替わるシーン以上の数値へ行ったら
@@ -193,8 +195,7 @@ void MainMove2::AdjustmentDraw()
 				, 0.22, DX_PI + vp_stageStairs[i]->GetYAngle(), adjustment2DDraw[3], true);
 		}
 		// オペレーター
-		if (p_adjustmentMachine->GetCanTouch()) DrawRotaGraph(
-			static_cast<int>((4500 - p_adjustmentMachine->GetArea().x) / 9000 * 1920)
+		if (p_adjustmentMachine->GetCanTouch()) DrawRotaGraph(static_cast<int>((4500 - p_adjustmentMachine->GetArea().x) / 9000 * 1920)
 			, static_cast<int>((4500 + p_adjustmentMachine->GetArea().z) / 9000 * 1080)
 			, 0.08, DX_PI, adjustment2DDraw[4], true);
 
@@ -336,20 +337,19 @@ void MainMove2::AdjustmentDraw()
 	/// オペレーターのフェード表現に関する-----------------------------------------------------------
 	if (adjustmentSceneFeed <= 50)
 	{
-		DrawBox(0, 0, BASICPARAM::winWidth, static_cast<int>(108 * (adjustmentSceneFeed / 5))
-			, GetColor(0, 0, 0), true);
+		DrawBox(0, 0, BASICPARAM::winWidth, static_cast<int>(108 * (adjustmentSceneFeed / 5)), GetColor(0, 0, 0), true);
 	}
 	if (adjustmentSceneFeed > 50 && adjustmentSceneFeed <= 100)
 	{
-		DrawBox(0, 0, BASICPARAM::winWidth, static_cast<int>(108 * (20 - adjustmentSceneFeed / 5))
-			, GetColor(0, 0, 0), true);
+		DrawBox(0, 0, BASICPARAM::winWidth, static_cast<int>(108 * (20 - adjustmentSceneFeed / 5)), GetColor(0, 0, 0), true);
 	}
 	/// ---------------------------------------------------------------------------------------------
 
 } /// void MainMove2::AdjustmentDraw()
 
 
-/// -------------------------------------------------------------------------------------------------------
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove2::AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID, float direction)
 {
 	// どのオブジェクトが選択されたか
@@ -357,14 +357,8 @@ void MainMove2::AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID, float 
 	{
 	// 階段が選択されていたら
 	case AdjustmentObject::Stairs:
-		vp_stageStairs.push_back(new StageStairs(stairsHandle, area, stairsTexture0
-			, DX_PI_F + direction));		// 生成
-		
-		
-		p_character->SetStairsArea(vp_stageStairs[BASICPARAM::stairsNum]->GetArea()
-			, BASICPARAM::stairsNum, DX_PI_F + direction);	// キャラクターに対して当たり判定生成
-
-
+		vp_stageStairs.push_back(new StageStairs(stairsHandle, area, stairsTexture0, DX_PI_F + direction));		// 生成
+		p_character->SetStairsArea(vp_stageStairs[BASICPARAM::stairsNum]->GetArea(), BASICPARAM::stairsNum, DX_PI_F + direction);	// キャラクターに対して当たり判定生成
 		BASICPARAM::stairsNum++;									// 全体で確認できるように階段の個数を追加
 		BASICPARAM::v_stairsArea.push_back(area);					// 全体で確認できるように場所を追加
 		BASICPARAM::v_stairsAngle.push_back(DX_PI_F + direction);	// 全体で確認できるように角度を追加
@@ -373,10 +367,7 @@ void MainMove2::AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID, float 
 
 	// 街灯が選択されていたら
 	case AdjustmentObject::StreetLight:
-		vp_stageStreetLight.push_back(new StageStreetLight(streetLightHandle, area
-			, streetLightTexture0, streetLightTexture1, direction));	// 生成
-
-
+		vp_stageStreetLight.push_back(new StageStreetLight(streetLightHandle, area, streetLightTexture0, streetLightTexture1, direction));	// 生成
 		BASICPARAM::streetLightNum++;								// 全体で確認できるように街灯の個数を追加
 		BASICPARAM::v_streetLightArea.push_back(area);				// 全体で確認できるように場所を追加
 		BASICPARAM::v_streetLightAngle.push_back(direction);		// 全体で確認できるように角度を追加
@@ -385,14 +376,8 @@ void MainMove2::AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID, float 
 
 	// 階段と床が選択されていたら
 	case AdjustmentObject::StairsRoad:
-		vp_stageStairsRoad.push_back(new StageStairsRoad(stairsRoadHandle, area
-			, stairsRoadTexture0, stairsRoadTexture1, DX_PI_F + direction));		// 生成
-		
-		
-		p_character->SetStairsRoadArea(vp_stageStairsRoad[BASICPARAM::stairsRoadNum]->GetArea()
-			, BASICPARAM::stairsRoadNum, DX_PI_F + direction);	// キャラクターに対してあたり判定生成
-		
-		
+		vp_stageStairsRoad.push_back(new StageStairsRoad(stairsRoadHandle, area, stairsRoadTexture0, stairsRoadTexture1, DX_PI_F + direction));		// 生成
+		p_character->SetStairsRoadArea(vp_stageStairsRoad[BASICPARAM::stairsRoadNum]->GetArea(), BASICPARAM::stairsRoadNum, DX_PI_F + direction);	// キャラクターに対してあたり判定生成
 		BASICPARAM::stairsRoadNum++;									// 全体で確認できるように階段と床の個数を追加
 		BASICPARAM::v_stairsRoadArea.push_back(area);					// 全体で確認できるように場所を追加
 		BASICPARAM::v_stairsRoadAngle.push_back(DX_PI_F + direction);	// 全体で確認できるように角度を追加
@@ -404,10 +389,11 @@ void MainMove2::AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID, float 
 } /// void MainMove2::AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID, float direction)
 
 
-/// -------------------------------------------------------------------------------------------------------
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove2::ShadowDraw()
 {
-	/// セットアップ-----------------------------------------------------------------------
+	/// セットアップ
 	BaseMove::ShadowCharaSetUpBefore();
 	// 敵
 	for (int i = 0, n = enemyNum; i != n; ++i)
@@ -444,7 +430,7 @@ void MainMove2::ShadowDraw()
 	p_character->ModelDraw();
 
 
-	/// キャラクター以外再セットアップ------------------------------------------------------
+	/// キャラクター以外再セットアップ
 	BaseMove::ShadowAnotherCharaSetUpBefore();
 	// 階段
 	for (int i = 0, n = static_cast<int>(vp_stageStairs.size()); i != n; ++i)
@@ -480,7 +466,7 @@ void MainMove2::ShadowDraw()
 	BaseMove::ShadowSetUpAfter();
 
 
-	/// 描画---------------------------------------------------------------------------
+	/// 描画
 	BaseMove::ShadowNoMoveDrawBefore();
 	BaseMove::ShadowAnotherCharaDrawBefore();
 	BaseMove::ShadowCharaDrawBefore();
@@ -527,7 +513,8 @@ void MainMove2::ShadowDraw()
 } /// void MainMove2::ShadowDraw()
 
 
-/// -------------------------------------------------------------------------------------------------------
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove2::AttackProcess()
 {
 	/// 敵に関する--------------------------------------------------------------------------------------------------------
@@ -539,10 +526,8 @@ void MainMove2::AttackProcess()
 
 		// 当たっていたらプレイヤーを押し出す
 		if (HitCheck_Capsule_Capsule(
-			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f))
-			, p_character->GetWidth(),
-			s_enemy[i].p_enemy->GetArea(), VAdd(s_enemy[i].p_enemy->GetArea(), VGet(0.0f, s_enemy[i].p_enemy->GetHeight(), 0.0f))
-			, s_enemy[i].p_enemy->GetWidth()))
+			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth(),
+			s_enemy[i].p_enemy->GetArea(), VAdd(s_enemy[i].p_enemy->GetArea(), VGet(0.0f, s_enemy[i].p_enemy->GetHeight(), 0.0f)), s_enemy[i].p_enemy->GetWidth()))
 		{
 			p_character->HitCircleReturn(s_enemy[i].p_enemy->GetArea()
 				, s_enemy[i].p_enemy->GetWidth() >= p_character->GetWidth() ? s_enemy[i].p_enemy->GetWidth() : p_character->GetWidth());
@@ -566,8 +551,7 @@ void MainMove2::AttackProcess()
 			// エフェクトを再生する。
 			playingEfAttack = PlayEffekseer3DEffect(effectAttack);
 			SetScalePlayingEffekseer3DEffect(playingEfAttack, 10, 10, 10);
-			SetPosPlayingEffekseer3DEffect(playingEfAttack, p_character->GetAttackEndFrameArea().x
-				, p_character->GetAttackEndFrameArea().y, p_character->GetAttackEndFrameArea().z);
+			SetPosPlayingEffekseer3DEffect(playingEfAttack, p_character->GetAttackEndFrameArea().x, p_character->GetAttackEndFrameArea().y, p_character->GetAttackEndFrameArea().z);
 		}
 	} /// for (int i = 0, n = enemyNum; i != n; ++i)
 
@@ -578,8 +562,7 @@ void MainMove2::AttackProcess()
 		// 当たっていたらプレイヤーを押し出す
 		if (HitCheck_Capsule_Capsule(
 			p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth(),
-			p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, p_adjustmentMachine->GetHeight(), 0.0f))
-			, p_adjustmentMachine->GetWidth()))
+			p_adjustmentMachine->GetArea(), VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, p_adjustmentMachine->GetHeight(), 0.0f)), p_adjustmentMachine->GetWidth()))
 		{
 			p_character->HitCircleReturn(p_adjustmentMachine->GetArea()
 				, p_adjustmentMachine->GetWidth() >= p_character->GetWidth() ? p_adjustmentMachine->GetWidth() : p_character->GetWidth());
@@ -591,6 +574,7 @@ void MainMove2::AttackProcess()
 			&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
 		{
 			// 精密機械のシーンへ移行
+			//GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, adjustmentDrawScreen);
 			adjustmentFeedNow = true;
 			adjustmentStartFeed = true;
 			changeAdjustmentScene = true;
@@ -614,8 +598,7 @@ void MainMove2::AttackProcess()
 	{
 		// もう拾われているかどうかで次へ
 		if (!s_dropItem[i].alive) continue;
-		if (s_dropItem[i].p_dropItem->GetDeath() || !s_dropItem[i].p_dropItem->GetAlive()
-			|| !s_dropItem[i].p_dropItem->GetCanCatch()) continue;
+		if (s_dropItem[i].p_dropItem->GetDeath() || !s_dropItem[i].p_dropItem->GetAlive() || !s_dropItem[i].p_dropItem->GetCanCatch()) continue;
 
 
 		// 精密機械がドロップ数を十分手に入れていたら
@@ -636,8 +619,21 @@ void MainMove2::AttackProcess()
 				s_dropItem[i].p_dropItem->SetDeath(true);			// 生きさせない
 
 
-				// SEのプロセスを呼ぶ
-				MoveSoundProcess(true);
+				/// SEの再生をランダムにする-----------------------------------------------------------------------------
+				std::random_device rnd;     // 非決定的な乱数生成器を生成
+				std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+				std::uniform_int_distribution<> randPawnSE(0, 1);        // 乱数
+
+				// ドロップアイテムを取得するSEを流す
+				if (randPawnSE(mt) == 0)
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, s_dropItem[i].p_dropItem->GetArea());
+				}
+				else
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp2, s_dropItem[i].p_dropItem->GetArea());
+				}
+				/// -----------------------------------------------------------------------------------------------------
 
 
 				s_dropItem[i].alive = false;
@@ -652,15 +648,26 @@ void MainMove2::AttackProcess()
 
 
 			// 精密機械との距離が近かったら
-			if (BaseMove::GetDistance<int>(p_adjustmentMachine->GetArea()
-				, s_dropItem[i].p_dropItem->GetArea()) <= 75)
+			if (BaseMove::GetDistance<int>(p_adjustmentMachine->GetArea(), s_dropItem[i].p_dropItem->GetArea()) <= 75)
 			{
 				p_adjustmentMachine->CatchDropItem();
 				s_dropItem[i].p_dropItem->SetDeath(true);			// 生きさせない
 
+				/// SEの再生をランダムにする-----------------------------------------------------------------------------
+				std::random_device rnd;     // 非決定的な乱数生成器を生成
+				std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+				std::uniform_int_distribution<> randPawnSE(0, 1);        // 乱数
 
-				// SEのプロセスを呼ぶ
-				MoveSoundProcess(true);
+				// ドロップ取得のSEを流す
+				if (randPawnSE(mt) == 0)
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp, s_dropItem[i].p_dropItem->GetArea());
+				}
+				else
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp2, s_dropItem[i].p_dropItem->GetArea());
+				}
+				/// -----------------------------------------------------------------------------------------------------
 
 
 				s_dropItem[i].alive = false;
@@ -671,65 +678,8 @@ void MainMove2::AttackProcess()
 } /// void MainMove2::AttackProcess()
 
 
-/// -------------------------------------------------------------------------------------------------------
-void MainMove2::MoveSoundProcess(bool se, int areaID)
-{
-	if (se)
-	{
-		std::random_device rnd;
-		std::mt19937 mt(rnd());
-		std::uniform_int_distribution<> randPawnSE(0, 1);        // 乱数
 
-
-		// ドロップ取得のSEを流す
-		if (randPawnSE(mt) == 0)
-		{
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp
-				, s_dropItem[areaID].p_dropItem->GetArea());
-		}
-		else
-		{
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPickUp2
-				, s_dropItem[areaID].p_dropItem->GetArea());
-		}
-	}
-	else
-	{
-		if (p_character->GetArea().y >= 2500.0f)
-		{
-			if (bgmOnceVolumeChange != 5) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 200, 200);
-			bgmOnceVolumeChange = 5;
-		}
-		else if (p_character->GetArea().y >= 2000.0f)
-		{
-			if (bgmOnceVolumeChange != 4) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 170, 170);
-			bgmOnceVolumeChange = 4;
-		}
-		else if (p_character->GetArea().y >= 1500.0f)
-		{
-			if (bgmOnceVolumeChange != 3) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 150, 150);
-			bgmOnceVolumeChange = 3;
-		}
-		else if (p_character->GetArea().y >= 1000.0f)
-		{
-			if (bgmOnceVolumeChange != 2) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 100, 100);
-			bgmOnceVolumeChange = 2;
-		}
-		else if (p_character->GetArea().y >= 500.0f)
-		{
-			if (bgmOnceVolumeChange != 1) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 50, 50);
-			bgmOnceVolumeChange = 1;
-		}
-		else
-		{
-			if (bgmOnceVolumeChange != 0) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 0, 0);
-			bgmOnceVolumeChange = 0;
-		}
-	}
-}
-
-
-/// -------------------------------------------------------------------------------------------------------
+/// --------------------------------------------------------------------------------------------------
 MainMove2::MainMove2(const std::vector<int> v_file)
 {
 	BASICPARAM::paneruDrawFlag = false;
@@ -784,10 +734,8 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 
 
 	// キャラクターの初期化
-	p_character	 = new CharacterSword(v_file[EFILE::characterAttack], v_file[EFILE::stage]
-		, v_file[EFILE::stairsColl], v_file[EFILE::paneru], v_file[EFILE::stairsRoadColl]
-		, v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2]
-		, v_file[EFILE::charaTex3], v_file[EFILE::charaTex4]);
+	p_character	 = new CharacterSword(v_file[EFILE::characterAttack], v_file[EFILE::stage], v_file[EFILE::stairsColl], v_file[EFILE::paneru], v_file[EFILE::stairsRoadColl]
+		, v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3], v_file[EFILE::charaTex4]);
 
 
 	// 操作説明画像の初期化
@@ -827,15 +775,14 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	// パネルの初期化
 	for (int i = 0; i != 10; ++i)
 	{
-		p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneru]
-			, VGet(500.0f * i, 300.0f * i, 100.0f * i));
+		p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneru], VGet(500.0f * i, 300.0f * i, 100.0f * i));
 	}
 
 
 	// 敵の初期化
 	p_enemyBossBefore = new EnemyBossBefore();
-	std::random_device rnd;
-	std::mt19937 mt(rnd());
+	std::random_device rnd;     // 非決定的な乱数生成器を生成
+	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
 	std::uniform_int_distribution<> randInX(-4000, 4000);        // X座標用乱数
 	std::uniform_int_distribution<> randInZ(-4000, 4000);        // Z座標用乱数
 	for (int i = 0, n = enemyNum; i != n; ++i)
@@ -870,14 +817,12 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 	// ドロップアイテムの初期化
 	for (int i = 0, n = enemyNum * 5; i != n; ++i)
 	{
-		s_dropItem[i].p_dropItem = new DropItemMove2(v_file[EFILE::block]
-			, s_enemy[i / 5].p_enemy->GetArea(), v_file[EFILE::blockTex0]);
+		s_dropItem[i].p_dropItem = new DropItemMove2(v_file[EFILE::block], s_enemy[i / 5].p_enemy->GetArea(), v_file[EFILE::blockTex0]);
 	}
 
 
 	// 精密機械の初期化
-	p_adjustmentMachine = new AdjustmentMachine(v_file[EFILE::terminal], VGet(-1000.0f, 0.0f, -500.0f)
-		, v_file[EFILE::terminalTex0], v_file[EFILE::terminalTex1]);
+	p_adjustmentMachine = new AdjustmentMachine(v_file[EFILE::terminal], VGet(-1000.0f, 0.0f, -500.0f), v_file[EFILE::terminalTex0], v_file[EFILE::terminalTex1]);
 
 
 	// 精密機械に関する
@@ -942,7 +887,8 @@ MainMove2::MainMove2(const std::vector<int> v_file)
 } /// MainMove2::MainMove2(const std::vector<int> v_file)
 
 
-/// -------------------------------------------------------------------------------------------------------
+
+/// --------------------------------------------------------------------------------------------------
 MainMove2::~MainMove2()
 {
 	/// エフェクトに関する
@@ -1039,7 +985,8 @@ MainMove2::~MainMove2()
 } /// MainMove2::~MainMove2()
 
 
-/// -------------------------------------------------------------------------------------------------------
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove2::Draw()
 {
 	// スカイボックスの描画
@@ -1081,8 +1028,7 @@ void MainMove2::Draw()
 		// 精密機械の頭上に起動操作の説明描画
 		if (BaseMove::GetDistance<int>(p_character->GetArea(), p_adjustmentMachine->GetArea()) <= 175)
 		{
-			DrawBillboard3D(VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 200.0f, 0.0f))
-				, 0.5f, 0.5f, 300.0f, 0.0f, adjustmentDescriptionDraw, false);
+			DrawBillboard3D(VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, 200.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, adjustmentDescriptionDraw, false);
 		}
 	}
 
@@ -1130,30 +1076,18 @@ void MainMove2::Draw()
 				// 距離が攻撃で当たるくらいの距離だったら
 				if (mostNearEnemyDistance < 250)
 				{
-					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x - 20.0f)
-						, static_cast<int>(mostNearEnemyScreenArea.y - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
-						, static_cast<int>(mostNearEnemyScreenArea.x + 20.0f)
-						, static_cast<int>(mostNearEnemyScreenArea.y - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
-						, GetColor(255, 255, 255), false);
-					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x)
-						, static_cast<int>(mostNearEnemyScreenArea.y - 20.0f - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
-						, static_cast<int>(mostNearEnemyScreenArea.x)
-						, static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
-						, GetColor(255, 255, 255), false);
+					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x - 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
+						, static_cast<int>(mostNearEnemyScreenArea.x + 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f), GetColor(255, 255, 255), false);
+					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y - 20.0f - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
+						, static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f), GetColor(255, 255, 255), false);
 				}
 				// 攻撃は当たらないが近かったら
 				else
 				{
-					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x - 20.0f)
-						, static_cast<int>(mostNearEnemyScreenArea.y - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
-						, static_cast<int>(mostNearEnemyScreenArea.x + 20.0f)
-						, static_cast<int>(mostNearEnemyScreenArea.y - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
-						, GetColor(125, 125, 125), false);
-					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x)
-						, static_cast<int>(mostNearEnemyScreenArea.y - 20.0f - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
-						, static_cast<int>(mostNearEnemyScreenArea.x)
-						, static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
-						, GetColor(125, 125, 125), false);
+					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x - 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
+						, static_cast<int>(mostNearEnemyScreenArea.x + 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f), GetColor(125, 125, 125), false);
+					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y - 20.0f - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
+						, static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f), GetColor(125, 125, 125), false);
 				}
 			}
 		}
@@ -1176,7 +1110,6 @@ void MainMove2::Draw()
 		if (moveDescriptionFrame < 255) SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 	}
 
-
 #ifdef _DEBUG
 	// 敵
 	for (int i = 0, n = enemyNum; i != n; ++i)
@@ -1188,7 +1121,8 @@ void MainMove2::Draw()
 } /// void MainMove2::Draw()
 
 
-/// -------------------------------------------------------------------------------------------------------
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove2::Process()
 {
 	// 精密機械のシーンじゃなかったら
@@ -1263,26 +1197,11 @@ void MainMove2::Process()
 
 				
 				// ドロップアイテムを描画させる
-				if (!s_dropItem[(i * 5)].p_dropItem->GetDeath() && !s_dropItem[(i * 5)].p_dropItem->GetAlive())
-				{
-					s_dropItem[(i * 5)].p_dropItem->SetAlive(true);
-				}
-				if (!s_dropItem[(i * 5) + 1].p_dropItem->GetDeath() && !s_dropItem[(i * 5) + 1].p_dropItem->GetAlive())
-				{
-					s_dropItem[(i * 5) + 1].p_dropItem->SetAlive(true);
-				}
-				if (!s_dropItem[(i * 5) + 2].p_dropItem->GetDeath() && !s_dropItem[(i * 5) + 2].p_dropItem->GetAlive())
-				{
-					s_dropItem[(i * 5) + 2].p_dropItem->SetAlive(true);
-				}
-				if (!s_dropItem[(i * 5) + 3].p_dropItem->GetDeath() && !s_dropItem[(i * 5) + 3].p_dropItem->GetAlive())
-				{
-					s_dropItem[(i * 5) + 3].p_dropItem->SetAlive(true);
-				}
-				if (!s_dropItem[(i * 5) + 4].p_dropItem->GetDeath() && !s_dropItem[(i * 5) + 4].p_dropItem->GetAlive())
-				{
-					s_dropItem[(i * 5) + 4].p_dropItem->SetAlive(true);
-				}
+				if (!s_dropItem[(i * 5)].p_dropItem->GetDeath() && !s_dropItem[(i * 5)].p_dropItem->GetAlive()) s_dropItem[(i * 5)].p_dropItem->SetAlive(true);
+				if (!s_dropItem[(i * 5) + 1].p_dropItem->GetDeath() && !s_dropItem[(i * 5) + 1].p_dropItem->GetAlive()) s_dropItem[(i * 5) + 1].p_dropItem->SetAlive(true);
+				if (!s_dropItem[(i * 5) + 2].p_dropItem->GetDeath() && !s_dropItem[(i * 5) + 2].p_dropItem->GetAlive()) s_dropItem[(i * 5) + 2].p_dropItem->SetAlive(true);
+				if (!s_dropItem[(i * 5) + 3].p_dropItem->GetDeath() && !s_dropItem[(i * 5) + 3].p_dropItem->GetAlive()) s_dropItem[(i * 5) + 3].p_dropItem->SetAlive(true);
+				if (!s_dropItem[(i * 5) + 4].p_dropItem->GetDeath() && !s_dropItem[(i * 5) + 4].p_dropItem->GetAlive()) s_dropItem[(i * 5) + 4].p_dropItem->SetAlive(true);
 
 
 				s_enemy[i].alive = false;
@@ -1364,8 +1283,38 @@ void MainMove2::Process()
 		BaseMove::SkyBoxProcess(p_character->GetArea());
 
 
-		// BGMに関してプロセスを呼ぶ
-		MoveSoundProcess(false);
+		/// プレイヤーの座標にて次のシーンのBGMを流す---------------------------------------------------------------------
+		if (p_character->GetArea().y >= 2500.0f)
+		{
+			if (bgmOnceVolumeChange != 5) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 200, 200);
+			bgmOnceVolumeChange = 5;
+		}
+		else if (p_character->GetArea().y >= 2000.0f)
+		{
+			if (bgmOnceVolumeChange != 4) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 170, 170);
+			bgmOnceVolumeChange = 4;
+		}
+		else if (p_character->GetArea().y >= 1500.0f)
+		{
+			if (bgmOnceVolumeChange != 3) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 150, 150);
+			bgmOnceVolumeChange = 3;
+		}
+		else if (p_character->GetArea().y >= 1000.0f)
+		{
+			if (bgmOnceVolumeChange != 2) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 100, 100);
+			bgmOnceVolumeChange = 2;
+		}
+		else if (p_character->GetArea().y >= 500.0f)
+		{
+			if (bgmOnceVolumeChange != 1) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 50, 50);
+			bgmOnceVolumeChange = 1;
+		}
+		else
+		{
+			if (bgmOnceVolumeChange != 0) SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 0, 0);
+			bgmOnceVolumeChange = 0;
+		}
+		/// ------------------------------------------------------------------------------------------------------------------
 
 
 		// プレイヤーの位置にて次のシーンへ移動する
@@ -1423,28 +1372,32 @@ void MainMove2::Process()
 } /// void MainMove2::Process()
 
 
-/// -------------------------------------------------------------------------------------------------------
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove2::CameraProcess()
 {
 	p_camera->SetUp();
 }
 
 
-/// -------------------------------------------------------------------------------------------------------
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove2::OptionActorModel()
 {
 	p_character->OptionActorDraw();
 }
 
 
-/// -------------------------------------------------------------------------------------------------------
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove2::OptionActorModelBefore()
 {
 	p_character->OptionActorDrawBefore();
 }
 
 
-/// -------------------------------------------------------------------------------------------------------
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove2::OptionActorModelAfter()
 {
 	p_character->OptionActorDrawAfter();

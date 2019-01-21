@@ -1,6 +1,7 @@
 #include "AdjustmentMachine.hpp"
 
 
+
 /// ------------------------------------------------------------------------------------------
 AdjustmentMachine::AdjustmentMachine(const int draw, const VECTOR area
 	, const int tex0, const int tex1): BasicObject()
@@ -51,6 +52,7 @@ AdjustmentMachine::AdjustmentMachine(const int draw, const VECTOR area
 } /// AdjustmentMachine::AdjustmentMachine(const int draw, const VECTOR area, const int tex0, const int tex1): BasicObject()
 
 
+
 /// ------------------------------------------------------------------------------------------
 AdjustmentMachine::~AdjustmentMachine()
 {
@@ -63,6 +65,7 @@ AdjustmentMachine::~AdjustmentMachine()
 	// ƒ‚ƒfƒ‹ŠJ•ú
 	MODEL_RELEASE(modelHandle);
 }
+
 
 
 /// ------------------------------------------------------------------------------------------
@@ -92,6 +95,7 @@ void AdjustmentMachine::Draw()
 	}
 #endif // _DEBUG
 }
+
 
 
 /// ------------------------------------------------------------------------------------------
@@ -126,6 +130,7 @@ void AdjustmentMachine::TextureReload()
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle1, false);
 }
+
 
 
 /// ------------------------------------------------------------------------------------------

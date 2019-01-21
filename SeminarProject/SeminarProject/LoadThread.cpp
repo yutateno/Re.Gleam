@@ -4,6 +4,7 @@ using namespace std;
 mutex mtx;
 
 
+
 /// ---------------------------------------------------------------------------------------
 void LoadThread::MyNextLoad(const std::string path, int& file, const ELOADFILE type)
 {
@@ -11,6 +12,7 @@ void LoadThread::MyNextLoad(const std::string path, int& file, const ELOADFILE t
 
 	LoadFile::MyLoad(path, file, type);
 }
+
 
 
 /// ---------------------------------------------------------------------------------------
@@ -22,6 +24,7 @@ LoadThread::LoadThread()
 }
 
 
+
 /// ---------------------------------------------------------------------------------------
 LoadThread::~LoadThread()
 {
@@ -29,6 +32,7 @@ LoadThread::~LoadThread()
 	fileName.clear();
 	fileName.shrink_to_fit();
 }
+
 
 
 /// ---------------------------------------------------------------------------------------
@@ -49,6 +53,7 @@ void LoadThread::Process(const int max, const std::vector<std::string> path
 		Process(max, path, type);					// ì«Ç›çûÇ›èIÇÌÇÈÇ‹Ç≈çƒãA
 	}
 }
+
 
 
 /// ---------------------------------------------------------------------------------------

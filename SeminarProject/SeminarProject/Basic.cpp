@@ -59,6 +59,9 @@ bool MyDebug::enemyFourEnemySearchLineDrawFlag = false;
 bool MyDebug::enemyFifthEnemyDrawFlag = false;
 bool MyDebug::enemyFifthEnemySearchLineDrawFlag = false;
 
+
+
+/// --------------------------------------------------------------------------------------------------
 void MyDebug::Init()
 {
 	checkFlag = false;
@@ -81,6 +84,9 @@ void MyDebug::Init()
 	enemyFifthEnemySearchLineDrawFlag = false;
 }
 
+
+
+/// --------------------------------------------------------------------------------------------------
 void MyDebug::DebugProcess()
 {
 	if (CheckHitKey(KEY_INPUT_LCONTROL) == 1 && DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_BACK) == 1)

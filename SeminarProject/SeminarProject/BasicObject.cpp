@@ -7,8 +7,7 @@
 bool BasicObject::ShadowFoot(int shadowModel)
 {
 	// プレイヤーの直下に存在する地面のポリゴンを取得
-	ShadowHitResDim = MV1CollCheck_Capsule(shadowModel, -1, area
-		, VAdd(area, VGet(0.0f, -shadowHeight, 0.0f)), shadowSize);
+	ShadowHitResDim = MV1CollCheck_Capsule(shadowModel, -1, area, VAdd(area, VGet(0.0f, -shadowHeight, 0.0f)), shadowSize);
 
 
 	// 頂点データで変化が無い部分をセット

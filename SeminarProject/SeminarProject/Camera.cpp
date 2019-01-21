@@ -75,10 +75,10 @@ void Camera::Process(const VECTOR charaarea)
 	// ¶‚É‰ñ“]’†
 	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) < 0)
 	{
-		RLrotate(speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f)
-			, cameraPerspectiveArea.x, cameraPerspectiveArea.z);				// ‰“‹ß–@ƒJƒƒ‰‚Ì‰ñ“]ˆ—
-		RLrotate(speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f)
-			, cameraOrthoArea.x, cameraOrthoArea.z);							// ³Ë‰eƒJƒƒ‰‚Ì‰ñ“]ˆ—
+		// ‰“‹ß–@ƒJƒƒ‰‚Ì‰ñ“]ˆ—
+		RLrotate(speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f), cameraPerspectiveArea.x, cameraPerspectiveArea.z);
+		// ³Ë‰eƒJƒƒ‰‚Ì‰ñ“]ˆ—
+		RLrotate(speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f), cameraOrthoArea.x, cameraOrthoArea.z);
 
 
 		// ƒJƒƒ‰‚Ì•ûŒü
@@ -92,10 +92,10 @@ void Camera::Process(const VECTOR charaarea)
 	// ‰E‚É‰ñ“]’†
 	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) > 0)
 	{
-		RLrotate(-speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f)
-			, cameraPerspectiveArea.x, cameraPerspectiveArea.z);				// ‰“‹ß–@ƒJƒƒ‰‚Ì‰ñ“]ˆ—
-		RLrotate(-speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f)
-			, cameraOrthoArea.x, cameraOrthoArea.z);							// ³Ë‰eƒJƒƒ‰‚Ì‰ñ“]ˆ—
+		// ‰“‹ß–@ƒJƒƒ‰‚Ì‰ñ“]ˆ—
+		RLrotate(-speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f), cameraPerspectiveArea.x, cameraPerspectiveArea.z);
+		// ³Ë‰eƒJƒƒ‰‚Ì‰ñ“]ˆ—
+		RLrotate(-speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f), cameraOrthoArea.x, cameraOrthoArea.z);
 
 
 		// ƒJƒƒ‰‚Ì•ûŒü
@@ -168,8 +168,7 @@ void Camera::SetUp()
 	{
 		SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
 		SetCameraNearFar(100.0f, 10000.0f);
-		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea)
-			, VAdd(perspesctiveViewArea, charaArea));
+		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea), VAdd(perspesctiveViewArea, charaArea));
 		SoundProcess::SetLisnerArea(cameraPerspectiveArea);
 		SoundProcess::Set3DRadius(VSize(cameraPerspectiveArea));
 	}
@@ -177,8 +176,7 @@ void Camera::SetUp()
 	else
 	{
 		SetupCamera_Ortho(orthoArea);
-		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea)
-			, VAdd(orthoViewArea, charaArea));
+		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea), VAdd(orthoViewArea, charaArea));
 		SoundProcess::SetLisnerArea(cameraOrthoArea);
 		SoundProcess::Set3DRadius(VSize(cameraOrthoArea));
 	}

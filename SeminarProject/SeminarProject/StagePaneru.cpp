@@ -16,8 +16,6 @@ StagePaneru::StagePaneru(const int draw, const VECTOR area) : BasicObject()
 	
 	// サイズ変更
 	MV1SetScale(this->modelHandle, VGet(50.0f, 50.0f, 50.0f));
-
-
 	// 座標を更新
 	MV1SetPosition(this->modelHandle, area);
 }

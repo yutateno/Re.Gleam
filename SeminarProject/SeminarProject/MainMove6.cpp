@@ -211,11 +211,13 @@ void MainMove6::ThsTextureReload()
 
 /// --------------------------------------------------------------------------------------------------
 void MainMove6::FirstDraw()
-{
-	BaseMove::SkyBoxDraw();		// スカイボックスを描画
+{	
+	// スカイボックスを描画
+	BaseMove::SkyBoxDraw();
 
 
-	ShadowDraw();		// シャドウマップを描画
+	// シャドウマップを描画
+	ShadowDraw();
 
 
 	// 敵ラスボスのあれ
@@ -232,7 +234,8 @@ void MainMove6::FirstDraw()
 	}
 
 
-	p_character->Draw();	// キャラクターを描画
+	// キャラクターを描画
+	p_character->Draw();
 
 
 
@@ -335,6 +338,7 @@ void MainMove6::FirstProcess()
 			// 近づくにカーソルがあったとき
 			if (approachUISelect)
 			{
+				// シーンを移行する
 				e_nowMove = ESceneMove6::Movie;
 				p_cameraMove->SetView(VGet(4000, 50, 0));
 				p_cameraMove->SetArea(VGet(3000, 200, 0));
@@ -403,6 +407,7 @@ void MainMove6::MovieProcess()
 	// 300フレーム以上だったら地面に埋まらせる
 	if (movieFrame >= 300)
 	{
+		// 存在していたらそれぞれを地面に埋まらせる
 		for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
 		{
 			vp_ordinaryPerson[i]->Move6SetDownArea();
@@ -419,51 +424,54 @@ void MainMove6::MovieProcess()
 		{
 			vp_stageStreetLight[i]->Move6SetDownArea();
 		}
+
+
+		// 600フレーム以上だったらボスを地面に埋まらせる
+		if (movieFrame >= 600)
+		{
+			p_enemyBossBefore->AreaSetDown();
+		}
+
+
+		// 800フレーム以上だったらプレイヤーを地面に埋まらせる
+		if (movieFrame >= 800)
+		{
+			p_character->AreaSetDown();
+		}
 	}
 
 
-	// 600フレーム以上だったら地面に埋まらせる
-	if (movieFrame >= 600)
-	{
-		p_enemyBossBefore->AreaSetDown();
-	}
-
-
-	// 800フレーム以上だったら地面に埋まらせる
-	if (movieFrame >= 800)
-	{
-		p_character->AreaSetDown();
-	}
-	/// アクターごとの描画に関する---------------------------------------------
-
-
-	/// カメラに関する------------------------------------------------------------------
 	// 200フレーム以下だったら
 	if (movieFrame <= 200)
 	{
 		// 操作できないプレイヤーのプロセスを呼ぶ
 		p_character->NotOpeProcess(p_camera->GetAngle());
 	}
+	/// アクターごとの描画に関する---------------------------------------------
 
 
+	/// カメラに関する------------------------------------------------------------------
 	// 200フレームより多く300フレーム以下だったら
 	if (movieFrame > 200 && movieFrame <= 400)
 	{
+		// カメラがボス注視するようにする
 		p_cameraMove->SetView(VGet(4000 - (movieFrame - 200) * 10.0f, 50, 0));
 		p_cameraMove->SetArea(VGet(3000 - (movieFrame - 200) * 10.0f, 200, 0));
 		p_cameraMove->SetView(VGet(1000, 0, 1000));
 	}
 
 
-	// 300フレームより多く400フレーム以下だったら
+	// 400フレームより多く600フレーム以下だったら
 	if (movieFrame > 400 && movieFrame <= 600)
 	{
+		// カメラがステージを見回すようにする
 		p_cameraMove->SetView(VGet(2000 + (movieFrame - 400) * 10.0f, 50, 0));
 		p_cameraMove->SetArea(VGet(1000 + (movieFrame - 400) * 10.0f, 200, 0));
 	}
 	/// カメラに関する------------------------------------------------------------------
 
 	
+	// シーン移行する
 	if (movieFrame >= 1000)
 	{
 		SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::boss);
@@ -483,7 +491,10 @@ void MainMove6::BattleDraw()
 	p_stage->Draw();
 
 
-	p_character->ModelDraw();
+	if (BASICPARAM::lastCharaView)
+	{
+		p_character->ModelDraw();
+	}
 	p_character->Draw();
 } /// void MainMove6::BattleDraw()
 
@@ -500,11 +511,8 @@ void MainMove6::BattleProcess()
 	p_camera->Process(p_character->GetArea());
 
 
-	// シャドウマップの位置を更新
-	BaseMove::ShadowArea(p_character->GetArea());
-
-
-	AttackProcess();		// 当たり判定のプロセス
+	// 当たり判定のプロセス
+	AttackProcess();
 
 
 	// スカイボックスの位置を更新
@@ -532,7 +540,10 @@ void MainMove6::LastDraw()
 	p_stage->Draw();
 
 
-	p_character->ModelDraw();
+	if (BASICPARAM::lastCharaView)
+	{
+		p_character->ModelDraw();
+	}
 	p_character->Draw();
 
 
@@ -562,10 +573,6 @@ void MainMove6::LastProcess()
 
 	// カメラのプロセス
 	p_camera->Process(p_character->GetArea());
-
-
-	// シャドウマップの位置を更新
-	BaseMove::ShadowArea(p_character->GetArea());
 
 
 	// スカイボックスの位置を更新
@@ -747,16 +754,16 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 
 
 	// サウンドのロード
-	SoundProcess::Load(v_file[EFILE::se_attackOne], SoundProcess::ESOUNDNAME_SE::pianoAttack1);
-	SoundProcess::Load(v_file[EFILE::se_attackThrid], SoundProcess::ESOUNDNAME_SE::pianoAttack3);
-	SoundProcess::Load(v_file[EFILE::se_attackTwo], SoundProcess::ESOUNDNAME_SE::pianoAttack2);
-	SoundProcess::Load(v_file[EFILE::se_foot], SoundProcess::ESOUNDNAME_SE::foot);
-	SoundProcess::Load(v_file[EFILE::se_footCorridor], SoundProcess::ESOUNDNAME_SE::footFloor);
-	SoundProcess::Load(v_file[EFILE::se_jump], SoundProcess::ESOUNDNAME_SE::jump);
-	SoundProcess::Load(v_file[EFILE::se_landing], SoundProcess::ESOUNDNAME_SE::landing);
-	SoundProcess::Load(v_file[EFILE::se_landingSecond], SoundProcess::ESOUNDNAME_SE::landing2);
-	SoundProcess::Load(v_file[EFILE::bgm_Main], SoundProcess::ESOUNDNAME_BGM::boss);
-	SoundProcess::Load(v_file[EFILE::bgm_end], SoundProcess::ESOUNDNAME_BGM::ending);
+	SoundProcess::Load(v_file[EFILE::se_attackOne]		, SoundProcess::ESOUNDNAME_SE::pianoAttack1);
+	SoundProcess::Load(v_file[EFILE::se_attackThrid]	, SoundProcess::ESOUNDNAME_SE::pianoAttack3);
+	SoundProcess::Load(v_file[EFILE::se_attackTwo]		, SoundProcess::ESOUNDNAME_SE::pianoAttack2);
+	SoundProcess::Load(v_file[EFILE::se_foot]			, SoundProcess::ESOUNDNAME_SE::foot);
+	SoundProcess::Load(v_file[EFILE::se_footCorridor]	, SoundProcess::ESOUNDNAME_SE::footFloor);
+	SoundProcess::Load(v_file[EFILE::se_jump]			, SoundProcess::ESOUNDNAME_SE::jump);
+	SoundProcess::Load(v_file[EFILE::se_landing]		, SoundProcess::ESOUNDNAME_SE::landing);
+	SoundProcess::Load(v_file[EFILE::se_landingSecond]	, SoundProcess::ESOUNDNAME_SE::landing2);
+	SoundProcess::Load(v_file[EFILE::bgm_Main]			, SoundProcess::ESOUNDNAME_BGM::boss);
+	SoundProcess::Load(v_file[EFILE::bgm_end]			, SoundProcess::ESOUNDNAME_BGM::ending);
 	
 	SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::boss, 0, 0);
 } /// MainMove6::MainMove6(const std::vector<int> v_file)

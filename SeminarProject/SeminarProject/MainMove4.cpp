@@ -527,17 +527,17 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 
 	// サウンドのロード
 	nowBattleBGM = true;
-	SoundProcess::Load(v_file[EFILE::se_attackOne], SoundProcess::ESOUNDNAME_SE::pianoAttack1);
-	SoundProcess::Load(v_file[EFILE::se_attackThrid], SoundProcess::ESOUNDNAME_SE::pianoAttack3);
-	SoundProcess::Load(v_file[EFILE::se_attackTwo], SoundProcess::ESOUNDNAME_SE::pianoAttack2);
-	SoundProcess::Load(v_file[EFILE::se_foot], SoundProcess::ESOUNDNAME_SE::foot);
-	SoundProcess::Load(v_file[EFILE::se_footCorridor], SoundProcess::ESOUNDNAME_SE::footFloor);
-	SoundProcess::Load(v_file[EFILE::se_jump], SoundProcess::ESOUNDNAME_SE::jump);
-	SoundProcess::Load(v_file[EFILE::se_landing], SoundProcess::ESOUNDNAME_SE::landing);
-	SoundProcess::Load(v_file[EFILE::se_landingSecond], SoundProcess::ESOUNDNAME_SE::landing2);
-	SoundProcess::Load(v_file[EFILE::bgm_Main], SoundProcess::ESOUNDNAME_BGM::normalBGM);
-	SoundProcess::Load(v_file[EFILE::bgm_battle], SoundProcess::ESOUNDNAME_BGM::battleBGM);
-	SoundProcess::Load(v_file[EFILE::se_enemyDamage], SoundProcess::ESOUNDNAME_SE::strikeBomb);
+	SoundProcess::Load(v_file[EFILE::se_attackOne]		, SoundProcess::ESOUNDNAME_SE::pianoAttack1);
+	SoundProcess::Load(v_file[EFILE::se_attackThrid]	, SoundProcess::ESOUNDNAME_SE::pianoAttack3);
+	SoundProcess::Load(v_file[EFILE::se_attackTwo]		, SoundProcess::ESOUNDNAME_SE::pianoAttack2);
+	SoundProcess::Load(v_file[EFILE::se_foot]			, SoundProcess::ESOUNDNAME_SE::foot);
+	SoundProcess::Load(v_file[EFILE::se_footCorridor]	, SoundProcess::ESOUNDNAME_SE::footFloor);
+	SoundProcess::Load(v_file[EFILE::se_jump]			, SoundProcess::ESOUNDNAME_SE::jump);
+	SoundProcess::Load(v_file[EFILE::se_landing]		, SoundProcess::ESOUNDNAME_SE::landing);
+	SoundProcess::Load(v_file[EFILE::se_landingSecond]	, SoundProcess::ESOUNDNAME_SE::landing2);
+	SoundProcess::Load(v_file[EFILE::se_enemyDamage]	, SoundProcess::ESOUNDNAME_SE::strikeBomb);
+	SoundProcess::Load(v_file[EFILE::bgm_Main]			, SoundProcess::ESOUNDNAME_BGM::normalBGM);
+	SoundProcess::Load(v_file[EFILE::bgm_battle]		, SoundProcess::ESOUNDNAME_BGM::battleBGM);
 
 	SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::battleBGM, 255, 255);
 	// SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 255, 255);
@@ -965,8 +965,8 @@ void MainMove4::Process()
 				{
 					std::mt19937 mt(rnd());
 					std::uniform_int_distribution<> blood(0, 2);        // X座標用乱数
-					damageDrawID = blood(mt);		// ランダムでダメージ画像を表示する
-					damageDrawFrame = 10;			// 10フレームだけ表示するようにする
+					damageDrawID = blood(mt);							// ランダムでダメージ画像を表示する
+					damageDrawFrame = 10;								// 10フレームだけ表示するようにする
 				}
 			}
 		} /// if (!p_enemyMove->GetDeathFlag())

@@ -57,7 +57,7 @@ namespace BASICPARAM
 	// 前シーンの終了フェードを終えたかどうか
 	extern bool endFeedNow;
 
-	// 次シーンの開始フェードを終えたかどうか
+	// 次シーンの開始フェードを終えてないかどうか
 	extern bool startFeedNow;
 
 

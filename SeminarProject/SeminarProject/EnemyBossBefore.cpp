@@ -56,7 +56,7 @@ EnemyBossBefore::EnemyBossBefore() : BasicCreature()
 		std::uniform_int_distribution<> texture(0, 3);        // どのテクスチャを適応するか
 		std::uniform_int_distribution<> setArea(0, 5);        // どこに配置するか
 
-		/// テクスチャの適応---------------------------------------------------------------------------------------------------------------------------
+		/// テクスチャの適応-------------------------------------------------------------------------------------------------------------
 
 		int tempTex0 = -1;
 		int tempTex1 = -1;
@@ -99,7 +99,7 @@ EnemyBossBefore::EnemyBossBefore() : BasicCreature()
 		MV1SetMaterialDrawBlendParam(this->modelHandle, 1, 50);
 		MV1SetMaterialDrawBlendMode(this->modelHandle, 2, DX_BLENDMODE_ALPHA);
 		MV1SetMaterialDrawBlendParam(this->modelHandle, 2, 50);
-		/// テクスチャの適応---------------------------------------------------------------------------------------------------------------------------
+		/// テクスチャの適応-------------------------------------------------------------------------------------------------------------
 
 
 		// 座標を決める
@@ -135,8 +135,8 @@ EnemyBossBefore::EnemyBossBefore() : BasicCreature()
 
 
 	// モデルの座標を設定
-	MV1SetRotationXYZ(this->modelHandle, VGet(0.0f, 0.0f, 0.0f));
 	preArea = area;
+	MV1SetRotationXYZ(this->modelHandle, VGet(0.0f, 0.0f, 0.0f));
 	MV1SetPosition(this->modelHandle, area);
 } /// EnemyBossBefore::EnemyBossBefore() : BasicCreature(true)
 

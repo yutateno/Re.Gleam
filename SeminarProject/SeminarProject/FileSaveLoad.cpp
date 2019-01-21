@@ -19,12 +19,6 @@ namespace FileSaveLoad
 		// ƒtƒ@ƒCƒ‹“Ç‚İ‚İ¬Œ÷
 		else
 		{
-			//// “Ç‚İ‚İ¬Œ÷
-			//for (int i = 0, n = static_cast<int>(v_className.size()); i < n; i++)
-			//{
-			//	saveFile << v_className[i] << "," << v_areaX[i] << "," << v_areaY[i] << "," << v_areaZ[i] << "," << v_direction[i];
-			//	saveFile << std::endl;
-			//}
 			saveFile << static_cast<int>(BASICPARAM::e_nowScene) << std::endl;
 			if (BASICPARAM::e_nowScene >= ESceneNumber::THIRDMOVE)
 			{

@@ -324,6 +324,7 @@ void Manager::TitleProcess()
 		&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_BACK) >= 1
 		&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_X) == 1)
 	{
+		// おまけコマンドを出す
 		playBonus = true;
 		optionSelectMax = 8;
 	}
@@ -424,8 +425,8 @@ void Manager::InitMove1Load()
 		// モデルデータ
 		moveStr[0] = "media\\ステージモデル\\move1_graphic.myn";
 		moveStr[1] = "media\\ステージモデル\\move1_hantei.myn";
-		moveStr[2] = "media\\CLPH\\motion\\CLPH_motionALL.myn";				// 4
-		moveStr[3] = "media\\剣\\sword.myn";								// 1
+		moveStr[2] = "media\\CLPH\\motion\\CLPH_motionALL.myn";
+		moveStr[3] = "media\\剣\\sword.myn";
 
 		// サウンドデータ
 		moveStr[4] = "media\\sound\\タイトル（オルゴール）.wyn";
@@ -489,13 +490,13 @@ void Manager::InitMove2Load()
 	{
 		// モデルデータ
 		moveStr[0] = "media\\ステージモデル\\move1_hantei.myn";
-		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";			// 5
+		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";
 		moveStr[2] = "media\\paneru\\paneru.myn";
-		moveStr[3] = "media\\kaidan\\kaidan.myn";						// 1
+		moveStr[3] = "media\\kaidan\\kaidan.myn";		
 		moveStr[4] = "media\\kaidan\\kaidan_hantei.myn";
-		moveStr[5] = "media\\街灯\\Gaitou.myn";							// 2
-		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";				// 1
-		moveStr[7] = "media\\ブロック\\cubeblock.myn";					// 1
+		moveStr[5] = "media\\街灯\\Gaitou.myn";	
+		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";	
+		moveStr[7] = "media\\ブロック\\cubeblock.myn";
 		moveStr[8] = "media\\ステージモデル\\move1_graphic.myn";
 
 		// キャラのテクスチャデータ
@@ -522,7 +523,7 @@ void Manager::InitMove2Load()
 		moveStr[19] = "media\\sound\\たま拾う音.wyn";
 
 		// 精算機械データ
-		moveStr[20] = "media\\Terminal\\terminal.myn";					// 2
+		moveStr[20] = "media\\Terminal\\terminal.myn";
 
 		// 精算機械テクスチャ
 		moveStr[21] = "media\\Terminal\\whiteblack\\Terminal.pyn";
@@ -532,7 +533,7 @@ void Manager::InitMove2Load()
 		moveStr[23] = "media\\Terminal\\push.pyn";
 
 		// 階段とそのあとの床データ
-		moveStr[24] = "media\\階段と床合体\\kaidan_yuka1.myn";			// 2
+		moveStr[24] = "media\\階段と床合体\\kaidan_yuka1.myn";
 
 		// 階段とそのあとの床のテクスチャデータ
 		moveStr[25] = "media\\階段と床合体\\whiteblack\\kaidan.pyn";
@@ -655,12 +656,12 @@ void Manager::InitMove3Load()
 	{
 		// モデルデータ
 		moveStr[0] = "media\\ステージモデル\\move1_hantei.myn";
-		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";			// 5
+		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";
 		moveStr[2] = "media\\paneru\\paneru.myn";
-		moveStr[3] = "media\\kaidan\\kaidan.myn";						// 1
+		moveStr[3] = "media\\kaidan\\kaidan.myn";
 		moveStr[4] = "media\\kaidan\\kaidan_hantei.myn";
-		moveStr[5] = "media\\街灯\\Gaitou.myn";							// 2
-		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";				// 1
+		moveStr[5] = "media\\街灯\\Gaitou.myn";
+		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";
 		moveStr[7] = "media\\ステージモデル\\move1_graphic.myn";
 
 		// キャラのテクスチャデータ
@@ -684,7 +685,7 @@ void Manager::InitMove3Load()
 		moveStr[17] = "media\\sound\\たま拾う音.wyn";
 
 		// 精算機械データ
-		moveStr[18] = "media\\Terminal\\terminal.myn";					// 2
+		moveStr[18] = "media\\Terminal\\terminal.myn";
 
 		// 精算機械テクスチャ
 		moveStr[19] = "media\\Terminal\\whiteblack\\Terminal.pyn";
@@ -694,7 +695,7 @@ void Manager::InitMove3Load()
 		moveStr[21] = "media\\Terminal\\push.pyn";
 
 		// 階段とそのあとの床データ
-		moveStr[22] = "media\\階段と床合体\\kaidan_yuka1.myn";			// 2
+		moveStr[22] = "media\\階段と床合体\\kaidan_yuka1.myn";
 
 		// 階段とそのあとの床のテクスチャデータ
 		moveStr[23] = "media\\階段と床合体\\whiteblack\\kaidan.pyn";
@@ -872,12 +873,12 @@ void Manager::InitMove4Load()
 	{
 		// モデルデータ
 		moveStr[0] = "media\\ステージモデル\\move1_hantei.myn";
-		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";			// 5
+		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";
 		moveStr[2] = "media\\paneru\\paneru.myn";
-		moveStr[3] = "media\\kaidan\\kaidan.myn";						// 1
+		moveStr[3] = "media\\kaidan\\kaidan.myn";
 		moveStr[4] = "media\\kaidan\\kaidan_hantei.myn";
-		moveStr[5] = "media\\街灯\\Gaitou.myn";							// 2
-		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";				// 1
+		moveStr[5] = "media\\街灯\\Gaitou.myn";	
+		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";
 		moveStr[7] = "media\\ステージモデル\\move1_graphic.myn";
 
 		// キャラのテクスチャデータ
@@ -898,7 +899,7 @@ void Manager::InitMove4Load()
 		moveStr[16] = "media\\スカイボックス\\whiteblack\\BlueSky.byn";
 
 		// 精算機械データ
-		moveStr[17] = "media\\Terminal\\terminal.myn";					// 2
+		moveStr[17] = "media\\Terminal\\terminal.myn";	
 
 		// 精算機械テクスチャ
 		moveStr[18] = "media\\Terminal\\whiteblack\\Terminal.pyn";
@@ -908,7 +909,7 @@ void Manager::InitMove4Load()
 		moveStr[20] = "media\\Terminal\\push.pyn";
 
 		// 階段とそのあとの床データ
-		moveStr[21] = "media\\階段と床合体\\kaidan_yuka1.myn";			// 2
+		moveStr[21] = "media\\階段と床合体\\kaidan_yuka1.myn";
 
 		// 階段とそのあとの床のテクスチャデータ
 		moveStr[22] = "media\\階段と床合体\\whiteblack\\kaidan.pyn";
@@ -1204,12 +1205,12 @@ void Manager::InitMove5Load()
 	{
 		// モデルデータ
 		moveStr[0] = "media\\ステージモデル\\move1_hantei.myn";
-		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";			// 5
+		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";
 		moveStr[2] = "media\\paneru\\paneru.myn";
-		moveStr[3] = "media\\kaidan\\kaidan.myn";						// 1
+		moveStr[3] = "media\\kaidan\\kaidan.myn";	
 		moveStr[4] = "media\\kaidan\\kaidan_hantei.myn";
-		moveStr[5] = "media\\街灯\\Gaitou.myn";							// 2
-		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";				// 1
+		moveStr[5] = "media\\街灯\\Gaitou.myn";		
+		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";
 		moveStr[7] = "media\\ステージモデル\\move1_graphic.myn";
 
 		// キャラのテクスチャデータ
@@ -1230,7 +1231,7 @@ void Manager::InitMove5Load()
 		moveStr[16] = "media\\スカイボックス\\whiteblack\\BlueSky.byn";
 
 		// 精算機械データ
-		moveStr[17] = "media\\Terminal\\terminal.myn";					// 2
+		moveStr[17] = "media\\Terminal\\terminal.myn";	
 
 		// 精算機械テクスチャ
 		moveStr[18] = "media\\Terminal\\whiteblack\\Terminal.pyn";
@@ -1240,7 +1241,7 @@ void Manager::InitMove5Load()
 		moveStr[20] = "media\\Terminal\\push.pyn";
 
 		// 階段とそのあとの床データ
-		moveStr[21] = "media\\階段と床合体\\kaidan_yuka1.myn";			// 2
+		moveStr[21] = "media\\階段と床合体\\kaidan_yuka1.myn";
 
 		// 階段とそのあとの床のテクスチャデータ
 		moveStr[22] = "media\\階段と床合体\\whiteblack\\kaidan.pyn";
@@ -1518,12 +1519,12 @@ void Manager::InitMove6Load()
 	{
 		// モデルデータ
 		moveStr[0] = "media\\ステージモデル\\move1_hantei.myn";
-		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";			// 5
+		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";
 		moveStr[2] = "media\\paneru\\paneru.myn";
-		moveStr[3] = "media\\kaidan\\kaidan.myn";						// 1
+		moveStr[3] = "media\\kaidan\\kaidan.myn";	
 		moveStr[4] = "media\\kaidan\\kaidan_hantei.myn";
-		moveStr[5] = "media\\街灯\\Gaitou.myn";							// 2
-		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";				// 1
+		moveStr[5] = "media\\街灯\\Gaitou.myn";		
+		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";	
 		moveStr[7] = "media\\ステージモデル\\move1_graphic.myn";
 
 		// キャラのテクスチャデータ
@@ -1544,7 +1545,7 @@ void Manager::InitMove6Load()
 		moveStr[16] = "media\\スカイボックス\\whiteblack\\BlueSky.byn";
 
 		// 階段とそのあとの床データ
-		moveStr[17] = "media\\階段と床合体\\kaidan_yuka1.myn";			// 2
+		moveStr[17] = "media\\階段と床合体\\kaidan_yuka1.myn";
 
 		// 階段とそのあとの床のテクスチャデータ
 		moveStr[18] = "media\\階段と床合体\\whiteblack\\kaidan.pyn";
@@ -2706,7 +2707,7 @@ void Manager::Update()
 				{
 					BASICPARAM::endFeedNow = true;						// 終了フェードのフラッグを立てる
 					preLoadScene = true;								// 直前がロードだったら
-					BASICPARAM::e_nowScene = ESceneNumber::SIXMOVE;	// 次のシーンを指定する				
+					BASICPARAM::e_nowScene = ESceneNumber::SIXMOVE;		// 次のシーンを指定する				
 				}
 			}
 			// ロードではなくゲームだったら
@@ -2719,7 +2720,7 @@ void Manager::Update()
 				if (!optionMenuNow)
 				{
 					// 開始フェードが終了していたら
-					if (!BASICPARAM::startFeedNow/* && !BASICPARAM::endFeedNow*/)
+					if (!BASICPARAM::startFeedNow)
 					{
 						// アンチエイリアス画面に対して描画処理を行う
 						SetDrawScreen(antiAliasScreen);
@@ -2787,7 +2788,7 @@ void Manager::Update()
 						MyDebug::DebugProcess();
 #endif // _DEBUG
 						ScreenFlip();
-					} /// if (!BASICPARAM::startFeedNow/* && !BASICPARAM::endFeedNow*/)
+					} /// if (!BASICPARAM::startFeedNow)
 					// 開始フェードが立っていたら
 					else
 					{
@@ -2819,7 +2820,7 @@ void Manager::Update()
 
 
 						ScreenFlip();
-					} /// else(!if (!BASICPARAM::startFeedNow/* && !BASICPARAM::endFeedNow*/))
+					} /// else(!if (!BASICPARAM::startFeedNow))
 				} /// if (!optionMenuNow)
 				// オプションメニューのとき
 				else
@@ -2837,7 +2838,7 @@ void Manager::Update()
 					if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1)
 					{
 						p_baseMove->OptionActorModelAfter();
-						p_baseMove->CameraProcess();			// カメラ切り替え
+						p_baseMove->CameraProcess();				// カメラ切り替え
 						SoundProcess::SetOptionMenuNow(false);		// サウンド音量をオプション用から戻す
 						optionMenuNow = false;
 					}

@@ -547,9 +547,8 @@ void EnemyMove3Slime::Process()
 	FallProcess();	// 落下のプロセス
 
 
-	// 第二引数の回転角度をセット
-	MV1SetRotationXYZ(modelHandle, VGet(0.0f, direXAngle + direZAngle, 0.0f));
 	// 指定位置にモデルを配置
+	MV1SetRotationXYZ(modelHandle, VGet(0.0f, direXAngle + direZAngle, 0.0f));
 	MV1SetPosition(modelHandle, area);
 } /// void EnemyMove3Slime::Process()
 

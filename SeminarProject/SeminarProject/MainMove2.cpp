@@ -359,18 +359,18 @@ void MainMove2::AdjuctmentCreate(VECTOR area, AdjustmentObject obujectID, float 
 	case AdjustmentObject::Stairs:
 		vp_stageStairs.push_back(new StageStairs(stairsHandle, area, stairsTexture0, DX_PI_F + direction));		// 生成
 		p_character->SetStairsArea(vp_stageStairs[BASICPARAM::stairsNum]->GetArea(), BASICPARAM::stairsNum, DX_PI_F + direction);	// キャラクターに対して当たり判定生成
-		BASICPARAM::stairsNum++;									// 全体で確認できるように階段の個数を追加
-		BASICPARAM::v_stairsArea.push_back(area);					// 全体で確認できるように場所を追加
-		BASICPARAM::v_stairsAngle.push_back(DX_PI_F + direction);	// 全体で確認できるように角度を追加
+		BASICPARAM::stairsNum++;										// 全体で確認できるように階段の個数を追加
+		BASICPARAM::v_stairsArea.push_back(area);						// 全体で確認できるように場所を追加
+		BASICPARAM::v_stairsAngle.push_back(DX_PI_F + direction);		// 全体で確認できるように角度を追加
 		break;
 
 
 	// 街灯が選択されていたら
 	case AdjustmentObject::StreetLight:
 		vp_stageStreetLight.push_back(new StageStreetLight(streetLightHandle, area, streetLightTexture0, streetLightTexture1, direction));	// 生成
-		BASICPARAM::streetLightNum++;								// 全体で確認できるように街灯の個数を追加
-		BASICPARAM::v_streetLightArea.push_back(area);				// 全体で確認できるように場所を追加
-		BASICPARAM::v_streetLightAngle.push_back(direction);		// 全体で確認できるように角度を追加
+		BASICPARAM::streetLightNum++;									// 全体で確認できるように街灯の個数を追加
+		BASICPARAM::v_streetLightArea.push_back(area);					// 全体で確認できるように場所を追加
+		BASICPARAM::v_streetLightAngle.push_back(direction);			// 全体で確認できるように角度を追加
 		break;
 
 
@@ -551,7 +551,8 @@ void MainMove2::AttackProcess()
 			// エフェクトを再生する。
 			playingEfAttack = PlayEffekseer3DEffect(effectAttack);
 			SetScalePlayingEffekseer3DEffect(playingEfAttack, 10, 10, 10);
-			SetPosPlayingEffekseer3DEffect(playingEfAttack, p_character->GetAttackEndFrameArea().x, p_character->GetAttackEndFrameArea().y, p_character->GetAttackEndFrameArea().z);
+			SetPosPlayingEffekseer3DEffect(playingEfAttack, p_character->GetAttackEndFrameArea().x
+				, p_character->GetAttackEndFrameArea().y, p_character->GetAttackEndFrameArea().z);
 		}
 	} /// for (int i = 0, n = enemyNum; i != n; ++i)
 
@@ -574,7 +575,6 @@ void MainMove2::AttackProcess()
 			&& DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
 		{
 			// 精密機械のシーンへ移行
-			//GetDrawScreenGraph(0, 0, BASICPARAM::winWidth, BASICPARAM::winHeight, adjustmentDrawScreen);
 			adjustmentFeedNow = true;
 			adjustmentStartFeed = true;
 			changeAdjustmentScene = true;
@@ -1074,17 +1074,21 @@ void MainMove2::Draw()
 				if (mostNearEnemyDistance < 250)
 				{
 					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x - 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
-						, static_cast<int>(mostNearEnemyScreenArea.x + 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f), GetColor(255, 255, 255), false);
+						, static_cast<int>(mostNearEnemyScreenArea.x + 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
+						, GetColor(255, 255, 255), false);
 					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y - 20.0f - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
-						, static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f), GetColor(255, 255, 255), false);
+						, static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
+						, GetColor(255, 255, 255), false);
 				}
 				// 攻撃は当たらないが近かったら
 				else
 				{
 					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x - 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
-						, static_cast<int>(mostNearEnemyScreenArea.x + 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f), GetColor(125, 125, 125), false);
+						, static_cast<int>(mostNearEnemyScreenArea.x + 20.0f), static_cast<int>(mostNearEnemyScreenArea.y - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
+						, GetColor(125, 125, 125), false);
 					DrawBox(static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y - 20.0f - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
-						, static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f), GetColor(125, 125, 125), false);
+						, static_cast<int>(mostNearEnemyScreenArea.x), static_cast<int>(mostNearEnemyScreenArea.y + 20.0f - s_enemy[lockONNowEnemyID].p_enemy->GetHeight() / 2.0f)
+						, GetColor(125, 125, 125), false);
 				}
 			}
 		}
@@ -1193,7 +1197,7 @@ void MainMove2::Process()
 				}
 
 				
-				// ドロップアイテムを描画させる
+				// ドロップアイテムを生成させる
 				if (!s_dropItem[(i * 5)].p_dropItem->GetDeath() && !s_dropItem[(i * 5)].p_dropItem->GetAlive()) s_dropItem[(i * 5)].p_dropItem->SetAlive(true);
 				if (!s_dropItem[(i * 5) + 1].p_dropItem->GetDeath() && !s_dropItem[(i * 5) + 1].p_dropItem->GetAlive()) s_dropItem[(i * 5) + 1].p_dropItem->SetAlive(true);
 				if (!s_dropItem[(i * 5) + 2].p_dropItem->GetDeath() && !s_dropItem[(i * 5) + 2].p_dropItem->GetAlive()) s_dropItem[(i * 5) + 2].p_dropItem->SetAlive(true);

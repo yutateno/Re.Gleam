@@ -1,12 +1,12 @@
 #include "Basic.hpp"
 
 
-// extern static 変数
-ESceneNumber BASICPARAM::e_preScene;		// 直前のシーン
-ESceneNumber BASICPARAM::e_nowScene;		// 今のシーン
-ETextureColor BASICPARAM::e_preTextureColor;	// 直前のテクスチャの色
-ETextureColor BASICPARAM::e_TextureColor;	// テクスチャの色
-bool BASICPARAM::nowCameraOrtho;	// 今のカメラの形式が正射影かどうか
+// extern 変数
+ESceneNumber BASICPARAM::e_preScene;
+ESceneNumber BASICPARAM::e_nowScene;
+ETextureColor BASICPARAM::e_preTextureColor;
+ETextureColor BASICPARAM::e_TextureColor;
+bool BASICPARAM::nowCameraOrtho;
 int BASICPARAM::winWidth;
 int BASICPARAM::winHeight;
 int BASICPARAM::bitColor;

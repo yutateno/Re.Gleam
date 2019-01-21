@@ -156,7 +156,7 @@ void EnemyMove5::AutoMoveProcess()
 		direXAngle = DX_PI_F;
 		direZAngle = charaLookAtAngle;
 		charaLookAt = true;
-		escapeFrame = 10;
+		escapeFrame = 20;
 	}
 	// プレイヤーを視認できなかったら
 	else

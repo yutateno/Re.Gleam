@@ -452,15 +452,13 @@ void MainMove3::ShadowDraw()
 	// 敵スライム
 	for (int i = 0; i != enemySlimeNum; ++i)
 	{
-		if (p_enemySlime[i]->GetDeathFlag()
-			|| p_enemySlime[i]->GetEraseExistence()) continue;
+		if (p_enemySlime[i]->GetDeathFlag()	|| p_enemySlime[i]->GetEraseExistence()) continue;
 		p_enemySlime[i]->ModelDraw();
 	}
 	// 敵クレヨンヒューマン
 	for (int i = 0; i != enemyCrayonHumanNum; ++i)
 	{
-		if (p_enemyCrayonHuman[i]->GetDeathFlag()
-			|| p_enemyCrayonHuman[i]->GetEraseExistence()) continue;
+		if (p_enemyCrayonHuman[i]->GetDeathFlag() || p_enemyCrayonHuman[i]->GetEraseExistence()) continue;
 		p_enemyCrayonHuman[i]->ModelDraw();
 	}
 	// キャラクター
@@ -598,8 +596,7 @@ void MainMove3::AttackProcess()
 		// ダメージを受けていないがプレイヤーが攻撃中だったら
 		if (p_character->GetAttackNow() && !enemyCrayonHumanDamage[i])
 		{
-			p_enemyCrayonHuman[i]->HitLineReturn(p_character->GetAttackFirstFrameArea()
-				, p_character->GetAttackEndFrameArea());
+			p_enemyCrayonHuman[i]->HitLineReturn(p_character->GetAttackFirstFrameArea(), p_character->GetAttackEndFrameArea());
 		}
 
 
@@ -695,8 +692,7 @@ void MainMove3::AttackProcess()
 
 		// スライムが当たっていたとき
 		if (HitCheck_Capsule_Capsule(
-			p_enemySlime[i]->GetArea()
-			, VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, p_enemySlime[i]->GetHeight(), 0.0f))
+			p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, p_enemySlime[i]->GetHeight(), 0.0f))
 			, p_enemySlime[i]->GetWidth(), p_adjustmentMachine->GetArea()
 			, VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, p_adjustmentMachine->GetHeight(), 0.0f))
 			, p_adjustmentMachine->GetWidth()))
@@ -715,8 +711,7 @@ void MainMove3::AttackProcess()
 
 		// クレヨンヒューマンが当たっていたとき
 		if (HitCheck_Capsule_Capsule(
-			p_enemyCrayonHuman[i]->GetArea()
-			, VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, p_enemyCrayonHuman[i]->GetHeight(), 0.0f))
+			p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, p_enemyCrayonHuman[i]->GetHeight(), 0.0f))
 			, p_enemyCrayonHuman[i]->GetWidth(), p_adjustmentMachine->GetArea()
 			, VAdd(p_adjustmentMachine->GetArea(), VGet(0.0f, p_adjustmentMachine->GetHeight(), 0.0f)), p_adjustmentMachine->GetWidth()))
 		{
@@ -757,8 +752,7 @@ void MainMove3::AttackProcess()
 
 		// プレイヤーと当たっていたら
 		if (HitCheck_Capsule_Capsule(
-			p_enemySlime[i]->GetArea()
-			, VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, p_enemySlime[i]->GetHeight(), 0.0f))
+			p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, p_enemySlime[i]->GetHeight(), 0.0f))
 			, p_enemySlime[i]->GetWidth(), p_character->GetArea()
 			, VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth()))
 		{
@@ -777,8 +771,7 @@ void MainMove3::AttackProcess()
 
 		// プレイヤーと当たっていたら
 		if (HitCheck_Capsule_Capsule(
-			p_enemyCrayonHuman[i]->GetArea()
-			, VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, p_enemyCrayonHuman[i]->GetHeight(), 0.0f))
+			p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, p_enemyCrayonHuman[i]->GetHeight(), 0.0f))
 			, p_enemyCrayonHuman[i]->GetWidth(), p_character->GetArea()
 			, VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth()))
 		{
@@ -807,8 +800,7 @@ void MainMove3::AttackProcess()
 
 			// 当たっていたら
 			if (HitCheck_Capsule_Capsule(
-				p_enemySlime[i]->GetArea()
-				, VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, p_enemySlime[i]->GetHeight(), 0.0f))
+				p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, p_enemySlime[i]->GetHeight(), 0.0f))
 				, p_enemySlime[i]->GetWidth(), p_enemySlime[j]->GetArea()
 				, VAdd(p_enemySlime[j]->GetArea(), VGet(0.0f, p_enemySlime[j]->GetHeight(), 0.0f)), p_enemySlime[j]->GetWidth()))
 			{
@@ -828,8 +820,7 @@ void MainMove3::AttackProcess()
 
 			// 当たっていたら
 			if (HitCheck_Capsule_Capsule(
-				p_enemySlime[i]->GetArea()
-				, VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, p_enemySlime[i]->GetHeight(), 0.0f))
+				p_enemySlime[i]->GetArea(), VAdd(p_enemySlime[i]->GetArea(), VGet(0.0f, p_enemySlime[i]->GetHeight(), 0.0f))
 				, p_enemySlime[i]->GetWidth(), p_enemyCrayonHuman[j]->GetArea()
 				, VAdd(p_enemyCrayonHuman[j]->GetArea(), VGet(0.0f, p_enemyCrayonHuman[j]->GetHeight(), 0.0f)), p_enemyCrayonHuman[j]->GetWidth()))
 			{
@@ -856,8 +847,7 @@ void MainMove3::AttackProcess()
 
 			// 当たっていたら
 			if (HitCheck_Capsule_Capsule(
-				p_enemyCrayonHuman[i]->GetArea()
-				, VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, p_enemyCrayonHuman[i]->GetHeight(), 0.0f))
+				p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, p_enemyCrayonHuman[i]->GetHeight(), 0.0f))
 				, p_enemyCrayonHuman[i]->GetWidth(), p_enemyCrayonHuman[j]->GetArea()
 				, VAdd(p_enemyCrayonHuman[j]->GetArea(), VGet(0.0f, p_enemyCrayonHuman[i]->GetHeight(), 0.0f)), p_enemyCrayonHuman[i]->GetWidth()))
 			{
@@ -875,8 +865,7 @@ void MainMove3::AttackProcess()
 
 			// 当たっていたら
 			if (HitCheck_Capsule_Capsule(
-				p_enemyCrayonHuman[i]->GetArea()
-				, VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, p_enemyCrayonHuman[i]->GetHeight(), 0.0f))
+				p_enemyCrayonHuman[i]->GetArea(), VAdd(p_enemyCrayonHuman[i]->GetArea(), VGet(0.0f, p_enemyCrayonHuman[i]->GetHeight(), 0.0f))
 				, p_enemyCrayonHuman[i]->GetWidth(), p_enemySlime[j]->GetArea()
 				, VAdd(p_enemySlime[j]->GetArea(), VGet(0.0f, p_enemySlime[j]->GetHeight(), 0.0f)), p_enemySlime[j]->GetWidth()))
 			{
@@ -987,8 +976,7 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 
 	// キャラクターの初期化
 	p_character = new CharacterSword(v_file[EFILE::charaModel], v_file[EFILE::stageCollModel]
-		, v_file[EFILE::stairsCollModel]
-		, v_file[EFILE::paneruModel], v_file[EFILE::stairsRoadCollModel], v_file[EFILE::charaTex0]
+		, v_file[EFILE::stairsCollModel], v_file[EFILE::paneruModel], v_file[EFILE::stairsRoadCollModel], v_file[EFILE::charaTex0]
 		, v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3], v_file[EFILE::charaTex4]);
 	charaSomeEnemyDamageCount = 0;
 
@@ -1651,17 +1639,12 @@ void MainMove3::Process()
 
 
 				// ドロップアイテムを落とす
-				if (!p_dropItem[(i * 5)]->GetDeath()
-					&& !p_dropItem[(i * 5)]->GetAlive()) p_dropItem[(i * 5)]->SetAlive(p_enemySlime[i]->GetArea());
+				if (!p_dropItem[(i * 5)]->GetDeath() && !p_dropItem[(i * 5)]->GetAlive()) p_dropItem[(i * 5)]->SetAlive(p_enemySlime[i]->GetArea());
 				else continue;
-				if (!p_dropItem[(i * 5) + 1]->GetDeath()
-					&& !p_dropItem[(i * 5) + 1]->GetAlive()) p_dropItem[(i * 5) + 1]->SetAlive(p_enemySlime[i]->GetArea());
-				if (!p_dropItem[(i * 5) + 2]->GetDeath()
-					&& !p_dropItem[(i * 5) + 2]->GetAlive()) p_dropItem[(i * 5) + 2]->SetAlive(p_enemySlime[i]->GetArea());
-				if (!p_dropItem[(i * 5) + 3]->GetDeath()
-					&& !p_dropItem[(i * 5) + 3]->GetAlive()) p_dropItem[(i * 5) + 3]->SetAlive(p_enemySlime[i]->GetArea());
-				if (!p_dropItem[(i * 5) + 4]->GetDeath()
-					&& !p_dropItem[(i * 5) + 4]->GetAlive()) p_dropItem[(i * 5) + 4]->SetAlive(p_enemySlime[i]->GetArea());
+				if (!p_dropItem[(i * 5) + 1]->GetDeath() && !p_dropItem[(i * 5) + 1]->GetAlive()) p_dropItem[(i * 5) + 1]->SetAlive(p_enemySlime[i]->GetArea());
+				if (!p_dropItem[(i * 5) + 2]->GetDeath() && !p_dropItem[(i * 5) + 2]->GetAlive()) p_dropItem[(i * 5) + 2]->SetAlive(p_enemySlime[i]->GetArea());
+				if (!p_dropItem[(i * 5) + 3]->GetDeath() && !p_dropItem[(i * 5) + 3]->GetAlive()) p_dropItem[(i * 5) + 3]->SetAlive(p_enemySlime[i]->GetArea());
+				if (!p_dropItem[(i * 5) + 4]->GetDeath() && !p_dropItem[(i * 5) + 4]->GetAlive()) p_dropItem[(i * 5) + 4]->SetAlive(p_enemySlime[i]->GetArea());
 				continue;
 			}
 
@@ -1769,8 +1752,8 @@ void MainMove3::Process()
 					{
 						std::mt19937 mt(rnd());
 						std::uniform_int_distribution<> blood(0, 2);        // X座標用乱数
-						damageDrawID = blood(mt);		// 乱数から画像を選ぶ
-						damageDrawFrame = 10;			// 10フレーム出すようにする
+						damageDrawID = blood(mt);							// 乱数から画像を選ぶ
+						damageDrawFrame = 10;								// 10フレーム出すようにする
 					}
 				}
 			}
@@ -1796,17 +1779,12 @@ void MainMove3::Process()
 
 				// ドロップアイテムを出す
 				int temp = enemySlimeNum * 5;
-				if (!p_dropItem[(i * 5) + temp]->GetDeath()
-					&& !p_dropItem[(i * 5) + temp]->GetAlive()) p_dropItem[(i * 5) + temp]->SetAlive(p_enemyCrayonHuman[i]->GetArea());
+				if (!p_dropItem[(i * 5) + temp]->GetDeath()	&& !p_dropItem[(i * 5) + temp]->GetAlive()) p_dropItem[(i * 5) + temp]->SetAlive(p_enemyCrayonHuman[i]->GetArea());
 				else continue;
-				if (!p_dropItem[(i * 5) + 1 + temp]->GetDeath()
-					&& !p_dropItem[(i * 5) + 1 + temp]->GetAlive()) p_dropItem[(i * 5) + 1 + temp]->SetAlive(p_enemyCrayonHuman[i]->GetArea());
-				if (!p_dropItem[(i * 5) + 2 + temp]->GetDeath()
-					&& !p_dropItem[(i * 5) + 2 + temp]->GetAlive()) p_dropItem[(i * 5) + 2 + temp]->SetAlive(p_enemyCrayonHuman[i]->GetArea());
-				if (!p_dropItem[(i * 5) + 3 + temp]->GetDeath()
-					&& !p_dropItem[(i * 5) + 3 + temp]->GetAlive()) p_dropItem[(i * 5) + 3 + temp]->SetAlive(p_enemyCrayonHuman[i]->GetArea());
-				if (!p_dropItem[(i * 5) + 4 + temp]->GetDeath()
-					&& !p_dropItem[(i * 5) + 4 + temp]->GetAlive()) p_dropItem[(i * 5) + 4 + temp]->SetAlive(p_enemyCrayonHuman[i]->GetArea());
+				if (!p_dropItem[(i * 5) + 1 + temp]->GetDeath()	&& !p_dropItem[(i * 5) + 1 + temp]->GetAlive()) p_dropItem[(i * 5) + 1 + temp]->SetAlive(p_enemyCrayonHuman[i]->GetArea());
+				if (!p_dropItem[(i * 5) + 2 + temp]->GetDeath()	&& !p_dropItem[(i * 5) + 2 + temp]->GetAlive()) p_dropItem[(i * 5) + 2 + temp]->SetAlive(p_enemyCrayonHuman[i]->GetArea());
+				if (!p_dropItem[(i * 5) + 3 + temp]->GetDeath()	&& !p_dropItem[(i * 5) + 3 + temp]->GetAlive()) p_dropItem[(i * 5) + 3 + temp]->SetAlive(p_enemyCrayonHuman[i]->GetArea());
+				if (!p_dropItem[(i * 5) + 4 + temp]->GetDeath()	&& !p_dropItem[(i * 5) + 4 + temp]->GetAlive()) p_dropItem[(i * 5) + 4 + temp]->SetAlive(p_enemyCrayonHuman[i]->GetArea());
 				continue;
 			}
 
@@ -1913,8 +1891,8 @@ void MainMove3::Process()
 					{
 						std::mt19937 mt(rnd());
 						std::uniform_int_distribution<> blood(0, 2);        // X座標用乱数
-						damageDrawID = blood(mt);		// ランダムでダメージ画像を表示する
-						damageDrawFrame = 10;			// 10フレームだけ表示するようにする
+						damageDrawID = blood(mt);							// ランダムでダメージ画像を表示する
+						damageDrawFrame = 10;								// 10フレームだけ表示するようにする
 					}
 				}
 			}
@@ -1924,7 +1902,7 @@ void MainMove3::Process()
 		BaseMove::ShadowArea(p_character->GetArea());		// シャドウマップの位置を更新する
 
 
-		AttackProcess();		// 当たり判定処理
+		AttackProcess();									// 当たり判定処理
 
 
 		BaseMove::SkyBoxProcess(p_character->GetArea());	// スカイボックスの位置を更新する

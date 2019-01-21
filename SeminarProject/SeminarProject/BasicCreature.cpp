@@ -302,7 +302,8 @@ bool BasicCreature::ActorHit(int stageHandle)
 					mainPoly = wallPoly[j];		// ¡‚Ì’²‚×‚éƒ|ƒŠƒSƒ“î•ñ‚ð“n‚·
 
 					// “–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ð’²‚×‚é
-					if (HitCheck_Capsule_Triangle(VAdd(area, VGet(0.0f, modelHeight, 0.0f)), VAdd(area, VGet(0.0f, modelHeight, 0.0f))
+					if (HitCheck_Capsule_Triangle(VAdd(area, VGet(0.0f, modelHeight, 0.0f))
+						, VAdd(area, VGet(0.0f, modelHeight, 0.0f))
 						, modelWidth, mainPoly->Position[0], mainPoly->Position[1], mainPoly->Position[2]) != 0)
 					{
 						jumpUpNow = false;

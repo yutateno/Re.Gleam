@@ -38,7 +38,7 @@ private:
 	};
 
 
-	/// ステージ-----------------------------------------
+	/// ステージ--------------------------------------------------------------------------
 
 	// ステージのポインタ
 	Stage* p_stage;
@@ -56,13 +56,13 @@ private:
 	std::vector<StageStairsRoad*> vp_stageStairsRoad;
 
 
-	/// キャラクター-------------------
+	/// キャラクター---------------------------------------------------------------------
 
 	// キャラクターのポインタ
 	CharacterSword* p_character;
 
 
-	/// 敵---------------------
+	/// 敵-------------------------------------------------------------------------------
 
 	// ボスのあれ
 	EnemyBossBefore* p_enemyBossBefore;
@@ -77,10 +77,12 @@ private:
 	int enemyCatchNum;
 
 
-	/// 敵を一定数手に入れた時の演出に関する---------------
+	/// 敵を一定数手に入れた時の演出に関する---------------------------------------------
 
 	// 一定数手に入れた時に描画する画像のID
-	enum class ECertainDrawID { adjustment, ordinary, streetLight, character, paneru, stairs, stairsRoad };
+	enum class ECertainDrawID { 
+		adjustment, ordinary, streetLight, character, paneru, stairs, stairsRoad
+	};
 	
 	// 一定数手に入れた時に描画する画像のID
 	ECertainDrawID e_certainID;
@@ -95,13 +97,13 @@ private:
 	int certainDrawFeed;
 
 
-	/// 一般人------------------
+	/// 一般人--------------------------------------------------------------------------
 
 	// 一般人のポインタ
 	std::vector<OrdinaryPerson*> vp_ordinaryPerson;
 
 
-	/// 精密機械------------------------------
+	/// 精密機械-----------------------------------------------------------------------
 
 	// 精密機械のポインタ
 	AdjustmentMachine* p_adjustmentMachine;
@@ -110,11 +112,13 @@ private:
 	int adjustmentDescDraw;
 
 
-	/// カメラ------------------
+	/// カメラ-------------------------------------------------------------------------
 
 	// カメラのポインタ
 	Camera* p_camera;
 
+
+	/// ムーブ内の動きに関して---------------------------------------------------------
 
 	// 影の描画
 	void ShadowDraw();

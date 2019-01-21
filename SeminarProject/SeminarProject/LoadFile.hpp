@@ -16,6 +16,9 @@
 enum class ELOADFILE { graph, soundmem, mv1model, soundStream, sound3DSource };
 
 
+/*
+素材を複合してロードするクラス
+*/
 class LoadFile
 {
 private:

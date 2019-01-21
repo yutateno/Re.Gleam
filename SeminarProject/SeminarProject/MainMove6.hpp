@@ -35,7 +35,7 @@ private:
 	};
 
 	
-	/// ステージ----------------------------------------
+	/// ステージ-----------------------------------------------------------------------
 
 	// ステージのポインタ
 	Stage* p_stage;
@@ -53,13 +53,13 @@ private:
 	std::vector<StageStairsRoad*> vp_stageStairsRoad;
 
 
-	/// キャラクター------------------------
+	/// キャラクター-------------------------------------------------------------------
 
 	// キャラクター
 	CharacterSword* p_character;
 
 
-	/// 敵------------------------------
+	/// 敵----------------------------------------------------------------------------
 
 	// ボスのあれ
 	EnemyBossBefore* p_enemyBossBefore;
@@ -73,17 +73,17 @@ private:
 	//ボスに近づいたときにあらわれるUIにてどちらを選択したか
 	bool approachUISelect;
 	
-	// スティックの押し倒しかどうかを調べる(DLLXinputでやるべきなんだろうかとりあえず
+	// スティックの押し倒しかどうかを調べる
 	int adjustmentControllStick[2];
 
 
-	/// 一般人------------------------------------
+	/// 一般人-----------------------------------------------------------------------
 
 	// 一般人のポインタ
 	std::vector<OrdinaryPerson*> vp_ordinaryPerson;
 
 
-	/// カメラ---------------------
+	/// カメラ----------------------------------------------------------------------
 
 	// カメラのポインタ
 	Camera* p_camera;
@@ -92,23 +92,25 @@ private:
 	CameraMove6* p_cameraMove;
 
 
-	/// 影---------------------
+	/// 影--------------------------------------------------------------------------
 	
 	// 影の描画
 	void ShadowDraw();
 
 
-	/// 攻撃及びあたり判定---------
+	/// 攻撃及びあたり判定---------------------------------------------------------
 
 	// 攻撃のプロセス
 	void AttackProcess();
 
 
-	/// シーン内での取り分け----------------
+	/// シーン内での取り分け------------------------------------------------------
 
 	// シーンのID分け
 	enum class ESceneMove6 { First, Movie, Battle, Last };
 	ESceneMove6 e_nowMove;
+
+	/// 最初のシーン-------------------------------------------------
 
 	// 最初の描画
 	void FirstDraw();
@@ -116,23 +118,13 @@ private:
 	// 最初のプロセス
 	void FirstProcess();
 
+	/// ムービー中のシーン-----------------------------------------
+
 	// ムービー中の描画
 	void MovieDraw();
 
 	// ムービー中のプロセス
 	void MovieProcess();
-
-	// 戦闘の描画
-	void BattleDraw();
-
-	// 戦闘のプロセス
-	void BattleProcess();
-
-	// 最後の描画
-	void LastDraw();
-
-	// 最後のプロセス
-	void LastProcess();
 
 	// ムービー中の動きをまとめる時間フレーム
 	int movieFrame;
@@ -140,9 +132,28 @@ private:
 	// ムービー前が正射影カメラだったかどうか
 	bool movieBeforeCameraOrtho;
 
+	/// 戦闘のシーン-----------------------------------------------
+
+	// 戦闘の描画
+	void BattleDraw();
+
+	// 戦闘のプロセス
+	void BattleProcess();
+
+	/// 最後のシーン----------------------------------------------
+
+	// 最後の描画
+	void LastDraw();
+
+	// 最後のプロセス
+	void LastProcess();
+
 	// エンドロール用画像
-	enum class EEndRolUI { title, program, graphic, sound, libThanks, dxlib, effekseer, specialThanks, test, youser };
+	enum class EEndRolUI {
+		title, program, graphic, sound, libThanks, dxlib, effekseer, specialThanks, test, youser
+	};
 	int endrolDraw[10];
+
 
 
 public:

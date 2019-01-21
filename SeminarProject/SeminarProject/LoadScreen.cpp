@@ -1,7 +1,7 @@
 #include "LoadScreen.hpp"
 
 
-// コンストラクタ
+/// ---------------------------------------------------------------------------------------
 LoadScreen::LoadScreen()
 {
 	// 情報初期化
@@ -16,6 +16,7 @@ LoadScreen::LoadScreen()
 	// 状態に応じて読み込む2Dモデルを変更
 	switch (BASICPARAM::e_TextureColor)
 	{
+	// 通常色のとき
 	case ETextureColor::NORMAL:
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\normal\\1.pyn", draw[0], ELOADFILE::graph);
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\normal\\2.pyn", draw[1], ELOADFILE::graph);
@@ -28,6 +29,8 @@ LoadScreen::LoadScreen()
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\ex\\normal\\jamp2.pyn", endDraw, ELOADFILE::graph);
 		break;
 
+
+	// D型補正のとき
 	case ETextureColor::D_CORRECTION:
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\D\\1.pyn", draw[0], ELOADFILE::graph);
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\D\\2.pyn", draw[1], ELOADFILE::graph);
@@ -40,6 +43,8 @@ LoadScreen::LoadScreen()
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\ex\\D\\jamp2.pyn", endDraw, ELOADFILE::graph);
 		break;
 
+
+	// P型補正のとき
 	case ETextureColor::P_CORRECTION:
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\P\\1.pyn", draw[0], ELOADFILE::graph);
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\P\\2.pyn", draw[1], ELOADFILE::graph);
@@ -52,6 +57,8 @@ LoadScreen::LoadScreen()
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\ex\\P\\jamp2.pyn", endDraw, ELOADFILE::graph);
 		break;
 
+
+	// 白黒のとき
 	case ETextureColor::WHITEBLACK:
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\whiteblack\\1.pyn", draw[0], ELOADFILE::graph);
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\whiteblack\\2.pyn", draw[1], ELOADFILE::graph);
@@ -63,6 +70,7 @@ LoadScreen::LoadScreen()
 
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\ex\\whiteblack\\jamp2.pyn", endDraw, ELOADFILE::graph);
 		break;
+
 
 	default:
 		LoadFile::MyLoad("media\\こっち\\media\\clph_2d\\scrollaction\\walk\\normal\\1.pyn", draw[0], ELOADFILE::graph);
@@ -79,7 +87,7 @@ LoadScreen::LoadScreen()
 } /// LoadScreen::LoadScreen()
 
 
-// デストラクタ
+/// ---------------------------------------------------------------------------------------
 LoadScreen::~LoadScreen()
 {
 	for (int i = 0; i != 7; ++i)
@@ -90,13 +98,13 @@ LoadScreen::~LoadScreen()
 }
 
 
-// プロセス
+/// ---------------------------------------------------------------------------------------
 void LoadScreen::Process(const int num, const int max)
 {
 	if (++walkCount > 5) walkCount = 0;
 
 
-	// 何をやっている最中か分からせる
+	// ロード中のロゴを出す
 	DrawGraph(50, 50, draw[6], true);
 
 

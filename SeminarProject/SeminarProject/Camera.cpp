@@ -1,7 +1,7 @@
 #include "Camera.hpp"
 
 
-// 回転する
+/// ------------------------------------------------------------------------------------
 void Camera::RLrotate(const float speed, float& axisOne, float& axisTwo)
 {
 	const float tempX = axisOne;
@@ -11,7 +11,7 @@ void Camera::RLrotate(const float speed, float& axisOne, float& axisTwo)
 }
 
 
-// コンストラクタ
+/// ------------------------------------------------------------------------------------
 Camera::Camera(const VECTOR charaarea)
 {
 	// 遠近法カメラの初期化
@@ -39,40 +39,47 @@ Camera::Camera(const VECTOR charaarea)
 	if (!BASICPARAM::nowCameraOrtho)
 	{
 		SetCameraNearFar(100.0f, 10000.0f);	// カメラの描画範囲を指定
-		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea), VAdd(perspesctiveViewArea, charaArea));
+		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea)
+			, VAdd(perspesctiveViewArea, charaArea));
 		SoundProcess::Set3DRadius(VSize(cameraPerspectiveArea));
 	}
 	// 正射影カメラだったら
 	else
 	{
 		SetupCamera_Ortho(orthoArea);
-		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea), VAdd(orthoViewArea, charaArea));
+		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea)
+			, VAdd(orthoViewArea, charaArea));
 		SoundProcess::Set3DRadius(VSize(cameraOrthoArea));
 	}
 
 
-	// DXライブラリのカメラとEffekseerのカメラを同期する。
+	// DXライブラリのカメラとEffekseerのカメラを同期
 	Effekseer_Sync3DSetting();
 } /// Camera::Camera(const VECTOR charaarea, const int collStageHandle)
 
 
-// デストラクタ
+/// ------------------------------------------------------------------------------------
 Camera::~Camera()
 {
 }
 
 
-// メインプロセス
+/// ------------------------------------------------------------------------------------
 void Camera::Process(const VECTOR charaarea)
 {
-	charaArea = VAdd(charaarea, VGet(0.0f, 80.0f, 0.0f));		// キャラの位置を更新し続ける
+	charaArea = VAdd(charaarea, VGet(0.0f, 80.0f, 0.0f));		// キャラの位置を更新
 
 
 	// 左に回転中
 	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) < 0)
 	{
-		RLrotate(speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f), cameraPerspectiveArea.x, cameraPerspectiveArea.z);	// 回転処理
-		RLrotate(speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f), cameraOrthoArea.x, cameraOrthoArea.z);	// 回転処理
+		RLrotate(speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f)
+			, cameraPerspectiveArea.x, cameraPerspectiveArea.z);				// 遠近法カメラの回転処理
+		RLrotate(speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f)
+			, cameraOrthoArea.x, cameraOrthoArea.z);							// 正射影カメラの回転処理
+
+
+		// カメラの方向
 		if ((angle >= DX_TWO_PI_F && !BASICPARAM::cameraHorizonReturn)
 			|| (angle <= -DX_TWO_PI_F && BASICPARAM::cameraHorizonReturn))
 		{
@@ -83,8 +90,13 @@ void Camera::Process(const VECTOR charaarea)
 	// 右に回転中
 	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) > 0)
 	{
-		RLrotate(-speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f), cameraPerspectiveArea.x, cameraPerspectiveArea.z);	// 回転処理
-		RLrotate(-speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f), cameraOrthoArea.x, cameraOrthoArea.z);			// 回転処理
+		RLrotate(-speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f)
+			, cameraPerspectiveArea.x, cameraPerspectiveArea.z);				// 遠近法カメラの回転処理
+		RLrotate(-speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f)
+			, cameraOrthoArea.x, cameraOrthoArea.z);							// 正射影カメラの回転処理
+
+
+		// カメラの方向
 		if ((angle <= -DX_TWO_PI_F && !BASICPARAM::cameraHorizonReturn)
 			|| (angle >= DX_TWO_PI_F && BASICPARAM::cameraHorizonReturn))
 		{
@@ -104,8 +116,9 @@ void Camera::Process(const VECTOR charaarea)
 				|| (zRota.y >= 0.0f && BASICPARAM::cameraVerticalReturn))
 			{
 				VECTOR temp = VSub(cameraPerspectiveArea, zRota);
-				RLrotate(-speed * (BASICPARAM::cameraVerticalReturn ? -1.0f : 1.0f), zRota.z, zRota.y);	// 回転処理
-				cameraPerspectiveArea = VAdd(VGet(cameraPerspectiveArea.x, 0, cameraPerspectiveArea.z), VGet(0, zRota.y + temp.y, 0));
+				RLrotate(-speed * (BASICPARAM::cameraVerticalReturn ? -1.0f : 1.0f), zRota.z, zRota.y);		// 回転処理
+				cameraPerspectiveArea = VAdd(VGet(cameraPerspectiveArea.x, 0, cameraPerspectiveArea.z)
+					, VGet(0, zRota.y + temp.y, 0));
 			}
 		}
 		// 下に回転
@@ -116,7 +129,8 @@ void Camera::Process(const VECTOR charaarea)
 			{
 				VECTOR temp = VSub(cameraPerspectiveArea, zRota);
 				RLrotate(speed * (BASICPARAM::cameraVerticalReturn ? -1.0f : 1.0f), zRota.z, zRota.y);	// 回転処理
-				cameraPerspectiveArea = VAdd(VGet(cameraPerspectiveArea.x, 0, cameraPerspectiveArea.z), VGet(0, zRota.y + temp.y, 0));
+				cameraPerspectiveArea = VAdd(VGet(cameraPerspectiveArea.x, 0, cameraPerspectiveArea.z)
+					, VGet(0, zRota.y + temp.y, 0));
 			}
 		}
 	}
@@ -138,20 +152,21 @@ void Camera::Process(const VECTOR charaarea)
 	}
 
 
-	// DXライブラリのカメラとEffekseerのカメラを同期する。
+	// DXライブラリのカメラとEffekseerのカメラを同期
 	Effekseer_Sync3DSetting();
 } /// void Camera::Process(const VECTOR charaarea)
 
 
-// 再セットアップ
+/// ------------------------------------------------------------------------------------
 void Camera::SetUp()
 {
 	// 遠近法カメラだったら
 	if (!BASICPARAM::nowCameraOrtho)
 	{
 		SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
-		SetCameraNearFar(100.0f, 10000.0f);	// カメラの描画範囲を指定
-		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea), VAdd(perspesctiveViewArea, charaArea));
+		SetCameraNearFar(100.0f, 10000.0f);
+		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea)
+			, VAdd(perspesctiveViewArea, charaArea));
 		SoundProcess::SetLisnerArea(cameraPerspectiveArea);
 		SoundProcess::Set3DRadius(VSize(cameraPerspectiveArea));
 	}
@@ -159,18 +174,19 @@ void Camera::SetUp()
 	else
 	{
 		SetupCamera_Ortho(orthoArea);
-		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea), VAdd(orthoViewArea, charaArea));
+		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea)
+			, VAdd(orthoViewArea, charaArea));
 		SoundProcess::SetLisnerArea(cameraOrthoArea);
 		SoundProcess::Set3DRadius(VSize(cameraOrthoArea));
 	}
 
 
-	// DXライブラリのカメラとEffekseerのカメラを同期する。
+	// DXライブラリのカメラとEffekseerのカメラを同期
 	Effekseer_Sync3DSetting();
 }
 
 
-// カメラの座標を渡す
+/// ------------------------------------------------------------------------------------
 const VECTOR Camera::GetArea()
 {
 	// 遠近法カメラだったら

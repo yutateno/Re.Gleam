@@ -1,104 +1,103 @@
 #include "BaseMove.hpp"
 
-bool BaseMove::endFlag;		// 終了フラッグ
+
+bool BaseMove::endFlag;			// 終了フラッグ
 ESceneNumber BaseMove::scene;	// 現在のシーン
 
 
-// プレイヤーのシャドウマップへの準備
+/// ---------------------------------------------------------------------------------------------
 void BaseMove::ShadowCharaSetUpBefore()
 {
 	ShadowMap_DrawSetup(shadowMapCharaHandle);
 }
 
 
-// プレイヤー以外のシャドウマップへの準備
+/// ---------------------------------------------------------------------------------------------
 void BaseMove::ShadowAnotherCharaSetUpBefore()
 {
 	ShadowMap_DrawSetup(shadowMapAnotherCharaHandle);
 }
 
 
-// ステージのシャドウマップへの描画の準備
+/// ---------------------------------------------------------------------------------------------
 void BaseMove::ShadowNoMoveSetUpBefore()
 {
 	ShadowMap_DrawSetup(shadowMapNoMoveHandle);
 }
 
 
-// シャドウマップの終了
+/// ---------------------------------------------------------------------------------------------
 void BaseMove::ShadowSetUpAfter()
 {
 	ShadowMap_DrawEnd();
 }
 
 
-// プレイヤーの描画に使用するシャドウマップを設定
+/// ---------------------------------------------------------------------------------------------
 void BaseMove::ShadowCharaDrawBefore()
 {
 	SetUseShadowMap(0, shadowMapCharaHandle);
 }
 
 
-// プレイヤーの描画に使用するシャドウマップの設定を解除
+/// ---------------------------------------------------------------------------------------------
 void BaseMove::ShadowCharaDrawAfter()
 {
 	SetUseShadowMap(0, -1);
 }
 
 
-// プレイヤー以外の描画に使用するシャドウマップを設定
+/// ---------------------------------------------------------------------------------------------
 void BaseMove::ShadowAnotherCharaDrawBefore()
 {
 	SetUseShadowMap(1, shadowMapAnotherCharaHandle);
 }
 
 
-// プレイヤー以外の描画に使用するシャドウマップの設定を解除
+/// ---------------------------------------------------------------------------------------------
 void BaseMove::ShadowAnotherCharaDrawAfter()
 {
 	SetUseShadowMap(1, -1);
 }
 
 
-// ステージの描画に使用するシャドウマップを設定
+/// ---------------------------------------------------------------------------------------------
 void BaseMove::ShadowNoMoveDrawBefore()
 {
 	SetUseShadowMap(2, shadowMapNoMoveHandle);
 }
 
 
-// ステージの描画に使用するシャドウマップの設定を解除
+/// ---------------------------------------------------------------------------------------------
 void BaseMove::ShadowNoMoveDrawAfter()
 {
 	SetUseShadowMap(2, -1);
 }
 
 
-// シャドウマップの中心座標をプレイヤーに更新
+/// ---------------------------------------------------------------------------------------------
 void BaseMove::ShadowArea(const VECTOR charaArea)
 {
-	SetShadowMapDrawArea(shadowMapCharaHandle, VAdd(charaArea, shadowCharaLowArea), VAdd(charaArea, shadowCharaHighArea));
-	SetShadowMapDrawArea(shadowMapAnotherCharaHandle, VAdd(charaArea, shadowAnotherCharaLowArea), VAdd(charaArea, shadowAnotherCharaHighArea));
+	SetShadowMapDrawArea(shadowMapCharaHandle, VAdd(charaArea, shadowCharaLowArea)
+		, VAdd(charaArea, shadowCharaHighArea));
+	SetShadowMapDrawArea(shadowMapAnotherCharaHandle, VAdd(charaArea, shadowAnotherCharaLowArea)
+		, VAdd(charaArea, shadowAnotherCharaHighArea));
 }
 
 
-// スカイボックスの描画
+/// ---------------------------------------------------------------------------------------------
 void BaseMove::SkyBoxDraw()
 {
-	// ライティングを無効にする
 	SetUseLighting(FALSE);
-	// Ｚバッファを有効にする
 	SetUseZBuffer3D(TRUE);
 	MV1DrawModel(skyBoxUp);
 	MV1DrawModel(skyBoxUnder);
-	// ライティングを有効にする
 	SetUseLighting(TRUE);
-	// Ｚバッファを無効にする
 	SetUseZBuffer3D(FALSE);
 }
 
 
-// スカイボックスのプロセス
+/// ---------------------------------------------------------------------------------------------
 void BaseMove::SkyBoxProcess(const VECTOR characterArea)
 {
 	// ポジションをプレイヤー中心にする
@@ -107,7 +106,7 @@ void BaseMove::SkyBoxProcess(const VECTOR characterArea)
 }
 
 
-// スカイボックスの初期化
+/// ---------------------------------------------------------------------------------------------
 void BaseMove::SetInitSkyBox(const int skyBoxUp, const int tex0)
 {
 	/// スカイボックスの上に関する-----------------------------------------
@@ -121,7 +120,6 @@ void BaseMove::SetInitSkyBox(const int skyBoxUp, const int tex0)
 	MV1SetTextureGraphHandle(this->skyBoxUp, 0, textureHandle, false);
 
 
-	// スケール変更
 	MV1SetScale(this->skyBoxUp, VGet(170.0f, 170.0f, 170.0f));
 
 
@@ -134,19 +132,16 @@ void BaseMove::SetInitSkyBox(const int skyBoxUp, const int tex0)
 	MV1SetTextureGraphHandle(this->skyBoxUnder, 0, textureHandle, false);
 
 
-	// スケール変更
 	MV1SetScale(this->skyBoxUnder, VGet(170.0f, 170.0f, 170.0f));
-
-
-	// ロケーション変更
 	MV1SetRotationXYZ(this->skyBoxUnder, VGet(DX_PI_F, 0.0f, 0.0f));
 } /// void BaseMove::SetInitSkyBox(const int skyBoxUp, const int tex0)
 
 
-// スカイボックスのテクスチャ差し替え
+/// ---------------------------------------------------------------------------------------------
 void BaseMove::SkyTextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle);
+
 
 	switch (BASICPARAM::e_TextureColor)
 	{
@@ -171,11 +166,12 @@ void BaseMove::SkyTextureReload()
 		break;
 	}
 
+
 	MV1SetTextureGraphHandle(this->skyBoxUp, 0, textureHandle, false);
 }
 
 
-// コンストラクタ
+/// ---------------------------------------------------------------------------------------------
 BaseMove::BaseMove()
 {
 	SetLightEnable(TRUE);	// 光源を有効にする
@@ -203,9 +199,12 @@ BaseMove::BaseMove()
 	shadowNoMoveLowArea = VGet(-2000.0f, -1.0f, -2000.0f);
 	shadowNoMoveHighArea = VGet(2000.0f, 1000.0f, 2000.0f);
 
-	SetShadowMapDrawArea(shadowMapCharaHandle, shadowCharaLowArea, shadowCharaHighArea);
-	SetShadowMapDrawArea(shadowMapAnotherCharaHandle, shadowAnotherCharaLowArea, shadowAnotherCharaHighArea);
-	SetShadowMapDrawArea(shadowMapNoMoveHandle, shadowNoMoveLowArea, shadowNoMoveHighArea);
+	SetShadowMapDrawArea(shadowMapCharaHandle, shadowCharaLowArea
+		, shadowCharaHighArea);
+	SetShadowMapDrawArea(shadowMapAnotherCharaHandle, shadowAnotherCharaLowArea
+		, shadowAnotherCharaHighArea);
+	SetShadowMapDrawArea(shadowMapNoMoveHandle, shadowNoMoveLowArea
+		, shadowNoMoveHighArea);
 
 
 	// ライトの方向を設定
@@ -230,7 +229,7 @@ BaseMove::BaseMove()
 }
 
 
-// デストラクタ
+/// ---------------------------------------------------------------------------------------------
 BaseMove::~BaseMove()
 {
 	// シャドウマップの削除

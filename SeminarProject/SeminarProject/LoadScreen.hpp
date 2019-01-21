@@ -2,6 +2,9 @@
 #include "LoadFile.hpp"
 
 
+/*
+ロード中の画面のクラス
+*/
 class LoadScreen
 {
 private:

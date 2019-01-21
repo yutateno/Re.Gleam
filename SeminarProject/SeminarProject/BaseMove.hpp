@@ -3,10 +3,13 @@
 #include "LoadFile.hpp"
 
 
+/*
+ムーブの大本
+*/
 class BaseMove
 {
 private:
-	/// 影に関して-----------------------------------------------
+	/// 影に関して-------------------------------------------------------
 
 	// キャラクターの影のハンドル
 	int shadowMapCharaHandle;
@@ -37,16 +40,15 @@ private:
 
 	// ライトのディレクション方向
 	VECTOR lightDire;
-	/// ---------------------------------------------------------
 
 
-	/// スカイボックスに関して--------------
+	/// スカイボックスに関して--------------------------------------------
 
 	// スカイボックスのハンドル
 	int skyBoxUp, skyBoxUnder;
 
 
-	/// テクスチャに関して
+	/// テクスチャに関して-----------------------------------------------
 
 	// テクスチャ
 	int textureHandle;
@@ -60,7 +62,7 @@ protected:
 	static ESceneNumber scene;
 
 
-	/// ムーブ毎の説明画像--------------
+	/// ムーブ毎の説明画像-----------------------------------------------
 
 	// ムーブ説明の画像
 	int moveDescriptionDraw;
@@ -69,8 +71,8 @@ protected:
 	int moveDescriptionFrame;
 
 
-	/// 影に関して-----------------------------------------------
-	/// 設定する
+	/// 影に関して-------------------------------------------------------
+	/// 設定する-----------------------------------------
 
 	// 設定シャドウマップ０番：主人公
 	void ShadowCharaSetUpBefore();
@@ -85,7 +87,7 @@ protected:
 	void ShadowSetUpAfter();
 
 
-	/// 描画へ使用する
+	/// 描画へ使用する----------------------------------
 
 	// 描画シャドウマップ０番：主人公
 	void ShadowCharaDrawBefore();
@@ -101,18 +103,20 @@ protected:
 
 	// 座標を更新し続ける
 	void ShadowArea(const VECTOR charaArea);
-	/// ---------------------------------------------------------
 
+
+	/// アクターごとに関して----------------------------------------------
 
 	// 二つのモデルの距離
 	template<class T>
 	T GetDistance(const VECTOR alpha, const VECTOR beta)
 	{
-		return static_cast<T>(sqrt((alpha.x - beta.x) * (alpha.x - beta.x) + (alpha.z - beta.z) * (alpha.z - beta.z)));
+		return static_cast<T>(sqrt((alpha.x - beta.x) * (alpha.x - beta.x)
+			+ (alpha.z - beta.z) * (alpha.z - beta.z)));
 	}
 
 
-	/// スカイボックスに関して-----------------------------
+	/// スカイボックスに関して------------------------------------------
 
 	// スカイボックスの描画
 	void SkyBoxDraw();
@@ -127,7 +131,7 @@ protected:
 	void SkyTextureReload();
 
 
-	/// テクスチャに関して------
+	/// テクスチャに関して-----------------------------------------------
 
 	// 非同期用変数
 	std::thread ths;
@@ -165,7 +169,7 @@ public:
 	virtual void OptionActorModelAfter() = 0;
 
 
-	/// ゲッターセッター------------------------------
+	/// ゲッターセッター-------------------------------------------------
 
 	// 終了かどうかを渡す
 	static const bool GetEndFlag() { return endFlag; }

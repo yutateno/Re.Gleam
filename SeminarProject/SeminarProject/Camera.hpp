@@ -2,6 +2,9 @@
 #include "Basic.hpp"
 
 
+/*
+’Êí‚ÌƒJƒƒ‰‚ÌƒNƒ‰ƒX
+*/
 class Camera
 {
 private:

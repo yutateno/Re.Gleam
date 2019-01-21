@@ -2,6 +2,9 @@
 #include "LoadScreen.hpp"
 
 
+/*
+非同期でロードを行うクラス
+*/
 class LoadThread
 {
 private:
@@ -20,7 +23,7 @@ private:
 	// ロード画面のポインタ
 	LoadScreen* p_loadScreen;
 
-	// 非同期を行うメソッド
+	// デッドロックを抑制しながら非同期を行うメソッド
 	void MyNextLoad(const std::string path, int& file, const ELOADFILE type);
 
 	   
@@ -32,14 +35,15 @@ public:
 	~LoadThread();
 
 
-	// 行う
-	void Process(const int max, const std::vector<std::string> path, const std::vector<ELOADFILE> type);
+	// プロセス
+	void Process(const int max, const std::vector<std::string> path
+		, const std::vector<ELOADFILE> type);
 
 	// 描画
 	void Draw();
 
 
-	/// ゲッターセッター
+	/// ゲッターセッター------------------------------------------------
 	
 	// ロードしたものを渡す
 	const std::vector<int> GetFile() const { return fileName; }

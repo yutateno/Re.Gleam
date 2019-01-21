@@ -2,6 +2,9 @@
 #include "Basic.hpp"
 
 
+/*
+ムーブ６にてムービーのような役割をするクラス
+*/
 class CameraMove6
 {
 private:

@@ -1,7 +1,7 @@
 #include "MainMove1.hpp"
 
 
-// モデルごとのあたり判定処理
+/// -----------------------------------------------------------------------------------------------------
 void MainMove1::ActorHit()
 {
 	for (int i = 0; i < enemyNum; ++i)
@@ -10,67 +10,18 @@ void MainMove1::ActorHit()
 		if (s_lightBall[i].aliveNow)
 		{
 			// プレイヤーと玉が接触したら
-			if (BaseMove::GetDistance<int>(p_character->GetArea(), s_lightBall[i].p_enemyMove->GetArea()) <= 60)
+			if (BaseMove::GetDistance<int>(p_character->GetArea()
+				, s_lightBall[i].p_enemyMove->GetArea()) <= 60)
 			{
 				// 生きさせない
 				s_lightBall[i].aliveNow = false;
 				POINTER_RELEASE(s_lightBall[i].p_enemyMove);
+				catchEnemyNum++;
+
+
+				// 音を流すタイミングがここなのでここで音周り呼ぶ
+				MoveSoundProcess();
 				
-
-				/// 状況に応じてBGMの音量を調整----------------------------------------------------------
-				switch (++catchEnemyNum)
-				{
-				case 1:
-					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 50, 50);
-					break;
-				case 2:
-					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 100, 100);
-					break;
-				case 3:
-					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 150, 150);
-					break;
-				case 4:
-					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 170, 170);
-					break;
-				case 5:
-					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 190, 190);
-					break;
-				case 6:
-					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 210, 210);
-					break;
-				case 7:
-					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 230, 230);
-					break;
-				case 8:
-					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 255, 255);
-					break;
-
-				case 30:
-					SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 0, 0);
-					break;
-				default:
-					break;
-				} /// switch (++catchEnemyNum)
-				/// ---------------------------------------------------------------------------------------
-
-
-				/// SEの再生をランダムにする-----------------------------------------------------------------------------
-				std::random_device rnd;     // 非決定的な乱数生成器を生成
-				std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
-				std::uniform_int_distribution<> randPawnSE(0, 1);        // 乱数
-
-
-				if (randPawnSE(mt) == 0)
-				{
-					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPawnHigh);
-				}
-				else
-				{
-					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPawn);
-				}
-				/// -----------------------------------------------------------------------------------------------------
-
-
 
 				/// 操作説明に関する-----------------------------
 				if (catchEnemyNum == 1)
@@ -93,9 +44,10 @@ void MainMove1::ActorHit()
 					// ブレンドが0になるようにする
 					nextExplanationDrawFeed = 0;
 				}
-			} /// if (BaseMove::GetDistance<int>(p_character->GetArea(), s_lightBall[i].p_enemyMove->GetArea()) <= 60)
+			} /// if (BaseMove::GetDistance<int>(p_character->GetArea()
 			// プレイヤーと玉との距離がある程度近くなったら
-			else if (BaseMove::GetDistance<int>(p_character->GetArea(), s_lightBall[i].p_enemyMove->GetArea()) <= 300)
+			else if (BaseMove::GetDistance<int>(p_character->GetArea()
+				, s_lightBall[i].p_enemyMove->GetArea()) <= 300)
 			{
 				// 玉をプレイヤーに近づくようにする
 				s_lightBall[i].p_enemyMove->NearChara(p_character->GetArea());
@@ -112,6 +64,7 @@ void MainMove1::ActorHit()
 		BaseMove::SetScene(ESceneNumber::SECONDLOAD);
 	}
 
+
 #ifdef _DEBUG
 	if (CheckHitKey(KEY_INPUT_Z) == 1)
 	{
@@ -122,8 +75,7 @@ void MainMove1::ActorHit()
 } /// void MainMove1::ActorHit()
 
 
-
-// ライトに関する
+/// ---------------------------------------------------------------------------------------------
 void MainMove1::LightProcess()
 {
 	// 光源の情報を更新させる
@@ -137,7 +89,7 @@ void MainMove1::LightProcess()
 	}
 
 
-	/// 玉の個数でライトの状況を変化させる命令をする--------------------------------------------
+	/// 玉の個数でライトの状況を変化させる命令をする-----------------------------
 	if (catchEnemyNum == 1)
 	{
 		// ライトを一つ有効にする
@@ -329,7 +281,6 @@ void MainMove1::LightProcess()
 			}
 		}
 	}
-	/// -----------------------------------------------------------------------------------------
 
 
 	// イベントを開始する
@@ -367,7 +318,66 @@ void MainMove1::LightProcess()
 } /// void MainMove1::LightProcess()
 
 
-// コンストラクタ
+/// ---------------------------------------------------------------------------------------------
+void MainMove1::MoveSoundProcess()
+{
+	/// 状況に応じてBGMの音量を調整----------------------------------------------------------
+	switch (catchEnemyNum)
+	{
+	case 1:
+		SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 50, 50);
+		break;
+	case 2:
+		SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 100, 100);
+		break;
+	case 3:
+		SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 150, 150);
+		break;
+	case 4:
+		SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 170, 170);
+		break;
+	case 5:
+		SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 190, 190);
+		break;
+	case 6:
+		SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 210, 210);
+		break;
+	case 7:
+		SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 230, 230);
+		break;
+	case 8:
+		SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 255, 255);
+		break;
+
+	case 30:
+		SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::titleMusicBox, 0, 0);
+		break;
+	default:
+		break;
+	} /// switch (++catchEnemyNum)
+	/// ---------------------------------------------------------------------------------------
+
+
+	/// SEの再生をランダムにする----------------------------------------------------
+	std::random_device rnd;     // 非決定的な乱数生成器を生成
+	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+	std::uniform_int_distribution<> randPawnSE(0, 1);        // 乱数
+
+
+	if (randPawnSE(mt) == 0)
+	{
+		SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPawnHigh);
+	}
+	else
+	{
+		SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::ballPawn);
+	}
+	/// ----------------------------------------------------------------------------
+
+}
+
+
+/// ---------------------------------------------------------------------------------------------
 MainMove1::MainMove1(const std::vector<int> v_file)
 {	
 	// 自然光源を一切遮断
@@ -400,7 +410,8 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 
 	// キャラクター初期化
 	p_character = new Character(v_file[EFILE::character], v_file[EFILE::collStage]
-		, v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3]);		
+		, v_file[EFILE::charaTex0], v_file[EFILE::charaTex1]
+		, v_file[EFILE::charaTex2], v_file[EFILE::charaTex3]);		
 	
 
 	// カメラ初期化
@@ -412,8 +423,8 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 
 	
 	/// 玉生成に関する初期化---------------------------------------------------------------
-	std::random_device rnd;     // 非決定的な乱数生成器を生成
-	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+	std::random_device rnd;
+	std::mt19937 mt(rnd());
 	std::uniform_int_distribution<> randInX(-3000, 3000);        // X座標用乱数
 	std::uniform_int_distribution<> randInZ(-3000, 3000);        // Z座標用乱数
 	std::uniform_int_distribution<> color(1, 100);				 // 色用の乱数
@@ -450,7 +461,7 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 	catchEnemyNum = 0;		
 
 
-	/// ライトに関する初期化--------------------------------------------------------------------------
+	/// ライトに関する初期化--------------------------------------------
 	for (int i = 0; i != lightNum; ++i)
 	{
 		lightHandle[i] = -1;						// ライトハンドルを初期化
@@ -460,7 +471,8 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 		lightArea[i].z = -630.0f;					// ライトのZ軸初期化
 
 		// ライトを生成
-		lightHandle[i] = CreatePointLightHandle(lightArea[i], lightRange[i], 0.0f, 0.002f, 0.0f);
+		lightHandle[i] = CreatePointLightHandle(lightArea[i], lightRange[i]
+			, 0.0f, 0.002f, 0.0f);
 
 		// ライトを無効にする
 		SetLightEnableHandle(lightHandle[i], FALSE);
@@ -485,10 +497,10 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 	nextExplanationDrawFeed = 255;
 
 
-	/// サウンドの初期化---------------------------------------------------------------------------------------------------------------
-	SoundProcess::Load(v_file[EFILE::sound], SoundProcess::ESOUNDNAME_BGM::titleMusicBox);
+	/// サウンドの初期化------------------------------------------------------------------------
+	SoundProcess::Load(v_file[EFILE::sound]		, SoundProcess::ESOUNDNAME_BGM::titleMusicBox);
 	SoundProcess::Load(v_file[EFILE::seBallHigh], SoundProcess::ESOUNDNAME_SE::ballPawnHigh);
-	SoundProcess::Load(v_file[EFILE::seBall], SoundProcess::ESOUNDNAME_SE::ballPawn);
+	SoundProcess::Load(v_file[EFILE::seBall]	, SoundProcess::ESOUNDNAME_SE::ballPawn);
 
 
 	// エフェクト読み込み
@@ -497,7 +509,7 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 } /// MainMove1::MainMove1(const std::vector<int> v_file)
 
 
-// デストラクタ
+/// ---------------------------------------------------------------------------------------------
 MainMove1::~MainMove1()
 {
 	// エフェクト開放
@@ -540,7 +552,7 @@ MainMove1::~MainMove1()
 } /// MainMove1::~MainMove1() /// MainMove1::~MainMove1()
 
 
-// 描画
+/// ---------------------------------------------------------------------------------------------
 void MainMove1::Draw()
 {
 	// 背景を描画
@@ -621,7 +633,8 @@ void MainMove1::Draw()
 		{
 			if (BaseMove::GetDistance<int>(p_character->GetArea(), s_lightBall[i].p_enemyMove->GetArea()) <= 500)
 			{
-				DrawLine3D(VAdd(p_character->GetArea(), VGet(0.0f, 80.0f, 0.0f)), VAdd(s_lightBall[i].p_enemyMove->GetArea(), VGet(0.0f, 60.0f, 0.0f)), GetColor(255, 0, 0));
+				DrawLine3D(VAdd(p_character->GetArea(), VGet(0.0f, 80.0f, 0.0f))
+					, VAdd(s_lightBall[i].p_enemyMove->GetArea(), VGet(0.0f, 60.0f, 0.0f)), GetColor(255, 0, 0));
 			}
 		}
 	}
@@ -630,7 +643,7 @@ void MainMove1::Draw()
 } /// void MainMove1::Draw()
 
 
-// メインプロセス
+/// ---------------------------------------------------------------------------------------------
 void MainMove1::Process()
 {
 	// キャラクターのプロセスを呼ぶ
@@ -661,28 +674,28 @@ void MainMove1::Process()
 } /// void MainMove1::Process()
 
 
-// カメラの再セットアップ
+/// ---------------------------------------------------------------------------------------------
 void MainMove1::CameraProcess()
 {
 	p_camera->SetUp();
 }
 
 
-// オプション描画モデルの描画処理
+/// ---------------------------------------------------------------------------------------------
 void MainMove1::OptionActorModel()
 {
 	p_character->OptionActorDraw();
 }
 
 
-// オプション画面モデルの描画前処理
+/// ---------------------------------------------------------------------------------------------
 void MainMove1::OptionActorModelBefore()
 {
 	p_character->OptionActorDrawBefore();
 }
 
 
-// オプション画面モデルの描画後処理
+/// ---------------------------------------------------------------------------------------------
 void MainMove1::OptionActorModelAfter()
 {
 	p_character->OptionActorDrawAfter();

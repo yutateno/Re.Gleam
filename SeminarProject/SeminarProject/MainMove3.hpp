@@ -42,7 +42,7 @@ private:
 	};
 
 
-	/// ステージ-----------------------------------------
+	/// ステージ------------------------------------------------------------------------
 
 	// ステージのポインタ
 	Stage* p_stage;
@@ -60,7 +60,7 @@ private:
 	std::vector<StageStairsRoad*> vp_stageStairsRoad;
 
 
-	/// キャラクター-------------------
+	/// キャラクター--------------------------------------------------------------------
 
 	// キャラクターのポインタ
 	CharacterSword* p_character;
@@ -93,7 +93,7 @@ private:
 	void DamageTextureReload();
 
 
-	/// 敵---------------------
+	/// 敵------------------------------------------------------------------------------
 
 	// ボスのあれ
 	EnemyBossBefore* p_enemyBossBefore;
@@ -138,7 +138,7 @@ private:
 	bool lockOnEnemySlime;
 
 
-	/// 精密機械------------------------------
+	/// 精密機械------------------------------------------------------------------------
 
 	// 精密機械のポインタ
 	AdjustmentMachine* p_adjustmentMachine;
@@ -165,23 +165,28 @@ private:
 	bool adjustmentStartFeed;
 
 	// 精密機械から色を戻すするID
-	enum class AdjustmentSelect { chara, anotherActor, enemy, streetLight, stairsRoad, stairs };
+	enum class AdjustmentSelect { 
+		chara, anotherActor, enemy
+		, streetLight, stairsRoad, stairs
+	};
 
 	// どのオブジェクトの色を取り戻すかどうか
 	AdjustmentSelect adjustmentSelectTexChange;
 	
-	// スティックの押し倒しかどうかを調べる(DLLXinputでやるべきなんだろうかとりあえず
+	// スティックの押し倒しかどうかを調べる
 	int adjustmentControllStick[2];
 
 	// どのオブジェとの色を取り戻すか選択する画像
 	int adjustmentSelectTexDraw[6];
 
 
-	/// カメラ------------------
+	/// カメラ-------------------------------------------------------------------------
 
 	// カメラのポインタ
 	Camera* p_camera;
 
+
+	/// ムーブ内の動きに関して--------------------------------------------------------
 
 	// 影の描画
 	void ShadowDraw();
@@ -190,7 +195,7 @@ private:
 	void AttackProcess();
 
 
-	/// エフェクトに関して
+	/// エフェクトに関して------------------------------------------------------------
 	
 	int effeckBack[10];		// ダメージ演出の10種類
 	int playingEfDamage;		// ダメージ演出用
@@ -198,6 +203,8 @@ private:
 	int playingEfAttack;
 
 	
+	/// 音に関して--------------------------------------------------------------------
+
 	// BGMの切り替えが行われたかどうか
 	bool nowBattleBGM;
 

@@ -23,18 +23,20 @@ class MainMove2 : public BaseMove
 private:
 	// ロードで渡されるファイル
 	enum EFILE {
-		stage, characterAttack, paneru, stairs, stairsColl, streetLight, skyBox, block, drawStage
-		, charaTex0, charaTex1, charaTex2, charaTex3, charaTex4, stairTex0, streetLightTex0, streetLightTex1
-		, skyBoxTex0, blockTex0, se_ballPickUp, terminal, terminalTex0, terminalTex1, terminalDescription
-		, stairsRoad, stairsRoadTex0, stairsRoadTex1, stairsRoadColl
-		, block2D, character2D, streetLight2D, stairs2D, terminal2D, stairsRoad2D
+		stage, characterAttack, paneru, stairs, stairsColl, streetLight, skyBox
+		, block, drawStage, charaTex0, charaTex1, charaTex2, charaTex3, charaTex4
+		, stairTex0, streetLightTex0, streetLightTex1, skyBoxTex0, blockTex0
+		, se_ballPickUp, terminal, terminalTex0, terminalTex1, terminalDescription
+		, stairsRoad, stairsRoadTex0, stairsRoadTex1, stairsRoadColl, block2D
+		, character2D, streetLight2D, stairs2D, terminal2D, stairsRoad2D
 		, jump3DSE, footCorridor3DSE, foot3DSE, landing3DSE, landingSecond3DSE
 		, charaAttackOne3DSE, charaAttackTwo3DSE, charaAttackThree3DSE
-		, se_ballPickUp2, nextStageBGM, attackUI, jumpUI, fastSpeedUI, optionUI, moveDescription
+		, se_ballPickUp2, nextStageBGM, attackUI, jumpUI, fastSpeedUI, optionUI
+		, moveDescription
 	};
 
 
-	/// ステージ-------------------------------------
+	/// ステージ----------------------------------------------------------------------
 	
 	// ステージのポインタ
 	Stage* p_stage;
@@ -72,13 +74,13 @@ private:
 	std::vector<StageStairsRoad*> vp_stageStairsRoad;
 	
 
-	/// キャラクター----------------------
+	/// キャラクター-----------------------------------------------------------------
 
 	// キャラクターのポインタ
 	CharacterSword* p_character;
 
 
-	/// 操作の説明画像---------------------------------------------
+	/// 操作の説明画像---------------------------------------------------------------
 
 	// 操作説明画像のID
 	enum class EOPERATION_UI { attack, jump, fastSpeed, option };
@@ -96,7 +98,7 @@ private:
 	bool opeFastOptionEnd;
 
 
-	/// 敵---------------------
+	/// 敵---------------------------------------------------------------------------
 
 	// ボスのあれ
 	EnemyBossBefore* p_enemyBossBefore;
@@ -131,7 +133,7 @@ private:
 	int lockONNowEnemyID;
 
 
-	/// 精算機械-----------------------------------------------------------------------
+	/// 精算機械---------------------------------------------------------------------
 
 	// 精算機械のポインタ
 	AdjustmentMachine* p_adjustmentMachine;
@@ -181,7 +183,7 @@ private:
 	// 配置するオブジェクトの向き
 	float adjustmentArrangementDire;
 
-	// スティックの押し倒しかどうかを調べる(DLLXinputでやるべきなんだろうかとりあえず
+	// スティックの押し倒しかどうかを調べる
 	int adjustmentControllStick[2];
 
 	// 階段オブジェクトに必要な生成個数
@@ -192,14 +194,15 @@ private:
 
 	// 階段と床オブジェクトに必要な生成個数
 	const int createStairsRoadNeedNum = 5;
-	/// -------------------------------------------------------------------------------
 
 
-	/// カメラ-----------------------
+	/// カメラ-----------------------------------------------------------------------
 	
 	// カメラのポインタ
 	Camera* p_camera;
 
+
+	/// ムーブ内の動きに関して------------------------------------------------------
 
 	// 影の描画
 	void ShadowDraw();
@@ -208,13 +211,18 @@ private:
 	void AttackProcess();
 
 
-	/// Effekseer関連-----------------------
+	/// Effekseer関連----------------------------------------------------------------
 	int effectAttack;
 	int playingEfAttack;
 
 
+	/// 音に関して-------------------------------------------------------------------
+
 	// BGMの音量変更を一度だけ呼ぶように
 	int bgmOnceVolumeChange;
+
+	// 音周りのプロセス
+	void MoveSoundProcess(bool se, int areaID = 0);
 
 
 public:

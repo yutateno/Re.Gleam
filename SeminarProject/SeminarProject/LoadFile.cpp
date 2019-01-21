@@ -3,23 +3,25 @@
 using namespace std;
 
 
-// ファイルサイズを調べる
+/// ------------------------------------------------------------------------------------
 unsigned int LoadFile::file_size(ifstream &fin)
 {
-	unsigned int pos = static_cast<unsigned int>(fin.tellg()); // 現在位置保存
+	// 現在位置保存
+	unsigned int pos = static_cast<unsigned int>(fin.tellg());
 
 
-	unsigned int size = static_cast<unsigned int>(fin.seekg(0, ios::end).tellg()); // 最後にシークして位置取得→サイズ
+	// 最後にシークして位置取得からサイズを得る
+	unsigned int size = static_cast<unsigned int>(fin.seekg(0, ios::end).tellg());
 
 
-	fin.seekg(pos); // 元の位置に戻す
+	fin.seekg(pos);		// 元の位置に戻す
 
 
-	return size; // サイズを返す
+	return size;		// サイズを返す
 }
 
 
-// ファイルの読み込み
+/// ------------------------------------------------------------------------------------
 void LoadFile::MyLoad(const string path, int& file, const ELOADFILE type)
 {
 	vector<BYTE> data;  // ファイルデータ
@@ -28,10 +30,10 @@ void LoadFile::MyLoad(const string path, int& file, const ELOADFILE type)
 
 
 	// ファイルの読み込み
-	ifstream fin(path.c_str(), ios::binary); // ファイルオープン
-	size = file_size(fin); // ファイルサイズ取得
-	data.resize(size); // メモリ確保
-	fin.read((char*)&data[0], size); // 読み込み
+	ifstream fin(path.c_str(), ios::binary);	// ファイルオープン
+	size = file_size(fin);						// ファイルサイズ取得
+	data.resize(size);							// メモリ確保
+	fin.read((char*)&data[0], size);			// 読み込み
 	fin.close();
 
 

@@ -1,7 +1,7 @@
 #include "DropItemMove2.hpp"
 
 
-// コンストラクタ
+/// --------------------------------------------------------------------------------------------------
 DropItemMove2::DropItemMove2(const int draw, VECTOR area, const int tex0) : BasicObject()
 {
 	// 初期位置を設定
@@ -9,8 +9,8 @@ DropItemMove2::DropItemMove2(const int draw, VECTOR area, const int tex0) : Basi
 
 
 	// 目的位置を設定
-	std::random_device rnd;     // 非決定的な乱数生成器を生成
-	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+	std::random_device rnd;
+	std::mt19937 mt(rnd());
 	std::uniform_int_distribution<> randInX(-250, 250);        // X座標用乱数
 	std::uniform_int_distribution<> randInZ(-250, 250);        // Z座標用乱数
 	nextAreaX = static_cast<float>(randInX(mt));
@@ -41,7 +41,7 @@ DropItemMove2::DropItemMove2(const int draw, VECTOR area, const int tex0) : Basi
 } /// DropItemMove2::DropItemMove2(const int draw, VECTOR area, const int tex0) : BasicObject()
 
 
-// デストラクタ
+/// --------------------------------------------------------------------------------------------------
 DropItemMove2::~DropItemMove2()
 {
 	// モデル開放
@@ -49,7 +49,7 @@ DropItemMove2::~DropItemMove2()
 }
 
 
-// プロセス
+/// --------------------------------------------------------------------------------------------------
 void DropItemMove2::Process()
 {
 	// 生きていないか死んでいるか
@@ -76,9 +76,10 @@ void DropItemMove2::Process()
 }
 
 
-// 引数の座標に対して近づく
+/// --------------------------------------------------------------------------------------------------
 void DropItemMove2::ChaseActor(const VECTOR chaseArea)
 {
+	// 死んでいるか存在していないか
 	if (deathNow || !aliveNow) return;
 
 
@@ -107,4 +108,4 @@ void DropItemMove2::ChaseActor(const VECTOR chaseArea)
 	{
 		area.y += 2.0f;
 	}
-}
+} /// void DropItemMove2::ChaseActor(const VECTOR chaseArea)

@@ -3,6 +3,9 @@
 #include "SoundProcess.hpp"
 
 
+/*
+モーションを持った動くアクターのクラス
+*/
 class BasicCreature : public BasicObject
 {
 protected:

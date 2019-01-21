@@ -3,6 +3,9 @@
 #include <random>
 
 
+/*
+ムーブ３で出てくるクレヨン人間のクラス
+*/
 class EnemyMove3CrayonHuman : public BasicCreature
 {
 private:

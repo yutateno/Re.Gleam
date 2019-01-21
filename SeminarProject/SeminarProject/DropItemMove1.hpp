@@ -2,6 +2,9 @@
 #include "BasicObject.hpp"
 
 
+/*
+ムーブ１にて落ちている剣のクラス
+*/
 class DropItemMove1 : public BasicObject
 {
 private:

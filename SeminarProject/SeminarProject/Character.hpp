@@ -2,6 +2,9 @@
 #include "BasicCreature.hpp"
 
 
+/*
+ムーブ１のみで扱うキャラクターのクラス
+*/
 class Character : public BasicCreature
 {
 private:

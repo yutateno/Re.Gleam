@@ -1,7 +1,7 @@
 #include "DropItemMove1.hpp"
 
 
-// コンストラクタ
+/// -------------------------------------------------------------------------------------------
 DropItemMove1::DropItemMove1(const int draw, const int tex0) : BasicObject()
 {
 	// 初期位置を設定
@@ -31,7 +31,7 @@ DropItemMove1::DropItemMove1(const int draw, const int tex0) : BasicObject()
 }
 
 
-// デストラクタ
+/// -------------------------------------------------------------------------------------------
 DropItemMove1::~DropItemMove1()
 {
 	GRAPHIC_RELEASE(textureHandle);
@@ -39,13 +39,14 @@ DropItemMove1::~DropItemMove1()
 }
 
 
-// 描画
+/// -------------------------------------------------------------------------------------------
 void DropItemMove1::Draw()
 {
 #ifdef _DEBUG
 	if (MyDebug::dropItemOneDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, 1.0f, 0.0f)), 80.0f, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, 1.0f, 0.0f))
+			, 80.0f, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
 	}
 #endif // _DEBUG
 }

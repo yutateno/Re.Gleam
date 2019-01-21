@@ -3,6 +3,9 @@
 #include <random>
 
 
+/*
+ムーブ４以降で出てくる一般人のクラス
+*/
 class OrdinaryPerson : public BasicCreature
 {
 private:

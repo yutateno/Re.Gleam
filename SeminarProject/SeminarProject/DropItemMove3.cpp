@@ -1,7 +1,7 @@
 #include "DropItemMove3.hpp"
 
 
-// コンストラクタ
+/// --------------------------------------------------------------------------------------------------
 DropItemMove3::DropItemMove3(const int draw, VECTOR area, const int tex0) : BasicObject()
 {
 	// 初期位置を設定
@@ -9,8 +9,8 @@ DropItemMove3::DropItemMove3(const int draw, VECTOR area, const int tex0) : Basi
 
 
 	// 目的位置を設定
-	std::random_device rnd;     // 非決定的な乱数生成器を生成
-	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+	std::random_device rnd;
+	std::mt19937 mt(rnd());
 	std::uniform_int_distribution<> randInX(-250, 250);        // X座標用乱数
 	std::uniform_int_distribution<> randInZ(-250, 250);        // Z座標用乱数
 	nextAreaX = static_cast<float>(randInX(mt));
@@ -43,7 +43,7 @@ DropItemMove3::DropItemMove3(const int draw, VECTOR area, const int tex0) : Basi
 } /// DropItemMove3::DropItemMove3(const int draw, VECTOR area, const int tex0) : BasicObject()
 
 
-// デストラクタ
+/// --------------------------------------------------------------------------------------------------
 DropItemMove3::~DropItemMove3()
 {
 	// テクスチャ開放
@@ -55,7 +55,7 @@ DropItemMove3::~DropItemMove3()
 }
 
 
-// プロセス
+/// --------------------------------------------------------------------------------------------------
 void DropItemMove3::Process()
 {
 	// 生きていないか死んでいるか
@@ -82,7 +82,7 @@ void DropItemMove3::Process()
 }
 
 
-// 引数の座標に対して近づく処理
+/// --------------------------------------------------------------------------------------------------
 void DropItemMove3::ChaseActor(const VECTOR chaseArea)
 {
 	if (deathNow || !aliveNow) return;
@@ -115,12 +115,14 @@ void DropItemMove3::ChaseActor(const VECTOR chaseArea)
 }
 
 
-// テクスチャ差し替え
+/// --------------------------------------------------------------------------------------------------
 void DropItemMove3::TextureReload()
 {
 	if (deathNow) return;
 
+	
 	GRAPHIC_RELEASE(textureHandle);
+
 
 	switch (BASICPARAM::e_TextureColor)
 	{
@@ -141,11 +143,12 @@ void DropItemMove3::TextureReload()
 		break;
 	}
 
+
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle, false);
 }
 
 
-// 生存を許されたときに座標を決める
+/// --------------------------------------------------------------------------------------------------
 void DropItemMove3::SetAlive(VECTOR dropArea, bool alive)
 {
 	aliveNow = alive;

@@ -3,6 +3,9 @@
 #include <random>
 
 
+/*
+ムーブ３で出てくるスライムのクラス
+*/
 class EnemyMove3Slime : public BasicCreature
 {
 private:

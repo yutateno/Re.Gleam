@@ -2,6 +2,9 @@
 #include "BasicCreature.hpp"
 
 
+/*
+ムーブ１に出てくる光の玉のクラス
+*/
 class EnemyMove1 : public BasicCreature
 {
 private:

@@ -3,6 +3,9 @@
 #include <random>
 
 
+/*
+ムーブ２以降で扱う剣を持ったキャラクターのクラス
+*/
 class CharacterSword : public BasicCreature
 {
 private:

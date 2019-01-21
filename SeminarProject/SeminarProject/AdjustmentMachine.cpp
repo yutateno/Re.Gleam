@@ -1,8 +1,9 @@
 #include "AdjustmentMachine.hpp"
 
 
-// コンストラクタ
-AdjustmentMachine::AdjustmentMachine(const int draw, const VECTOR area, const int tex0, const int tex1): BasicObject()
+/// ------------------------------------------------------------------------------------------
+AdjustmentMachine::AdjustmentMachine(const int draw, const VECTOR area
+	, const int tex0, const int tex1): BasicObject()
 {
 	// 座標初期化
 	this->area = area;
@@ -50,7 +51,7 @@ AdjustmentMachine::AdjustmentMachine(const int draw, const VECTOR area, const in
 } /// AdjustmentMachine::AdjustmentMachine(const int draw, const VECTOR area, const int tex0, const int tex1): BasicObject()
 
 
-// デストラクタ
+/// ------------------------------------------------------------------------------------------
 AdjustmentMachine::~AdjustmentMachine()
 {
 	// テクスチャ開放
@@ -64,7 +65,7 @@ AdjustmentMachine::~AdjustmentMachine()
 }
 
 
-// 描画
+/// ------------------------------------------------------------------------------------------
 void AdjustmentMachine::Draw()
 {
 	// ムーブ2以下で透過がまだされていたら
@@ -82,16 +83,18 @@ void AdjustmentMachine::Draw()
 		if(!canTouch) canTouch = true;
 	}
 
+
 #ifdef _DEBUG
 	if (MyDebug::adjustmentMachineDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f))
+			, modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
 	}
 #endif // _DEBUG
 }
 
 
-// テクスチャ差し替え
+/// ------------------------------------------------------------------------------------------
 void AdjustmentMachine::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle0);
@@ -125,7 +128,7 @@ void AdjustmentMachine::TextureReload()
 }
 
 
-// ディスプレイのテクスチャを切り替える
+/// ------------------------------------------------------------------------------------------
 void AdjustmentMachine::ChangeDisplayTexture(bool touchNow)
 {
 	if (touchNow)

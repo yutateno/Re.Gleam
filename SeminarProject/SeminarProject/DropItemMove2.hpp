@@ -3,6 +3,9 @@
 #include <random>
 
 
+/*
+ムーブ２で出てくるドロップアイテムのクラス
+*/
 class DropItemMove2 : public BasicObject
 {
 private:

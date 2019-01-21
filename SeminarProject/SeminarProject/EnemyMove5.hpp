@@ -3,6 +3,9 @@
 #include <random>
 
 
+/*
+ムーブ５で出てくる小さい人間のクラス
+*/
 class EnemyMove5 : public BasicCreature
 {
 private:

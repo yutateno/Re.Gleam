@@ -2,6 +2,9 @@
 #include "BasicObject.hpp"
 
 
+/*
+ムーブ２以降に出て、次へのステージを出すオペレーターのクラス
+*/
 class AdjustmentMachine : public BasicObject
 {
 private:
@@ -11,13 +14,10 @@ private:
 	int textureHandleDisplayBlack;
 
 
-	// ムーブ2用のブレンド
+	/// ムーブ2用のブレンド-------------------------------
+
 	int blendCount;
-
-
 	int nextBlendCount;
-
-
 	// ムーブ2にて何個ドロップアイテム得たかどうか
 	int dropCount;
 

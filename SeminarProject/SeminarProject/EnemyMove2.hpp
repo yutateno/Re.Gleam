@@ -2,6 +2,9 @@
 #include "BasicCreature.hpp"
 
 
+/*
+ムーブ２で出てくる箱のクラス
+*/
 class EnemyMove2 : public BasicCreature
 {
 public:

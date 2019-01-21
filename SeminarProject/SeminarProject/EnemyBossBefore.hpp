@@ -3,6 +3,9 @@
 #include <random>
 
 
+/*
+ムーブ１からボス戦までに出てくるボスのクラス
+*/
 class EnemyBossBefore : public BasicCreature
 {
 public:

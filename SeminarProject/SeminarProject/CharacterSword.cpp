@@ -1,7 +1,7 @@
 #include "CharacterSword.hpp"
 
 
-// 動きのプロセス
+/// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::MoveProcess()
 {
 	// 動いていたら
@@ -46,59 +46,6 @@ void CharacterSword::MoveProcess()
 
 			
 			underWalkCount++;			// 地面を歩いているカウントを加算する
-
-
-			// 左足が地面に着く位置に来たら
-			if (leftFootArea <= MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y + 1.0f
-				&& leftFootArea >= MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y - 1.0f)
-			{
-				underWalkCount = 2;		// 歩いているカウントを2にする
-
-
-				// y座標が10以上、つまりオブジェクトの上にいたら
-				if (area.y >= 10.0f)
-				{
-					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
-				}
-				// 平地にいたら
-				else
-				{
-					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot, area);
-				}
-			}
-
-
-			// 地面を歩き始めた時
-			if (underWalkCount == 1)
-			{
-				leftFootArea = MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y;		// 左足の位置を取得
-
-
-				// y座標が10以上、つまりオブジェクトの上にいたら
-				if (area.y >= 10.0f)
-				{
-					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
-				}
-				// 平地にいたら
-				else
-				{
-					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot, area);
-				}
-			}
-
-
-			// 歩くカウント数が0ではなく14で割り切れる数だったら(ここ無理やりすぎる感
-			if (underWalkCount % 14 == 0 && underWalkCount != 0)
-			{
-				if (area.y >= 10.0f)
-				{
-					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
-				}
-				else
-				{
-					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot, area);
-				}
-			}
 		} /// if (!jumpNow)
 		// 飛んでいたら
 		else
@@ -197,74 +144,11 @@ void CharacterSword::MoveProcess()
 	}
 
 
-	// 左スティックが前に押されたら前進する
-	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
-	{
-		m_direction[DIRECTION::up] = true;
-		direXAngle = 0.0f;
-		direZAngle = 0.0f;
-		moveFlag = true;
-	}
-	// 左スティックが前に押されていなかったら
-	else
-	{
-		m_direction[DIRECTION::up] = false;
-	}
+	// 操作のプロセスを呼ぶ
+	OpeProcess();
 
 
-	// 左スティックが後ろに押されたら後退する
-	if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y))
-	{
-		m_direction[DIRECTION::down] = true;
-		direXAngle = 0.0f;
-		direZAngle = DX_PI_F;
-		moveFlag = true;
-	}
-	// 左スティックが後ろに押されていなかったら
-	else
-	{
-		m_direction[DIRECTION::down] = false;
-	}
-
-
-	// 左スティックが左に押されたら左に移動する
-	if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X))
-	{
-		m_direction[DIRECTION::left] = true;
-		m_direction[DIRECTION::right] = false;
-		// スティックの傾きで微調整
-		direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber()
-			, DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, false);
-		if (direZAngle != 0.0f)
-		{
-			direXAngle = -direXAngle;
-		}
-		moveFlag = true;
-	}
-	// 左スティックが右に押されたら右に移動する
-	else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
-	{
-		m_direction[DIRECTION::left] = false;
-		m_direction[DIRECTION::right] = true;
-		direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, true);
-		if (direZAngle != 0.0f)
-		{
-			direXAngle = -direXAngle;
-		}
-		moveFlag = true;
-	}
-	// 左スティックが左右どちらにも押されていなかったら
-	else
-	{
-		m_direction[DIRECTION::left] = false;
-		m_direction[DIRECTION::right] = false;
-		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) == 0)
-		{
-			moveFlag = false;
-		}
-	}
-
-	/// 操作に対する向きと動き----------------------------------------------------------------------------------
+	/// 操作に対する向きと動き---------------------------------------------------------------------------------------
 	// 左に移動するフラッグが立っていたら
 	if (m_direction[static_cast<int>(DIRECTION::left)])
 	{
@@ -325,11 +209,84 @@ void CharacterSword::MoveProcess()
 			area.z += cosf(angle + direXAngle) * -walkSpeed;
 		}
 	}
-	/// -----------------------------------------------------------------------------------------------------------
+	/// 操作に対する向きと動き---------------------------------------------------------------------------------------
 } /// void CharacterSword::MoveProcess()
 
 
-// 攻撃に関するプロセス
+/// ---------------------------------------------------------------------------------------------------------------
+void CharacterSword::OpeProcess()
+{
+	// 左スティックが前に押されたら前進する
+	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
+	{
+		m_direction[DIRECTION::up] = true;
+		direXAngle = 0.0f;
+		direZAngle = 0.0f;
+		moveFlag = true;
+	}
+	// 左スティックが前に押されていなかったら
+	else
+	{
+		m_direction[DIRECTION::up] = false;
+	}
+
+
+	// 左スティックが後ろに押されたら後退する
+	if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y))
+	{
+		m_direction[DIRECTION::down] = true;
+		direXAngle = 0.0f;
+		direZAngle = DX_PI_F;
+		moveFlag = true;
+	}
+	// 左スティックが後ろに押されていなかったら
+	else
+	{
+		m_direction[DIRECTION::down] = false;
+	}
+
+
+	// 左スティックが左に押されたら左に移動する
+	if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X))
+	{
+		m_direction[DIRECTION::left] = true;
+		m_direction[DIRECTION::right] = false;
+		// スティックの傾きで微調整
+		direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber()
+			, DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, false);
+		if (direZAngle != 0.0f)
+		{
+			direXAngle = -direXAngle;
+		}
+		moveFlag = true;
+	}
+	// 左スティックが右に押されたら右に移動する
+	else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
+	{
+		m_direction[DIRECTION::left] = false;
+		m_direction[DIRECTION::right] = true;
+		direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber()
+			, DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, true);
+		if (direZAngle != 0.0f)
+		{
+			direXAngle = -direXAngle;
+		}
+		moveFlag = true;
+	}
+	// 左スティックが左右どちらにも押されていなかったら
+	else
+	{
+		m_direction[DIRECTION::left] = false;
+		m_direction[DIRECTION::right] = false;
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) == 0)
+		{
+			moveFlag = false;
+		}
+	}
+} /// void CharacterSword::OpeProcess()
+
+
+/// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::AttackProcess()
 {
 	// 攻撃のコマンドを押したら
@@ -346,7 +303,7 @@ void CharacterSword::AttackProcess()
 				{
 					jumpPower = 0.0f;
 					jumpUpNow = false;
-					attackNumber = MOTION::skyAction1;		// 攻撃コマンド番号を1番にする
+					attackNumber = MOTION::skyAction1;
 					jumpAttackDo = true;
 				}
 				// ジャンプ攻撃をしていなかったら
@@ -359,7 +316,7 @@ void CharacterSword::AttackProcess()
 			// ジャンプをしていなかったら
 			else
 			{
-				attackNumber = MOTION::action1;		// 攻撃コマンド番号を1番にする
+				attackNumber = MOTION::action1;
 			}
 			animSpeed = 0.4f;									// アニメーション速度を変更
 
@@ -370,7 +327,6 @@ void CharacterSword::AttackProcess()
 
 
 			attackNow = true;					// 攻撃しているフラッグを立てる
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack1, MV1GetFramePosition(modelHandle, 67));		// 剣先で攻撃音を出す
 		} /// if (attackFrame == 0)
 		// 二回目以降の攻撃時
 		else if (attackFrame < 10.0f)
@@ -382,7 +338,6 @@ void CharacterSword::AttackProcess()
 
 	// 攻撃が終了してジャンプしていなかったらジャンプ攻撃の始動を許す
 	if (attackFrame == 0 && !jumpNow) jumpAttackDo = false;
-
 
 
 	// 攻撃をしたら
@@ -404,39 +359,18 @@ void CharacterSword::AttackProcess()
 		// 攻撃フレームがアニメーションよりも小さかったら(攻撃中に体の向きを変えさせないため
 		if (attackFrame < animSpeed)
 		{
-			// 左スティックが前に押されたら前を向く
-			if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
+			// 攻撃はじめだけ体の向きを変えさせる
+			OpeProcess();
+
+
+			// 敵が近くにいて動いていない状態(スティックを動かしていない)だったら
+			if (!moveFlag && !(mostNearEnemyArea.y >= -1001.0f && mostNearEnemyArea.y <= -999.0f))
 			{
-				direXAngle = 0.0f;
+				// 敵の方に向くようにする
+				mostNearEnemyDire = atan2(VSub(area, mostNearEnemyArea).x, VSub(area, mostNearEnemyArea).z);
+				direXAngle = mostNearEnemyDire;
 				direZAngle = 0.0f;
-			}
-
-
-			// 左スティックが後ろに押されたら後ろを向く
-			if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y))
-			{
-				direXAngle = 0.0f;
-				direZAngle = DX_PI_F;
-			}
-
-
-			// 左スティックが左に押されたら左を向く
-			if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X))
-			{
-				direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, false);
-				if (direZAngle != 0.0f)
-				{
-					direXAngle = -direXAngle;
-				}
-			}
-			// 左スティックが右に押されたら右を向く
-			else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
-			{
-				direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, true);
-				if (direZAngle != 0.0f)
-				{
-					direXAngle = -direXAngle;
-				}
+				angle = 0.0f;
 			}
 		} /// if (attackFrame < animSpeed)
 		attackFrame += animSpeed;
@@ -460,7 +394,6 @@ void CharacterSword::AttackProcess()
 				animSpeed = 0.4f;									// アニメーション速度を変更
 				attackNumber = MOTION::action2;
 				preAttackNumber = attackNumber;
-				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack2, MV1GetFramePosition(modelHandle, 67));
 				break;
 
 
@@ -469,7 +402,6 @@ void CharacterSword::AttackProcess()
 				animSpeed = 0.4f;									// アニメーション速度を変更
 				attackNumber = MOTION::action3;
 				preAttackNumber = attackNumber;
-				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack3, MV1GetFramePosition(modelHandle, 67));
 				break;
 
 
@@ -487,7 +419,6 @@ void CharacterSword::AttackProcess()
 				animSpeed = 0.4f;
 				attackNumber = MOTION::skyAction2;
 				preAttackNumber = attackNumber;
-				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack2, MV1GetFramePosition(modelHandle, 67));
 				break;
 
 
@@ -496,7 +427,6 @@ void CharacterSword::AttackProcess()
 				animSpeed = 0.4f;
 				attackNumber = MOTION::skyAction3;
 				preAttackNumber = attackNumber;
-				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack2, MV1GetFramePosition(modelHandle, 67));
 				break;
 
 
@@ -535,7 +465,7 @@ void CharacterSword::AttackProcess()
 } /// void CharacterSword::AttackProcess()
 
 
-// ジャンプに関するプロセス
+/// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::JumpProcess()
 {
 	// ジャンプ攻撃中だったらやらない
@@ -546,7 +476,6 @@ void CharacterSword::JumpProcess()
 	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1
 		&& !jumpNow)
 	{
-		SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::jump, area);
 		jumpNow = true;					// 飛んでいる
 		jumpUpNow = true;				// 上に上がっている
 		jumpPower = flyJumpPower;		// 飛ぶ速度を加える
@@ -590,17 +519,6 @@ void CharacterSword::JumpProcess()
 	{
 		flyCount = 0;
 		preJumpNow = false;
-
-
-		// プレイヤーの高さに応じてオブジェクトに乗ったと判断し音を変える
-		if (area.y >= 10.0f)
-		{
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::landing, area);
-		}
-		else
-		{
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::landing2, area);
-		}
 	}
 
 
@@ -618,7 +536,7 @@ void CharacterSword::JumpProcess()
 } /// void CharacterSword::JumpProcess()
 
 
-// アニメーションのプロセス
+/// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::AnimProcess()
 {
 	// 飛んでいるとき
@@ -680,34 +598,151 @@ void CharacterSword::AnimProcess()
 } /// void CharacterSword::AnimProcess()
 
 
-CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle, const int paneruHandle, const int stairsRoadHandle
-	, const int tex0, const int tex1, const int tex2, const int tex3, const int tex4) : BasicCreature(true)
+/// ---------------------------------------------------------------------------------------------------------------
+void CharacterSword::SEProcess()
 {
-	// あたり判定のステージのコリジョン情報の更新
+	SoundProcess::SetCharaArea(area);		// 3Dサウンドのプレイヤーの位置を更新
+
+
+	// 動いていたら
+	if (moveFlag && !jumpNow)
+	{
+		// 左足が地面に着く位置に来たら
+		if (leftFootArea <= MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y + 1.0f
+			&& leftFootArea >= MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y - 1.0f)
+		{
+			underWalkCount = 2;		// 歩いているカウントを2にする
+
+
+			// y座標が10以上、つまりオブジェクトの上にいたら
+			if (area.y >= 10.0f)
+			{
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
+			}
+			// 平地にいたら
+			else
+			{
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot, area);
+			}
+		}
+
+
+		// 地面を歩き始めた時
+		if (underWalkCount == 1)
+		{
+			// 左足の位置を取得
+			leftFootArea = MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y;
+
+
+			// y座標が10以上、つまりオブジェクトの上にいたら
+			if (area.y >= 10.0f)
+			{
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
+			}
+			// 平地にいたら
+			else
+			{
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot, area);
+			}
+		}
+
+
+		// 歩くカウント数が0ではなく14で割り切れる数だったら
+		if (underWalkCount % 14 == 0 && underWalkCount != 0)
+		{
+			// オブジェクトの上にいたら
+			if (area.y >= 10.0f)
+			{
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
+			}
+			// 平地にいたら
+			else
+			{
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot, area);
+			}
+		}
+	} /// if (moveFlag)
+
+
+	// 攻撃のコマンドを押したら
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_X) == 1
+		&& attackFrame == 0)
+	{
+		// 剣先で攻撃音を出す
+		SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack1, MV1GetFramePosition(modelHandle, 67));
+	}
+
+
+	// 攻撃モーションの終盤当たりで次に攻撃する意思があったら
+	if (attackFrame >= 9.0f && attackNext)
+	{
+		// 攻撃二番目の攻撃SE
+		if (preAttackNumber == MOTION::action1 || preAttackNumber == MOTION::skyAction1
+			|| preAttackNumber == MOTION::skyAction2)
+		{
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack2, MV1GetFramePosition(modelHandle, 67));
+		}
+		// 攻撃三番目の攻撃SE
+		else if (preAttackNumber == MOTION::action2)
+		{
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack3, MV1GetFramePosition(modelHandle, 67));
+		}
+	}
+
+
+	// ジャンプした瞬間
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1
+		&& !jumpNow)
+	{
+		SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::jump, area);
+	}
+
+
+	// 着地したら
+	if (!jumpNow && preJumpNow && flyCount > 10)
+	{
+		// プレイヤーの高さに応じてオブジェクトに乗ったと判断し音を変える
+		if (area.y >= 10.0f)
+		{
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::landing, area);
+		}
+		else
+		{
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::landing2, area);
+		}
+	}
+} /// void CharacterSword::SEProcess()
+
+
+/// ---------------------------------------------------------------------------------------------------------------
+CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle
+	, const int paneruHandle, const int stairsRoadHandle, const int tex0, const int tex1, const int tex2
+	, const int tex3, const int tex4) : BasicCreature(true)
+{
+	// あたり判定のステージのコリジョン情報を設定する
 	stageHandle = -1;
 	stageHandle = MV1DuplicateModel(collStageHandle);
 	MV1SetScale(stageHandle, VGet(0.7f, 0.7f, 0.7f));
-	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
-	MV1SetupCollInfo(stageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetFrameVisible(stageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(stageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));
+	MV1SetupCollInfo(stageHandle, -1);
+	MV1SetFrameVisible(stageHandle, -1, false);
+	MV1RefreshCollInfo(stageHandle, -1);
 
-	// 足元影判定用のステージのコリジョン情報の更新
+
+	// 足元影判定用のステージのコリジョン情報を設定する
 	shadowStageHandle = -1;
 	shadowStageHandle = MV1DuplicateModel(collStageHandle);
 	MV1SetScale(shadowStageHandle, VGet(0.8f, 0.8f, 0.8f));
-	MV1SetPosition(shadowStageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
-	MV1SetupCollInfo(shadowStageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetFrameVisible(shadowStageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(shadowStageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetPosition(shadowStageHandle, VGet(0.0f, 0.0f, 0.0f));
+	MV1SetupCollInfo(shadowStageHandle, -1);
+	MV1SetFrameVisible(shadowStageHandle, -1, false);
+	MV1RefreshCollInfo(shadowStageHandle, -1);
 
 
 	// ３Ｄモデルの読み込み
 	this->modelHandle = -1;
 	this->modelHandle = MV1DuplicateModel(modelHandle);
 
-
-	/// テクスチャに関する-------------------------------------------------------------------------------------------------------------------------
 
 	// テクスチャ適応
 	textureHandle0 = -1;
@@ -720,21 +755,16 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	textureHandle2 = tex2;
 	textureHandle3 = tex3;
 	textureHandle4 = tex4;
-
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, true);
 	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle1, false);
 	MV1SetTextureGraphHandle(this->modelHandle, 2, textureHandle2, false);
 	MV1SetTextureGraphHandle(this->modelHandle, 3, textureHandle3, false);
 	MV1SetTextureGraphHandle(this->modelHandle, 4, textureHandle4, true);
-	/// -----------------------------------------------------------------------------------------------------------------------------------------
 
 
-	// ３Ｄモデルの0番目のアニメーションをアタッチする
+	// ３Ｄモデルのアニメーションをアタッチする
 	attachNum = MOTION::idle;
 	attachMotion = MV1AttachAnim(this->modelHandle, attachNum, -1, FALSE);
-
-
-	// アタッチしたアニメーションの総再生時間を取得する
 	totalTime = MV1GetAttachAnimTotalTime(this->modelHandle, attachMotion);
 
 
@@ -814,10 +844,10 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	
 	// アクター同士のあたり判定用の処理のセットアップ
 	MV1SetupCollInfo(this->modelHandle, -1);
-} /// CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle, const int paneruHandle, const int stairsRoadHandle
-/// , const int tex0, const int tex1, const int tex2, const int tex3, const int tex4) : BasicCreature(true)
+} /// CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle
 
 
+/// ---------------------------------------------------------------------------------------------------------------
 CharacterSword::~CharacterSword()
 {
 	// テクスチャを解放
@@ -872,62 +902,55 @@ CharacterSword::~CharacterSword()
 } /// CharacterSword::~CharacterSword()
 
 
-// 階段のコリジョンセットアップ
+/// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::SetStairsArea(const VECTOR stairsArea, const int num, const float angle)
 {
-	// ステージのコリジョン情報の更新
+	// 階段のコリジョン情報の設定
 	if (num != 0)
 	{
 		v_stairsHandle.push_back(MV1DuplicateModel(v_stairsHandle[0]));
 	}
 	MV1SetRotationXYZ(v_stairsHandle[num], VGet(0.0f, angle, 0.0f));
-	MV1SetPosition(v_stairsHandle[num], stairsArea);				// ステージの座標を更新
-	MV1SetupCollInfo(v_stairsHandle[num], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetFrameVisible(v_stairsHandle[num], -1, false);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetPosition(v_stairsHandle[num], stairsArea);
+	MV1SetupCollInfo(v_stairsHandle[num], -1);
+	MV1SetFrameVisible(v_stairsHandle[num], -1, false);
 	MV1RefreshCollInfo(v_stairsHandle[num], -1);
 }
 
 
-// パネルのコリジョンセットアップ
+/// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::SetPaneruArea(const VECTOR paneruArea, const int num)
 {
-	// ステージのコリジョン情報の更新
+	// パネルのコリジョン情報の設定
 	if (num != 0)
 	{
 		paneruHandle[num] = MV1DuplicateModel(paneruHandle[0]);
 		MV1SetScale(this->paneruHandle[num], VGet(50.0f, 50.0f, 50.0f));
 	}
-	MV1SetPosition(paneruHandle[num], paneruArea);					// ステージの座標を更新
-	MV1SetupCollInfo(paneruHandle[num], -1);						// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetFrameVisible(paneruHandle[num], -1, false);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetPosition(paneruHandle[num], paneruArea);
+	MV1SetupCollInfo(paneruHandle[num], -1);
+	MV1SetFrameVisible(paneruHandle[num], -1, false);
 	MV1RefreshCollInfo(paneruHandle[num], -1);
 }
 
 
-// 階段と床のコリジョンセットアップ
+/// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::SetStairsRoadArea(const VECTOR stairsRoadArea, const int num, const float angle)
 {
-	// ステージのコリジョン情報の更新
+	// 階段と床のコリジョン情報の更新
 	if (num != 0)
 	{
 		v_stairsRoadHandle.push_back(MV1DuplicateModel(v_stairsRoadHandle[0]));
 	}
 	MV1SetRotationXYZ(v_stairsRoadHandle[num], VGet(0.0f, angle, 0.0f));
-	MV1SetPosition(v_stairsRoadHandle[num], stairsRoadArea);		// ステージの座標を更新
-	MV1SetupCollInfo(v_stairsRoadHandle[num], -1);					// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetFrameVisible(v_stairsRoadHandle[num], -1, false);			// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(v_stairsRoadHandle[num], -1);				// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetPosition(v_stairsRoadHandle[num], stairsRoadArea);
+	MV1SetupCollInfo(v_stairsRoadHandle[num], -1);
+	MV1SetFrameVisible(v_stairsRoadHandle[num], -1, false);
+	MV1RefreshCollInfo(v_stairsRoadHandle[num], -1);
 }
 
 
-// ダメージを受けたとき呼ばれる
-void CharacterSword::SetDamage()
-{
-	damageFlag = true;
-}
-
-
-// 体を地面に埋まらせる(ムーブ6のみ
+/// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::AreaSetDown()
 {
 	area.y -= 2.0f;
@@ -935,30 +958,20 @@ void CharacterSword::AreaSetDown()
 }
 
 
-// メインプロセス
+/// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::Process(const float getAngle)
 {
 	preArea = area;		// 直前の座標
 
 
-	SoundProcess::SetCharaArea(area);		// 3Dサウンドのプレイヤーの位置を更新
+	// SEのプロセス
+	SEProcess();
 
 
 	// 動いているもしくは攻撃しているとき
 	if (moveFlag || attackNow)
 	{
 		angle = getAngle;	// カメラ向きのアングル
-	}
-
-
-	// 敵が近くにいて動いていない状態で攻撃をしたら
-	if (!moveFlag && attackNow && !(mostNearEnemyArea.y >= -1001.0f && mostNearEnemyArea.y <= -999.0f))
-	{
-		// 敵の方に向くようにする
-		mostNearEnemyDire = atan2(VSub(area, mostNearEnemyArea).x, VSub(area, mostNearEnemyArea).z);
-		direXAngle = mostNearEnemyDire;
-		direZAngle = 0.0f;
-		angle = 0.0f;
 	}
 
 
@@ -1046,12 +1059,12 @@ void CharacterSword::Process(const float getAngle)
 	// 動いていない状態でロックオンした敵が近くにいて攻撃したとき
 	if (!moveFlag && attackNow && !(mostNearEnemyArea.y >= -1001.0f && mostNearEnemyArea.y <= -999.0f))
 	{
-		MV1SetRotationXYZ(modelHandle, VGet(0.0f,mostNearEnemyDire, 0.0f));		// 体の向きを決める
+		MV1SetRotationXYZ(modelHandle, VGet(0.0f,mostNearEnemyDire, 0.0f));
 	}
 	// 通常の時
 	else
 	{
-		MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));		// 体の向きを決める
+		MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));
 	}
 
 
@@ -1064,7 +1077,7 @@ void CharacterSword::Process(const float getAngle)
 } /// void CharacterSword::Process(const float getAngle)
 
 
-// 操作できないプロセス
+/// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::NotOpeProcess(const float getAngle)
 {
 	moveFlag = false;
@@ -1075,7 +1088,8 @@ void CharacterSword::NotOpeProcess(const float getAngle)
 	preArea = area;		// 直前の座標
 
 
-	SoundProcess::SetCharaArea(area);		// 3Dサウンドのプレイヤーの位置を更新
+	// SEのプロセス
+	SEProcess();
 
 
 	// 動いているもしくは攻撃しているとき
@@ -1192,37 +1206,26 @@ void CharacterSword::NotOpeProcess(const float getAngle)
 	}
 
 
-	MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));		// 体の向きを決める
-	
 	// 指定位置にモデルを配置
+	MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));
 	MV1SetPosition(modelHandle, area);
 } /// void CharacterSword::NotOpeProcess(const float getAngle)
 
 
-// 床以外あたり判定をさせないプロセス
+/// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::OnlyCollFloorProcess(const float getAngle)
 {
 	preArea = area;		// 直前の座標
 
 
-	SoundProcess::SetCharaArea(area);		// 3Dサウンドのプレイヤーの位置を更新
+	// SEのプロセス
+	SEProcess();
 
 
 	// 動いているもしくは攻撃しているとき
 	if (moveFlag || attackNow)
 	{
 		angle = getAngle;	// カメラ向きのアングル
-	}
-
-
-	// 敵が近くにいて動いていない状態で攻撃をしたら
-	if (!moveFlag && attackNow && !(mostNearEnemyArea.y >= -1001.0f && mostNearEnemyArea.y <= -999.0f))
-	{
-		// 敵の方に向くようにする
-		mostNearEnemyDire = atan2(VSub(area, mostNearEnemyArea).x, VSub(area, mostNearEnemyArea).z);
-		direXAngle = mostNearEnemyDire;
-		direZAngle = 0.0f;
-		angle = 0.0f;
 	}
 
 
@@ -1306,14 +1309,14 @@ void CharacterSword::OnlyCollFloorProcess(const float getAngle)
 } /// void CharacterSword::OnlyCollFloorProcess(const float getAngle)
 
 
-// ポジションをリセットする
+/// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::PositionReset()
 {
 	area = VGet(0.0f, 50.0f, 0.0f);
 }
 
 
-// テクスチャを差し替える
+/// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle0);
@@ -1321,6 +1324,7 @@ void CharacterSword::TextureReload()
 	GRAPHIC_RELEASE(textureHandle2);
 	GRAPHIC_RELEASE(textureHandle3);
 	GRAPHIC_RELEASE(textureHandle4);
+
 
 	switch (BASICPARAM::e_TextureColor)
 	{
@@ -1357,6 +1361,7 @@ void CharacterSword::TextureReload()
 		break;
 	}
 
+
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, true);
 	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle1, false);
 	MV1SetTextureGraphHandle(this->modelHandle, 2, textureHandle2, false);
@@ -1365,7 +1370,7 @@ void CharacterSword::TextureReload()
 } /// void CharacterSword::TextureReload()
 
 
-// 描画
+/// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::Draw()
 {
 	int setShadowNum = 0;		// 足の影を生成したかどうかの個数を取得する
@@ -1449,16 +1454,18 @@ void CharacterSword::Draw()
 	// ステージでの足影
 	BasicObject::ShadowFoot(shadowStageHandle);
 
+
 #ifdef _DEBUG
 	if(MyDebug::characterSwordDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f))
+			, modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
 	}
 #endif // _DEBUG
 } /// void CharacterSword::Draw()
 
 
-// オプション画面モデルの後処理
+/// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::OptionActorDrawAfter()
 {
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));

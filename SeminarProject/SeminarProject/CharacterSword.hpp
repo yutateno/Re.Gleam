@@ -67,17 +67,20 @@ private:
 	// 片足が床に触れるフレーム数
 	int leftUnderTouchFrame;
 
+	// 操作のプロセス
+	void OpeProcess();
 
-	/// walkSpeedの各々の状況の最大値
+
+	/// walkSpeedの各々の状況の最大値---------------------------------------
 
 	// 攻撃中の最大移動値
 	const float maxWalkSpeedAttack = 60.0f;
 
 	// 瞬間加速時の最大移動量
-	const float maxWalkSpeedFast = 85.0f;		// 元100.0f
+	const float maxWalkSpeedFast = 85.0f;
 
 	// 空中で瞬間加速時の最大移動量
-	const float maxWalkSpeedFlyFast = 80.0f;		// 元85.0f
+	const float maxWalkSpeedFlyFast = 80.0f;
 
 	// 通常時の最大移動量
 	const float maxWalkSpeedNormal = 30.0f;
@@ -159,6 +162,11 @@ private:
 	int textureHandle4;
 
 
+	/// 音に関して----------------------
+
+	void SEProcess();
+
+
 public:
 	// コンストラクタ
 	CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle, const int paneruHandle, const int stairsRoadHandle
@@ -188,7 +196,7 @@ public:
 	void TextureReload();
 
 	// 攻撃を受けている
-	void SetDamage();
+	void SetDamage() { damageFlag = true; }
 
 	// 体を地面に埋まらせる(ムーブ6のみ
 	void AreaSetDown();

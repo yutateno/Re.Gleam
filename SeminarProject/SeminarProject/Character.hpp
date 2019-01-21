@@ -29,6 +29,9 @@ private:
 	// 動きのプロセス
 	void MoveProcess();
 
+	// 操作のプロセス
+	void OpeProcess();
+
 
 	/// テクスチャに関して------------------
 

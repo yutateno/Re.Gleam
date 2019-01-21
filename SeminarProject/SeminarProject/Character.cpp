@@ -1,6 +1,7 @@
 #include "Character.hpp"
 
-// 動きのプロセス
+
+/// ----------------------------------------------------------------------------------------------------------------
 void Character::MoveProcess()
 {
 	// 歩く状態だったら
@@ -37,82 +38,11 @@ void Character::MoveProcess()
 	}
 
 
-	// 左スティックが前に押されたら前進する
-	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
-	{
-		m_direction[DIRECTION::up] = true;
-		direXAngle = 0.0f;
-		direZAngle = 0.0f;
-		moveFlag = true;
-		Player_PlayAnim(MOTION::walk);
-	}
-	// 左スティックが前に押されていない
-	else
-	{
-		m_direction[DIRECTION::up] = false;
-	}
+	// 操作のプロセスを呼ぶ
+	OpeProcess();
 
 
-	// 左スティックが後ろに押されたら後退する
-	if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y))
-	{
-		m_direction[DIRECTION::down] = true;
-		direXAngle = 0.0f;
-		direZAngle = DX_PI_F;
-		moveFlag = true;
-		Player_PlayAnim(MOTION::walk);
-	}
-	// 左スティックが後ろに押されていない
-	else
-	{
-		m_direction[DIRECTION::down] = false;
-	}
-
-
-	// 左スティックが左に押されたら左に移動する
-	if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X))
-	{
-		m_direction[DIRECTION::left] = true;
-		m_direction[DIRECTION::right] = false;
-		// スティックの傾きで微調整
-		direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber()
-			, DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, false);
-		if (direZAngle != 0.0f)
-		{
-			direXAngle = -direXAngle;
-		}
-		moveFlag = true;
-		Player_PlayAnim(MOTION::walk);
-	}
-	// 左スティックが右に押されたら右に移動する
-	else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
-	{
-		m_direction[DIRECTION::left] = false;
-		m_direction[DIRECTION::right] = true;
-		// スティックの傾きで微調整
-		direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber()
-			, DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, true);
-		if (direZAngle != 0.0f)
-		{
-			direXAngle = -direXAngle;
-		}
-		moveFlag = true;
-		Player_PlayAnim(MOTION::walk);
-	}
-	// 左スティックが左右どちらにも傾いていなかったら
-	else
-	{
-		m_direction[DIRECTION::left] = false;
-		m_direction[DIRECTION::right] = false;
-		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) == 0)
-		{
-			moveFlag = false;
-			Player_PlayAnim(MOTION::idle);
-		}
-	}
-
-
-	/// 操作に対する向きと動き--------------------------------------------------
+	/// 操作に対する向きと動き--------------------------------------------------------------------------------------
 	// 左方向に移動するフラッグが立っているとき
 	if (m_direction[static_cast<int>(DIRECTION::left)])
 	{
@@ -173,31 +103,115 @@ void Character::MoveProcess()
 			area.z += cosf(angle + direXAngle) * -walkSpeed;
 		}
 	}
+	/// 操作に対する向きと動き--------------------------------------------------------------------------------------
 } /// void Character::MoveProcess()
 
 
-// コンストラクタ
+/// ----------------------------------------------------------------------------------------------------------------
+void Character::OpeProcess()
+{
+	// 左スティックが前に押されたら前進する
+	if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) > 0)
+	{
+		m_direction[DIRECTION::up] = true;
+		direXAngle = 0.0f;
+		direZAngle = 0.0f;
+		moveFlag = true;
+		Player_PlayAnim(MOTION::walk);
+	}
+	// 左スティックが前に押されていない
+	else
+	{
+		m_direction[DIRECTION::up] = false;
+	}
+
+
+	// 左スティックが後ろに押されたら後退する
+	if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y))
+	{
+		m_direction[DIRECTION::down] = true;
+		direXAngle = 0.0f;
+		direZAngle = DX_PI_F;
+		moveFlag = true;
+		Player_PlayAnim(MOTION::walk);
+	}
+	// 左スティックが後ろに押されていない
+	else
+	{
+		m_direction[DIRECTION::down] = false;
+	}
+
+
+	// 左スティックが左に押されたら左に移動する
+	if (0 > DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X))
+	{
+		m_direction[DIRECTION::left] = true;
+		m_direction[DIRECTION::right] = false;
+		
+		
+		// スティックの傾きで微調整
+		direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber()
+			, DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, false);
+		if (direZAngle != 0.0f)
+		{
+			direXAngle = -direXAngle;
+		}
+		moveFlag = true;
+		Player_PlayAnim(MOTION::walk);
+	}
+	// 左スティックが右に押されたら右に移動する
+	else if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_X) > 0)
+	{
+		m_direction[DIRECTION::left] = false;
+		m_direction[DIRECTION::right] = true;
+
+
+		// スティックの傾きで微調整
+		direXAngle = ((float)DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber()
+			, DLLXinput::XINPUT_PAD::STICK_LEFT_X) * (DX_PI_F / 2.0f)) / (float)DLLXinput::GetPadThumbMax(false, true, true);
+		if (direZAngle != 0.0f)
+		{
+			direXAngle = -direXAngle;
+		}
+		moveFlag = true;
+		Player_PlayAnim(MOTION::walk);
+	}
+	// 左スティックが左右どちらにも傾いていなかったら
+	else
+	{
+		m_direction[DIRECTION::left] = false;
+		m_direction[DIRECTION::right] = false;
+		if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_LEFT_Y) == 0)
+		{
+			moveFlag = false;
+			Player_PlayAnim(MOTION::idle);
+		}
+	}
+} /// void Character::OpeProcess()
+
+
+/// ----------------------------------------------------------------------------------------------------------------
 Character::Character(const int modelHandle, const int collStageHandle, const int tex0, const int tex1
 	, const int tex2, const int tex3) : BasicCreature(true)
 {
-	// あたり判定用ステージのコリジョン情報の更新
+	// あたり判定用ステージのコリジョン情報を設定する
 	stageHandle = -1;
 	stageHandle = MV1DuplicateModel(collStageHandle);
 	MV1SetScale(stageHandle, VGet(0.75f, 0.75f, 0.75f));
-	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
-	MV1SetupCollInfo(stageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetFrameVisible(stageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(stageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetPosition(stageHandle, VGet(0.0f, 0.0f, 0.0f));
+	MV1SetupCollInfo(stageHandle, -1);
+	MV1SetFrameVisible(stageHandle, -1, false);
+	MV1RefreshCollInfo(stageHandle, -1);
 
 
-	// 足影判定用ステージのコリジョン情報の更新
+	// 足影判定用ステージのコリジョン情報を設定する
 	shadowStageHandle = -1;
 	shadowStageHandle = MV1DuplicateModel(collStageHandle);
 	MV1SetScale(shadowStageHandle, VGet(0.8f, 0.8f, 0.8f));
-	MV1SetPosition(shadowStageHandle, VGet(0.0f, 0.0f, 0.0f));				// ステージの座標を更新
-	MV1SetupCollInfo(shadowStageHandle, -1);									// モデルのコリジョン情報をセットアップ(-1による全体フレーム)
-	MV1SetFrameVisible(shadowStageHandle, -1, false);							// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
-	MV1RefreshCollInfo(shadowStageHandle, -1);								// ステージを描画させない（でもどうせDraw呼ばないからこれ意味ない気もする）
+	MV1SetPosition(shadowStageHandle, VGet(0.0f, 0.0f, 0.0f));
+	MV1SetupCollInfo(shadowStageHandle, -1);
+	MV1SetFrameVisible(shadowStageHandle, -1, false);
+	MV1RefreshCollInfo(shadowStageHandle, -1);
 
 
 	// ３Ｄモデルの読み込み
@@ -220,12 +234,9 @@ Character::Character(const int modelHandle, const int collStageHandle, const int
 	MV1SetTextureGraphHandle(this->modelHandle, 3, textureHandle3, false);
 
 
-	// ３Ｄモデルの0番目のアニメーションをアタッチする
+	// ３Ｄモデルのアニメーションをアタッチする
 	attachNum = MOTION::idle;
 	attachMotion = MV1AttachAnim(this->modelHandle, attachNum, -1, FALSE);
-
-
-	// アタッチしたアニメーションの総再生時間を取得する
 	totalTime = MV1GetAttachAnimTotalTime(this->modelHandle, attachMotion);
 
 
@@ -255,10 +266,9 @@ Character::Character(const int modelHandle, const int collStageHandle, const int
 	// モデルの座標を更新
 	MV1SetPosition(this->modelHandle, area);
 } /// Character::Character(const int modelHandle, const int collStageHandle, const int tex0, const int tex1
-///, const int tex2, const int tex3) : BasicCreature(true)
 
 
-// デストラクタ
+/// ----------------------------------------------------------------------------------------------------------------
 Character::~Character()
 {
 	GRAPHIC_RELEASE(textureHandle0);
@@ -272,11 +282,11 @@ Character::~Character()
 }
 
 
-// メインプロセス
+/// ----------------------------------------------------------------------------------------------------------------
 void Character::Process(const float getAngle)
 {
 	// 直前の座標
-	preArea = area;		
+	preArea = area;
 
 	
 	// 動いていたら
@@ -305,23 +315,20 @@ void Character::Process(const float getAngle)
 	}
 
 
-	// 第二引数の回転角度をセット
-	MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));
-
-
 	// 指定位置にモデルを配置
+	MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));
 	MV1SetPosition(modelHandle, area);
 } /// void Character::Process(const float getAngle)
 
 
-// 位置をリセットする
+/// ----------------------------------------------------------------------------------------------------------------
 void Character::PositionReset()
 {
 	area = VGet(0.0f, 0.0f, 0.0f);
 }
 
 
-// オプション画面モデルの後処理
+/// ----------------------------------------------------------------------------------------------------------------
 void Character::OptionActorDrawAfter()
 {
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + direXAngle + direZAngle, 0.0f));
@@ -329,15 +336,17 @@ void Character::OptionActorDrawAfter()
 }
 
 
-// 描画
+/// ----------------------------------------------------------------------------------------------------------------
 void Character::Draw()
 {
 	BasicObject::ShadowFoot(shadowStageHandle);
 
+
 #ifdef _DEBUG
 	if(MyDebug::characterDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f))
+			, modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
 	}
 #endif // _DEBUG
 }

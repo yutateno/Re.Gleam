@@ -1,7 +1,9 @@
 #include "Manager.hpp"
 
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	// ウィンドウサイズを決める
 	BASICPARAM::winWidth = 1920;
 	BASICPARAM::winHeight = 1080;
 	BASICPARAM::bitColor = 32;
@@ -40,7 +42,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 
-	/// Effekseer関連-------------------------------------------------------------------
 	// Effekseerを初期化する。引数には画面に表示する最大パーティクル数を設定する。
 	if (Effkseer_Init(8000) == -1)
 	{
@@ -50,23 +51,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 	// フルスクリーンウインドウの切り替えでリソースが消えるのを防ぐ。
-	// Effekseerを使用する場合は必ず設定する。
 	SetChangeScreenModeGraphicsSystemResetFlag(FALSE);
-
-
-	// DXライブラリのデバイスロストした時のコールバックを設定する。
-	// ウインドウとフルスクリーンの切り替えが発生する場合は必ず実行する。
-	// ただし、DirectX11を使用する場合は実行する必要はない。
-	// Effekseer_SetGraphicsDeviceLostCallbackFunctions();
 
 
 	Effekseer_Set2DSetting(1920, 1080);	// 2Dエフェクトの最大範囲を設定
 
-	/// --------------------------------------------------------------------------------
-
 
 	SetAlwaysRunFlag(TRUE);			// 裏でもアクティブにする
 	SetDrawScreen(DX_SCREEN_BACK);	// 背景描画
+	SetMouseDispFlag(FALSE);		// マウスカーソルを非表示にする
 
 
 	// コントローラーの初期化
@@ -84,6 +77,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int controllCount = 0;							// コマンドに関する時間
 	bool noTouch = true;							// コマンドを押されない時間経過次第で再起動を促すよう処理
 	const int COUNT = 600;							// コマンド時間の数値
+
+												
 	// 接続数が一つの場合は確認しない
 	if (DLLXinput::GetPadNum() == 1)
 	{
@@ -100,7 +95,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 	// ゲームの核
-	while (/*ScreenFlip() == 0 && */ProcessMessage() == 0/* && ClearDrawScreen() == 0 */&& CheckHitKey(KEY_INPUT_ESCAPE) == 0 && !manager->GetEnd())
+	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0 && !manager->GetEnd())
 	{
 		// コントローラーが一つでないとき
 		if (!firstControll)
@@ -168,7 +163,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 							DLLXinput::SetPlayerPadNum(DLLXinput::XINPUT_PAD::NUM04);
 							controllCount = 0;
 						}
-					}
+					} /// if (controllCount >= 10)
 
 
 					// 入力されない時間が逝って以上だったら
@@ -185,6 +180,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 					}
 					// 終了させる
 					else if (controllCount >= COUNT + 550) break;
+
+
 				} /// if (DLLXinput::GetPlayerPadNumber() == 5)
 				// コントローラーが決定されたら
 				else
@@ -213,7 +210,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			DLLXinput::VibrationSlowlyStop(DLLXinput::GetPlayerPadNumber());
 		}
-	} /// while (/*ScreenFlip() == 0 && */ProcessMessage() == 0/* && ClearDrawScreen() == 0 */&& CheckHitKey(KEY_INPUT_ESCAPE) == 0)
+	} /// while
 
 
 	// 削除
@@ -226,8 +223,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	MV1InitModel();					// モデル開放
 
 
-	// Effekseerを終了する。
-	Effkseer_End();
+	Effkseer_End();		// Effekseerを終了する。
 
 
 	DxLib_End();		// DXライブラリの後始末

@@ -2,9 +2,14 @@
 #include "LoadFile.hpp"
 
 
+/*
+全アクターの必要な要素を持ったクラス
+*/
 class BasicObject
 {
 protected:
+	/// モデルに関する---------------------------------------
+
 	// モデルのハンドル
 	int modelHandle;
 
@@ -18,7 +23,7 @@ protected:
 	int notViewCount;
 
 
-	/// 足元影に関する----------------
+	/// 足元影に関する----------------------------------------
 
 	// 足元影の高さ
 	float shadowHeight;
@@ -34,7 +39,7 @@ protected:
 
 
 private:
-	/// 影に関する------------------------------------
+	/// 影に関する--------------------------------------------
 
 	// 周囲のポリゴンを代入する構造体
 	MV1_COLL_RESULT_POLY_DIM ShadowHitResDim;
@@ -58,13 +63,10 @@ private:
 	int optionModelDrawCount;
 
 
-	/// ムーブ6のみに関する変数
+	/// ムーブ6のみに関する変数-------------------------------
 
 	// 円の半径
 	float move6_circle;
-
-	//// 目的座標
-	//const VECTOR move6_enemyArea = VGet(4000.0f, 200.0f, 0.0f);
 
 	// 線の動き
 	float move6_line;
@@ -97,7 +99,7 @@ public:
 	void Move6SetDownArea();
 
 
-	/// ゲッターセッター
+	/// ゲッターセッター--------------------------------------
 
 	// 座標を渡す
 	const VECTOR GetArea() const { return area; }

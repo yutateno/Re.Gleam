@@ -1,7 +1,7 @@
 #include "StagePaneru.hpp"
 
 
-// コンストラクタ
+/// --------------------------------------------------------------------------------
 StagePaneru::StagePaneru(const int draw, const VECTOR area) : BasicObject()
 {
 	// 座標を設定
@@ -22,7 +22,7 @@ StagePaneru::StagePaneru(const int draw, const VECTOR area) : BasicObject()
 }
 
 
-// デストラクタ
+/// --------------------------------------------------------------------------------
 StagePaneru::~StagePaneru()
 {
 	// モデル開放

@@ -2,6 +2,9 @@
 #include "BasicObject.hpp"
 
 
+/*
+階段と床のクラス
+*/
 class StageStairsRoad : public BasicObject
 {
 private:
@@ -16,7 +19,8 @@ private:
 
 public:
 	// コンストラクタ
-	StageStairsRoad(const int draw, const VECTOR area, const int tex0, const int tex1, const float angle);
+	StageStairsRoad(const int draw, const VECTOR area, const int tex0
+		, const int tex1, const float angle);
 
 	// デストラクタ
 	~StageStairsRoad();

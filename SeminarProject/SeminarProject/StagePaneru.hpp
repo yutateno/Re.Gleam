@@ -2,6 +2,9 @@
 #include "BasicObject.hpp"
 
 
+/*
+次のステージへの役割をするパネルのクラス
+*/
 class StagePaneru : public BasicObject
 {
 public:

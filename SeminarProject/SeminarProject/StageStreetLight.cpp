@@ -1,7 +1,7 @@
 #include "StageStreetLight.hpp"
 
 
-// コンストラクタ
+/// --------------------------------------------------------------------------------
 StageStreetLight::StageStreetLight(const int draw, const VECTOR area
 	, const int tex0, const int tex1, const float angle) : BasicObject()
 {
@@ -30,7 +30,7 @@ StageStreetLight::StageStreetLight(const int draw, const VECTOR area
 }
 
 
-// デストラクタ
+/// --------------------------------------------------------------------------------
 StageStreetLight::~StageStreetLight()
 {
 	// テクスチャ開放
@@ -43,11 +43,12 @@ StageStreetLight::~StageStreetLight()
 }
 
 
-// テクスチャ差し替え
+/// --------------------------------------------------------------------------------
 void StageStreetLight::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle0);
 	GRAPHIC_RELEASE(textureHandle1);
+
 
 	switch (BASICPARAM::e_TextureColor)
 	{
@@ -71,6 +72,7 @@ void StageStreetLight::TextureReload()
 		LoadFile::MyLoad("media\\こっち\\media\\街灯\\normal\\lamp_COLandems.pyn", textureHandle1, ELOADFILE::graph);
 		break;
 	}
+
 
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle1, false);

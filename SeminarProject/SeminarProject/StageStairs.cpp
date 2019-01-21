@@ -1,8 +1,9 @@
 #include "StageStairs.hpp"
 
 
-// コンストラクタ
-StageStairs::StageStairs(const int draw, const VECTOR area, const int tex0, const float angle) : BasicObject()
+/// --------------------------------------------------------------------------------
+StageStairs::StageStairs(const int draw, const VECTOR area
+	, const int tex0, const float angle) : BasicObject()
 {
 	// 座標設定
 	this->area = area;
@@ -26,7 +27,7 @@ StageStairs::StageStairs(const int draw, const VECTOR area, const int tex0, cons
 }
 
 
-// デストラクタ
+/// --------------------------------------------------------------------------------
 StageStairs::~StageStairs()
 {
 	// テクスチャ解放
@@ -38,10 +39,11 @@ StageStairs::~StageStairs()
 }
 
 
-// テクスチャ差し替え
+/// --------------------------------------------------------------------------------
 void StageStairs::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle);
+
 
 	switch (BASICPARAM::e_TextureColor)
 	{
@@ -61,6 +63,7 @@ void StageStairs::TextureReload()
 		LoadFile::MyLoad("media\\こっち\\media\\kaidan\\normal\\kaidan.pyn", textureHandle, ELOADFILE::graph);
 		break;
 	}
+
 
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle, false);
 }

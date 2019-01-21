@@ -2,6 +2,9 @@
 #include "Basic.hpp"
 
 
+/*
+全ムーブでのステージのクラス
+*/
 class Stage
 {
 private:

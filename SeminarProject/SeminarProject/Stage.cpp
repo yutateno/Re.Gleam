@@ -1,6 +1,7 @@
 #include "Stage.hpp"
 
-// コンストラクタ
+
+/// ------------------------------------------------------------------------
 Stage::Stage(const int drawStageHandle)
 {
 	// モデルハンドル受け渡し
@@ -12,7 +13,7 @@ Stage::Stage(const int drawStageHandle)
 }
 
 
-// デストラクタ
+/// ------------------------------------------------------------------------
 Stage::~Stage()
 {
 	// モデル開放
@@ -20,10 +21,11 @@ Stage::~Stage()
 }
 
 
-// 描画
+/// ------------------------------------------------------------------------
 void Stage::Draw()
 {
 	MV1DrawModel(drawStageHandle);
+
 
 #ifdef _DEBUG
 	if (MyDebug::stageDrawFlag)
@@ -57,4 +59,4 @@ void Stage::Draw()
 		SetUseZBufferFlag(FALSE);
 	}
 #endif // _DEBUG
-}
+} /// void Stage::Draw()

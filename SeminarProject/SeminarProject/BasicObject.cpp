@@ -2,11 +2,12 @@
 #include <typeinfo.h>
 
 
-// 足影生成
+/// --------------------------------------------------------------------------------
 bool BasicObject::ShadowFoot(int shadowModel)
 {
 	// プレイヤーの直下に存在する地面のポリゴンを取得
-	ShadowHitResDim = MV1CollCheck_Capsule(shadowModel, -1, area, VAdd(area, VGet(0.0f, -shadowHeight, 0.0f)), shadowSize);
+	ShadowHitResDim = MV1CollCheck_Capsule(shadowModel, -1, area
+		, VAdd(area, VGet(0.0f, -shadowHeight, 0.0f)), shadowSize);
 
 
 	// 頂点データで変化が無い部分をセット
@@ -27,7 +28,7 @@ bool BasicObject::ShadowFoot(int shadowModel)
 	SetUseZBuffer3D(TRUE);	// Ｚバッファを有効にする
 
 
-	// テクスチャアドレスモードを CLAMP にする( テクスチャの端より先は端のドットが延々続く )
+	// テクスチャアドレスモードを CLAMP にする
 	SetTextureAddressMode(DX_TEXADDRESS_CLAMP);
 	for (int i = 0; i != ShadowHitResDim.HitNum; ++i, ++ShadowHitRes)
 	{
@@ -84,20 +85,17 @@ bool BasicObject::ShadowFoot(int shadowModel)
 
 	SetUseLighting(TRUE);	// ライティングを有効にする
 	SetUseZBuffer3D(FALSE);	// Ｚバッファを無効にする
-
-
 	return true;
 } /// bool BasicObject::ShadowFoot(int shadowModel)
 
 
-// コンストラクタ
+/// --------------------------------------------------------------------------------
 BasicObject::BasicObject()
 {
 	// 情報初期化
 	shadowHandle = -1;
 	notViewCount = 0;
 	optionRotaCount = 0;
-
 	modelHeight = 0;
 	modelHandle = -1;
 	shadowHeight = 0;
@@ -106,13 +104,12 @@ BasicObject::BasicObject()
 	ShadowHitResDim;
 	ShadowHitRes = nullptr;
 	ZeroMemory(ShadowVertex, sizeof(ShadowVertex));
-
 	move6_circle = 0;
 	move6_line = 0.0f;
 }
 
 
-// コピーコンストラクタ
+/// --------------------------------------------------------------------------------
 BasicObject::BasicObject(bool shadowDo)
 {
 	// 影の読み込み
@@ -123,7 +120,6 @@ BasicObject::BasicObject(bool shadowDo)
 	// 情報初期化
 	notViewCount = 0;
 	optionRotaCount = 0;
-
 	modelHeight = 0;
 	modelHandle = -1;
 	shadowHeight = 0;
@@ -132,13 +128,12 @@ BasicObject::BasicObject(bool shadowDo)
 	ShadowHitResDim;
 	ShadowHitRes = nullptr;
 	ZeroMemory(ShadowVertex, sizeof(ShadowVertex));
-
 	move6_circle = 0;
 	move6_line = 0.0f;
 }
 
 
-// デストラクタ
+/// --------------------------------------------------------------------------------
 BasicObject::~BasicObject()
 {
 	// 影ハンドル開放
@@ -146,11 +141,12 @@ BasicObject::~BasicObject()
 }
 
 
-// 描画
+/// --------------------------------------------------------------------------------
 void BasicObject::ModelDraw()
 {
 	// スクリーン座標内にいたら
-	if (!CheckCameraViewClip(area) && !CheckCameraViewClip(VAdd(area, VGet(0.0f, modelHeight, 0.0f))) && !CheckCameraViewClip(VAdd(area, VGet(0.0f, modelHeight / 2.0f, 0.0f))))
+	if (!CheckCameraViewClip(area) && !CheckCameraViewClip(VAdd(area, VGet(0.0f, modelHeight, 0.0f)))
+		&& !CheckCameraViewClip(VAdd(area, VGet(0.0f, modelHeight / 2.0f, 0.0f))))
 	{
 		// モデルを描画
 		MV1DrawModel(modelHandle);
@@ -172,9 +168,10 @@ void BasicObject::ModelDraw()
 }
 
 
-// オプション画面モデルの描画
+/// --------------------------------------------------------------------------------
 void BasicObject::OptionActorDraw()
 {
+	// 回転して描画させる
 	if (++optionRotaCount > 360) optionRotaCount = 0;
 	if (optionModelDrawCount++ > 10) MV1DrawModel(modelHandle);
 	MV1SetRotationXYZ(modelHandle, VGet(0.0f, optionRotaCount * DX_PI_F / 180.0f, 0.0f));
@@ -182,7 +179,7 @@ void BasicObject::OptionActorDraw()
 }
 
 
-// オプション画面モデルの描画準備
+/// --------------------------------------------------------------------------------
 void BasicObject::OptionActorDrawBefore()
 {
 	SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
@@ -192,22 +189,37 @@ void BasicObject::OptionActorDrawBefore()
 }
 
 
+/// --------------------------------------------------------------------------------
 void BasicObject::Move6SetDownArea()
 {
+	// 自分からボスのとこまで伸ばしている線がまだ到達していなかったら
 	if (move6_line <= 200.0f)
 	{
+		// 黒い丸い円の半径を大きくする
 		if (move6_circle <= 100.0f) move6_circle++;
-		move6_line++;
-		DrawCone3D(VGet(area.x, 50.0, area.z), VGet(area.x, 0, area.z), move6_circle, 16, GetColor(0, 0, 0), GetColor(0, 0, 0), true);
-		DrawLine3D(VGet(area.x, 50.0, area.z), VGet(area.x + ((4000.0f - area.x) * (move6_line / 200.0f)), 50.0f, 0.0f), GetColor(0, 0, 0));
+		DrawCone3D(VGet(area.x, 50.0, area.z), VGet(area.x, 0, area.z)
+			, move6_circle, 16, GetColor(0, 0, 0), GetColor(0, 0, 0), true);
+
+
+		// 自分からボスのとこまで線を引く
+		DrawLine3D(VGet(area.x, 50.0, area.z)
+			, VGet(area.x + ((4000.0f - area.x) * (move6_line / 200.0f)), 50.0f, 0.0f), GetColor(0, 0, 0));
 	}
+	// ボスのとこまで線が到達していたら
 	else if (move6_line <= 400.0f)
 	{
+		// 黒い丸い円の半径を小さくしていく
 		if (move6_circle >= 0.0f) move6_circle--;
-		move6_line++; 
-		DrawCone3D(VGet(area.x, 50.0, area.z), VGet(area.x, 0, area.z), move6_circle, 16, GetColor(0, 0, 0), GetColor(0, 0, 0), true);
+		DrawCone3D(VGet(area.x, 50.0, area.z), VGet(area.x, 0, area.z)
+			, move6_circle, 16, GetColor(0, 0, 0), GetColor(0, 0, 0), true);
+
+
+		// 自分からボスのとこまで線を引く
 		DrawLine3D(VGet(area.x, 50.0, area.z), VGet(4000.0f, 50.0f, 0.0f), GetColor(0, 0, 0));
 	}
+
+
+	// 沈ませる
 	area.y -= 2.0f;
 	MV1SetPosition(modelHandle, this->area);
-}
+} /// void BasicObject::Move6SetDownArea()

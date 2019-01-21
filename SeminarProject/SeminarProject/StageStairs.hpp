@@ -2,6 +2,9 @@
 #include "BasicObject.hpp"
 
 
+/*
+ŠK’i‚ÌƒNƒ‰ƒX
+*/
 class StageStairs : public BasicObject
 {
 private:

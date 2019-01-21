@@ -1,7 +1,7 @@
 #include "StageStairsRoad.hpp"
 
 
-// コンストラクタ
+/// --------------------------------------------------------------------------------
 StageStairsRoad::StageStairsRoad(const int draw, const VECTOR area
 	, const int tex0, const int tex1, const float angle) : BasicObject()
 {
@@ -30,7 +30,7 @@ StageStairsRoad::StageStairsRoad(const int draw, const VECTOR area
 }
 
 
-// デストラクタ
+/// --------------------------------------------------------------------------------
 StageStairsRoad::~StageStairsRoad()
 {
 	// テクスチャ開放
@@ -43,11 +43,12 @@ StageStairsRoad::~StageStairsRoad()
 }
 
 
-// テクスチャ差し替え
+/// --------------------------------------------------------------------------------
 void StageStairsRoad::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle1);
 	GRAPHIC_RELEASE(textureHandle0);
+
 
 	switch (BASICPARAM::e_TextureColor)
 	{
@@ -71,6 +72,7 @@ void StageStairsRoad::TextureReload()
 		LoadFile::MyLoad("media\\こっち\\media\\階段と床合体\\normal\\yuka.pyn", textureHandle1, ELOADFILE::graph);
 		break;
 	}
+
 
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle1, false);

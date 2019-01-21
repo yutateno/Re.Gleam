@@ -2,6 +2,9 @@
 #include "BasicObject.hpp"
 
 
+/*
+街灯のクラス
+*/
 class StageStreetLight : public BasicObject
 {
 private:
@@ -15,7 +18,8 @@ private:
 
 public:
 	// コンストラクタ
-	StageStreetLight(const int draw, const VECTOR area, const int tex0, const int tex1, const float angle);
+	StageStreetLight(const int draw, const VECTOR area, const int tex0
+		, const int tex1, const float angle);
 
 	// デストラクタ
 	~StageStreetLight();

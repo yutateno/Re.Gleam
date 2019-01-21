@@ -43,7 +43,6 @@ void OrdinaryPerson::MoveProcess()
 	else if (moveCount == 100)
 	{
 		// ランダム数値取得
-		std::random_device rnd;
 		std::mt19937 mt(rnd());
 		std::uniform_int_distribution<> randInX(-200, 200);			// X座標用乱数
 		std::uniform_int_distribution<> moveTurn(-200, 200);		// Z座標用乱数
@@ -93,7 +92,6 @@ void OrdinaryPerson::MoveProcess()
 	// ステージ外に向かっていたら乱数を再暗算
 	if (tempX >= 5000.0f || tempX <= -5000.0f || tempZ >= 5000.0f || tempZ <= -5000.0f)
 	{
-		std::random_device rnd;
 		std::mt19937 mt(rnd());
 		std::uniform_int_distribution<> randInX(-4000, 4000);        // X座標用乱数
 		std::uniform_int_distribution<> randInZ(-4000, 4000);        // Z座標用乱数
@@ -451,8 +449,7 @@ void OrdinaryPerson::Draw()
 #ifdef _DEBUG
 	if(MyDebug::ordinaryDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f))
-			, modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
 	}
 #endif // _DEBUG
 }

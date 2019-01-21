@@ -86,6 +86,11 @@ private:
 	// テクスチャの相対IDを後ろにつけて
 	int textureHandle0;
 
+	
+	/// 乱数値----------------------------------------
+
+	std::random_device rnd;
+
 
 public:
 	// コンストラクタ

@@ -41,16 +41,14 @@ Camera::Camera(const VECTOR charaarea)
 	if (!BASICPARAM::nowCameraOrtho)
 	{
 		SetCameraNearFar(100.0f, 10000.0f);	// ƒJƒƒ‰‚Ì•`‰æ”ÍˆÍ‚ğw’è
-		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea)
-			, VAdd(perspesctiveViewArea, charaArea));
+		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea), VAdd(perspesctiveViewArea, charaArea));
 		SoundProcess::Set3DRadius(VSize(cameraPerspectiveArea));
 	}
 	// ³Ë‰eƒJƒƒ‰‚¾‚Á‚½‚ç
 	else
 	{
 		SetupCamera_Ortho(orthoArea);
-		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea)
-			, VAdd(orthoViewArea, charaArea));
+		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea), VAdd(orthoViewArea, charaArea));
 		SoundProcess::Set3DRadius(VSize(cameraOrthoArea));
 	}
 

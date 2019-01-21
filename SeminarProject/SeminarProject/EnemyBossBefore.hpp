@@ -8,6 +8,12 @@
 */
 class EnemyBossBefore : public BasicCreature
 {
+private:
+	/// 乱数値----------------------------------------
+
+	std::random_device rnd;
+
+
 public:
 	// コンストラクタ
 	EnemyBossBefore();

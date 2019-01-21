@@ -388,6 +388,7 @@ void MainMove6::MovieProcess()
 
 	// ボス前のプロセスを呼ぶ
 	p_enemyBossBefore->Process();
+	p_enemyBossBefore->MoveReturn();
 
 
 	// シャドウマップの位置を更新
@@ -442,7 +443,6 @@ void MainMove6::MovieProcess()
 	{
 		// 操作できないプレイヤーのプロセスを呼ぶ
 		p_character->NotOpeProcess(p_camera->GetAngle());
-		p_enemyBossBefore->MoveReturn();
 	}
 
 
@@ -460,7 +460,6 @@ void MainMove6::MovieProcess()
 	{
 		p_cameraMove->SetView(VGet(2000 + (movieFrame - 400) * 10.0f, 50, 0));
 		p_cameraMove->SetArea(VGet(1000 + (movieFrame - 400) * 10.0f, 200, 0));
-		p_enemyBossBefore->MoveReturn();
 	}
 	/// カメラに関する------------------------------------------------------------------
 
@@ -683,8 +682,7 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 	// 一般人
 	if (BASICPARAM::ordinaryPeopleNum != 0)
 	{
-		std::random_device rnd;     // 非決定的な乱数生成器を生成
-		std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+		std::mt19937 mt(rnd());
 		std::uniform_int_distribution<> randInX(-4000, 4000);        // X座標用乱数
 		std::uniform_int_distribution<> randInZ(-4000, 4000);        // Z座標用乱数
 

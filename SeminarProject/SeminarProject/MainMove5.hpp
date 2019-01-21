@@ -127,6 +127,11 @@ private:
 	void AttackProcess();
 
 
+	/// 乱数値------------------------------------------------------------------------
+
+	std::random_device rnd;
+
+
 public:
 	// コンストラクタ
 	MainMove5(const std::vector<int> v_file);

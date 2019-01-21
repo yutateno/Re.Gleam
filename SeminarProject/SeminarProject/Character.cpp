@@ -345,8 +345,7 @@ void Character::Draw()
 #ifdef _DEBUG
 	if(MyDebug::characterDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f))
-			, modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
 	}
 #endif // _DEBUG
 }

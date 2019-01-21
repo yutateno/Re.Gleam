@@ -83,7 +83,6 @@ void EnemyMove3CrayonHuman::AutoMoveProcess()
 	else if (moveCount == 100)
 	{
 		// 欄数値取得
-		std::random_device rnd;
 		std::mt19937 mt(rnd());
 		std::uniform_int_distribution<> randInX(-200, 200);			// X座標用乱数
 		std::uniform_int_distribution<> moveTurn(-200, 200);		// Z座標用乱数
@@ -138,7 +137,6 @@ void EnemyMove3CrayonHuman::AutoMoveProcess()
 	// ステージ外に向かっていたら乱数を再暗算
 	if (tempX >= 5000.0f || tempX <= -5000.0f || tempZ >= 5000.0f || tempZ <= -5000.0f)
 	{
-		std::random_device rnd;
 		std::mt19937 mt(rnd());
 		std::uniform_int_distribution<> randInX(-4000, 4000);        // X座標用乱数
 		std::uniform_int_distribution<> randInZ(-4000, 4000);        // Z座標用乱数
@@ -232,6 +230,7 @@ void EnemyMove3CrayonHuman::DamageProcess()
 		// ダメージの数値が死ぬ値になったら
 		if (++damageCount >= 3.0f)
 		{
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::crayonDie, area);
 			deathFlag = true;
 		}
 	}
@@ -291,18 +290,6 @@ void EnemyMove3CrayonHuman::FallProcess()
 		}
 	}
 } /// void EnemyMove3CrayonHuman::FallProcess()
-
-
-
-/// --------------------------------------------------------------------------------------------------
-void EnemyMove3CrayonHuman::SEProcess()
-{
-	// 死んだとき
-	if (damageHit && !deathFlag && damageCount >= 3.0f)
-	{
-		SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::crayonDie, area);
-	}
-}
 
 
 
@@ -546,8 +533,6 @@ void EnemyMove3CrayonHuman::Process()
 
 
 		MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
-
-
 		return;
 	}
 
@@ -558,10 +543,6 @@ void EnemyMove3CrayonHuman::Process()
 
 	// 直前の座標
 	preArea = area;
-
-
-	// SEのプロセス
-	SEProcess();
 
 
 	// プレイヤーとの距離が索敵外だったら

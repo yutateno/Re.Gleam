@@ -21,7 +21,6 @@ EnemyBossBefore::EnemyBossBefore() : BasicCreature()
 
 
 	// —”¶¬
-	std::random_device rnd;
 	std::mt19937 mt(rnd());
 	std::uniform_int_distribution<> modelView(0, 1);	// ƒ‚ƒfƒ‹‚ÌÀ‘Ô‚ğ•`‰æ‚·‚é‚©‚Ç‚¤‚©
 	// ƒ‚ƒfƒ‹‚ğ•`‰æ‚µ‚È‚¢ê‡
@@ -211,6 +210,7 @@ void EnemyBossBefore::MoveReturn()
 	// Œü‚«‚ğ‰ñ“]‚³‚¹‚é
 	if (angle <= DX_PI_F / 2.0f) angle += DX_PI_F / 90.0f;
 	else Player_PlayAnim(0);
+
 	MV1SetRotationXYZ(this->modelHandle, VGet(0.0f, angle, 0.0f));
 }
 

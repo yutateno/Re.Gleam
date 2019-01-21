@@ -135,6 +135,11 @@ private:
 	int playingEfBack;
 
 
+	/// 乱数値-----------------------------------------------------------
+
+	std::random_device rnd;
+
+
 public:
 	// コンストラクタ
 	MainMove1(const std::vector<int> v_file);

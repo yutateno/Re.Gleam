@@ -329,7 +329,7 @@ void EnemyMove4::Draw()
 #ifdef _DEBUG
 	if (MyDebug::enemyFourEnemyDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
 	}
 
 	if (MyDebug::enemyFourEnemySearchLineDrawFlag)
@@ -381,8 +381,6 @@ void EnemyMove4::Process()
 
 		MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
 		MV1SetMaterialDrawBlendParam(this->modelHandle, 1, blendCount);
-
-
 		return;
 	}
 

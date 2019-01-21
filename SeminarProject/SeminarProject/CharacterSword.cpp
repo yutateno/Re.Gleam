@@ -47,6 +47,63 @@ void CharacterSword::MoveProcess()
 
 			
 			underWalkCount++;			// 地面を歩いているカウントを加算する
+
+
+			// 左足が地面に着く位置に来たら
+			if (leftFootArea <= MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y + 1.0f
+				&& leftFootArea >= MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y - 1.0f)
+			{
+				// 歩いているカウントを2にする
+				underWalkCount = 2;
+
+
+				// y座標が10以上、つまりオブジェクトの上にいたら
+				if (area.y >= 10.0f)
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
+				}
+				// 平地にいたら
+				else
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot, area);
+				}
+			}
+
+
+			// 地面を歩き始めた時
+			if (underWalkCount == 1)
+			{
+				// 左足の位置を取得
+				leftFootArea = MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y;
+
+
+				// y座標が10以上、つまりオブジェクトの上にいたら
+				if (area.y >= 10.0f)
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
+				}
+				// 平地にいたら
+				else
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot, area);
+				}
+			}
+
+
+			// 歩くカウント数が0ではなく14で割り切れる数だったら
+			if (underWalkCount % 14 == 0 && underWalkCount != 0)
+			{
+				// オブジェクトの上にいたら
+				if (area.y >= 10.0f)
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
+				}
+				// 平地にいたら
+				else
+				{
+					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot, area);
+				}
+			}
 		} /// if (!jumpNow)
 		// 飛んでいたら
 		else
@@ -330,6 +387,7 @@ void CharacterSword::AttackProcess()
 
 
 			attackNow = true;				// 攻撃しているフラッグを立てる
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack1, MV1GetFramePosition(modelHandle, 67));
 		} /// if (attackFrame == 0)
 		// 二回目以降の攻撃時
 		else if (attackFrame < 10.0f)
@@ -397,6 +455,7 @@ void CharacterSword::AttackProcess()
 				animSpeed = 0.4f;						// アニメーション速度を変更
 				attackNumber = MOTION::action2;
 				preAttackNumber = attackNumber;
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack2, MV1GetFramePosition(modelHandle, 67));
 				break;
 
 
@@ -405,6 +464,7 @@ void CharacterSword::AttackProcess()
 				animSpeed = 0.4f;						// アニメーション速度を変更
 				attackNumber = MOTION::action3;
 				preAttackNumber = attackNumber;
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack3, MV1GetFramePosition(modelHandle, 67));
 				break;
 
 
@@ -422,6 +482,7 @@ void CharacterSword::AttackProcess()
 				animSpeed = 0.4f;
 				attackNumber = MOTION::skyAction2;
 				preAttackNumber = attackNumber;
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack2, MV1GetFramePosition(modelHandle, 67));
 				break;
 
 
@@ -430,6 +491,7 @@ void CharacterSword::AttackProcess()
 				animSpeed = 0.4f;
 				attackNumber = MOTION::skyAction3;
 				preAttackNumber = attackNumber;
+				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack2, MV1GetFramePosition(modelHandle, 67));
 				break;
 
 
@@ -483,6 +545,7 @@ void CharacterSword::JumpProcess()
 		jumpNow = true;					// 飛んでいる
 		jumpUpNow = true;				// 上に上がっている
 		jumpPower = flyJumpPower;		// 飛ぶ速度を加える
+		SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::jump, area);
 	}
 
 
@@ -523,6 +586,17 @@ void CharacterSword::JumpProcess()
 	{
 		flyCount = 0;
 		preJumpNow = false;
+
+
+		// プレイヤーの高さに応じてオブジェクトに乗ったと判断し音を変える
+		if (area.y >= 10.0f)
+		{
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::landing, area);
+		}
+		else
+		{
+			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::landing2, area);
+		}
 	}
 
 
@@ -601,124 +675,6 @@ void CharacterSword::AnimProcess()
 		}
 	} /// else(1if (jumpNow))
 } /// void CharacterSword::AnimProcess()
-
-
-
-/// ---------------------------------------------------------------------------------------------------------------
-void CharacterSword::SEProcess()
-{
-	SoundProcess::SetCharaArea(area);		// 3Dサウンドのプレイヤーの位置を更新
-
-
-	// 動いていたら
-	if (moveFlag && !jumpNow)
-	{
-		// 左足が地面に着く位置に来たら
-		if (leftFootArea <= MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y + 1.0f
-			&& leftFootArea >= MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y - 1.0f)
-		{
-			// 歩いているカウントを2にする
-			underWalkCount = 2;
-
-
-			// y座標が10以上、つまりオブジェクトの上にいたら
-			if (area.y >= 10.0f)
-			{
-				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
-			}
-			// 平地にいたら
-			else
-			{
-				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot, area);
-			}
-		}
-
-
-		// 地面を歩き始めた時
-		if (underWalkCount == 1)
-		{
-			// 左足の位置を取得
-			leftFootArea = MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y;
-
-
-			// y座標が10以上、つまりオブジェクトの上にいたら
-			if (area.y >= 10.0f)
-			{
-				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
-			}
-			// 平地にいたら
-			else
-			{
-				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot, area);
-			}
-		}
-
-
-		// 歩くカウント数が0ではなく14で割り切れる数だったら
-		if (underWalkCount % 14 == 0 && underWalkCount != 0)
-		{
-			// オブジェクトの上にいたら
-			if (area.y >= 10.0f)
-			{
-				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
-			}
-			// 平地にいたら
-			else
-			{
-				SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot, area);
-			}
-		}
-	} /// if (moveFlag)
-
-
-	// 攻撃のコマンドを押したら
-	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_X) == 1
-		&& attackFrame == 0)
-	{
-		// 剣先で攻撃音を出す
-		SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack1, MV1GetFramePosition(modelHandle, 67));
-	}
-
-
-	// 攻撃モーションの終盤当たりで次に攻撃する意思があったら
-	if (attackFrame >= 9.0f && attackNext)
-	{
-		// 攻撃二番目の攻撃SE
-		if (preAttackNumber == MOTION::action1 || preAttackNumber == MOTION::skyAction1
-			|| preAttackNumber == MOTION::skyAction2)
-		{
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack2, MV1GetFramePosition(modelHandle, 67));
-		}
-		// 攻撃三番目の攻撃SE
-		else if (preAttackNumber == MOTION::action2)
-		{
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::pianoAttack3, MV1GetFramePosition(modelHandle, 67));
-		}
-	}
-
-
-	// ジャンプした瞬間
-	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1
-		&& !jumpNow)
-	{
-		SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::jump, area);
-	}
-
-
-	// 着地したら
-	if (!jumpNow && preJumpNow && flyCount > 10)
-	{
-		// プレイヤーの高さに応じてオブジェクトに乗ったと判断し音を変える
-		if (area.y >= 10.0f)
-		{
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::landing, area);
-		}
-		else
-		{
-			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::landing2, area);
-		}
-	}
-} /// void CharacterSword::SEProcess()
 
 
 
@@ -978,8 +934,7 @@ void CharacterSword::Process(const float getAngle)
 	preArea = area;		// 直前の座標
 
 
-	// SEのプロセス
-	SEProcess();
+	SoundProcess::SetCharaArea(area);		// 3Dサウンドのプレイヤーの位置を更新
 
 
 	// 動いているもしくは攻撃しているとき
@@ -1063,8 +1018,7 @@ void CharacterSword::Process(const float getAngle)
 	{
 		area.y = 0.5f;
 	}
-	if (area.x >= 4900.0f || area.x <= -4900.0f
-		|| area.z >= 4900.0f || area.z <= -4900.0f)
+	if (area.x >= 4900.0f || area.x <= -4900.0f	|| area.z >= 4900.0f || area.z <= -4900.0f)
 	{
 		area = VGet(0, 0, 0);
 	}
@@ -1103,8 +1057,7 @@ void CharacterSword::NotOpeProcess(const float getAngle)
 	preArea = area;		// 直前の座標
 
 
-	// SEのプロセス
-	SEProcess();
+	SoundProcess::SetCharaArea(area);		// 3Dサウンドのプレイヤーの位置を更新
 
 
 	// 動いているもしくは攻撃しているとき
@@ -1234,8 +1187,7 @@ void CharacterSword::OnlyCollFloorProcess(const float getAngle)
 	preArea = area;		// 直前の座標
 
 
-	// SEのプロセス
-	SEProcess();
+	SoundProcess::SetCharaArea(area);		// 3Dサウンドのプレイヤーの位置を更新
 
 
 	// 動いているもしくは攻撃しているとき
@@ -1297,8 +1249,7 @@ void CharacterSword::OnlyCollFloorProcess(const float getAngle)
 	{
 		area.y = 0.5f;
 	}
-	if (area.x >= 4900.0f || area.x <= -4900.0f
-		|| area.z >= 4900.0f || area.z <= -4900.0f)
+	if (area.x >= 4900.0f || area.x <= -4900.0f	|| area.z >= 4900.0f || area.z <= -4900.0f)
 	{
 		area = VGet(0, 0, 0);
 	}
@@ -1469,8 +1420,7 @@ void CharacterSword::Draw()
 #ifdef _DEBUG
 	if(MyDebug::characterSwordDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f))
-			, modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
 	}
 #endif // _DEBUG
 } /// void CharacterSword::Draw()

@@ -74,7 +74,6 @@ void EnemyMove3Slime::AutoMoveProcess()
 	else if (moveCount == 100)
 	{
 		// ランダム数値取得
-		std::random_device rnd;
 		std::mt19937 mt(rnd());
 		std::uniform_int_distribution<> randInX(-200, 200);			// X座標用乱数
 		std::uniform_int_distribution<> moveTurn(-200, 200);		// Z座標用乱数
@@ -130,7 +129,6 @@ void EnemyMove3Slime::AutoMoveProcess()
 	// ステージ外に行ったら
 	if (tempX >= 5000.0f || tempX <= -5000.0f || tempZ >= 5000.0f || tempZ <= -5000.0f)
 	{
-		std::random_device rnd;
 		std::mt19937 mt(rnd());
 		std::uniform_int_distribution<> randInX(-4000, 4000);        // X座標用乱数
 		std::uniform_int_distribution<> randInZ(-4000, 4000);        // Z座標用乱数
@@ -450,7 +448,7 @@ void EnemyMove3Slime::Draw()
 #ifdef _DEBUG
 	if (MyDebug::enemyThreeSlimeDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);		// 当たり判定を確認用の表示テスト
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
 	}
 	if (MyDebug::enemyThreeSlimeSearchLineDrawFlag)
 	{

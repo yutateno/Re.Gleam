@@ -910,8 +910,7 @@ void MainMove3::AttackProcess()
 
 
 			/// SEの再生をランダムにする-----------------------------------------------------------------------------
-			std::random_device rnd;     // 非決定的な乱数生成器を生成
-			std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+			std::mt19937 mt(rnd());
 			std::uniform_int_distribution<> randPawnSE(0, 1);        // 乱数
 
 			if (randPawnSE(mt) == 0)
@@ -1071,8 +1070,7 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 
 
 	// 敵スライムの初期化
-	std::random_device rnd;     // 非決定的な乱数生成器を生成
-	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+	std::mt19937 mt(rnd());
 	std::uniform_int_distribution<> randInX(-4000, 4000);        // X座標用乱数
 	std::uniform_int_distribution<> randInZ(-4000, 4000);        // Z座標用乱数
 	for (int i = 0; i != enemySlimeNum; ++i)
@@ -1769,7 +1767,6 @@ void MainMove3::Process()
 					// ダメージ演出画像が出ていなかったら
 					if (damageDrawFrame == 0)
 					{
-						std::random_device rnd;
 						std::mt19937 mt(rnd());
 						std::uniform_int_distribution<> blood(0, 2);        // X座標用乱数
 						damageDrawID = blood(mt);		// 乱数から画像を選ぶ
@@ -1914,7 +1911,6 @@ void MainMove3::Process()
 					// ダメージ演出画像が出ていなかったら
 					if (damageDrawFrame == 0)
 					{
-						std::random_device rnd;
 						std::mt19937 mt(rnd());
 						std::uniform_int_distribution<> blood(0, 2);        // X座標用乱数
 						damageDrawID = blood(mt);		// ランダムでダメージ画像を表示する

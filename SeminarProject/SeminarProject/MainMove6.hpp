@@ -150,10 +150,15 @@ private:
 
 	// エンドロール用画像
 	enum class EEndRolUI {
-		title, program, graphic, sound, libThanks, dxlib, effekseer, specialThanks, test, youser
+		title, program, graphic, sound
+		, libThanks, dxlib, effekseer, specialThanks, test, youser
 	};
 	int endrolDraw[10];
 
+
+	/// 乱数値-----------------------------------------------------
+
+	std::random_device rnd;
 
 
 public:

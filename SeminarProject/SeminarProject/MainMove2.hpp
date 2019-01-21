@@ -222,6 +222,11 @@ private:
 	int bgmOnceVolumeChange;
 
 
+	/// 乱数値-----------------------------------------------------------------------
+
+	std::random_device rnd;
+
+
 public:
 	// コンストラクタ
 	MainMove2(const std::vector<int> v_file);

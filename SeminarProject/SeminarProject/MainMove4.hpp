@@ -151,6 +151,11 @@ private:
 	int effectAttack;
 	int playingEfAttack;
 
+	
+	/// 乱数値---------------------------------------------------------------------
+
+	std::random_device rnd;
+
 
 public:
 	// コンストラクタ

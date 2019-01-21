@@ -963,8 +963,7 @@ void MainMove4::Process()
 				// ダメージ演出画像が出ていなかったら
 				if (damageDrawFrame == 0)
 				{
-					std::random_device rnd;     // 非決定的な乱数生成器を生成
-					std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+					std::mt19937 mt(rnd());
 					std::uniform_int_distribution<> blood(0, 2);        // X座標用乱数
 					damageDrawID = blood(mt);		// ランダムでダメージ画像を表示する
 					damageDrawFrame = 10;			// 10フレームだけ表示するようにする

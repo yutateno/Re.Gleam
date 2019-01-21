@@ -27,6 +27,9 @@ private:
 	// 飛び散った先の座標
 	float nextAreaX, nextAreaZ, moveAreaY;
 
+	// 乱数値
+	std::random_device rnd;
+
 
 public:
 	// コンストラクタ

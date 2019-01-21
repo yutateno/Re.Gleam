@@ -111,10 +111,9 @@ private:
 	int textureHandle0;
 
 
-	/// 音に関して--------------------------------------
+	/// 乱数値---------------------------------------
 
-	// SEのプロセス
-	void SEProcess();
+	std::random_device rnd;
 
 
 public:

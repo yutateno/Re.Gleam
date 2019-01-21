@@ -209,6 +209,11 @@ private:
 	bool nowBattleBGM;
 
 
+	/// 乱数値------------------------------------------------------------------------
+
+	std::random_device rnd;
+
+
 public:
 	// コンストラクタ
 	MainMove3(const std::vector<int> v_file);

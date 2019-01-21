@@ -115,8 +115,7 @@ void BasicCreature::Player_AnimProcess()
 bool BasicCreature::ActorHit(int stageHandle)
 {
 	// プレイヤーをカプセルとしてステージとのコリジョン情報を調べる(OBB形式)
-	m_hitDim = MV1CollCheck_Capsule(stageHandle, -1, area
-		, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth);
+	m_hitDim = MV1CollCheck_Capsule(stageHandle, -1, area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth);
 
 
 	// ポリゴンの数を再初期化
@@ -498,13 +497,8 @@ void BasicCreature::HitCircleReturn(VECTOR hitOneArea, float width)
 	if (length - width < 0)
 	{
 		float tempY = 0.0f;
-
-		
 		tempY = area.y;
 		area = VAdd(hitOneArea, VScale(pushVec, width));
-
-
-		// Ｙ座標は変化させない
 		area.y = tempY;
 	}
 } /// void BasicCreature::HitCircleReturn(VECTOR hitOneArea, float width)

@@ -56,8 +56,7 @@ void MainMove1::ActorHit()
 
 
 				/// SEの再生をランダムにする-----------------------------------------------------------------------------
-				std::random_device rnd;     // 非決定的な乱数生成器を生成
-				std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+				std::mt19937 mt(rnd());
 				std::uniform_int_distribution<> randPawnSE(0, 1);        // 乱数
 
 
@@ -414,8 +413,7 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 
 	
 	/// 玉生成に関する初期化---------------------------------------------------------------
-	std::random_device rnd;     // 非決定的な乱数生成器を生成
-	std::mt19937 mt(rnd());     // メルセンヌ・ツイスタの32ビット版
+	std::mt19937 mt(rnd());
 	std::uniform_int_distribution<> randInX(-3000, 3000);        // X座標用乱数
 	std::uniform_int_distribution<> randInZ(-3000, 3000);        // Z座標用乱数
 	std::uniform_int_distribution<> color(1, 100);				 // 色用の乱数

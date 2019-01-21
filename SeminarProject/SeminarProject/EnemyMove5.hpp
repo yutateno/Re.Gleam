@@ -108,6 +108,11 @@ private:
 	int textureHandle0;
 
 
+	/// 乱数値---------------------------------------
+
+	std::random_device rnd;
+
+
 public:
 	// コンストラクタ
 	EnemyMove5(const int modelHandle, const int collStageHandle, const int stairsHandle

@@ -167,11 +167,6 @@ private:
 	int textureHandle4;
 
 
-	/// 音に関して-----------------------------------------------------------------------------
-
-	void SEProcess();
-
-
 public:
 	// コンストラクタ
 	CharacterSword(const int modelHandle, const int collStageHandle, const int stairsHandle

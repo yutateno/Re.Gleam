@@ -42,8 +42,7 @@ void LoadThread::Process(const int max, const std::vector<std::string> path
 	if (num < max)
 	{
 		fileName.push_back(-1);
-		ths = thread(&LoadThread::MyNextLoad, this, path[num]
-			, ref(fileName[num]), type[num]);
+		ths = thread(&LoadThread::MyNextLoad, this, path[num], ref(fileName[num]), type[num]);
 		ths.join();
 		num++;
 		ClearDrawScreen();

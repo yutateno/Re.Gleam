@@ -203,12 +203,9 @@ BaseMove::BaseMove()
 	shadowNoMoveLowArea = VGet(-2000.0f, -1.0f, -2000.0f);
 	shadowNoMoveHighArea = VGet(2000.0f, 1000.0f, 2000.0f);
 
-	SetShadowMapDrawArea(shadowMapCharaHandle, shadowCharaLowArea
-		, shadowCharaHighArea);
-	SetShadowMapDrawArea(shadowMapAnotherCharaHandle, shadowAnotherCharaLowArea
-		, shadowAnotherCharaHighArea);
-	SetShadowMapDrawArea(shadowMapNoMoveHandle, shadowNoMoveLowArea
-		, shadowNoMoveHighArea);
+	SetShadowMapDrawArea(shadowMapCharaHandle, shadowCharaLowArea, shadowCharaHighArea);
+	SetShadowMapDrawArea(shadowMapAnotherCharaHandle, shadowAnotherCharaLowArea, shadowAnotherCharaHighArea);
+	SetShadowMapDrawArea(shadowMapNoMoveHandle, shadowNoMoveLowArea, shadowNoMoveHighArea);
 
 
 	// ÉâÉCÉgÇÃï˚å¸Çê›íË

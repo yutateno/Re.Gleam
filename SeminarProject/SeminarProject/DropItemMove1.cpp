@@ -48,8 +48,7 @@ void DropItemMove1::Draw()
 #ifdef _DEBUG
 	if (MyDebug::dropItemOneDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, 1.0f, 0.0f))
-			, 80.0f, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, 1.0f, 0.0f)), 80.0f, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
 	}
 #endif // _DEBUG
 }

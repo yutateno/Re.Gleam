@@ -114,8 +114,7 @@ void EnemyMove1::Draw()
 	SetUseZBuffer3D(TRUE);
 	SetWriteZBuffer3D(TRUE);
 	SetMaterialParam(material);
-	DrawSphere3D(VAdd(area, VGet(0.0f, 60.0f, 0.0f)), modelWidth, 16
-		, GetColor(68, 178, 227), GetColor(255, 255, 255), TRUE);
+	DrawSphere3D(VAdd(area, VGet(0.0f, 60.0f, 0.0f)), modelWidth, 16, GetColor(68, 178, 227), GetColor(255, 255, 255), TRUE);
 	SetWriteZBuffer3D(FALSE);
 	SetUseZBuffer3D(FALSE);
 

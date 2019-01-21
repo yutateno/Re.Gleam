@@ -72,8 +72,7 @@ AdjustmentMachine::~AdjustmentMachine()
 void AdjustmentMachine::Draw()
 {
 	// ÉÄÅ[Éu2à»â∫Ç≈ìßâﬂÇ™Ç‹ÇæÇ≥ÇÍÇƒÇ¢ÇΩÇÁ
-	if (BASICPARAM::e_nowScene <= ESceneNumber::SECONDMOVE
-		&& blendCount < 255)
+	if (BASICPARAM::e_nowScene <= ESceneNumber::SECONDMOVE && blendCount < 255)
 	{
 		if (nextBlendCount > blendCount) blendCount += 3;
 		nextBlendCount = dropCount * 17;
@@ -90,8 +89,7 @@ void AdjustmentMachine::Draw()
 #ifdef _DEBUG
 	if (MyDebug::adjustmentMachineDrawFlag)
 	{
-		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f))
-			, modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
+		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
 	}
 #endif // _DEBUG
 }

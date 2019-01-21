@@ -205,26 +205,24 @@ void BasicObject::Move6SetDownArea()
 	{
 		// 黒い丸い円の半径を大きくする
 		if (move6_circle <= 100.0f) move6_circle++;
-		DrawCone3D(VGet(area.x, 50.0, area.z), VGet(area.x, 0, area.z)
-			, move6_circle, 16, GetColor(0, 0, 0), GetColor(0, 0, 0), true);
+		DrawCone3D(VGet(area.x, 50.0, area.z), VGet(area.x, 0, area.z), move6_circle, 16, GetColor(0, 0, 0), GetColor(0, 0, 0), true);
 
 
 		// 自分からボスのとこまで線を引く
-		DrawLine3D(VGet(area.x, 50.0, area.z)
-			, VGet(area.x + ((4000.0f - area.x) * (move6_line / 200.0f)), 50.0f, 0.0f), GetColor(0, 0, 0));
+		DrawLine3D(VGet(area.x, 50.0, area.z), VGet(area.x + ((4000.0f - area.x) * (move6_line / 200.0f)), 50.0f, 0.0f), GetColor(0, 0, 0));
 	}
 	// ボスのとこまで線が到達していたら
 	else if (move6_line <= 400.0f)
 	{
 		// 黒い丸い円の半径を小さくしていく
 		if (move6_circle >= 0.0f) move6_circle--;
-		DrawCone3D(VGet(area.x, 50.0, area.z), VGet(area.x, 0, area.z)
-			, move6_circle, 16, GetColor(0, 0, 0), GetColor(0, 0, 0), true);
+		DrawCone3D(VGet(area.x, 50.0, area.z), VGet(area.x, 0, area.z), move6_circle, 16, GetColor(0, 0, 0), GetColor(0, 0, 0), true);
 
 
 		// 自分からボスのとこまで線を引く
 		DrawLine3D(VGet(area.x, 50.0, area.z), VGet(4000.0f, 50.0f, 0.0f), GetColor(0, 0, 0));
 	}
+	move6_line++;
 
 
 	// 沈ませる

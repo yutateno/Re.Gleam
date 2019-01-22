@@ -67,6 +67,12 @@
     <Filter Include="ヘッダー ファイル\Actor\Creature\Enemy">
       <UniqueIdentifier>{7a9cc0ea-e0e5-4c17-9982-4d60a246ddb3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Actor\Creature\Enemy\Boss">
+      <UniqueIdentifier>{2b84052d-f690-4ce8-88a8-ff8daba5e315}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Actor\Creature\Enemy\Boss">
+      <UniqueIdentifier>{89698ccf-5835-42f8-adb4-fd9863a34fcd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -177,14 +183,20 @@
     <ClCompile Include="MainMove6.cpp">
       <Filter>ソース ファイル\MoveLevel</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyBossBefore.cpp">
-      <Filter>ソース ファイル\Actor\Creature\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyBossAfter.cpp">
-      <Filter>ソース ファイル\Actor\Creature\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="CameraMove6.cpp">
       <Filter>ソース ファイル\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBossAfter.cpp">
+      <Filter>ソース ファイル\Actor\Creature\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBossBefore.cpp">
+      <Filter>ソース ファイル\Actor\Creature\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="MagicIcePillar.cpp">
+      <Filter>ソース ファイル\Actor\Creature\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="ChaseBlock.cpp">
+      <Filter>ソース ファイル\Actor\Creature\Enemy\Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -293,14 +305,20 @@
     <ClInclude Include="MainMove6.hpp">
       <Filter>ヘッダー ファイル\MoveLevel</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyBossBefore.hpp">
-      <Filter>ヘッダー ファイル\Actor\Creature\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyBossAfter.hpp">
-      <Filter>ヘッダー ファイル\Actor\Creature\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="CameraMove6.hpp">
       <Filter>ヘッダー ファイル\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBossAfter.hpp">
+      <Filter>ヘッダー ファイル\Actor\Creature\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBossBefore.hpp">
+      <Filter>ヘッダー ファイル\Actor\Creature\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="MagicIcePillar.hpp">
+      <Filter>ヘッダー ファイル\Actor\Creature\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="ChaseBlock.hpp">
+      <Filter>ヘッダー ファイル\Actor\Creature\Enemy\Boss</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

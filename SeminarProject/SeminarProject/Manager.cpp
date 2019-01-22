@@ -168,10 +168,6 @@ void Manager::TitleProcess()
 			optionSelectMin = 0;
 			optionSelectMax = 4;
 			gameFirstStarting = false;
-			for (int i = 0; i != titleUINum; ++i)
-			{
-				GRAPHIC_RELEASE(titleUIDraw[i]);
-			}
 		} /// if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::firstGame))
 		// ロードするとき
 		else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::load))
@@ -186,10 +182,6 @@ void Manager::TitleProcess()
 			optionSelectMin = 0;
 			optionSelectMax = 4;
 			gameFirstStarting = false;
-			for (int i = 0; i != titleUINum; ++i)
-			{
-				GRAPHIC_RELEASE(titleUIDraw[i]);
-			}
 		} /// else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::load))
 		// ゲームを終了するとき
 		else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::gameEnd))
@@ -310,10 +302,6 @@ void Manager::TitleProcess()
 			optionSelectMin = 0;
 			optionSelectMax = 4;
 			gameFirstStarting = false;
-			for (int i = 0; i != titleUINum; ++i)
-			{
-				GRAPHIC_RELEASE(titleUIDraw[i]);
-			}
 		} /// else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::bonus))
 	} /// if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
 
@@ -1598,6 +1586,11 @@ void Manager::InitMove6Load()
 
 		// エンドロール用BGM
 		moveStr[49] = "media\\sound\\ED.wyn";
+
+		// 戦闘敵のデータ
+		moveStr[50] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\normal.pyn";
+		moveStr[51] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\normal.pyn";
+		moveStr[52] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\normal.pyn";
 	}
 
 
@@ -1668,6 +1661,10 @@ void Manager::InitMove6Load()
 		loadType[48] = ELOADFILE::graph;
 
 		loadType[49] = ELOADFILE::soundStream;
+
+		loadType[50] = ELOADFILE::graph;
+		loadType[51] = ELOADFILE::graph;
+		loadType[52] = ELOADFILE::graph;
 	}
 } /// void Manager::InitMove6Load()
 
@@ -1688,8 +1685,14 @@ void Manager::Move6TextureReload()
 			moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn";
 			moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn";
 		}
-		if (!BASICPARAM::enemyTextureWhiteBlack)
+		if (!BASICPARAM::enemyTextureWhiteBlack || !BASICPARAM::lightStreetTextureWhiteBlack
+			|| !BASICPARAM::stairsRoadTextureWhiteBlack || !BASICPARAM::stairsTextureWhiteBlack
+			|| !BASICPARAM::anothreTextureWhiteBlack)
 		{
+			// 戦闘敵のデータ
+			moveStr[50] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\normal.pyn";
+			moveStr[51] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\normal.pyn";
+			moveStr[52] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\normal.pyn";
 		}
 		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{
@@ -1729,8 +1732,14 @@ void Manager::Move6TextureReload()
 			moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_face.pyn";
 			moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_ex.pyn";
 		}
-		if (!BASICPARAM::enemyTextureWhiteBlack)
+		if (!BASICPARAM::enemyTextureWhiteBlack || !BASICPARAM::lightStreetTextureWhiteBlack
+			|| !BASICPARAM::stairsRoadTextureWhiteBlack || !BASICPARAM::stairsTextureWhiteBlack
+			|| !BASICPARAM::anothreTextureWhiteBlack)
 		{
+			// 戦闘敵のデータ
+			moveStr[50] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\P.pyn";
+			moveStr[51] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\P.pyn";
+			moveStr[52] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\P.pyn";
 		}
 		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{
@@ -1770,8 +1779,14 @@ void Manager::Move6TextureReload()
 			moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_face.pyn";
 			moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_ex.pyn";
 		}
-		if (!BASICPARAM::enemyTextureWhiteBlack)
+		if (!BASICPARAM::enemyTextureWhiteBlack || !BASICPARAM::lightStreetTextureWhiteBlack
+			|| !BASICPARAM::stairsRoadTextureWhiteBlack || !BASICPARAM::stairsTextureWhiteBlack
+			|| !BASICPARAM::anothreTextureWhiteBlack)
 		{
+			// 戦闘敵のデータ
+			moveStr[50] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\D.pyn";
+			moveStr[51] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\D.pyn";
+			moveStr[52] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\D.pyn";
 		}
 		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{

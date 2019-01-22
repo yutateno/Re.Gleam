@@ -373,7 +373,7 @@ MainMove1::MainMove1(const std::vector<int> v_file)
 {	
 	// 自然光源を一切遮断
 	SetLightEnable(FALSE);	
-	// フォグを有効にする
+	// フォグを無効にする
 	SetFogEnable(FALSE);
 	// 背景色に関する
 	backgroundColor = GetColor(0, 0, 0);

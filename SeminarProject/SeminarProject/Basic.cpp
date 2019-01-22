@@ -41,47 +41,48 @@ bool BASICPARAM::lastOrdinaryView;
 
 /// debug-----------------------------------------------------------------------------------------------------------------------
 #ifdef _DEBUG
-bool MyDebug::characterDrawFlag = false;
-bool MyDebug::characterSwordDrawFlag = false;
-bool MyDebug::ordinaryDrawFlag = false;
-bool MyDebug::enemyOneDrawFlag = false;
-bool MyDebug::enemyTwoDrawFlag = false;
-bool MyDebug::adjustmentMachineDrawFlag = false;
-bool MyDebug::dropItemOneDrawFlag = false;
-bool MyDebug::stageDrawFlag = false;
-bool MyDebug::moveOneDrawFlag = false;
-bool MyDebug::enemyThreeSlimeDrawFlag = false;
-bool MyDebug::enemyThreeCrayonHumanDrawFlag = false;
-bool MyDebug::enemyThreeSlimeSearchLineDrawFlag = false;
-bool MyDebug::enemyThreeCrayonHumanSearchLineDrawFlag = false;
-bool MyDebug::enemyFourEnemyDrawFlag = false;
-bool MyDebug::enemyFourEnemySearchLineDrawFlag = false;
-bool MyDebug::enemyFifthEnemyDrawFlag = false;
-bool MyDebug::enemyFifthEnemySearchLineDrawFlag = false;
-
+bool MyDebug::characterDrawFlag							 = false;
+bool MyDebug::characterSwordDrawFlag					 = false;
+bool MyDebug::ordinaryDrawFlag							 = false;
+bool MyDebug::enemyOneDrawFlag							 = false;
+bool MyDebug::enemyTwoDrawFlag							 = false;
+bool MyDebug::adjustmentMachineDrawFlag					 = false;
+bool MyDebug::dropItemOneDrawFlag						 = false;
+bool MyDebug::stageDrawFlag								 = false;
+bool MyDebug::moveOneDrawFlag							 = false;
+bool MyDebug::enemyThreeSlimeDrawFlag					 = false;
+bool MyDebug::enemyThreeCrayonHumanDrawFlag				 = false;
+bool MyDebug::enemyThreeSlimeSearchLineDrawFlag			 = false;
+bool MyDebug::enemyThreeCrayonHumanSearchLineDrawFlag	 = false;
+bool MyDebug::enemyFourEnemyDrawFlag					 = false;
+bool MyDebug::enemyFourEnemySearchLineDrawFlag			 = false;
+bool MyDebug::enemyFifthEnemyDrawFlag					 = false;
+bool MyDebug::enemyFifthEnemySearchLineDrawFlag			 = false;
+bool MyDebug::enemyLastBossDrawFlag						 = false;
 
 
 /// --------------------------------------------------------------------------------------------------
 void MyDebug::Init()
 {
-	checkFlag = false;
-	characterDrawFlag = false;
-	characterSwordDrawFlag = false;
-	ordinaryDrawFlag = false;
-	enemyOneDrawFlag = false;
-	enemyTwoDrawFlag = false;
-	adjustmentMachineDrawFlag = false;
-	dropItemOneDrawFlag = false;
-	stageDrawFlag = false;
-	moveOneDrawFlag = false;
-	enemyThreeSlimeDrawFlag = false;
-	enemyThreeCrayonHumanDrawFlag = false;
-	enemyThreeSlimeSearchLineDrawFlag = false;
-	enemyThreeCrayonHumanSearchLineDrawFlag = false;
-	enemyFourEnemyDrawFlag = false;
-	enemyFourEnemySearchLineDrawFlag = false;
-	enemyFifthEnemyDrawFlag = false;
-	enemyFifthEnemySearchLineDrawFlag = false;
+	checkFlag								 = false;
+	characterDrawFlag						 = false;
+	characterSwordDrawFlag					 = false;
+	ordinaryDrawFlag						 = false;
+	enemyOneDrawFlag						 = false;
+	enemyTwoDrawFlag						 = false;
+	adjustmentMachineDrawFlag				 = false;
+	dropItemOneDrawFlag						 = false;
+	stageDrawFlag							 = false;
+	moveOneDrawFlag							 = false;
+	enemyThreeSlimeDrawFlag					 = false;
+	enemyThreeCrayonHumanDrawFlag			 = false;
+	enemyThreeSlimeSearchLineDrawFlag		 = false;
+	enemyThreeCrayonHumanSearchLineDrawFlag	 = false;
+	enemyFourEnemyDrawFlag					 = false;
+	enemyFourEnemySearchLineDrawFlag		 = false;
+	enemyFifthEnemyDrawFlag					 = false;
+	enemyFifthEnemySearchLineDrawFlag		 = false;
+	enemyLastBossDrawFlag					 = false;
 }
 
 
@@ -205,6 +206,12 @@ void MyDebug::DebugProcess()
 		if (CheckHitKey(KEY_INPUT_I) == 1 && DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_BACK) == 1)
 		{
 			enemyFifthEnemySearchLineDrawFlag = !enemyFifthEnemySearchLineDrawFlag;
+		}
+
+		DrawFormatString(970, 350, GetColor(0, 0, 0), "enemyLastBossDrawFlag: O: %s", enemyLastBossDrawFlag ? "true" : "false");
+		if (CheckHitKey(KEY_INPUT_O) == 1 && DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_BACK) == 1)
+		{
+			enemyLastBossDrawFlag = !enemyLastBossDrawFlag;
 		}
 	}
 }

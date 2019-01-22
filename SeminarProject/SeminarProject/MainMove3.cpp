@@ -620,7 +620,6 @@ void MainMove3::AttackProcess()
 			// エフェクトを再生する。
 			playingEfAttack = PlayEffekseer3DEffect(effectAttack);
 			SetScalePlayingEffekseer3DEffect(playingEfAttack, 10, 10, 10);
-			// 再生中のエフェクトを移動する。
 			SetPosPlayingEffekseer3DEffect(playingEfAttack, p_character->GetAttackEndFrameArea().x
 				, p_character->GetAttackEndFrameArea().y, p_character->GetAttackEndFrameArea().z);
 		}
@@ -664,7 +663,6 @@ void MainMove3::AttackProcess()
 			// エフェクトを再生する。
 			playingEfAttack = PlayEffekseer3DEffect(effectAttack);
 			SetScalePlayingEffekseer3DEffect(playingEfAttack, 10, 10, 10);
-			// 再生中のエフェクトを移動する。
 			SetPosPlayingEffekseer3DEffect(playingEfAttack, p_character->GetAttackEndFrameArea().x
 				, p_character->GetAttackEndFrameArea().y, p_character->GetAttackEndFrameArea().z);
 		}

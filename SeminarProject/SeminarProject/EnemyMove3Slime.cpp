@@ -559,6 +559,7 @@ void EnemyMove3Slime::TextureReload()
 {
 	GRAPHIC_RELEASE(textureHandle0);
 
+
 	switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::NORMAL:
@@ -577,6 +578,7 @@ void EnemyMove3Slime::TextureReload()
 		LoadFile::MyLoad("media\\move3\\インクスライム\\ink_slime_motionALL.fbm\\normal\\Slime_tex.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 	}
+
 
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 }

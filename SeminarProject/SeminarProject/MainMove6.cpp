@@ -177,25 +177,16 @@ void MainMove6::ShadowDraw()
 /// --------------------------------------------------------------------------------------------------
 void MainMove6::AttackProcess()
 {
-	/// プレイヤーに触れられたら-----------------------------------------------------
-	//for (int i = 0; i != enemyNum; ++i)
-	//{
-	//	// 死んでいるかプレイヤーとの距離が近くではなかったら
-	//	if (p_enemyMove[i]->GetDeathFlag()
-	//		|| BaseMove::GetDistance<int>(p_enemyMove[i]->GetArea(), p_character->GetArea()) > 250) continue;
+	// プレイヤーと当たっていたら
+	if (HitCheck_Capsule_Capsule(
+		p_enemyBossAfter->GetArea(), VAdd(p_enemyBossAfter->GetArea(), VGet(0.0f, p_enemyBossAfter->GetHeight(), 0.0f)), p_enemyBossAfter->GetWidth(),
+		p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth()))
+	{
 
-
-	//	// プレイヤーと当たっていたら
-	//	if (HitCheck_Capsule_Capsule(
-	//		p_enemyMove[i]->GetArea(), VAdd(p_enemyMove[i]->GetArea(), VGet(0.0f, p_enemyMove[i]->GetHeight(), 0.0f)), p_enemyMove[i]->GetWidth(),
-	//		p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth()))
-	//	{
-	//		// 死ぬ
-	//		p_enemyMove[i]->SetDie();
-	//		enemyCatchNum++;
-	//	}
-	//}
-	/// プレイヤーから押し出される-----------------------------------------------------
+		// 自分を押し出す
+		p_character->HitCircleReturn(p_enemyBossAfter->GetArea()
+			, p_character->GetWidth() >= p_enemyBossAfter->GetWidth() ? p_character->GetWidth() : p_enemyBossAfter->GetWidth());
+	}
 } /// void MainMove6::AttackProcess()
 
 
@@ -474,6 +465,7 @@ void MainMove6::MovieProcess()
 	// シーン移行する
 	if (movieFrame >= 1000)
 	{
+		SetFogEnable(FALSE);
 		SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::boss);
 		e_nowMove = ESceneMove6::Battle;
 		p_character->PositionReset();
@@ -485,12 +477,20 @@ void MainMove6::MovieProcess()
 /// --------------------------------------------------------------------------------------------------
 void MainMove6::BattleDraw()
 {
-	BaseMove::SkyBoxDraw();		// スカイボックスを描画
+	// スカイボックスを描画
+	//BaseMove::SkyBoxDraw();	
 
-	
+
+	// ステージの描画
 	p_stage->Draw();
 
 
+	// ボスの描画
+	p_enemyBossAfter->DrawWhile();
+	p_enemyBossAfter->Draw();
+
+
+	// キャラクターの描画
 	if (BASICPARAM::lastCharaView)
 	{
 		p_character->ModelDraw();
@@ -511,16 +511,21 @@ void MainMove6::BattleProcess()
 	p_camera->Process(p_character->GetArea());
 
 
+	// ボスのプロセス
+	p_enemyBossAfter->Process();
+	p_enemyBossAfter->SetPlayerArea(p_character->GetArea());
+
+
 	// 当たり判定のプロセス
 	AttackProcess();
 
 
 	// スカイボックスの位置を更新
-	BaseMove::SkyBoxProcess(p_character->GetArea());
+	//BaseMove::SkyBoxProcess(p_character->GetArea());
 
 
-	// test
-	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
+	// 次のシーンへ移行
+	if (CheckHitKey(KEY_INPUT_M) == 1)
 	{
 		SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::ending);
 		e_nowMove = ESceneMove6::Last;
@@ -593,6 +598,7 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 {
 	// 初期化
 	BASICPARAM::paneruDrawFlag = false;
+	e_nowMove = ESceneMove6::Movie;
 
 
 	// ポインタNULL初期化
@@ -680,6 +686,7 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 
 	// 敵の初期化
 	p_enemyBossBefore = new EnemyBossBefore(v_file[EFILE::bossBeforeModel], v_file[EFILE::bossBeforeTex0], v_file[EFILE::bossBeforeTex1], v_file[EFILE::bossBeforeTex2]);
+	p_enemyBossAfter = new EnemyBossAfter(v_file[EFILE::bossBeforeModel], v_file[EFILE::bossAfterTex0], v_file[EFILE::bossAfterTex1], v_file[EFILE::bossAfterTex2]);
 	approachBossUIDraw[0] = v_file[EFILE::approachUINear];
 	approachBossUIDraw[1] = v_file[EFILE::approachUIYes];
 	approachBossUIDraw[2] = v_file[EFILE::approachUINo];
@@ -798,6 +805,7 @@ MainMove6::~MainMove6()
 		GRAPHIC_RELEASE(approachBossUIDraw[i]);
 	}
 	POINTER_RELEASE(p_enemyBossBefore);
+	POINTER_RELEASE(p_enemyBossAfter);
 
 
 	// 階段

@@ -31,7 +31,8 @@ private:
 		, bgm_Main, ordinaryModel, ordinaryTex0, approachUINear, approachUIYes
 		, approachUINo, bossBeforeModel, bossBeforeTex0, bossBeforeTex1, bossBeforeTex2
 		, end_Title, end_DxLib, end_Effekseer, end_Graphic, end_Program, end_Sound
-		, end_Special, end_Test, end_ThanksLib, end_Youser, bgm_end
+		, end_Special, end_Test, end_ThanksLib, end_Youser, bgm_end, bossAfterTex0
+		, bossAfterTex1, bossAfterTex2
 	};
 
 	

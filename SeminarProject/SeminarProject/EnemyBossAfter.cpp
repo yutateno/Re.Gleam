@@ -185,6 +185,10 @@ void EnemyBossAfter::Process()
 	attackStartNow = false;		// 攻撃をし始めてないとする
 
 
+	// ダメージを受けたら
+	if (damageHit) damageHit = false;
+
+
 	// 300フレームに到達したら
 	if (moveCount++ > moveDoCount)
 	{

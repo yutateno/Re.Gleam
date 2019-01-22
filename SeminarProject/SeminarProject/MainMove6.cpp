@@ -31,14 +31,6 @@ void MainMove6::ShadowDraw()
 			vp_stageStairsRoad[i]->ModelDraw();
 		}
 	}
-	// パネル
-	if (BASICPARAM::paneruDrawFlag)
-	{
-		for (int i = 0; i != 10; ++i)
-		{
-			p_stagePaneru[i]->ModelDraw();
-		}
-	}
 	// 一般人
 	if (BASICPARAM::ordinaryPeopleNum != 0)
 	{
@@ -75,14 +67,6 @@ void MainMove6::ShadowDraw()
 		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
 		{
 			vp_stageStairsRoad[i]->ModelDraw();
-		}
-	}
-	// パネル
-	if (BASICPARAM::paneruDrawFlag)
-	{
-		for (int i = 0; i != 10; ++i)
-		{
-			p_stagePaneru[i]->ModelDraw();
 		}
 	}
 	// 一般人
@@ -135,17 +119,6 @@ void MainMove6::ShadowDraw()
 			}
 		}
 	}
-	// パネル
-	if (BASICPARAM::lastPaneruView)
-	{
-		if (BASICPARAM::paneruDrawFlag)
-		{
-			for (int i = 0; i != 10; ++i)
-			{
-				p_stagePaneru[i]->ModelDraw();
-			}
-		}
-	}
 	// 一般人
 	if (BASICPARAM::lastOrdinaryView)
 	{
@@ -187,6 +160,29 @@ void MainMove6::AttackProcess()
 		// 自分を押し出す
 		p_character->HitCircleReturn(p_enemyBossAfter->GetArea()
 			, p_character->GetWidth() >= p_enemyBossAfter->GetWidth() ? p_character->GetWidth() : p_enemyBossAfter->GetWidth());
+	}
+
+
+	/// プレイヤーの攻撃---------------------------------------------------------------------
+	// プレイヤーの攻撃が終わったら
+	if (p_character->GetAttackMotionEnd()) enemyHitDamage = false;
+
+
+	// ダメージを受けていなくてプレイヤーが攻撃中だったら
+	if (p_character->GetAttackNow() && !enemyHitDamage && p_character->GetArea().y >= 2100)
+	{
+		p_enemyBossAfter->HitLineReturn(p_character->GetAttackFirstFrameArea()
+			, p_character->GetAttackEndFrameArea());
+	}
+
+
+	// 攻撃でダメージを受けたら
+	if (p_enemyBossAfter->GetDamageFlag())
+	{
+		// ダメージを受けている
+		enemyHitDamage = true;
+		// バイブレーションさせる
+		DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 30, 7500, 7500);
 	}
 
 
@@ -516,6 +512,8 @@ void MainMove6::MovieProcess()
 	if (movieFrame >= 1000)
 	{
 		SetFogEnable(FALSE);
+		BASICPARAM::paneruDrawFlag = true;
+		BASICPARAM::lastPaneruView = true;
 		SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::boss);
 		e_nowMove = ESceneMove6::Battle;
 		p_character->PositionReset();
@@ -529,6 +527,13 @@ void MainMove6::BattleDraw()
 {
 	// ステージの描画
 	p_stage->Draw();
+
+
+	// パネルの描画
+	for (int i = 0; i != paneruNum; ++i)
+	{
+		p_stagePaneru[i]->ModelDraw();
+	}
 
 
 	// ボスの描画
@@ -547,6 +552,9 @@ void MainMove6::BattleDraw()
 		p_character->ModelDraw();
 	}
 	p_character->Draw();
+
+
+	printfDx("%f\t%f\t%f\n", p_character->GetArea().x, p_character->GetArea().y, p_character->GetArea().z);
 } /// void MainMove6::BattleDraw()
 
 
@@ -662,7 +670,7 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 	p_character = nullptr;
 	p_stage = nullptr;
 	p_stage = nullptr;
-	for (int i = 0; i != 10; ++i)
+	for (int i = 0; i != paneruNum; ++i)
 	{
 		p_stagePaneru[i] = nullptr;
 	}
@@ -697,10 +705,54 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 
 
 	// パネルの初期化
-	for (int i = 0; i != 10; ++i)
+	p_character->SetCollPaneruNum(paneruNum);
+	for (int i = 0; i != paneruNum; ++i)
 	{
-		p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(500.0f * i, 300.0f * i, 100.0f * i));
-		p_character->SetPaneruArea(p_stagePaneru[i]->GetArea(), i);
+		// 微妙に散らばせる
+		std::mt19937 mt(rnd());
+		std::uniform_int_distribution<> randInX(-300, 300);        // X座標用乱数
+		std::uniform_int_distribution<> randInZ(-300, 300);        // Z座標用乱数
+		// 敵を目の前にして左上
+		if (i < 8)
+		{
+			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(randInX(mt), 800.0f * i, 500.0f * i));
+			p_character->SetPaneruArea(p_stagePaneru[i]->GetArea(), i);
+		}
+		// 敵を目の前にして右上
+		else if (i < 16)
+		{
+			int temp = i - 8;
+			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(randInX(mt), 800.0f * temp, -500.0f * temp));
+			p_character->SetPaneruArea(p_stagePaneru[i]->GetArea(), i);
+		}
+		// 敵を目の前にして左の列
+		else if (i < 36)
+		{
+			int temp = i - 16;
+			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(4370 / 20 * temp, 5600.0f - (2000 / 20 * temp), 3500 - (2500 / 20 * temp)));
+			p_character->SetPaneruArea(p_stagePaneru[i]->GetArea(), i);
+		}
+		// 敵を目の前にして右の列
+		else if (i < 56)
+		{
+			int temp = i - 36;
+			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(4370 / 20 * temp, 5600.0f - (2000 / 20 * temp), (2500 / 20 * temp) - 3500));
+			p_character->SetPaneruArea(p_stagePaneru[i]->GetArea(), i);
+		}
+		// 敵を目の前にして敵左から腹まで
+		else if (i < 61)
+		{
+			int temp = i - 56;
+			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(4150 - (600 / 5 * temp), 3750 - (500 / 5 * temp), 1120 - (1120 / 5 * temp)));
+			p_character->SetPaneruArea(p_stagePaneru[i]->GetArea(), i);
+		}
+		// 敵を目の前にして敵右から腹まで
+		else if (i < 66)
+		{
+			int temp = i - 61;
+			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(4150 - (600 / 5 * temp), 3750 - (500 / 5 * temp), (1120 / 5 * temp) - 1120));
+			p_character->SetPaneruArea(p_stagePaneru[i]->GetArea(), i);
+		}
 	}
 
 
@@ -756,6 +808,7 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 	p_magicIcePillar[1] = new MagicIcePillar();
 	p_chaseBlock[0] = new ChaseBlock();
 	p_chaseBlock[1] = new ChaseBlock();
+	enemyHitDamage = false;
 
 
 	// 一般人
@@ -910,7 +963,7 @@ MainMove6::~MainMove6()
 
 
 	// パネル
-	for (int i = 0; i != 10; ++i)
+	for (int i = 0; i != paneruNum; ++i)
 	{
 		POINTER_RELEASE(p_stagePaneru[i]);
 	}

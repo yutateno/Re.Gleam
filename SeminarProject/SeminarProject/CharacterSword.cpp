@@ -789,8 +789,10 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 
 	
 	// パネル
-	this->paneruHandle[0] = MV1DuplicateModel(paneruHandle);
-	MV1SetScale(this->paneruHandle[0], VGet(50.0f, 50.0f, 50.0f));
+	paneruNum = 10;
+	v_paneruHandle.clear();
+	this->v_paneruHandle.push_back(MV1DuplicateModel(paneruHandle));
+	MV1SetScale(this->v_paneruHandle[0], VGet(50.0f, 50.0f, 50.0f));
 
 	
 	// 階段と床
@@ -824,10 +826,12 @@ CharacterSword::~CharacterSword()
 	
 
 	// パネルを解放
-	for (int i = 0; i != 10; ++i)
+	for (int i = 0; i != paneruNum; ++i)
 	{
-		MODEL_RELEASE(paneruHandle[i]);
+		MODEL_RELEASE(v_paneruHandle[i]);
 	}
+	v_paneruHandle.clear();
+	v_paneruHandle.shrink_to_fit();
 
 
 	// 階段と床の解放
@@ -891,13 +895,13 @@ void CharacterSword::SetPaneruArea(const VECTOR paneruArea, const int num)
 	// パネルのコリジョン情報の設定
 	if (num != 0)
 	{
-		paneruHandle[num] = MV1DuplicateModel(paneruHandle[0]);
-		MV1SetScale(this->paneruHandle[num], VGet(50.0f, 50.0f, 50.0f));
+		v_paneruHandle.push_back(MV1DuplicateModel(v_paneruHandle[0]));
+		MV1SetScale(this->v_paneruHandle[num], VGet(50.0f, 50.0f, 50.0f));
 	}
-	MV1SetPosition(paneruHandle[num], paneruArea);
-	MV1SetupCollInfo(paneruHandle[num], -1);
-	MV1SetFrameVisible(paneruHandle[num], -1, false);
-	MV1RefreshCollInfo(paneruHandle[num], -1);
+	MV1SetPosition(v_paneruHandle[num], paneruArea);
+	MV1SetupCollInfo(v_paneruHandle[num], -1);
+	MV1SetFrameVisible(v_paneruHandle[num], -1, false);
+	MV1RefreshCollInfo(v_paneruHandle[num], -1);
 }
 
 
@@ -973,9 +977,9 @@ void CharacterSword::Process(const float getAngle)
 	// パネルのあたり判定
 	if (BASICPARAM::paneruDrawFlag)
 	{
-		for (int i = 0; i != 10; ++i)
+		for (int i = 0; i != paneruNum; ++i)
 		{
-			setCollHitNum += ActorHit(paneruHandle[i]);
+			setCollHitNum += ActorHit(v_paneruHandle[i]);
 		}
 	}
 
@@ -1087,7 +1091,7 @@ void CharacterSword::NotOpeProcess(const float getAngle)
 	{
 		for (int i = 0; i != 10; ++i)
 		{
-			setCollHitNum += ActorHit(paneruHandle[i]);
+			setCollHitNum += ActorHit(v_paneruHandle[i]);
 		}
 	}
 
@@ -1226,9 +1230,9 @@ void CharacterSword::OnlyCollFloorProcess(const float getAngle)
 	// パネルのあたり判定
 	if (BASICPARAM::paneruDrawFlag)
 	{
-		for (int i = 0; i != 10; ++i)
+		for (int i = 0; i != paneruNum; ++i)
 		{
-			setCollHitNum += ActorHit(paneruHandle[i]);
+			setCollHitNum += ActorHit(v_paneruHandle[i]);
 		}
 	}
 
@@ -1386,9 +1390,9 @@ void CharacterSword::Draw()
 	// パネルでの足影
 	if (BASICPARAM::paneruDrawFlag)
 	{
-		for (int i = 0; i != 10; ++i)
+		for (int i = 0; i != paneruNum; ++i)
 		{
-			setShadowNum += BasicObject::ShadowFoot(paneruHandle[i]);
+			setShadowNum += BasicObject::ShadowFoot(v_paneruHandle[i]);
 		}
 	}
 

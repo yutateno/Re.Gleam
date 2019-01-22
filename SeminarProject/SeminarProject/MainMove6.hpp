@@ -49,8 +49,11 @@ private:
 	// 街灯のポインタ
 	std::vector<StageStreetLight*> vp_stageStreetLight;
 
+	// パネルの個数
+	const int paneruNum = 66;
+
 	// パネルのポインタ
-	StagePaneru* p_stagePaneru[10];
+	StagePaneru* p_stagePaneru[66];
 
 	// 階段と床のポインタ
 	std::vector<StageStairsRoad*> vp_stageStairsRoad;
@@ -87,6 +90,9 @@ private:
 
 	// 追尾箱のポインタ
 	ChaseBlock* p_chaseBlock[2];
+
+	// 攻撃を受けたかどうか
+	int enemyHitDamage;
 
 
 	/// 一般人-----------------------------------------------------------------------

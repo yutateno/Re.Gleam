@@ -49,7 +49,10 @@ private:
 	/// パネルに関して------------------------------------------------------------------------
 	
 	// パネルのモデル
-	int paneruHandle[10];
+	std::vector<int> v_paneruHandle;
+
+	// パネルの個数
+	int paneruNum;
 
 
 	/// 動きに関して--------------------------------------------------------------------------
@@ -240,5 +243,8 @@ public:
 
 	// 最も近くてロックオンしている敵
 	void SetMostNearEnemyArea(VECTOR enemyArea = VGet(0, -1000, 0)) { mostNearEnemyArea = enemyArea; }
+
+	// 当たり判定を行うパネルの数を指定する
+	void SetCollPaneruNum(int num) { paneruNum = num; }
 };
 

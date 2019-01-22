@@ -177,6 +177,7 @@ void MainMove6::ShadowDraw()
 /// --------------------------------------------------------------------------------------------------
 void MainMove6::AttackProcess()
 {
+	/// プレイヤーを押し出す処理------------------------------------------------------------
 	// プレイヤーと当たっていたら
 	if (HitCheck_Capsule_Capsule(
 		p_enemyBossAfter->GetArea(), VAdd(p_enemyBossAfter->GetArea(), VGet(0.0f, p_enemyBossAfter->GetHeight(), 0.0f)), p_enemyBossAfter->GetWidth(),
@@ -187,6 +188,43 @@ void MainMove6::AttackProcess()
 		p_character->HitCircleReturn(p_enemyBossAfter->GetArea()
 			, p_character->GetWidth() >= p_enemyBossAfter->GetWidth() ? p_character->GetWidth() : p_enemyBossAfter->GetWidth());
 	}
+
+
+	/// 敵の攻撃の処理-----------------------------------------------------------------------
+	/// 敵の魔法攻撃の処理-------------------------------------------------
+	// 何の攻撃をしたか
+	e_attackPattern = p_enemyBossAfter->GetAttackPattern();
+
+
+	// 敵が攻撃を始めたとき
+	if (p_enemyBossAfter->GetAttackStartNow())
+	{
+		// 氷の柱を使う攻撃だったら
+		if (e_attackPattern == EAttackPattern::icePillar)
+		{
+			if (!p_magicIcePillar[0]->GetActive())
+			{
+				p_magicIcePillar[0]->Active(VGet(0, 0, 0));
+			}
+			if (!p_magicIcePillar[1]->GetActive())
+			{
+				p_magicIcePillar[1]->Active(VGet(300, 0, 0));
+			}
+		}
+		// 箱を使う攻撃だったら
+		else if (e_attackPattern == EAttackPattern::magicBlock)
+		{
+			if (!p_chaseBlock[0]->GetActive())
+			{
+				p_chaseBlock[0]->Active(p_character->GetArea());
+			}
+			if (!p_chaseBlock[1]->GetActive())
+			{
+				p_chaseBlock[1]->Active(p_character->GetArea());
+			}
+		}
+	}
+	/// 敵の魔法攻撃の処理-------------------------------------------------
 } /// void MainMove6::AttackProcess()
 
 
@@ -352,7 +390,7 @@ void MainMove6::MovieDraw()
 	BaseMove::SkyBoxDraw();		// スカイボックスを描画
 
 
-	ShadowDraw();		// シャドウマップを描画
+	ShadowDraw();				// シャドウマップを描画
 
 
 	// 敵ラスボスのあれ
@@ -369,7 +407,7 @@ void MainMove6::MovieDraw()
 	}
 
 
-	p_character->Draw();	// キャラクターを描画
+	p_character->Draw();		// キャラクターを描画
 } /// void MainMove6::MovieDraw()
 
 
@@ -477,10 +515,6 @@ void MainMove6::MovieProcess()
 /// --------------------------------------------------------------------------------------------------
 void MainMove6::BattleDraw()
 {
-	// スカイボックスを描画
-	//BaseMove::SkyBoxDraw();	
-
-
 	// ステージの描画
 	p_stage->Draw();
 
@@ -488,6 +522,11 @@ void MainMove6::BattleDraw()
 	// ボスの描画
 	p_enemyBossAfter->DrawWhile();
 	p_enemyBossAfter->Draw();
+
+
+	// ボスの攻撃による追尾する箱
+	p_chaseBlock[0]->Draw();
+	p_chaseBlock[1]->Draw();
 
 
 	// キャラクターの描画
@@ -513,15 +552,20 @@ void MainMove6::BattleProcess()
 
 	// ボスのプロセス
 	p_enemyBossAfter->Process();
-	p_enemyBossAfter->SetPlayerArea(p_character->GetArea());
+
+
+	// 氷柱のエフェクト
+	p_magicIcePillar[0]->Process();
+	p_magicIcePillar[1]->Process();
+
+
+	// 追尾箱
+	p_chaseBlock[0]->Process();
+	p_chaseBlock[1]->Process();
 
 
 	// 当たり判定のプロセス
 	AttackProcess();
-
-
-	// スカイボックスの位置を更新
-	//BaseMove::SkyBoxProcess(p_character->GetArea());
 
 
 	// 次のシーンへ移行
@@ -619,6 +663,10 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 	vp_stageStairsRoad.clear();
 	vp_stageStreetLight.clear();
 	vp_ordinaryPerson.clear();
+	p_magicIcePillar[0] = nullptr;
+	p_magicIcePillar[1] = nullptr;
+	p_chaseBlock[0] = nullptr;
+	p_chaseBlock[1] = nullptr;
 
 
 	// ステージの初期化
@@ -691,6 +739,11 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 	approachBossUIDraw[1] = v_file[EFILE::approachUIYes];
 	approachBossUIDraw[2] = v_file[EFILE::approachUINo];
 	approachUISelect = true;
+	e_attackPattern = EAttackPattern::hand;
+	p_magicIcePillar[0] = new MagicIcePillar();
+	p_magicIcePillar[1] = new MagicIcePillar();
+	p_chaseBlock[0] = new ChaseBlock();
+	p_chaseBlock[1] = new ChaseBlock();
 
 
 	// 一般人

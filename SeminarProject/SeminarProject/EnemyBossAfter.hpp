@@ -5,6 +5,10 @@
 #include <random>
 
 
+// ボスの攻撃のパターンID
+enum class EAttackPattern { hand, icePillar, magicBlock };
+
+
 /*
 ムーブ6で出てくるラスボスの戦闘用クラス
 */
@@ -39,20 +43,11 @@ private:
 	// 攻撃によるあたりをさせるかどうか
 	bool attackDamageNow;
 
-	// 氷柱のポインタ
-	MagicIcePillar* p_magicIcePillar[2];
-
-	// 攻撃のパターンID
-	enum EAttackPattern { hand, icePillar, magicBlock };
-
 	// どの攻撃を行うか
 	EAttackPattern e_attackPattern;
 
-	// 追尾箱のポインタ
-	ChaseBlock* p_chaseBlock[2];
-
-	// プレイヤーの座標
-	VECTOR playerArea;
+	// 攻撃を開始した瞬間
+	bool attackStartNow;
 
 	
 	/// テクスチャに関して---------------------------------------------------
@@ -95,7 +90,10 @@ public:
 	// オプション用モデル描画の後始末
 	void OptionActorDrawAfter() override {}
 
-	// プレイヤーの座標を得る
-	void SetPlayerArea(VECTOR player) { playerArea = player; }
+	// どの攻撃を行ったか渡す
+	const EAttackPattern GetAttackPattern() { return e_attackPattern; }
+
+	// 攻撃を行った瞬間かどうか
+	const bool GetAttackStartNow() { return attackStartNow; }
 };
 

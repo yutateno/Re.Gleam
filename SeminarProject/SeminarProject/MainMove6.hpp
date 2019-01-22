@@ -11,6 +11,8 @@
 #include "EnemyBossAfter.hpp"
 #include "EnemyBossBefore.hpp"
 #include "CameraMove6.hpp"
+#include "ChaseBlock.hpp"
+#include "MagicIcePillar.hpp"
 
 
 /*
@@ -76,6 +78,15 @@ private:
 	
 	// スティックの押し倒しかどうかを調べる
 	int adjustmentControllStick[2];
+
+	// どの攻撃を行うか
+	EAttackPattern e_attackPattern;
+
+	// 氷柱のポインタ
+	MagicIcePillar* p_magicIcePillar[2];
+
+	// 追尾箱のポインタ
+	ChaseBlock* p_chaseBlock[2];
 
 
 	/// 一般人-----------------------------------------------------------------------

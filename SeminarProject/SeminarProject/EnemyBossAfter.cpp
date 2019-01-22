@@ -27,17 +27,7 @@ void EnemyBossAfter::MotionProcess()
 		// 氷の柱を使う攻撃だったら
 		else if (e_attackPattern == EAttackPattern::icePillar)
 		{
-			if (!p_magicIcePillar[0]->GetActive())
-			{
-				p_magicIcePillar[0]->Active(VGet(0, 0, 0));
-			}
-			if (!p_magicIcePillar[1]->GetActive())
-			{
-				p_magicIcePillar[1]->Active(VGet(300, 0, 0));
-			}
-
 			animSpeed = 0.4f;
-
 			Player_PlayAnim(MOTION::attackMagic);
 			attackFrame += animSpeed;
 			if (attackFrame > MV1GetAnimTotalTime(modelHandle, MOTION::attackMagic))
@@ -53,16 +43,6 @@ void EnemyBossAfter::MotionProcess()
 		// 箱を使う攻撃だったら
 		else if (e_attackPattern == EAttackPattern::magicBlock)
 		{
-			if (!p_chaseBlock[0]->GetActive())
-			{
-				p_chaseBlock[0]->Active(playerArea);
-			}
-			if (!p_chaseBlock[1]->GetActive())
-			{
-				p_chaseBlock[1]->Active(playerArea);
-			}
-
-
 			animSpeed = 0.1f;
 			Player_PlayAnim(MOTION::attackMagic2);
 			attackFrame += animSpeed;
@@ -99,13 +79,6 @@ void EnemyBossAfter::MoveProcess()
 EnemyBossAfter::EnemyBossAfter(const int modelHandle, const int modelTex0
 	, const int modeltex1, const int modelTex2) : BasicCreature(false)
 {
-	// ポインタ初期化
-	p_magicIcePillar[0] = nullptr;
-	p_magicIcePillar[1] = nullptr;
-	p_chaseBlock[0] = nullptr;
-	p_chaseBlock[1] = nullptr;
-
-
 	// 3Dモデルの読み込み
 	this->modelHandle = -1;
 	this->modelHandle = MV1DuplicateModel(modelHandle);
@@ -127,6 +100,9 @@ EnemyBossAfter::EnemyBossAfter(const int modelHandle, const int modelTex0
 	MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
 	MV1SetMaterialDrawBlendParam(this->modelHandle, 1, blendCount);
 	MV1SetMaterialDrawBlendParam(this->modelHandle, 2, blendCount);
+	MV1SetMaterialEmiColor(this->modelHandle, 0, GetColorF(1.0f, 1.0f, 1.0f, 1.0f));
+	MV1SetMaterialEmiColor(this->modelHandle, 1, GetColorF(0.3f, 0.3f, 0.3f, 1.0f));
+	MV1SetMaterialEmiColor(this->modelHandle, 2, GetColorF(0.3f, 0.3f, 0.3f, 1.0f));
 
 
 	// 3Dモデルのアニメーションをアタッチする
@@ -150,11 +126,7 @@ EnemyBossAfter::EnemyBossAfter(const int modelHandle, const int modelTex0
 	moveCount = 0;
 	attackFrame = 0.0f;
 	attackDamageNow = false;
-	p_magicIcePillar[0] = new MagicIcePillar();
-	p_magicIcePillar[1] = new MagicIcePillar();
-	e_attackPattern = EAttackPattern::hand;
-	p_chaseBlock[0] = new ChaseBlock();
-	p_chaseBlock[1] = new ChaseBlock();
+	attackStartNow = false;
 
 
 	// モデルの座標を更新
@@ -186,10 +158,6 @@ EnemyBossAfter::~EnemyBossAfter()
 /// ----------------------------------------------------------------------------------------
 void EnemyBossAfter::Draw()
 {
-	p_chaseBlock[0]->Draw();
-	p_chaseBlock[1]->Draw();
-
-
 #ifdef _DEBUG
 	if (MyDebug::enemyThreeSlimeDrawFlag)
 	{
@@ -208,8 +176,10 @@ void EnemyBossAfter::DrawWhile()
 /// ----------------------------------------------------------------------------------------
 void EnemyBossAfter::Process()
 {
+	attackStartNow = false;
 	if (moveCount++ > 300)
 	{
+		attackStartNow = true;
 		moveCount = 0;
 		std::mt19937 mt(rnd());
 		std::uniform_int_distribution<> attackPatternRnd(0, 2);        // 乱数
@@ -224,16 +194,6 @@ void EnemyBossAfter::Process()
 	
 	// モーションのプロセス
 	MotionProcess();
-
-
-	// 氷柱のエフェクト
-	p_magicIcePillar[0]->Process();
-	p_magicIcePillar[1]->Process();
-
-
-	// 追尾箱
-	p_chaseBlock[0]->Process();
-	p_chaseBlock[1]->Process();
 } /// void EnemyBossAfter::Process()
 
 

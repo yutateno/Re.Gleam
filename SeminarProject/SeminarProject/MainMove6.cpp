@@ -774,7 +774,7 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 {
 	// ‰Šú‰»
 	BASICPARAM::paneruDrawFlag = false;
-	e_nowMove = ESceneMove6::Movie;
+	e_nowMove = ESceneMove6::First;
 
 
 	// ƒ|ƒCƒ“ƒ^NULL‰Šú‰»

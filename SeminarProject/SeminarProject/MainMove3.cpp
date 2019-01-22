@@ -260,6 +260,13 @@ void MainMove3::AdjustmentDraw()
 			if (adjustmentSelectTexChange == AdjustmentSelect::chara)
 			{
 				DrawBox(60, 60, 40 + 528, 40 + 60, GetColor(0, 0, 0), false);
+
+
+				// ドロップ数が足りなかったら
+				if (catchDropItemNum < 15)
+				{
+					DrawLine(60, 60, 40 + 528, 40 + 60, GetColor(0, 0, 0), false);
+				}
 			}
 		}
 
@@ -281,10 +288,17 @@ void MainMove3::AdjustmentDraw()
 		// 戻っていなかったら
 		else
 		{
-			// キャラクターにカーソルが当たっていたら
+			// カーソルが当たっていたら
 			if (adjustmentSelectTexChange == AdjustmentSelect::anotherActor)
 			{
 				DrawBox(60, 160, 40 + 528, 140 + 60, GetColor(0, 0, 0), false);
+
+
+				// ドロップ数が足りなかったら
+				if (catchDropItemNum < 15)
+				{
+					DrawLine(60, 160, 40 + 528, 140 + 60, GetColor(0, 0, 0), false);
+				}
 			}
 		}
 
@@ -306,10 +320,17 @@ void MainMove3::AdjustmentDraw()
 		// 戻っていなかったら
 		else
 		{
-			// キャラクターにカーソルが当たっていたら
+			// カーソルが当たっていたら
 			if (adjustmentSelectTexChange == AdjustmentSelect::enemy)
 			{
 				DrawBox(60, 260, 40 + 528, 240 + 60, GetColor(0, 0, 0), false);
+
+
+				// ドロップ数が足りなかったら
+				if (catchDropItemNum < 15)
+				{
+					DrawLine(60, 260, 40 + 528, 240 + 60, GetColor(0, 0, 0), false);
+				}
 			}
 		}
 
@@ -331,10 +352,17 @@ void MainMove3::AdjustmentDraw()
 		// 戻っていなかったら
 		else
 		{
-			// キャラクターにカーソルが当たっていたら
+			// カーソルが当たっていたら
 			if (adjustmentSelectTexChange == AdjustmentSelect::streetLight)
 			{
 				DrawBox(60, 360, 40 + 528, 340 + 60, GetColor(0, 0, 0), false);
+
+
+				// ドロップ数が足りなかったら
+				if (catchDropItemNum < 15)
+				{
+					DrawLine(60, 360, 40 + 528, 340 + 60, GetColor(0, 0, 0), false);
+				}
 			}
 		}
 
@@ -356,10 +384,17 @@ void MainMove3::AdjustmentDraw()
 		// 戻っていなかったら
 		else
 		{
-			// キャラクターにカーソルが当たっていたら
+			// カーソルが当たっていたら
 			if (adjustmentSelectTexChange == AdjustmentSelect::stairsRoad)
 			{
 				DrawBox(60, 460, 40 + 528, 440 + 60, GetColor(0, 0, 0), false);
+
+
+				// ドロップ数が足りなかったら
+				if (catchDropItemNum < 15)
+				{
+					DrawLine(60, 460, 40 + 528, 440 + 60, GetColor(0, 0, 0), false);
+				}
 			}
 		}
 
@@ -381,20 +416,28 @@ void MainMove3::AdjustmentDraw()
 		// 戻っていなかったら
 		else
 		{
-			// キャラクターにカーソルが当たっていたら
+			// カーソルが当たっていたら
 			if (adjustmentSelectTexChange == AdjustmentSelect::stairs)
 			{
 				DrawBox(60, 560, 40 + 528, 540 + 60, GetColor(0, 0, 0), false);
+
+
+				// ドロップ数が足りなかったら
+				if (catchDropItemNum < 15)
+				{
+					DrawLine(60, 560, 40 + 528, 540 + 60, GetColor(0, 0, 0), false);
+				}
 			}
 		}
 
 
 		// ドロップアイテムの個数を表示
 		DrawFormatString(1020, 20, GetColor(0, 0, 0), "手に入れたドロップアイテムの数: %d", catchDropItemNum);
+		DrawFormatString(1020, 40, GetColor(0, 0, 0), "ドロップアイテム15個必要");
 
 
 		// パネル説明
-		DrawFormatString(1020, 50, GetColor(0, 0, 0), "RBボタンで次のステージへの道");
+		DrawFormatString(1020, 80, GetColor(0, 0, 0), "RBボタンで次のステージへの道");
 	}
 
 

@@ -190,7 +190,10 @@ namespace SoundProcess
 				// 大きい方のBGMの音量を調整する、その際にSEの個数に応じて音量を下げる
 				SetBGMVolume(bgm_name[0], bgm_maxVolume[0] - (10 * count), bgm_maxVolume[0]);
 			}
-			//count--;
+			count--;
+
+
+			BGMProcess();		// BGMのプロセスを呼ぶ
 		}
 
 
@@ -213,9 +216,6 @@ namespace SoundProcess
 			// 再生しているSEの音量調整が終わった
 			else break;
 		}
-
-
-		BGMProcess();		// BGMのプロセスを呼ぶ
 	} /// void Process()
 
 

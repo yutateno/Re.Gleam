@@ -34,6 +34,9 @@ private:
 	// 動きのプロセス
 	void MoveProcess();
 
+	// 動きを決めるカウント数値
+	const int moveDoCount = 600;
+
 	// 動きのカウント
 	int moveCount;
 
@@ -48,6 +51,9 @@ private:
 
 	// 攻撃を開始した瞬間
 	bool attackStartNow;
+
+	// 同じ攻撃を連続して行わせない
+	EAttackPattern e_preAttackPattern;
 
 	
 	/// テクスチャに関して---------------------------------------------------

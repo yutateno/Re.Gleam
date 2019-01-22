@@ -11,55 +11,56 @@ void EnemyBossAfter::MotionProcess()
 		// 手を振りかざす攻撃だったら
 		if (e_attackPattern == EAttackPattern::hand)
 		{
+			// アニメーションを設定する
 			animSpeed = 0.05f;
 			Player_PlayAnim(MOTION::attack);
 			attackFrame += animSpeed;
+
+
+			// モーションが終了したら
 			if (attackFrame > MV1GetAnimTotalTime(modelHandle, MOTION::attack) - 4)
 			{
 				attackMotionNow = false;
 				attackFrame = 0.0f;
 			}
-			else
-			{
-				attackMotionNow = true;
-			}
 		}
 		// 氷の柱を使う攻撃だったら
 		else if (e_attackPattern == EAttackPattern::icePillar)
 		{
+			// アニメーションを設定する
 			animSpeed = 0.4f;
 			Player_PlayAnim(MOTION::attackMagic);
 			attackFrame += animSpeed;
+
+
+			// モーションが終了したら
 			if (attackFrame > MV1GetAnimTotalTime(modelHandle, MOTION::attackMagic))
 			{
 				attackMotionNow = false;
 				attackFrame = 0.0f;
 			}
-			else
-			{
-				attackMotionNow = true;
-			}
 		}
 		// 箱を使う攻撃だったら
 		else if (e_attackPattern == EAttackPattern::magicBlock)
 		{
+			// アニメーションを設定する
 			animSpeed = 0.1f;
 			Player_PlayAnim(MOTION::attackMagic2);
 			attackFrame += animSpeed;
+
+
+			// モーションが終了したら
 			if (attackFrame > MV1GetAnimTotalTime(modelHandle, MOTION::attackMagic2))
 			{
 				attackMotionNow = false;
 				attackFrame = 0.0f;
-			}
-			else
-			{
-				attackMotionNow = true;
 			}
 		}
 	} /// if (attackMotionNow)
 	// 攻撃しないとき
 	else
 	{
+		// アニメーションを設定する
 		animSpeed = 0.2f;
 		Player_PlayAnim(MOTION::idleDevile);
 	}
@@ -127,6 +128,8 @@ EnemyBossAfter::EnemyBossAfter(const int modelHandle, const int modelTex0
 	attackFrame = 0.0f;
 	attackDamageNow = false;
 	attackStartNow = false;
+	e_attackPattern = EAttackPattern::hand;
+	e_preAttackPattern = EAttackPattern::hand;
 
 
 	// モデルの座標を更新
@@ -166,6 +169,9 @@ void EnemyBossAfter::Draw()
 #endif // _DEBUG
 }
 
+
+
+/// ----------------------------------------------------------------------------------------
 void EnemyBossAfter::DrawWhile()
 {
 	MV1DrawModel(modelHandle);
@@ -176,14 +182,25 @@ void EnemyBossAfter::DrawWhile()
 /// ----------------------------------------------------------------------------------------
 void EnemyBossAfter::Process()
 {
-	attackStartNow = false;
-	if (moveCount++ > 300)
+	attackStartNow = false;		// 攻撃をし始めてないとする
+
+
+	// 300フレームに到達したら
+	if (moveCount++ > moveDoCount)
 	{
+		// 前回とは違う攻撃をさせる
+		while (e_preAttackPattern == e_attackPattern)
+		{
+			std::mt19937 mt(rnd());
+			std::uniform_int_distribution<> attackPatternRnd(0, 2);        // 乱数
+			e_attackPattern = static_cast<EAttackPattern>(attackPatternRnd(mt));
+		}
+
+
+		// 攻撃を実行させる
+		e_preAttackPattern = e_attackPattern;
 		attackStartNow = true;
 		moveCount = 0;
-		std::mt19937 mt(rnd());
-		std::uniform_int_distribution<> attackPatternRnd(0, 2);        // 乱数
-		e_attackPattern = static_cast<EAttackPattern>(attackPatternRnd(mt));
 		attackMotionNow = true;
 	}
 

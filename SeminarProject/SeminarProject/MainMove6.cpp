@@ -202,25 +202,37 @@ void MainMove6::AttackProcess()
 		// •X‚Ì’Œ‚ðŽg‚¤UŒ‚‚¾‚Á‚½‚ç
 		if (e_attackPattern == EAttackPattern::icePillar)
 		{
+			// 0”Ô–Ú‚Ì‚à‚Ì‚ªŽg‚í‚ê‚Ä‚¢‚È‚©‚Á‚½‚ç
 			if (!p_magicIcePillar[0]->GetActive())
 			{
 				p_magicIcePillar[0]->Active(VGet(0, 0, 0));
 			}
-			if (!p_magicIcePillar[1]->GetActive())
+			// 0”Ô–Ú‚ª‰Ò“­’†‚¾‚Á‚½‚ç
+			else
 			{
-				p_magicIcePillar[1]->Active(VGet(300, 0, 0));
+				// 1”Ô–Ú‚Ì‚à‚Ì‚ªŽg‚í‚ê‚Ä‚¢‚È‚©‚Á‚½‚ç
+				if (!p_magicIcePillar[1]->GetActive())
+				{
+					p_magicIcePillar[1]->Active(VGet(0, 0, 0));
+				}
 			}
 		}
 		// ” ‚ðŽg‚¤UŒ‚‚¾‚Á‚½‚ç
 		else if (e_attackPattern == EAttackPattern::magicBlock)
 		{
+			// 0”Ô–Ú‚Ì‚à‚Ì‚ªŽg‚í‚ê‚Ä‚¢‚È‚©‚Á‚½‚ç
 			if (!p_chaseBlock[0]->GetActive())
 			{
 				p_chaseBlock[0]->Active(p_character->GetArea());
 			}
-			if (!p_chaseBlock[1]->GetActive())
+			// 0”Ô–Ú‚ª‰Ò“­’†‚¾‚Á‚½‚ç
+			else
 			{
-				p_chaseBlock[1]->Active(p_character->GetArea());
+				// 1”Ô–Ú‚Ì‚à‚Ì‚ªŽg‚í‚ê‚Ä‚¢‚È‚©‚Á‚½‚ç
+				if (!p_chaseBlock[1]->GetActive())
+				{
+					p_chaseBlock[1]->Active(p_character->GetArea());
+				}
 			}
 		}
 	}

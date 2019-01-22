@@ -660,7 +660,7 @@ void MainMove3::AttackProcess()
 			DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 30, 7500, 7500);
 
 
-			// エフェクトを再生する。
+			// エフェクトを再生する
 			playingEfAttack = PlayEffekseer3DEffect(effectAttack);
 			SetScalePlayingEffekseer3DEffect(playingEfAttack, 10, 10, 10);
 			SetPosPlayingEffekseer3DEffect(playingEfAttack, p_character->GetAttackEndFrameArea().x

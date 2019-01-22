@@ -30,13 +30,9 @@ void ChaseBlock::Process()
 		area = VAdd(area, speed);
 
 		
-		if (area.y < chaseArea.y)
+		if (disappearFrame++ > 200)
 		{
-			disappearFrame++;
-			if (disappearFrame > 50)
-			{
-				activeNow = false;
-			}
+			activeNow = false;
 		}
 	}
 } /// void ChaseBlock::Process()

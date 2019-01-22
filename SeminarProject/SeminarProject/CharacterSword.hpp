@@ -208,6 +208,9 @@ public:
 	// オプション用モデル描画の後始末
 	void OptionActorDrawAfter() override;
 
+	// ムーブ6にてワープさせる
+	void WarpMove6(VECTOR paneruArea) { area = VAdd(paneruArea, VGet(0, 50, 0)); }
+
 
 	/// ゲッターセッター-------------------------------------------------------------------------
 

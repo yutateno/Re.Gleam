@@ -182,7 +182,7 @@ void MainMove6::AttackProcess()
 		// ダメージを受けている
 		enemyHitDamage = true;
 		// バイブレーションさせる
-		DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 30, 7500, 7500);
+		DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 30, 15000, 15000);
 	}
 
 
@@ -198,19 +198,12 @@ void MainMove6::AttackProcess()
 		// 氷の柱を使う攻撃だったら
 		if (e_attackPattern == EAttackPattern::icePillar)
 		{
-			// 0番目のものが使われていなかったら
-			if (!p_magicIcePillar[0]->GetActive())
+			// 微妙に散らばせる
+			std::mt19937 mt(rnd());
+			std::uniform_int_distribution<> paneruID(0, 65);        // パネルのID
+			for (int i = 0; i != icePillarNum; ++i)
 			{
-				p_magicIcePillar[0]->Active(VGet(0, 0, 0));
-			}
-			// 0番目が稼働中だったら
-			else
-			{
-				// 1番目のものが使われていなかったら
-				if (!p_magicIcePillar[1]->GetActive())
-				{
-					p_magicIcePillar[1]->Active(VGet(0, 0, 0));
-				}
+				p_magicIcePillar[i]->Active(p_stagePaneru[paneruID(mt)]->GetArea());
 			}
 		}
 		// 箱を使う攻撃だったら
@@ -231,7 +224,7 @@ void MainMove6::AttackProcess()
 				}
 			}
 		}
-	}
+	} /// if (p_enemyBossAfter->GetAttackStartNow())
 	/// 敵の魔法攻撃の処理-------------------------------------------------
 } /// void MainMove6::AttackProcess()
 
@@ -475,7 +468,7 @@ void MainMove6::MovieProcess()
 		{
 			p_character->AreaSetDown();
 		}
-	}
+	} /// if (movieFrame >= 300)
 
 
 	// 200フレーム以下だったら
@@ -532,6 +525,10 @@ void MainMove6::BattleDraw()
 	// パネルの描画
 	for (int i = 0; i != paneruNum; ++i)
 	{
+		if (!paneruArrival[0] && i >= 16 && i < 36) continue;
+		if (!paneruArrival[1] && i >= 36 && i < 56) continue;
+		if (!paneruArrival[2] && i >= 56 && i < 61) continue;
+		if (!paneruArrival[3] && i >= 61 && i < 66) continue;
 		p_stagePaneru[i]->ModelDraw();
 	}
 
@@ -552,9 +549,6 @@ void MainMove6::BattleDraw()
 		p_character->ModelDraw();
 	}
 	p_character->Draw();
-
-
-	printfDx("%f\t%f\t%f\n", p_character->GetArea().x, p_character->GetArea().y, p_character->GetArea().z);
 } /// void MainMove6::BattleDraw()
 
 
@@ -564,6 +558,70 @@ void MainMove6::BattleProcess()
 {
 	// キャラクターのプロセス
 	p_character->OnlyCollFloorProcess(p_camera->GetAngle());
+	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
+	{
+		// ワープ可能演出が出ていて特定のパネル状に居たら
+		if (paneruArrival[0]
+			&& p_stagePaneru[1]->GetArea().x - 100 < p_character->GetArea().x && p_stagePaneru[1]->GetArea().x + 100 > p_character->GetArea().x
+			&& p_stagePaneru[1]->GetArea().y - 100 < p_character->GetArea().y && p_stagePaneru[1]->GetArea().y + 100 > p_character->GetArea().y
+			&& p_stagePaneru[1]->GetArea().z - 100 < p_character->GetArea().z && p_stagePaneru[1]->GetArea().z + 100 > p_character->GetArea().z)
+		{
+			p_character->WarpMove6(p_stagePaneru[7]->GetArea());
+		}
+		else if (paneruArrival[1]
+			&& p_stagePaneru[9]->GetArea().x - 100 < p_character->GetArea().x && p_stagePaneru[9]->GetArea().x + 100 > p_character->GetArea().x
+			&& p_stagePaneru[9]->GetArea().y - 100 < p_character->GetArea().y && p_stagePaneru[9]->GetArea().y + 100 > p_character->GetArea().y
+			&& p_stagePaneru[9]->GetArea().z - 100 < p_character->GetArea().z && p_stagePaneru[9]->GetArea().z + 100 > p_character->GetArea().z)
+		{
+			p_character->WarpMove6(p_stagePaneru[15]->GetArea());
+		}
+		else if (paneruArrival[2]
+			&& p_stagePaneru[16]->GetArea().x - 100 < p_character->GetArea().x && p_stagePaneru[16]->GetArea().x + 100 > p_character->GetArea().x
+			&& p_stagePaneru[16]->GetArea().y - 100 < p_character->GetArea().y && p_stagePaneru[16]->GetArea().y + 100 > p_character->GetArea().y
+			&& p_stagePaneru[16]->GetArea().z - 100 < p_character->GetArea().z && p_stagePaneru[16]->GetArea().z + 100 > p_character->GetArea().z)
+		{
+			p_character->WarpMove6(p_stagePaneru[35]->GetArea());
+		}
+		else if (paneruArrival[3]
+			&& p_stagePaneru[36]->GetArea().x - 100 < p_character->GetArea().x && p_stagePaneru[36]->GetArea().x + 100 > p_character->GetArea().x
+			&& p_stagePaneru[36]->GetArea().y - 100 < p_character->GetArea().y && p_stagePaneru[36]->GetArea().y + 100 > p_character->GetArea().y
+			&& p_stagePaneru[36]->GetArea().z - 100 < p_character->GetArea().z && p_stagePaneru[36]->GetArea().z + 100 > p_character->GetArea().z)
+		{
+			p_character->WarpMove6(p_stagePaneru[55]->GetArea());
+		}
+	} /// if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
+	// 敵を目の前にして左の一番上に達したら
+	if (!paneruArrival[0]
+		&& p_stagePaneru[7]->GetArea().x - 100 < p_character->GetArea().x && p_stagePaneru[7]->GetArea().x + 100 > p_character->GetArea().x
+		&& p_stagePaneru[7]->GetArea().y - 100 < p_character->GetArea().y && p_stagePaneru[7]->GetArea().y + 100 > p_character->GetArea().y
+		&& p_stagePaneru[7]->GetArea().z - 100 < p_character->GetArea().z && p_stagePaneru[7]->GetArea().z + 100 > p_character->GetArea().z)
+	{
+		paneruArrival[0] = true;
+	}
+	// 敵を目の前にして右の一番上に達したら
+	if (!paneruArrival[1]
+		&& p_stagePaneru[15]->GetArea().x - 100 < p_character->GetArea().x && p_stagePaneru[15]->GetArea().x + 100 > p_character->GetArea().x
+		&& p_stagePaneru[15]->GetArea().y - 100 < p_character->GetArea().y && p_stagePaneru[15]->GetArea().y + 100 > p_character->GetArea().y
+		&& p_stagePaneru[15]->GetArea().z - 100 < p_character->GetArea().z && p_stagePaneru[15]->GetArea().z + 100 > p_character->GetArea().z)
+	{
+		paneruArrival[1] = true;
+	}
+	// 敵を目の前にして左の一番上に達した後で敵近くに到達したら
+	if (paneruArrival[0] && !paneruArrival[2]
+		&& p_stagePaneru[35]->GetArea().x - 100 < p_character->GetArea().x && p_stagePaneru[35]->GetArea().x + 100 > p_character->GetArea().x
+		&& p_stagePaneru[35]->GetArea().y - 100 < p_character->GetArea().y && p_stagePaneru[35]->GetArea().y + 100 > p_character->GetArea().y
+		&& p_stagePaneru[35]->GetArea().z - 100 < p_character->GetArea().z && p_stagePaneru[35]->GetArea().z + 100 > p_character->GetArea().z)
+	{
+		paneruArrival[2] = true;
+	}
+	// 敵を目の前にして右の一番上に達した後で敵近くに到達したら
+	if (paneruArrival[1] && !paneruArrival[3]
+		&& p_stagePaneru[55]->GetArea().x - 100 < p_character->GetArea().x && p_stagePaneru[55]->GetArea().x + 100 > p_character->GetArea().x
+		&& p_stagePaneru[55]->GetArea().y - 100 < p_character->GetArea().y && p_stagePaneru[55]->GetArea().y + 100 > p_character->GetArea().y
+		&& p_stagePaneru[55]->GetArea().z - 100 < p_character->GetArea().z && p_stagePaneru[55]->GetArea().z + 100 > p_character->GetArea().z)
+	{
+		paneruArrival[3] = true;
+	}
 
 
 	// カメラのプロセス
@@ -575,8 +633,10 @@ void MainMove6::BattleProcess()
 
 
 	// 氷柱のエフェクト
-	p_magicIcePillar[0]->Process();
-	p_magicIcePillar[1]->Process();
+	for (int i = 0; i != icePillarNum; ++i)
+	{
+		p_magicIcePillar[i]->Process();
+	}
 
 
 	// 追尾箱
@@ -586,6 +646,58 @@ void MainMove6::BattleProcess()
 
 	// 当たり判定のプロセス
 	AttackProcess();
+
+
+	/// ワープエフェクトの処理-----------------------------------------------------------------------------------------------------------
+	// 敵を目の前にして左の一番上に到達したら
+	if (paneruArrival[0])
+	{
+		// エフェクトが再生していなかったら
+		if (IsEffekseer3DEffectPlaying(playingEfWarp[0]) != 0)
+		{
+			// 左一つ上のパネルで
+			playingEfWarp[0] = PlayEffekseer3DEffect(effectWarp);
+			SetScalePlayingEffekseer3DEffect(playingEfWarp[0], 40, 40, 40);
+			SetPosPlayingEffekseer3DEffect(playingEfWarp[0], p_stagePaneru[1]->GetArea().x, p_stagePaneru[1]->GetArea().y + 55, p_stagePaneru[1]->GetArea().z);
+		}
+	}
+	// 敵を目の前にして右の一番上に到達したら
+	if (paneruArrival[1])
+	{
+		// エフェクトが再生していなかったら
+		if (IsEffekseer3DEffectPlaying(playingEfWarp[1]) != 0)
+		{
+			// 右一つ上のパネルで
+			playingEfWarp[1] = PlayEffekseer3DEffect(effectWarp);
+			SetScalePlayingEffekseer3DEffect(playingEfWarp[1], 40, 40, 40);
+			SetPosPlayingEffekseer3DEffect(playingEfWarp[1], p_stagePaneru[9]->GetArea().x, p_stagePaneru[9]->GetArea().y + 55, p_stagePaneru[9]->GetArea().z);
+		}
+	}
+	// 敵を目の前にして左の敵近くに到達したら
+	if (paneruArrival[2])
+	{
+		// エフェクトが再生していなかったら
+		if (IsEffekseer3DEffectPlaying(playingEfWarp[2]) != 0)
+		{
+			// 左一番上のパネルで
+			playingEfWarp[2] = PlayEffekseer3DEffect(effectWarp);
+			SetScalePlayingEffekseer3DEffect(playingEfWarp[2], 40, 40, 40);
+			SetPosPlayingEffekseer3DEffect(playingEfWarp[2], p_stagePaneru[16]->GetArea().x, p_stagePaneru[16]->GetArea().y + 55, p_stagePaneru[16]->GetArea().z);
+		}
+	}
+	// 敵を目の前にして右の敵近くに到達したら
+	if (paneruArrival[3])
+	{
+		// エフェクトが再生していなかったら
+		if (IsEffekseer3DEffectPlaying(playingEfWarp[3]) != 0)
+		{
+			// 右一番上のパネルで
+			playingEfWarp[3] = PlayEffekseer3DEffect(effectWarp);
+			SetScalePlayingEffekseer3DEffect(playingEfWarp[3], 40, 40, 40);
+			SetPosPlayingEffekseer3DEffect(playingEfWarp[3], p_stagePaneru[36]->GetArea().x, p_stagePaneru[36]->GetArea().y + 55, p_stagePaneru[36]->GetArea().z);
+		}
+	}
+	/// ワープエフェクトの処理-----------------------------------------------------------------------------------------------------------
 
 
 	// 次のシーンへ移行
@@ -683,8 +795,10 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 	vp_stageStairsRoad.clear();
 	vp_stageStreetLight.clear();
 	vp_ordinaryPerson.clear();
-	p_magicIcePillar[0] = nullptr;
-	p_magicIcePillar[1] = nullptr;
+	for (int i = 0; i != icePillarNum; ++i)
+	{
+		p_magicIcePillar[i] = nullptr;
+	}
 	p_chaseBlock[0] = nullptr;
 	p_chaseBlock[1] = nullptr;
 
@@ -715,44 +829,64 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 		// 敵を目の前にして左上
 		if (i < 8)
 		{
-			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(randInX(mt), 800.0f * i, 500.0f * i));
+			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(static_cast<float>(randInX(mt))
+				, static_cast<float>(800.0f * i), static_cast<float>(500.0f * i)));
 			p_character->SetPaneruArea(p_stagePaneru[i]->GetArea(), i);
 		}
 		// 敵を目の前にして右上
 		else if (i < 16)
 		{
 			int temp = i - 8;
-			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(randInX(mt), 800.0f * temp, -500.0f * temp));
+			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(static_cast<float>(randInX(mt))
+				, static_cast<float>(800.0f * temp), static_cast<float>(-500.0f * temp)));
 			p_character->SetPaneruArea(p_stagePaneru[i]->GetArea(), i);
 		}
 		// 敵を目の前にして左の列
 		else if (i < 36)
 		{
 			int temp = i - 16;
-			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(4370 / 20 * temp, 5600.0f - (2000 / 20 * temp), 3500 - (2500 / 20 * temp)));
+			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(static_cast<float>(4370 / 20 * temp)
+				, static_cast<float>(5600.0f - (2000 / 20 * temp)), static_cast<float>(3500 - (2500 / 20 * temp))));
 			p_character->SetPaneruArea(p_stagePaneru[i]->GetArea(), i);
 		}
 		// 敵を目の前にして右の列
 		else if (i < 56)
 		{
 			int temp = i - 36;
-			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(4370 / 20 * temp, 5600.0f - (2000 / 20 * temp), (2500 / 20 * temp) - 3500));
+			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(static_cast<float>(4370 / 20 * temp)
+				, static_cast<float>(5600.0f - (2000 / 20 * temp)), static_cast<float>((2500 / 20 * temp) - 3500)));
 			p_character->SetPaneruArea(p_stagePaneru[i]->GetArea(), i);
 		}
 		// 敵を目の前にして敵左から腹まで
 		else if (i < 61)
 		{
 			int temp = i - 56;
-			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(4150 - (600 / 5 * temp), 3750 - (500 / 5 * temp), 1120 - (1120 / 5 * temp)));
+			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(static_cast<float>(4150 - (600 / 5 * temp))
+				, static_cast<float>(3750 - (500 / 5 * temp)), static_cast<float>(1120 - (1120 / 5 * temp))));
 			p_character->SetPaneruArea(p_stagePaneru[i]->GetArea(), i);
 		}
 		// 敵を目の前にして敵右から腹まで
 		else if (i < 66)
 		{
 			int temp = i - 61;
-			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(4150 - (600 / 5 * temp), 3750 - (500 / 5 * temp), (1120 / 5 * temp) - 1120));
+			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(static_cast<float>(4150 - (600 / 5 * temp))
+				, static_cast<float>(3750 - (500 / 5 * temp)), static_cast<float>((1120 / 5 * temp) - 1120)));
 			p_character->SetPaneruArea(p_stagePaneru[i]->GetArea(), i);
 		}
+		// 特に意味もなくこれまでのパネル内で散らばす
+		else
+		{
+			std::uniform_int_distribution<> randX(1000, 3000);        // X座標用乱数
+			std::uniform_int_distribution<> randY(2000, 4000);        // Z座標用乱数
+			std::uniform_int_distribution<> randZ(-3000, 3000);        // Z座標用乱数
+			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(static_cast<float>(randX(mt))
+				, static_cast<float>(randY(mt)), static_cast<float>(randZ(mt))));
+			p_character->SetPaneruArea(p_stagePaneru[i]->GetArea(), i);
+		}
+	}
+	for (int i = 0; i != 4; ++i)
+	{
+		paneruArrival[i] = false;
 	}
 
 
@@ -804,8 +938,10 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 	approachBossUIDraw[2] = v_file[EFILE::approachUINo];
 	approachUISelect = true;
 	e_attackPattern = EAttackPattern::hand;
-	p_magicIcePillar[0] = new MagicIcePillar();
-	p_magicIcePillar[1] = new MagicIcePillar();
+	for (int i = 0; i != icePillarNum; ++i)
+	{
+		p_magicIcePillar[i] = new MagicIcePillar();
+	}
 	p_chaseBlock[0] = new ChaseBlock();
 	p_chaseBlock[1] = new ChaseBlock();
 	enemyHitDamage = false;
@@ -891,6 +1027,14 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 	SoundProcess::Load(v_file[EFILE::bgm_end]			, SoundProcess::ESOUNDNAME_BGM::ending);
 	
 	SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::boss, 0, 0);
+
+
+	// エフェクトのロード
+	effectWarp = LoadEffekseerEffect("media\\Effect\\warp.efk");
+	for (int i = 0; i != 4; ++i)
+	{
+		playingEfWarp[i] = -1;
+	}
 } /// MainMove6::MainMove6(const std::vector<int> v_file)
 
 
@@ -898,6 +1042,14 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 /// --------------------------------------------------------------------------------------------------
 MainMove6::~MainMove6()
 {
+	// エフェクト開放
+	for (int i = 0; i != 4; ++i)
+	{
+		StopEffekseer3DEffect(playingEfWarp[i]);
+	}
+	DeleteEffekseerEffect(effectWarp);
+
+
 	// エンドロール
 	for (int i = 0; i != 10; ++i)
 	{

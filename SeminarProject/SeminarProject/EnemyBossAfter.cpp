@@ -118,7 +118,7 @@ EnemyBossAfter::EnemyBossAfter(const int modelHandle, const int modelTex0
 	walkSpeed = 0.0f;
 	animSpeed = 0.5f;
 	jumpUpNow = false;
-	area = VGet(4500.0f, 200.0f, 0.0f);
+	area = VGet(4300.0f, 200.0f, 0.0f);
 	angle = DX_PI_F / 2.0f;
 	MV1SetScale(this->modelHandle, VGet(25, 25, 25));
 

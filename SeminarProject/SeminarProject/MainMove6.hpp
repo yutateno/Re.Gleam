@@ -49,14 +49,17 @@ private:
 	// 街灯のポインタ
 	std::vector<StageStreetLight*> vp_stageStreetLight;
 
-	// パネルの個数
-	const int paneruNum = 66;
-
-	// パネルのポインタ
-	StagePaneru* p_stagePaneru[66];
-
 	// 階段と床のポインタ
 	std::vector<StageStairsRoad*> vp_stageStairsRoad;
+	
+	// パネルの個数
+	const int paneruNum = 70;
+
+	// パネルのポインタ
+	StagePaneru* p_stagePaneru[70];
+
+	// パネルの4点にそれぞれ到達したかどうか
+	bool paneruArrival[4];
 
 
 	/// キャラクター-------------------------------------------------------------------
@@ -85,8 +88,11 @@ private:
 	// どの攻撃を行うか
 	EAttackPattern e_attackPattern;
 
+	// 氷柱の数
+	const int icePillarNum = 10;
+
 	// 氷柱のポインタ
-	MagicIcePillar* p_magicIcePillar[2];
+	MagicIcePillar* p_magicIcePillar[10];
 
 	// 追尾箱のポインタ
 	ChaseBlock* p_chaseBlock[2];
@@ -172,6 +178,12 @@ private:
 		, libThanks, dxlib, effekseer, specialThanks, test, youser
 	};
 	int endrolDraw[10];
+
+
+	/// エフェクトに関して----------------------------------------
+
+	int effectWarp;
+	int playingEfWarp[4];
 
 
 	/// 乱数値-----------------------------------------------------

@@ -1,6 +1,5 @@
 # Re.Gleam
-DxLibで3Dのジャンプアクションゲーム
+DxLibとEffecseerというライブラリを用いた3Dのジャンプアクションゲーム
 
 
-## ※まだ途中なので、閲覧のみでお願いします
-## ※Please Read Only
+3年次の集大成です。

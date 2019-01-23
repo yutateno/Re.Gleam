@@ -34,7 +34,8 @@ private:
 		, approachUINo, bossBeforeModel, bossBeforeTex0, bossBeforeTex1, bossBeforeTex2
 		, end_Title, end_DxLib, end_Effekseer, end_Graphic, end_Program, end_Sound
 		, end_Special, end_Test, end_ThanksLib, end_Youser, bgm_end, bossAfterTex0
-		, bossAfterTex1, bossAfterTex2
+		, bossAfterTex1, bossAfterTex2, movieSkip, charaIcon, charaIconBack
+		, charaGage, charaGageBar, enemyGageBar
 	};
 
 	
@@ -103,6 +104,9 @@ private:
 	// 攻撃を受けたかどうか
 	int enemyHitDamage;
 
+	// ボスのダメージカウント
+	int enemyDamageCount;
+
 
 	/// 一般人-----------------------------------------------------------------------
 
@@ -159,6 +163,9 @@ private:
 	// ムービー前が正射影カメラだったかどうか
 	bool movieBeforeCameraOrtho;
 
+	// ムービーのスキップの仕方を教える画像
+	int movieSkipDraw;
+
 	/// 戦闘のシーン-----------------------------------------------
 
 	// 戦闘の描画
@@ -166,6 +173,14 @@ private:
 
 	// 戦闘のプロセス
 	void BattleProcess();
+
+	// 各々の体力を知らしめる画像のID
+	enum class EHealDraw{
+		icon, iconBack, gage, gageBar, enemyGage
+	};
+
+	// 各々の体力を知らしめる画像
+	int battleHealDraw[5];
 
 	/// 最後のシーン----------------------------------------------
 

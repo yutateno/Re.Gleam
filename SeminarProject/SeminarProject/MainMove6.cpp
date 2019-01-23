@@ -182,6 +182,7 @@ void MainMove6::AttackProcess()
 	{
 		// ダメージを受けている
 		enemyHitDamage = true;
+		enemyDamageCount++;
 		// バイブレーションさせる
 		DLLXinput::Vibration(DLLXinput::GetPlayerPadNumber(), 30, 15000, 15000);
 	}
@@ -481,14 +482,13 @@ void MainMove6::FirstProcess()
 /// --------------------------------------------------------------------------------------------------
 void MainMove6::MovieDraw()
 {
-	BaseMove::SkyBoxDraw();		// スカイボックスを描画
+	BaseMove::SkyBoxDraw();										// スカイボックスを描画
 
 
-	ShadowDraw();				// シャドウマップを描画
+	ShadowDraw();												// シャドウマップを描画
 
 
-	// 敵ラスボスのあれ
-	p_enemyBossBefore->ModelDraw();
+	p_enemyBossBefore->ModelDraw();								// 敵ラスボスのあれ
 
 
 	// 一般人
@@ -501,7 +501,10 @@ void MainMove6::MovieDraw()
 	}
 
 
-	p_character->Draw();		// キャラクターを描画
+	p_character->Draw();										// キャラクターを描画
+
+
+	DrawGraph(1920 - 260, 1080 - 80, movieSkipDraw, false);		// スキップの仕方を説明
 } /// void MainMove6::MovieDraw()
 
 
@@ -595,7 +598,8 @@ void MainMove6::MovieProcess()
 
 	
 	// シーン移行する
-	if (movieFrame >= 1000)
+	if (movieFrame >= 1000
+		|| DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::SHOULDER_LB) == 1)
 	{
 		SetFogEnable(FALSE);
 		BASICPARAM::paneruDrawFlag = true;
@@ -642,6 +646,15 @@ void MainMove6::BattleDraw()
 		p_character->ModelDraw();
 	}
 	p_character->Draw();
+
+	printfDx("%d\t%d\n", damageCount, 477 - damageCount);
+	// 体力を表示する画像
+	DrawExtendGraph(62, 235, 477 - damageCount, 260, battleHealDraw[static_cast<int>(EHealDraw::gageBar)], true);
+	DrawExtendGraph(21, 146, 562, 293, battleHealDraw[static_cast<int>(EHealDraw::gage)], true);
+	DrawExtendGraph(340, 42, 575, 258, battleHealDraw[static_cast<int>(EHealDraw::iconBack)], true);
+	DrawExtendGraph(337, 50, 537, 233, battleHealDraw[static_cast<int>(EHealDraw::icon)], true);
+	DrawBox(460, 1000, 1460, 1030, GetColor(0, 0, 0), false);
+	DrawExtendGraph(460, 1000, 1460 - enemyDamageCount * 5, 1030, battleHealDraw[static_cast<int>(EHealDraw::enemyGage)], true);
 } /// void MainMove6::BattleDraw()
 
 
@@ -794,6 +807,26 @@ void MainMove6::BattleProcess()
 
 
 	// 次のシーンへ移行
+	if (enemyDamageCount >= 20)
+	{
+		SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::ending);
+		e_nowMove = ESceneMove6::Last;
+		p_character->PositionReset();
+		movieFrame = 0;
+	}
+
+
+	// プレイヤーが死んだら
+	if (damageCount >= 477)
+	{
+		// タイトルへ強制的に移動させる
+		BASICPARAM::endFeedNow = true;
+		BaseMove::SetScene(ESceneNumber::FIRSTLOAD);
+	}
+
+
+#ifdef _DEBUG
+	// 次のシーンへ移行
 	if (CheckHitKey(KEY_INPUT_M) == 1)
 	{
 		SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::ending);
@@ -801,6 +834,7 @@ void MainMove6::BattleProcess()
 		p_character->PositionReset();
 		movieFrame = 0;
 	}
+#endif
 } /// void MainMove6::BattleProcess()
 
 
@@ -896,6 +930,18 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 	p_chaseBlock[1] = nullptr;
 
 
+	// ムービーでの画像
+	movieSkipDraw = v_file[EFILE::movieSkip];
+
+
+	// 戦闘中の画像
+	battleHealDraw[static_cast<int>(EHealDraw::icon)]		 = v_file[EFILE::charaIcon];
+	battleHealDraw[static_cast<int>(EHealDraw::iconBack)]	 = v_file[EFILE::charaIconBack];
+	battleHealDraw[static_cast<int>(EHealDraw::gage)]		 = v_file[EFILE::charaGage];
+	battleHealDraw[static_cast<int>(EHealDraw::gageBar)]	 = v_file[EFILE::charaGageBar];
+	battleHealDraw[static_cast<int>(EHealDraw::enemyGage)]	 = v_file[EFILE::enemyGageBar];
+
+
 	// ステージの初期化
 	p_stage = new Stage(v_file[EFILE::stageDrawModel]);
 
@@ -904,6 +950,7 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 	p_character = new CharacterSword(v_file[EFILE::charaModel], v_file[EFILE::stageCollModel], v_file[EFILE::stairsCollModel]
 		, v_file[EFILE::paneruModel], v_file[EFILE::stairsRoadCollModel]
 		, v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3], v_file[EFILE::charaTex4]);
+	damageCount = 0;
 
 
 	// カメラの初期化
@@ -1038,6 +1085,7 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 	p_chaseBlock[0] = new ChaseBlock();
 	p_chaseBlock[1] = new ChaseBlock();
 	enemyHitDamage = false;
+	enemyDamageCount = 0;
 
 
 	// 一般人
@@ -1225,6 +1273,17 @@ MainMove6::~MainMove6()
 
 	// ステージ
 	POINTER_RELEASE(p_stage);
+
+
+	// 戦闘中画像
+	for (int i = 0; i != 5; ++i)
+	{
+		GRAPHIC_RELEASE(battleHealDraw[i]);
+	}
+
+
+	// ムービー画像
+	GRAPHIC_RELEASE(movieSkipDraw);
 } /// MainMove5::~MainMove5()
 
 

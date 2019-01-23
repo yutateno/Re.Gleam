@@ -228,7 +228,7 @@ void EnemyMove3CrayonHuman::DamageProcess()
 
 
 		// ダメージの数値が死ぬ値になったら
-		if (++damageCount >= 3.0f)
+		if (++damageCount >= 3)
 		{
 			SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::crayonDie, area);
 			deathFlag = true;

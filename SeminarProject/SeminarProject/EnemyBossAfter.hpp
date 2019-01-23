@@ -35,7 +35,7 @@ private:
 	void MoveProcess();
 
 	// 動きを決めるカウント数値
-	int moveDoCount = 300;
+	int moveDoCount;
 
 	// 動きのカウント
 	int moveCount;
@@ -54,6 +54,9 @@ private:
 
 	// 同じ攻撃を連続して行わせない
 	EAttackPattern e_preAttackPattern;
+
+	// ダメージを受けた数値
+	int damageCount;
 
 	
 	/// テクスチャに関して---------------------------------------------------

@@ -1588,9 +1588,21 @@ void Manager::InitMove6Load()
 		moveStr[49] = "media\\sound\\ED.wyn";
 
 		// 戦闘敵のデータ
-		moveStr[50] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\normal.pyn";
-		moveStr[51] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\normal.pyn";
-		moveStr[52] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\normal.pyn";
+		moveStr[50] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\whiteblack.pyn";
+		moveStr[51] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\whiteblack.pyn";
+		moveStr[52] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\whiteblack.pyn";
+
+		// ムービーをスキップの仕方の画像
+		moveStr[53] = "media\\move6\\skip.pyn";
+
+		// プレイヤーの体力を表示する
+		moveStr[54] = "media\\UI\\clph_icon\\whiteblack.pyn";
+		moveStr[55] = "media\\UI\\no_name\\whiteblack.pyn";
+		moveStr[56] = "media\\UI\\ゲージ\\whiteblack.pyn";
+		moveStr[57] = "media\\UI\\ゲージの中身1\\whiteblack.pyn";
+
+		// 敵の体力を表示する
+		moveStr[58] = "media\\UI\\enemy\\whiteblack.pyn";
 	}
 
 
@@ -1665,6 +1677,15 @@ void Manager::InitMove6Load()
 		loadType[50] = ELOADFILE::graph;
 		loadType[51] = ELOADFILE::graph;
 		loadType[52] = ELOADFILE::graph;
+
+		loadType[53] = ELOADFILE::graph;
+
+		loadType[54] = ELOADFILE::graph;
+		loadType[55] = ELOADFILE::graph;
+		loadType[56] = ELOADFILE::graph;
+		loadType[57] = ELOADFILE::graph;
+
+		loadType[58] = ELOADFILE::graph;
 	}
 } /// void Manager::InitMove6Load()
 
@@ -1684,6 +1705,12 @@ void Manager::Move6TextureReload()
 			moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_wear.pyn";
 			moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn";
 			moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn";
+
+			// プレイヤーの体力を表示する
+			moveStr[54] = "media\\UI\\clph_icon\\normal.pyn";
+			moveStr[55] = "media\\UI\\no_name\\normal.pyn";
+			moveStr[56] = "media\\UI\\ゲージ\\normal.pyn";
+			moveStr[57] = "media\\UI\\ゲージの中身1\\normal.pyn";
 		}
 		if (!BASICPARAM::enemyTextureWhiteBlack || !BASICPARAM::lightStreetTextureWhiteBlack
 			|| !BASICPARAM::stairsRoadTextureWhiteBlack || !BASICPARAM::stairsTextureWhiteBlack
@@ -1693,6 +1720,9 @@ void Manager::Move6TextureReload()
 			moveStr[50] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\normal.pyn";
 			moveStr[51] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\normal.pyn";
 			moveStr[52] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\normal.pyn";
+
+			// 敵の体力を表示する
+			moveStr[58] = "media\\UI\\enemy\\normal.pyn";
 		}
 		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{
@@ -1731,6 +1761,12 @@ void Manager::Move6TextureReload()
 			moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_wear.pyn";
 			moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_face.pyn";
 			moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_ex.pyn";
+
+			// プレイヤーの体力を表示する
+			moveStr[54] = "media\\UI\\clph_icon\\P.pyn";
+			moveStr[55] = "media\\UI\\no_name\\P.pyn";
+			moveStr[56] = "media\\UI\\ゲージ\\P.pyn";
+			moveStr[57] = "media\\UI\\ゲージの中身1\\P.pyn";
 		}
 		if (!BASICPARAM::enemyTextureWhiteBlack || !BASICPARAM::lightStreetTextureWhiteBlack
 			|| !BASICPARAM::stairsRoadTextureWhiteBlack || !BASICPARAM::stairsTextureWhiteBlack
@@ -1740,6 +1776,9 @@ void Manager::Move6TextureReload()
 			moveStr[50] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\P.pyn";
 			moveStr[51] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\P.pyn";
 			moveStr[52] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\P.pyn";
+
+			// 敵の体力を表示する
+			moveStr[58] = "media\\UI\\enemy\\P.pyn";
 		}
 		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{
@@ -1778,6 +1817,12 @@ void Manager::Move6TextureReload()
 			moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_wear.pyn";
 			moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_face.pyn";
 			moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_ex.pyn";
+
+			// プレイヤーの体力を表示する
+			moveStr[54] = "media\\UI\\clph_icon\\D.pyn";
+			moveStr[55] = "media\\UI\\no_name\\D.pyn";
+			moveStr[56] = "media\\UI\\ゲージ\\D.pyn";
+			moveStr[57] = "media\\UI\\ゲージの中身1\\D.pyn";
 		}
 		if (!BASICPARAM::enemyTextureWhiteBlack || !BASICPARAM::lightStreetTextureWhiteBlack
 			|| !BASICPARAM::stairsRoadTextureWhiteBlack || !BASICPARAM::stairsTextureWhiteBlack
@@ -1787,6 +1832,9 @@ void Manager::Move6TextureReload()
 			moveStr[50] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\D.pyn";
 			moveStr[51] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\D.pyn";
 			moveStr[52] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\D.pyn";
+
+			// 敵の体力を表示する
+			moveStr[58] = "media\\UI\\enemy\\D.pyn";
 		}
 		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{

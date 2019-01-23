@@ -130,6 +130,8 @@ EnemyBossAfter::EnemyBossAfter(const int modelHandle, const int modelTex0
 	attackStartNow = false;
 	e_attackPattern = EAttackPattern::hand;
 	e_preAttackPattern = EAttackPattern::hand;
+	damageCount = 0;
+	moveDoCount = 1000;
 
 
 	// モデルの座標を更新
@@ -220,6 +222,28 @@ void EnemyBossAfter::Process()
 		attackStartNow = true;
 		moveCount = 0;
 		attackMotionNow = true;
+	}
+
+
+	// ダメージを受けたとき
+	if (damageHit)
+	{
+		damageHit = false;
+		damageCount++;
+
+		// ダメージの数値
+		if (damageCount >= 5)
+		{
+			moveDoCount = 600;
+		}
+		else if (damageCount >= 10)
+		{
+			moveDoCount = 400;
+		}
+		else if (damageCount >= 15)
+		{
+			moveDoCount = 200;
+		}
 	}
 
 

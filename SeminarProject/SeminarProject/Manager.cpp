@@ -1982,7 +1982,7 @@ void Manager::OptionProcess()
 			// 通常色にカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::ColorNormal;
 			optionSelectMin = 7;
-			optionSelectMax = 8;
+			optionSelectMax = 9;
 		}
 		// サウンドにカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::Sound)

@@ -1440,6 +1440,47 @@ void MainMove6::TextureReload()
 			}
 		}
 	}
+
+
+	// 戦闘中画像
+	for (int i = 0; i != 5; ++i)
+	{
+		GRAPHIC_RELEASE(battleHealDraw[i]);
+	}
+	switch (BASICPARAM::e_TextureColor)
+	{
+	case ETextureColor::NORMAL:
+		LoadFile::MyLoad("media\\UI\\clph_icon\\normal.pyn", battleHealDraw[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\no_name\\normal.pyn", battleHealDraw[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\ゲージ\\normal.pyn", battleHealDraw[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\ゲージの中身1\\normal.pyn", battleHealDraw[3], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\enemy\\normal.pyn", battleHealDraw[4], ELOADFILE::graph);
+		break;
+
+	case ETextureColor::D_CORRECTION:
+		LoadFile::MyLoad("media\\UI\\clph_icon\\D.pyn", battleHealDraw[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\no_name\\D.pyn", battleHealDraw[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\ゲージ\\D.pyn", battleHealDraw[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\ゲージの中身1\\D.pyn", battleHealDraw[3], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\enemy\\D.pyn", battleHealDraw[4], ELOADFILE::graph);
+		break;
+
+	case ETextureColor::P_CORRECTION:
+		LoadFile::MyLoad("media\\UI\\clph_icon\\P.pyn", battleHealDraw[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\no_name\\P.pyn", battleHealDraw[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\ゲージ\\P.pyn", battleHealDraw[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\ゲージの中身1\\P.pyn", battleHealDraw[3], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\enemy\\P.pyn", battleHealDraw[4], ELOADFILE::graph);
+		break;
+
+	default:
+		LoadFile::MyLoad("media\\UI\\clph_icon\\normal.pyn", battleHealDraw[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\no_name\\normal.pyn", battleHealDraw[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\ゲージ\\normal.pyn", battleHealDraw[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\ゲージの中身1\\normal.pyn", battleHealDraw[3], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\enemy\\normal.pyn", battleHealDraw[4], ELOADFILE::graph);
+		break;
+	}
 } /// void MainMove5::TextureReload()
 
 

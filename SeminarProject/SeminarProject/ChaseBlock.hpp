@@ -43,5 +43,14 @@ public:
 
 	// ƒAƒNƒeƒBƒu’†‰Ø“n‚·
 	const bool GetActive() const { return activeNow; }
+
+	// ‰¡•‚ğ“n‚·
+	const float GetWidth() const { return 300.0f; }
+
+	// c•‚ğ“n‚·
+	const float GetHeight() const { return 300.0f; }
+
+	// ¡‚ÌÀ•W‚ğ“n‚·
+	const VECTOR GetArea() const { return area; }
 };
 

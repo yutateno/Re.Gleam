@@ -151,7 +151,7 @@ void MainMove6::ShadowDraw()
 void MainMove6::AttackProcess()
 {
 	/// プレイヤーを押し出す処理------------------------------------------------------------
-	// プレイヤーと当たっていたら
+	// ボスと当たっていたら
 	if (HitCheck_Capsule_Capsule(
 		p_enemyBossAfter->GetArea(), VAdd(p_enemyBossAfter->GetArea(), VGet(0.0f, p_enemyBossAfter->GetHeight(), 0.0f)), p_enemyBossAfter->GetWidth(),
 		p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth()))
@@ -161,6 +161,7 @@ void MainMove6::AttackProcess()
 		p_character->HitCircleReturn(p_enemyBossAfter->GetArea()
 			, p_character->GetWidth() >= p_enemyBossAfter->GetWidth() ? p_character->GetWidth() : p_enemyBossAfter->GetWidth());
 	}
+
 
 
 	/// プレイヤーの攻撃---------------------------------------------------------------------
@@ -187,7 +188,6 @@ void MainMove6::AttackProcess()
 
 
 	/// 敵の攻撃の処理-----------------------------------------------------------------------
-	/// 敵の魔法攻撃の処理-------------------------------------------------
 	// 何の攻撃をしたか
 	e_attackPattern = p_enemyBossAfter->GetAttackPattern();
 
@@ -225,7 +225,100 @@ void MainMove6::AttackProcess()
 			}
 		}
 	} /// if (p_enemyBossAfter->GetAttackStartNow())
-	/// 敵の魔法攻撃の処理-------------------------------------------------
+	/// 敵の攻撃の処理-----------------------------------------------------------------------
+
+
+	/// 敵の攻撃によりダメージを受けているかどうか-------------------------------------------------------------------------------------------------------
+	// 氷の柱を使う攻撃だったら
+	if (e_attackPattern == EAttackPattern::icePillar)
+	{
+		for (int i = 0; i != icePillarNum; ++i)
+		{
+			// アクティブだったら
+			if (p_magicIcePillar[i]->GetActive())
+			{
+				// 重なっていたら
+				if (p_magicIcePillar[i]->GetArea().x - 100 < p_character->GetArea().x && p_magicIcePillar[i]->GetArea().x + 100 > p_character->GetArea().x
+					&& p_magicIcePillar[i]->GetArea().y - 50 < p_character->GetArea().y && p_magicIcePillar[i]->GetArea().y + 250 > p_character->GetArea().y
+					&& p_magicIcePillar[i]->GetArea().z - 100 < p_character->GetArea().z && p_magicIcePillar[i]->GetArea().z + 100 > p_character->GetArea().z)
+				{
+					// ダメージを与える
+					p_character->SetDamage();
+					damageCount++;
+				}
+			}
+		}
+	}
+	// 箱を使う攻撃だったら
+	else if (e_attackPattern == EAttackPattern::magicBlock)
+	{
+		// ID0番目がアクティブだったら
+		if (p_chaseBlock[0]->GetActive())
+		{
+			// ID0番目の追尾箱と当たっていたら
+			if (HitCheck_Capsule_Capsule(
+				p_chaseBlock[0]->GetArea(), VAdd(p_chaseBlock[0]->GetArea(), VGet(0.0f, p_chaseBlock[0]->GetHeight(), 0.0f)), p_chaseBlock[0]->GetWidth(),
+				p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth()))
+			{
+
+				// 自分を押し出す
+				p_character->HitCircleReturn(p_chaseBlock[0]->GetArea()
+					, p_character->GetWidth() >= p_chaseBlock[0]->GetWidth() ? p_character->GetWidth() : p_chaseBlock[0]->GetWidth());
+
+
+				// ダメージを与える
+				p_character->SetDamage();
+				damageCount++;
+			}
+		}
+		// ID1番目がアクティブだったら
+		else if (p_chaseBlock[1]->GetActive())
+		{
+			// ID1番目の追尾箱と当たっていたら
+			if (HitCheck_Capsule_Capsule(
+				p_chaseBlock[1]->GetArea(), VAdd(p_chaseBlock[1]->GetArea(), VGet(0.0f, p_chaseBlock[1]->GetHeight(), 0.0f)), p_chaseBlock[1]->GetWidth(),
+				p_character->GetArea(), VAdd(p_character->GetArea(), VGet(0.0f, p_character->GetHeight(), 0.0f)), p_character->GetWidth()))
+			{
+
+				// 自分を押し出す
+				p_character->HitCircleReturn(p_chaseBlock[1]->GetArea()
+					, p_character->GetWidth() >= p_chaseBlock[1]->GetWidth() ? p_character->GetWidth() : p_chaseBlock[1]->GetWidth());
+
+
+				// ダメージを与える
+				p_character->SetDamage();
+				damageCount++;
+			}
+		}
+	}
+	// 手を振りかざす攻撃だったら
+	else if (e_attackPattern == EAttackPattern::hand)
+	{
+		// 攻撃中だったら
+		if (p_enemyBossAfter->GetAttackNow())
+		{
+			int temp = 0;		// 押し出し回数を仮置き
+
+
+			// プレイヤーを押し出す
+			temp += p_character->HitCircleReturn(p_enemyBossAfter->GetAttackFlameOneArea()
+				, p_character->GetWidth() >= p_enemyBossAfter->GetAttackFlameOneWidth() ? p_character->GetWidth() : p_enemyBossAfter->GetAttackFlameOneWidth());
+			temp += p_character->HitCircleReturn(p_enemyBossAfter->GetAttackFlameTwoArea()
+				, p_character->GetWidth() >= p_enemyBossAfter->GetAttackFlameTwoWidth() ? p_character->GetWidth() : p_enemyBossAfter->GetAttackFlameTwoWidth());
+			temp += p_character->HitCircleReturn(p_enemyBossAfter->GetAttackFlameThreeArea()
+				, p_character->GetWidth() >= p_enemyBossAfter->GetAttackFlameThreeWidth() ? p_character->GetWidth() : p_enemyBossAfter->GetAttackFlameThreeWidth());
+
+
+			// ぶつかっていたら
+			if (temp != 0)
+			{
+				// ダメージを与える
+				p_character->SetDamage();
+				damageCount++;
+			}
+		}
+	}
+	/// 敵の攻撃によりダメージを受けているかどうか-------------------------------------------------------------------------------------------------------
 } /// void MainMove6::AttackProcess()
 
 
@@ -876,9 +969,9 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 		// 特に意味もなくこれまでのパネル内で散らばす
 		else
 		{
-			std::uniform_int_distribution<> randX(1000, 3000);        // X座標用乱数
-			std::uniform_int_distribution<> randY(2000, 4000);        // Z座標用乱数
-			std::uniform_int_distribution<> randZ(-3000, 3000);        // Z座標用乱数
+			std::uniform_int_distribution<> randX(1000, 3000);			// X座標用乱数
+			std::uniform_int_distribution<> randY(2000, 4000);			// Y座標用乱数
+			std::uniform_int_distribution<> randZ(-3000, 3000);			// Z座標用乱数
 			p_stagePaneru[i] = new StagePaneru(v_file[EFILE::paneruModel], VGet(static_cast<float>(randX(mt))
 				, static_cast<float>(randY(mt)), static_cast<float>(randZ(mt))));
 			p_character->SetPaneruArea(p_stagePaneru[i]->GetArea(), i);
@@ -951,8 +1044,8 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 	if (BASICPARAM::ordinaryPeopleNum != 0)
 	{
 		std::mt19937 mt(rnd());
-		std::uniform_int_distribution<> randInX(-4000, 4000);        // X座標用乱数
-		std::uniform_int_distribution<> randInZ(-4000, 4000);        // Z座標用乱数
+		std::uniform_int_distribution<> randInX(-4000, 4000);		// X座標用乱数
+		std::uniform_int_distribution<> randInZ(-4000, 4000);		// Z座標用乱数
 
 
 		vp_ordinaryPerson.resize(BASICPARAM::ordinaryPeopleNum);

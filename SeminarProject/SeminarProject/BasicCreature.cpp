@@ -481,7 +481,7 @@ BasicCreature::~BasicCreature()
 
 
 /// -------------------------------------------------------------------------
-void BasicCreature::HitCircleReturn(VECTOR hitOneArea, float width)
+bool BasicCreature::HitCircleReturn(VECTOR hitOneArea, float width)
 {
 	VECTOR subVec;
 	float length;
@@ -501,6 +501,11 @@ void BasicCreature::HitCircleReturn(VECTOR hitOneArea, float width)
 		tempY = area.y;
 		area = VAdd(hitOneArea, VScale(pushVec, width));
 		area.y = tempY;
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 } /// void BasicCreature::HitCircleReturn(VECTOR hitOneArea, float width)
 

@@ -59,6 +59,7 @@ bool MyDebug::enemyFourEnemySearchLineDrawFlag			 = false;
 bool MyDebug::enemyFifthEnemyDrawFlag					 = false;
 bool MyDebug::enemyFifthEnemySearchLineDrawFlag			 = false;
 bool MyDebug::enemyLastBossDrawFlag						 = false;
+bool MyDebug::enemyLastBossAttackFlameDrawFlag			 = false;
 
 
 /// --------------------------------------------------------------------------------------------------
@@ -83,6 +84,7 @@ void MyDebug::Init()
 	enemyFifthEnemyDrawFlag					 = false;
 	enemyFifthEnemySearchLineDrawFlag		 = false;
 	enemyLastBossDrawFlag					 = false;
+	enemyLastBossAttackFlameDrawFlag		 = false;
 }
 
 
@@ -212,6 +214,12 @@ void MyDebug::DebugProcess()
 		if (CheckHitKey(KEY_INPUT_O) == 1 && DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_BACK) == 1)
 		{
 			enemyLastBossDrawFlag = !enemyLastBossDrawFlag;
+		}
+
+		DrawFormatString(970, 370, GetColor(0, 0, 0), "enemyLastBossAttackFlameDrawFlag: P: %s", enemyLastBossAttackFlameDrawFlag ? "true" : "false");
+		if (CheckHitKey(KEY_INPUT_P) == 1 && DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_BACK) == 1)
+		{
+			enemyLastBossAttackFlameDrawFlag = !enemyLastBossAttackFlameDrawFlag;
 		}
 	}
 }

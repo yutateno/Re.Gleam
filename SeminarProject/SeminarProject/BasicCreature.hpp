@@ -157,7 +157,7 @@ public:
 	void SetAreaReturn() { area = preArea; }
 
 	// “–‚½‚Á‚½‚ç‰Ÿ‚µo‚·‚æ‚¤‚É‚·‚é
-	void HitCircleReturn(VECTOR hitUnderArea, float width);
+	bool HitCircleReturn(VECTOR hitUnderArea, float width);
 
 	// •Ší‚Ìü•ª“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
 	void HitLineReturn(VECTOR hitOneArea, VECTOR hitTwoArea);

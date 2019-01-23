@@ -162,9 +162,23 @@ EnemyBossAfter::~EnemyBossAfter()
 void EnemyBossAfter::Draw()
 {
 #ifdef _DEBUG
-	if (MyDebug::enemyThreeSlimeDrawFlag)
+	if (MyDebug::enemyLastBossDrawFlag)
 	{
 		DrawCapsule3D(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f)), modelWidth, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
+	}
+	if (MyDebug::enemyLastBossAttackFlameDrawFlag)
+	{
+		DrawCapsule3D(VScale(VAdd(MV1GetFramePosition(modelHandle, 15), MV1GetFramePosition(modelHandle, 14)), 0.5)
+			, VAdd(VScale(VAdd(MV1GetFramePosition(modelHandle, 15), MV1GetFramePosition(modelHandle, 14)), 0.5), VGet(0, 20, 0))
+			, 350, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
+
+		DrawCapsule3D(VScale(VAdd(MV1GetFramePosition(modelHandle, 16), MV1GetFramePosition(modelHandle, 15)), 0.5)
+			, VAdd(VScale(VAdd(MV1GetFramePosition(modelHandle, 16), MV1GetFramePosition(modelHandle, 15)), 0.5), VGet(0, 50, 0))
+			, 460, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
+
+		DrawCapsule3D(VScale(VAdd(MV1GetFramePosition(modelHandle, 17), MV1GetFramePosition(modelHandle, 16)), 0.5)
+			, VAdd(VScale(VAdd(MV1GetFramePosition(modelHandle, 17), MV1GetFramePosition(modelHandle, 16)), 0.5), VGet(0, 50, 0))
+			, 360, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
 	}
 #endif // _DEBUG
 }

@@ -190,6 +190,7 @@ namespace MyDebug
 	extern bool enemyFifthEnemyDrawFlag;
 	extern bool enemyFifthEnemySearchLineDrawFlag;
 	extern bool enemyLastBossDrawFlag;
+	extern bool enemyLastBossAttackFlameDrawFlag;
 
 	void Init();
 

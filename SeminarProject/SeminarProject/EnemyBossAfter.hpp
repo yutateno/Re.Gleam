@@ -35,7 +35,7 @@ private:
 	void MoveProcess();
 
 	// “®‚«‚ğŒˆ‚ß‚éƒJƒEƒ“ƒg”’l
-	const int moveDoCount = 600;
+	int moveDoCount = 300;
 
 	// “®‚«‚ÌƒJƒEƒ“ƒg
 	int moveCount;
@@ -97,9 +97,39 @@ public:
 	void OptionActorDrawAfter() override {}
 
 	// ‚Ç‚ÌUŒ‚‚ğs‚Á‚½‚©“n‚·
-	const EAttackPattern GetAttackPattern() { return e_attackPattern; }
+	const EAttackPattern GetAttackPattern() const { return e_attackPattern; }
 
 	// UŒ‚‚ğs‚Á‚½uŠÔ‚©‚Ç‚¤‚©
-	const bool GetAttackStartNow() { return attackStartNow; }
+	const bool GetAttackStartNow() const { return attackStartNow; }
+
+	// UŒ‚’†’†‚©“n‚·
+	const bool GetAttackNow() const { return attackMotionNow; }
+
+	// è‚ğU‚è‚©‚´‚·UŒ‚‚ÌŒ¨‚©‚ç•I‚Ì’†ŠÔ‚ÌÀ•W‚ğ“n‚·
+	const VECTOR GetAttackFlameOneArea() const { return VScale(VAdd(MV1GetFramePosition(modelHandle, 15), MV1GetFramePosition(modelHandle, 14)), 0.5); }
+
+	// è‚ğU‚è‚©‚´‚·UŒ‚‚ÌŒ¨‚©‚ç•I‚Ü‚Å‚ÌƒJƒvƒZƒ‹‚Ì‰¡•‚ğ“n‚·
+	const float GetAttackFlameOneWidth() const { return 350.0f; }
+
+	// è‚ğU‚è‚©‚´‚·UŒ‚‚ÌŒ¨‚©‚ç•I‚Ü‚Å‚ÌƒJƒvƒZƒ‹‚Ìc•‚ğ“n‚·
+	const float GetAttackFlameOneHeight() const { return 20.0f; }
+
+	// è‚ğU‚è‚©‚´‚·UŒ‚‚Ì•I‚©‚çèñ‚Ì’†ŠÔ‚ÌÀ•W‚ğ“n‚·
+	const VECTOR GetAttackFlameTwoArea() const { return VScale(VAdd(MV1GetFramePosition(modelHandle, 16), MV1GetFramePosition(modelHandle, 15)), 0.5); }
+
+	// è‚ğU‚è‚©‚´‚·UŒ‚‚Ì•I‚©‚çèñ‚Ü‚Å‚ÌƒJƒvƒZƒ‹‚Ì‰¡•‚ğ“n‚·
+	const float GetAttackFlameTwoWidth() const { return 460.0f; }
+
+	// è‚ğU‚è‚©‚´‚·UŒ‚‚Ì•I‚©‚çèñ‚Ü‚Å‚ÌƒJƒvƒZƒ‹‚Ìc•‚ğ“n‚·
+	const float GetAttackFlameTwoHeight() const { return 50.0f; }
+
+	// è‚ğU‚è‚©‚´‚·UŒ‚‚Ìèñ‚©‚çèæ‚Ì’†ŠÔ‚ÌÀ•W‚ğ“n‚·
+	const VECTOR GetAttackFlameThreeArea() const { return VScale(VAdd(MV1GetFramePosition(modelHandle, 17), MV1GetFramePosition(modelHandle, 16)), 0.5); }
+
+	// è‚ğU‚è‚©‚´‚·UŒ‚‚Ìèñ‚©‚çèæ‚Ü‚Å‚ÌƒJƒvƒZƒ‹‚Ì‰¡•‚ğ“n‚·
+	const float GetAttackFlameThreeWidth() const { return 360.0f; }
+
+	// è‚ğU‚è‚©‚´‚·UŒ‚‚Ìèñ‚©‚çèæ‚Ü‚Å‚ÌƒJƒvƒZƒ‹‚Ìc•‚ğ“n‚·
+	const float GetAttackFlameThreeHeight() const { return 50.0f; }
 };
 

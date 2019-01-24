@@ -621,6 +621,7 @@ void MainMove1::Draw()
 	{
 		for (int i = 0; i < enemyNum; ++i)
 		{
+			if (!s_lightBall[i].aliveNow) continue;
 			if (BaseMove::GetDistance<int>(p_character->GetArea(), s_lightBall[i].p_enemyMove->GetArea()) <= 500)
 			{
 				DrawLine3D(VAdd(p_character->GetArea(), VGet(0.0f, 80.0f, 0.0f))

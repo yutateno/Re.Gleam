@@ -647,14 +647,14 @@ void MainMove6::BattleDraw()
 	}
 	p_character->Draw();
 
-	printfDx("%d\t%d\n", damageCount, 477 - damageCount);
+
 	// ‘Ì—Í‚ð•\Ž¦‚·‚é‰æ‘œ
 	DrawExtendGraph(62, 235, 477 - damageCount, 260, battleHealDraw[static_cast<int>(EHealDraw::gageBar)], true);
 	DrawExtendGraph(21, 146, 562, 293, battleHealDraw[static_cast<int>(EHealDraw::gage)], true);
 	DrawExtendGraph(340, 42, 575, 258, battleHealDraw[static_cast<int>(EHealDraw::iconBack)], true);
 	DrawExtendGraph(337, 50, 537, 233, battleHealDraw[static_cast<int>(EHealDraw::icon)], true);
 	DrawBox(460, 1000, 1460, 1030, GetColor(0, 0, 0), false);
-	DrawExtendGraph(460, 1000, 1460 - enemyDamageCount * 5, 1030, battleHealDraw[static_cast<int>(EHealDraw::enemyGage)], true);
+	DrawExtendGraph(460, 1000, 1460 - enemyDamageCount * 50, 1030, battleHealDraw[static_cast<int>(EHealDraw::enemyGage)], true);
 } /// void MainMove6::BattleDraw()
 
 

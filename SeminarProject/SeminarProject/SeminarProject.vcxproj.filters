@@ -321,4 +321,9 @@
       <Filter>ヘッダー ファイル\Actor\Creature\Enemy\Boss</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="media\icon.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
+  </ItemGroup>
 </Project>

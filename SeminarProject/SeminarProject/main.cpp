@@ -23,6 +23,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ChangeWindowMode(TRUE);						// ウィンドウズモードにさせる
 	SetEnableXAudioFlag(TRUE);					// XAudioを使用するようにする
 	SetUseLarge3DPositionSupport(TRUE);			// 巨大な座標値をサポート
+	SetWindowIconID(333);
 
 
 	SetGraphMode(BASICPARAM::winWidth, BASICPARAM::winHeight, BASICPARAM::bitColor);			// 画面サイズ設定

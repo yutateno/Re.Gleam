@@ -604,7 +604,7 @@ void MainMove6::MovieProcess()
 		SetFogEnable(FALSE);
 		BASICPARAM::paneruDrawFlag = true;
 		BASICPARAM::lastPaneruView = true;
-		SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::boss);
+		SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::boss, 255);
 		e_nowMove = ESceneMove6::Battle;
 		p_character->PositionReset();
 	}

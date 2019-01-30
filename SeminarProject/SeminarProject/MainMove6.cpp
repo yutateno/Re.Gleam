@@ -555,10 +555,6 @@ void MainMove6::MovieProcess()
 		// 600フレーム以上だったらボスを地面に埋まらせる
 		if (movieFrame >= 600)
 		{
-			DrawCone3D(VSub(p_enemyBossBefore->GetArea(), VGet(0, 200, 0)), VSub(p_enemyBossBefore->GetArea(), VGet(0, 200, 0))
-				, static_cast<float>(movieFrame - 600), 16, GetColor(0, 0, 0), GetColor(0, 0, 0), true);
-
-
 			p_enemyBossBefore->AreaSetDown();
 		}
 
@@ -566,11 +562,18 @@ void MainMove6::MovieProcess()
 		// 800フレーム以上だったらプレイヤーを地面に埋まらせる
 		if (movieFrame >= 800)
 		{
-			DrawCone3D(VSub(p_enemyBossBefore->GetArea(), VGet(0, 200, 0)), VSub(p_enemyBossBefore->GetArea(), VGet(0, 200, 0))
-				, static_cast<float>(800 - movieFrame), 16, GetColor(0, 0, 0), GetColor(0, 0, 0), true);
-
-
 			p_character->AreaSetDown();
+		}
+
+
+		// ボスの埋めに合わせて地面に黒い円を出す
+		if (movieFrame >= 600 && movieFrame < 800)
+		{
+			DrawCone3D(VGet(4000.0f, 0.0f, 0.0f), VGet(4000.0f, 1.0f, 0.0f), static_cast<float>(movieFrame - 600) * 2.0f, 16, GetColor(0, 0, 0), GetColor(0, 0, 0), true);
+		}
+		else if (movieFrame >= 800)
+		{
+			DrawCone3D(VGet(4000.0f, 0.0f, 0.0f), VGet(4000.0f, 1.0f, 0.0f), static_cast<float>(1000 - movieFrame) * 2.0f, 16, GetColor(0, 0, 0), GetColor(0, 0, 0), true);
 		}
 	} /// if (movieFrame >= 300)
 

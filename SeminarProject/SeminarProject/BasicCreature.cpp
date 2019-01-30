@@ -419,19 +419,28 @@ BasicCreature::BasicCreature() :BasicObject()
 
 
 	// èâä˙âª
-	fallCount = 0;
+	preArea = VGet(0.0f, 0.0f, 0.0f);
 	angle = 0.0f;
+	nextArea = VGet(0.0f, 0.0f, 0.0f);
+	walkSpeed = 0.0f;
+	animSpeed = 0.0f;
+	fallCount = 0;
+	jumpNow = false;
+	jumpUpNow = false;
+	jumpPower = 0.0f;
+	attachMotion = 0;
+	attachNum = 0;
+	totalTime = 0.0f;
+	stageHandle = -1;
+	shadowStageHandle = -1;
+	hitDimNum = 0;
 	damageHit = false;
 	deathFlag = false;
 	eraseExistence = false;
-	blendCount = 255;
-	jumpNow = false;
-	attachMotion = 0;
-	walkSpeed = 0;
-	mainPoly = nullptr;
-	nextArea = VGet(0, 0, 0);
-	modelWidth = 0;
+	blendCount = 0;
+	ZeroMemory(wallPoly, sizeof(wallPoly));
 	ZeroMemory(floorPoly, sizeof(floorPoly));
+	mainPoly = nullptr;
 } /// BasicCreature::BasicCreature() :BasicObject()
 
 
@@ -456,19 +465,28 @@ BasicCreature::BasicCreature(bool shadowDo) :BasicObject(shadowDo)
 
 
 	// èâä˙âª
-	fallCount = 0;
+	preArea = VGet(0.0f, 0.0f, 0.0f);
 	angle = 0.0f;
+	nextArea = VGet(0.0f, 0.0f, 0.0f);
+	walkSpeed = 0.0f;
+	animSpeed = 0.0f;
+	fallCount = 0;
+	jumpNow = false;
+	jumpUpNow = false;
+	jumpPower = 0.0f;
+	attachMotion = 0;
+	attachNum = 0;
+	totalTime = 0.0f;
+	stageHandle = -1;
+	shadowStageHandle = -1;
+	hitDimNum = 0;
 	damageHit = false;
 	deathFlag = false;
 	eraseExistence = false;
-	blendCount = 255;
-	jumpNow = false;
-	attachMotion = 0;
-	walkSpeed = 0;
-	mainPoly = nullptr;
-	nextArea = VGet(0, 0, 0);
-	modelWidth = 0;
+	blendCount = 0;
+	ZeroMemory(wallPoly, sizeof(wallPoly));
 	ZeroMemory(floorPoly, sizeof(floorPoly));
+	mainPoly = nullptr;
 } /// BasicCreature::BasicCreature(bool shadowDo) :BasicObject(shadowDo)
 
 

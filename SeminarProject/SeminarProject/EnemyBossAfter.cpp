@@ -78,7 +78,7 @@ void EnemyBossAfter::MoveProcess()
 
 /// ----------------------------------------------------------------------------------------
 EnemyBossAfter::EnemyBossAfter(const int modelHandle, const int modelTex0
-	, const int modeltex1, const int modelTex2) : BasicCreature(false)
+	, const int modeltex1, const int modelTex2) : BasicCreature()
 {
 	// 3Dモデルの読み込み
 	this->modelHandle = -1;
@@ -86,6 +86,7 @@ EnemyBossAfter::EnemyBossAfter(const int modelHandle, const int modelTex0
 
 	
 	// テクスチャの適応
+	blendCount = 255;
 	textureHandle0 = -1;
 	textureHandle1 = -1;
 	textureHandle2 = -1;

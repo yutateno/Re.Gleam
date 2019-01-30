@@ -5,11 +5,6 @@
 /// -------------------------------------------------------------------------------------------------
 EnemyMove2::EnemyMove2(const VECTOR area, const int modelHandle, const int tex0) : BasicCreature()
 {
-	// 変数の初期化
-	shadowStageHandle = -1;
-	stageHandle = -1;
-
-
 	// 座標を設定
 	this->area = VAdd(area, VGet(0.0f, 10.0f, 0.0f));
 
@@ -24,6 +19,7 @@ EnemyMove2::EnemyMove2(const VECTOR area, const int modelHandle, const int tex0)
 
 
 	// テクスチャ適応
+	blendCount = 255;
 	MV1SetTextureGraphHandle(this->modelHandle, 0, tex0, false);
 	MV1SetMaterialDrawBlendMode(this->modelHandle, 0, DX_BLENDMODE_ALPHA);
 	MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);

@@ -280,6 +280,7 @@ EnemyMove5::EnemyMove5(const int modelHandle, const int collStageHandle
 
 
 	// テクスチャの適応
+	blendCount = 255;
 	textureHandle0 = -1;
 	textureHandle0 = tex0;
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
@@ -314,7 +315,7 @@ EnemyMove5::EnemyMove5(const int modelHandle, const int collStageHandle
 
 
 	// 足元の影に関する
-	shadowHeight = 48.0f;
+	shadowHeight = 1.0f;
 	shadowSize = 17.0f;
 
 

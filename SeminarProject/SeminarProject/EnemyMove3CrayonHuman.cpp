@@ -324,6 +324,7 @@ EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int co
 
 
 	// テクスチャの適応
+	blendCount = 255;
 	textureHandle0 = -1;
 	textureHandle0 = tex0;
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
@@ -358,7 +359,7 @@ EnemyMove3CrayonHuman::EnemyMove3CrayonHuman(const int modelHandle, const int co
 
 
 	// 足元の影に関する
-	shadowHeight = 20.0f;
+	shadowHeight = 1.0f;
 	shadowSize = 70.0f;
 
 

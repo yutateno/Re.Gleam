@@ -491,10 +491,6 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 
 	// 精密機械の初期化
 	p_adjustmentMachine = new AdjustmentMachine(v_file[EFILE::terminalModel], VGet(-1000.0f, 0.0f, -500.0f), v_file[EFILE::terminalTex0], v_file[EFILE::terminalTex1]);
-	for (int i = 0; i != 15; ++i)
-	{
-		p_adjustmentMachine->CatchDropItem();
-	}
 	adjustmentDescDraw = v_file[EFILE::terminalDesc];
 
 
@@ -540,7 +536,6 @@ MainMove4::MainMove4(const std::vector<int> v_file)
 	SoundProcess::Load(v_file[EFILE::bgm_battle]		, SoundProcess::ESOUNDNAME_BGM::battleBGM);
 
 	SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::battleBGM, 255, 255);
-	// SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::normalBGM, 255, 255);
 
 
 	// ダメージ演出

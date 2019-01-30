@@ -42,16 +42,16 @@ private:
 	/// 影に関する--------------------------------------------
 
 	// 周囲のポリゴンを代入する構造体
-	MV1_COLL_RESULT_POLY_DIM ShadowHitResDim;
+	MV1_COLL_RESULT_POLY_DIM shadowHitResDim;
 
 	// 影のポリゴンの構造体
-	MV1_COLL_RESULT_POLY *ShadowHitRes;
+	MV1_COLL_RESULT_POLY *shadowHitRes;
 
 	// 影の行列
-	VERTEX3D ShadowVertex[3];
+	VERTEX3D shadowVertex[3];
 
 	// 影の座標
-	VECTOR ShadowSlideVec;
+	VECTOR shadowSlideVec;
 
 	// 影のハンドル
 	int shadowHandle;

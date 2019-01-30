@@ -292,6 +292,7 @@ EnemyMove3Slime::EnemyMove3Slime(const int modelHandle, const int collStageHandl
 
 
 	// テクスチャの適応
+	blendCount = 255;
 	textureHandle0 = -1;
 	textureHandle0 = tex0;
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);

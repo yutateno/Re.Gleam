@@ -1078,10 +1078,6 @@ MainMove3::MainMove3(const std::vector<int> v_file)
 	// ¸–§‹@ŠB‚Ì‰Šú‰»
 	p_adjustmentMachine = new AdjustmentMachine(v_file[EFILE::terminalModel], VGet(-1000.0f, 0.0f, -500.0f)
 		, v_file[EFILE::terminalTex0], v_file[EFILE::terminalTex1]);
-	for (int i = 0; i != 15; ++i)
-	{
-		p_adjustmentMachine->CatchDropItem();
-	}
 	adjustmentDescDraw = v_file[EFILE::terminalDesc];
 	changeAdjustmentScene = false;
 	adjustmentSceneFeed = 0;

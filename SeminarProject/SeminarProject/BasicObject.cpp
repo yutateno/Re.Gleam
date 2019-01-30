@@ -7,21 +7,21 @@
 bool BasicObject::ShadowFoot(int shadowModel)
 {
 	// プレイヤーの直下に存在する地面のポリゴンを取得
-	ShadowHitResDim = MV1CollCheck_Capsule(shadowModel, -1, area, VAdd(area, VGet(0.0f, -shadowHeight, 0.0f)), shadowSize);
+	shadowHitResDim = MV1CollCheck_Capsule(shadowModel, -1, area, VAdd(area, VGet(0.0f, -shadowHeight, 0.0f)), shadowSize);
 
 
 	// 頂点データで変化が無い部分をセット
-	ShadowVertex[0].dif = GetColorU8(255, 255, 255, 255);
-	ShadowVertex[0].spc = GetColorU8(0, 0, 0, 0);
-	ShadowVertex[0].su = 0.0f;
-	ShadowVertex[0].sv = 0.0f;
-	ShadowVertex[1] = ShadowVertex[0];
-	ShadowVertex[2] = ShadowVertex[0];
+	shadowVertex[0].dif = GetColorU8(255, 255, 255, 255);
+	shadowVertex[0].spc = GetColorU8(0, 0, 0, 0);
+	shadowVertex[0].su = 0.0f;
+	shadowVertex[0].sv = 0.0f;
+	shadowVertex[1] = shadowVertex[0];
+	shadowVertex[2] = shadowVertex[0];
 
 
 	// 球の直下に存在するポリゴンの数だけ繰り返し
-	ShadowHitRes = ShadowHitResDim.Dim;
-	if (ShadowHitResDim.HitNum == 0) return false;
+	shadowHitRes = shadowHitResDim.Dim;
+	if (shadowHitResDim.HitNum == 0) return false;
 
 
 	SetUseLighting(FALSE);	// ライティングを無効にする
@@ -30,57 +30,57 @@ bool BasicObject::ShadowFoot(int shadowModel)
 
 	// テクスチャアドレスモードを CLAMP にする
 	SetTextureAddressMode(DX_TEXADDRESS_CLAMP);
-	for (int i = 0; i != ShadowHitResDim.HitNum; ++i, ++ShadowHitRes)
+	for (int i = 0; i != shadowHitResDim.HitNum; ++i, ++shadowHitRes)
 	{
 		// ポリゴンの座標は地面ポリゴンの座標
-		ShadowVertex[0].pos = ShadowHitRes->Position[0];
-		ShadowVertex[1].pos = ShadowHitRes->Position[1];
-		ShadowVertex[2].pos = ShadowHitRes->Position[2];
+		shadowVertex[0].pos = shadowHitRes->Position[0];
+		shadowVertex[1].pos = shadowHitRes->Position[1];
+		shadowVertex[2].pos = shadowHitRes->Position[2];
 
 
 		// ちょっと持ち上げて重ならないようにする
-		ShadowSlideVec = VScale(ShadowHitRes->Normal, 0.5f);
-		ShadowVertex[0].pos = VAdd(ShadowVertex[0].pos, ShadowSlideVec);
-		ShadowVertex[1].pos = VAdd(ShadowVertex[1].pos, ShadowSlideVec);
-		ShadowVertex[2].pos = VAdd(ShadowVertex[2].pos, ShadowSlideVec);
+		shadowSlideVec = VScale(shadowHitRes->Normal, 0.5f);
+		shadowVertex[0].pos = VAdd(shadowVertex[0].pos, shadowSlideVec);
+		shadowVertex[1].pos = VAdd(shadowVertex[1].pos, shadowSlideVec);
+		shadowVertex[2].pos = VAdd(shadowVertex[2].pos, shadowSlideVec);
 
 
 		// ポリゴンの不透明度を設定する
-		ShadowVertex[0].dif.a = 0;
-		ShadowVertex[1].dif.a = 0;
-		ShadowVertex[2].dif.a = 0;
-		if (ShadowHitRes->Position[0].y > area.y - shadowHeight)
+		shadowVertex[0].dif.a = 0;
+		shadowVertex[1].dif.a = 0;
+		shadowVertex[2].dif.a = 0;
+		if (shadowHitRes->Position[0].y > area.y - shadowHeight)
 		{
-			ShadowVertex[0].dif.a = (BYTE)(128 * (1.0f - fabs(ShadowHitRes->Position[0].y - area.y) / shadowHeight));
+			shadowVertex[0].dif.a = (BYTE)(128 * (1.0f - fabs(shadowHitRes->Position[0].y - area.y) / shadowHeight));
 		}
 
-		if (ShadowHitRes->Position[1].y > area.y - shadowHeight)
+		if (shadowHitRes->Position[1].y > area.y - shadowHeight)
 		{
-			ShadowVertex[1].dif.a = (BYTE)(128 * (1.0f - fabs(ShadowHitRes->Position[1].y - area.y) / shadowHeight));
+			shadowVertex[1].dif.a = (BYTE)(128 * (1.0f - fabs(shadowHitRes->Position[1].y - area.y) / shadowHeight));
 		}
 
-		if (ShadowHitRes->Position[2].y > area.y - shadowHeight)
+		if (shadowHitRes->Position[2].y > area.y - shadowHeight)
 		{
-			ShadowVertex[2].dif.a = (BYTE)(128 * (1.0f - fabs(ShadowHitRes->Position[2].y - area.y) / shadowHeight));
+			shadowVertex[2].dif.a = (BYTE)(128 * (1.0f - fabs(shadowHitRes->Position[2].y - area.y) / shadowHeight));
 		}
 
 
 		// ＵＶ値は地面ポリゴンとプレイヤーの相対座標から割り出す
-		ShadowVertex[0].u = (ShadowHitRes->Position[0].x - area.x) / (shadowSize * 2.0f) + 0.5f;
-		ShadowVertex[0].v = (ShadowHitRes->Position[0].z - area.z) / (shadowSize * 2.0f) + 0.5f;
-		ShadowVertex[1].u = (ShadowHitRes->Position[1].x - area.x) / (shadowSize * 2.0f) + 0.5f;
-		ShadowVertex[1].v = (ShadowHitRes->Position[1].z - area.z) / (shadowSize * 2.0f) + 0.5f;
-		ShadowVertex[2].u = (ShadowHitRes->Position[2].x - area.x) / (shadowSize * 2.0f) + 0.5f;
-		ShadowVertex[2].v = (ShadowHitRes->Position[2].z - area.z) / (shadowSize * 2.0f) + 0.5f;
+		shadowVertex[0].u = (shadowHitRes->Position[0].x - area.x) / (shadowSize * 2.0f) + 0.5f;
+		shadowVertex[0].v = (shadowHitRes->Position[0].z - area.z) / (shadowSize * 2.0f) + 0.5f;
+		shadowVertex[1].u = (shadowHitRes->Position[1].x - area.x) / (shadowSize * 2.0f) + 0.5f;
+		shadowVertex[1].v = (shadowHitRes->Position[1].z - area.z) / (shadowSize * 2.0f) + 0.5f;
+		shadowVertex[2].u = (shadowHitRes->Position[2].x - area.x) / (shadowSize * 2.0f) + 0.5f;
+		shadowVertex[2].v = (shadowHitRes->Position[2].z - area.z) / (shadowSize * 2.0f) + 0.5f;
 
 
 		// 影ポリゴンを描画
-		DrawPolygon3D(ShadowVertex, 1, shadowHandle, TRUE);
+		DrawPolygon3D(shadowVertex, 1, shadowHandle, TRUE);
 	} /// for (int i = 0; i != ShadowHitResDim.HitNum; ++i, ++ShadowHitRes)
 
 
 	// 検出した地面ポリゴン情報の後始末
-	MV1CollResultPolyDimTerminate(ShadowHitResDim);
+	MV1CollResultPolyDimTerminate(shadowHitResDim);
 
 
 	SetUseLighting(TRUE);	// ライティングを有効にする
@@ -94,18 +94,20 @@ bool BasicObject::ShadowFoot(int shadowModel)
 BasicObject::BasicObject()
 {
 	// 情報初期化
-	shadowHandle = -1;
-	notViewCount = 0;
-	optionRotaCount = 0;
-	modelHeight = 0;
 	modelHandle = -1;
-	shadowHeight = 0;
-	shadowSize = 0;
-	area = VGet(0, 0, 0);
-	ShadowHitResDim;
-	ShadowHitRes = nullptr;
-	ZeroMemory(ShadowVertex, sizeof(ShadowVertex));
-	move6_circle = 0;
+	modelHeight = 0.0f;
+	modelWidth = 0.0f;
+	notViewCount = 0;
+	shadowHeight = 0.0f;
+	shadowSize = 0.0f;
+	area = VGet(0.0f, 0.0f, 0.0f);
+	shadowHitRes = nullptr;
+	ZeroMemory(shadowVertex, sizeof(shadowVertex));
+	shadowSlideVec = VGet(0.0f, 0.0f, 0.0f);
+	shadowHandle = -1;
+	optionRotaCount = 0;
+	optionModelDrawCount = 0;
+	move6_circle = 0.0f;
 	move6_line = 0.0f;
 }
 
@@ -116,21 +118,26 @@ BasicObject::BasicObject(bool shadowDo)
 {
 	// 影の読み込み
 	shadowHandle = -1;
-	LoadFile::MyLoad("media\\Shadow.tyn", shadowHandle, ELOADFILE::graph);
+	if (shadowDo)
+	{
+		LoadFile::MyLoad("media\\Shadow.tyn", shadowHandle, ELOADFILE::graph);
+	}
 
 
 	// 情報初期化
-	notViewCount = 0;
-	optionRotaCount = 0;
-	modelHeight = 0;
 	modelHandle = -1;
-	shadowHeight = 0;
-	shadowSize = 0;
+	modelHeight = 0.0f;
+	modelWidth = 0.0f;
+	notViewCount = 0;
+	shadowHeight = 0.0f;
+	shadowSize = 0.0f;
 	area = VGet(0, 0, 0);
-	ShadowHitResDim;
-	ShadowHitRes = nullptr;
-	ZeroMemory(ShadowVertex, sizeof(ShadowVertex));
-	move6_circle = 0;
+	shadowHitRes = nullptr;
+	ZeroMemory(shadowVertex, sizeof(shadowVertex));
+	shadowSlideVec = VGet(0.0f, 0.0f, 0.0f);
+	optionRotaCount = 0;
+	optionModelDrawCount = 0;
+	move6_circle = 0.0f;
 	move6_line = 0.0f;
 }
 
@@ -221,6 +228,8 @@ void BasicObject::Move6SetDownArea()
 		// 自分からボスのとこまで線を引く
 		DrawLine3D(VGet(area.x, 50.0, area.z), VGet(4000.0f, 50.0f, 0.0f), GetColor(0, 0, 0));
 	}
+
+
 	move6_line++;
 
 

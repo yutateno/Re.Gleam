@@ -176,10 +176,15 @@ EnemyMove4::EnemyMove4(const int modelHandle, const int collStageHandle
 		, static_cast<float>(bigBodyChangeDamage)));
 
 	// テクスチャの適応
+	blendCount = 255;
 	textureHandle0 = -1;
 	textureHandle0 = tex0;
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle0, false);
+	MV1SetMaterialDrawBlendMode(this->modelHandle, 0, DX_BLENDMODE_ALPHA);
+	MV1SetMaterialDrawBlendMode(this->modelHandle, 1, DX_BLENDMODE_ALPHA);
+	MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
+	MV1SetMaterialDrawBlendParam(this->modelHandle, 1, blendCount);
 
 
 	// 3Dモデルのアニメーションをアタッチする
@@ -209,7 +214,7 @@ EnemyMove4::EnemyMove4(const int modelHandle, const int collStageHandle
 
 
 	// 足元の影に関する
-	shadowHeight = 65.0f * bigBodyChangeDamage;
+	shadowHeight = 1.0f;
 	shadowSize = 35.0f * bigBodyChangeDamage;
 
 

@@ -13,7 +13,6 @@ namespace FileSaveLoad
 		// ファイル読み込み失敗
 		if (saveFile.fail())
 		{
-			std::cerr << "SaveError" << std::endl;
 			return false;
 		}
 		// ファイル読み込み成功
@@ -76,7 +75,6 @@ namespace FileSaveLoad
 		// マップデータ読み込み失敗
 		if (ifs.fail())
 		{
-			std::cerr << "LoadError" << std::endl;
 			return false;
 		}
 

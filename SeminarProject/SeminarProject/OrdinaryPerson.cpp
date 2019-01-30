@@ -240,7 +240,7 @@ OrdinaryPerson::OrdinaryPerson(const int modelHandle, const int collStageHandle,
 
 
 	// ‘«Œ³‚Ì‰e‚ÉŠÖ‚·‚é
-	shadowHeight = 20.0f;
+	shadowHeight = 1.0f;
 	shadowSize = 50.0f;
 
 

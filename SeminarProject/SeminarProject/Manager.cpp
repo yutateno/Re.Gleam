@@ -1050,6 +1050,22 @@ void Manager::Move4TextureReload()
 			moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_wear.pyn";
 			moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_face.pyn";
 			moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\normal\\CLPH_ex.pyn";
+
+
+			// ダメージ演出画像
+			moveStr[40] = "media\\damage\\damage1\\normal.pyn";
+			moveStr[41] = "media\\damage\\damage2\\normal.pyn";
+			moveStr[42] = "media\\damage\\damage3\\normal.pyn";
+			moveStr[43] = "media\\damage\\Blood\\bl1\\normal.pyn";
+			moveStr[44] = "media\\damage\\Blood\\bl2\\normal.pyn";
+			moveStr[45] = "media\\damage\\Blood\\bl3\\normal.pyn";
+			moveStr[46] = "media\\damage\\Blood\\bl4\\normal.pyn";
+			moveStr[47] = "media\\damage\\Blood\\bl5\\normal.pyn";
+			moveStr[48] = "media\\damage\\Blood\\bl6\\normal.pyn";
+			moveStr[49] = "media\\damage\\Blood\\bl7\\normal.pyn";
+			moveStr[50] = "media\\damage\\Blood\\bl8\\normal.pyn";
+			moveStr[51] = "media\\damage\\Blood\\bl9\\normal.pyn";
+			moveStr[52] = "media\\damage\\Blood\\bl10\\normal.pyn";
 		}
 		if (!BASICPARAM::enemyTextureWhiteBlack)
 		{
@@ -1096,6 +1112,22 @@ void Manager::Move4TextureReload()
 			moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_wear.pyn";
 			moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_face.pyn";
 			moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\P\\CLPH_ex.pyn";
+
+
+			// ダメージ演出画像
+			moveStr[40] = "media\\damage\\damage1\\P.pyn";
+			moveStr[41] = "media\\damage\\damage2\\P.pyn";
+			moveStr[42] = "media\\damage\\damage3\\P.pyn";
+			moveStr[43] = "media\\damage\\Blood\\bl1\\P.pyn";
+			moveStr[44] = "media\\damage\\Blood\\bl2\\P.pyn";
+			moveStr[45] = "media\\damage\\Blood\\bl3\\P.pyn";
+			moveStr[46] = "media\\damage\\Blood\\bl4\\P.pyn";
+			moveStr[47] = "media\\damage\\Blood\\bl5\\P.pyn";
+			moveStr[48] = "media\\damage\\Blood\\bl6\\P.pyn";
+			moveStr[49] = "media\\damage\\Blood\\bl7\\P.pyn";
+			moveStr[50] = "media\\damage\\Blood\\bl8\\P.pyn";
+			moveStr[51] = "media\\damage\\Blood\\bl9\\P.pyn";
+			moveStr[52] = "media\\damage\\Blood\\bl10\\P.pyn";
 		}
 		if (!BASICPARAM::enemyTextureWhiteBlack)
 		{
@@ -1142,6 +1174,22 @@ void Manager::Move4TextureReload()
 			moveStr[10] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_wear.pyn";
 			moveStr[11] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_face.pyn";
 			moveStr[12] = "media\\swordCLPH\\clph_sword_all.fbm\\D\\CLPH_ex.pyn";
+
+
+			// ダメージ演出画像
+			moveStr[40] = "media\\damage\\damage1\\D.pyn";
+			moveStr[41] = "media\\damage\\damage2\\D.pyn";
+			moveStr[42] = "media\\damage\\damage3\\D.pyn";
+			moveStr[43] = "media\\damage\\Blood\\bl1\\D.pyn";
+			moveStr[44] = "media\\damage\\Blood\\bl2\\D.pyn";
+			moveStr[45] = "media\\damage\\Blood\\bl3\\D.pyn";
+			moveStr[46] = "media\\damage\\Blood\\bl4\\D.pyn";
+			moveStr[47] = "media\\damage\\Blood\\bl5\\D.pyn";
+			moveStr[48] = "media\\damage\\Blood\\bl6\\D.pyn";
+			moveStr[49] = "media\\damage\\Blood\\bl7\\D.pyn";
+			moveStr[50] = "media\\damage\\Blood\\bl8\\D.pyn";
+			moveStr[51] = "media\\damage\\Blood\\bl9\\D.pyn";
+			moveStr[52] = "media\\damage\\Blood\\bl10\\D.pyn";
 		}
 		if (!BASICPARAM::enemyTextureWhiteBlack)
 		{

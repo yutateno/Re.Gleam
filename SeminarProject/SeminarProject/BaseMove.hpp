@@ -111,8 +111,7 @@ protected:
 	template<class T>
 	T GetDistance(const VECTOR alpha, const VECTOR beta)
 	{
-		return static_cast<T>(sqrt((alpha.x - beta.x) * (alpha.x - beta.x)
-			+ (alpha.z - beta.z) * (alpha.z - beta.z)));
+		return static_cast<T>(sqrt((alpha.x - beta.x) * (alpha.x - beta.x) + (alpha.z - beta.z) * (alpha.z - beta.z)));
 	}
 
 

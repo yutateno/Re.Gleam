@@ -482,29 +482,33 @@ void MainMove6::FirstProcess()
 /// --------------------------------------------------------------------------------------------------
 void MainMove6::MovieDraw()
 {
-	BaseMove::SkyBoxDraw();										// スカイボックスを描画
-
-
-	ShadowDraw();												// シャドウマップを描画
-
-
-	p_enemyBossBefore->ModelDraw();								// 敵ラスボスのあれ
-
-
-	// 一般人
-	if (BASICPARAM::ordinaryPeopleNum != 0)
+	if (movieFrame < 1000
+		|| DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::SHOULDER_LB) != 1)
 	{
-		for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+		BaseMove::SkyBoxDraw();										// スカイボックスを描画
+
+
+		ShadowDraw();												// シャドウマップを描画
+
+
+		p_enemyBossBefore->ModelDraw();								// 敵ラスボスのあれ
+
+
+		// 一般人
+		if (BASICPARAM::ordinaryPeopleNum != 0)
 		{
-			vp_ordinaryPerson[i]->Draw();
+			for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+			{
+				vp_ordinaryPerson[i]->Draw();
+			}
 		}
+
+
+		p_character->Draw();										// キャラクターを描画
+
+
+		DrawGraph(1920 - 260, 1080 - 80, movieSkipDraw, false);		// スキップの仕方を説明
 	}
-
-
-	p_character->Draw();										// キャラクターを描画
-
-
-	DrawGraph(1920 - 260, 1080 - 80, movieSkipDraw, false);		// スキップの仕方を説明
 } /// void MainMove6::MovieDraw()
 
 
@@ -612,12 +616,79 @@ void MainMove6::MovieProcess()
 	if (movieFrame >= 1000
 		|| DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::SHOULDER_LB) == 1)
 	{
-		SetFogEnable(FALSE);
-		BASICPARAM::paneruDrawFlag = true;
-		BASICPARAM::lastPaneruView = true;
-		SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::boss, 255);
-		e_nowMove = ESceneMove6::Battle;
-		p_character->PositionReset();
+		// いらないデータを削除
+		{
+			// 一般人
+			if (BASICPARAM::ordinaryPeopleNum != 0)
+			{
+				for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+				{
+					POINTER_RELEASE(vp_ordinaryPerson[i]);
+				}
+				vp_ordinaryPerson.clear();
+				vp_ordinaryPerson.shrink_to_fit();
+			}
+
+
+			// 敵
+			for (int i = 0; i != 3; ++i)
+			{
+				GRAPHIC_RELEASE(approachBossUIDraw[i]);
+			}
+			POINTER_RELEASE(p_enemyBossBefore);
+
+
+			// 階段
+			if (BASICPARAM::stairsNum != 0)
+			{
+				for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+				{
+					POINTER_RELEASE(vp_stageStairs[i]);
+				}
+				vp_stageStairs.clear();
+				vp_stageStairs.shrink_to_fit();
+			}
+
+
+			// 街灯
+			if (BASICPARAM::streetLightNum != 0)
+			{
+				for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
+				{
+					POINTER_RELEASE(vp_stageStreetLight[i]);
+				}
+				vp_stageStreetLight.clear();
+				vp_stageStreetLight.shrink_to_fit();
+			}
+
+
+			// 階段と床
+			if (BASICPARAM::stairsRoadNum != 0)
+			{
+				for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+				{
+					POINTER_RELEASE(vp_stageStairsRoad[i]);
+				}
+				vp_stageStairsRoad.clear();
+				vp_stageStairsRoad.shrink_to_fit();
+			}
+
+
+			// ムービー用カメラ
+			POINTER_RELEASE(p_cameraMove);
+
+
+			// ムービー画像
+			GRAPHIC_RELEASE(movieSkipDraw);
+		}
+
+
+		SetFogEnable(FALSE);														// フォグを解除
+		BASICPARAM::paneruDrawFlag = true;											// パネルを描画させる
+		BASICPARAM::lastPaneruView = true;											// パネルは必ず描画するように設定
+		SoundProcess::SetBGMVolume(SoundProcess::ESOUNDNAME_BGM::boss, 255);		// BGMを再生
+		e_nowMove = ESceneMove6::Battle;											// バトルへ移行
+		p_character->PositionReset();												// キャラクターの座標を初期化
 	}
 } /// void MainMove6::MovieProcess()
 
@@ -1210,7 +1281,7 @@ MainMove6::~MainMove6()
 
 
 	// 一般人
-	if (BASICPARAM::ordinaryPeopleNum != 0)
+	if (vp_ordinaryPerson.size() != 0)
 	{
 		for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
 		{
@@ -1231,7 +1302,7 @@ MainMove6::~MainMove6()
 
 
 	// 階段
-	if (BASICPARAM::stairsNum != 0)
+	if (vp_stageStairs.size() != 0)
 	{
 		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
 		{
@@ -1243,7 +1314,7 @@ MainMove6::~MainMove6()
 
 
 	// 街灯
-	if (BASICPARAM::streetLightNum != 0)
+	if (vp_stageStreetLight.size() != 0)
 	{
 		for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
 		{
@@ -1255,7 +1326,7 @@ MainMove6::~MainMove6()
 
 
 	// 階段と床
-	if (BASICPARAM::stairsRoadNum != 0)
+	if (vp_stageStairsRoad.size() != 0)
 	{
 		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
 		{

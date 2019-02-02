@@ -7,7 +7,7 @@ namespace SoundProcess
 	const int seNum = 23;			// SEの数
 	const int bgmNum = 11;			// BGMの数
 	const int bgmArray = 2;			// BGMの最大再生個数
-	const int bgmFeedValue = 15;	// BGMのフェード値
+	const int bgmFeedValue = 60;	// BGMのフェード値
 	///-------------------------------------------
 
 

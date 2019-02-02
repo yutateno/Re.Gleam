@@ -1471,11 +1471,15 @@ void MainMove6::TextureReload()
 	}
 
 
+	// 戦闘敵の画像
+	p_enemyBossAfter->TextureReload();
+
+
 	// その他のテクスチャが白黒指定じゃなかったら
 	if (!BASICPARAM::anothreTextureWhiteBlack)
 	{
 		// 一般人
-		if (BASICPARAM::ordinaryPeopleNum != 0)
+		if (vp_ordinaryPerson.size() != 0)
 		{
 			for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
 			{
@@ -1488,7 +1492,7 @@ void MainMove6::TextureReload()
 	// 階段のテクスチャが白黒指定じゃなかったら
 	if (!BASICPARAM::stairsTextureWhiteBlack)
 	{
-		if (BASICPARAM::stairsNum != 0)
+		if (vp_stageStairs.size() != 0)
 		{
 			for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
 			{
@@ -1501,7 +1505,7 @@ void MainMove6::TextureReload()
 	// 街灯のテクスチャが白黒指定じゃなかったら
 	if (!BASICPARAM::lightStreetTextureWhiteBlack)
 	{
-		if (BASICPARAM::streetLightNum != 0)
+		if (vp_stageStreetLight.size() != 0)
 		{
 			for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
 			{
@@ -1514,7 +1518,7 @@ void MainMove6::TextureReload()
 	// 階段と床のテクスチャが白黒指定じゃなかったら
 	if (!BASICPARAM::stairsRoadTextureWhiteBlack)
 	{
-		if (BASICPARAM::stairsRoadNum != 0)
+		if (vp_stageStairsRoad.size() != 0)
 		{
 			for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
 			{

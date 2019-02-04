@@ -35,7 +35,7 @@ private:
 		, end_Title, end_DxLib, end_Effekseer, end_Graphic, end_Program, end_Sound
 		, end_Special, end_Test, end_ThanksLib, end_Youser, bgm_end, bossAfterTex0
 		, bossAfterTex1, bossAfterTex2, movieSkip, charaIcon, charaIconBack
-		, charaGage, charaGageBar, enemyGageBar
+		, charaGage, charaGageBar, enemyGageBar, warpDescDraw
 	};
 
 	
@@ -70,6 +70,9 @@ private:
 
 	// ダメージ数値
 	int damageCount;
+
+	// ワープの補助説明画像
+	int warpDesc;
 
 
 	/// 敵----------------------------------------------------------------------------

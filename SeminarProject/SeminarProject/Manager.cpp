@@ -1651,6 +1651,9 @@ void Manager::InitMove6Load()
 
 		// “G‚Ì‘Ì—Í‚ğ•\¦‚·‚é
 		moveStr[58] = "media\\UI\\enemy\\whiteblack.pyn";
+
+		// ƒ[ƒv‚Ìà–¾•â•
+		moveStr[59] = "media\\Terminal\\push.pyn";
 	}
 
 
@@ -1734,6 +1737,8 @@ void Manager::InitMove6Load()
 		loadType[57] = ELOADFILE::graph;
 
 		loadType[58] = ELOADFILE::graph;
+
+		loadType[59] = ELOADFILE::graph;
 	}
 } /// void Manager::InitMove6Load()
 

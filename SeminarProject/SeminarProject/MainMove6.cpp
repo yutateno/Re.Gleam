@@ -746,38 +746,76 @@ void MainMove6::BattleProcess()
 {
 	// キャラクターのプロセス
 	p_character->OnlyCollFloorProcess(p_camera->GetAngle());
-	if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
+
+
+	/// ワープ可能でその上にプレイヤーがいたら------------------------------------------------------------------------------------------------
+	// すぐ左のパネル
+	if (paneruArrival[0]
+		&& p_stagePaneru[1]->GetArea().x - 100 < p_character->GetArea().x && p_stagePaneru[1]->GetArea().x + 100 > p_character->GetArea().x
+		&& p_stagePaneru[1]->GetArea().y - 100 < p_character->GetArea().y && p_stagePaneru[1]->GetArea().y + 100 > p_character->GetArea().y
+		&& p_stagePaneru[1]->GetArea().z - 100 < p_character->GetArea().z && p_stagePaneru[1]->GetArea().z + 100 > p_character->GetArea().z)
 	{
-		// ワープ可能演出が出ていて特定のパネル状に居たら
-		if (paneruArrival[0]
-			&& p_stagePaneru[1]->GetArea().x - 100 < p_character->GetArea().x && p_stagePaneru[1]->GetArea().x + 100 > p_character->GetArea().x
-			&& p_stagePaneru[1]->GetArea().y - 100 < p_character->GetArea().y && p_stagePaneru[1]->GetArea().y + 100 > p_character->GetArea().y
-			&& p_stagePaneru[1]->GetArea().z - 100 < p_character->GetArea().z && p_stagePaneru[1]->GetArea().z + 100 > p_character->GetArea().z)
+		// ボタン説明を出す
+		DrawBillboard3D(VAdd(p_stagePaneru[1]->GetArea(), VGet(0.0f, 300.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, warpDesc, false);
+
+
+		// Bボタンで移動する
+		if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
 		{
 			p_character->WarpMove6(p_stagePaneru[7]->GetArea());
 		}
-		else if (paneruArrival[1]
-			&& p_stagePaneru[9]->GetArea().x - 100 < p_character->GetArea().x && p_stagePaneru[9]->GetArea().x + 100 > p_character->GetArea().x
-			&& p_stagePaneru[9]->GetArea().y - 100 < p_character->GetArea().y && p_stagePaneru[9]->GetArea().y + 100 > p_character->GetArea().y
-			&& p_stagePaneru[9]->GetArea().z - 100 < p_character->GetArea().z && p_stagePaneru[9]->GetArea().z + 100 > p_character->GetArea().z)
+	}
+	// すぐ右のパネル
+	else if (paneruArrival[1]
+		&& p_stagePaneru[9]->GetArea().x - 100 < p_character->GetArea().x && p_stagePaneru[9]->GetArea().x + 100 > p_character->GetArea().x
+		&& p_stagePaneru[9]->GetArea().y - 100 < p_character->GetArea().y && p_stagePaneru[9]->GetArea().y + 100 > p_character->GetArea().y
+		&& p_stagePaneru[9]->GetArea().z - 100 < p_character->GetArea().z && p_stagePaneru[9]->GetArea().z + 100 > p_character->GetArea().z)
+	{
+		// ボタン説明を出す
+		DrawBillboard3D(VAdd(p_stagePaneru[9]->GetArea(), VGet(0.0f, 300.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, warpDesc, false);
+
+
+		// Bボタンで移動する
+		if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
 		{
 			p_character->WarpMove6(p_stagePaneru[15]->GetArea());
 		}
-		else if (paneruArrival[2]
-			&& p_stagePaneru[16]->GetArea().x - 100 < p_character->GetArea().x && p_stagePaneru[16]->GetArea().x + 100 > p_character->GetArea().x
-			&& p_stagePaneru[16]->GetArea().y - 100 < p_character->GetArea().y && p_stagePaneru[16]->GetArea().y + 100 > p_character->GetArea().y
-			&& p_stagePaneru[16]->GetArea().z - 100 < p_character->GetArea().z && p_stagePaneru[16]->GetArea().z + 100 > p_character->GetArea().z)
+	}
+	// 左上のパネル
+	else if (paneruArrival[2]
+		&& p_stagePaneru[16]->GetArea().x - 100 < p_character->GetArea().x && p_stagePaneru[16]->GetArea().x + 100 > p_character->GetArea().x
+		&& p_stagePaneru[16]->GetArea().y - 100 < p_character->GetArea().y && p_stagePaneru[16]->GetArea().y + 100 > p_character->GetArea().y
+		&& p_stagePaneru[16]->GetArea().z - 100 < p_character->GetArea().z && p_stagePaneru[16]->GetArea().z + 100 > p_character->GetArea().z)
+	{
+		// ボタン説明を出す
+		DrawBillboard3D(VAdd(p_stagePaneru[16]->GetArea(), VGet(0.0f, 300.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, warpDesc, false);
+
+
+		// Bボタンで移動する
+		if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
 		{
 			p_character->WarpMove6(p_stagePaneru[35]->GetArea());
 		}
-		else if (paneruArrival[3]
-			&& p_stagePaneru[36]->GetArea().x - 100 < p_character->GetArea().x && p_stagePaneru[36]->GetArea().x + 100 > p_character->GetArea().x
-			&& p_stagePaneru[36]->GetArea().y - 100 < p_character->GetArea().y && p_stagePaneru[36]->GetArea().y + 100 > p_character->GetArea().y
-			&& p_stagePaneru[36]->GetArea().z - 100 < p_character->GetArea().z && p_stagePaneru[36]->GetArea().z + 100 > p_character->GetArea().z)
+	}
+	// 右上のパネル
+	else if (paneruArrival[3]
+		&& p_stagePaneru[36]->GetArea().x - 100 < p_character->GetArea().x && p_stagePaneru[36]->GetArea().x + 100 > p_character->GetArea().x
+		&& p_stagePaneru[36]->GetArea().y - 100 < p_character->GetArea().y && p_stagePaneru[36]->GetArea().y + 100 > p_character->GetArea().y
+		&& p_stagePaneru[36]->GetArea().z - 100 < p_character->GetArea().z && p_stagePaneru[36]->GetArea().z + 100 > p_character->GetArea().z)
+	{
+		// ボタン説明を出す
+		DrawBillboard3D(VAdd(p_stagePaneru[36]->GetArea(), VGet(0.0f, 300.0f, 0.0f)), 0.5f, 0.5f, 300.0f, 0.0f, warpDesc, false);
+
+
+		// Bボタンで移動する
+		if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
 		{
 			p_character->WarpMove6(p_stagePaneru[55]->GetArea());
 		}
-	} /// if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
+	}
+	/// ワープ可能でその上にプレイヤーがいたら------------------------------------------------------------------------------------------------
+
+
 	// 敵を目の前にして左の一番上に達したら
 	if (!paneruArrival[0]
 		&& p_stagePaneru[7]->GetArea().x - 100 < p_character->GetArea().x && p_stagePaneru[7]->GetArea().x + 100 > p_character->GetArea().x
@@ -1033,6 +1071,7 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 		, v_file[EFILE::paneruModel], v_file[EFILE::stairsRoadCollModel]
 		, v_file[EFILE::charaTex0], v_file[EFILE::charaTex1], v_file[EFILE::charaTex2], v_file[EFILE::charaTex3], v_file[EFILE::charaTex4]);
 	damageCount = 0;
+	warpDesc = v_file[EFILE::warpDescDraw];
 
 
 	// カメラの初期化
@@ -1350,6 +1389,7 @@ MainMove6::~MainMove6()
 
 
 	// キャラクター
+	GRAPHIC_RELEASE(warpDesc);
 	POINTER_RELEASE(p_character);
 
 

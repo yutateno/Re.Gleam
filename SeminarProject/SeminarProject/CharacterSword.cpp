@@ -45,16 +45,12 @@ void CharacterSword::MoveProcess()
 			// 飛んでいるカウントが10以下だったら0にする
 			if (flyCount <= 10) flyCount = 0;
 
-			
-			underWalkCount++;			// 地面を歩いているカウントを加算する
 
-
-			// 左足が地面に着く位置に来たら
-			if (leftFootArea <= MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y + 1.0f
-				&& leftFootArea >= MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y - 1.0f)
+			// 左足音
+			if (MV1GetFramePosition(modelHandle, 5).y - 1.0f <= area.y && !leftFootSoundDo)
 			{
-				// 歩いているカウントを2にする
-				underWalkCount = 2;
+				leftFootSoundDo = true;
+				rightFootSoundDo = false;
 
 
 				// y座標が10以上、つまりオブジェクトの上にいたら
@@ -70,30 +66,14 @@ void CharacterSword::MoveProcess()
 			}
 
 
-			// 地面を歩き始めた時
-			if (underWalkCount == 1)
+			// 右足音
+			if (MV1GetFramePosition(modelHandle, 10).y - 1.0f <= area.y && !rightFootSoundDo)
 			{
-				// 左足の位置を取得
-				leftFootArea = MV1GetFramePosition(modelHandle, 0).y - MV1GetFramePosition(modelHandle, 5).y;
+				leftFootSoundDo = false;
+				rightFootSoundDo = true;
 
 
 				// y座標が10以上、つまりオブジェクトの上にいたら
-				if (area.y >= 10.0f)
-				{
-					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
-				}
-				// 平地にいたら
-				else
-				{
-					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::foot, area);
-				}
-			}
-
-
-			// 歩くカウント数が0ではなく14で割り切れる数だったら
-			if (underWalkCount % 14 == 0 && underWalkCount != 0)
-			{
-				// オブジェクトの上にいたら
 				if (area.y >= 10.0f)
 				{
 					SoundProcess::DoSound(SoundProcess::ESOUNDNAME_SE::footFloor, area);
@@ -145,6 +125,10 @@ void CharacterSword::MoveProcess()
 		animSpeed = 0.5f;		// モーション速度を決める
 
 
+		leftFootSoundDo = false;
+		rightFootSoundDo = false;
+
+
 		// ゆっくり止まるように処理
 		if (walkSpeed > 0.0f)
 		{
@@ -152,7 +136,6 @@ void CharacterSword::MoveProcess()
 		}
 		else
 		{
-			underWalkCount = 0;
 			walkSpeed = 0.0f;
 		}
 	}
@@ -566,7 +549,6 @@ void CharacterSword::JumpProcess()
 	if (jumpNow)
 	{
 		flyCount++;
-		underWalkCount = 0;
 		preJumpNow = true;
 		jumpPower -= gravity;			// 落下重力を加え続ける
 		area.y += jumpPower;			// Y座標に加え続ける
@@ -745,9 +727,8 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	preDrawArea = area;
 	direXAngle = 0.0f;
 	direZAngle = 0.0f;
-	leftFootArea = 0.0f;
-	underWalkCount = 0;
-	leftUnderTouchFrame = 13;
+	rightFootSoundDo = false;
+	leftFootSoundDo = false;
 
 
 	// 足元の影に関する
@@ -1141,7 +1122,6 @@ void CharacterSword::NotOpeProcess(const float getAngle)
 		if (jumpNow)
 		{
 			flyCount++;
-			underWalkCount = 0;
 			preJumpNow = true;
 			jumpPower -= gravity;			// 落下重力を加え続ける
 			area.y += jumpPower;			// Y座標に加え続ける

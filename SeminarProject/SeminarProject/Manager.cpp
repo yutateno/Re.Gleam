@@ -1984,16 +1984,16 @@ void Manager::OptionProcess()
 		{
 			// BGM設定音量に移る
 			optionSelectButtonNum = EOptionSelectButton::BGMSelect;
-			optionSelectMin = 10;
-			optionSelectMax = 10;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::BGMSelect);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::BGMSelect);
 		}
 		// SEにカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::SE)
 		{
 			// SE設定音量に移る
 			optionSelectButtonNum = EOptionSelectButton::SESelect;
-			optionSelectMin = 11;
-			optionSelectMax = 11;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::SESelect);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::SESelect);
 		}
 		// テクスチャ色の通常にカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorNormal)
@@ -2034,8 +2034,8 @@ void Manager::OptionProcess()
 		{
 			// 通常色にカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::ColorNormal;
-			optionSelectMin = 7;
-			optionSelectMax = 9;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::ColorNormal);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::ColorD);
 		}
 		// サウンドにカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::Sound)
@@ -2043,32 +2043,32 @@ void Manager::OptionProcess()
 			// BGMにカーソルを移す
 			SoundProcess::SetOptionMenuNow(false);				// サウンドの音量をオプション用からやめる
 			optionSelectButtonNum = EOptionSelectButton::BGM;
-			optionSelectMin = 5;
-			optionSelectMax = 6;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::BGM);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::SE);
 		}
-		// BGM選択にカーソルがあったとき
+		// BGMの設定音量にカーソルがあったとき（調整していたとき）
 		else if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
 		{
-			// BGMの設定音量に移る
+			// BGMにカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::BGM;
-			optionSelectMin = 5;
-			optionSelectMax = 6;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::BGM);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::SE);
 		}
-		// SE選択にカーソルがあったとき
+		// SEの設定音量にカーソルがあったとき（調整していたとき）
 		else if (optionSelectButtonNum == EOptionSelectButton::SESelect)
 		{
-			// SEの設定音量に移る
+			// SEにカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::SE;
-			optionSelectMin = 5;
-			optionSelectMax = 6;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::BGM);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::SE);
 		}
 		// カメラにカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::Camera)
 		{
 			// 遠近法カメラに移る
 			optionSelectButtonNum = EOptionSelectButton::CameraPerspective;
-			optionSelectMin = 12;
-			optionSelectMax = 15;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::CameraPerspective);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::CameraVReturn);
 		}
 		// 遠近法カメラにカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective)
@@ -2099,16 +2099,16 @@ void Manager::OptionProcess()
 		{
 			// セーブにカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::SaveYes;
-			optionSelectMin = 16;
-			optionSelectMax = 17;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::SaveYes);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::SaveNo);
 		}
 		// ゲーム終了にカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::GameEnd)
 		{
-			// セーブにカーソルを移す
+			// ゲーム終了にカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::GameEndYes;
-			optionSelectMin = 18;
-			optionSelectMax = 19;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::GameEndYes);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::GameEndNo);
 		}
 		// セーブするにカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::SaveYes)
@@ -2123,16 +2123,16 @@ void Manager::OptionProcess()
 
 			// セーブにカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::DataSave;
-			optionSelectMin = 0;
-			optionSelectMax = 4;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::Sound);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::GameEnd);
 		}
 		// セーブしないにカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::SaveNo)
 		{
 			// セーブにカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::DataSave;
-			optionSelectMin = 0;
-			optionSelectMax = 4;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::Sound);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::GameEnd);
 		}
 		// ゲーム終了にカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::GameEndYes)
@@ -2145,8 +2145,8 @@ void Manager::OptionProcess()
 		{
 			// ゲームを終了にカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::GameEnd;
-			optionSelectMin = 0;
-			optionSelectMax = 4;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::Sound);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::GameEnd);
 		}
 	} /// if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
 	///決定------------------------------------------------------------------------------------------------------
@@ -2163,8 +2163,8 @@ void Manager::OptionProcess()
 			// サウンドにカーソルを移す
 			SoundProcess::SetOptionMenuNow(true);					// サウンドの音量をオプション用からに戻す
 			optionSelectButtonNum = EOptionSelectButton::Sound;
-			optionSelectMin = 0;
-			optionSelectMax = 4;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::Sound);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::GameEnd);
 		}
 		// 通常色にカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::ColorNormal
@@ -2173,24 +2173,24 @@ void Manager::OptionProcess()
 		{
 			// 色覚選択にカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::ColorSelect;
-			optionSelectMin = 0;
-			optionSelectMax = 4;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::Sound);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::GameEnd);
 		}
 		// BGM音量調整にカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::BGMSelect)
 		{
 			// BGMにカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::BGM;
-			optionSelectMin = 5;
-			optionSelectMax = 6;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::BGM);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::SE);
 		}
 		// SE音量調整にカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::SESelect)
 		{
 			// SEにカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::SE;
-			optionSelectMin = 5;
-			optionSelectMax = 6;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::BGM);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::SE);
 		}
 		// カメラ関連にカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::CameraPerspective
@@ -2200,8 +2200,8 @@ void Manager::OptionProcess()
 		{
 			// カメラにカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::Camera;
-			optionSelectMin = 0;
-			optionSelectMax = 4;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::Sound);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::GameEnd);
 		}
 		// セーブ関連にカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::SaveYes
@@ -2209,8 +2209,8 @@ void Manager::OptionProcess()
 		{
 			// セーブにカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::DataSave;
-			optionSelectMin = 0;
-			optionSelectMax = 4;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::Sound);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::GameEnd);
 		}
 		// ゲーム終了関連にカーソルがあったとき
 		else if (optionSelectButtonNum == EOptionSelectButton::GameEndYes
@@ -2218,8 +2218,8 @@ void Manager::OptionProcess()
 		{
 			// ゲームを終了にカーソルを移す
 			optionSelectButtonNum = EOptionSelectButton::GameEnd;
-			optionSelectMin = 0;
-			optionSelectMax = 4;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::Sound);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::GameEnd);
 		}
 	} /// if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_B) == 1)
 	///戻る------------------------------------------------------------------------------------------------------

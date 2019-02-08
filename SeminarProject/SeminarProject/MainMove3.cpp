@@ -958,14 +958,6 @@ void MainMove3::AttackProcess()
 
 
 /// --------------------------------------------------------------------------------------------------
-void MainMove3::ThsTextureReload()
-{
-	ths = std::thread(&MainMove3::TextureReload, this);
-	ths.join();
-}
-
-
-/// --------------------------------------------------------------------------------------------------
 MainMove3::MainMove3(const std::vector<int> v_file)
 {
 	// ƒpƒlƒ‹‚ð”ñ•\Ž¦‚É‚·‚é
@@ -2091,6 +2083,14 @@ void MainMove3::TextureReload()
 		p_dropItem[i]->TextureReload();
 	}
 } /// void MainMove3::TextureReload()
+
+
+/// --------------------------------------------------------------------------------------------------
+void MainMove3::ThsTextureReload()
+{
+	ths = std::thread(&MainMove3::TextureReload, this);
+	ths.join();
+}
 
 
 /// --------------------------------------------------------------------------------------------------

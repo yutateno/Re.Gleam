@@ -185,6 +185,9 @@ private:
 	// 各々の体力を知らしめる画像
 	int battleHealDraw[5];
 
+	// 戦闘UIのテクスチャ差し替え
+	void BattleTextureReload();
+
 	/// 最後のシーン----------------------------------------------
 
 	// 最後の描画
@@ -229,9 +232,6 @@ public:
 
 	// カメラのプロセス
 	void CameraProcess() override;
-
-	// テクスチャの切り替え
-	void TextureReload() override;
 
 	// 非同期テクスチャ切り替え
 	void ThsTextureReload() override;

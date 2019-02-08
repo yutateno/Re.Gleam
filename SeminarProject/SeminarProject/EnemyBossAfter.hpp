@@ -93,6 +93,9 @@ public:
 	// テクスチャの切り替え
 	void TextureReload();
 
+	// 非同期テクスチャ差し替え
+	std::thread ThsTextureReload();
+
 	// 攻撃をダメージに反映するかどうか
 	const bool GetAttackDamage() const { return attackDamageNow; }
 

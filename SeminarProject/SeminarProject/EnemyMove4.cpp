@@ -503,6 +503,14 @@ void EnemyMove4::TextureReload()
 
 
 /// ------------------------------------------------------------------------------------------------
+std::thread EnemyMove4::ThsTextureReload()
+{
+	return std::thread(&EnemyMove4::TextureReload, this);
+}
+
+
+
+/// ------------------------------------------------------------------------------------------------
 void EnemyMove4::SetCharacterArea(const VECTOR characterArea, const int distance)
 {
 	playerCharaArea = characterArea;

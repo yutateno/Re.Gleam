@@ -135,6 +135,9 @@ protected:
 	// 非同期用変数
 	std::thread ths;
 
+	// 非同期読み込み個数
+	int textureReloadCountDo;
+
 
 public:
 	// コンストラクタ
@@ -152,9 +155,6 @@ public:
 	// カメラのプロセス
 	virtual void CameraProcess() = 0;
 
-	// テクスチャの切り替え
-	virtual void TextureReload() = 0;
-
 	// 非同期テクスチャの切り替え
 	virtual void ThsTextureReload() = 0;
 
@@ -166,6 +166,9 @@ public:
 
 	// オプション画面でのモデル表示の後始末
 	virtual void OptionActorModelAfter() = 0;
+
+	// 非同期テクスチャ切り替え時の個数を初期化する
+	void TextureReloadCountDoReset() { textureReloadCountDo = 0; }
 
 
 	/// ゲッターセッター-------------------------------------------------

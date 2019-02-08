@@ -165,8 +165,8 @@ void Manager::TitleProcess()
 		{
 			BASICPARAM::e_nowScene = ESceneNumber::FIRSTLOAD;
 			BASICPARAM::e_preScene = ESceneNumber::FIRSTLOAD;
-			optionSelectMin = 0;
-			optionSelectMax = 4;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::Sound);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::GameEnd);
 			gameFirstStarting = false;
 		} /// if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::firstGame))
 		// ロードするとき
@@ -179,8 +179,8 @@ void Manager::TitleProcess()
 			}
 
 
-			optionSelectMin = 0;
-			optionSelectMax = 4;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::Sound);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::GameEnd);
 			gameFirstStarting = false;
 		} /// else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::load))
 		// ゲームを終了するとき
@@ -299,8 +299,8 @@ void Manager::TitleProcess()
 			} /// else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::bonusMove6))
 
 
-			optionSelectMin = 0;
-			optionSelectMax = 4;
+			optionSelectMin = static_cast<int>(EOptionSelectButton::Sound);
+			optionSelectMax = static_cast<int>(EOptionSelectButton::GameEnd);
 			gameFirstStarting = false;
 		} /// else if (optionSelectButtonNum == static_cast<EOptionSelectButton>(ETitleDraw::bonus))
 	} /// if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_A) == 1)
@@ -2003,6 +2003,7 @@ void Manager::OptionProcess()
 			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
 			{
 				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
+				p_baseMove->TextureReloadCountDoReset();
 				p_baseMove->ThsTextureReload();		// テクスチャ切り替え
 			}
 		}
@@ -2014,6 +2015,7 @@ void Manager::OptionProcess()
 			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
 			{
 				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
+				p_baseMove->TextureReloadCountDoReset();
 				p_baseMove->ThsTextureReload();		// テクスチャ切り替え
 			}
 		}
@@ -2025,6 +2027,7 @@ void Manager::OptionProcess()
 			if (BASICPARAM::e_TextureColor != BASICPARAM::e_preTextureColor)
 			{
 				BASICPARAM::e_preTextureColor = BASICPARAM::e_TextureColor;
+				p_baseMove->TextureReloadCountDoReset();
 				p_baseMove->ThsTextureReload();		// テクスチャ切り替え
 			}
 		}
@@ -2953,6 +2956,8 @@ void Manager::Update()
 					// オプション画面から戻る
 					if (DLLXinput::GetPadButtonData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::BUTTON_START) == 1)
 					{
+						optionSelectMin = static_cast<int>(EOptionSelectButton::Sound);
+						optionSelectMax = static_cast<int>(EOptionSelectButton::GameEnd);
 						p_baseMove->OptionActorModelAfter();
 						p_baseMove->CameraProcess();				// カメラ切り替え
 						SoundProcess::SetOptionMenuNow(false);		// サウンド音量をオプション用から戻す

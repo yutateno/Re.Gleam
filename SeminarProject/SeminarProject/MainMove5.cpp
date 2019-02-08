@@ -304,15 +304,6 @@ void MainMove5::AttackProcess()
 
 
 /// --------------------------------------------------------------------------------------------------
-void MainMove5::ThsTextureReload()
-{
-	ths = std::thread(&MainMove5::TextureReload, this);
-	ths.join();
-}
-
-
-
-/// --------------------------------------------------------------------------------------------------
 MainMove5::MainMove5(const std::vector<int> v_file)
 {
 	// 初期化
@@ -853,80 +844,118 @@ void MainMove5::CameraProcess()
 
 
 /// --------------------------------------------------------------------------------------------------
-void MainMove5::TextureReload()
+void MainMove5::ThsTextureReload()
 {
-	// キャラクターのテクスチャが白黒指定じゃなかったら
-	if (!BASICPARAM::charaTextureWhiteBlack)
+	if (textureReloadCountDo == 6)
 	{
-		// キャラクター
-		p_character->TextureReload();
+		// キャラクターのテクスチャが白黒指定じゃなかったら
+		if (!BASICPARAM::charaTextureWhiteBlack)
+		{
+			// キャラクター
+			ths = p_character->ThsTextureReload();
+			ths.join();
+		}
 	}
 
 
-	// その他のテクスチャが白黒指定じゃなかったら
-	if (!BASICPARAM::anothreTextureWhiteBlack)
+	if (textureReloadCountDo == 5)
 	{
-		// 精密機械
-		p_adjustmentMachine->TextureReload();
-
-
-		// 一般人
-		if (BASICPARAM::ordinaryPeopleNum != 0)
+		// その他のテクスチャが白黒指定じゃなかったら
+		if (!BASICPARAM::anothreTextureWhiteBlack)
 		{
-			for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+			// 精密機械
+			ths = p_adjustmentMachine->ThsTextureReload();
+			ths.join();
+		}
+	}
+
+
+	if (textureReloadCountDo == 4)
+	{
+		// その他のテクスチャが白黒指定じゃなかったら
+		if (!BASICPARAM::anothreTextureWhiteBlack)
+		{
+			// 一般人
+			if (BASICPARAM::ordinaryPeopleNum != 0)
 			{
-				vp_ordinaryPerson[i]->TextureReload();
+				for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+				{
+					ths = vp_ordinaryPerson[i]->ThsTextureReload();
+					ths.join();
+				}
 			}
 		}
 	}
 
 
-	// 敵
-	if (!BASICPARAM::enemyTextureWhiteBlack)
+	if (textureReloadCountDo == 3)
 	{
-		for (int i = 0; i != enemyNum; ++i)
+		// 敵
+		if (!BASICPARAM::enemyTextureWhiteBlack)
 		{
-			p_enemyMove[i]->TextureReload();
-		}
-	}
-
-
-	// 階段のテクスチャが白黒指定じゃなかったら
-	if (!BASICPARAM::stairsTextureWhiteBlack)
-	{
-		if (BASICPARAM::stairsNum != 0)
-		{
-			for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+			for (int i = 0; i != enemyNum; ++i)
 			{
-				vp_stageStairs[i]->TextureReload();
+				ths = p_enemyMove[i]->ThsTextureReload();
+				ths.join();
 			}
 		}
 	}
 
 
-	// 街灯のテクスチャが白黒指定じゃなかったら
-	if (!BASICPARAM::lightStreetTextureWhiteBlack)
+	if (textureReloadCountDo == 2)
 	{
-		if (BASICPARAM::streetLightNum != 0)
+		// 階段のテクスチャが白黒指定じゃなかったら
+		if (!BASICPARAM::stairsTextureWhiteBlack)
 		{
-			for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
+			if (BASICPARAM::stairsNum != 0)
 			{
-				vp_stageStreetLight[i]->TextureReload();
+				for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+				{
+					ths = vp_stageStairs[i]->ThsTextureReload();
+					ths.join();
+				}
 			}
 		}
 	}
 
 
-	// 階段と床のテクスチャが白黒指定じゃなかったら
-	if (!BASICPARAM::stairsRoadTextureWhiteBlack)
+	if (textureReloadCountDo == 1)
 	{
-		if (BASICPARAM::stairsRoadNum != 0)
+		// 街灯のテクスチャが白黒指定じゃなかったら
+		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{
-			for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+			if (BASICPARAM::streetLightNum != 0)
 			{
-				vp_stageStairsRoad[i]->TextureReload();
+				for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
+				{
+					ths = vp_stageStreetLight[i]->ThsTextureReload();
+					ths.join();
+				}
 			}
 		}
+	}
+
+
+	if (textureReloadCountDo == 0)
+	{
+		// 階段と床のテクスチャが白黒指定じゃなかったら
+		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
+		{
+			if (BASICPARAM::stairsRoadNum != 0)
+			{
+				for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+				{
+					ths = vp_stageStairsRoad[i]->ThsTextureReload();
+					ths.join();
+				}
+			}
+		}
+	}
+
+
+	if (++textureReloadCountDo <= 6)
+	{
+		ThsTextureReload();					// 読み込み終わるまで再帰
 	}
 } /// void MainMove5::TextureReload()
 

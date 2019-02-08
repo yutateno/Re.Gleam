@@ -428,6 +428,14 @@ void OrdinaryPerson::TextureReload()
 
 
 /// ----------------------------------------------------------------------------------------------------------------------
+std::thread OrdinaryPerson::ThsTextureReload()
+{
+	return std::thread(&OrdinaryPerson::TextureReload, this);
+}
+
+
+
+/// ----------------------------------------------------------------------------------------------------------------------
 void OrdinaryPerson::SetAlive(VECTOR area, bool alive)
 {
 	this->area = area;

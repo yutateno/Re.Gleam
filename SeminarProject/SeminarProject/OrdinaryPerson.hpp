@@ -111,6 +111,9 @@ public:
 	// テクスチャの切り替え
 	void TextureReload();
 
+	// 非同期テクスチャ差し替え
+	std::thread ThsTextureReload();
+
 	// オプション用モデル描画の後始末
 	void OptionActorDrawAfter() override {}
 

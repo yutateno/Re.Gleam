@@ -27,6 +27,9 @@ public:
 	// テクスチャの切り替え
 	void TextureReload();
 
+	// 非同期テクスチャ差し替え
+	std::thread ThsTextureReload();
+
 
 	// Y軸の回転
 	const float GetYAngle() const { return angle; }

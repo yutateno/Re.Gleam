@@ -298,3 +298,11 @@ void EnemyBossAfter::TextureReload()
 	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle1, false);
 	MV1SetTextureGraphHandle(this->modelHandle, 2, textureHandle2, false);
 } /// void EnemyBossAfter::TextureReload()
+
+
+
+/// ----------------------------------------------------------------------------------------
+std::thread EnemyBossAfter::ThsTextureReload()
+{
+	return std::thread(&EnemyBossAfter::TextureReload, this);
+}

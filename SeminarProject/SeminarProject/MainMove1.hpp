@@ -158,9 +158,6 @@ public:
 	// カメラのプロセス
 	void CameraProcess() override;
 
-	// テクスチャの切り替え
-	void TextureReload() override {}
-
 	// テクスチャの差し替えだがこのムーブでは使わない
 	void ThsTextureReload() override {}
 

@@ -2000,96 +2000,135 @@ void MainMove3::CameraProcess()
 
 
 /// --------------------------------------------------------------------------------------------------
-void MainMove3::TextureReload()
-{
-	// キャラクターのテクスチャが白黒指定じゃなかったら
-	if (!BASICPARAM::charaTextureWhiteBlack)
-	{
-		// ダメージ演出
-		DamageTextureReload();
-
-		// キャラクター
-		p_character->TextureReload();
-	}
-	
-
-	// その他のテクスチャが白黒指定じゃなかったら
-	if (!BASICPARAM::anothreTextureWhiteBlack)
-	{
-		// 精密機械
-		p_adjustmentMachine->TextureReload();
-	}
-
-
-	// 階段のテクスチャが白黒指定じゃなかったら
-	if (!BASICPARAM::stairsTextureWhiteBlack)
-	{
-		if (BASICPARAM::stairsNum != 0)
-		{
-			for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
-			{
-				vp_stageStairs[i]->TextureReload();
-			}
-		}
-	}
-
-
-	// 街灯のテクスチャが白黒指定じゃなかったら
-	if (!BASICPARAM::lightStreetTextureWhiteBlack)
-	{
-		if (BASICPARAM::streetLightNum != 0)
-		{
-			for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
-			{
-				vp_stageStreetLight[i]->TextureReload();
-			}
-		}
-	}
-
-
-	// 階段と床のテクスチャが白黒指定じゃなかったら
-	if (!BASICPARAM::stairsRoadTextureWhiteBlack)
-	{
-		if (BASICPARAM::stairsRoadNum != 0)
-		{
-			for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
-			{
-				vp_stageStairsRoad[i]->TextureReload();
-			}
-		}
-	}
-
-
-	// 敵スライム
-	for (int i = 0; i != enemySlimeNum; ++i)
-	{
-		if (p_enemySlime[i]->GetDeathFlag()) continue;
-		p_enemySlime[i]->TextureReload();
-	}
-
-
-	// 敵クレヨンヒューマン
-	for (int i = 0; i != enemyCrayonHumanNum; ++i)
-	{
-		if (p_enemyCrayonHuman[i]->GetDeathFlag()) continue;
-		p_enemyCrayonHuman[i]->TextureReload();
-	}
-
-
-	// ドロップアイテムのテクスチャが白黒指定じゃなかったら
-	for (int i = 0, n = dropItemNum; i != n; ++i)
-	{
-		if (p_dropItem[i]->GetDeath()) continue;
-		p_dropItem[i]->TextureReload();
-	}
-} /// void MainMove3::TextureReload()
-
-
-/// --------------------------------------------------------------------------------------------------
 void MainMove3::ThsTextureReload()
 {
-	ths = std::thread(&MainMove3::TextureReload, this);
-	ths.join();
+	if (textureReloadCountDo == 8)
+	{
+		// ドロップアイテムのテクスチャが白黒指定じゃなかったら
+		for (int i = 0, n = dropItemNum; i != n; ++i)
+		{
+			if (p_dropItem[i]->GetDeath()) continue;
+			ths = p_dropItem[i]->ThsTextureReload();
+			ths.join();
+		}
+	}
+
+
+	if (textureReloadCountDo == 7)
+	{
+		// 敵クレヨンヒューマン
+		for (int i = 0; i != enemyCrayonHumanNum; ++i)
+		{
+			if (p_enemyCrayonHuman[i]->GetDeathFlag()) continue;
+			ths = p_enemyCrayonHuman[i]->ThsTextureReload();
+			ths.join();
+		}
+	}
+
+
+	if (textureReloadCountDo == 6)
+	{
+		// 敵スライム
+		for (int i = 0; i != enemySlimeNum; ++i)
+		{
+			if (p_enemySlime[i]->GetDeathFlag()) continue;
+			ths = p_enemySlime[i]->ThsTextureReload();
+			ths.join();
+		}
+	}
+
+
+	if (textureReloadCountDo == 5)
+	{
+		// 階段と床のテクスチャが白黒指定じゃなかったら
+		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
+		{
+			if (BASICPARAM::stairsRoadNum != 0)
+			{
+				for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+				{
+					ths = vp_stageStairsRoad[i]->ThsTextureReload();
+					ths.join();
+				}
+			}
+		}
+	}
+
+
+	if (textureReloadCountDo == 4)
+	{
+		// 街灯のテクスチャが白黒指定じゃなかったら
+		if (!BASICPARAM::lightStreetTextureWhiteBlack)
+		{
+			if (BASICPARAM::streetLightNum != 0)
+			{
+				for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
+				{
+					ths = vp_stageStreetLight[i]->ThsTextureReload();
+					ths.join();
+				}
+			}
+		}
+	}
+
+
+	if (textureReloadCountDo == 3)
+	{
+		// 階段のテクスチャが白黒指定じゃなかったら
+		if (!BASICPARAM::stairsTextureWhiteBlack)
+		{
+			if (BASICPARAM::stairsNum != 0)
+			{
+				for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+				{
+					ths = vp_stageStairs[i]->ThsTextureReload();
+					ths.join();
+				}
+			}
+		}
+	}
+
+
+	if (textureReloadCountDo == 2)
+	{
+		// その他のテクスチャが白黒指定じゃなかったら
+		if (!BASICPARAM::anothreTextureWhiteBlack)
+		{
+			// 精密機械
+			ths = p_adjustmentMachine->ThsTextureReload();
+			ths.join();
+		}
+	}
+
+
+	if (textureReloadCountDo == 1)
+	{
+		// キャラクターのテクスチャが白黒指定じゃなかったら
+		if (!BASICPARAM::charaTextureWhiteBlack)
+		{
+			// キャラクター
+			ths = p_character->ThsTextureReload();
+			ths.join();
+		}
+	}
+
+
+	if (textureReloadCountDo == 0)
+	{
+		// キャラクターのテクスチャが白黒指定じゃなかったら
+		if (!BASICPARAM::charaTextureWhiteBlack)
+		{
+			// ダメージ演出
+			ths = std::thread(&MainMove3::DamageTextureReload, this);
+			ths.join();
+		}
+	}
+
+
+	if (++textureReloadCountDo <= 8)
+	{
+		ThsTextureReload();					// 読み込み終わるまで再帰
+	}
 }
 
 

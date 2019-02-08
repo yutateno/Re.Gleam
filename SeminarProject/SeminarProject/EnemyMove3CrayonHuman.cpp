@@ -647,7 +647,16 @@ void EnemyMove3CrayonHuman::TextureReload()
 
 
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
-}/// void EnemyMove3CrayonHuman::TextureReload()
+}
+/// void EnemyMove3CrayonHuman::TextureReload()
+
+
+
+/// --------------------------------------------------------------------------------------------------
+std::thread EnemyMove3CrayonHuman::ThsTextureReload()
+{
+	return std::thread(&EnemyMove3CrayonHuman::TextureReload, this);
+}
 
 
 

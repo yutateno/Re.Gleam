@@ -245,9 +245,6 @@ public:
 	// カメラのプロセス
 	void CameraProcess() override;
 
-	// テクスチャの切り替え
-	void TextureReload() override {}
-
 	// 非同期テクスチャ切り替え
 	void ThsTextureReload() override {};
 

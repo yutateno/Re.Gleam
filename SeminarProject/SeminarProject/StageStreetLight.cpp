@@ -80,3 +80,11 @@ void StageStreetLight::TextureReload()
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
 	MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle1, false);
 }
+
+
+
+/// --------------------------------------------------------------------------------------------------
+std::thread StageStreetLight::ThsTextureReload()
+{
+	return std::thread(&StageStreetLight::TextureReload, this);
+}

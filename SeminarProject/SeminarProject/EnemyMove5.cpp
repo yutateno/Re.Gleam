@@ -608,7 +608,16 @@ void EnemyMove5::TextureReload()
 
 
 	MV1SetTextureGraphHandle(this->modelHandle, 0, textureHandle0, false);
-}/// void EnemyMove3CrayonHuman::TextureReload()
+}
+/// void EnemyMove3CrayonHuman::TextureReload()
+
+
+
+/// -----------------------------------------------------------------------------------------
+std::thread EnemyMove5::ThsTextureReload()
+{
+	return std::thread(&EnemyMove5::TextureReload, this);
+}
 
 
 

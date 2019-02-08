@@ -37,6 +37,9 @@ public:
 	// テクスチャの切り替え
 	void TextureReload();
 
+	// 非同期テクスチャ差し替え
+	std::thread ThsTextureReload();
+
 	// 触れられ次第でテクスチャを切り替える
 	void ChangeDisplayTexture(bool touchNow);
 

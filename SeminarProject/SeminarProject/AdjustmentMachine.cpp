@@ -132,6 +132,14 @@ void AdjustmentMachine::TextureReload()
 
 
 /// ------------------------------------------------------------------------------------------
+std::thread AdjustmentMachine::ThsTextureReload()
+{
+	return std::thread(&AdjustmentMachine::TextureReload, this);
+}
+
+
+
+/// ------------------------------------------------------------------------------------------
 void AdjustmentMachine::ChangeDisplayTexture(bool touchNow)
 {
 	if (touchNow)

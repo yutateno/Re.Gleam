@@ -1317,6 +1317,14 @@ void CharacterSword::TextureReload()
 
 
 /// ---------------------------------------------------------------------------------------------------------------
+std::thread CharacterSword::ThsTextureReload()
+{
+	return std::thread(&CharacterSword::TextureReload, this);
+}
+
+
+
+/// ---------------------------------------------------------------------------------------------------------------
 void CharacterSword::Draw()
 {
 	int setShadowNum = 0;		// ‘«‚Ì‰e‚ğ¶¬‚µ‚½‚©‚Ç‚¤‚©‚ÌŒÂ”‚ğæ“¾‚·‚é

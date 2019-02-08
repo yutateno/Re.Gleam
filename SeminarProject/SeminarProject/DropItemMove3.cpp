@@ -154,6 +154,14 @@ void DropItemMove3::TextureReload()
 
 
 /// --------------------------------------------------------------------------------------------------
+std::thread DropItemMove3::ThsTextureReload()
+{
+	return std::thread(&DropItemMove3::TextureReload, this);
+}
+
+
+
+/// --------------------------------------------------------------------------------------------------
 void DropItemMove3::SetAlive(VECTOR dropArea, bool alive)
 {
 	aliveNow = alive;

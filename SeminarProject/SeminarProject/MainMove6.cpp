@@ -325,15 +325,6 @@ void MainMove6::AttackProcess()
 
 
 /// --------------------------------------------------------------------------------------------------
-void MainMove6::ThsTextureReload()
-{
-	ths = std::thread(&MainMove6::TextureReload, this);
-	ths.join();
-}
-
-
-
-/// --------------------------------------------------------------------------------------------------
 void MainMove6::FirstDraw()
 {	
 	// スカイボックスを描画
@@ -960,6 +951,53 @@ void MainMove6::BattleProcess()
 
 
 /// --------------------------------------------------------------------------------------------------
+void MainMove6::BattleTextureReload()
+{
+	for (int i = 0; i != 5; ++i)
+	{
+		GRAPHIC_RELEASE(battleHealDraw[i]);
+	}
+
+
+	switch (BASICPARAM::e_TextureColor)
+	{
+	case ETextureColor::NORMAL:
+		LoadFile::MyLoad("media\\UI\\clph_icon\\normal.pyn", battleHealDraw[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\no_name\\normal.pyn", battleHealDraw[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\ゲージ\\normal.pyn", battleHealDraw[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\ゲージの中身1\\normal.pyn", battleHealDraw[3], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\enemy\\normal.pyn", battleHealDraw[4], ELOADFILE::graph);
+		break;
+
+	case ETextureColor::D_CORRECTION:
+		LoadFile::MyLoad("media\\UI\\clph_icon\\D.pyn", battleHealDraw[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\no_name\\D.pyn", battleHealDraw[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\ゲージ\\D.pyn", battleHealDraw[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\ゲージの中身1\\D.pyn", battleHealDraw[3], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\enemy\\D.pyn", battleHealDraw[4], ELOADFILE::graph);
+		break;
+
+	case ETextureColor::P_CORRECTION:
+		LoadFile::MyLoad("media\\UI\\clph_icon\\P.pyn", battleHealDraw[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\no_name\\P.pyn", battleHealDraw[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\ゲージ\\P.pyn", battleHealDraw[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\ゲージの中身1\\P.pyn", battleHealDraw[3], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\enemy\\P.pyn", battleHealDraw[4], ELOADFILE::graph);
+		break;
+
+	default:
+		LoadFile::MyLoad("media\\UI\\clph_icon\\normal.pyn", battleHealDraw[0], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\no_name\\normal.pyn", battleHealDraw[1], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\ゲージ\\normal.pyn", battleHealDraw[2], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\ゲージの中身1\\normal.pyn", battleHealDraw[3], ELOADFILE::graph);
+		LoadFile::MyLoad("media\\UI\\enemy\\normal.pyn", battleHealDraw[4], ELOADFILE::graph);
+		break;
+	}
+}
+
+
+
+/// --------------------------------------------------------------------------------------------------
 void MainMove6::LastDraw()
 {
 	BaseMove::SkyBoxDraw();		// スカイボックスを描画
@@ -1501,111 +1539,108 @@ void MainMove6::CameraProcess()
 
 
 /// --------------------------------------------------------------------------------------------------
-void MainMove6::TextureReload()
+void MainMove6::ThsTextureReload()
 {
-	// キャラクターのテクスチャが白黒指定じゃなかったら
-	if (!BASICPARAM::charaTextureWhiteBlack)
+	if (textureReloadCountDo == 6)
 	{
-		// キャラクター
-		p_character->TextureReload();
+		// キャラクターのテクスチャが白黒指定じゃなかったら
+		if (!BASICPARAM::charaTextureWhiteBlack)
+		{
+			// キャラクター
+			ths = p_character->ThsTextureReload();
+			ths.join();
+		}
 	}
 
 
-	// 戦闘敵の画像
-	p_enemyBossAfter->TextureReload();
-
-
-	// その他のテクスチャが白黒指定じゃなかったら
-	if (!BASICPARAM::anothreTextureWhiteBlack)
+	if (textureReloadCountDo == 5)
 	{
-		// 一般人
-		if (vp_ordinaryPerson.size() != 0)
+		// 戦闘敵の画像
+		ths = p_enemyBossAfter->ThsTextureReload();
+		ths.join();
+	}
+
+
+	if (textureReloadCountDo == 4)
+	{
+		// その他のテクスチャが白黒指定じゃなかったら
+		if (!BASICPARAM::anothreTextureWhiteBlack)
 		{
-			for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+			// 一般人
+			if (vp_ordinaryPerson.size() != 0)
 			{
-				vp_ordinaryPerson[i]->TextureReload();
+				for (int i = 0, n = BASICPARAM::ordinaryPeopleNum; i != n; ++i)
+				{
+					ths = vp_ordinaryPerson[i]->ThsTextureReload();
+					ths.join();
+				}
 			}
 		}
 	}
 
 
-	// 階段のテクスチャが白黒指定じゃなかったら
-	if (!BASICPARAM::stairsTextureWhiteBlack)
+	if (textureReloadCountDo == 3)
 	{
-		if (vp_stageStairs.size() != 0)
+		// 階段のテクスチャが白黒指定じゃなかったら
+		if (!BASICPARAM::stairsTextureWhiteBlack)
 		{
-			for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+			if (vp_stageStairs.size() != 0)
 			{
-				vp_stageStairs[i]->TextureReload();
+				for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
+				{
+					ths = vp_stageStairs[i]->ThsTextureReload();
+					ths.join();
+				}
 			}
 		}
 	}
 
 
-	// 街灯のテクスチャが白黒指定じゃなかったら
-	if (!BASICPARAM::lightStreetTextureWhiteBlack)
+	if (textureReloadCountDo == 2)
 	{
-		if (vp_stageStreetLight.size() != 0)
+		// 街灯のテクスチャが白黒指定じゃなかったら
+		if (!BASICPARAM::lightStreetTextureWhiteBlack)
 		{
-			for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
+			if (vp_stageStreetLight.size() != 0)
 			{
-				vp_stageStreetLight[i]->TextureReload();
+				for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
+				{
+					ths = vp_stageStreetLight[i]->ThsTextureReload();
+					ths.join();
+				}
 			}
 		}
 	}
 
 
-	// 階段と床のテクスチャが白黒指定じゃなかったら
-	if (!BASICPARAM::stairsRoadTextureWhiteBlack)
+	if (textureReloadCountDo == 1)
 	{
-		if (vp_stageStairsRoad.size() != 0)
+		// 階段と床のテクスチャが白黒指定じゃなかったら
+		if (!BASICPARAM::stairsRoadTextureWhiteBlack)
 		{
-			for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+			if (vp_stageStairsRoad.size() != 0)
 			{
-				vp_stageStairsRoad[i]->TextureReload();
+				for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
+				{
+					ths = vp_stageStairsRoad[i]->ThsTextureReload();
+					ths.join();
+				}
 			}
 		}
 	}
 
 
-	// 戦闘中画像
-	for (int i = 0; i != 5; ++i)
+	if (textureReloadCountDo == 0)
 	{
-		GRAPHIC_RELEASE(battleHealDraw[i]);
+		// 戦闘中画像
+		ths = std::thread(&MainMove6::BattleTextureReload, this);
+		ths.join();
 	}
-	switch (BASICPARAM::e_TextureColor)
+
+
+	if (++textureReloadCountDo <= 6)
 	{
-	case ETextureColor::NORMAL:
-		LoadFile::MyLoad("media\\UI\\clph_icon\\normal.pyn", battleHealDraw[0], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\UI\\no_name\\normal.pyn", battleHealDraw[1], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\UI\\ゲージ\\normal.pyn", battleHealDraw[2], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\UI\\ゲージの中身1\\normal.pyn", battleHealDraw[3], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\UI\\enemy\\normal.pyn", battleHealDraw[4], ELOADFILE::graph);
-		break;
-
-	case ETextureColor::D_CORRECTION:
-		LoadFile::MyLoad("media\\UI\\clph_icon\\D.pyn", battleHealDraw[0], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\UI\\no_name\\D.pyn", battleHealDraw[1], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\UI\\ゲージ\\D.pyn", battleHealDraw[2], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\UI\\ゲージの中身1\\D.pyn", battleHealDraw[3], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\UI\\enemy\\D.pyn", battleHealDraw[4], ELOADFILE::graph);
-		break;
-
-	case ETextureColor::P_CORRECTION:
-		LoadFile::MyLoad("media\\UI\\clph_icon\\P.pyn", battleHealDraw[0], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\UI\\no_name\\P.pyn", battleHealDraw[1], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\UI\\ゲージ\\P.pyn", battleHealDraw[2], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\UI\\ゲージの中身1\\P.pyn", battleHealDraw[3], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\UI\\enemy\\P.pyn", battleHealDraw[4], ELOADFILE::graph);
-		break;
-
-	default:
-		LoadFile::MyLoad("media\\UI\\clph_icon\\normal.pyn", battleHealDraw[0], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\UI\\no_name\\normal.pyn", battleHealDraw[1], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\UI\\ゲージ\\normal.pyn", battleHealDraw[2], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\UI\\ゲージの中身1\\normal.pyn", battleHealDraw[3], ELOADFILE::graph);
-		LoadFile::MyLoad("media\\UI\\enemy\\normal.pyn", battleHealDraw[4], ELOADFILE::graph);
-		break;
+		ThsTextureReload();					// 読み込み終わるまで再帰
 	}
 } /// void MainMove5::TextureReload()
 

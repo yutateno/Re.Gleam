@@ -136,6 +136,9 @@ public:
 	// テクスチャの切り替え
 	void TextureReload();
 
+	// 非同期テクスチャ差し替え
+	std::thread ThsTextureReload();
+
 	// キャラクターの座標と距離を把握する
 	void SetCharacterArea(const VECTOR characterArea, const int distance);
 

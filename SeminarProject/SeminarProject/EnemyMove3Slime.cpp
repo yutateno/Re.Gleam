@@ -587,6 +587,14 @@ void EnemyMove3Slime::TextureReload()
 
 
 /// --------------------------------------------------------------------------------------
+std::thread EnemyMove3Slime::ThsTextureReload()
+{
+	return std::thread(&EnemyMove3Slime::TextureReload, this);
+}
+
+
+
+/// --------------------------------------------------------------------------------------
 void EnemyMove3Slime::SetCharacterArea(const VECTOR characterArea, const int distance)
 {
 	playerCharaArea = characterArea;

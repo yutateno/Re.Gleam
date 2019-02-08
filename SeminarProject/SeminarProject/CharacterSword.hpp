@@ -196,6 +196,9 @@ public:
 	// テクスチャの切り替え
 	void TextureReload();
 
+	// 非同期テクスチャ差し替え
+	std::thread ThsTextureReload();
+
 	// 攻撃を受けている
 	void SetDamage() { damageFlag = true; }
 

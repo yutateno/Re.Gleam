@@ -152,8 +152,7 @@ BasicObject::~BasicObject()
 void BasicObject::ModelDraw()
 {
 	// スクリーン座標内にいたら
-	if (!CheckCameraViewClip(area) && !CheckCameraViewClip(VAdd(area, VGet(0.0f, modelHeight, 0.0f)))
-		&& !CheckCameraViewClip(VAdd(area, VGet(0.0f, modelHeight / 2.0f, 0.0f))))
+	if (CheckCameraViewClip_Box(area, VAdd(area, VGet(0.0f, modelHeight, 0.0f))) == FALSE)
 	{
 		// モデルを描画
 		MV1DrawModel(modelHandle);
@@ -165,8 +164,11 @@ void BasicObject::ModelDraw()
 	// スクリーン座標外にいたら
 	else
 	{
+		if (notViewCount > 10) return;
+
+
 		// 見えていないカウントが6以下だったら
-		if (++notViewCount <= 6)
+		if (notViewCount++ <= 6)
 		{
 			// モデルを描画
 			MV1DrawModel(modelHandle);

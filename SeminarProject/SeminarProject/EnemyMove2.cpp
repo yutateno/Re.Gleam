@@ -62,15 +62,6 @@ void EnemyMove2::Process()
 	if (eraseExistence) return;
 
 
-	// ダメージ受けた時
-	if (damageHit)
-	{
-		deathFlag = true;
-
-		damageHit = false;
-	}
-
-
 	// 死んだとき
 	if (deathFlag)
 	{
@@ -89,6 +80,19 @@ void EnemyMove2::Process()
 
 		MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
 	}
+
+
+	// ダメージ受けた時
+	if (damageHit)
+	{
+		deathFlag = true;
+
+		damageHit = false;
+	}
+
+
+	// 画面外にいたら処理させない
+	if (notViewCount > 3) return;
 
 
 	MV1SetPosition(this->modelHandle, area);

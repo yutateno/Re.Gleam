@@ -142,6 +142,10 @@ std::thread AdjustmentMachine::ThsTextureReload()
 /// ------------------------------------------------------------------------------------------
 void AdjustmentMachine::ChangeDisplayTexture(bool touchNow)
 {
+	// ‰æ–ÊŠO‚É‚¢‚½‚çˆ—‚³‚¹‚È‚¢
+	if (notViewCount > 3) return;
+
+
 	if (touchNow)
 	{
 		MV1SetTextureGraphHandle(this->modelHandle, 1, textureHandle1, false);

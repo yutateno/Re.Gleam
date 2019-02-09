@@ -10,7 +10,7 @@ CameraMove6::CameraMove6()
 
 
 	SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
-	SetCameraNearFar(100.0f, 9000.0f);
+	SetCameraNearFar(100.0f, 9500.0f);
 	SetCameraPositionAndTarget_UpVecY(area, viewArea);
 }
 
@@ -27,6 +27,6 @@ CameraMove6::~CameraMove6()
 void CameraMove6::SetUp()
 {
 	SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
-	SetCameraNearFar(100.0f, 9000.0f);
+	SetCameraNearFar(100.0f, 9500.0f);
 	SetCameraPositionAndTarget_UpVecY(area, viewArea);
 }

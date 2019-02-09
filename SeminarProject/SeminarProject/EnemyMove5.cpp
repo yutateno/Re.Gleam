@@ -432,6 +432,10 @@ void EnemyMove5::Draw()
 	if (deathFlag || eraseExistence) return;
 
 
+	// ‰æ–ÊŠO‚É‚¢‚½‚çˆ—‚³‚¹‚È‚¢
+	if (notViewCount > 3) return;
+
+
 	BasicObject::ShadowFoot(shadowStageHandle);
 
 
@@ -624,6 +628,10 @@ std::thread EnemyMove5::ThsTextureReload()
 /// -----------------------------------------------------------------------------------------
 void EnemyMove5::SetCharacterArea(const VECTOR characterArea, const int distance)
 {
+	// ‰æ–ÊŠO‚É‚¢‚½‚çˆ—‚³‚¹‚È‚¢
+	if (notViewCount > 3) return;
+
+
 	playerCharaArea = characterArea;
 	playerCharaDistance = distance;
 }

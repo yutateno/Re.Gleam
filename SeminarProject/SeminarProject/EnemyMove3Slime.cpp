@@ -443,6 +443,10 @@ void EnemyMove3Slime::Draw()
 	if (deathFlag || eraseExistence) return;
 
 
+	// ‰æ–ÊŠO‚É‚¢‚½‚çˆ—‚³‚¹‚È‚¢
+	if (notViewCount > 3) return;
+
+
 	BasicObject::ShadowFoot(shadowStageHandle);
 
 
@@ -597,6 +601,10 @@ std::thread EnemyMove3Slime::ThsTextureReload()
 /// --------------------------------------------------------------------------------------
 void EnemyMove3Slime::SetCharacterArea(const VECTOR characterArea, const int distance)
 {
+	// ‰æ–ÊŠO‚É‚¢‚½‚çˆ—‚³‚¹‚È‚¢
+	if (notViewCount > 3) return;
+
+
 	playerCharaArea = characterArea;
 	playerCharaDistance = distance;
 }

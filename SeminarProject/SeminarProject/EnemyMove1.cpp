@@ -108,6 +108,10 @@ EnemyMove1::~EnemyMove1()
 /// ---------------------------------------------------------------------------------------------------------
 void EnemyMove1::Draw()
 {
+	// 画面外にいたら処理させない
+	if (notViewCount > 3) return;
+
+
 	BasicObject::ShadowFoot(shadowStageHandle);
 
 
@@ -132,6 +136,10 @@ void EnemyMove1::Draw()
 /// ---------------------------------------------------------------------------------------------------------
 void EnemyMove1::Process()
 {
+	// 画面外にいたら処理させない
+	if (notViewCount > 3) return;
+
+
 	// 動きのプロセス
 	MoveProcess();
 }
@@ -141,6 +149,10 @@ void EnemyMove1::Process()
 /// ---------------------------------------------------------------------------------------------------------
 void EnemyMove1::NearChara(const VECTOR characterArea)
 {
+	// 画面外にいたら処理させない
+	if (notViewCount > 3) return;
+
+
 	// プレイヤーに近づく
 	if (characterArea.x < area.x - 4.0f)
 	{

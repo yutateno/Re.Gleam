@@ -349,6 +349,10 @@ void OrdinaryPerson::Process()
 	if (!alive) return;
 
 
+	// 画面外にいたら処理させない
+	if (notViewCount > 3) return;
+
+
 	preArea = area;		// 直前の座標
 
 
@@ -449,6 +453,10 @@ void OrdinaryPerson::Draw()
 {
 	// 生存を許してないとき
 	if (!alive) return;
+
+
+	// 画面外にいたら処理させない
+	if (notViewCount > 3) return;
 
 
 	BasicObject::ShadowFoot(shadowStageHandle);

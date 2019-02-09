@@ -57,8 +57,5 @@ public:
 
 	// 目的の座標に達したことでキャラクターが手に入れられるかどうか
 	const bool GetCanCatch() { return flyAroundFrame >= 60 ? true : false; }
-
-	// オプション用モデル描画の後始末
-	void OptionActorDrawAfter() override {}
 };
 

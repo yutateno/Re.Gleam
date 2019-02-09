@@ -16,6 +16,12 @@ private:
 	// 左右のキャラ向きを扱う変数
 	float direXAngle;
 
+	// オプションでの回転数
+	int optionRotaCount;
+
+	// オプションでもモデル表示カウント
+	int optionModelDrawCount;
+
 
 	/// モーションに関して--------------------------------
 	enum MOTION { run, idle, walk };
@@ -64,6 +70,12 @@ public:
 	// 位置を初期化
 	void PositionReset() { area = VGet(0.0f, 0.0f, 0.0f); }
 
+	// オプション用モデル描画
+	void OptionActorDraw();
+
+	// オプション用モデル描画の準備
+	void OptionActorDrawBefore();
+
 	// オプション用モデル描画の後始末
-	void OptionActorDrawAfter() override;
+	void OptionActorDrawAfter();
 };

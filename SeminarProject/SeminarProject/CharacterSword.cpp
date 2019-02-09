@@ -719,6 +719,8 @@ CharacterSword::CharacterSword(const int modelHandle, const int collStageHandle,
 	modelWidth = 50.0f;
 	blendCount = 0;
 	moveFastWaitCount = 0;
+	optionRotaCount = 0;
+	optionModelDrawCount = 0;
 
 
 	// ƒ‚ƒfƒ‹‚ÌŒü‚«‚ÆˆÊ’u
@@ -1416,6 +1418,29 @@ void CharacterSword::Draw()
 	}
 #endif // _DEBUG
 } /// void CharacterSword::Draw()
+
+
+
+/// ---------------------------------------------------------------------------------------------------------------
+void CharacterSword::OptionActorDraw()
+{
+	// ‰ñ“]‚µ‚Ä•`‰æ‚³‚¹‚é
+	if (++optionRotaCount > 360) optionRotaCount = 0;
+	if (optionModelDrawCount++ > 10) MV1DrawModel(modelHandle);
+	MV1SetRotationXYZ(modelHandle, VGet(0.0f, optionRotaCount * DX_PI_F / 180.0f, 0.0f));
+	MV1SetPosition(modelHandle, VGet(150.0f, -110.0f, -370.0f));
+}
+
+
+
+/// ---------------------------------------------------------------------------------------------------------------
+void CharacterSword::OptionActorDrawBefore()
+{
+	SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
+	SetCameraNearFar(1.0f, 1.0f);	// ƒJƒƒ‰‚Ì•`‰æ”ÍˆÍ‚ğw’è
+	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 0.0f, -650.0f), VGet(0.0f, 0.0f, 0.0f));
+	optionModelDrawCount = 0;
+}
 
 
 

@@ -7,30 +7,6 @@ void MainMove6::ShadowDraw()
 {
 	/// セットアップ
 	BaseMove::ShadowCharaSetUpBefore();
-	// 階段
-	if (BASICPARAM::stairsNum != 0)
-	{
-		for (int i = 0, n = BASICPARAM::stairsNum; i != n; ++i)
-		{
-			vp_stageStairs[i]->ModelDraw();
-		}
-	}
-	// 街灯
-	if (BASICPARAM::streetLightNum != 0)
-	{
-		for (int i = 0, n = BASICPARAM::streetLightNum; i != n; ++i)
-		{
-			vp_stageStreetLight[i]->ModelDraw();
-		}
-	}
-	// 階段と床
-	if (BASICPARAM::stairsRoadNum != 0)
-	{
-		for (int i = 0, n = BASICPARAM::stairsRoadNum; i != n; ++i)
-		{
-			vp_stageStairsRoad[i]->ModelDraw();
-		}
-	}
 	// 一般人
 	if (BASICPARAM::ordinaryPeopleNum != 0)
 	{

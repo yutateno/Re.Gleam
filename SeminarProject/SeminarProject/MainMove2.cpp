@@ -401,29 +401,6 @@ void MainMove2::ShadowDraw()
 		if (!s_enemy[i].alive) continue;
 		if (!s_enemy[i].p_enemy->GetEraseExistence()) s_enemy[i].p_enemy->ModelDraw();
 	}
-	// 階段
-	for (int i = 0, n = static_cast<int>(vp_stageStairs.size()); i != n; ++i)
-	{
-		vp_stageStairs[i]->ModelDraw();
-	}
-	// 街灯
-	for (int i = 0, n = static_cast<int>(vp_stageStreetLight.size()); i != n; ++i)
-	{
-		vp_stageStreetLight[i]->ModelDraw();
-	}
-	// 階段と床
-	for (int i = 0, n = static_cast<int>(vp_stageStairsRoad.size()); i != n; ++i)
-	{
-		vp_stageStairsRoad[i]->ModelDraw();
-	}
-	// パネル
-	if (BASICPARAM::paneruDrawFlag)
-	{
-		for (int i = 0; i != 10; ++i)
-		{
-			p_stagePaneru[i]->ModelDraw();
-		}
-	}
 	// 精密機械
 	if(p_adjustmentMachine->GetCanTouch()) p_adjustmentMachine->ModelDraw();
 	// キャラクター

@@ -140,7 +140,4 @@ public:
 
 	// 死んだかどうか
 	void SetDie() { this->damageHit = true; }
-
-	// オプション用モデル描画の後始末
-	void OptionActorDrawAfter() override {}
 };

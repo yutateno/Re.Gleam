@@ -51,8 +51,5 @@ public:
 
 	// もうドロップアイテムいらないかどうか
 	const bool GetFullDropItem() const { return dropCount < 15 ? false : true; }
-
-	// オプション用モデル描画の後始末
-	void OptionActorDrawAfter() override {}
 };
 

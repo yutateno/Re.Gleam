@@ -114,9 +114,6 @@ public:
 	// 非同期テクスチャ差し替え
 	std::thread ThsTextureReload();
 
-	// オプション用モデル描画の後始末
-	void OptionActorDrawAfter() override {}
-
 	// 生存を許されたら座標を設定して生成
 	void SetAlive(VECTOR area, bool alive = true);
 

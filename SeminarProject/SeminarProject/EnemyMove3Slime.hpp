@@ -137,8 +137,5 @@ public:
 
 	// 攻撃をダメージに反映するかどうか
 	const bool GetAttackDamage() const { return attackDamageNow; }
-
-	// オプション用モデル描画の後始末
-	void OptionActorDrawAfter() override {}
 };
 

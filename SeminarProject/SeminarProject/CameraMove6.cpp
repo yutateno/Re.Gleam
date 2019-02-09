@@ -9,7 +9,8 @@ CameraMove6::CameraMove6()
 	viewArea = VGet(0, 0, 0);
 
 
-	SetCameraNearFar(100.0f, 10000.0f);
+	SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
+	SetCameraNearFar(100.0f, 9000.0f);
 	SetCameraPositionAndTarget_UpVecY(area, viewArea);
 }
 
@@ -26,6 +27,6 @@ CameraMove6::~CameraMove6()
 void CameraMove6::SetUp()
 {
 	SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
-	SetCameraNearFar(100.0f, 10000.0f);
+	SetCameraNearFar(100.0f, 9000.0f);
 	SetCameraPositionAndTarget_UpVecY(area, viewArea);
 }

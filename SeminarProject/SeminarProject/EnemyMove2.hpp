@@ -21,10 +21,6 @@ public:
 	// プロセス
 	void Process();
 
-
-	// オプション用モデル描画の後始末
-	void OptionActorDrawAfter() override {}
-
 	
 	/// ゲッターセッター---------------------------------------
 

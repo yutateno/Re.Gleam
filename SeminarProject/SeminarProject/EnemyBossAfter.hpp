@@ -99,9 +99,6 @@ public:
 	// 攻撃をダメージに反映するかどうか
 	const bool GetAttackDamage() const { return attackDamageNow; }
 
-	// オプション用モデル描画の後始末
-	void OptionActorDrawAfter() override {}
-
 	// どの攻撃を行ったか渡す
 	const EAttackPattern GetAttackPattern() const { return e_attackPattern; }
 

@@ -105,8 +105,6 @@ BasicObject::BasicObject()
 	ZeroMemory(shadowVertex, sizeof(shadowVertex));
 	shadowSlideVec = VGet(0.0f, 0.0f, 0.0f);
 	shadowHandle = -1;
-	optionRotaCount = 0;
-	optionModelDrawCount = 0;
 	move6_circle = 0.0f;
 	move6_line = 0.0f;
 }
@@ -135,8 +133,6 @@ BasicObject::BasicObject(bool shadowDo)
 	shadowHitRes = nullptr;
 	ZeroMemory(shadowVertex, sizeof(shadowVertex));
 	shadowSlideVec = VGet(0.0f, 0.0f, 0.0f);
-	optionRotaCount = 0;
-	optionModelDrawCount = 0;
 	move6_circle = 0.0f;
 	move6_line = 0.0f;
 }
@@ -176,29 +172,6 @@ void BasicObject::ModelDraw()
 			MV1DrawModel(modelHandle);
 		}
 	}
-}
-
-
-
-/// --------------------------------------------------------------------------------
-void BasicObject::OptionActorDraw()
-{
-	// ‰ñ“]‚µ‚Ä•`‰æ‚³‚¹‚é
-	if (++optionRotaCount > 360) optionRotaCount = 0;
-	if (optionModelDrawCount++ > 10) MV1DrawModel(modelHandle);
-	MV1SetRotationXYZ(modelHandle, VGet(0.0f, optionRotaCount * DX_PI_F / 180.0f, 0.0f));
-	MV1SetPosition(modelHandle, VGet(150.0f, -110.0f, -370.0f));
-}
-
-
-
-/// --------------------------------------------------------------------------------
-void BasicObject::OptionActorDrawBefore()
-{
-	SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
-	SetCameraNearFar(100.0f, 10000.0f);	// ƒJƒƒ‰‚Ì•`‰æ”ÍˆÍ‚ğw’è
-	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 0.0f, -650.0f), VGet(0.0f, 0.0f, 0.0f));
-	optionModelDrawCount = 0;
 }
 
 

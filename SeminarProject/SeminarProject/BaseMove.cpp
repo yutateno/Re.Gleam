@@ -184,24 +184,24 @@ BaseMove::BaseMove()
 	// フォグに関する
 	SetFogEnable(TRUE);					// フォグを有効にする
 	SetFogColor(128, 128, 128);			// フォグの色にする
-	SetFogStartEnd(3500.0f, 6000.0f);	// フォグの開始距離
+	SetFogStartEnd(3000.0f, 4000.0f);	// フォグの開始距離
 
 
 	// シャドウマップハンドルの作成
-	shadowMapCharaHandle = MakeShadowMap(2048, 2048);
+	shadowMapCharaHandle = MakeShadowMap(512, 512);
 	shadowMapAnotherCharaHandle = MakeShadowMap(512, 512);
-	shadowMapNoMoveHandle = MakeShadowMap(256, 256);
+	shadowMapNoMoveHandle = MakeShadowMap(1, 1);
 
 
 	// シャドウマップに描画する範囲を設定
-	shadowCharaLowArea = VGet(-500.0f, -1.0f, -500.0f);
-	shadowCharaHighArea = VGet(500.0f, 10.0f, 500.0f);
+	shadowCharaLowArea = VGet(-400.0f, -0.5f, -400.0f);
+	shadowCharaHighArea = VGet(400.0f, 0.5f, 400.0f);
 
-	shadowAnotherCharaLowArea = VGet(-2000.0f, -1.0f, -2000.0f);
-	shadowAnotherCharaHighArea = VGet(2000.0f, 100.0f, 2000.0f);
+	shadowAnotherCharaLowArea = VGet(-2000.0f, -0.5f, -2000.0f);
+	shadowAnotherCharaHighArea = VGet(2000.0f, 0.5f, 2000.0f);
 
-	shadowNoMoveLowArea = VGet(-2000.0f, -1.0f, -2000.0f);
-	shadowNoMoveHighArea = VGet(2000.0f, 1000.0f, 2000.0f);
+	shadowNoMoveLowArea = VGet(-0.5f, -0.5f, -0.5f);
+	shadowNoMoveHighArea = VGet(0.5f, 0.5f, 0.5f);
 
 	SetShadowMapDrawArea(shadowMapCharaHandle, shadowCharaLowArea, shadowCharaHighArea);
 	SetShadowMapDrawArea(shadowMapAnotherCharaHandle, shadowAnotherCharaLowArea, shadowAnotherCharaHighArea);

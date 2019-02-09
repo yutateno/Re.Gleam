@@ -20,6 +20,12 @@ private:
 	// 残像用描画
 	VECTOR preDrawArea;
 
+	// オプションでの回転数
+	int optionRotaCount;
+
+	// オプションでもモデル表示カウント
+	int optionModelDrawCount;
+
 
 	/// モーションに関して---------------------------------------------------------------------
 
@@ -205,8 +211,14 @@ public:
 	// 体を地面に埋まらせる(ムーブ6のみ
 	void AreaSetDown();
 
+	// オプション用モデル描画
+	void OptionActorDraw();
+
+	// オプション用モデル描画の準備
+	void OptionActorDrawBefore();
+
 	// オプション用モデル描画の後始末
-	void OptionActorDrawAfter() override;
+	void OptionActorDrawAfter();
 
 	// ムーブ6にてワープさせる
 	void WarpMove6(VECTOR paneruArea) { area = VAdd(paneruArea, VGet(0, 50, 0)); }

@@ -39,7 +39,4 @@ public:
 
 	// キャラクターが近づいたら
 	void NearChara(const VECTOR characterArea);
-
-	// オプション用モデル描画の後始末
-	void OptionActorDrawAfter() override {}
 };

@@ -40,7 +40,7 @@ Camera::Camera(const VECTOR charaarea)
 	// 遠近法カメラだったら
 	if (!BASICPARAM::nowCameraOrtho)
 	{
-		SetCameraNearFar(100.0f, 10000.0f);	// カメラの描画範囲を指定
+		SetCameraNearFar(100.0f, 9000.0f);	// カメラの描画範囲を指定
 		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea), VAdd(perspesctiveViewArea, charaArea));
 		SoundProcess::Set3DRadius(VSize(cameraPerspectiveArea));
 	}
@@ -167,7 +167,7 @@ void Camera::SetUp()
 	if (!BASICPARAM::nowCameraOrtho)
 	{
 		SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
-		SetCameraNearFar(100.0f, 10000.0f);
+		SetCameraNearFar(100.0f, 9000.0f);
 		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea), VAdd(perspesctiveViewArea, charaArea));
 		SoundProcess::SetLisnerArea(cameraPerspectiveArea);
 		SoundProcess::Set3DRadius(VSize(cameraPerspectiveArea));

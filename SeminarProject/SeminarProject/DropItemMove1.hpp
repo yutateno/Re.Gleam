@@ -22,9 +22,5 @@ public:
 
 	// 描画
 	void Draw();
-
-
-	// オプション用モデル描画の後始末
-	void OptionActorDrawAfter() override {}
 };
 

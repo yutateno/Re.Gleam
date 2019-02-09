@@ -34,8 +34,5 @@ public:
 
 	// Y軸の回転
 	const float GetYAngle() const { return angle; }
-
-	// オプション用モデル描画の後始末
-	void OptionActorDrawAfter() override {}
 };
 

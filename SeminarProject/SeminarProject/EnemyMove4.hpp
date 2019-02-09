@@ -138,8 +138,5 @@ public:
 
 	// サイズでかいときかどうか
 	const bool GetBigNow() const { return damageCount <= bigBodyChangeDamage ? true : false; }
-
-	// オプション用モデル描画の後始末
-	void OptionActorDrawAfter() override {}
 };
 

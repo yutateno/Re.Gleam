@@ -703,7 +703,7 @@ void MainMove6::BattleDraw()
 	DrawExtendGraph(337, 50, 537, 233, battleHealDraw[static_cast<int>(EHealDraw::icon)], true);
 	DrawExtendGraph(21, 146, 562, 293, battleHealDraw[static_cast<int>(EHealDraw::gage)], true);
 	DrawBox(460, 1000, 1460, 1030, GetColor(0, 0, 0), false);
-	DrawExtendGraph(460, 1000, 1460 - enemyDamageCount * 50, 1030, battleHealDraw[static_cast<int>(EHealDraw::enemyGage)], true);
+	DrawExtendGraph(460, 1000, 1460 - enemyDamageCount * enemyDamageHitCount, 1030, battleHealDraw[static_cast<int>(EHealDraw::enemyGage)], true);
 } /// void MainMove6::BattleDraw()
 
 
@@ -894,7 +894,7 @@ void MainMove6::BattleProcess()
 
 
 	// 次のシーンへ移行
-	if (enemyDamageCount >= 20)
+	if (enemyDamageCount >= 1000 / enemyDamageHitCount)
 	{
 		SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::ending);
 		e_nowMove = ESceneMove6::Last;
@@ -1221,6 +1221,18 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 	p_chaseBlock[1] = new ChaseBlock();
 	enemyHitDamage = false;
 	enemyDamageCount = 0;
+	enemyDamageHitCount = BASICPARAM::ordinaryPeopleNum + BASICPARAM::stairsNum + BASICPARAM::streetLightNum + BASICPARAM::stairsRoadNum;
+	while(1000 % ++enemyDamageHitCount != 0){}
+	enemyDamageHitCount = 1000 / enemyDamageHitCount;
+	if (enemyDamageHitCount < 50)
+	{
+		enemyDamageHitCount = 50;
+	}
+	if (enemyDamageHitCount > 500)
+	{
+		enemyDamageHitCount = 500;
+	}
+
 
 
 	// 一般人

@@ -105,10 +105,13 @@ private:
 	ChaseBlock* p_chaseBlock[2];
 
 	// 攻撃を受けたかどうか
-	int enemyHitDamage;
+	bool enemyHitDamage;
 
 	// ボスのダメージカウント
 	int enemyDamageCount;
+
+	// プレイヤーの攻撃によるダメージ量
+	int enemyDamageHitCount;
 
 
 	/// 一般人-----------------------------------------------------------------------

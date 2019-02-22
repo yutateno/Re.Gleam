@@ -893,13 +893,35 @@ void MainMove6::BattleProcess()
 	/// ワープエフェクトの処理-----------------------------------------------------------------------------------------------------------
 
 
-	// 次のシーンへ移行
+	// ボスが死んだら
 	if (enemyDamageCount >= 1000 / enemyDamageHitCount)
 	{
-		SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::ending);
-		e_nowMove = ESceneMove6::Last;
-		p_character->PositionReset();
-		movieFrame = 0;
+		// 次のシーンへ移行する
+		if (p_enemyBossAfter->SetDeathBlendDraw())
+		{
+			p_camera->SetShakePower(0.0f);
+			SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::ending);
+			e_nowMove = ESceneMove6::Last;
+			p_character->PositionReset();
+			movieFrame = 0;
+		}
+		// 次のシーンへ移行する前の準備をする
+		else
+		{
+			if (std::fabsf(cameraShakeParam) <= 20.0f)
+			{
+				if (cameraShakeParam < 0.0f)
+				{
+					cameraShakeParam -= 1.0f;
+				}
+				else
+				{
+					cameraShakeParam += 1.0f;
+				}
+			}
+			cameraShakeParam *= -1.0f;
+			p_camera->SetShakePower(cameraShakeParam);
+		}
 	}
 
 
@@ -916,10 +938,31 @@ void MainMove6::BattleProcess()
 	// 次のシーンへ移行
 	if (CheckHitKey(KEY_INPUT_M) == 1)
 	{
-		SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::ending);
-		e_nowMove = ESceneMove6::Last;
-		p_character->PositionReset();
-		movieFrame = 0;
+		// 次のシーンへ移行する
+		if (p_enemyBossAfter->SetDeathBlendDraw())
+		{
+			SoundProcess::BGMTrans(SoundProcess::ESOUNDNAME_BGM::ending);
+			e_nowMove = ESceneMove6::Last;
+			p_character->PositionReset();
+			movieFrame = 0;
+		}
+		// 次のシーンへ移行する前の準備をする
+		else
+		{
+			if (std::fabsf(cameraShakeParam) <= 20.0f)
+			{
+				if (cameraShakeParam < 0.0f)
+				{
+					cameraShakeParam -= 1.0f;
+				}
+				else
+				{
+					cameraShakeParam += 1.0f;
+				}
+			}
+			cameraShakeParam *= -1.0f;
+			p_camera->SetShakePower(cameraShakeParam);
+		}
 	}
 #endif
 } /// void MainMove6::BattleProcess()
@@ -1091,6 +1134,7 @@ MainMove6::MainMove6(const std::vector<int> v_file)
 	// カメラの初期化
 	p_camera = new Camera(p_character->GetArea());
 	p_cameraMove = new CameraMove6();
+	cameraShakeParam = 0.0f;
 
 
 	// パネルの初期化

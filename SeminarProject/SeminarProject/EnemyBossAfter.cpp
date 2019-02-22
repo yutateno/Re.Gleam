@@ -202,10 +202,6 @@ void EnemyBossAfter::Process()
 	attackStartNow = false;		// 攻撃をし始めてないとする
 
 
-	// ダメージを受けたら
-	if (damageHit) damageHit = false;
-
-
 	// 300フレームに到達したら
 	if (moveCount++ > moveDoCount)
 	{
@@ -255,6 +251,32 @@ void EnemyBossAfter::Process()
 	// モーションのプロセス
 	MotionProcess();
 } /// void EnemyBossAfter::Process()
+
+
+
+/// ----------------------------------------------------------------------------------------
+bool EnemyBossAfter::SetDeathBlendDraw()
+{
+	// モデルの透過値が0以上だったら
+	if (blendCount >= 0)
+	{
+		blendCount -= 2;
+	}
+	// モデルが透過したら
+	else
+	{
+		// 存在を消したことにする
+		return true;
+	}
+
+
+	MV1SetMaterialDrawBlendParam(this->modelHandle, 0, blendCount);
+	MV1SetMaterialDrawBlendParam(this->modelHandle, 1, blendCount);
+	MV1SetMaterialDrawBlendParam(this->modelHandle, 2, blendCount);
+
+
+	return false;
+}
 
 
 

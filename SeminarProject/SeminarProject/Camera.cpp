@@ -35,6 +35,7 @@ Camera::Camera(const VECTOR charaarea)
 	speed = DX_PI_F / 90;
 	angle = 0.0f;
 	zRota = VGet(0, 530, 700);
+	shakePower = 0.0f;
 
 
 	// 遠近法カメラだったら
@@ -166,19 +167,23 @@ void Camera::SetUp()
 	// 遠近法カメラだったら
 	if (!BASICPARAM::nowCameraOrtho)
 	{
+		VECTOR tempArea = VAdd(cameraPerspectiveArea, VGet(0, shakePower, 0));
+		VECTOR tempViewArea = VAdd(perspesctiveViewArea, VGet(0, shakePower, 0));
 		SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
 		SetCameraNearFar(100.0f, 9500.0f);
-		SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea), VAdd(perspesctiveViewArea, charaArea));
-		SoundProcess::SetLisnerArea(cameraPerspectiveArea);
-		SoundProcess::Set3DRadius(VSize(cameraPerspectiveArea));
+		SetCameraPositionAndTarget_UpVecY(VAdd(tempArea, charaArea), VAdd(tempViewArea, charaArea));
+		SoundProcess::SetLisnerArea(tempArea);
+		SoundProcess::Set3DRadius(VSize(tempArea));
 	}
 	// 正射影カメラだったら
 	else
 	{
+		VECTOR tempArea = VAdd(cameraOrthoArea, VGet(0, shakePower, 0));
+		VECTOR tempViewArea = VAdd(orthoViewArea, VGet(0, shakePower, 0));
 		SetupCamera_Ortho(orthoArea);
-		SetCameraPositionAndTarget_UpVecY(VAdd(cameraOrthoArea, charaArea), VAdd(orthoViewArea, charaArea));
-		SoundProcess::SetLisnerArea(cameraOrthoArea);
-		SoundProcess::Set3DRadius(VSize(cameraOrthoArea));
+		SetCameraPositionAndTarget_UpVecY(VAdd(tempArea, charaArea), VAdd(tempViewArea, charaArea));
+		SoundProcess::SetLisnerArea(tempArea);
+		SoundProcess::Set3DRadius(VSize(tempArea));
 	}
 
 

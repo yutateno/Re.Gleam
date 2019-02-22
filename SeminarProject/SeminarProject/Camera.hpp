@@ -34,6 +34,9 @@ private:
 	// 上下回転用
 	VECTOR zRota;
 
+	// 画面揺れのパラメータ
+	float shakePower;
+
 
 public:
 	// キャラの位置を引数に取ったコンストラクタ
@@ -54,4 +57,8 @@ public:
 
 	// カメラの座標
 	const VECTOR GetArea();
+
+
+	// 画面揺れのパラメータを設定する
+	void SetShakePower(float shakeParameter) { this->shakePower = shakeParameter; }
 };

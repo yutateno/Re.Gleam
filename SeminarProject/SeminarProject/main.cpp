@@ -66,7 +66,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// コントローラーの初期化
 	DLLXinput::Init();
-	DLLXinput::FirstUpdate();
+	DLLXinput::AllControllerUpdate();
 
 
 	// メイン処理をnewする
@@ -121,7 +121,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			// コントローラーが繋がっているとき
 			else
 			{
-				DLLXinput::FirstUpdate();		// コントローラーの更新
+				DLLXinput::AllControllerUpdate();		// コントローラーの更新
 
 
 				// コントローラーが決まっていなかったら
@@ -204,7 +204,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// ゲームを開始する条件としてのコントローラーが決定されたら
 		else
 		{
-			DLLXinput::EverUpdate();
+			DLLXinput::OneControllerUpdate();
 
 			manager->Update();
 

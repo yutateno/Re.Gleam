@@ -2,8 +2,8 @@
 DxLibとEffekseerというライブラリを用いた3Dのジャンプアクションゲーム
 
 # Dependency
-使用言語：C/C++
-バージョン：ver1.13(2019/2/24)
+使用言語：C/C++<br>
+バージョン：ver1.13(2019/2/24)<br>
 必要なライブラリ：Effekseer(ver140_319d)
 
 # Setup

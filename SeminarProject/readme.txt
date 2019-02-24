@@ -3,8 +3,6 @@ Re.Gleam　説明書
 作品ホームページ
 https://scrapbox.io/yutateno/Re.Gleam
 
-(C)2019 立野優羽
-
 ■このゲームについて
 3Dのジャンプアクションゲームです。
 
@@ -66,7 +64,11 @@ https://kingwasheart.wixsite.com/yutateno
 ・プレイ動画のアップロードや2次創作物の公開等は
 　良識の範囲内でご自由に行っていただいて構いません。
 
+libpng　Copyright (C) 2004, 2006-2012 Glenn Randers-Pehrson.
+zlib　Copyright (C) 1995-2012 Jean-loup Gailly and Mark Adler.
+
 ■更新履歴
+2019年2月24日　Ver1.13に更新(コントローラの処理の修正
 2019年2月22日　Ver1.12に更新(ボス倒し後の演出の組み込み
 2019年2月13日　Ver1.11に更新(エフェクト処理軽減、ボスの体力上限値の動的変更に処理変更
 2019年2月9日　Ver1.10に更新(処理負荷軽減

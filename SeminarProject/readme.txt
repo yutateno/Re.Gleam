@@ -64,8 +64,39 @@ https://kingwasheart.wixsite.com/yutateno
 ・プレイ動画のアップロードや2次創作物の公開等は
 　良識の範囲内でご自由に行っていただいて構いません。
 
+・DXライブラリ
+DX Library Copyright (C) 2001-2015 Takumi Yamada.
+
 libpng　Copyright (C) 2004, 2006-2012 Glenn Randers-Pehrson.
 zlib　Copyright (C) 1995-2012 Jean-loup Gailly and Mark Adler.
+
+・Effekseer
+
+The MIT License (MIT)
+
+Copyright (c) 2011 Effekseer Project
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+DirectX Tool Kit
+https://directxtk.codeplex.com/
+Microsoft Public License (Ms-PL)
 
 ■更新履歴
 2019年2月24日　Ver1.13に更新(コントローラの処理の修正

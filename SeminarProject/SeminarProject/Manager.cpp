@@ -3039,10 +3039,6 @@ void Manager::Update()
 						DrawEffekseer3D_End();
 
 
-						// サウンドを解放する
-						SoundProcess::Release();
-
-
 						feedCount = 0;
 						BASICPARAM::endFeedNow = false;
 					}
@@ -3050,10 +3046,6 @@ void Manager::Update()
 				// 終了シーンがロードのとき
 				else
 				{
-					// サウンドを解放する
-					SoundProcess::Release();
-
-
 					// フェードを加算する
 					feedCount += 15;
 

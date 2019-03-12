@@ -1,4 +1,10 @@
 #pragma once
+
+// インクルードガード
+#ifndef _SOUNDPROCESS_HPP
+#define _SOUNDPROCESS_HPP
+
+
 #include "DxLib.h"
 #define _USE_MATH_DEFINES
 #include <cmath>
@@ -90,3 +96,5 @@ namespace SoundProcess
 	// オプション画面にいるかどうか、またサウンド調整しているかどうかでもここで調整する
 	void SetOptionMenuNow(bool nowTrue);
 }
+
+#endif // !_SOUNDPROCESS_HPP

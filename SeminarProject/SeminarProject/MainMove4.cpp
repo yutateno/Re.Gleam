@@ -632,8 +632,12 @@ MainMove4::~MainMove4()
 	POINTER_RELEASE(p_stage);
 
 
-	/// à–¾‰æ‘œ‰ğ•ú
+	// à–¾‰æ‘œ‰ğ•ú
 	GRAPHIC_RELEASE(moveDescriptionDraw);
+
+
+	// ƒTƒEƒ“ƒh‚ğ‰ğ•ú‚·‚é
+	SoundProcess::Release();
 } /// MainMove4::~MainMove4()
 
 

@@ -469,7 +469,7 @@ namespace SoundProcess
 		// SEÇè¡Ç∑
 		for (int i = 0; i != seNum; ++i)
 		{
-			if (!se_loadFlag[i]) continue;
+			//if (!se_loadFlag[i]) continue;
 			DeleteSoundMem(se_sound[i]);
 			se_sound[i] = -1;
 		}
@@ -478,7 +478,7 @@ namespace SoundProcess
 		// BGMÇè¡Ç∑
 		for (int i = 0; i != bgmNum; ++i)
 		{
-			if (!bgm_loadFlag[i]) continue;
+			//if (!bgm_loadFlag[i]) continue;
 			StopSoundMem(bgm_sound[i]);
 			DeleteSoundMem(bgm_sound[i]);
 			bgm_sound[i] = -1;

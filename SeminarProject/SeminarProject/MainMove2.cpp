@@ -956,6 +956,10 @@ MainMove2::~MainMove2()
 
 	/// à–¾‰æ‘œ‰ğ•ú
 	GRAPHIC_RELEASE(moveDescriptionDraw);
+
+
+	/// ƒTƒEƒ“ƒh‚ğ‰ğ•ú‚·‚é
+	SoundProcess::Release();
 } /// MainMove2::~MainMove2()
 
 

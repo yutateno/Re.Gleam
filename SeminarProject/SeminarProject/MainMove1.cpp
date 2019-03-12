@@ -538,6 +538,10 @@ MainMove1::~MainMove1()
 
 	// à–¾‰æ‘œ‰ğ•ú
 	GRAPHIC_RELEASE(moveDescriptionDraw);
+
+
+	// ƒTƒEƒ“ƒh‚ğ‰ğ•ú‚·‚é
+	SoundProcess::Release();
 } /// MainMove1::~MainMove1() /// MainMove1::~MainMove1()
 
 

@@ -703,7 +703,10 @@ void MainMove6::BattleDraw()
 	DrawExtendGraph(337, 50, 537, 233, battleHealDraw[static_cast<int>(EHealDraw::icon)], true);
 	DrawExtendGraph(21, 146, 562, 293, battleHealDraw[static_cast<int>(EHealDraw::gage)], true);
 	DrawBox(460, 1000, 1460, 1030, GetColor(0, 0, 0), false);
-	DrawExtendGraph(460, 1000, 1460 - enemyDamageCount * enemyDamageHitCount, 1030, battleHealDraw[static_cast<int>(EHealDraw::enemyGage)], true);
+	if (enemyDamageCount*enemyDamageHitCount < 1000)
+	{
+		DrawExtendGraph(460, 1000, 1460 - enemyDamageCount * enemyDamageHitCount, 1030, battleHealDraw[static_cast<int>(EHealDraw::enemyGage)], true);
+	}
 } /// void MainMove6::BattleDraw()
 
 
@@ -1476,6 +1479,10 @@ MainMove6::~MainMove6()
 
 	// ムービー画像
 	GRAPHIC_RELEASE(movieSkipDraw);
+
+
+	// サウンドを解放する
+	SoundProcess::Release();
 } /// MainMove5::~MainMove5()
 
 

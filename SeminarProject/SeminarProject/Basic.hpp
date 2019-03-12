@@ -3,6 +3,10 @@
 /*
 大本
 */
+// インクルードガード
+#ifndef _BASIC_MAIN
+#define _BASIC_MAIN
+
 
 /// インクルードファイル--------------------------------------------------------
 #include "DLLXinput.h"
@@ -197,3 +201,6 @@ namespace MyDebug
 	void DebugProcess();
 }
 #endif // _DEBUG
+
+
+#endif // _BASIC_MAIN

@@ -23,7 +23,7 @@ namespace SoundProcess
 		saveOn, saveMiss, pianoAttack3, pianoAttack2, pianoAttack1, pianoAttack
 		, jump, pianoAttackMiss, landing, landing2, footFloor, foot
 		, ballPickUp, ballPickUp2, strikeBomb, ballPawnHigh, ballPawn, lightOneFoot, lightFoot
-		, crayonDie, titleBurnLow, titleBurnLowMagni, titleBurn
+		, crayonDie, titleBurnLow, titleBurnLowMagni, titleBurn, none
 	};
 
 	// サウンドの名前ID_BGM

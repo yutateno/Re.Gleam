@@ -4,8 +4,8 @@
 namespace SoundProcess
 {
 	/// ゲームによって変わる部分------------------
-	const int seNum = 23;			// SEの数
-	const int bgmNum = 11;			// BGMの数
+	const int seNum = static_cast<int>(SoundProcess::ESOUNDNAME_SE::none);			// SEの数
+	const int bgmNum = static_cast<int>(SoundProcess::ESOUNDNAME_BGM::none);			// BGMの数
 	const int bgmArray = 2;			// BGMの最大再生個数
 	const int bgmFeedValue = 60;	// BGMのフェード値
 	///-------------------------------------------

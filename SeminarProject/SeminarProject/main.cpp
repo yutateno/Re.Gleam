@@ -70,7 +70,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 	// メイン処理をnewする
-	Manager* manager = new Manager();
+	Manager manager;
 
 
 	// 最初にコントローラーを設定するための確認コマンド
@@ -97,7 +97,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 	// ゲームの核
-	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0 && !manager->GetEnd())
+	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0 && !manager.GetEnd())
 	{
 		// コントローラーが一つでないとき
 		if (!firstControll)
@@ -206,7 +206,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		{
 			DLLXinput::OneControllerUpdate();
 
-			manager->Update();
+			manager.Update();
 
 			SoundProcess::Process();
 
@@ -216,7 +216,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 	// 削除
-	POINTER_RELEASE(manager);
+	manager.~Manager();
 
 
 	SoundProcess::Release();		// サウンド開放

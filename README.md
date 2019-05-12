@@ -3,14 +3,11 @@ DxLibとEffekseerというライブラリを用いた3Dのジャンプアクシ�
 
 # Dependency
 使用言語：C/C++<br>
-バージョン：ver1.13(2019/2/24)<br>
+バージョン：ver1.15<br>
 必要なライブラリ：Effekseer(ver140_319d)
 
 # Setup
 ソフトウェア：Visual Studio 2017
-
-# Usage
-使い方。なるべく具体的に書く。サンプルも書く
 
 # Licence
 This software is released under the MIT License, see LICENSE.

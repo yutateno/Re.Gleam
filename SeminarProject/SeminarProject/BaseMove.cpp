@@ -149,23 +149,23 @@ void BaseMove::SkyTextureReload()
 	switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::WHITEBLACK:
-		LoadFile::MyLoad("media\\スカイボックス\\whiteblack\\BlueSky.byn", textureHandle, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\skyBox\\whiteblack.byn", textureHandle, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::NORMAL:
-		LoadFile::MyLoad("media\\スカイボックス\\normal\\BlueSky.byn", textureHandle, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\skyBox\\normal.byn", textureHandle, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::D_CORRECTION:
-		LoadFile::MyLoad("media\\スカイボックス\\D\\BlueSky.byn", textureHandle, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\skyBox\\D.byn", textureHandle, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::P_CORRECTION:
-		LoadFile::MyLoad("media\\スカイボックス\\P\\BlueSky.byn", textureHandle, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\skyBox\\P.byn", textureHandle, ELOADFILE::graph);
 		break;
 
 	default:
-		LoadFile::MyLoad("media\\スカイボックス\\normal\\BlueSky.byn", textureHandle, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\skyBox\\normal.byn", textureHandle, ELOADFILE::graph);
 		break;
 	}
 

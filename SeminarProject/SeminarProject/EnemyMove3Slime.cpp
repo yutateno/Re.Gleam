@@ -568,19 +568,19 @@ void EnemyMove3Slime::TextureReload()
 	switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::NORMAL:
-		LoadFile::MyLoad("media\\move3\\インクスライム\\ink_slime_motionALL.fbm\\normal\\Slime_tex.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\move3\\inkSlime\\texture\\normal.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::D_CORRECTION:
-		LoadFile::MyLoad("media\\move3\\インクスライム\\ink_slime_motionALL.fbm\\D\\Slime_tex.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\move3\\inkSlime\\texture\\D.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::P_CORRECTION:
-		LoadFile::MyLoad("media\\move3\\インクスライム\\ink_slime_motionALL.fbm\\P\\Slime_tex.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\move3\\inkSlime\\texture\\P.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 
 	default:
-		LoadFile::MyLoad("media\\move3\\インクスライム\\ink_slime_motionALL.fbm\\normal\\Slime_tex.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\move3\\inkSlime\\texture\\normal.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 	}
 

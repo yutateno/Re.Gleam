@@ -131,19 +131,19 @@ void DropItemMove3::TextureReload()
 	switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::NORMAL:
-		LoadFile::MyLoad("media\\move3\\インク的な\\correction\\normal\\ink.pyn", textureHandle, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\move3\\dropItem\\texture\\normal.pyn", textureHandle, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::D_CORRECTION:
-		LoadFile::MyLoad("media\\move3\\インク的な\\correction\\D\\ink.pyn", textureHandle, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\move3\\dropItem\\texture\\D.pyn", textureHandle, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::P_CORRECTION:
-		LoadFile::MyLoad("media\\move3\\インク的な\\correction\\P\\ink.pyn", textureHandle, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\move3\\dropItem\\texture\\P.pyn", textureHandle, ELOADFILE::graph);
 		break;
 
 	default:
-		LoadFile::MyLoad("media\\move3\\インク的な\\correction\\normal\\ink.pyn", textureHandle, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\move3\\dropItem\\texture\\normal.pyn", textureHandle, ELOADFILE::graph);
 		break;
 	}
 

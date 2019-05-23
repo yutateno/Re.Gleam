@@ -594,19 +594,19 @@ void EnemyMove5::TextureReload()
 	switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::NORMAL:
-		LoadFile::MyLoad("media\\childCLPH\\sd_,motionALL.fbm\\kureyon_,motionALL.fbm\\normal\\SDchar.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\childCLPH\\texture\\normal.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::D_CORRECTION:
-		LoadFile::MyLoad("media\\childCLPH\\sd_,motionALL.fbm\\kureyon_,motionALL.fbm\\D\\SDchar.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\childCLPH\\texture\\D.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::P_CORRECTION:
-		LoadFile::MyLoad("media\\childCLPH\\sd_,motionALL.fbm\\kureyon_,motionALL.fbm\\P\\SDchar.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\childCLPH\\texture\\P.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 
 	default:
-		LoadFile::MyLoad("media\\childCLPH\\sd_,motionALL.fbm\\kureyon_,motionALL.fbm\\normal\\SDchar.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\childCLPH\\texture\\normal.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 	}
 

@@ -409,19 +409,19 @@ void OrdinaryPerson::TextureReload()
 	switch (BASICPARAM::e_TextureColor)
 	{
 	case ETextureColor::NORMAL:
-		LoadFile::MyLoad("media\\move4\\àÍî êlÅQÇªÇÃÇP\\human1_motionALL.fbm\\normal\\human_col.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\move4\\people\\texture\\normal.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::D_CORRECTION:
-		LoadFile::MyLoad("media\\move4\\àÍî êlÅQÇªÇÃÇP\\human1_motionALL.fbm\\D\\human_col.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\move4\\people\\texture\\D.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 
 	case ETextureColor::P_CORRECTION:
-		LoadFile::MyLoad("media\\move4\\àÍî êlÅQÇªÇÃÇP\\human1_motionALL.fbm\\P\\human_col.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\move4\\people\\texture\\P.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 
 	default:
-		LoadFile::MyLoad("media\\move4\\àÍî êlÅQÇªÇÃÇP\\human1_motionALL.fbm\\normal\\human_col.pyn", textureHandle0, ELOADFILE::graph);
+		LoadFile::MyLoad("media\\move4\\people\\texture\\normal.pyn", textureHandle0, ELOADFILE::graph);
 		break;
 	}
 

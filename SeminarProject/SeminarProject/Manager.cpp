@@ -411,10 +411,10 @@ void Manager::InitMove1Load()
 	moveStr.resize(max1 + 1);
 	{
 		// モデルデータ
-		moveStr[0] = "media\\ステージモデル\\move1_graphic.myn";
-		moveStr[1] = "media\\ステージモデル\\move1_hantei.myn";
-		moveStr[2] = "media\\CLPH\\motion\\CLPH_motionALL.myn";
-		moveStr[3] = "media\\剣\\sword.myn";
+		moveStr[0] = "media\\ステージモデル\\move1_graphic.mv1";
+		moveStr[1] = "media\\ステージモデル\\move1_hantei.mv1";
+		moveStr[2] = "media\\CLPH\\motion\\CLPH_motionALL.mv1";
+		moveStr[3] = "media\\剣\\sword.mv1";
 
 		// サウンドデータ
 		moveStr[4] = "media\\sound\\タイトル（オルゴール）.wyn";
@@ -477,15 +477,15 @@ void Manager::InitMove2Load()
 	moveStr.resize(max2 + 1);
 	{
 		// モデルデータ
-		moveStr[0] = "media\\ステージモデル\\move1_hantei.myn";
-		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";
-		moveStr[2] = "media\\paneru\\paneru.myn";
-		moveStr[3] = "media\\kaidan\\kaidan.myn";		
-		moveStr[4] = "media\\kaidan\\kaidan_hantei.myn";
-		moveStr[5] = "media\\街灯\\Gaitou.myn";	
-		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";	
-		moveStr[7] = "media\\ブロック\\cubeblock.myn";
-		moveStr[8] = "media\\ステージモデル\\move1_graphic.myn";
+		moveStr[0] = "media\\ステージモデル\\move1_hantei.mv1";
+		moveStr[1] = "media\\swordCLPH\\clph_sword_all.mv1";
+		moveStr[2] = "media\\paneru\\paneru.mv1";
+		moveStr[3] = "media\\kaidan\\kaidan.mv1";		
+		moveStr[4] = "media\\kaidan\\kaidan_hantei.mv1";
+		moveStr[5] = "media\\街灯\\Gaitou.mv1";	
+		moveStr[6] = "media\\スカイボックス\\SkyDome.mv1";	
+		moveStr[7] = "media\\ブロック\\cubeblock.mv1";
+		moveStr[8] = "media\\ステージモデル\\move1_graphic.mv1";
 
 		// キャラのテクスチャデータ
 		moveStr[9] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn";
@@ -511,7 +511,7 @@ void Manager::InitMove2Load()
 		moveStr[19] = "media\\sound\\たま拾う音.wyn";
 
 		// 精算機械データ
-		moveStr[20] = "media\\Terminal\\terminal.myn";
+		moveStr[20] = "media\\Terminal\\terminal.mv1";
 
 		// 精算機械テクスチャ
 		moveStr[21] = "media\\Terminal\\whiteblack\\Terminal.pyn";
@@ -521,14 +521,14 @@ void Manager::InitMove2Load()
 		moveStr[23] = "media\\Terminal\\push.pyn";
 
 		// 階段とそのあとの床データ
-		moveStr[24] = "media\\階段と床合体\\kaidan_yuka1.myn";
+		moveStr[24] = "media\\階段と床合体\\kaidan_yuka1.mv1";
 
 		// 階段とそのあとの床のテクスチャデータ
 		moveStr[25] = "media\\階段と床合体\\whiteblack\\kaidan.pyn";
 		moveStr[26] = "media\\階段と床合体\\whiteblack\\yuka.pyn";
 
 		// 階段と床のあたり判定データ
-		moveStr[27] = "media\\階段と床合体\\kaidan_yuka1_hantei.myn";
+		moveStr[27] = "media\\階段と床合体\\kaidan_yuka1_hantei.mv1";
 
 		// 2D関連
 		moveStr[28] = "media\\2D素材\\change\\whiteblack\\block_2D.pyn";
@@ -643,14 +643,14 @@ void Manager::InitMove3Load()
 	moveStr.resize(max3 + 1);
 	{
 		// モデルデータ
-		moveStr[0] = "media\\ステージモデル\\move1_hantei.myn";
-		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";
-		moveStr[2] = "media\\paneru\\paneru.myn";
-		moveStr[3] = "media\\kaidan\\kaidan.myn";
-		moveStr[4] = "media\\kaidan\\kaidan_hantei.myn";
-		moveStr[5] = "media\\街灯\\Gaitou.myn";
-		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";
-		moveStr[7] = "media\\ステージモデル\\move1_graphic.myn";
+		moveStr[0] = "media\\ステージモデル\\move1_hantei.mv1";
+		moveStr[1] = "media\\swordCLPH\\clph_sword_all.mv1";
+		moveStr[2] = "media\\paneru\\paneru.mv1";
+		moveStr[3] = "media\\kaidan\\kaidan.mv1";
+		moveStr[4] = "media\\kaidan\\kaidan_hantei.mv1";
+		moveStr[5] = "media\\街灯\\Gaitou.mv1";
+		moveStr[6] = "media\\スカイボックス\\SkyDome.mv1";
+		moveStr[7] = "media\\ステージモデル\\move1_graphic.mv1";
 
 		// キャラのテクスチャデータ
 		moveStr[8] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn";
@@ -673,7 +673,7 @@ void Manager::InitMove3Load()
 		moveStr[17] = "media\\sound\\たま拾う音.wyn";
 
 		// 精算機械データ
-		moveStr[18] = "media\\Terminal\\terminal.myn";
+		moveStr[18] = "media\\Terminal\\terminal.mv1";
 
 		// 精算機械テクスチャ
 		moveStr[19] = "media\\Terminal\\whiteblack\\Terminal.pyn";
@@ -683,14 +683,14 @@ void Manager::InitMove3Load()
 		moveStr[21] = "media\\Terminal\\push.pyn";
 
 		// 階段とそのあとの床データ
-		moveStr[22] = "media\\階段と床合体\\kaidan_yuka1.myn";
+		moveStr[22] = "media\\階段と床合体\\kaidan_yuka1.mv1";
 
 		// 階段とそのあとの床のテクスチャデータ
 		moveStr[23] = "media\\階段と床合体\\whiteblack\\kaidan.pyn";
 		moveStr[24] = "media\\階段と床合体\\whiteblack\\yuka.pyn";
 
 		// 階段と床のあたり判定データ
-		moveStr[25] = "media\\階段と床合体\\kaidan_yuka1_hantei.myn";
+		moveStr[25] = "media\\階段と床合体\\kaidan_yuka1_hantei.mv1";
 
 		// キャラクター周りの3DSE
 		moveStr[26] = "media\\sound\\ジャンプ.wyn";
@@ -711,15 +711,15 @@ void Manager::InitMove3Load()
 		moveStr[35] = "media\\sound\\通常bgm.wyn";
 
 		// 敵のスライムのデータ
-		moveStr[36] = "media\\move3\\インクスライム\\ink_slime_motionALL.myn";
+		moveStr[36] = "media\\move3\\インクスライム\\ink_slime_motionALL.mv1";
 		moveStr[37] = "media\\move3\\インクスライム\\ink_slime_motionALL.fbm\\normal\\Slime_tex.pyn";
 
 		// 敵のクレヨンヒューマンのデータ
-		moveStr[38] = "media\\move3\\人型クレヨン\\kureyon_,motionALL.myn";
+		moveStr[38] = "media\\move3\\人型クレヨン\\kureyon_,motionALL.mv1";
 		moveStr[39] = "media\\move3\\人型クレヨン\\kureyon_,motionALL.fbm\\normal\\kre.pyn";
 
 		// ドロップアイテムのデータ
-		moveStr[40] = "media\\move3\\インク的な\\ink.myn";
+		moveStr[40] = "media\\move3\\インク的な\\ink.mv1";
 		moveStr[41] = "media\\move3\\インク的な\\correction\\normal\\ink.pyn";
 
 		// ダメージ演出画像
@@ -860,14 +860,14 @@ void Manager::InitMove4Load()
 	moveStr.resize(max4 + 1);
 	{
 		// モデルデータ
-		moveStr[0] = "media\\ステージモデル\\move1_hantei.myn";
-		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";
-		moveStr[2] = "media\\paneru\\paneru.myn";
-		moveStr[3] = "media\\kaidan\\kaidan.myn";
-		moveStr[4] = "media\\kaidan\\kaidan_hantei.myn";
-		moveStr[5] = "media\\街灯\\Gaitou.myn";	
-		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";
-		moveStr[7] = "media\\ステージモデル\\move1_graphic.myn";
+		moveStr[0] = "media\\ステージモデル\\move1_hantei.mv1";
+		moveStr[1] = "media\\swordCLPH\\clph_sword_all.mv1";
+		moveStr[2] = "media\\paneru\\paneru.mv1";
+		moveStr[3] = "media\\kaidan\\kaidan.mv1";
+		moveStr[4] = "media\\kaidan\\kaidan_hantei.mv1";
+		moveStr[5] = "media\\街灯\\Gaitou.mv1";	
+		moveStr[6] = "media\\スカイボックス\\SkyDome.mv1";
+		moveStr[7] = "media\\ステージモデル\\move1_graphic.mv1";
 
 		// キャラのテクスチャデータ
 		moveStr[8] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn";
@@ -887,7 +887,7 @@ void Manager::InitMove4Load()
 		moveStr[16] = "media\\スカイボックス\\whiteblack\\BlueSky.byn";
 
 		// 精算機械データ
-		moveStr[17] = "media\\Terminal\\terminal.myn";	
+		moveStr[17] = "media\\Terminal\\terminal.mv1";	
 
 		// 精算機械テクスチャ
 		moveStr[18] = "media\\Terminal\\whiteblack\\Terminal.pyn";
@@ -897,14 +897,14 @@ void Manager::InitMove4Load()
 		moveStr[20] = "media\\Terminal\\push.pyn";
 
 		// 階段とそのあとの床データ
-		moveStr[21] = "media\\階段と床合体\\kaidan_yuka1.myn";
+		moveStr[21] = "media\\階段と床合体\\kaidan_yuka1.mv1";
 
 		// 階段とそのあとの床のテクスチャデータ
 		moveStr[22] = "media\\階段と床合体\\whiteblack\\kaidan.pyn";
 		moveStr[23] = "media\\階段と床合体\\whiteblack\\yuka.pyn";
 
 		// 階段と床のあたり判定データ
-		moveStr[24] = "media\\階段と床合体\\kaidan_yuka1_hantei.myn";
+		moveStr[24] = "media\\階段と床合体\\kaidan_yuka1_hantei.mv1";
 
 		// キャラクター周りの3DSE
 		moveStr[25] = "media\\sound\\ジャンプ.wyn";
@@ -922,11 +922,11 @@ void Manager::InitMove4Load()
 		moveStr[33] = "media\\sound\\通常bgm.wyn";
 
 		// 人のデータ
-		moveStr[34] = "media\\move4\\一般人＿その１\\human1_motionALL.myn";
+		moveStr[34] = "media\\move4\\一般人＿その１\\human1_motionALL.mv1";
 		moveStr[35] = "media\\move4\\一般人＿その１\\human1_motionALL.fbm\\whiteblack\\human_col.pyn";
 
 		// 敵のデータ
-		moveStr[36] = "media\\move4\\人（敵）\\ene_human_motionALL.myn";
+		moveStr[36] = "media\\move4\\人（敵）\\ene_human_motionALL.mv1";
 		moveStr[37] = "media\\move4\\人（敵）\\ene_human_motionALL.fbm\\whiteblack\\whiteblack.pyn";
 
 		// 攻撃BGM
@@ -1240,14 +1240,14 @@ void Manager::InitMove5Load()
 	moveStr.resize(max5 + 1);
 	{
 		// モデルデータ
-		moveStr[0] = "media\\ステージモデル\\move1_hantei.myn";
-		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";
-		moveStr[2] = "media\\paneru\\paneru.myn";
-		moveStr[3] = "media\\kaidan\\kaidan.myn";	
-		moveStr[4] = "media\\kaidan\\kaidan_hantei.myn";
-		moveStr[5] = "media\\街灯\\Gaitou.myn";		
-		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";
-		moveStr[7] = "media\\ステージモデル\\move1_graphic.myn";
+		moveStr[0] = "media\\ステージモデル\\move1_hantei.mv1";
+		moveStr[1] = "media\\swordCLPH\\clph_sword_all.mv1";
+		moveStr[2] = "media\\paneru\\paneru.mv1";
+		moveStr[3] = "media\\kaidan\\kaidan.mv1";	
+		moveStr[4] = "media\\kaidan\\kaidan_hantei.mv1";
+		moveStr[5] = "media\\街灯\\Gaitou.mv1";		
+		moveStr[6] = "media\\スカイボックス\\SkyDome.mv1";
+		moveStr[7] = "media\\ステージモデル\\move1_graphic.mv1";
 
 		// キャラのテクスチャデータ
 		moveStr[8] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn";
@@ -1267,7 +1267,7 @@ void Manager::InitMove5Load()
 		moveStr[16] = "media\\スカイボックス\\whiteblack\\BlueSky.byn";
 
 		// 精算機械データ
-		moveStr[17] = "media\\Terminal\\terminal.myn";	
+		moveStr[17] = "media\\Terminal\\terminal.mv1";	
 
 		// 精算機械テクスチャ
 		moveStr[18] = "media\\Terminal\\whiteblack\\Terminal.pyn";
@@ -1277,14 +1277,14 @@ void Manager::InitMove5Load()
 		moveStr[20] = "media\\Terminal\\push.pyn";
 
 		// 階段とそのあとの床データ
-		moveStr[21] = "media\\階段と床合体\\kaidan_yuka1.myn";
+		moveStr[21] = "media\\階段と床合体\\kaidan_yuka1.mv1";
 
 		// 階段とそのあとの床のテクスチャデータ
 		moveStr[22] = "media\\階段と床合体\\whiteblack\\kaidan.pyn";
 		moveStr[23] = "media\\階段と床合体\\whiteblack\\yuka.pyn";
 
 		// 階段と床のあたり判定データ
-		moveStr[24] = "media\\階段と床合体\\kaidan_yuka1_hantei.myn";
+		moveStr[24] = "media\\階段と床合体\\kaidan_yuka1_hantei.mv1";
 
 		// キャラクター周りの3DSE
 		moveStr[25] = "media\\sound\\ジャンプ.wyn";
@@ -1302,11 +1302,11 @@ void Manager::InitMove5Load()
 		moveStr[33] = "media\\sound\\通常bgm.wyn";
 
 		// 敵のデータ
-		moveStr[34] = "media\\childCLPH\\sd_,motionALL.myn";
+		moveStr[34] = "media\\childCLPH\\sd_,motionALL.mv1";
 		moveStr[35] = "media\\childCLPH\\sd_,motionALL.fbm\\whiteblack\\SDchar.pyn";
 
 		// 一般人のデータ
-		moveStr[36] = "media\\move4\\一般人＿その１\\human1_motionALL.myn";
+		moveStr[36] = "media\\move4\\一般人＿その１\\human1_motionALL.mv1";
 		moveStr[37] = "media\\move4\\一般人＿その１\\human1_motionALL.fbm\\whiteblack\\human_col.pyn";
 
 		// ムーブの説明画像
@@ -1554,14 +1554,14 @@ void Manager::InitMove6Load()
 	moveStr.resize(max6 + 1);
 	{
 		// モデルデータ
-		moveStr[0] = "media\\ステージモデル\\move1_hantei.myn";
-		moveStr[1] = "media\\swordCLPH\\clph_sword_all.myn";
-		moveStr[2] = "media\\paneru\\paneru.myn";
-		moveStr[3] = "media\\kaidan\\kaidan.myn";	
-		moveStr[4] = "media\\kaidan\\kaidan_hantei.myn";
-		moveStr[5] = "media\\街灯\\Gaitou.myn";		
-		moveStr[6] = "media\\スカイボックス\\SkyDome.myn";	
-		moveStr[7] = "media\\ステージモデル\\move1_graphic.myn";
+		moveStr[0] = "media\\ステージモデル\\move1_hantei.mv1";
+		moveStr[1] = "media\\swordCLPH\\clph_sword_all.mv1";
+		moveStr[2] = "media\\paneru\\paneru.mv1";
+		moveStr[3] = "media\\kaidan\\kaidan.mv1";	
+		moveStr[4] = "media\\kaidan\\kaidan_hantei.mv1";
+		moveStr[5] = "media\\街灯\\Gaitou.mv1";		
+		moveStr[6] = "media\\スカイボックス\\SkyDome.mv1";	
+		moveStr[7] = "media\\ステージモデル\\move1_graphic.mv1";
 
 		// キャラのテクスチャデータ
 		moveStr[8] = "media\\swordCLPH\\clph_sword_all.fbm\\whiteblack\\sword_Tex.pyn";
@@ -1581,14 +1581,14 @@ void Manager::InitMove6Load()
 		moveStr[16] = "media\\スカイボックス\\whiteblack\\BlueSky.byn";
 
 		// 階段とそのあとの床データ
-		moveStr[17] = "media\\階段と床合体\\kaidan_yuka1.myn";
+		moveStr[17] = "media\\階段と床合体\\kaidan_yuka1.mv1";
 
 		// 階段とそのあとの床のテクスチャデータ
 		moveStr[18] = "media\\階段と床合体\\whiteblack\\kaidan.pyn";
 		moveStr[19] = "media\\階段と床合体\\whiteblack\\yuka.pyn";
 
 		// 階段と床のあたり判定データ
-		moveStr[20] = "media\\階段と床合体\\kaidan_yuka1_hantei.myn";
+		moveStr[20] = "media\\階段と床合体\\kaidan_yuka1_hantei.mv1";
 
 		// キャラクター周りの3DSE
 		moveStr[21] = "media\\sound\\ジャンプ.wyn";
@@ -1606,7 +1606,7 @@ void Manager::InitMove6Load()
 		moveStr[29] = "media\\sound\\boss.wyn";
 
 		// 一般人のデータ
-		moveStr[30] = "media\\move4\\一般人＿その１\\human1_motionALL.myn";
+		moveStr[30] = "media\\move4\\一般人＿その１\\human1_motionALL.mv1";
 		moveStr[31] = "media\\move4\\一般人＿その１\\human1_motionALL.fbm\\whiteblack\\human_col.pyn";
 
 		// 敵に近づいたときに出るUI
@@ -1615,7 +1615,7 @@ void Manager::InitMove6Load()
 		moveStr[34] = "media\\move6\\no.pyn";
 
 		// 前敵のデータ
-		moveStr[35] = "media\\ラスボス＿光\\モーション\\motion_Boss1.myn";
+		moveStr[35] = "media\\ラスボス＿光\\モーション\\motion_Boss1.mv1";
 		moveStr[36] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\wing\\whiteblack.pyn";
 		moveStr[37] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\body\\whiteblack.pyn";
 		moveStr[38] = "media\\ラスボス＿光\\モーション\\motion_Boss1.fbm\\head\\whiteblack.pyn";

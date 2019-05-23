@@ -31,31 +31,22 @@ void LoadFile::MyLoad(const string path, int& file, const ELOADFILE type)
 	string outstr;		// 出力するファイル名
 
 
-	// ファイルの読み込み
-	ifstream fin(path.c_str(), ios::binary);	// ファイルオープン
-	size = file_size(fin);						// ファイルサイズ取得
-	data.resize(size);							// メモリ確保
-	fin.read((char*)&data[0], size);			// 読み込み
-	fin.close();
-
-
-	// 解読
-	for (UINT i = 0; i < size; i += 5)
+	// モデルデータではないとき
+	if (type != ELOADFILE::mv1model)
 	{
-		data[i] = (data[i] ^ rad);
-	}
+		// ファイルの読み込み
+		ifstream fin(path.c_str(), ios::binary);	// ファイルオープン
+		size = file_size(fin);						// ファイルサイズ取得
+		data.resize(size);							// メモリ確保
+		fin.read((char*)& data[0], size);			// 読み込み
+		fin.close();
 
 
-	// モデルデータのとき
-	if (type == ELOADFILE::mv1model)
-	{
-		//保存
-		outstr = path;
-		outstr.erase(outstr.end() - 2, outstr.end());
-		outstr.append("v1");
-		ofstream fout(outstr.c_str(), ios::binary);
-		fout.write((char*)&data[0], size);
-		fout.close();
+		// 解読
+		for (UINT i = 0; i < size; i += 5)
+		{
+			data[i] = (data[i] ^ rad);
+		}
 	}
 
 
@@ -76,9 +67,7 @@ void LoadFile::MyLoad(const string path, int& file, const ELOADFILE type)
 
 	// モデルデータのとき
 	case ELOADFILE::mv1model:
-		file = MV1LoadModel(outstr.c_str());
-		// 一時出力したものを削除
-		std::remove(outstr.c_str());
+		file = MV1LoadModel(path.c_str());
 		break;
 
 

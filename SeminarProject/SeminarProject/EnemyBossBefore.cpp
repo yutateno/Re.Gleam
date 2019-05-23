@@ -7,7 +7,7 @@ EnemyBossBefore::EnemyBossBefore() : BasicCreature()
 {
 	// 3Dモデルの読み込み
 	this->modelHandle = -1;
-	LoadFile::MyLoad("media\\ラスボス＿光\\モーション\\motion_Boss1.myn", modelHandle, ELOADFILE::mv1model);
+	LoadFile::MyLoad("media\\ラスボス＿光\\モーション\\motion_Boss1.mv1", modelHandle, ELOADFILE::mv1model);
 
 
 	// 初期化
